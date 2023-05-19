@@ -32,7 +32,7 @@
                                 <img class="preview" id="avatarPreview" src="">
                             </div>
                         </div>
-                        <div class="col-7">
+                        <div class="col-md-7">
                             <div class="form-group row">
                                 <label for="staticEmail" class="col-sm-4 col-form-label">{{ __('home.full name') }}</label>
                                 <div class="col-sm-8">
@@ -92,7 +92,7 @@
                     <div class="row form-group pl-2">
                         <label for="day" class="col-sm-3 col-form-label">{{ __('home.nationality') }}</label>
 
-                        <div class="col-9">
+                        <div class="col-md-9">
                             <select class="form-control" id="country">
                             </select>
                         </div>
@@ -100,7 +100,7 @@
                     <div class="row pl-2 pt-3">
                         <label for="day" class="col-sm-3 col-form-label"></label>
 
-                        <div class="col-9">
+                        <div class="col-md-9">
                             <button class="btn btn-outline-primary -align-center" type="submit">{{ __('home.save changes') }}</button>
 
                         </div>

@@ -135,4 +135,39 @@ return [
     'warranty' => '보장하다',
     'warranty 1 month' => '1 개월 보증',
     'reputable brand' => '신뢰할 수있는 브랜드',
+
+    //thu cũ đổi mới, trợ giá 1.000.000, giá cũ, giá mới, xem ngay
+    'exchange old for new' => '옛날 교환 새로운',
+    'discount' => '할인',
+    'old price' => '옛날 가격',
+    'new price' => '새로운 가격',
+    'see now' => '지금보기',
+
+    //sạc & cáp kết nối, ốp điện thoại, dán màn hình, pin dự phòng, tai nghe, phụ kiện, sạc điện thoại, loa bluetooth
+    'charger & cable' => '충전기 및 케이블',
+    'phone case' => '휴대 전화 케이스',
+    'screen protector' => '스크린 프로텍터',
+    'power bank' => '전원 은행',
+    'headphone' => '헤드폰',
+    'accessories' => '액세서리',
+    'phone charger' => '휴대 전화 충전기',
+    'bluetooth speaker' => '블루투스 스피커',
+
+    //hàng chính hãng, full phụ kiện, write a read, your name, your review, submit, write a review, customer rating
+    'genuine product' => '진정한 제품',
+    'full accessories' => '전체 액세서리',
+    'write a read' => '리뷰 작성',
+    'write a review' => '리뷰 작성',
+    'your name' => '당신의 이름',
+    'your review' => '당신의 리뷰',
+    'submit' => '제출',
+    'customer rating' => '고객 평가',
+
+    //Tích điểm đổi quà giảm đến 10% cho thành viên., Miễn phí quẹt thẻ Tín dụng Visa Mastercard, Miễn phí trả góp 0% lãi suất cho thẻ tín dụng, Miễn phí giao hàng toàn quốc., Giảm ngay 1 triệu khi thu cũ đổi mới
+    'accumulate points' => '포인트 축적',
+    'free credit card' => '무료 스 와이프',
+    'free installment' => '무료 할부',
+    'free delivery' => '무료 배송',
+    'discount immediately' => '즉시 할인 1 백만',
+
 ];
