@@ -48,6 +48,9 @@ p {
   display: block;
   z-index: 10;
   transition: top 0.8s ease-in-out;
+  & > ul {
+    width: 100%;
+  }
 }
 .height-img {
   width: 223px !important;

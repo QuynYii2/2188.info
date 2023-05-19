@@ -61,7 +61,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3" style="padding: 0">
+            <div class="col-md-3" style="padding: 0">
                 <div class="product-offer " style="height: 150px;">
                     <img class="img-fluid" src="{{ asset('images//offer-1.jpg') }}" alt="">
                 </div>
@@ -80,9 +80,9 @@
     <!-- Products Start -->
     <div class="container-fluid">
         <div class="row">
-            <div class="col-2">
+            <div class="col-md-2">
                 <div class="row ">
-                    <div class="col-11">
+                    <div class="col-md-11">
                         <div class="pb-2">
                             <div class="product-item bg-light border-product">
                                 <div class="text-center-x-y height-side">
@@ -98,7 +98,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-11">
+                    <div class="col-md-11">
                         <div class="product-item bg-light border-product">
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100" src="{{ asset('images/product-1.jpg') }}"
@@ -122,7 +122,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-8">
+            <div class="col-md-8">
                 <div class="row py-2">
                     @foreach ($productByLocal as $product)
                         <div class="col-auto rounded">
@@ -150,10 +150,10 @@
                 </div>
             </div>
 
-            <div class="col-2">
+            <div class="col-md-2">
                 <div class="row ">
-                    <div class="col-1"></div>
-                    <div class="col-11">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-11">
                         <div class="pb-2">
                             <div class="product-item bg-light border-product">
                                 <div class="text-center-x-y height-side">
@@ -172,8 +172,8 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-1"></div>
-                    <div class="col-11">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-11">
                         <div class="product-item bg-light border-product">
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100 " src="{{ asset('images/product-1.jpg') }}"
@@ -202,9 +202,9 @@
     <div class="pt-5 pb-2" style="background: #ff66ff"></div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-2">
+            <div class="col-md-2">
                 <div class="row pb-2">
-                    <div class="col-11 ">
+                    <div class="col-md-11 ">
                         <div class="product-item bg-light border-product">
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100" src="{{ asset('images/product-1.jpg') }}"
@@ -228,7 +228,7 @@
                     </div>
                 </div>
                 <div class="row pb-2">
-                    <div class="col-11">
+                    <div class="col-md-11">
                         <div class="product-item bg-light border-product">
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100" src="{{ asset('images/product-2.jpg') }}"
@@ -253,7 +253,7 @@
                 </div>
             </div>
 
-            <div class="col-8">
+            <div class="col-md-8">
                 <div class="row py-2">
                     <div class="col-auto">
 
@@ -466,10 +466,10 @@
                 </div>
             </div>
 
-            <div class="col-2">
+            <div class="col-md-2">
                 <div class="row pb-2">
-                    <div class="col-1"></div>
-                    <div class="col-11">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-11">
                         <div class="product-item bg-light border-product">
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100 " src="{{ asset('images/product-8.jpg') }}"
@@ -493,8 +493,8 @@
                     </div>
                 </div>
                 <div class="row pb-2">
-                    <div class="col-1"></div>
-                    <div class="col-11">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-11">
                         <div class="product-item bg-light border-product">
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100 " src="{{ asset('images/product-9.jpg') }}"
@@ -520,9 +520,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-2">
+            <div class="col-md-2">
                 <div class="row pb-2">
-                    <div class="col-11 ">
+                    <div class="col-md-11 ">
                         <div class="product-item bg-light border-product">
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100" src="{{ asset('images/product-1.jpg') }}"
@@ -546,7 +546,7 @@
                     </div>
                 </div>
                 <div class="row pb-2">
-                    <div class="col-11">
+                    <div class="col-md-11">
                         <div class="product-item bg-light border-product">
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100" src="{{ asset('images/product-2.jpg') }}"
@@ -571,7 +571,7 @@
                 </div>
             </div>
 
-            <div class="col-8">
+            <div class="col-md-8">
                 <div class="row py-2">
                     <div class="col-auto">
 
@@ -784,10 +784,10 @@
                 </div>
             </div>
 
-            <div class="col-2">
+            <div class="col-md-2">
                 <div class="row pb-2">
-                    <div class="col-1"></div>
-                    <div class="col-11">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-11">
                         <div class="product-item bg-light border-product">
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100 " src="{{ asset('images/product-8.jpg') }}"
@@ -811,8 +811,8 @@
                     </div>
                 </div>
                 <div class="row pb-2">
-                    <div class="col-1"></div>
-                    <div class="col-11">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-11">
                         <div class="product-item bg-light border-product">
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100 " src="{{ asset('images/product-9.jpg') }}"
@@ -838,9 +838,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-2">
+            <div class="col-md-2">
                 <div class="row pb-2">
-                    <div class="col-11 ">
+                    <div class="col-md-11 ">
                         <div class="product-item bg-light border-product">
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100" src="{{ asset('images/product-1.jpg') }}"
@@ -864,7 +864,7 @@
                     </div>
                 </div>
                 <div class="row pb-2">
-                    <div class="col-11">
+                    <div class="col-md-11">
                         <div class="product-item bg-light border-product">
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100" src="{{ asset('images/product-2.jpg') }}"
@@ -889,7 +889,7 @@
                 </div>
             </div>
 
-            <div class="col-8">
+            <div class="col-md-8">
                 <div class="row py-2">
                     <div class="col-auto">
 
@@ -1102,10 +1102,10 @@
                 </div>
             </div>
 
-            <div class="col-2">
+            <div class="col-md-2">
                 <div class="row pb-2">
-                    <div class="col-1"></div>
-                    <div class="col-11">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-11">
                         <div class="product-item bg-light border-product">
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100 " src="{{ asset('images/product-8.jpg') }}"
@@ -1129,8 +1129,8 @@
                     </div>
                 </div>
                 <div class="row pb-2">
-                    <div class="col-1"></div>
-                    <div class="col-11">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-11">
                         <div class="product-item bg-light border-product">
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100 " src="{{ asset('images/product-9.jpg') }}"

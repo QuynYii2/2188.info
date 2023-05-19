@@ -135,4 +135,38 @@ return [
     'warranty' => 'Bảo hành',
     'warranty 1 month' => 'Bảo hành 1 tháng',
     'reputable brand' => 'Thương hiệu uy tín',
+
+    //thu cũ đổi mới, trợ giá 1.000.000, giá cũ, giá mới, xem ngay
+    'exchange old for new' => 'Thu cũ đổi mới',
+    'discount' => 'Trợ giá',
+    'old price' => 'Giá cũ',
+    'new price' => 'Giá mới',
+    'see now' => 'Xem ngay',
+
+    //sạc & cáp kết nối, ốp điện thoại, dán màn hình, pin dự phòng, tai nghe, phụ kiện, sạc điện thoại, loa bluetooth
+    'charger & cable' => 'Sạc & cáp kết nối',
+    'phone case' => 'Ốp điện thoại',
+    'screen protector' => 'Dán màn hình',
+    'power bank' => 'Pin dự phòng',
+    'headphone' => 'Tai nghe',
+    'accessories' => 'Phụ kiện',
+    'phone charger' => 'Sạc điện thoại',
+    'bluetooth speaker' => 'Loa bluetooth',
+
+    //hàng chính hãng, full phụ kiện, write a read, your name, your review, submit, write a review, customer rating
+    'genuine product' => 'Hàng chính hãng',
+    'full accessories' => 'Full phụ kiện',
+    'write a read' => 'Viết một bài đọc',
+    'write a review' => 'Viết nhận xét',
+    'your name' => 'Tên của bạn',
+    'your review' => 'Nhận xét của bạn',
+    'submit' => 'Gửi',
+    'customer rating' => 'Đánh giá của khách hàng',
+
+    //Tích điểm đổi quà giảm đến 10% cho thành viên., Miễn phí quẹt thẻ Tín dụng Visa Mastercard, Miễn phí trả góp 0% lãi suất cho thẻ tín dụng, Miễn phí giao hàng toàn quốc., Giảm ngay 1 triệu khi thu cũ đổi mới
+    'accumulate points' => 'Tích điểm cho thành viên',
+    'free credit card' => 'Miễn phí quẹt thẻ Tín dụng Visa Mastercard',
+    'free installment' => 'Miễn phí trả góp',
+    'free delivery' => 'Miễn phí giao hàng',
+    'discount immediately' => 'Giảm ngay 1 triệu',
 ];

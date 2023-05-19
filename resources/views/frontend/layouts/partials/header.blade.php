@@ -42,7 +42,7 @@
         </div>
     </div>
     <div class="row align-items-center">
-        <div class="col-3 pl-5" id="nav-left" style="background-color: #ffcccc">
+        <div class="col-md-3 pl-5" id="nav-left" style="background-color: #ffcccc">
             <div class="row">
                 <a href="/" class="text-decoration-none">
                     <span class="h1 text-uppercase text-primary bg-dark px-2">Shopping</span>
@@ -50,10 +50,10 @@
                 </a>
             </div>
         </div>
-        <div class="col-9 py-2 pr-5" id="nav-right" style="background-color: #feff99;">
+        <div class="col-md-9 py-2 pr-5" id="nav-right" style="background-color: #feff99;">
             <div class="row align-items-center ">
-                <div class="col-1"></div>
-                <div class="col-5">
+                <div class="col-md-1"></div>
+                <div class="col-md-5">
                     <form>
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="{{ __('home.placeholder search') }}">
@@ -65,27 +65,27 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-1"></div>
+                <div class="col-md-1"></div>
 
-                <div class="col-5 pr-5">
+                <div class="col-md-5 pr-5">
                     <div class="row align-items-center -align-right">
-                        <div class="col-1"></div>
+                        <div class="col-md-1"></div>
                         @if (session('error'))
                             {{ session('error') }}
                         @endif
 
                         @if (session('login'))
-                            <div class="col-6">
+                            <div class="col-md-6">
 
                                 <div class="row" style="display: flex; align-items: center;">
-                                    <div class="col-4">
+                                    <div class="col-md-4">
                                         <a href="#!">
                                             <img class="avatar"
                                                  src="https://www.gravatar.com/avatar/4f7f74d163a190dee16e31dffc8da4e5?d=mm&amp;s=64"
                                                  alt=""/>
                                         </a>
                                     </div>
-                                    <div class="col-8">
+                                    <div class="col-md-8">
                                         <div class="dropdown d-flex align-items-center">
                                             <h4 data-toggle="dropdown" aria-expanded="false">
                                                 @if($infoUser)
@@ -107,7 +107,7 @@
 
                             </div>
                         @else
-                            <div class="col-3">
+                            <div class="col-md-3">
 
                                 <div class="btn-group mb-2 full-width">
                                     <a href="/login" class="full-width">
@@ -125,7 +125,7 @@
                                 </div>
 
                             </div>
-                            <div class="col-3">
+                            <div class="col-md-3">
                                 <div class="btn-group mb-2 full-width">
                                     <a href="/register" class="full-width">
                                         <button type="button" class="btn btn-success mr-2 full-width"
@@ -139,11 +139,12 @@
                                             button 2
                                         </button>
                                     </a>
+                                    </a>
                                 </div>
                             </div>
                         @endif
 
-                        <div class="col-4 pr-5">
+                        <div class="col-md-4 pr-5">
                             <img src="{{ asset('images/hotline.png') }}" alt="">
                         </div>
                     </div>
