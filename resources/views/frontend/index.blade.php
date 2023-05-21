@@ -18,21 +18,35 @@
                                 {{ __('home.category') }}
                             </button>
                             <ul class="dropdown-menu show" id="dropdown">
-                                <li><a class="dropdown-item" href="/category/10"> Dropdown item 2 &raquo </a>
-                                    <ul class="submenu dropdown-menu">
-                                        @foreach($categories as $category)
-                                            <li><a class="dropdown-item"
-                                                   href="">{{ $category->name }} @if($category->children->count() > 0)
-                                                        &raquo
-                                                    @endif </a>
-                                                @if($category->children->count() > 0)
-                                                    @include('frontend.layouts.partials.subcategories', ['subcategories' => $category->children])
-                                                @endif
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </li>
+                                @foreach($categories as $category)
+                                    <li>
+                                        <a class="dropdown-item" href="/category/{{ $category->id }}">
+                                            {{ $category->name }}
+                                            @if($category->children->count() > 0)
+                                                &raquo;
+                                            @endif
+                                        </a>
+                                        @if($category->children->count() > 0)
+                                            <ul class="submenu dropdown-menu">
+                                                @foreach ($category->children as $subcategory)
+                                                    <li>
+                                                        <a class="dropdown-item" href="/category/{{ $subcategory->id }}">
+                                                            {{ $subcategory->name }}
+                                                            @if($subcategory->children->count() > 0)
+                                                                &raquo;
+                                                            @endif
+                                                        </a>
+                                                        @if($subcategory->children->count() > 0)
+                                                            @include('frontend.layouts.partials.subcategories', ['subcategories' => $subcategory->children])
+                                                        @endif
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
+                                    </li>
+                                @endforeach
                             </ul>
+
                         </div>
                     </div>
 

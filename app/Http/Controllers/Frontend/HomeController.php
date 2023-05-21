@@ -11,8 +11,6 @@ use App\Models\Product;
 
 class HomeController extends Controller
 {
-
-
     public function index(Request $request)
     {
         $locale = '';

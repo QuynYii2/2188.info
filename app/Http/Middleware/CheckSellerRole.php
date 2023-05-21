@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CheckSellerRole
 {
@@ -16,8 +18,14 @@ class CheckSellerRole
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->role === 'seller') {
-            return $next($request);
+        if (auth()->check()) {
+            $user = auth()->user();
+            $roles = $user->roles;
+            $roleNames = $roles->pluck('name');
+
+            if ($roleNames->contains('seller')) {
+                return $next($request);
+            }
         }
 
         abort(403, 'Unauthorized');

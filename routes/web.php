@@ -29,10 +29,10 @@ Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])-
 
 Route::get('/register/', [\App\Http\Controllers\Frontend\HomeController::class, 'register'])->name('register.store');
 
-Route::middleware('auth.product')->group(function () {
-    // Các tuyến đường sản phẩm ở đây
-    Route::get('/products/{id}', 'ProductController@show')->name('product.show');
-});
+//Route::middleware('auth.product')->group(function () {
+//    // Các tuyến đường sản phẩm ở đây
+//    Route::get('/products/{id}', 'ProductController@show')->name('product.show');
+//});
 
 Route::get('/info/', [\App\Http\Controllers\ProfileController::class, 'info']);
 Route::get('/my-notification/', [\App\Http\Controllers\ProfileController::class, 'my_notification']);
@@ -44,7 +44,7 @@ Route::get('/product-evaluation/', [\App\Http\Controllers\ProfileController::cla
 Route::get('/favorite-product/', [\App\Http\Controllers\ProfileController::class, 'favorite_product']);
 Route::get('/product-viewed/', [\App\Http\Controllers\ProfileController::class, 'product_viewed']);
 Route::get('/my-review/', [\App\Http\Controllers\ProfileController::class, 'my_review']);
-Route::get('/category/{id}', [\App\Http\Controllers\CategoryController::class, 'category'])->name('category.show');
+//Route::get('/category/{id}', [\App\Http\Controllers\CategoryController::class, 'category'])->name('category.show');
 Route::get('/detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
 
 
@@ -55,10 +55,20 @@ Route::group(['middleware' => 'role.admin'], function () {
 });
 
 Route::group(['middleware' => 'role.seller'], function () {
-    // Các route dành cho người bán
-    Route::get('/seller/dashboard', 'SellerController@dashboard');
-    Route::get('/seller/products', 'SellerController@products');
-    // ...
+    Route::get('/products', [\App\Http\Controllers\Seller\ProductController::class, 'index'])->name('seller.products.index');
+    Route::get('/products/create', [\App\Http\Controllers\Seller\ProductController::class, 'create'])->name('seller.products.create');
+    Route::post('/products', [\App\Http\Controllers\Seller\ProductController::class, 'store'])->name('seller.products.store');
+    Route::get('/products/{product}', [\App\Http\Controllers\Seller\ProductController::class, 'show'])->name('seller.products.show');
+    Route::get('/products/{product}/edit', [\App\Http\Controllers\Seller\ProductController::class, 'edit'])->name('seller.products.edit');
+    Route::put('/products/{product}', [\App\Http\Controllers\Seller\ProductController::class, 'update'])->name('seller.products.update');
+    Route::delete('/products/{product}', [\App\Http\Controllers\Seller\ProductController::class, 'destroy'])->name('seller.products.destroy');
+    // Categories
+    Route::get('/categories', [\App\Http\Controllers\Seller\CategoryController::class, 'index'])->name('seller.categories.index');
+    Route::get('/categories/create', [\App\Http\Controllers\Seller\CategoryController::class, 'create'])->name('seller.categories.create');
+    Route::post('/categories', [\App\Http\Controllers\Seller\CategoryController::class, 'store'])->name('seller.categories.store');
+    Route::get('/categories/{category}/edit', [\App\Http\Controllers\Seller\CategoryController::class, 'edit'])->name('seller.products.edit');
+    Route::put('/categories/{category}', [\App\Http\Controllers\Seller\CategoryController::class, 'update'])->name('seller.products.update');
+    Route::delete('/categories/{category}', [\App\Http\Controllers\Seller\CategoryController::class, 'destroy'])->name('seller.products.destroy');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {

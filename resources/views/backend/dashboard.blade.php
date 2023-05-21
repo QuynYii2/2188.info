@@ -1,5 +1,7 @@
-@extends('layouts.admin')
+@extends('layouts.master')
+
+@section('title', 'Dashboard')
 
 @section('content')
-    <!-- Nội dung trang dashboard -->
+    <p>Trang Admin</p>
 @endsection
