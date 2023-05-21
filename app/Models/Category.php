@@ -40,4 +40,9 @@ class Category extends Model
     {
         $this->setParentIdAttribute($value);
     }
+
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
 }
