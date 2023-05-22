@@ -8,8 +8,11 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function detail_product(Request $request) {
+    public function detail_product(Request $request, $id) {
         (new HomeController())->getLocale($request);
-        return view('frontend/pages/detail-product');
+        $product = Product::find($id);
+        return view('frontend/pages/detail-product',[
+            'product' => $product
+        ]);
     }
 }
