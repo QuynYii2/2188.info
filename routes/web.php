@@ -55,6 +55,16 @@ Route::group(['middleware' => 'role.admin'], function () {
 });
 
 Route::group(['middleware' => 'role.seller'], function () {
+
+    Route::get('/attributes', [\App\Http\Controllers\Seller\AttributeController::class, 'index'])->name('attributes.index');
+
+    Route::get('/attributes/create', [\App\Http\Controllers\Seller\AttributeController::class, 'create'])->name('attributes.create');
+    Route::post('/attributes', [\App\Http\Controllers\Seller\AttributeController::class, 'store'])->name('attributes.store');
+
+    Route::get('/variations/create', [\App\Http\Controllers\Seller\VariationController::class, 'create'])->name('variations.create');
+    Route::post('/variations', [\App\Http\Controllers\Seller\VariationController::class, 'store'])->name('variations.store');
+
+
     Route::get('/products', [\App\Http\Controllers\Seller\ProductController::class, 'index'])->name('seller.products.index');
     Route::get('/products/create', [\App\Http\Controllers\Seller\ProductController::class, 'create'])->name('seller.products.create');
     Route::post('/products', [\App\Http\Controllers\Seller\ProductController::class, 'store'])->name('seller.products.store');
@@ -66,9 +76,9 @@ Route::group(['middleware' => 'role.seller'], function () {
     Route::get('/categories', [\App\Http\Controllers\Seller\CategoryController::class, 'index'])->name('seller.categories.index');
     Route::get('/categories/create', [\App\Http\Controllers\Seller\CategoryController::class, 'create'])->name('seller.categories.create');
     Route::post('/categories', [\App\Http\Controllers\Seller\CategoryController::class, 'store'])->name('seller.categories.store');
-    Route::get('/categories/{category}/edit', [\App\Http\Controllers\Seller\CategoryController::class, 'edit'])->name('seller.products.edit');
-    Route::put('/categories/{category}', [\App\Http\Controllers\Seller\CategoryController::class, 'update'])->name('seller.products.update');
-    Route::delete('/categories/{category}', [\App\Http\Controllers\Seller\CategoryController::class, 'destroy'])->name('seller.products.destroy');
+    Route::get('/categories/{category}/edit', [\App\Http\Controllers\Seller\CategoryController::class, 'edit'])->name('seller.categories.edit');
+    Route::put('/categories/{category}', [\App\Http\Controllers\Seller\CategoryController::class, 'update'])->name('seller.categories.update');
+    Route::delete('/categories/{category}', [\App\Http\Controllers\Seller\CategoryController::class, 'destroy'])->name('seller.categories.destroy');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {

@@ -11,7 +11,7 @@
             @endif
         </div>
         <div class="card-body">
-            <form action="{{ route('seller.products.update', $category->id) }}" method="POST">
+            <form action="{{ route('seller.categories.update', $category->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
