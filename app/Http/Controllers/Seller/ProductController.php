@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Variation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -31,8 +33,11 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $attributes = Attribute::all();
+
         return view('backend/products/create', [
-            'categories' => $categories
+            'categories' => $categories,
+            'attributes' => $attributes
         ]);
     }
 

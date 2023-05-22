@@ -31,6 +31,17 @@
                 @endforeach
             </select>
         </div>
+        @foreach($attributes as $attribute)
+
+            <div class="form-group">
+                <label for="variations">{{ $attribute->name }}:</label>
+                <select class="form-control" name="variations[]" id="variations" multiple>
+                    @foreach($attribute->variations as $variation)
+                        <option value="{{ $variation->id }}">{{ $variation->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        @endforeach
 
         <div>
             <label for="thumbnail">Ảnh đại diện:</label>
