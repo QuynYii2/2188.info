@@ -82,6 +82,11 @@
                 <form action="{{ route('seller.products.store') }}" method="POST" enctype="multipart/form-data"
                       class="form-horizontal" role="form">
                     @csrf
+                    @if (session('success_update_product'))
+                        <div class="alert alert-success">
+                            {{ session('error_create_product') }}
+                        </div>
+                    @endif
 
                     <div class="form-group">
                         <label for="name" class="col-sm-3 control-label">Tên sản phẩm</label>
@@ -104,9 +109,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="more-description" class="col-sm-3 control-label">Mô tả chi tiết</label>
+                        <label for="description"  class="col-sm-3 control-label">Mô tả chi tiết</label>
                         <div class="col-sm-12">
-                            <textarea class="form-control"></textarea>
+                            <textarea class="form-control" name="description" required></textarea>
                         </div>
                     </div>
                     <div class="form-group ">
@@ -114,7 +119,7 @@
 
                         <div class="col-sm-3 d-inline-block">
                             <label class="control-label small" for="date_start">Giá bán</label>
-                            <input type="text" class="form-control" name="qty" id="qty" placeholder="Nhập giá bán">
+                            <input type="text" class="form-control" required name="price" id="price" placeholder="Nhập giá bán">
 
                         </div>
                         <div class="col-sm-3 d-inline-block">
@@ -125,6 +130,26 @@
                         </div>
 
                     </div>
+
+                    <div>
+                        <label for="category">Chuyên mục:</label>
+                        <select id="category" name="category_id" required>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @foreach($attributes as $attribute)
+
+                        <div class="form-group">
+                            <label for="variations">{{ $attribute->name }}:</label>
+                            <select class="form-control" name="variations[]" id="variations" multiple>
+                                @foreach($attribute->variations as $variation)
+                                    <option value="{{ $variation->id }}">{{ $variation->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endforeach
 
                     <div class="form-group">
                         <label for="category" class="col-sm-3 control-label">Danh mục sản phẩm</label>
@@ -168,6 +193,17 @@
                             <input type="checkbox">
                         </div>
                     </div>
+
+                    <div>
+                        <label for="thumbnail">Ảnh đại diện:</label>
+                        <input type="file" id="thumbnail" name="thumbnail" accept="image/*" required>
+                    </div>
+
+                    <div>
+                        <label for="gallery">Thư viện ảnh:</label>
+                        <input type="file" id="gallery" name="gallery[]" accept="image/*" multiple>
+                    </div>
+
                     <div class="form-group">
                         <label for="images" class="col-sm-3 control-label">Ảnh sản phẩm</label>
                         <br>

@@ -29,10 +29,10 @@ Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])-
 
 Route::get('/register/', [\App\Http\Controllers\Frontend\HomeController::class, 'register'])->name('register.store');
 
-//Route::middleware('auth.product')->group(function () {
-//    // Các tuyến đường sản phẩm ở đây
-//    Route::get('/products/{id}', 'ProductController@show')->name('product.show');
-//});
+Route::middleware('auth.product')->group(function () {
+    // Các tuyến đường sản phẩm ở đây
+    Route::get('/product/{id}', 'ProductController@show')->name('product.show');
+});
 
 Route::get('/info/', [\App\Http\Controllers\ProfileController::class, 'info']);
 Route::get('/my-notification/', [\App\Http\Controllers\ProfileController::class, 'my_notification']);
@@ -55,6 +55,16 @@ Route::group(['middleware' => 'role.admin'], function () {
 });
 
 Route::group(['middleware' => 'role.seller'], function () {
+
+    Route::get('/attributes', [\App\Http\Controllers\Seller\AttributeController::class, 'index'])->name('attributes.index');
+
+    Route::get('/attributes/create', [\App\Http\Controllers\Seller\AttributeController::class, 'create'])->name('attributes.create');
+    Route::post('/attributes', [\App\Http\Controllers\Seller\AttributeController::class, 'store'])->name('attributes.store');
+
+    Route::get('/variations/create', [\App\Http\Controllers\Seller\VariationController::class, 'create'])->name('variations.create');
+    Route::post('/variations', [\App\Http\Controllers\Seller\VariationController::class, 'store'])->name('variations.store');
+
+
     Route::get('/products', [\App\Http\Controllers\Seller\ProductController::class, 'index'])->name('seller.products.index');
     Route::get('/products/create', [\App\Http\Controllers\Seller\ProductController::class, 'create'])->name('seller.products.create');
     Route::post('/products', [\App\Http\Controllers\Seller\ProductController::class, 'store'])->name('seller.products.store');
@@ -66,9 +76,9 @@ Route::group(['middleware' => 'role.seller'], function () {
     Route::get('/categories', [\App\Http\Controllers\Seller\CategoryController::class, 'index'])->name('seller.categories.index');
     Route::get('/categories/create', [\App\Http\Controllers\Seller\CategoryController::class, 'create'])->name('seller.categories.create');
     Route::post('/categories', [\App\Http\Controllers\Seller\CategoryController::class, 'store'])->name('seller.categories.store');
-    Route::get('/categories/{category}/edit', [\App\Http\Controllers\Seller\CategoryController::class, 'edit'])->name('seller.products.edit');
-    Route::put('/categories/{category}', [\App\Http\Controllers\Seller\CategoryController::class, 'update'])->name('seller.products.update');
-    Route::delete('/categories/{category}', [\App\Http\Controllers\Seller\CategoryController::class, 'destroy'])->name('seller.products.destroy');
+    Route::get('/categories/{category}/edit', [\App\Http\Controllers\Seller\CategoryController::class, 'edit'])->name('seller.categories.edit');
+    Route::put('/categories/{category}', [\App\Http\Controllers\Seller\CategoryController::class, 'update'])->name('seller.categories.update');
+    Route::delete('/categories/{category}', [\App\Http\Controllers\Seller\CategoryController::class, 'destroy'])->name('seller.categories.destroy');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {
@@ -77,3 +87,12 @@ Route::group(['middleware' => 'role.buyer'], function () {
     Route::get('/buyer/orders', 'BuyerController@orders');
     // ...
 });
+
+Route::post('/add-to-cart/{product}', [\App\Http\Controllers\Frontend\CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart', 'CartController@index')->name('cart.index');
+Route::patch('/cart/{product}', 'CartController@update')->name('cart.update');
+Route::delete('/cart/{product}', 'CartController@remove')->name('cart.remove');
+Route::delete('/cart', 'CartController@clearCart')->name('cart.clear');
+Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
+
+

@@ -83,15 +83,11 @@
                             <td>Mô tả</td>
                             <td>10</td>
                             <td>
-                                <a href="{{ route('seller.products.edit', $category->id) }}"
-                                   class="btn btn-primary">Sửa</a>
-                                <form action="{{ route('seller.products.destroy', $category->id) }}" method="POST"
-                                      style="display: inline-block">
+                                <a href="{{ route('seller.categories.edit', $category->id) }}" class="btn btn-primary">Sửa</a>
+                                <form action="{{ route('seller.categories.destroy', $category->id) }}" method="POST" style="display: inline-block">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger"
-                                            onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa
-                                    </button>
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</button>
                                 </form>
                             </td>
                         </tr>

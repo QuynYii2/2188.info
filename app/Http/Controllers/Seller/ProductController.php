@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Variation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -31,8 +33,11 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $attributes = Attribute::all();
+
         return view('backend/products/create', [
-            'categories' => $categories
+            'categories' => $categories,
+            'attributes' => $attributes
         ]);
     }
 
@@ -71,7 +76,14 @@ class ProductController extends Controller
         $product->gallery = $galleryString;
         $product->user_id = $userInfo->id;
         $product->location = $userInfo->region;
-        $product->save();
+        $createProduct = $product->save();
+        if ($createProduct) {
+            $request->session()->flash('success_create_product', 'Tạo mới sản phẩm thành công.');
+            return redirect()->route('seller.products.index')->with('success', 'Category đã được cập nhật thành công!');
+        } else{
+            $request->session()->flash('error_create_product', 'Tạo mới sản phẩm không thành công.');
+            return redirect()->route('seller.products.edit');
+        }
     }
 
     /**
@@ -93,7 +105,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $categories = Category::all();
+        return view('backend.products.edit', compact('product', 'categories'));
     }
 
     /**
@@ -105,7 +119,38 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        $product->name = $request->input('name');
+        $product->price = $request->input('price');
+        $product->category_id = $request->input('category_id');
+
+        if ($request->hasFile('thumbnail')) {
+            $thumbnail = $request->file('thumbnail');
+            $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+            $product->thumbnail = $thumbnailPath;
+        }
+
+        if ($request->hasFile('gallery')) {
+            $gallery = $request->file('gallery');
+            $galleryPaths = [];
+            foreach ($gallery as $image) {
+                $galleryPath = $image->store('gallery', 'public');
+                $galleryPaths[] = $galleryPath;
+            }
+            $product->gallery = $galleryPaths;
+        }
+
+        $updateProduct = $product->save();
+
+        if ($updateProduct) {
+            $request->session()->flash('success_update_product', 'Cập nhật thành công.');
+            return redirect()->route('seller.products.index')->with('success', 'Category đã được cập nhật thành công!');
+        } else{
+            $request->session()->flash('error_update_product', 'Cập nhật không thành công.');
+            return redirect()->route('seller.products.edit');
+        }
+
     }
 
     /**

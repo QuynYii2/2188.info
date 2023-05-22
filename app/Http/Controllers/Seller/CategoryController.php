@@ -103,7 +103,7 @@ class CategoryController extends Controller
             return redirect()->route('seller.categories.index')->with('success', 'Category đã được cập nhật thành công!');
         } else{
             $request->session()->flash('error_update_cat', 'Cập nhật không thành công.');
-            return redirect()->route('seller.products.edit');
+            return redirect()->route('seller.categories.edit');
         }
     }
 

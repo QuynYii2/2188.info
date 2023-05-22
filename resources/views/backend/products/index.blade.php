@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
             <h5 class="card-title">Danh sách sản phẩm</h5>
-            <a href="{{ route('seller.categories.create') }}" class="btn btn-primary">Thêm mới</a>
+            <a href="{{ route('seller.products.create') }}" class="btn btn-primary">Thêm mới</a>
             @if (session('success_update_product'))
                 <div class="alert alert-success">
                     {{ session('success_update_product') }}
