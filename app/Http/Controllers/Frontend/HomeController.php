@@ -65,7 +65,26 @@ class HomeController extends Controller
     public function shop() {
         return view('frontend/pages/product-list');
     }
-    public function register() {
+    public function register(Request $request) {
+        $this->getLocale($request);
         return view('frontend/pages/register');
+    }
+
+    public function getLocale(Request $request){
+        $locale = '';
+        if ($request->session()->has('locale')) {
+            $locale = $request->session()->get('locale');
+            app()->setLocale($request->session()->get('locale'));
+        } else {
+            $ipAddress = $request->ip();
+            $geoIp = new GeoIP();
+            $locale = $geoIp->get_country_from_ip('183.80.130.4');
+            if ($locale !== null && is_array($locale)) {
+                $locale = $locale['countryCode'];
+            } else {
+                $locale = 'vi';
+            }
+        }
+        app()->setLocale($locale);
     }
 }
