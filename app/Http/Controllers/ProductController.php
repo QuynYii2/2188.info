@@ -12,13 +12,15 @@ class ProductController extends Controller
 {
     public function detail_product(Request $request, $id) {
         (new HomeController())->getLocale($request);
-        $products = Product::find($id);
+
+        $product = Product::find($id);
         $result = EvaluateProduct::where([
-            ['product_id', '=', $products->id],
+            ['product_id', '=', $product->id],
             ['status','=', EvaluateProductStatus::APPROVED]
         ])->get();
         return view('frontend/pages/detail-product', [
-            'result' => $result
+            'result' => $result,
+            'product' => $product
         ]);
     }
 }

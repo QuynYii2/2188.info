@@ -29,10 +29,10 @@ Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])-
 
 Route::get('/register/', [\App\Http\Controllers\Frontend\HomeController::class, 'register'])->name('register.store');
 
-//Route::middleware('auth.product')->group(function () {
-//    // Các tuyến đường sản phẩm ở đây
-//    Route::get('/products/{id}', 'ProductController@show')->name('product.show');
-//});
+Route::middleware('auth.product')->group(function () {
+    // Các tuyến đường sản phẩm ở đây
+    Route::get('/product/{id}', 'ProductController@show')->name('product.show');
+});
 
 Route::get('/info/', [\App\Http\Controllers\ProfileController::class, 'info']);
 Route::get('/my-notification/', [\App\Http\Controllers\ProfileController::class, 'my_notification']);
@@ -44,7 +44,7 @@ Route::get('/product-evaluation/', [\App\Http\Controllers\ProfileController::cla
 Route::get('/favorite-product/', [\App\Http\Controllers\ProfileController::class, 'favorite_product']);
 Route::get('/product-viewed/', [\App\Http\Controllers\ProfileController::class, 'product_viewed']);
 Route::get('/my-review/', [\App\Http\Controllers\ProfileController::class, 'my_review']);
-//Route::get('/category/{id}', [\App\Http\Controllers\CategoryController::class, 'category'])->name('category.show');
+Route::get('/category/{id}', [\App\Http\Controllers\CategoryController::class, 'category'])->name('category.show');
 Route::get('/detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
 
 // Đánh giá sản phẩm
@@ -91,4 +91,9 @@ Route::group(['middleware' => 'role.buyer'], function () {
     // ...
 });
 
-//Route::get('',[\App\Http\Controllers\ProductController::class, 'detail_product'])->name('test');
+Route::post('/add-to-cart/{product}', [\App\Http\Controllers\Frontend\CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart', 'CartController@index')->name('cart.index');
+Route::patch('/cart/{product}', 'CartController@update')->name('cart.update');
+Route::delete('/cart/{product}', 'CartController@remove')->name('cart.remove');
+Route::delete('/cart', 'CartController@clearCart')->name('cart.clear');
+Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');

@@ -141,9 +141,13 @@
                             <button type="button" class="btn">
                                 {{ __('home.installment by card') }}
                             </button>
-                            <button type="button" class="btn mt-2"><i class="fas fa-shopping-cart"></i>
-                                {{ __('home.buy now') }}
-                            </button>
+
+                            <form action="{{ route('cart.add', $product) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="button btn mt-2"><i class="fas fa-shopping-cart"></i>
+                                    {{ __('home.buy now') }}
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
