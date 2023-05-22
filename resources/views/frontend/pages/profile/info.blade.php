@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <form>
-                    <div class="row  align-items-center">
+                    <div class="row align-items-center">
                         <div class="col-auto">
                             <div class="avatar-upload">
                                 <div class="avatar-edit">
