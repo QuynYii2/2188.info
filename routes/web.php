@@ -44,7 +44,7 @@ Route::get('/product-evaluation/', [\App\Http\Controllers\ProfileController::cla
 Route::get('/favorite-product/', [\App\Http\Controllers\ProfileController::class, 'favorite_product']);
 Route::get('/product-viewed/', [\App\Http\Controllers\ProfileController::class, 'product_viewed']);
 Route::get('/my-review/', [\App\Http\Controllers\ProfileController::class, 'my_review']);
-//Route::get('/category/{id}', [\App\Http\Controllers\CategoryController::class, 'category'])->name('category.show');
+Route::get('/category/{id}', [\App\Http\Controllers\CategoryController::class, 'category'])->name('category.show');
 Route::get('/detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
 
 

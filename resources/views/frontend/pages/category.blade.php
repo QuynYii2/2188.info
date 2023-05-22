@@ -27,7 +27,7 @@
         </div>
 
         <div class="bg-white mt-3">
-            <h3 class="ml-3">Hãng</h3>
+            <h3 class="ml-3">{{ __('home.brands') }}</h3>
             <table class="table table-bordered ">
 
                 <tr>
@@ -145,14 +145,14 @@
                                 <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true"
                                    class="">
                                     <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">Product type</h6>
+                                    <h6 class="title">{{ __('home.product type') }}</h6>
                                 </a>
                             </header>
                             <div class="filter-content collapse show" id="collapse_1" style="">
                                 <div class="card-body">
                                     <form class="pb-3">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Search">
+                                            <input type="text" class="form-control" placeholder="{{ __('home.search') }}">
                                             <div class="input-group-append">
                                                 <button class="btn btn-light" type="button"><i class="fa fa-search"></i>
                                                 </button>
@@ -161,13 +161,12 @@
                                     </form>
 
                                     <ul class="list-menu">
-                                        <li><a href="#">People </a></li>
-                                        <li><a href="#">Watches </a></li>
-                                        <li><a href="#">Cinema </a></li>
-                                        <li><a href="#">Clothes </a></li>
-                                        <li><a href="#">Home items </a></li>
-                                        <li><a href="#">Animals</a></li>
-                                        <li><a href="#">People </a></li>
+                                        <li><a href="#">{{ __('home.people') }}</a></li>
+                                        <li><a href="#">{{ __('home.watches') }}</a></li>
+                                        <li><a href="#">{{ __('home.cinema') }}</a></li>
+                                        <li><a href="#">{{ __('home.clothes') }}</a></li>
+                                        <li><a href="#">{{ __('home.home items') }}</a></li>
+                                        <li><a href="#">{{ __('home.animals') }}</a></li>
                                     </ul>
 
                                 </div> <!-- card-body.// -->
@@ -178,7 +177,7 @@
                                 <a href="#" data-toggle="collapse" data-target="#collapse_2" aria-expanded="true"
                                    class="">
                                     <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">Brands </h6>
+                                    <h6 class="title">{{ __('home.brands') }}</h6>
                                 </a>
                             </header>
                             <div class="filter-content collapse show" id="collapse_2" style="">
@@ -216,7 +215,7 @@
                                 <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true"
                                    class="">
                                     <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">Price range </h6>
+                                    <h6 class="title">{{ __('home.price range') }}</h6>
                                 </a>
                             </header>
                             <div class="filter-content collapse show" id="collapse_3" style="">
@@ -224,15 +223,15 @@
                                     <input type="range" class="custom-range" min="0" max="100" name="">
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label>Min</label>
+                                            <label>{{ __('home.min') }}</label>
                                             <input class="form-control" placeholder="$0" type="number">
                                         </div>
                                         <div class="form-group text-right col-md-6">
-                                            <label>Max</label>
+                                            <label>{{ __('home.max') }}</label>
                                             <input class="form-control" placeholder="$1,0000" type="number">
                                         </div>
                                     </div> <!-- form-row.// -->
-                                    <button class="btn btn-block btn-primary">Apply</button>
+                                    <button class="btn btn-block btn-primary">{{ __('home.apply') }}</button>
                                 </div><!-- card-body.// -->
                             </div>
                         </article> <!-- filter-group .// -->
@@ -241,7 +240,7 @@
                                 <a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true"
                                    class="">
                                     <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">Sizes </h6>
+                                    <h6 class="title">{{ __('home.size') }}</h6>
                                 </a>
                             </header>
                             <div class="filter-content collapse show" id="collapse_4" style="">
@@ -273,7 +272,7 @@
                                 <a href="#" data-toggle="collapse" data-target="#collapse_5" aria-expanded="false"
                                    class="">
                                     <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">More filter </h6>
+                                    <h6 class="title">{{ __('home.more filter') }}</h6>
                                 </a>
                             </header>
                             <div class="filter-content collapse in" id="collapse_5" style="">
@@ -281,22 +280,22 @@
                                     <label class="custom-control custom-radio">
                                         <input type="radio" name="myfilter_radio" checked=""
                                                class="custom-control-input">
-                                        <div class="custom-control-label">Any condition</div>
+                                        <div class="custom-control-label">{{ __('home.any condition') }}</div>
                                     </label>
 
                                     <label class="custom-control custom-radio">
                                         <input type="radio" name="myfilter_radio" class="custom-control-input">
-                                        <div class="custom-control-label">Brand new</div>
+                                        <div class="custom-control-label">{{ __('home.brand new') }}</div>
                                     </label>
 
                                     <label class="custom-control custom-radio">
                                         <input type="radio" name="myfilter_radio" class="custom-control-input">
-                                        <div class="custom-control-label">Used items</div>
+                                        <div class="custom-control-label">{{ __('home.used items') }}</div>
                                     </label>
 
                                     <label class="custom-control custom-radio">
                                         <input type="radio" name="myfilter_radio" class="custom-control-input">
-                                        <div class="custom-control-label">Very old</div>
+                                        <div class="custom-control-label">{{ __('home.very old') }}</div>
                                     </label>
                                 </div><!-- card-body.// -->
                             </div>
@@ -308,12 +307,12 @@
 
                     <header class=" border-bottom mb-4 pb-3 ">
                         <div class="form-inline">
-                            <span class="mr-md-auto">32 Items found </span>
+                            <span class="mr-md-auto">32 {{ __('home.items found') }}</span>
                             <select class="form-control">
-                                <option>Latest items</option>
-                                <option>Trending</option>
-                                <option>Most Popular</option>
-                                <option>Cheapest</option>
+                                <option>{{ __('home.latest items') }}</option>
+                                <option>{{ __('home.trending') }}</option>
+                                <option>{{ __('home.most popular') }}</option>
+                                <option>{{ __('home.cheapest') }}</option>
                             </select>
                         </div>
                     </header>
@@ -567,11 +566,11 @@
 
                     <nav class="mt-4 d-flex justify-content-center" aria-label="Page navigation sample">
                         <ul class="pagination">
-                            <li class="page-item disabled"><a class="page-link" href="#!">Previous</a></li>
+                            <li class="page-item disabled"><a class="page-link" href="#!">{{ __('home.previous') }}</a></li>
                             <li class="page-item active"><a class="page-link" href="#!">1</a></li>
                             <li class="page-item"><a class="page-link" href="#!">2</a></li>
                             <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">Next</a></li>
+                            <li class="page-item"><a class="page-link" href="#!">{{ __('home.next') }}</a></li>
                         </ul>
                     </nav>
 
