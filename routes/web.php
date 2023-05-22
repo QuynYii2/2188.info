@@ -47,6 +47,9 @@ Route::get('/my-review/', [\App\Http\Controllers\ProfileController::class, 'my_r
 //Route::get('/category/{id}', [\App\Http\Controllers\CategoryController::class, 'category'])->name('category.show');
 Route::get('/detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
 
+// Đánh giá sản phẩm
+Route::post('/evaluate', [\App\Http\Controllers\EvaluateProductController::class, 'store'])->name('create.evaluate');
+
 
 Route::group(['middleware' => 'role.admin'], function () {
     // Các route dành cho super admin
@@ -87,3 +90,5 @@ Route::group(['middleware' => 'role.buyer'], function () {
     Route::get('/buyer/orders', 'BuyerController@orders');
     // ...
 });
+
+//Route::get('',[\App\Http\Controllers\ProductController::class, 'detail_product'])->name('test');

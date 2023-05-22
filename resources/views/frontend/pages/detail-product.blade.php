@@ -302,36 +302,42 @@
                             <div class="card mb-4">
                                 <div class="card-body">
                                     <div class="">{{ __('home.write a read') }}</div>
-                                    <form>
+                                    <form method="post" action="{{route('create.evaluate')}}">
+                                        @csrf
+                                        <input type="text" class="form-control" id="product_id" name="product_id"
+                                               hidden/>
                                         <div class="rating">
-                                            <input type="radio" name="rating" id="star1">
+                                            <input type="radio" name="star_number" id="star1" value="5">
                                             <label for="star1"><i class="fas fa-star"></i></label>
-                                            <input type="radio" name="rating" id="star2">
+                                            <input type="radio" name="star_number" id="star2" value="4">
                                             <label for="star2"><i class="fas fa-star"></i></label>
-                                            <input type="radio" name="rating" id="star3">
+                                            <input type="radio" name="star_number" id="star3" value="3">
                                             <label for="star3"><i class="fas fa-star"></i></label>
-                                            <input type="radio" name="rating" id="star4">
+                                            <input type="radio" name="star_number" id="star4" value="2">
                                             <label for="star4"><i class="fas fa-star"></i></label>
-                                            <input type="radio" name="rating" id="star5">
+                                            <input type="radio" name="star_number" id="star5" value="1">
                                             <label for="star5"><i class="fas fa-star"></i></label>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="" class="col-sm-12 col-form-label">{{ __('home.your name') }}</label>
+                                            <label for=""
+                                                   class="col-sm-12 col-form-label">{{ __('home.your name') }}</label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" id="" name=""
-                                                       placeholder="{{ __('home.your name') }}"/>
+                                                <input type="text" class="form-control" id="" name="username"
+                                                       placeholder="{{ __('home.your name') }}" required/>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="" class="col-sm-12 col-form-label">{{ __('home.your review') }}</label>
+                                            <label for=""
+                                                   class="col-sm-12 col-form-label">{{ __('home.your review') }}</label>
                                             <div class="col-sm-12">
-                                            <textarea class="form-control" id="" name="" placeholder="{{ __('home.your review') }}"
-                                                      rows="3"></textarea>
+                                            <textarea class="form-control" id="" name="content"
+                                                      placeholder="{{ __('home.your review') }}"
+                                                      rows="3" required></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <input class="btn btn-primary" type="submit" value="Submit">
+                                            <button class="btn btn-primary" type="submit">Submit</button>
                                         </div>
                                     </form>
                                 </div>
@@ -340,95 +346,93 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="card-header">{{ __('home.write a review') }}</div>
-                                    <table class="table table-bordered">
-                                        <tbody>
-                                        <tr>
-                                            <td colspan="2">
-                                                <strong>Ilea Heidemann</strong>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <p>Quaerat et sit sequi unde nostrum, accusantium accusamus ad placeat.
-                                                    Libero sit ut sit ut in consequuntur, sed recusandae esse; qui eum
-                                                    alias
-                                                    fuga ratione ut reiciendis commodi et laboriosam? Earum eveniet et
-                                                    neque
-                                                    est alias commodi voluptatem veniam est. Ad aut sit excepturi unde
-                                                    laudantium voluptatem reiciendis nostrum eos. Molestiae omnis
-                                                    consectetur, culpa in sed aliquam porro quas asperiores. Eum modi, a
-                                                    incidunt dolor ut molestiae aut accusamus aspernatur! Tenetur sed
-                                                    eveniet nesciunt, quam reprehenderit modi repellat quasi voluptatem.
-                                                    Sit
-                                                    quia nulla similique omnis in ipsa quasi ipsam consectetur!</p>
-                                                <p class="m-0">18/03/2013</p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <strong>{{ __('home.customer rating') }}: </strong>
-                                                <span class="fa fa-stack">
-												<i class="fas fa-star fa-stack-1x"></i>
-												<i class="far fa-star fa-stack-1x"></i>
-											</span>
-                                                <span class="fa fa-stack">
-												<i class="far fa-star fa-stack-1x"></i>
-											</span>
-                                                <span class="fa fa-stack">
-												<i class="far fa-star fa-stack-1x"></i>
-											</span>
-                                                <span class="fa fa-stack">
-												<i class="far fa-star fa-stack-1x"></i>
-											</span>
-                                                <span class="fa fa-stack">
-												<i class="far fa-star fa-stack-1x"></i>
-											</span>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <table class="table table-bordered">
-                                        <tbody>
-                                        <tr>
-                                            <td colspan="2">
-                                                <strong>Jelea lehwe</strong>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <p>Libero sit ut sit ut in consequuntur, sed recusandae esse; qui eum
-                                                    alias
-                                                    fuga ratione ut reiciendis commodi et laboriosam? Earum eveniet et
-                                                    neque
-                                                    est alias commodi voluptatem veniam est. Ad aut sit excepturi unde
-                                                    laudantium voluptatem reiciendis nostrum eos. Molestiae omnis
-                                                    consectetur, culpa in sed aliquam porro quas asperiores.</p>
-                                                <p class="m-0">18/03/2013</p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2">
-                                                <strong>{{ __('home.customer rating') }}: </strong>
-                                                <span class="fa fa-stack">
-												<i class="fas fa-star fa-stack-1x"></i>
-												<i class="far fa-star fa-stack-1x"></i>
-											</span>
-                                                <span class="fa fa-stack">
-												<i class="far fa-star fa-stack-1x"></i>
-											</span>
-                                                <span class="fa fa-stack">
-												<i class="far fa-star fa-stack-1x"></i>
-											</span>
-                                                <span class="fa fa-stack">
-												<i class="far fa-star fa-stack-1x"></i>
-											</span>
-                                                <span class="fa fa-stack">
-												<i class="far fa-star fa-stack-1x"></i>
-											</span>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                    @foreach($result as $res)
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <strong>{{$res->username}}</strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <p>{{$res->content}}</p>
+                                                    <p class="m-0">{{$res->created_at}}</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <strong>{{ __('home.customer rating') }}: </strong>
+                                                    @if($res->star_number == 1)
+                                                        <span class="fa fa-stack">
+                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                    </span>
+                                                        <span class="fa fa-stack"><i class="far fa-star fa-stack-1x"></i></span>
+                                                        <span class="fa fa-stack"><i class="far fa-star fa-stack-1x"></i></span>
+                                                        <span class="fa fa-stack"><i class="far fa-star fa-stack-1x"></i></span>
+                                                        <span class="fa fa-stack"><i class="far fa-star fa-stack-1x"></i></span>
+                                                    @endif
+                                                    @if($res->star_number == 2)
+                                                        <span class="fa fa-stack">
+                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                    </span>
+                                                        <span class="fa fa-stack">
+                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                    </span>
+                                                        <span class="fa fa-stack"><i class="far fa-star fa-stack-1x"></i></span>
+                                                        <span class="fa fa-stack"><i class="far fa-star fa-stack-1x"></i></span>
+                                                        <span class="fa fa-stack"><i class="far fa-star fa-stack-1x"></i></span>
+                                                    @endif
+                                                    @if($res->star_number == 3)
+                                                        <span class="fa fa-stack">
+                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                    </span>
+                                                        <span class="fa fa-stack">
+                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                    </span>
+                                                        <span class="fa fa-stack">
+                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                    </span>
+                                                        <span class="fa fa-stack"><i class="far fa-star fa-stack-1x"></i></span>
+                                                        <span class="fa fa-stack"><i class="far fa-star fa-stack-1x"></i></span>
+                                                    @endif
+                                                    @if($res->star_number == 4)
+                                                        <span class="fa fa-stack">
+                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                    </span>
+                                                        <span class="fa fa-stack">
+                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                    </span>
+                                                        <span class="fa fa-stack">
+                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                    </span>
+                                                        <span class="fa fa-stack">
+                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                    </span>
+                                                        <span class="fa fa-stack"><i class="far fa-star fa-stack-1x"></i></span>
+                                                    @endif
+                                                    @if($res->star_number == 5)
+                                                        <span class="fa fa-stack">
+                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                    </span>
+                                                        <span class="fa fa-stack">
+                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                    </span>
+                                                        <span class="fa fa-stack">
+                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                    </span>
+                                                        <span class="fa fa-stack">
+                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                    </span>
+                                                        <span class="fa fa-stack">
+                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                    </span>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -476,8 +480,11 @@
                                     <li><span class="text-bold">{{ __('home.condition') }}</span><br>
                                         {{ __('home.genuine product') }}
                                     </li>
-                                    <li><span class="text-bold">{{ __('home.box included') }}</span><br>{{ __('home.full accessories') }}</li>
-                                    <li><span class="text-bold">{{ __('home.warranty') }}</span><br>{{ __('home.warranty 1 month') }}
+                                    <li>
+                                        <span class="text-bold">{{ __('home.box included') }}</span><br>{{ __('home.full accessories') }}
+                                    </li>
+                                    <li>
+                                        <span class="text-bold">{{ __('home.warranty') }}</span><br>{{ __('home.warranty 1 month') }}
                                     </li>
                                 </ul>
                             </div>
@@ -826,6 +833,12 @@
                 moreLink.textContent = readLess;
             }
         }
+
+        let urlParams = window.location.href;
+        let myParam = urlParams.split('/');
+        let num = myParam.length;
+        console.log(myParam[num - 1]);
+        document.getElementById("product_id").value = myParam[num - 1];
 
     </script>
 @endsection
