@@ -152,7 +152,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center py-4 text-limit">
-                                    <a class="h6 text-decoration-none text-truncate" href="/detail/{{ $product->id }}}">{{ $product->name }}</a>
+                                    <a class="h6 text-decoration-none text-truncate" id="link-product" href="/detail/{{ $product->id }}">{{ $product->name }}</a>
                                     <div class="d-flex align-items-center justify-content-center mt-2">
                                         <h5>{{ convertCurrency($product->price, $countryCode) }}
                                         </h5><h6 class="text-muted ml-2"></h6>
