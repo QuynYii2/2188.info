@@ -3,7 +3,11 @@
 @section('content')
     <form action="{{ route('seller.products.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-
+        @if (session('success_update_product'))
+            <div class="alert alert-success">
+                {{ session('error_create_product') }}
+            </div>
+        @endif
         <div>
             <label for="name">Tên sản phẩm:</label>
             <input type="text" id="name" name="name" required>
