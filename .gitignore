@@ -140,3 +140,9 @@ fabric.properties
 .idea/**/azureSettings.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/laravel,phpstorm
+
+# MacOS ignore
+*.DS_Store
+#
+storage/.DS_Store
+.DS_Store

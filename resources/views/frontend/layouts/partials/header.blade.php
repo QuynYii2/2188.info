@@ -1,3 +1,4 @@
+@php use Illuminate\Support\Facades\Auth; @endphp
 <!-- Topbar Start -->
 <div class="container-fluid">
     <div class="row" style="background-color: #ff999a">
@@ -70,9 +71,9 @@
                 <div class="col-md-5 pr-5">
                     <div class="row align-items-center -align-right">
                         <div class="col-md-1"></div>
-                        @if (session('error'))
-                            {{ session('error') }}
-                        @endif
+{{--                        @if (session('error'))--}}
+{{--                            {{ session('error') }}--}}
+{{--                        @endif--}}
 
                         @if (session('login'))
                             <div class="col-md-6">
@@ -88,8 +89,8 @@
                                     <div class="col-md-8">
                                         <div class="dropdown d-flex align-items-center">
                                             <h4 data-toggle="dropdown" aria-expanded="false">
-                                                @if($infoUser)
-                                                    {{ $infoUser->name }}
+                                                @if(Auth::user())
+                                                    {{ Auth::user()->name }}
                                                 @endif
                                             </h4>
                                             <div class="dropdown-menu">
