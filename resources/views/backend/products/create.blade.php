@@ -69,18 +69,36 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
+
+
+        #pr-parameter .custom-scrollbar::-webkit-scrollbar, #cat-parameter .custom-scrollbar::-webkit-scrollbar{
+            width: 10px;
+            background-color: white; /* Màu nền của thanh cuộn */
+        }
+
+        #pr-parameter .custom-scrollbar::-webkit-scrollbar-thumb, #cat-parameter .custom-scrollbar::-webkit-scrollbar-thumb{
+            background-color: #888; /* Màu của thanh cuộn */
+            border-radius: 6px;
+        }
+
+        #pr-parameter .custom-scrollbar::-webkit-scrollbar-thumb:hover, #cat-parameter .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background-color: #555; /* Màu của thanh cuộn khi hover */
+        }
     </style>
+
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
 
     <div class="container">
 
-        <section class="panel panel-default">
+        <section class="panel panel-default ">
             <div class="panel-heading">
                 <h3 class="panel-title">Thêm mới sản phẩm</h3>
             </div>
-            <div class="panel-body">
+            <div class="panel-body row">
 
                 <form action="{{ route('seller.products.store') }}" method="POST" enctype="multipart/form-data"
-                      class="form-horizontal" role="form">
+                      class="form-horizontal row" role="form">
                     @csrf
                     @if (session('success_update_product'))
                         <div class="alert alert-success">
@@ -88,193 +106,256 @@
                         </div>
                     @endif
 
-                    <div class="form-group">
-                        <label for="name" class="col-sm-3 control-label">Tên sản phẩm</label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" name="name" id="name"
-                                   placeholder="Nhập tên sản phẩm">
+                    <div class="col-md-9 border-right">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-3 control-label">Tên sản phẩm</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" name="name" id="name"
+                                       placeholder="Nhập tên sản phẩm">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="col-sm-3 control-label">Mã sản phẩm</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" name="name" id="name"
+                                       placeholder="Nhập mã sản phẩm">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="less-description" class="col-sm-3 control-label">Mô tả ngắn</label>
+                            <div class="col-sm-12">
+                                <textarea id="tiny"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description"  class="col-sm-3 control-label">Mô tả chi tiết</label>
+                            <div class="col-sm-12">
+                                <textarea id="tiny" class="form-control" name="description" required></textarea>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="name" class="col-sm-3 control-label">Mã sản phẩm</label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" name="name" id="name"
-                                   placeholder="Nhập mã sản phẩm">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="less-description" class="col-sm-3 control-label">Mô tả ngắn</label>
-                        <div class="col-sm-12">
-                            <textarea class="form-control"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="description"  class="col-sm-3 control-label">Mô tả chi tiết</label>
-                        <div class="col-sm-12">
-                            <textarea class="form-control" name="description" required></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group ">
-                        <label class="col-sm-12 control-label">Giá sản phẩm</label>
+                    <div class="col-md-3">
+                        <div class="form-group ">
+                            <label class="col-sm-12 control-label">Giá sản phẩm</label>
 
-                        <div class="col-sm-3 d-inline-block">
-                            <label class="control-label small" for="date_start">Giá bán</label>
-                            <input type="text" class="form-control" required name="price" id="price" placeholder="Nhập giá bán">
+                            <div class="col-sm-12 d-inline-block">
+                                <label class="control-label small" for="date_start">Giá bán</label>
+                                <input type="text" class="form-control" required name="price" id="price" placeholder="Nhập giá bán">
+
+                            </div>
+                            <div class="col-sm-12 d-inline-block">
+                                <label class="control-label small" for="date_start">Giá khuyến mãi</label>
+                                <input type="text" class="form-control" name="qty" id="qty"
+                                       placeholder="Nhập giá khuyến mãi">
+
+                            </div>
 
                         </div>
-                        <div class="col-sm-3 d-inline-block">
-                            <label class="control-label small" for="date_start">Giá khuyến mãi</label>
-                            <input type="text" class="form-control" name="qty" id="qty"
-                                   placeholder="Nhập giá khuyến mãi">
-
-                        </div>
-
-                    </div>
-
-                    <div>
-                        <label for="category" class="col-sm-3 control-label">Chuyên mục:</label>
-                        <div class="col-sm-3">
-
-                        <select id="category" name="category_id" class="form-control" required>
-                            @foreach($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    </div>
-                    @foreach($attributes as $attribute)
 
                         <div class="form-group">
-                            <label for="variations">{{ $attribute->name }}:</label>
-                            <select class="form-control" name="variations[]" id="variations" multiple>
-                                @foreach($attribute->variations as $variation)
-                                    <option value="{{ $variation->id }}">{{ $variation->name }}</option>
-                                @endforeach
-                            </select>
+                            <label for="tech" class="col-sm-12 control-label">Mua trả góp</label>
+                            <div class="col-sm-12">
+                                <input type="checkbox">
+                            </div>
                         </div>
-                    @endforeach
 
-                    <div class="form-group ">
-                        <label class="col-sm-12 control-label">Thông số sản phẩm</label>
+                        <div class="form-group" id="cat-parameter">
+                            <label for="category" class="col-sm-12 control-label">Chuyên mục:</label>
+                            <div class="col-sm-12 overflow-scroll custom-scrollbar" style="height: 200px;">
 
-                        <div class="col-sm-3 d-inline-block">
-                            <label class="control-label small" for="date_start">Màu sắc</label>
-                            <select class="form-control">
-                                <option value="">Đỏ</option>
-                                <option value="texnolog2">Cam</option>
-                                <option value="texnolog3">Vàng</option>
-                            </select>
+{{--                                <select id="category" name="category_id" class="form-control" required>--}}
+{{--                                    @foreach($categories as $category)--}}
+{{--                                        <option value="{{ $category->id }}">{{ $category->name }}</option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+
+                                <ul id="category" class="list-unstyled">
+                                    @foreach($categories as $category)
+                                        <li>
+                                            <label>
+                                                <input type="radio" name="category_id" value="{{ $category->id }}" required>
+                                                {{ $category->name }}
+                                            </label>
+                                        </li>
+                                    @endforeach
+                                </ul>
+
+                            </div>
                         </div>
-                        <div class="col-sm-3 d-inline-block">
-                            <label class="control-label small" for="date_start">Size</label>
-                            <select class="form-control">
-                                <option value="">S</option>
-                                <option value="texnolog2">M</option>
-                                <option value="texnolog3">L</option>
-                            </select></div>
-                        <div class="col-sm-3 d-inline-block">
-                            <label class="control-label small" for="date_finish">Khối lượng</label>
-                            <input type="text" class="form-control" name="date_finish" id="date_finish"
-                                   placeholder="Khối lượng">
-                        </div>
-                    </div>
+                        @foreach($attributes as $attribute)
 
+                            <div class="form-group">
+                                <label for="variations">{{ $attribute->name }}:</label>
+                                <select class="form-control" name="variations[]" id="variations" multiple>
+                                    @foreach($attribute->variations as $variation)
+                                        <option value="{{ $variation->id }}">{{ $variation->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endforeach
 
-                    <div class="form-group">
-                        <label for="tech" class="col-sm-3 control-label">Mua trả góp</label>
-                        <div class="col-sm-3">
-                            <input type="checkbox">
-                        </div>
-                    </div>
+                        <div class="form-group" id="pr-parameter">
+                            <label class="col-md-12 control-label">Thông số sản phẩm</label>
+                            <label class="control-label small offset-2" for="color">Màu sắc</label>
 
-                    <div>
-                        <label for="thumbnail">Ảnh đại diện:</label>
-                        <input type="file" id="thumbnail" name="thumbnail" accept="image/*" required>
-                    </div>
-
-                    <div>
-                        <label for="gallery">Thư viện ảnh:</label>
-                        <input type="file" id="gallery" name="gallery[]" accept="image/*" multiple>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="images" class="col-sm-3 control-label">Ảnh sản phẩm</label>
-                        <br>
-                        <div class="container" id="upload-gallery-product">
-                            <div class="row">
-                                <div class="col-sm-2 imgUp">
-                                    <div class="imagePreview"></div>
-                                    <label class="btn btn-primary">
-                                        Upload<input type="file" class="uploadFile img" accept=".jpg, .png"
-                                                     value="Upload Photo"
-                                                     style="width: 0px;height: 0px;overflow: hidden;">
-                                    </label>
-                                </div><!-- col-2 -->
-                                <div class="imgAdd p-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                        <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                        <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/>
-                                    </svg>
-                                </div>
-                            </div><!-- row -->
-                        </div><!-- container -->
-
-                        <div class="form-group ">
-                            <label class="col-sm-12 control-label">Thông số sản phẩm</label>
-
-                            <div class="col-sm-3 d-inline-block">
-                                <label class="control-label small" for="date_start">Hình thức thanh toán</label>
-                                <input type="text" class="form-control"
-                                       onclick="showDropdown('payment-method', 'payment-dropdownList')"
-                                       placeholder="Chọn hình thức thanh toán" id="payment-method">
-                                <div class="dropdown-content" id="payment-dropdownList">
-                                    <label>
-                                        <input type="checkbox" value="option1"
-                                               onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
-                                        Nhận hàng thanh toán
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" value="option2"
-                                               onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
-                                        Thanh toán thẻ nội địa
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" value="option3"
-                                               onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
-                                        Thanh toán qua paypal
-                                    </label>
-                                </div>
+                            <div class="col-md-12 overflow-scroll custom-scrollbar" style="height: 150px;" >
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <label>
+                                            <input type="radio" name="color" value="" required>
+                                            Đỏ
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label>
+                                            <input type="radio" name="color" value="texnolog2">
+                                            Cam
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label>
+                                            <input type="radio" name="color" value="texnolog3">
+                                            Vàng
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label>
+                                            <input type="radio" name="color" value="texnolog3">
+                                            Tím
+                                        </label>
+                                    </li>
+                                </ul>
                             </div>
 
-                            <div class="col-sm-3 d-inline-block">
-                                <label class="control-label small" for="date_start">Hình thức vận chuyển</label>
-                                <input type="text" class="form-control"
-                                       onclick="showDropdown('transport-method', 'transport-dropdownList')"
-                                       placeholder="Chọn hình thức vận chuyển" id="transport-method">
-                                <div class="dropdown-content" id="transport-dropdownList">
-                                    <label>
-                                        <input type="checkbox" value="option1"
-                                               onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
-                                        Đường bộ
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" value="option2"
-                                               onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
-                                        Đường thủy
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" value="option3"
-                                               onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
-                                        Đường hàng không
-                                    </label>
-                                </div>
+                            <label class="control-label small offset-2" for="size">Size</label>
+                            <div class="col-md-12 overflow-scroll custom-scrollbar" style="height: 150px;">
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <label>
+                                            <input type="radio" name="size" value="" required>
+                                            S
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label>
+                                            <input type="radio" name="size" value="texnolog2">
+                                            M
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label>
+                                            <input type="radio" name="size" value="texnolog3">
+                                            L
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label>
+                                            <input type="radio" name="size" value="texnolog3">
+                                            XL
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="col-md-12" >
+                                <label class="control-label small" for="weight">Khối lượng</label>
+                                <input type="text" class="form-control" name="weight" id="weight" placeholder="Khối lượng">
                             </div>
 
                         </div>
 
-                        <hr>
+                        <div class="form-group">
+                            <label for="thumbnail">Ảnh đại diện:</label>
+                            <input type="file" id="thumbnail" name="thumbnail" accept="image/*" required>
+                        </div>
 
+                        <div class="form-group">
+                            <label for="gallery">Thư viện ảnh:</label>
+                            <input type="file" id="gallery" name="gallery[]" accept="image/*" multiple>
+                        </div>
                     </div>
+
+
+
+{{--                    <div class="form-group">--}}
+{{--                        <label for="images" class="col-sm-3 control-label">Ảnh sản phẩm</label>--}}
+{{--                        <br>--}}
+{{--                        <div class="container" id="upload-gallery-product">--}}
+{{--                            <div class="row">--}}
+{{--                                <div class="col-sm-2 imgUp">--}}
+{{--                                    <div class="imagePreview"></div>--}}
+{{--                                    <label class="btn btn-primary">--}}
+{{--                                        Upload<input type="file" class="uploadFile img" accept=".jpg, .png"--}}
+{{--                                                     value="Upload Photo"--}}
+{{--                                                     style="width: 0px;height: 0px;overflow: hidden;">--}}
+{{--                                    </label>--}}
+{{--                                </div><!-- col-2 -->--}}
+{{--                                <div class="imgAdd p-0">--}}
+{{--                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">--}}
+{{--                                        <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->--}}
+{{--                                        <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/>--}}
+{{--                                    </svg>--}}
+{{--                                </div>--}}
+{{--                            </div><!-- row -->--}}
+{{--                        </div><!-- container -->--}}
+
+{{--                        <div class="form-group ">--}}
+{{--                            <label class="col-sm-12 control-label">Thông số sản phẩm</label>--}}
+
+{{--                            <div class="col-sm-3 d-inline-block">--}}
+{{--                                <label class="control-label small" for="date_start">Hình thức thanh toán</label>--}}
+{{--                                <input type="text" class="form-control"--}}
+{{--                                       onclick="showDropdown('payment-method', 'payment-dropdownList')"--}}
+{{--                                       placeholder="Chọn hình thức thanh toán" id="payment-method">--}}
+{{--                                <div class="dropdown-content" id="payment-dropdownList">--}}
+{{--                                    <label>--}}
+{{--                                        <input type="checkbox" value="option1"--}}
+{{--                                               onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">--}}
+{{--                                        Nhận hàng thanh toán--}}
+{{--                                    </label>--}}
+{{--                                    <label>--}}
+{{--                                        <input type="checkbox" value="option2"--}}
+{{--                                               onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">--}}
+{{--                                        Thanh toán thẻ nội địa--}}
+{{--                                    </label>--}}
+{{--                                    <label>--}}
+{{--                                        <input type="checkbox" value="option3"--}}
+{{--                                               onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">--}}
+{{--                                        Thanh toán qua paypal--}}
+{{--                                    </label>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
+{{--                            <div class="col-sm-3 d-inline-block">--}}
+{{--                                <label class="control-label small" for="date_start">Hình thức vận chuyển</label>--}}
+{{--                                <input type="text" class="form-control"--}}
+{{--                                       onclick="showDropdown('transport-method', 'transport-dropdownList')"--}}
+{{--                                       placeholder="Chọn hình thức vận chuyển" id="transport-method">--}}
+{{--                                <div class="dropdown-content" id="transport-dropdownList">--}}
+{{--                                    <label>--}}
+{{--                                        <input type="checkbox" value="option1"--}}
+{{--                                               onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">--}}
+{{--                                        Đường bộ--}}
+{{--                                    </label>--}}
+{{--                                    <label>--}}
+{{--                                        <input type="checkbox" value="option2"--}}
+{{--                                               onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">--}}
+{{--                                        Đường thủy--}}
+{{--                                    </label>--}}
+{{--                                    <label>--}}
+{{--                                        <input type="checkbox" value="option3"--}}
+{{--                                               onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">--}}
+{{--                                        Đường hàng không--}}
+{{--                                    </label>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+
+{{--                        </div>--}}
+
+{{--                        <hr>--}}
+
+{{--                    </div>--}}
+
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-9">
                             <button type="submit" class="btn btn-primary">Gửi</button>
@@ -335,6 +416,18 @@
                 });
             selectedOptionsInput.value = selectedLabels.join(", ");
         }
+
+
+        tinymce.init({
+            selector: 'textarea#tiny',
+            plugins: [
+                'a11ychecker','advlist','advcode','advtable','autolink','checklist','export',
+                'lists','link','image','charmap','preview','anchor','searchreplace','visualblocks',
+                'powerpaste','fullscreen','formatpainter','insertdatetime','media','table','help','wordcount'
+            ],
+            toolbar: 'undo redo | a11ycheck casechange blocks | bold italic backcolor | alignleft aligncenter alignright alignjustify |' +
+                'bullist numlist checklist outdent indent | removeformat | code table help'
+        })
 
     </script>
 @endsection
