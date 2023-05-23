@@ -32,11 +32,20 @@
 
                     <div class="form-group">
                         <label for="parent">Status</label>
-                        <select class="form-control" id="status" name="status">
-                            <option value="">-- Select status --</option>
-                            <option value="{{\App\Enums\EvaluateProductStatus::APPROVED}}">{{\App\Enums\EvaluateProductStatus::APPROVED}}</option>
-                            <option value="{{\App\Enums\EvaluateProductStatus::PENDING}}">{{\App\Enums\EvaluateProductStatus::PENDING}}</option>
-                            <option value="{{\App\Enums\EvaluateProductStatus::REFUSE}}">{{\App\Enums\EvaluateProductStatus::REFUSE}}</option>
+                        <select class="form-select" id="status" name="status">
+                            @if($evaluate->status == \App\Enums\EvaluateProductStatus::APPROVED)
+                                <option value="{{\App\Enums\EvaluateProductStatus::APPROVED}}">{{\App\Enums\EvaluateProductStatus::APPROVED}}</option>
+                                <option value="{{\App\Enums\EvaluateProductStatus::PENDING}}">{{\App\Enums\EvaluateProductStatus::PENDING}}</option>
+                                <option value="{{\App\Enums\EvaluateProductStatus::REFUSE}}">{{\App\Enums\EvaluateProductStatus::REFUSE}}</option>
+                            @elseif($evaluate->status == \App\Enums\EvaluateProductStatus::PENDING)
+                                <option value="{{\App\Enums\EvaluateProductStatus::PENDING}}">{{\App\Enums\EvaluateProductStatus::PENDING}}</option>
+                                <option value="{{\App\Enums\EvaluateProductStatus::APPROVED}}">{{\App\Enums\EvaluateProductStatus::APPROVED}}</option>
+                                <option value="{{\App\Enums\EvaluateProductStatus::REFUSE}}">{{\App\Enums\EvaluateProductStatus::REFUSE}}</option>
+                            @else
+                                <option value="{{\App\Enums\EvaluateProductStatus::REFUSE}}">{{\App\Enums\EvaluateProductStatus::REFUSE}}</option>
+                                <option value="{{\App\Enums\EvaluateProductStatus::APPROVED}}">{{\App\Enums\EvaluateProductStatus::APPROVED}}</option>
+                                <option value="{{\App\Enums\EvaluateProductStatus::PENDING}}">{{\App\Enums\EvaluateProductStatus::PENDING}}</option>
+                            @endif
                         </select>
                     </div>
 
