@@ -23,18 +23,18 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="name" class="col-sm-12 control-label">Đường dẫn</label>
+                        <label for="slug" class="col-sm-12 control-label">Đường dẫn</label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" name="name" id="name"
+                            <input type="text" class="form-control" name="slug" id="slug"
                                    placeholder="Nhập tên sản phẩm">
                             <small>"slug" là đường dẫn thân thiện của tên. Nó thường chỉ bao gồm kí tự viết thường, số
                                 và dấu gạch ngangm không dùng tiếng Việt</small>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="name" class="col-sm-12 control-label">Chuyên mục cha</label>
+                        <label for="parent_id" class="col-sm-12 control-label">Chuyên mục cha</label>
                         <div class="col-sm-12">
-                            <select class="form-control">
+                            <select class="form-control" name="parent_id" id="parent_id">
                                 <option value="">Trống</option>
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -44,9 +44,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="name" class="col-sm-12 control-label">Mô tả</label>
+                        <label for="description" class="col-sm-12 control-label">Mô tả</label>
                         <div class="col-sm-12">
-                        <textarea type="text" class="form-control" name="name" id="name"
+                        <textarea type="text" class="form-control" name="description" id="description"
                                   placeholder="Nhập tên sản phẩm"></textarea>
                             <small>The description is not prominent by default; however, some themes may show
                                 it.</small>
