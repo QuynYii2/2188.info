@@ -82,6 +82,11 @@ Route::group(['middleware' => 'role.seller'], function () {
     Route::get('/categories/{category}/edit', [\App\Http\Controllers\Seller\CategoryController::class, 'edit'])->name('seller.categories.edit');
     Route::put('/categories/{category}', [\App\Http\Controllers\Seller\CategoryController::class, 'update'])->name('seller.categories.update');
     Route::delete('/categories/{category}', [\App\Http\Controllers\Seller\CategoryController::class, 'destroy'])->name('seller.categories.destroy');
+    // Evaluate Product
+    Route::get('/evaluates', [\App\Http\Controllers\Seller\SellerEvaluateProductController::class, 'index'])->name('seller.evaluates.index');
+    Route::get('/evaluates/{id}', [\App\Http\Controllers\Seller\SellerEvaluateProductController::class, 'detail'])->name('seller.evaluates.detail');
+    Route::put('/evaluates/{id}', [\App\Http\Controllers\Seller\SellerEvaluateProductController::class, 'update'])->name('seller.evaluates.update');
+    Route::delete('/evaluates/{id}', [\App\Http\Controllers\Seller\SellerEvaluateProductController::class, 'delete'])->name('seller.evaluates.delete');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {
