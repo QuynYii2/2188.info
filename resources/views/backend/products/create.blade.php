@@ -132,12 +132,15 @@
                     </div>
 
                     <div>
-                        <label for="category">Chuyên mục:</label>
-                        <select id="category" name="category_id" required>
+                        <label for="category" class="col-sm-3 control-label">Chuyên mục:</label>
+                        <div class="col-sm-3">
+
+                        <select id="category" name="category_id" class="form-control" required>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
+                    </div>
                     </div>
                     @foreach($attributes as $attribute)
 
@@ -151,16 +154,6 @@
                         </div>
                     @endforeach
 
-                    <div class="form-group">
-                        <label for="category" class="col-sm-3 control-label">Danh mục sản phẩm</label>
-                        <div class="col-sm-3">
-                            <select id="category" class="form-control" name="category_id" required>
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
                     <div class="form-group ">
                         <label class="col-sm-12 control-label">Thông số sản phẩm</label>
 
