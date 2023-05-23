@@ -18,7 +18,8 @@ class SellerEvaluateProductController extends Controller
         $eva = DB::table('evaluate_products')
             ->join('products', 'products.id', '=', 'evaluate_products.product_id')
             ->where([['products.user_id', '=', Auth::user()->id], ['status', '!=', EvaluateProductStatus::DELETED]])
-            ->select('evaluate_products.*', 'products.id', 'products.user_id')
+            ->select('evaluate_products.*')
+//            ->orderByDesc('evaluate_products.id')
             ->get();
 
         //SELECT bc.id, bc.product_id FROM BAOCAO bc INNER JOIN PRODUCT pro ON bc.product_id= pro.id and pro.user_id = 4;
