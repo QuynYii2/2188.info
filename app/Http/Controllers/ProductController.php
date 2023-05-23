@@ -7,6 +7,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Models\EvaluateProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -17,6 +18,9 @@ class ProductController extends Controller
         $result = EvaluateProduct::where([
             ['product_id', '=', $product->id],
             ['status','=', EvaluateProductStatus::APPROVED]
+        ])->orWhere([
+            ['user_id', '=', Auth::user()->id],
+            ['product_id', '=', $product->id]
         ])->get();
         return view('frontend/pages/detail-product', [
             'result' => $result,
