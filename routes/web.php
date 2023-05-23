@@ -47,6 +47,9 @@ Route::get('/my-review/', [\App\Http\Controllers\ProfileController::class, 'my_r
 Route::get('/category/{id}', [\App\Http\Controllers\CategoryController::class, 'category'])->name('category.show');
 Route::get('/detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
 
+// Đánh giá sản phẩm
+Route::post('/evaluate', [\App\Http\Controllers\EvaluateProductController::class, 'store'])->name('create.evaluate');
+
 
 Route::group(['middleware' => 'role.admin'], function () {
     // Các route dành cho super admin
@@ -79,6 +82,11 @@ Route::group(['middleware' => 'role.seller'], function () {
     Route::get('/categories/{category}/edit', [\App\Http\Controllers\Seller\CategoryController::class, 'edit'])->name('seller.categories.edit');
     Route::put('/categories/{category}', [\App\Http\Controllers\Seller\CategoryController::class, 'update'])->name('seller.categories.update');
     Route::delete('/categories/{category}', [\App\Http\Controllers\Seller\CategoryController::class, 'destroy'])->name('seller.categories.destroy');
+    // Evaluate Product
+    Route::get('/evaluates', [\App\Http\Controllers\Seller\SellerEvaluateProductController::class, 'index'])->name('seller.evaluates.index');
+    Route::get('/evaluates/{id}', [\App\Http\Controllers\Seller\SellerEvaluateProductController::class, 'detail'])->name('seller.evaluates.detail');
+    Route::put('/evaluates/{id}', [\App\Http\Controllers\Seller\SellerEvaluateProductController::class, 'update'])->name('seller.evaluates.update');
+    Route::delete('/evaluates/{id}', [\App\Http\Controllers\Seller\SellerEvaluateProductController::class, 'delete'])->name('seller.evaluates.delete');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {
@@ -94,5 +102,3 @@ Route::patch('/cart/{product}', 'CartController@update')->name('cart.update');
 Route::delete('/cart/{product}', 'CartController@remove')->name('cart.remove');
 Route::delete('/cart', 'CartController@clearCart')->name('cart.clear');
 Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
-
-

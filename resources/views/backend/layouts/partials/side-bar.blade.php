@@ -214,7 +214,12 @@
             </li>
 
             <li class="sub-menu">
-                <a href="#!"><i class="fa fa-text-height"></i><span>Quản lý bình luận</span></a>
+                <a href="#!"><i class="fa fa-text-height"></i><span>Quản lý bình luận</span><i
+                            class="arrow fa fa-angle-right pull-right"></i></a>
+                <ul>
+                    <li><a href="{{route('seller.evaluates.index')}}">List Evaluate</a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>
