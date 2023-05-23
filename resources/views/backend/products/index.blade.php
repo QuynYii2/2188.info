@@ -4,7 +4,6 @@
     <div class="card">
         <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
             <h5 class="card-title">Danh sách sản phẩm</h5>
-            <a href="{{ route('seller.products.create') }}" class="btn btn-primary">Thêm mới</a>
             @if (session('success_update_product'))
                 <div class="alert alert-success">
                     {{ session('success_update_product') }}
@@ -16,9 +15,11 @@
                 <thead>
                 <tr>
                     <th>Tên sản phẩm</th>
+                    <th>Tác giả</th>
                     <th>Chuyên mục</th>
                     <th>Giá</th>
                     <th>Ảnh đại diện</th>
+                    <th>Thời gian</th>
                     <th>Thao tác</th>
                 </tr>
                 </thead>
@@ -26,11 +27,13 @@
                 @foreach($products as $product)
                     <tr>
                         <td>{{ $product->name }}</td>
+                        <td></td>
                         <td>{{ $product->category->name }}</td>
                         <td>{{ $product->price }}</td>
                         <td>
-                            <img src="{{ asset($product->thumbnail) }}" alt="Thumbnail">
+                            <img src="{{ asset($product->thumbnail) }}" height="180" alt="Thumbnail">
                         </td>
+                        <td></td>
                         <td>
                             <a href="{{ route('seller.products.edit', $product->id) }}" class="btn btn-primary">Sửa</a>
                             <form action="{{ route('seller.products.destroy', $product->id) }}" method="POST" style="display: inline-block">

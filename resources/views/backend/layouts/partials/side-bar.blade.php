@@ -121,7 +121,7 @@
                             class="arrow fa fa-angle-right pull-right"></i></a>
                 <ul>
 
-                    <li><a href="#!">Danh sách sản phẩm</a>
+                    <li><a href="/products">Danh sách sản phẩm</a>
                     </li>
                     <li><a href="/products/create">Thêm mới sản phẩm</a>
                     </li>
