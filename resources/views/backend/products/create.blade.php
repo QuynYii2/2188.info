@@ -264,6 +264,54 @@
 
                         </div>
 
+                        <div class="col-sm-12 d-inline-block">
+                            <label class="control-label small" for="date_start">Hình thức thanh toán</label>
+                            <input type="text" class="form-control"
+                                   onclick="showDropdown('payment-method', 'payment-dropdownList')"
+                                   placeholder="Chọn hình thức thanh toán" id="payment-method">
+                            <div class="dropdown-content" id="payment-dropdownList">
+                                <label>
+                                    <input type="checkbox" value="option1"
+                                           onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
+                                    Nhận hàng thanh toán
+                                </label>
+                                <label>
+                                    <input type="checkbox" value="option2"
+                                           onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
+                                    Thanh toán thẻ nội địa
+                                </label>
+                                <label>
+                                    <input type="checkbox" value="option3"
+                                           onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
+                                    Thanh toán qua paypal
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 d-inline-block">
+                            <label class="control-label small" for="date_start">Hình thức vận chuyển</label>
+                            <input type="text" class="form-control"
+                                   onclick="showDropdown('transport-method', 'transport-dropdownList')"
+                                   placeholder="Chọn hình thức vận chuyển" id="transport-method">
+                            <div class="dropdown-content" id="transport-dropdownList">
+                                <label>
+                                    <input type="checkbox" value="option1"
+                                           onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
+                                    Đường bộ
+                                </label>
+                                <label>
+                                    <input type="checkbox" value="option2"
+                                           onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
+                                    Đường thủy
+                                </label>
+                                <label>
+                                    <input type="checkbox" value="option3"
+                                           onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
+                                    Đường hàng không
+                                </label>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="thumbnail">Ảnh đại diện:</label>
                             <input type="file" id="thumbnail" name="thumbnail" accept="image/*" required>
@@ -302,53 +350,7 @@
 {{--                        <div class="form-group ">--}}
 {{--                            <label class="col-sm-12 control-label">Thông số sản phẩm</label>--}}
 
-{{--                            <div class="col-sm-3 d-inline-block">--}}
-{{--                                <label class="control-label small" for="date_start">Hình thức thanh toán</label>--}}
-{{--                                <input type="text" class="form-control"--}}
-{{--                                       onclick="showDropdown('payment-method', 'payment-dropdownList')"--}}
-{{--                                       placeholder="Chọn hình thức thanh toán" id="payment-method">--}}
-{{--                                <div class="dropdown-content" id="payment-dropdownList">--}}
-{{--                                    <label>--}}
-{{--                                        <input type="checkbox" value="option1"--}}
-{{--                                               onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">--}}
-{{--                                        Nhận hàng thanh toán--}}
-{{--                                    </label>--}}
-{{--                                    <label>--}}
-{{--                                        <input type="checkbox" value="option2"--}}
-{{--                                               onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">--}}
-{{--                                        Thanh toán thẻ nội địa--}}
-{{--                                    </label>--}}
-{{--                                    <label>--}}
-{{--                                        <input type="checkbox" value="option3"--}}
-{{--                                               onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">--}}
-{{--                                        Thanh toán qua paypal--}}
-{{--                                    </label>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
 
-{{--                            <div class="col-sm-3 d-inline-block">--}}
-{{--                                <label class="control-label small" for="date_start">Hình thức vận chuyển</label>--}}
-{{--                                <input type="text" class="form-control"--}}
-{{--                                       onclick="showDropdown('transport-method', 'transport-dropdownList')"--}}
-{{--                                       placeholder="Chọn hình thức vận chuyển" id="transport-method">--}}
-{{--                                <div class="dropdown-content" id="transport-dropdownList">--}}
-{{--                                    <label>--}}
-{{--                                        <input type="checkbox" value="option1"--}}
-{{--                                               onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">--}}
-{{--                                        Đường bộ--}}
-{{--                                    </label>--}}
-{{--                                    <label>--}}
-{{--                                        <input type="checkbox" value="option2"--}}
-{{--                                               onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">--}}
-{{--                                        Đường thủy--}}
-{{--                                    </label>--}}
-{{--                                    <label>--}}
-{{--                                        <input type="checkbox" value="option3"--}}
-{{--                                               onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">--}}
-{{--                                        Đường hàng không--}}
-{{--                                    </label>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
 
 {{--                        </div>--}}
 
