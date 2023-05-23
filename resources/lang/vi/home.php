@@ -24,6 +24,7 @@ return [
     'input username' => 'Nhập vào tên đăng nhập...',
     'or use a social network' => 'Hoặc sử dụng mạng xã hội',
     'business license' => 'Tải lên giấy phép kinh doanh',
+    'wait a review'=> 'Nội dung đang chờ xét duyệt!',
 
     //thông tin tài khoản, thông báo của tôi, quản lý đơn hàng, quản lý đổi trả, sổ địa chỉ, thông tin thanh toán, đánh giá sản phẩm, sản phẩm bạn đã xem, sản phẩm yêu thích, sản phẩm mua sau, nhận xét của tôi, chia sẻ có lời, hợp đồng bảo hiểm, mua trước trả sau, mã giảm giá, quản lý xu của tôi, bookcare của tôi
     'account information' => 'Thông tin tài khoản',

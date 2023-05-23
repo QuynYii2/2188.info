@@ -364,6 +364,13 @@
                                                     <p class="m-0">{{$res->created_at}}</p>
                                                 </td>
                                             </tr>
+                                            @if($res->status == \App\Enums\EvaluateProductStatus::PENDING)
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <p class="text-danger">{{ __('home.wait a review') }}</p>
+                                                    </td>
+                                                </tr>
+                                            @endif
                                             <tr>
                                                 <td colspan="2">
                                                     <strong>{{ __('home.customer rating') }}: </strong>
