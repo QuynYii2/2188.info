@@ -5,10 +5,10 @@
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
     <!-- Carousel Start -->
-    <div style="background-color: #ffccff; height: 30px" class="text-center-x-y">{{ __('home.all categories') }}</div>
-    <div class="container-fluid" style="background: #ffcccc">
+    <div style=" height: 30px" class="text-center-x-y border-top">{{ __('home.all categories') }}</div>
+    <div class="container-fluid" style="">
         <div class="row">
-            <div class="col-3">
+            <div id="cat-dropdown" class="col-3">
                 <div class="row">
                     <div class="">
                         <div class="nav-item dropdown" id="fixMenu">
@@ -27,16 +27,19 @@
                                             @endif
                                         </a>
                                         @if($category->children->count() > 0)
-                                            <ul class="submenu dropdown-menu">
+
+                                            <ul class="submenu dropdown-menu" style="width: 700px; height: 500px">
                                                 @foreach ($category->children as $subcategory)
-                                                    <li>
-                                                        <a class="dropdown-item" href="/category/{{ $subcategory->id }}">
+                                                    <li style="width: 40%">
+                                                        <a class="dropdown-item border-right"
+                                                           href="/category/{{ $subcategory->id }}">
                                                             {{ $subcategory->name }}
                                                             @if($subcategory->children->count() > 0)
                                                                 &raquo;
                                                             @endif
                                                         </a>
                                                         @if($subcategory->children->count() > 0)
+
                                                             @include('frontend.layouts.partials.subcategories', ['subcategories' => $subcategory->children])
                                                         @endif
                                                     </li>
@@ -51,8 +54,9 @@
                     </div>
 
                 </div>
+
             </div>
-            <div class="col-lg-6" style="padding: 0">
+            <div id="carousel" class="col-lg-6" style="padding: 0">
                 <div id="header-carousel" class="carousel slide carousel-fade " data-ride="carousel">
                     <ol class="carousel-indicators">
                         <li data-target="#header-carousel" data-slide-to="0" class="active"></li>
@@ -89,6 +93,7 @@
         </div>
         <p class="text-center">{{ __('home.recommended new products') }}</p>
     </div>
+
     <!-- Carousel End -->
 
     <!-- Products Start -->
@@ -152,7 +157,8 @@
                                     </div>
                                 </div>
                                 <div class="text-center py-4 text-limit">
-                                    <a class="h6 text-decoration-none text-truncate" id="link-product" href="/detail/{{ $product->id }}">{{ $product->name }}</a>
+                                    <a class="h6 text-decoration-none text-truncate" id="link-product"
+                                       href="/detail/{{ $product->id }}">{{ $product->name }}</a>
                                     <div class="d-flex align-items-center justify-content-center mt-2">
                                         <h5>{{ convertCurrency($product->price, $countryCode) }}
                                         </h5><h6 class="text-muted ml-2"></h6>
@@ -213,7 +219,7 @@
             </div>
         </div>
     </div>
-    <div class="pt-5 pb-2" style="background: #ff66ff"></div>
+    <div class="pt-5 pb-2"></div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2">
@@ -1172,5 +1178,12 @@
 
     </div>
     <!-- Products End -->
+
+    <script>
+        window.addEventListener('load', function () {
+            var colRight = document.querySelector('#carousel').clientHeight;
+            document.querySelector('#cat-dropdown').style.height = colRight + 'px';
+        });
+    </script>
 @endsection
 
