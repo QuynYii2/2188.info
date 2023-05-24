@@ -96,59 +96,61 @@
                         </div>
                     </div>
                     <div class="product-content">
-                        <h2 class="product-title">nike shoes</h2>
-                        <div class="product-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <span>4.7(21)</span>
-                        </div>
 
-                        <div class="product-price">
-                            <p class="last-price">{{ __('home.old price') }}: <span>$257.00</span></p>
-                            <p class="new-price">{{ __('home.new price') }}: <span>$249.00 (5%)</span></p>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="size">{{ __('home.size') }}</label>
-                                <select id="size" name="size" class="form-control">
-                                    <option>S</option>
-                                    <option>M</option>
-                                    <option>L</option>
-                                    <option>XL</option>
-                                </select>
+                        <form action="{{ route('cart.add', $product) }}" method="POST">
+                            @csrf
+                            <h2 class="product-title">nike shoes</h2>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.7(21)</span>
                             </div>
-                            <div class="col-md-6">
-                                <label for="color">{{ __('home.color') }}</label>
-                                <select id="color" name="color" class="form-control">
-                                    <option>Blue</option>
-                                    <option>Green</option>
-                                    <option>Red</option>
-                                </select>
+
+                            <div class="product-price">
+                                <p class="last-price">{{ __('home.old price') }}: <span>$257.00</span></p>
+                                <p class="new-price">{{ __('home.new price') }}: <span>$249.00 (5%)</span></p>
                             </div>
-                        </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="size">{{ __('home.size') }}</label>
+                                    <select id="size" name="size" class="form-control">
+                                        <option>S</option>
+                                        <option>M</option>
+                                        <option>L</option>
+                                        <option>XL</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="color">{{ __('home.color') }}</label>
+                                    <select id="color" name="color" class="form-control">
+                                        <option>Blue</option>
+                                        <option>Green</option>
+                                        <option>Red</option>
+                                    </select>
+                                </div>
+                            </div>
 
-                        <div class="count__wrapper count__wrapper--ml mt-3">
-                            <label for="qty">{{ __('home.quantity') }}</label>
-                            <input class="product-qty input" type="number" name="product-qty" min="0"
-                                   style="width: 55px"
-                                   value="1">
-                        </div>
+                            <div class="count__wrapper count__wrapper--ml mt-3">
+                                <label for="qty">{{ __('home.quantity') }}</label>
+                                <input class="product-qty input" type="number" name="quantity" min="0"
+                                       style="width: 55px"
+                                       value="1">
+                            </div>
 
-                        <div class="purchase-info">
-                            <button type="button" class="btn">
-                                {{ __('home.installment by card') }}
-                            </button>
+                            <div class="purchase-info">
+                                <button type="button" class="btn">
+                                    {{ __('home.installment by card') }}
+                                </button>
 
-                            <form action="{{ route('cart.add', $product) }}" method="POST">
-                                @csrf
                                 <button type="submit" class="button btn mt-2"><i class="fas fa-shopping-cart"></i>
                                     {{ __('home.buy now') }}
                                 </button>
-                            </form>
-                        </div>
+
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="col-md-12 mt-4 bg-white">
@@ -378,10 +380,14 @@
                                                         <span class="fa fa-stack">
                                                        <i class="fas fa-star fa-stack-1x"></i>
                                                     </span>
-                                                        <span class="fa fa-stack"><i class="far fa-star fa-stack-1x"></i></span>
-                                                        <span class="fa fa-stack"><i class="far fa-star fa-stack-1x"></i></span>
-                                                        <span class="fa fa-stack"><i class="far fa-star fa-stack-1x"></i></span>
-                                                        <span class="fa fa-stack"><i class="far fa-star fa-stack-1x"></i></span>
+                                                        <span class="fa fa-stack"><i
+                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                        <span class="fa fa-stack"><i
+                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                        <span class="fa fa-stack"><i
+                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                        <span class="fa fa-stack"><i
+                                                                    class="far fa-star fa-stack-1x"></i></span>
                                                     @endif
                                                     @if($res->star_number == 2)
                                                         <span class="fa fa-stack">
@@ -390,9 +396,12 @@
                                                         <span class="fa fa-stack">
                                                        <i class="fas fa-star fa-stack-1x"></i>
                                                     </span>
-                                                        <span class="fa fa-stack"><i class="far fa-star fa-stack-1x"></i></span>
-                                                        <span class="fa fa-stack"><i class="far fa-star fa-stack-1x"></i></span>
-                                                        <span class="fa fa-stack"><i class="far fa-star fa-stack-1x"></i></span>
+                                                        <span class="fa fa-stack"><i
+                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                        <span class="fa fa-stack"><i
+                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                        <span class="fa fa-stack"><i
+                                                                    class="far fa-star fa-stack-1x"></i></span>
                                                     @endif
                                                     @if($res->star_number == 3)
                                                         <span class="fa fa-stack">
@@ -404,8 +413,10 @@
                                                         <span class="fa fa-stack">
                                                        <i class="fas fa-star fa-stack-1x"></i>
                                                     </span>
-                                                        <span class="fa fa-stack"><i class="far fa-star fa-stack-1x"></i></span>
-                                                        <span class="fa fa-stack"><i class="far fa-star fa-stack-1x"></i></span>
+                                                        <span class="fa fa-stack"><i
+                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                        <span class="fa fa-stack"><i
+                                                                    class="far fa-star fa-stack-1x"></i></span>
                                                     @endif
                                                     @if($res->star_number == 4)
                                                         <span class="fa fa-stack">
@@ -420,7 +431,8 @@
                                                         <span class="fa fa-stack">
                                                        <i class="fas fa-star fa-stack-1x"></i>
                                                     </span>
-                                                        <span class="fa fa-stack"><i class="far fa-star fa-stack-1x"></i></span>
+                                                        <span class="fa fa-stack"><i
+                                                                    class="far fa-star fa-stack-1x"></i></span>
                                                     @endif
                                                     @if($res->star_number == 5)
                                                         <span class="fa fa-stack">

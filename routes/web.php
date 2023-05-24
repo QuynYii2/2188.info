@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,9 +95,10 @@ Route::group(['middleware' => 'role.buyer'], function () {
     // ...
 });
 
+// Cart
+Route::get('/cart', [\App\Http\Controllers\Frontend\CartController::class, 'index'])->name('cart.index');
 Route::post('/add-to-cart/{product}', [\App\Http\Controllers\Frontend\CartController::class, 'addToCart'])->name('cart.add');
-Route::get('/cart', 'CartController@index')->name('cart.index');
-Route::patch('/cart/{product}', 'CartController@update')->name('cart.update');
-Route::delete('/cart/{product}', 'CartController@remove')->name('cart.remove');
-Route::delete('/cart', 'CartController@clearCart')->name('cart.clear');
-Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
+Route::put('/cart/{id}', [\App\Http\Controllers\Frontend\CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/{id}', [\App\Http\Controllers\Frontend\CartController::class, 'delete'])->name('cart.delete');
+Route::delete('/cart-clear', [\App\Http\Controllers\Frontend\CartController::class, 'clearCart'])->name('cart.clear');
+//Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
