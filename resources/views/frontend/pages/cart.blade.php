@@ -3,7 +3,7 @@
 @section('title', 'View Cart')
 
 @section('content')
-    <div class="container mt-5">
+    <div class="container mt-5" style="margin-bottom: 30px">
         <div class="card">
             <h2>Giỏ hàng</h2>
 

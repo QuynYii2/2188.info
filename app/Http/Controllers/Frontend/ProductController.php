@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Libraries\GeoIP;
+use App\Models\Category;
+use App\Models\Product;
 use App\Traits\CountryCodeTrait;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -12,23 +14,53 @@ use GuzzleHttp\Client;
 class ProductController extends Controller
 {
 //    use CountryCodeTrait;
-    public function product_by_local(Request $request){
-        $local = '';
+    public function index(Request $request)
+    {
+        $locale = '';
+        $currency = '';
         if ($request->session()->has('locale')) {
-            $local = $request->session()->get('locale');
+            $locale = $request->session()->get('locale');
             app()->setLocale($request->session()->get('locale'));
         } else {
-            $client = new Client();
-            $response = $client->get('https://ipinfo.io/ip');
-            $ipAddress = trim((string) $response->getBody());
+            $ipAddress = $request->ip();
             $geoIp = new GeoIP();
-            $locale = $geoIp->get_country_from_ip($ipAddress);
+            $locale = $geoIp->get_country_from_ip('183.80.130.4');
             if ($locale !== null && is_array($locale)) {
                 $locale = $locale['countryCode'];
             } else {
                 $locale = 'vi';
             }
         }
-        return $local;
+        app()->setLocale($locale);
+
+        $currencies = [
+            'vi' => 'VND',
+            'kr' => 'KRW',
+            'cn' => 'CNY',
+            'jp' => 'JPY',
+        ];
+
+        if (array_key_exists($locale, $currencies)) {
+            $currency = $currencies[$locale];
+        }
+
+        $categories = Category::get()->toTree();
+
+        $locations = ['vi', 'kr', 'jp', 'cn'];
+
+        $locations = array_diff($locations, [$locale]);
+
+        $productByLocal = Product::whereIn('location', array_slice($locations, 0, 3))
+            ->limit(10)
+            ->get();
+
+        $productByLocal = Product::all();
+
+        return view('frontend/pages/product',[
+            'productByLocal' => $productByLocal,
+            'currency' => $currency,
+            'countryCode' => $locale,
+            'categories' => $categories
+        ]);
     }
 }

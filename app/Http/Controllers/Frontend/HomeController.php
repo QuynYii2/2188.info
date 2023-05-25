@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Enums\CartStatus;
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Libraries\GeoIP;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
 
 class HomeController extends Controller
@@ -28,7 +31,7 @@ class HomeController extends Controller
                 $locale = 'vi';
             }
         }
-            app()->setLocale($locale);
+        app()->setLocale($locale);
 
         $currencies = [
             'vi' => 'VND',
@@ -62,15 +65,19 @@ class HomeController extends Controller
     }
 
 
-    public function shop() {
+    public function shop()
+    {
         return view('frontend/pages/product-list');
     }
-    public function register(Request $request) {
+
+    public function register(Request $request)
+    {
         $this->getLocale($request);
         return view('frontend/pages/register');
     }
 
-    public function getLocale(Request $request){
+    public function getLocale(Request $request)
+    {
         $locale = '';
         if ($request->session()->has('locale')) {
             $locale = $request->session()->get('locale');
