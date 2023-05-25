@@ -12,12 +12,14 @@ use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $carts = Cart::where([
-            ['user_id', '=', Auth::user()->id],
-            ['status', '=', CartStatus::WAIT_ORDER]
-        ])->get();
+        (new HomeController())->getLocale($request);
+        if (Auth::check()) {
+            $carts = Cart::where([
+                ['user_id', '=', Auth::user()->id],
+                ['status', '=', CartStatus::WAIT_ORDER]
+            ])->get();
 
 //        $carts = DB::table('carts')
 //            ->select('product_id',DB::raw('count(quantity) as quantity'))
@@ -29,7 +31,10 @@ class CartController extends Controller
 //
 //        dd($carts);
 
-        return view('frontend/pages/cart')->with('cartItems', $carts);
+            return view('frontend/pages/cart')->with('cartItems', $carts);
+        } else {
+            return view('frontend/pages/login');
+        }
     }
 
     public function addToCart(Request $request, Product $product)

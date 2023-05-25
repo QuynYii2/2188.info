@@ -38,29 +38,555 @@
                 </div>
             </nav>
             <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-                <div class="tab-pane fade text-center active show" id="nav-1" role="tabpanel" aria-labelledby="nav-contact-tab">
-                    <img src="{{asset('images/empty.jpg')}}" alt="">
-                    <p>{{ __('home.you have no order') }}</p>
+                <div class="tab-pane fade text-center active show" id="nav-1" role="tabpanel"
+                     aria-labelledby="nav-contact-tab">
+                    @if ($orderAll->isEmpty())
+                        <img src="{{asset('images/empty.jpg')}}" alt="">
+                        <p>{{ __('home.you have no order') }}</p>
+                    @else
+                        <div class="d-flex justify-content-between">
+                            <div class="">Total:{{count($orderAll)}}</div>
+                        </div>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="float-left">OrderID</th>
+                                <th class="float-right">Total Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($orderAll as $order)
+                                <tr>
+                                    <td class="float-left">
+                                        <button class="text-decoration-none" data-toggle="modal"
+                                                data-target="#updateOrder"
+                                                style="cursor: pointer">{{$order->id}}</button>
+                                        <div class="modal fade" id="updateOrder" tabIndex="-1" role="dialog"
+                                             aria-labelledby="editModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Detail
+                                                            Order</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="delete-account-form"
+                                                              action="{{route('order.cancel', $order->id)}}" method="post">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <div class="row mb-5">
+                                                                <div class="col">
+                                                                    <label for="fname">Full name:</label>
+                                                                    <input type="text" value="{{$order->fullname}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label for="fname">Email:</label>
+                                                                    <input type="text" value="{{$order->email}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label for="fname">Phone:</label>
+                                                                    <input type="text" value="{{$order->phone}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label for="fname">Address:</label>
+                                                                    <input type="text" value="{{$order->address}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col mt-3">
+                                                                    <label for="fname">Total Price:</label>
+                                                                    <input type="text" value="${{$order->total}}"
+                                                                           disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex justify-content-around">
+                                                                @if($order->status == \App\Enums\OrderStatus::PROCESSING)
+                                                                    <button type="submit" class="btn w-25 btn-danger">
+                                                                        Cancel
+                                                                    </button>
+                                                                @else
+                                                                    <button type="" class="btn w-25 btn-danger"
+                                                                            disabled>
+                                                                        Cancel
+                                                                    </button>
+                                                                @endif
+
+                                                                <button type="button" class="btn w-25 btn-secondary"
+                                                                        data-dismiss="modal">Back
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="float-right">
+                                        {{$order->total}}
+                                        <div class="small">{{$order->status}}</div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    @endif
                 </div>
                 <div class="tab-pane fade text-center" id="nav-2" role="tabpanel" aria-labelledby="nav-about-tab">
-                    <img src="{{asset('images/empty.jpg')}}" alt="">
-                    <p>{{ __('home.you have no order') }}</p>
+                    <@if ($orderWaitPay->isEmpty())
+                        <img src="{{asset('images/empty.jpg')}}" alt="">
+                        <p>{{ __('home.you have no order') }}</p>
+                    @else
+                        <div class="d-flex justify-content-between">
+                            <div class="">Total:{{count($orderWaitPay)}}</div>
+                        </div>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="float-left">OrderID</th>
+                                <th class="float-right">Total Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($orderWaitPay as $order)
+                                <tr>
+                                    <td class="float-left">
+                                        <button class="text-decoration-none" data-toggle="modal"
+                                                data-target="#updateOrder"
+                                                style="cursor: pointer">{{$order->id}}</button>
+                                        <div class="modal fade" id="updateOrder" tabIndex="-1" role="dialog"
+                                             aria-labelledby="editModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Detail
+                                                            Order</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="delete-account-form">
+                                                            <div class="row mb-5">
+                                                                <div class="col">
+                                                                    <label for="fname">Full name:</label>
+                                                                    <input type="text" value="{{$order->fullname}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label for="fname">Email:</label>
+                                                                    <input type="text" value="{{$order->email}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label for="fname">Phone:</label>
+                                                                    <input type="text" value="{{$order->phone}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label for="fname">Address:</label>
+                                                                    <input type="text" value="{{$order->address}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col mt-3">
+                                                                    <label for="fname">Total Price:</label>
+                                                                    <input type="text" value="${{$order->total}}"
+                                                                           disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex justify-content-around">
+                                                                <button type="submit" class="btn w-25 btn-danger"
+                                                                        disabled>
+                                                                    Cancel
+                                                                </button>
+                                                                <button type="button" class="btn w-25 btn-secondary"
+                                                                        data-dismiss="modal">Back
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="float-right">
+                                        {{$order->total}}
+                                        <div class="small">{{$order->status}}</div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    @endif
                 </div>
                 <div class="tab-pane fade text-center" id="nav-3" role="tabpanel" aria-labelledby="nav-contact-tab">
-                    <img src="{{asset('images/empty.jpg')}}" alt="">
-                    <p>{{ __('home.you have no order') }}</p>
+                    @if ($orderProcessing->isEmpty())
+                        <img src="{{asset('images/empty.jpg')}}" alt="">
+                        <p>{{ __('home.you have no order') }}</p>
+                    @else
+                        <div class="d-flex justify-content-between">
+                            <div class="">Total:{{count($orderProcessing)}}</div>
+                        </div>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="float-left">OrderID</th>
+                                <th class="float-right">Total Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($orderProcessing as $order)
+                                <tr>
+                                    <td class="float-left">
+                                        <button class="text-decoration-none" data-toggle="modal"
+                                                data-target="#updateOrder"
+                                                style="cursor: pointer">{{$order->id}}</button>
+                                        <div class="modal fade" id="updateOrder" tabIndex="-1" role="dialog"
+                                             aria-labelledby="editModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Detail
+                                                            Order</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="delete-account-form"
+                                                              action="{{route('order.cancel', $order->id)}}" method="post">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <div class="row mb-5">
+                                                                <div class="col">
+                                                                    <label for="fname">Full name:</label>
+                                                                    <input type="text" value="{{$order->fullname}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label for="fname">Email:</label>
+                                                                    <input type="text" value="{{$order->email}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label for="fname">Phone:</label>
+                                                                    <input type="text" value="{{$order->phone}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label for="fname">Address:</label>
+                                                                    <input type="text" value="{{$order->address}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col mt-3">
+                                                                    <label for="fname">Total Price:</label>
+                                                                    <input type="text" value="${{$order->total}}"
+                                                                           disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex justify-content-around">
+                                                                @if($order->status == \App\Enums\OrderStatus::PROCESSING)
+                                                                    <button type="submit" class="btn w-25 btn-danger">
+                                                                        Cancel
+                                                                    </button>
+                                                                @else
+                                                                    <button type="" class="btn w-25 btn-danger"
+                                                                            disabled>
+                                                                        Cancel
+                                                                    </button>
+                                                                @endif
+
+                                                                <button type="button" class="btn w-25 btn-secondary"
+                                                                        data-dismiss="modal">Back
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="float-right">
+                                        {{$order->total}}
+                                        <div class="small">{{$order->status}}</div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    @endif
                 </div>
                 <div class="tab-pane fade text-center" id="nav-4" role="tabpanel" aria-labelledby="nav-about-tab">
-                    <img src="{{asset('images/empty.jpg')}}" alt="">
-                    <p>{{ __('home.you have no order') }}</p>
+                    @if ($orderShipping->isEmpty())
+                        <img src="{{asset('images/empty.jpg')}}" alt="">
+                        <p>{{ __('home.you have no order') }}</p>
+                    @else
+                        <div class="d-flex justify-content-between">
+                            <div class="">Total:{{count($orderShipping)}}</div>
+                        </div>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="float-left">OrderID</th>
+                                <th class="float-right">Total Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($orderShipping as $order)
+                                <tr>
+                                    <td class="float-left">
+                                        <button class="text-decoration-none" data-toggle="modal"
+                                                data-target="#updateOrder"
+                                                style="cursor: pointer">{{$order->id}}</button>
+                                        <div class="modal fade" id="updateOrder" tabIndex="-1" role="dialog"
+                                             aria-labelledby="editModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Detail
+                                                            Order</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="delete-account-form">
+                                                            <div class="row mb-5">
+                                                                <div class="col">
+                                                                    <label for="fname">Full name:</label>
+                                                                    <input type="text" value="{{$order->fullname}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label for="fname">Email:</label>
+                                                                    <input type="text" value="{{$order->email}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label for="fname">Phone:</label>
+                                                                    <input type="text" value="{{$order->phone}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label for="fname">Address:</label>
+                                                                    <input type="text" value="{{$order->address}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col mt-3">
+                                                                    <label for="fname">Total Price:</label>
+                                                                    <input type="text" value="${{$order->total}}"
+                                                                           disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex justify-content-around">
+                                                                <button type="submit" class="btn w-25 btn-danger"
+                                                                        disabled>
+                                                                    Cancel
+                                                                </button>
+
+                                                                <button type="button" class="btn w-25 btn-secondary"
+                                                                        data-dismiss="modal">Back
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="float-right">
+                                        {{$order->total}}
+                                        <div class="small">{{$order->status}}</div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    @endif
                 </div>
                 <div class="tab-pane fade text-center" id="nav-5" role="tabpanel" aria-labelledby="nav-about-tab">
-                    <img src="{{asset('images/empty.jpg')}}" alt="">
-                    <p>{{ __('home.you have no order') }}</p>
+                    @if ($orderDelivered->isEmpty())
+                        <img src="{{asset('images/empty.jpg')}}" alt="">
+                        <p>{{ __('home.you have no order') }}</p>
+                    @else
+                        <div class="d-flex justify-content-between">
+                            <div class="">Total:{{count($orderDelivered)}}</div>
+                        </div>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="float-left">OrderID</th>
+                                <th class="float-right">Total Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($orderDelivered as $order)
+                                <tr>
+                                    <td class="float-left">
+                                        <button class="text-decoration-none" data-toggle="modal"
+                                                data-target="#updateOrder"
+                                                style="cursor: pointer">{{$order->id}}</button>
+                                        <div class="modal fade" id="updateOrder" tabIndex="-1" role="dialog"
+                                             aria-labelledby="editModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Detail
+                                                            Order</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="delete-account-form">
+                                                            <div class="row mb-5">
+                                                                <div class="col">
+                                                                    <label for="fname">Full name:</label>
+                                                                    <input type="text" value="{{$order->fullname}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label for="fname">Email:</label>
+                                                                    <input type="text" value="{{$order->email}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label for="fname">Phone:</label>
+                                                                    <input type="text" value="{{$order->phone}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label for="fname">Address:</label>
+                                                                    <input type="text" value="{{$order->address}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col mt-3">
+                                                                    <label for="fname">Total Price:</label>
+                                                                    <input type="text" value="${{$order->total}}"
+                                                                           disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex justify-content-around">
+                                                                <button type="submit" class="btn w-25 btn-danger"
+                                                                        disabled>
+                                                                    Cancel
+                                                                </button>
+                                                                <button type="button" class="btn w-25 btn-secondary"
+                                                                        data-dismiss="modal">Back
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="float-right">
+                                        {{$order->total}}
+                                        <div class="small">{{$order->status}}</div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    @endif
                 </div>
                 <div class="tab-pane fade text-center" id="nav-6" role="tabpanel" aria-labelledby="nav-about-tab">
-                    <img src="{{asset('images/empty.jpg')}}" alt="">
-                    <p>{{ __('home.you have no order') }}</p>
+                    @if ($orderCancel->isEmpty())
+                        <img src="{{asset('images/empty.jpg')}}" alt="">
+                        <p>{{ __('home.you have no order') }}</p>
+                    @else
+                        <div class="d-flex justify-content-between">
+                            <div class="">Total:{{count($orderCancel)}}</div>
+                        </div>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th class="float-left">OrderID</th>
+                                <th class="float-right">Total Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($orderCancel as $order)
+                                <tr>
+                                    <td class="float-left">
+                                        <button class="text-decoration-none" data-toggle="modal"
+                                                data-target="#updateOrder"
+                                                style="cursor: pointer">{{$order->id}}</button>
+                                        <div class="modal fade" id="updateOrder" tabIndex="-1" role="dialog"
+                                             aria-labelledby="editModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Detail
+                                                            Order</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="delete-account-form">
+                                                            <div class="row mb-5">
+                                                                <div class="col">
+                                                                    <label for="fname">Full name:</label>
+                                                                    <input type="text" value="{{$order->fullname}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label for="fname">Email:</label>
+                                                                    <input type="text" value="{{$order->email}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label for="fname">Phone:</label>
+                                                                    <input type="text" value="{{$order->phone}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <label for="fname">Address:</label>
+                                                                    <input type="text" value="{{$order->address}}"
+                                                                           disabled>
+                                                                </div>
+                                                                <div class="col mt-3">
+                                                                    <label for="fname">Total Price:</label>
+                                                                    <input type="text" value="${{$order->total}}"
+                                                                           disabled>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex justify-content-around">
+                                                                <button type="submit" class="btn w-25 btn-danger"
+                                                                        disabled>
+                                                                    Cancel
+                                                                </button>
+                                                                <button type="button" class="btn w-25 btn-secondary"
+                                                                        data-dismiss="modal">Back
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="float-right">
+                                        {{$order->total}}
+                                        <div class="small">{{$order->status}}</div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    @endif
                 </div>
             </div>
 
