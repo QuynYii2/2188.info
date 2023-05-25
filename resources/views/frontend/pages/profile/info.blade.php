@@ -206,13 +206,13 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modal-edit-phone" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal-edit-phone" tabindex="-1" aria-labelledby="exampleModalLabel" >
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Cập nhật số điện thoại</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <span >&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -233,13 +233,13 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modal-edit-email" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modal-edit-email" tabindex="-1" aria-labelledby="exampleModalLabel" >
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Cập nhật Email</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <span >&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -261,13 +261,13 @@
     </div>
 
     <div class="modal fade" id="modal-edit-password" tabindex="-1" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
+         >
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Đổi mật khẩu</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <span >&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">

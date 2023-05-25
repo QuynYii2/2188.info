@@ -33,6 +33,9 @@ Route::middleware('auth.product')->group(function () {
     Route::get('/product/{id}', 'ProductController@show')->name('product.show');
 });
 
+Route::get('/detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
+Route::get('/category/{id}', [\App\Http\Controllers\CategoryController::class, 'category'])->name('category.show');
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/info/', [\App\Http\Controllers\ProfileController::class, 'info']);
     Route::get('/my-notification/', [\App\Http\Controllers\ProfileController::class, 'my_notification']);
@@ -44,8 +47,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/favorite-product/', [\App\Http\Controllers\ProfileController::class, 'favorite_product']);
     Route::get('/product-viewed/', [\App\Http\Controllers\ProfileController::class, 'product_viewed']);
     Route::get('/my-review/', [\App\Http\Controllers\ProfileController::class, 'my_review']);
-    Route::get('/category/{id}', [\App\Http\Controllers\CategoryController::class, 'category'])->name('category.show');
-    Route::get('/detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
     // Đánh giá sản phẩm
     Route::post('/evaluate', [\App\Http\Controllers\EvaluateProductController::class, 'store'])->name('create.evaluate');
     // Address Controller
@@ -103,8 +104,11 @@ Route::group(['middleware' => 'role.buyer'], function () {
     // ...
 });
 
+// Product
+Route::get('/product', [\App\Http\Controllers\Frontend\ProductController::class, 'index'])->name('product.index');
 // Cart
 Route::middleware(['auth'])->group(function () {
+    // Cart
     Route::get('/cart', [\App\Http\Controllers\Frontend\CartController::class, 'index'])->name('cart.index');
     Route::post('/add-to-cart/{product}', [\App\Http\Controllers\Frontend\CartController::class, 'addToCart'])->name('cart.add');
     Route::put('/cart/{id}', [\App\Http\Controllers\Frontend\CartController::class, 'update'])->name('cart.update');
