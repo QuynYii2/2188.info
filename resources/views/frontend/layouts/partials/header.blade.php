@@ -1,7 +1,7 @@
 @php use Illuminate\Support\Facades\Auth; @endphp
 <!-- Topbar Start -->
 <div class="container-fluid">
-    <div class="row" style="background-color: #ff999a">
+    <div class="row">
         <div class="col-md-12">
             <div id="success-register" data-success="{{ session('success') }}">{{ session('success') }}</div>
 
@@ -43,7 +43,7 @@
         </div>
     </div>
     <div class="row align-items-center">
-        <div class="col-md-3 pl-5" id="nav-left" style="background-color: #ffcccc">
+        <div class="col-md-3 pl-5 bg-white" id="nav-left">
             <div class="row">
                 <a href="/" class="text-decoration-none">
                     <span class="h1 text-uppercase text-primary bg-dark px-2">Shopping</span>
@@ -51,7 +51,7 @@
                 </a>
             </div>
         </div>
-        <div class="col-md-9 py-2 pr-5" id="nav-right" style="background-color: #feff99;">
+        <div class="col-md-9 py-2 pr-5 bg-white" id="nav-right">
             <div class="row align-items-center ">
                 <div class="col-md-1"></div>
                 <div class="col-md-5">

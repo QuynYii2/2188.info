@@ -1,7 +1,7 @@
 <!-- Footer Start -->
-<div class="pt-5"></div>
-<div class="pt-5" style="background-color: #ffcccc"></div>
-<div class="container-fluid text-secondary " style="background-color: #ffccff">
+<div class="pt-5 bg-white"></div>
+<div class="pt-2 bg-gradient"></div>
+<div class="container-fluid text-secondary bg-white">
     <div class="row px-xl-5 pt-5">
         <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
             <h5 class="text-secondary text-uppercase mb-4">Get In Touch</h5>

@@ -5,8 +5,8 @@
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
     <!-- Carousel Start -->
-    <div style="background-color: #ffccff; height: 30px" class="text-center-x-y">{{ __('home.all categories') }}</div>
-    <div class="container-fluid" style="background: #ffcccc">
+    <div style="height: 30px" class="text-center-x-y">{{ __('home.all categories') }}</div>
+    <div class="container-fluid bg-white">
         <div class="row">
             <div class="col-3">
                 <div class="row">
@@ -87,12 +87,12 @@
                 </div>
             </div>
         </div>
-        <p class="text-center">{{ __('home.recommended new products') }}</p>
+        <p class="text-center mt-3">{{ __('home.recommended new products') }}</p>
     </div>
     <!-- Carousel End -->
 
     <!-- Products Start -->
-    <div class="container-fluid">
+    <div class="container-fluid bg-white">
         <div class="row">
             <div class="col-md-2">
                 <div class="row ">
@@ -213,8 +213,7 @@
             </div>
         </div>
     </div>
-    <div class="pt-5 pb-2" style="background: #ff66ff"></div>
-    <div class="container-fluid">
+    <div class="container-fluid bg-white">
         <div class="row">
             <div class="col-md-2">
                 <div class="row pb-2">
