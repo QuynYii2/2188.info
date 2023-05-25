@@ -21,16 +21,6 @@ class CartController extends Controller
                 ['status', '=', CartStatus::WAIT_ORDER]
             ])->get();
 
-//        $carts = DB::table('carts')
-//            ->select('product_id',DB::raw('count(quantity) as quantity'))
-//            ->groupBy('product_id')
-//            ->where([
-//                ['user_id', '=', Auth::user()->id],
-//                ['status', '=', CartStatus::WAIT_ORDER]
-//            ])->get();
-//
-//        dd($carts);
-
             return view('frontend/pages/cart')->with('cartItems', $carts);
         } else {
             return view('frontend/pages/login');
