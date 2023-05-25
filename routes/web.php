@@ -33,21 +33,29 @@ Route::middleware('auth.product')->group(function () {
     Route::get('/product/{id}', 'ProductController@show')->name('product.show');
 });
 
-Route::get('/info/', [\App\Http\Controllers\ProfileController::class, 'info']);
-Route::get('/my-notification/', [\App\Http\Controllers\ProfileController::class, 'my_notification']);
-Route::get('/order-management/', [\App\Http\Controllers\ProfileController::class, 'order_management']);
-Route::get('/return-management/', [\App\Http\Controllers\ProfileController::class, 'return_management']);
-Route::get('/address-book/', [\App\Http\Controllers\ProfileController::class, 'address_book']);
-Route::get('/payment-information/', [\App\Http\Controllers\ProfileController::class, 'payment_information']);
-Route::get('/product-evaluation/', [\App\Http\Controllers\ProfileController::class, 'product_evaluation']);
-Route::get('/favorite-product/', [\App\Http\Controllers\ProfileController::class, 'favorite_product']);
-Route::get('/product-viewed/', [\App\Http\Controllers\ProfileController::class, 'product_viewed']);
-Route::get('/my-review/', [\App\Http\Controllers\ProfileController::class, 'my_review']);
-Route::get('/category/{id}', [\App\Http\Controllers\CategoryController::class, 'category'])->name('category.show');
-Route::get('/detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/info/', [\App\Http\Controllers\ProfileController::class, 'info']);
+    Route::get('/my-notification/', [\App\Http\Controllers\ProfileController::class, 'my_notification']);
+//    Route::get('/order-management/', [\App\Http\Controllers\ProfileController::class, 'order_management']);
+    Route::get('/return-management/', [\App\Http\Controllers\ProfileController::class, 'return_management']);
+//    Route::get('/address-book/', [\App\Http\Controllers\ProfileController::class, 'address_book']);
+    Route::get('/payment-information/', [\App\Http\Controllers\ProfileController::class, 'payment_information']);
+    Route::get('/product-evaluation/', [\App\Http\Controllers\ProfileController::class, 'product_evaluation']);
+    Route::get('/favorite-product/', [\App\Http\Controllers\ProfileController::class, 'favorite_product']);
+    Route::get('/product-viewed/', [\App\Http\Controllers\ProfileController::class, 'product_viewed']);
+    Route::get('/my-review/', [\App\Http\Controllers\ProfileController::class, 'my_review']);
+    Route::get('/category/{id}', [\App\Http\Controllers\CategoryController::class, 'category'])->name('category.show');
+    Route::get('/detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
+    // Đánh giá sản phẩm
+    Route::post('/evaluate', [\App\Http\Controllers\EvaluateProductController::class, 'store'])->name('create.evaluate');
+    // Address Controller
+    Route::get('/address-book', [\App\Http\Controllers\Frontend\AddressController::class, 'index'])->name('address.show');
+    Route::post('/address', [\App\Http\Controllers\Frontend\AddressController::class, 'store'])->name('address.create');
+//    Route::get('/address', [\App\Http\Controllers\Frontend\AddressController::class, 'index']);
+//    Route::get('/address', [\App\Http\Controllers\Frontend\AddressController::class, 'index']);
+//    Route::get('/address', [\App\Http\Controllers\Frontend\AddressController::class, 'index']);
 
-// Đánh giá sản phẩm
-Route::post('/evaluate', [\App\Http\Controllers\EvaluateProductController::class, 'store'])->name('create.evaluate');
+});
 
 
 Route::group(['middleware' => 'role.admin'], function () {
@@ -96,9 +104,16 @@ Route::group(['middleware' => 'role.buyer'], function () {
 });
 
 // Cart
-Route::get('/cart', [\App\Http\Controllers\Frontend\CartController::class, 'index'])->name('cart.index');
-Route::post('/add-to-cart/{product}', [\App\Http\Controllers\Frontend\CartController::class, 'addToCart'])->name('cart.add');
-Route::put('/cart/{id}', [\App\Http\Controllers\Frontend\CartController::class, 'update'])->name('cart.update');
-Route::delete('/cart/{id}', [\App\Http\Controllers\Frontend\CartController::class, 'delete'])->name('cart.delete');
-Route::delete('/cart-clear', [\App\Http\Controllers\Frontend\CartController::class, 'clearCart'])->name('cart.clear');
-//Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/cart', [\App\Http\Controllers\Frontend\CartController::class, 'index'])->name('cart.index');
+    Route::post('/add-to-cart/{product}', [\App\Http\Controllers\Frontend\CartController::class, 'addToCart'])->name('cart.add');
+    Route::put('/cart/{id}', [\App\Http\Controllers\Frontend\CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/{id}', [\App\Http\Controllers\Frontend\CartController::class, 'delete'])->name('cart.delete');
+    Route::delete('/cart-clear', [\App\Http\Controllers\Frontend\CartController::class, 'clearCart'])->name('cart.clear');
+    // Checkout Controller
+    Route::get('/checkout', [\App\Http\Controllers\Frontend\CheckoutController::class, 'index'])->name('checkout.show');
+    Route::post('/checkout', [\App\Http\Controllers\Frontend\CheckoutController::class, 'store'])->name('checkout.create');
+    // Order Controller
+    Route::get('/order-management/', [\App\Http\Controllers\Frontend\OrderController::class, 'index'])->name('order.show');
+    Route::delete('/order-delete/{id}', [\App\Http\Controllers\Frontend\OrderController::class, 'cancel'])->name('order.cancel');
+});

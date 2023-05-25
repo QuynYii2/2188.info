@@ -59,7 +59,7 @@
                     </div>
                 </div>
 
-                <a href="" class="btn btn-primary">Thanh toán</a>
+                <a href="{{route('checkout.show')}}" class="btn btn-primary">Thanh toán</a>
             @endif
         </div>
     </div>

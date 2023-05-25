@@ -18,25 +18,30 @@
             {{ __('home.add address') }}
         </button>
     </div>
-    <div class="row bg-white rounded mt-3">
-        <div class="row">
-            <div class="py-3">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Người nhận 1</h5>
-                    <div>
-                        <button class="btn btn-outline- " onclick="editModal()" data-target="#modal-address" data-toggle="modal" style="color: blue">{{ __('home.edit') }}</button>
-                        <button class="btn btn-outline- " style="color: red">{{ __('home.delete') }}</button>
+
+    @foreach($addresses as $address)
+        <div class="row bg-white rounded mt-3">
+            <div class="row">
+                <div class="py-3">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{$address->username}}</h5>
+                        <div>
+                            <button class="btn btn-outline- " onclick="editModal()" data-target="#modal-address"
+                                    data-toggle="modal" style="color: blue">{{ __('home.edit') }}</button>
+                            <button class="btn btn-outline- " style="color: red">{{ __('home.delete') }}</button>
+                        </div>
                     </div>
+                    <p class="mb-1">{{ __('home.address') }}:{{$address->address_detail}}, {{$address->location}},
+                        {{$address->province}}, {{$address->city}}</p>
+                    <small>{{ __('home.phone number') }}: {{$address->phone}}</small>
                 </div>
-                <p class="mb-1">{{ __('home.address') }}: Hà nội</p>
-                <small>{{ __('home.phone number') }}: 0123456789</small>
             </div>
         </div>
-    </div>
+    @endforeach
 
     <div class="modal fade" id="modal-address" tabindex="-1" aria-labelledby="modalLabel"
          aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered" >
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalLabel"></h5>
@@ -44,30 +49,31 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form action="">
+                <form action="{{route('address.create')}}" method="post">
+                    @csrf
+                    <div class="modal-body">
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Họ và tên</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="aaa">
+                                <input type="text" class="form-control" name="username">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Công ty</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="aaa">
+                                <input type="text" class="form-control" name="company">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Số điện thoại</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="aaa">
+                                <input type="text" class="form-control" name="phone">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Tỉnh/Thành phố</label>
                             <div class="col-sm-9">
-                                <select class="form-control" id="city">
+                                <select class="form-control" id="city" name="city">
                                     <option value="" selected>Chọn tỉnh thành</option>
                                 </select>
                             </div>
@@ -75,7 +81,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Quận huyện</label>
                             <div class="col-sm-9">
-                                <select class="form-control" id="district">
+                                <select class="form-control" id="district" name="province">
                                     <option value="" selected>Chọn quận huyện</option>
                                 </select>
                             </div>
@@ -83,7 +89,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Phường xã</label>
                             <div class="col-sm-9">
-                                <select class="form-control" id="ward">
+                                <select class="form-control" id="ward" name="location">
                                     <option value="" selected>Chọn phường xã</option>
                                 </select>
                             </div>
@@ -91,7 +97,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Địa chỉ</label>
                             <div class="col-sm-9">
-                                <textarea type="text" class="form-control" name="aaa"></textarea>
+                                <textarea type="text" class="form-control" name="address_detail"></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -99,15 +105,17 @@
                             <div class="col-sm-9">
                                 <div class="row">
                                     <div class="form-check col-sm-6">
-                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                                               value="1" checked>
+                                        <input class="form-check-input" type="radio" name="address_option"
+                                               id="exampleRadios1"
+                                               value="{{\App\Enums\AddressOrderOption::HOME_PRIVATE}}" checked>
                                         <label class="form-check-label" for="exampleRadios1">
                                             Nhà riêng / Chung cư
                                         </label>
                                     </div>
                                     <div class="form-check col-sm-6">
-                                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-                                               value="2">
+                                        <input class="form-check-input" type="radio" name="address_option"
+                                               id="exampleRadios2"
+                                               value="{{\App\Enums\AddressOrderOption::COMPANY}}">
                                         <label class="form-check-label" for="exampleRadios2">
                                             Cơ quan / Công ty
                                         </label>
@@ -119,22 +127,23 @@
                             <label class="col-sm-3 col-form-label"></label>
                             <div class="col-sm-9">
                                 <div class="input-group">
-                                    <input type="checkbox" class="mr-2">
+                                    <input type="checkbox" name="default" class="mr-2"
+                                           value="{{\App\Enums\AddressOrder::DEFAULT}}">
                                     Đặt làm địa chỉ mặc định
                                 </div>
                             </div>
                         </div>
-
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
+            referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script>
         const host = "https://provinces.open-api.vn/api/";
@@ -173,7 +182,7 @@
             callApiWard(host + "d/" + $("#district").find(':selected').data('id') + "?depth=2");
         });
 
-        document.getElementById("addAction").addEventListener("click", function() {
+        document.getElementById("addAction").addEventListener("click", function () {
             document.querySelector("#modalLabel").innerHTML = "Tạo sổ địa chỉ"
         });
 
