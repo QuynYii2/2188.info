@@ -2,6 +2,20 @@
 
 @section('title', 'Category')
 
+<style>
+    .tabs-product-detail{
+        background-color: #fff;!important;
+    }
+
+    .link-tabs:hover{
+        color: #c69500;!important;
+    }
+
+    .text-more-tabs:hover{
+        color: #c69500;!important;
+    }
+</style>
+
 @section('content')
     <div class="container pt-5">
         <div id="header-carousel" class="carousel slide carousel-fade " data-ride="carousel">
@@ -12,15 +26,15 @@
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item position-relative active" style="height: 450px;">
-                    <img class="position-absolute w-100 h-100" src="{{ asset('images//carousel-1.jpg') }}"
+                    <img class="position-absolute w-100 h-100 img" src="{{ asset('images//carousel-1.jpg') }}"
                          style="object-fit: cover;">
                 </div>
                 <div class="carousel-item position-relative" style="height: 450px;">
-                    <img class="position-absolute w-100 h-100" src="{{ asset('images//carousel-2.jpg') }}"
+                    <img class=" img position-absolute w-100 h-100" src="{{ asset('images//carousel-2.jpg') }}"
                          style="object-fit: cover;">
                 </div>
                 <div class="carousel-item position-relative" style="height: 450px;">
-                    <img class="position-absolute w-100 h-100" src="{{ asset('images//carousel-3.jpg') }}"
+                    <img class= "img position-absolute w-100 h-100" src="{{ asset('images//carousel-3.jpg') }}"
                          style="object-fit: cover;">
                 </div>
             </div>
@@ -35,7 +49,7 @@
                         <a href="#!">
                             <img
                                     src="{{asset('images/vendor-8.jpg')}}"
-                                    class="w-100"
+                                    class="w-100 img"
                             />
                         </a>
                     </td>
@@ -43,7 +57,7 @@
                         <a href="#!">
                             <img
                                     src="{{asset('images/cat-2.jpg')}}"
-                                    class="w-100"
+                                    class="w-100 img"
                             />
                         </a>
                     </td>
@@ -51,7 +65,7 @@
                         <a href="#!">
                             <img
                                     src="{{asset('images/cat-3.jpg')}}"
-                                    class="w-100"
+                                    class="w-100 img"
                             />
                         </a>
                     </td>
@@ -59,7 +73,7 @@
                         <a href="#!">
                             <img
                                     src="{{asset('images/cat-4.jpg')}}"
-                                    class="w-100"
+                                    class="w-100 img"
                             />
                         </a>
                     </td>
@@ -67,7 +81,7 @@
                         <a href="#!">
                             <img
                                     src="{{asset('images/cat-1.jpg')}}"
-                                    class="w-100"
+                                    class="w-100 img"
                             />
                         </a>
                     </td>
@@ -75,7 +89,7 @@
                         <a href="#!">
                             <img
                                     src="{{asset('images/vendor-2.jpg')}}"
-                                    class="w-100"
+                                    class="w-100 img"
                             />
                         </a>
                     </td>
@@ -86,7 +100,7 @@
                         <a href="#!">
                             <img
                                     src="{{asset('images/vendor-3.jpg')}}"
-                                    class="w-100"
+                                    class="w-100 img"
                             />
                         </a>
                     </td>
@@ -94,7 +108,7 @@
                         <a href="#!">
                             <img
                                     src="{{asset('images/vendor-4.jpg')}}"
-                                    class="w-100"
+                                    class="w-100 img"
                             />
                         </a>
                     </td>
@@ -102,7 +116,7 @@
                         <a href="#!">
                             <img
                                     src="{{asset('images/vendor-1.jpg')}}"
-                                    class="w-100"
+                                    class="w-100 img"
                             />
                         </a>
                     </td>
@@ -110,11 +124,11 @@
                         <a href="#!">
                             <img
                                     src="{{asset('images/vendor-5.jpg')}}"
-                                    class="w-100"
+                                    class="w-100 img"
                             />
                         </a>
                     </td>
-                    <td class="col-2 align-middle">
+                    <td class="col-2 align-middle img">
                         <a href="#!">
                             <img
                                     src="{{asset('images/vendor-6.jpg')}}"
@@ -126,7 +140,7 @@
                         <a href="#!">
                             <img
                                     src="{{asset('images/vendor-7.jpg')}}"
-                                    class="w-100"
+                                    class="w-100 img"
                             />
                         </a>
                     </td>
@@ -139,7 +153,7 @@
             <div class="row">
                 <aside class="col-md-3">
 
-                    <div class="card">
+                    <div class="card  mb-5">
                         <article class="filter-group">
                             <header class="card-header">
                                 <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true"
@@ -307,7 +321,7 @@
 
                     <header class=" border-bottom mb-4 pb-3 ">
                         <div class="form-inline">
-                            <span class="mr-md-auto">32 {{ __('home.items found') }}</span>
+                            <span class="mr-md-auto">{{count($productByLocal9)}} {{ __('home.items found') }}</span>
                             <select class="form-control">
                                 <option>{{ __('home.latest items') }}</option>
                                 <option>{{ __('home.trending') }}</option>
@@ -318,252 +332,22 @@
                     </header>
 
                     <div class="row py-2">
-                        <div class="col-3 rounded">
-                            <div class="product-item bg-light rounded ">
-                                <div class="product-img position-relative overflow-hidden rounded">
-                                    <img class=" height-img w-100" src="{{ asset('images/product-1.jpg') }}" alt="">
-                                    <div class="product-action">
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-shopping-cart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-sync-alt"></i></a>
+                        @foreach($productByLocal9 as $product)
+                            <div class="col-3 rounded">
+                                <div class="product-item bg-light rounded ">
+                                    <div class="product-img position-relative overflow-hidden rounded">
+                                        <img class=" height-img w-100 img" src="{{ $product->thumbnail }}" alt="">
                                     </div>
-                                </div>
-                                <div class="text-center py-4 text-limit">
-                                    <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                                    <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5>$123.00</h5><h6 class="text-muted ml-2"></h6>
+                                    <div class="text-center py-4 text-limit">
+                                        <a class="h6 text-decoration-none text-truncate tabs-product-detail" href="">{{ $product->name }}</a>
+                                        <div class="d-flex align-items-center justify-content-center mt-2">
+                                            <h5 class="text-danger">${{ $product->price }}</h5><h6 class="text-muted ml-2"></h6>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="product-item bg-light rounded ">
-                                <div class="product-img position-relative overflow-hidden rounded">
-                                    <img class=" height-img w-100" src="{{ asset('images/product-9.jpg') }}" alt="">
-                                    <div class="product-action">
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-shopping-cart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-sync-alt"></i></a>
-                                    </div>
-                                </div>
-                                <div class="text-center py-4 text-limit">
-                                    <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                                    <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5>$123.00</h5><h6 class="text-muted ml-2"></h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="product-item bg-light rounded ">
-                                <div class="product-img position-relative overflow-hidden rounded">
-                                    <img class=" height-img w-100" src="{{ asset('images/product-8.jpg') }}" alt="">
-                                    <div class="product-action">
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-shopping-cart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-sync-alt"></i></a>
-                                    </div>
-                                </div>
-                                <div class="text-center py-4 text-limit">
-                                    <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                                    <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5>$123.00</h5><h6 class="text-muted ml-2"></h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="product-item bg-light rounded ">
-                                <div class="product-img position-relative overflow-hidden rounded">
-                                    <img class=" height-img w-100" src="{{ asset('images/product-7.jpg') }}" alt="">
-                                    <div class="product-action">
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-shopping-cart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-sync-alt"></i></a>
-                                    </div>
-                                </div>
-                                <div class="text-center py-4 text-limit">
-                                    <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                                    <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5>$123.00</h5><h6 class="text-muted ml-2"></h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
-                    <div class="row py-2">
-                        <div class="col-3 rounded">
-                            <div class="product-item bg-light rounded ">
-                                <div class="product-img position-relative overflow-hidden rounded">
-                                    <img class=" height-img w-100" src="{{ asset('images/product-1.jpg') }}" alt="">
-                                    <div class="product-action">
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-shopping-cart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-sync-alt"></i></a>
-                                    </div>
-                                </div>
-                                <div class="text-center py-4 text-limit">
-                                    <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                                    <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5>$123.00</h5><h6 class="text-muted ml-2"></h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="product-item bg-light rounded ">
-                                <div class="product-img position-relative overflow-hidden rounded">
-                                    <img class=" height-img w-100" src="{{ asset('images/product-9.jpg') }}" alt="">
-                                    <div class="product-action">
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-shopping-cart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-sync-alt"></i></a>
-                                    </div>
-                                </div>
-                                <div class="text-center py-4 text-limit">
-                                    <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                                    <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5>$123.00</h5><h6 class="text-muted ml-2"></h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="product-item bg-light rounded ">
-                                <div class="product-img position-relative overflow-hidden rounded">
-                                    <img class=" height-img w-100" src="{{ asset('images/product-8.jpg') }}" alt="">
-                                    <div class="product-action">
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-shopping-cart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-sync-alt"></i></a>
-                                    </div>
-                                </div>
-                                <div class="text-center py-4 text-limit">
-                                    <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                                    <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5>$123.00</h5><h6 class="text-muted ml-2"></h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="product-item bg-light rounded ">
-                                <div class="product-img position-relative overflow-hidden rounded">
-                                    <img class=" height-img w-100" src="{{ asset('images/product-7.jpg') }}" alt="">
-                                    <div class="product-action">
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-shopping-cart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-sync-alt"></i></a>
-                                    </div>
-                                </div>
-                                <div class="text-center py-4 text-limit">
-                                    <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                                    <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5>$123.00</h5><h6 class="text-muted ml-2"></h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row py-2">
-                        <div class="col-3 rounded">
-                            <div class="product-item bg-light rounded ">
-                                <div class="product-img position-relative overflow-hidden rounded">
-                                    <img class=" height-img w-100" src="{{ asset('images/product-1.jpg') }}" alt="">
-                                    <div class="product-action">
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-shopping-cart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-sync-alt"></i></a>
-                                    </div>
-                                </div>
-                                <div class="text-center py-4 text-limit">
-                                    <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                                    <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5>$123.00</h5><h6 class="text-muted ml-2"></h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="product-item bg-light rounded ">
-                                <div class="product-img position-relative overflow-hidden rounded">
-                                    <img class=" height-img w-100" src="{{ asset('images/product-9.jpg') }}" alt="">
-                                    <div class="product-action">
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-shopping-cart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-sync-alt"></i></a>
-                                    </div>
-                                </div>
-                                <div class="text-center py-4 text-limit">
-                                    <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                                    <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5>$123.00</h5><h6 class="text-muted ml-2"></h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="product-item bg-light rounded ">
-                                <div class="product-img position-relative overflow-hidden rounded">
-                                    <img class=" height-img w-100" src="{{ asset('images/product-8.jpg') }}" alt="">
-                                    <div class="product-action">
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-shopping-cart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-sync-alt"></i></a>
-                                    </div>
-                                </div>
-                                <div class="text-center py-4 text-limit">
-                                    <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                                    <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5>$123.00</h5><h6 class="text-muted ml-2"></h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="product-item bg-light rounded ">
-                                <div class="product-img position-relative overflow-hidden rounded">
-                                    <img class=" height-img w-100" src="{{ asset('images/product-7.jpg') }}" alt="">
-                                    <div class="product-action">
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-shopping-cart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-sync-alt"></i></a>
-                                    </div>
-                                </div>
-                                <div class="text-center py-4 text-limit">
-                                    <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                                    <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5>$123.00</h5><h6 class="text-muted ml-2"></h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <nav class="mt-4 d-flex justify-content-center" aria-label="Page navigation sample">
                         <ul class="pagination">
                             <li class="page-item disabled"><a class="page-link" href="#!">{{ __('home.previous') }}</a></li>

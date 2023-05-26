@@ -27,7 +27,7 @@ Route::get('/login/{locale}', [\App\Http\Controllers\AuthController::class, 'sho
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login.submit');
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
-Route::get('/register/', [\App\Http\Controllers\Frontend\HomeController::class, 'register'])->name('register.store');
+Route::get('/register/', [\App\Http\Controllers\Frontend\HomeController::class, 'register'])->name('register.show');
 
 Route::middleware('auth.product')->group(function () {
     // Các tuyến đường sản phẩm ở đây

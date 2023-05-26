@@ -2,18 +2,35 @@
 
 @section('title', 'Login')
 
+<style>
+    .login-tags{
+        display: inline-block;
+        margin: auto;
+    }
+    .link-tabs{
+        color: #cccccc;
+        background-color: #f9f9f9 !important;
+    }
+
+    .link-tabs:hover{
+        color: #c69500;!important;
+        background-color: #f7f7f7;
+    }
+
+</style>
+
 @section('content')
     <div class="container bg-white mt-3">
-        <div class="form-title text-center pt-2">
+        <div class="form-title text-center pt-2 mb-5">
             <h4>{{ __('home.sign in') }}</h4>
         </div>
-        <div class="row">
-            <div class="col-xs-12 ">
+        <div class="row text-center">
+            <div class="col-md-8 login-tags">
                 <nav>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-buyer-tab" data-toggle="tab" href="#nav-buyer"
+                        <a class="nav-item nav-link active link-tabs" id="nav-buyer-tab" data-toggle="tab" href="#nav-buyer"
                            role="tab" aria-controls="nav-buyer">{{ __('home.buyer') }}</a>
-                        <a class="nav-item nav-link" id="nav-seller-tab" data-toggle="tab" href="#nav-seller" role="tab"
+                        <a class="nav-item nav-link link-tabs" id="nav-seller-tab" data-toggle="tab" href="#nav-seller" role="tab"
                            aria-controls="nav-seller">{{ __('home.seller') }}</a>
                     </div>
                 </nav>
@@ -30,9 +47,14 @@
                                        placeholder="{{ __('home.input password') }}" required>
                             </div>
 
-                            <div>
-                                <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                <label for="remember">Ghi nhớ đăng nhập</label>
+                            <div class="">
+                                <div class="float-left">
+                                    <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                    <label for="remember">Ghi nhớ đăng nhập</label>
+                                </div>
+                                <div class="float-right">
+                                    <a class="tabs-product-detail" href="{{route('register.show')}}">{{ __('home.sign up') }}</a>
+                                </div>
                             </div>
                             <button type="submit"
                                     class="btn btn-info btn-block btn-round">{{ __('home.sign in') }}
@@ -53,6 +75,15 @@
                             <div class="form-group">
                                 <input type="password" class="form-control" name="password"
                                        placeholder="{{ __('home.input password') }}" required>
+                            </div>
+                            <div class="">
+                                <div class="float-left">
+                                    <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                    <label for="remember">Ghi nhớ đăng nhập</label>
+                                </div>
+                                <div class="float-right">
+                                    <a class="tabs-product-detail" href="{{route('register.show')}}">{{ __('home.sign up') }}</a>
+                                </div>
                             </div>
                             <button type="submit"
                                     class="btn btn-info btn-block btn-round">{{ __('home.sign in') }}
