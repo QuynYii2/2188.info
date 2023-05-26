@@ -22,7 +22,8 @@ Route::post('/register', [\App\Http\Controllers\UserController::class, 'store'])
 
 Route::get('/', [\App\Http\Controllers\Frontend\HomeController::class, 'index'])->name('home');
 
-Route::get('/login/', [\App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('login');
+Route::get('/login/', [\App\Http\Controllers\AuthController::class, 'showLogin'])->name('login');
+Route::get('/login/{locale}', [\App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('login.local');
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login.submit');
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 

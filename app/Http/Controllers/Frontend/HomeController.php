@@ -56,6 +56,8 @@ class HomeController extends Controller
             ->limit(10)
             ->get();
 
+        $productByLocal5 = Product::all()->take(5);
+
         return view('frontend/index',[
             'productByLocal' => $productByLocal,
             'currency' => $currency,

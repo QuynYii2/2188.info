@@ -3,38 +3,380 @@
 @section('title', 'Home page')
 
 @section('content')
+    <style>
+        .vertical-menu {
+            width: 100%;
+        }
+
+        .vertical-menu .navbar-nav {
+            display: block;
+        }
+
+        .vertical-menu .nav-item {
+            background: #ffffff;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .vertical-menu .nav-link {
+            color: #757575;
+            padding: 10px;
+        }
+
+        /* CSS cho megamenu */
+        .megamenu {
+            display: none;
+        }
+
+        .vertical-menu .nav-item:hover .megamenu {
+            display: block;
+            position: absolute;
+            top: 8px;
+            left: 94%;
+            z-index: 999;
+            width: 700px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .25);
+            height: 350px;
+        }
+
+        .megamenu a:hover, a:focus {
+            color: #e7ab3c;
+            font-weight: 500;
+        }
+
+        .depart-hover li:hover .megamenu {
+            display: block;
+            position: absolute;
+            top: 8px;
+            left: 94%;
+            z-index: 999;
+            width: 700px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .25);
+        }
+
+        .depart-hover .megamenu li a {
+            padding-left: 0 !important;
+        }
+    </style>
     <!-- Hero Section Begin -->
-    <section class="hero-section">
-        <div class="hero-items owl-carousel">
-            <div class="single-hero-items set-bg" data-setbg="{{asset('images/img/hero-1.jpg')}}">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-5">
-                            <span>Bag,kids</span>
-                            <h1>Black friday</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore</p>
-                            <a href="#" class="primary-btn">Shop Now</a>
+    <section class="" style="padding: 0 60px">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2">
+                    <nav class="navbar navbar-expand-lg">
+                        <div class="vertical-menu">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/category/1"><i class="fa fa-laptop" aria-hidden="true"></i>&ensp; Electronic Devices</a>
+                                    <div class="megamenu">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h5>Desktops Computers</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">All-In-One</a></li>
+                                                    <li><a href="/category/1">Gaming Desktops</a></li>
+                                                    <li><a href="/category/1">DIY</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Laptops</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">Traditional Laptops</a></li>
+                                                    <li><a href="/category/1">Gaming Laptops</a></li>
+                                                    <li><a href="/category/1">2-in-1s</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Audio</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">Headphones & Headsets</a></li>
+                                                    <li><a href="/category/1">Portable Speakers</a></li>
+                                                    <li><a href="/category/1">Home Audio</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h5>Desktops Computers</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">All-In-One</a></li>
+                                                    <li><a href="/category/1">Gaming Desktops</a></li>
+                                                    <li><a href="/category/1">DIY</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Laptops</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">Traditional Laptops</a></li>
+                                                    <li><a href="/category/1">Gaming Laptops</a></li>
+                                                    <li><a href="/category/1">2-in-1s</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Audio</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">Headphones & Headsets</a></li>
+                                                    <li><a href="/category/1">Portable Speakers</a></li>
+                                                    <li><a href="/category/1">Home Audio</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/category/1"><i class="fa fa-television" aria-hidden="true"></i>&ensp; TV & Home Appliances</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/category/1"><i class="fa fa-laptop" aria-hidden="true"></i>&ensp; Electronic Devices</a>
+                                    <div class="megamenu">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h5>Desktops Computers</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">All-In-One</a></li>
+                                                    <li><a href="/category/1">Gaming Desktops</a></li>
+                                                    <li><a href="/category/1">DIY</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Laptops</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">Traditional Laptops</a></li>
+                                                    <li><a href="/category/1">Gaming Laptops</a></li>
+                                                    <li><a href="/category/1">2-in-1s</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Audio</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">Headphones & Headsets</a></li>
+                                                    <li><a href="/category/1">Portable Speakers</a></li>
+                                                    <li><a href="/category/1">Home Audio</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h5>Desktops Computers</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">All-In-One</a></li>
+                                                    <li><a href="/category/1">Gaming Desktops</a></li>
+                                                    <li><a href="/category/1">DIY</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Laptops</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">Traditional Laptops</a></li>
+                                                    <li><a href="/category/1">Gaming Laptops</a></li>
+                                                    <li><a href="/category/1">2-in-1s</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Audio</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">Headphones & Headsets</a></li>
+                                                    <li><a href="/category/1">Portable Speakers</a></li>
+                                                    <li><a href="/category/1">Home Audio</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#"><i class="fa fa-television" aria-hidden="true"></i>&ensp; TV & Home Appliances</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#"><i class="fa fa-laptop" aria-hidden="true"></i>&ensp; Electronic Devices</a>
+                                    <div class="megamenu">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h5>Desktops Computers</h5>
+                                                <ul>
+                                                    <li><a href="#">All-In-One</a></li>
+                                                    <li><a href="#">Gaming Desktops</a></li>
+                                                    <li><a href="#">DIY</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Laptops</h5>
+                                                <ul>
+                                                    <li><a href="#">Traditional Laptops</a></li>
+                                                    <li><a href="#">Gaming Laptops</a></li>
+                                                    <li><a href="#">2-in-1s</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Audio</h5>
+                                                <ul>
+                                                    <li><a href="#">Headphones & Headsets</a></li>
+                                                    <li><a href="#">Portable Speakers</a></li>
+                                                    <li><a href="#">Home Audio</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h5>Desktops Computers</h5>
+                                                <ul>
+                                                    <li><a href="#">All-In-One</a></li>
+                                                    <li><a href="#">Gaming Desktops</a></li>
+                                                    <li><a href="#">DIY</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Laptops</h5>
+                                                <ul>
+                                                    <li><a href="#">Traditional Laptops</a></li>
+                                                    <li><a href="#">Gaming Laptops</a></li>
+                                                    <li><a href="#">2-in-1s</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Audio</h5>
+                                                <ul>
+                                                    <li><a href="#">Headphones & Headsets</a></li>
+                                                    <li><a href="#">Portable Speakers</a></li>
+                                                    <li><a href="#">Home Audio</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#"><i class="fa fa-television" aria-hidden="true"></i>&ensp; TV & Home Appliances</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#"><i class="fa fa-laptop" aria-hidden="true"></i>&ensp; Electronic Devices</a>
+                                    <div class="megamenu">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h5>Desktops Computers</h5>
+                                                <ul>
+                                                    <li><a href="#">All-In-One</a></li>
+                                                    <li><a href="#">Gaming Desktops</a></li>
+                                                    <li><a href="#">DIY</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Laptops</h5>
+                                                <ul>
+                                                    <li><a href="#">Traditional Laptops</a></li>
+                                                    <li><a href="#">Gaming Laptops</a></li>
+                                                    <li><a href="#">2-in-1s</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Audio</h5>
+                                                <ul>
+                                                    <li><a href="#">Headphones & Headsets</a></li>
+                                                    <li><a href="#">Portable Speakers</a></li>
+                                                    <li><a href="#">Home Audio</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h5>Desktops Computers</h5>
+                                                <ul>
+                                                    <li><a href="#">All-In-One</a></li>
+                                                    <li><a href="#">Gaming Desktops</a></li>
+                                                    <li><a href="#">DIY</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Laptops</h5>
+                                                <ul>
+                                                    <li><a href="#">Traditional Laptops</a></li>
+                                                    <li><a href="#">Gaming Laptops</a></li>
+                                                    <li><a href="#">2-in-1s</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Audio</h5>
+                                                <ul>
+                                                    <li><a href="#">Headphones & Headsets</a></li>
+                                                    <li><a href="#">Portable Speakers</a></li>
+                                                    <li><a href="#">Home Audio</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#"><i class="fa fa-television" aria-hidden="true"></i>&ensp; TV & Home Appliances</a>
+                                </li>
+                            </ul>
                         </div>
-                    </div>
-                    <div class="off-card">
-                        <h2>Sale <span>50%</span></h2>
-                    </div>
+                    </nav>
+
                 </div>
-            </div>
-            <div class="single-hero-items set-bg" data-setbg="{{asset('images/img/hero-2.jpg')}}">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-5">
-                            <span>Bag,kids</span>
-                            <h1>Black friday</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore</p>
-                            <a href="#" class="primary-btn">Shop Now</a>
-                        </div>
+                <div class="col-md-7">
+                    <!-- Hero Section Begin -->
+                    <section class="slider-section">
+                        <div id="carousel" class="carousel slide" data-ride="carousel">
+                            {{--                            <!-- Indicators -->--}}
+                            {{--                            <ol class="carousel-indicators">--}}
+                            {{--                                <li data-target="#carousel" data-slide-to="0" class="active"></li>--}}
+                            {{--                                <li data-target="#carousel" data-slide-to="1"></li>--}}
+                            {{--                                <li data-target="#carousel" data-slide-to="2"></li>--}}
+                            {{--                            </ol> <!-- End of Indicators -->--}}
+
+                            <!-- Carousel Content -->
+                            <div class="carousel-inner mt-1" role="listbox">
+                                <div class=" carousel-item active"
+                                     style="background-image: url('{{asset('images/img/banner.webp')}}');
+                                    height: 400px;
+                                    margin-top:-30px; background-size: contain;">
+                                </div> <!-- End of Carousel Item -->
+
+                                <div class=" carousel-item"
+                                     style="background-image: url('{{asset('images/img/banner2.webp')}}');
+                                    height: 400px;
+                                    margin-top:-30px;  background-size: contain;">
+                                </div> <!-- End of Carousel Item -->
+                            </div> <!-- End of Carousel Content -->
+
+                            <!-- Previous & Next -->
+                            <a href="#carousel" class="carousel-control-prev" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only"></span>
+                            </a>
+                            <a href="#carousel" class="carousel-control-next" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only"></span>
+                            </a>
+                        </div> <!-- End of Carousel -->
+                    </section> <!-- End of Slider -->
+                    <!-- Hero Section End -->
+                </div>
+
+                <div class="col-md-3 mt-2">
+                    <div class="single-banner">
+                        <img class="img" src="{{asset('images/img/Screenshot 2023-05-26 at 2.14.36 AM.png')}}" alt=""
+                             height="100%">
                     </div>
-                    <div class="off-card">
-                        <h2>Sale <span>50%</span></h2>
+
+                    <div class="single-banner">
+                        <img class="img" src="{{asset('images/img/banner_sidebar1.jpeg')}}" alt="" height="100%">
+                    </div>
+
+                    <div class="single-banner">
+                        <img class="img" src="{{asset('images/img/banner_sidebar2.png')}}" alt="" height="100%">
                     </div>
                 </div>
             </div>
@@ -42,85 +384,115 @@
     </section>
     <!-- Hero Section End -->
 
-    <!-- Banner Section Begin -->
-    <div class="banner-section spad">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="single-banner">
-                        <img class="img" src="{{asset('images/img/banner-1.jpg')}}" alt="" height="100%">
-                        <div class="inner-text">
-                            <h4>Men’s</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="single-banner">
-                        <img class="img" src="{{asset('images/img/banner-2.jpg')}}" alt="" height="100%">
-                        <div class="inner-text">
-                            <h4>Women’s</h4>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="single-banner">
-                        <img class="img" src="{{asset('images/img/banner-3.jpg')}}" alt="" height="100%">
-                        <div class="inner-text">
-                            <h4>Kid’s</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Banner Section End -->
+    {{--    <!-- Banner Section Begin -->--}}
+    {{--    <div class="banner-section spad">--}}
+    {{--        <div class="container-fluid">--}}
+    {{--            <div class="row">--}}
+    {{--                <div class="col-lg-4">--}}
+    {{--                    <div class="single-banner">--}}
+    {{--                        <img src="img/banner-1.jpg" alt="">--}}
+    {{--                        <div class="inner-text">--}}
+    {{--                            <h4>Men’s</h4>--}}
+    {{--                        </div>--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--                <div class="col-lg-4">--}}
+    {{--                    <div class="single-banner">--}}
+    {{--                        <img src="img/banner-2.jpg" alt="">--}}
+    {{--                        <div class="inner-text">--}}
+    {{--                            <h4>Women’s</h4>--}}
+    {{--                        </div>--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--                <div class="col-lg-4">--}}
+    {{--                    <div class="single-banner">--}}
+    {{--                        <img src="img/banner-3.jpg" alt="">--}}
+    {{--                        <div class="inner-text">--}}
+    {{--                            <h4>Kid’s</h4>--}}
+    {{--                        </div>--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
+    {{--    <!-- Banner Section End -->--}}
 
     <!-- Women Banner Section Begin -->
-    <section class="women-banner spad">
+    <section class="man-banner spad">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-3">
-                    <div class="product-large set-bg" data-setbg="{{asset('images/img/products/women-large.jpg')}}">
+                <div class="col-lg-2 ">
+                    <div class="product-large set-bg m-large"
+                         data-setbg="{{asset('images/img/products/women-large.jpg')}}">
+                        <h2>Women’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                    <div class="product-large set-bg m-large"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
                         <h2>Women’s</h2>
                         <a href="#">Discover More</a>
                     </div>
                 </div>
-                <div class="col-lg-8 offset-lg-1">
-                    <div class="filter-control">
-                        <ul>
-                            <li class="active">Clothings</li>
-                            <li>HandBag</li>
-                            <li>Shoes</li>
-                            <li>Accessories</li>
-                        </ul>
-                    </div>
+                <div class="col-lg-8">
                     <div class="product-slider owl-carousel">
                         @foreach($productByLocal as $product)
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <img class="img" src="{{$product->thumbnail}}" alt="">
-                                    <div class="sale">Sale</div>
-                                    <div class="icon">
-                                        <i class="icon_heart_alt"></i>
+                            <div class="row ml-5 ">
+                                <div class="col-12">
+                                    <div class="product-item">
+                                        <div class="pi-pic">
+                                            <img class="img" src="{{$product->thumbnail}}" alt="">
+                                            <div class="sale">Sale</div>
+                                            <div class="icon">
+                                                <i class="icon_heart_alt"></i>
+                                            </div>
+                                        </div>
+                                        <div class="pi-text">
+                                            <div class="catagory-name">{{$product->category->name}}</div>
+                                            <a href="{{route('detail_product.show', $product->id)}}">
+                                                <h5>{{$product->name}}</h5>
+                                            </a>
+                                            <div class="product-price">
+                                                ${{$product->price}}
+                                                {{--                                        <span>$35.00</span>--}}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <ul>
-                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                        <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                    </ul>
                                 </div>
-                                <div class="pi-text">
-                                    <div class="catagory-name">{{$product->category->name}}</div>
-                                    <a href="{{route('detail_product.show', $product->id)}}">
-                                        <h5>{{$product->name}}</h5>
-                                    </a>
-                                    <div class="product-price">
-                                        ${{$product->price}}
-{{--                                        <span>$35.00</span>--}}
+                                <div class="col-12">
+                                    <div class="product-item">
+                                        <div class="pi-pic">
+                                            <img class="img" src="{{$product->thumbnail}}" alt="">
+                                            <div class="sale">Sale</div>
+                                            <div class="icon">
+                                                <i class="icon_heart_alt"></i>
+                                            </div>
+                                        </div>
+                                        <div class="pi-text">
+                                            <div class="catagory-name">{{$product->category->name}}</div>
+                                            <a href="{{route('detail_product.show', $product->id)}}">
+                                                <h5>{{$product->name}}</h5>
+                                            </a>
+                                            <div class="product-price">
+                                                ${{$product->price}}
+                                                {{--                                        <span>$35.00</span>--}}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="product-large set-bg m-large"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                        <h2>Women’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                    <div class="product-large set-bg m-large"
+                         data-setbg="{{asset('images/img/products/women-large.jpg')}}">
+                        <h2>Women’s</h2>
+                        <a href="#">Discover More</a>
                     </div>
                 </div>
             </div>
@@ -134,7 +506,7 @@
             <div class="col-lg-6 text-center">
                 <div class="section-title">
                     <h2>Deal Of The Week</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed<br /> do ipsum dolor sit amet,
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed<br/> do ipsum dolor sit amet,
                         consectetur adipisicing elit </p>
                     <div class="product-price">
                         $35.00
@@ -169,46 +541,76 @@
     <section class="man-banner spad">
         <div class="container-fluid">
             <div class="row">
+                <div class="col-lg-2">
+                    <div class="product-large set-bg m-large"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                        <h2>Men’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                </div>
                 <div class="col-lg-8">
-                    <div class="filter-control">
-                        <ul>
-                            <li class="active">Clothings</li>
-                            <li>HandBag</li>
-                            <li>Shoes</li>
-                            <li>Accessories</li>
+                    <div class=" filter-control d-flex justify-content-between">
+                        <ul class="ml-5">
+                            <li><img src="{{ asset('images/korea.png') }}" alt=""></li>
+                            <li><img src="{{ asset('images/japan.webp') }}" alt=""></li>
+                            <li><img src="{{ asset('images/china.webp') }}" alt=""></li>
+                        </ul>
+                        <ul class="mr-5">
+                            <li><a class="link-read-more" href="{{route('product.index')}}">Read More</a></li>
                         </ul>
                     </div>
                     <div class="product-slider owl-carousel">
                         @foreach($productByLocal as $product)
-                            <div class="product-item">
-                                <div class="pi-pic">
-                                    <img class="img" src="{{$product->thumbnail}}" alt="">
-                                    <div class="sale">Sale</div>
-                                    <div class="icon">
-                                        <i class="icon_heart_alt"></i>
+                            <div class="row ml-5 ">
+                                <div class="col-12">
+                                    <div class="product-item">
+                                        <div class="pi-pic">
+                                            <img class="img" src="{{$product->thumbnail}}" alt="">
+                                            <div class="sale">Sale</div>
+                                            <div class="icon">
+                                                <i class="icon_heart_alt"></i>
+                                            </div>
+                                        </div>
+                                        <div class="pi-text">
+                                            <div class="catagory-name">{{$product->category->name}}</div>
+                                            <a href="{{route('detail_product.show', $product->id)}}">
+                                                <h5>{{$product->name}}</h5>
+                                            </a>
+                                            <div class="product-price">
+                                                ${{$product->price}}
+                                                {{--                                        <span>$35.00</span>--}}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <ul>
-                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                        <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                    </ul>
                                 </div>
-                                <div class="pi-text">
-                                    <div class="catagory-name">{{$product->category->name}}</div>
-                                    <a href="{{route('detail_product.show', $product->id)}}">
-                                        <h5>{{$product->name}}</h5>
-                                    </a>
-                                    <div class="product-price">
-                                        ${{$product->price}}
-                                        {{--                                        <span>$35.00</span>--}}
+                                <div class="col-12">
+                                    <div class="product-item">
+                                        <div class="pi-pic">
+                                            <img class="img" src="{{$product->thumbnail}}" alt="">
+                                            <div class="sale">Sale</div>
+                                            <div class="icon">
+                                                <i class="icon_heart_alt"></i>
+                                            </div>
+                                        </div>
+                                        <div class="pi-text">
+                                            <div class="catagory-name">{{$product->category->name}}</div>
+                                            <a href="{{route('detail_product.show', $product->id)}}">
+                                                <h5>{{$product->name}}</h5>
+                                            </a>
+                                            <div class="product-price">
+                                                ${{$product->price}}
+                                                {{--                                        <span>$35.00</span>--}}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
                     </div>
                 </div>
-                <div class="col-lg-3 offset-lg-1">
-                    <div class="product-large set-bg m-large" data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                <div class="col-lg-2">
+                    <div class="product-large set-bg m-large"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
                         <h2>Men’s</h2>
                         <a href="#">Discover More</a>
                     </div>
@@ -334,38 +736,39 @@
     </section>
     <!-- Latest Blog Section End -->
 
-{{--    <!-- Partner Logo Section Begin -->--}}
-{{--    <div class="partner-logo">--}}
-{{--        <div class="container">--}}
-{{--            <div class="logo-carousel owl-carousel">--}}
-{{--                <div class="logo-item">--}}
-{{--                    <div class="tablecell-inner">--}}
-{{--                        <img src="img/logo-carousel/logo-1.png" alt="">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="logo-item">--}}
-{{--                    <div class="tablecell-inner">--}}
-{{--                        <img src="img/logo-carousel/logo-2.png" alt="">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="logo-item">--}}
-{{--                    <div class="tablecell-inner">--}}
-{{--                        <img src="img/logo-carousel/logo-3.png" alt="">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="logo-item">--}}
-{{--                    <div class="tablecell-inner">--}}
-{{--                        <img src="img/logo-carousel/logo-4.png" alt="">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="logo-item">--}}
-{{--                    <div class="tablecell-inner">--}}
-{{--                        <img src="img/logo-carousel/logo-5.png" alt="">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--    <!-- Partner Logo Section End -->--}}
+    {{--    <!-- Partner Logo Section Begin -->--}}
+    {{--    <div class="partner-logo">--}}
+    {{--        <div class="container">--}}
+    {{--            <div class="logo-carousel owl-carousel">--}}
+    {{--                <div class="logo-item">--}}
+    {{--                    <div class="tablecell-inner">--}}
+    {{--                        <img src="img/logo-carousel/logo-1.png" alt="">--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--                <div class="logo-item">--}}
+    {{--                    <div class="tablecell-inner">--}}
+    {{--                        <img src="img/logo-carousel/logo-2.png" alt="">--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--                <div class="logo-item">--}}
+    {{--                    <div class="tablecell-inner">--}}
+    {{--                        <img src="img/logo-carousel/logo-3.png" alt="">--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--                <div class="logo-item">--}}
+    {{--                    <div class="tablecell-inner">--}}
+    {{--                        <img src="img/logo-carousel/logo-4.png" alt="">--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--                <div class="logo-item">--}}
+    {{--                    <div class="tablecell-inner">--}}
+    {{--                        <img src="img/logo-carousel/logo-5.png" alt="">--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
+    {{--    <!-- Partner Logo Section End -->--}}
 @endsection
+
 
