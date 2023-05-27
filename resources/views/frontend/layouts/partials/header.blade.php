@@ -234,7 +234,7 @@
                 @endif
                 @if(session('login'))
                     <div class="col-lg-3 text-right col-md-3">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <div class="d-flex align-items-center">
                                 <ul class="nav-right">
                                     @php
@@ -307,8 +307,8 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <div class="dropdown">
-                                    <h4 class="dropbtn">
+                                <div class="dropdown ml-3">
+                                    <h4 class="dropbtn text-center">
                                         @if(Auth::user())
                                             {{ Auth::user()->name }}
                                         @endif
