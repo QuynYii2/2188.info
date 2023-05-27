@@ -65,10 +65,10 @@
         }
     </style>
     <!-- Hero Section Begin -->
-    <section class="" style="padding: 0 60px">
+    <section class="header_bottom" >
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-2">
+                <div class="col-md-4 col-lg-2 ">
                     <nav class="navbar navbar-expand-lg">
                         <div class="vertical-menu">
                             <ul class="navbar-nav">
@@ -325,18 +325,10 @@
                     </nav>
 
                 </div>
-                <div class="col-md-7">
+                <div class="col-lg-7 col-md-6">
                     <!-- Hero Section Begin -->
                     <section class="slider-section">
                         <div id="carousel" class="carousel slide" data-ride="carousel">
-                            {{--                            <!-- Indicators -->--}}
-                            {{--                            <ol class="carousel-indicators">--}}
-                            {{--                                <li data-target="#carousel" data-slide-to="0" class="active"></li>--}}
-                            {{--                                <li data-target="#carousel" data-slide-to="1"></li>--}}
-                            {{--                                <li data-target="#carousel" data-slide-to="2"></li>--}}
-                            {{--                            </ol> <!-- End of Indicators -->--}}
-
-                            <!-- Carousel Content -->
                             <div class="carousel-inner mt-1" role="listbox">
                                 <div class=" carousel-item active"
                                      style="background-image: url('{{asset('images/img/banner.webp')}}');
@@ -365,7 +357,7 @@
                     <!-- Hero Section End -->
                 </div>
 
-                <div class="col-md-3 mt-2">
+                <div class="col-lg-3 col-md-3">
                     <div class="single-banner">
                         <img class="img" src="{{asset('images/img/Screenshot 2023-05-26 at 2.14.36 AM.png')}}" alt=""
                              height="100%">

@@ -352,19 +352,19 @@
                                                      style="margin: 8px 16px">
                                                     <a href="{{route('login.local' , ['locale' => 'vi'])}}"
                                                        class="full-width">
-                                                        <img width="102px" height="68px"
+                                                        <img class="img" width="102px" height="68px"
                                                              src="{{ asset('images/vietnam.webp') }}" alt="">
                                                     </a>
 
                                                     <a href="{{route('login.local' , ['locale' => 'kr'])}}"
                                                        class="full-width">
-                                                        <img width="102px" height="68px" class="border"
+                                                        <img width="102px" height="68px" class="img border"
                                                              src="{{ asset('images/korea.png') }}" alt="">
                                                     </a>
 
                                                     <a href="{{route('login.local' , ['locale' => 'cn'])}}"
                                                        class="full-width">
-                                                        <img width="102px" height="68px"
+                                                        <img class="img" width="102px" height="68px"
                                                              src="{{ asset('images/china.webp') }}" alt="">
                                                     </a>
                                                 </div>
@@ -416,7 +416,6 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <hr>
                                                     <div class="row">
                                                         <div class="col-sm-4">
                                                             <h4>Desktops Computers</h4>

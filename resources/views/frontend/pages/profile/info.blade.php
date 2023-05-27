@@ -1,3 +1,7 @@
+@php use Illuminate\Support\Facades\Auth;
+ $user = \App\Models\User::find(Auth::user()->id)
+@endphp
+
 @extends('frontend.layouts.profile')
 
 @section('title', 'Information')
@@ -8,7 +12,7 @@
             <h5>{{ __('home.account information') }}</h5>
         </div>
         <div class="border-bottom"></div>
-        <div class="row">
+        <div class="row mb-5">
             <div class="col-md-7 border-right">
                 <div class="p-3 py-3">
                     <div class="d-flex align-items-center experience">
@@ -29,59 +33,62 @@
                                         </svg>
                                     </label>
                                 </div>
-                                <img class="preview" id="avatarPreview" src="">
+                                <img class=" img preview mb-3" id="avatarPreview" src="">
                             </div>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-12">
                             <div class="form-group row">
-                                <label for="staticEmail" class="col-sm-4 col-form-label">{{ __('home.full name') }}</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="staticEmail">
+                                <label for="staticEmail"
+                                       class="col-md-4 col-form-label">{{ __('home.full name') }}</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="staticEmail" value="{{$user->name}}">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputPassword" class="col-sm-4 col-form-label">{{ __('home.nickname') }}</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="inputPassword">
+                                <label for="inputPassword"
+                                       class="col-md-4 col-form-label">{{ __('home.nickname') }}</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="inputPassword"
+                                           value="{{$user->username}}">
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row form-group pl-2">
-                        <label for="day" class="col-sm-3 col-form-label ">{{ __('home.date of birth') }}</label>
+                    <div class="row form-group">
+                        <label for="day" class="col-md-3 col-form-label ">{{ __('home.date of birth') }}</label>
 
-                        <div class="col-sm-3">
+                        <div class="col-md-3">
                             <select class="form-control" id="day">
                             </select>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-md-3">
                             <select class="form-control" id="month">
                             </select>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-md-3">
                             <select class="form-control" id="year">
                             </select>
                         </div>
                     </div>
 
-                    <div class="row form-group pl-2">
-                        <label for="day" class="col-sm-3 col-form-label">{{ __('home.gender') }}</label>
-                        <div class="form-check col-sm-3">
+                    <div class="row form-group">
+                        <label for="day" class="col-md-3 col-form-label">{{ __('home.gender') }}</label>
+                        <div class="form-check col-md-3">
                             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
                                    value="1" checked>
                             <label class="form-check-label" for="exampleRadios1">
                                 {{ __('home.male') }}
                             </label>
                         </div>
-                        <div class="form-check col-sm-3">
+                        <div class="form-check col-md-3">
                             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
                                    value="2">
                             <label class="form-check-label" for="exampleRadios2">
                                 {{ __('home.female') }}
                             </label>
                         </div>
-                        <div class="form-check col-sm-3">
+                        <div class="form-check col-md-3">
                             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3"
                                    value="3">
                             <label class="form-check-label" for="exampleRadios3">
@@ -89,8 +96,8 @@
                             </label>
                         </div>
                     </div>
-                    <div class="row form-group pl-2">
-                        <label for="day" class="col-sm-3 col-form-label">{{ __('home.nationality') }}</label>
+                    <div class="row form-group">
+                        <label for="day" class="col-md-3 col-form-label">{{ __('home.nationality') }}</label>
 
                         <div class="col-md-9">
                             <select class="form-control" id="country">
@@ -101,8 +108,8 @@
                         <label for="day" class="col-sm-3 col-form-label"></label>
 
                         <div class="col-md-9">
-                            <button class="btn btn-outline-primary -align-center" type="submit">{{ __('home.save changes') }}</button>
-
+                            <button class="btn btn-outline-primary -align-center"
+                                    type="submit">{{ __('home.save changes') }}</button>
                         </div>
                     </div>
 
@@ -117,13 +124,23 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                             <div>
-                                <h6 class="mb-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                        <path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/>
-                                    </svg>
-                                    {{ __('home.phone number') }}
-                                </h6>
-                                <h6 class="mb-0" style="margin-left: 32px">0123456789</h6>
+                                @if($user->phone == null)
+                                    <h6 class="mb-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                            <path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/>
+                                        </svg>
+                                        {{ __('home.phone number') }}
+                                    </h6>
+                                    <h6 class="mb-0" style="margin-left: 32px">{{ __('home.add phone') }}</h6>
+                                @else
+                                    <h6 class="mb-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                            <path d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/>
+                                        </svg>
+                                        {{ __('home.phone number') }}
+                                    </h6>
+                                    <h6 class="mb-0" style="margin-left: 32px">{{$user->phone}}</h6>
+                                @endif
                             </div>
                             <button class="btn-outline-primary btn" data-toggle="modal" data-target="#modal-edit-phone">
                                 {{ __('home.update') }}
@@ -131,15 +148,23 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                             <div>
-
-
-                                <h6 class="mb-0">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                        <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/>
-                                    </svg>
-                                    {{ __('home.email') }}
-                                </h6>
-                                <h6 class="mb-0" style="margin-left: 32px">{{ __('home.add email') }}</h6>
+                                @if($user->email == null)
+                                    <h6 class="mb-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                            <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/>
+                                        </svg>
+                                        {{ __('home.email') }}
+                                    </h6>
+                                    <h6 class="mb-0" style="margin-left: 32px">{{ __('home.add email') }}</h6>
+                                @else
+                                    <h6 class="mb-0">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                            <path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/>
+                                        </svg>
+                                        {{ __('home.email') }}
+                                    </h6>
+                                    <h6 class="mb-0" style="margin-left: 32px">{{$user->email}}</h6>
+                                @endif
                             </div>
                             <button class="btn-outline-primary btn" data-toggle="modal" data-target="#modal-edit-email">
                                 {{ __('home.update') }}
@@ -164,15 +189,15 @@
                                     data-target="#modal-edit-password">{{ __('home.update') }}
                             </button>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                            <h6 class="mb-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                    <path d="M256 0c4.6 0 9.2 1 13.4 2.9L457.7 82.8c22 9.3 38.4 31 38.3 57.2c-.5 99.2-41.3 280.7-213.6 363.2c-16.7 8-36.1 8-52.8 0C57.3 420.7 16.5 239.2 16 140c-.1-26.2 16.3-47.9 38.3-57.2L242.7 2.9C246.8 1 251.4 0 256 0z"/>
-                                </svg>
-                                {{ __('home.set pin code') }}
-                            </h6>
-                            <button class="btn-outline-primary btn">{{ __('home.update') }}</button>
-                        </li>
+                        {{--                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">--}}
+                        {{--                            <h6 class="mb-0">--}}
+                        {{--                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">--}}
+                        {{--                                    <path d="M256 0c4.6 0 9.2 1 13.4 2.9L457.7 82.8c22 9.3 38.4 31 38.3 57.2c-.5 99.2-41.3 280.7-213.6 363.2c-16.7 8-36.1 8-52.8 0C57.3 420.7 16.5 239.2 16 140c-.1-26.2 16.3-47.9 38.3-57.2L242.7 2.9C246.8 1 251.4 0 256 0z"/>--}}
+                        {{--                                </svg>--}}
+                        {{--                                {{ __('home.set pin code') }}--}}
+                        {{--                            </h6>--}}
+                        {{--                            <button class="btn-outline-primary btn">{{ __('home.update') }}</button>--}}
+                        {{--                        </li>--}}
                     </ul>
                 </div>
 
@@ -206,13 +231,13 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modal-edit-phone" tabindex="-1" aria-labelledby="exampleModalLabel" >
+    <div class="modal fade" id="modal-edit-phone" tabindex="-1" aria-labelledby="exampleModalLabel">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Cập nhật số điện thoại</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span >&times;</span>
+                        <span>&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -220,7 +245,7 @@
                         <div class="form-group">
                             <label for="inputPassword" class="col-sm-4 col-form-label">Số điện thoại</label>
                             <div>
-                                <input type="tel" class="form-control" name="edit-phone">
+                                <input type="tel" class="form-control" name="edit-phone"/>
                             </div>
                         </div>
                     </form>
@@ -233,13 +258,13 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modal-edit-email" tabindex="-1" aria-labelledby="exampleModalLabel" >
+    <div class="modal fade" id="modal-edit-email" tabindex="-1" aria-labelledby="exampleModalLabel">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Cập nhật Email</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span >&times;</span>
+                        <span>&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -247,7 +272,7 @@
                         <div class="form-group">
                             <label for="inputPassword" class="col-sm-4 col-form-label">Email</label>
                             <div>
-                                <input type="tel" class="form-control" name="edit-email">
+                                <input type="tel" class="form-control" name="edit-email"/>
                             </div>
                         </div>
                     </form>
@@ -260,14 +285,13 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modal-edit-password" tabindex="-1" aria-labelledby="exampleModalLabel"
-         >
+    <div class="modal fade" id="modal-edit-password" tabindex="-1" aria-labelledby="exampleModalLabel">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Đổi mật khẩu</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span >&times;</span>
+                        <span>&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
