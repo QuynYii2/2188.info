@@ -116,72 +116,88 @@
                     <select class="language_drop" name="countries" id="countries" style="width:300px;"
                             onchange="location = this.value;">
                         @if(session('locale') == 'vi' || session('locale') == null)
-                            <option class="img" value='{{ route('language', ['locale' => 'vi']) }}' data-image="{{ asset('images/vietnam.webp') }}" data-imagecss="flag vi">
+                            <option class="img" value='{{ route('language', ['locale' => 'vi']) }}'
+                                    data-image="{{ asset('images/vietnam.webp') }}" data-imagecss="flag vi">
                                 <a class="text-body mr-3">Việt Nam</a>
                             </option>
-                            <option class="img" value='{{ route('language', ['locale' => 'kr']) }}' data-image="{{ asset('images/korea.png') }}" data-imagecss="flag kr">
+                            <option class="img" value='{{ route('language', ['locale' => 'kr']) }}'
+                                    data-image="{{ asset('images/korea.png') }}" data-imagecss="flag kr">
                                 <a class="text-body mr-3">Korea</a>
                             </option>
-                            <option class="img" value='{{ route('language', ['locale' => 'jp']) }}' data-image="{{ asset('images/japan.webp') }}" data-imagecss="flag jp"
+                            <option class="img" value='{{ route('language', ['locale' => 'jp']) }}'
+                                    data-image="{{ asset('images/japan.webp') }}" data-imagecss="flag jp"
                                     data-title="Japan">
                                 <a class="text-body mr-3">Japan</a>
                             </option>
-                            <option class="img" value='{{ route('language', ['locale' => 'cn']) }}' data-image="{{ asset('images/china.webp') }}" data-imagecss="flag cn">
+                            <option class="img" value='{{ route('language', ['locale' => 'cn']) }}'
+                                    data-image="{{ asset('images/china.webp') }}" data-imagecss="flag cn">
                                 <a class="text-body mr-3">China</a>
                             </option>
                         @endif
                         @if(session('locale') == 'kr')
-                            <option class="img" value='{{ route('language', ['locale' => 'kr']) }}' data-image="{{ asset('images/korea.png') }}" data-imagecss="flag kr"
+                            <option class="img" value='{{ route('language', ['locale' => 'kr']) }}'
+                                    data-image="{{ asset('images/korea.png') }}" data-imagecss="flag kr"
                                     data-title="Korea">
-                                <a class="text-body mr-3" >Korea</a>
+                                <a class="text-body mr-3">Korea</a>
                             </option>
-                            <option class="img" value='{{ route('language', ['locale' => 'vi']) }}' data-image="{{ asset('images/vietnam.webp') }}" data-imagecss="flag vi"
+                            <option class="img" value='{{ route('language', ['locale' => 'vi']) }}'
+                                    data-image="{{ asset('images/vietnam.webp') }}" data-imagecss="flag vi"
                                     data-title="VietNam">
                                 <a class="text-body mr-3">Việt Nam</a>
                             </option>
-                            <option class="img" value='{{ route('language', ['locale' => 'jp']) }}' data-image="{{ asset('images/japan.webp') }}" data-imagecss="flag jp"
+                            <option class="img" value='{{ route('language', ['locale' => 'jp']) }}'
+                                    data-image="{{ asset('images/japan.webp') }}" data-imagecss="flag jp"
                                     data-title="Japan">
                                 <a class="text-body mr-3">Japan</a>
                             </option>
-                            <option class="img" value='{{ route('language', ['locale' => 'cn']) }}' data-image="{{ asset('images/china.webp') }}" data-imagecss="flag cn"
+                            <option class="img" value='{{ route('language', ['locale' => 'cn']) }}'
+                                    data-image="{{ asset('images/china.webp') }}" data-imagecss="flag cn"
                                     data-title="China">
                                 <a class="text-body mr-3">China</a>
                             </option>
                         @endif
                         @if(session('locale') == 'jp')
-                                <option class="img" value='{{ route('language', ['locale' => 'jp']) }}' data-image="{{ asset('images/japan.webp') }}" data-imagecss="flag jp"
-                                        data-title="Japan">
-                                    <a class="text-body mr-3">Japan</a>
-                                </option>
-                                <option class="img" value='{{ route('language', ['locale' => 'kr']) }}' data-image="{{ asset('images/korea.png') }}" data-imagecss="flag kr"
-                                        data-title="Korea">
-                                    <a class="text-body mr-3" >Korea</a>
-                                </option>
-                                <option class="img" value='{{ route('language', ['locale' => 'vi']) }}' data-image="{{ asset('images/vietnam.webp') }}" data-imagecss="flag vi"
-                                        data-title="VietNam">
-                                    <a class="text-body mr-3">Việt Nam</a>
-                                </option>
-                                <option class="img" value='{{ route('language', ['locale' => 'cn']) }}' data-image="{{ asset('images/china.webp') }}" data-imagecss="flag cn"
-                                        data-title="China">
-                                    <a class="text-body mr-3">China</a>
+                            <option class="img" value='{{ route('language', ['locale' => 'jp']) }}'
+                                    data-image="{{ asset('images/japan.webp') }}" data-imagecss="flag jp"
+                                    data-title="Japan">
+                                <a class="text-body mr-3">Japan</a>
+                            </option>
+                            <option class="img" value='{{ route('language', ['locale' => 'kr']) }}'
+                                    data-image="{{ asset('images/korea.png') }}" data-imagecss="flag kr"
+                                    data-title="Korea">
+                                <a class="text-body mr-3">Korea</a>
+                            </option>
+                            <option class="img" value='{{ route('language', ['locale' => 'vi']) }}'
+                                    data-image="{{ asset('images/vietnam.webp') }}" data-imagecss="flag vi"
+                                    data-title="VietNam">
+                                <a class="text-body mr-3">Việt Nam</a>
+                            </option>
+                            <option class="img" value='{{ route('language', ['locale' => 'cn']) }}'
+                                    data-image="{{ asset('images/china.webp') }}" data-imagecss="flag cn"
+                                    data-title="China">
+                                <a class="text-body mr-3">China</a>
                             </option>
                         @endif
                         @if(session('locale') == 'cn')
-                                <option class="img" value='{{ route('language', ['locale' => 'cn']) }}' data-image="{{ asset('images/china.webp') }}" data-imagecss="flag cn"
-                                        data-title="China">
-                                    <a class="text-body mr-3">China</a>
-                                <option class="img" value='{{ route('language', ['locale' => 'kr']) }}' data-image="{{ asset('images/korea.png') }}" data-imagecss="flag kr"
-                                        data-title="Korea">
-                                    <a class="text-body mr-3" >Korea</a>
-                                </option>
-                                <option class="img" value='{{ route('language', ['locale' => 'vi']) }}' data-image="{{ asset('images/vietnam.webp') }}" data-imagecss="flag vi"
-                                        data-title="VietNam">
-                                    <a class="text-body mr-3">Việt Nam</a>
-                                </option>
-                                <option class="img" value='{{ route('language', ['locale' => 'jp']) }}' data-image="{{ asset('images/japan.webp') }}" data-imagecss="flag jp"
-                                        data-title="Japan">
-                                    <a class="text-body mr-3">Japan</a>
-                                </option>
+                            <option class="img" value='{{ route('language', ['locale' => 'cn']) }}'
+                                    data-image="{{ asset('images/china.webp') }}" data-imagecss="flag cn"
+                                    data-title="China">
+                                <a class="text-body mr-3">China</a>
+                            <option class="img" value='{{ route('language', ['locale' => 'kr']) }}'
+                                    data-image="{{ asset('images/korea.png') }}" data-imagecss="flag kr"
+                                    data-title="Korea">
+                                <a class="text-body mr-3">Korea</a>
+                            </option>
+                            <option class="img" value='{{ route('language', ['locale' => 'vi']) }}'
+                                    data-image="{{ asset('images/vietnam.webp') }}" data-imagecss="flag vi"
+                                    data-title="VietNam">
+                                <a class="text-body mr-3">Việt Nam</a>
+                            </option>
+                            <option class="img" value='{{ route('language', ['locale' => 'jp']) }}'
+                                    data-image="{{ asset('images/japan.webp') }}" data-imagecss="flag jp"
+                                    data-title="Japan">
+                                <a class="text-body mr-3">Japan</a>
+                            </option>
                         @endif
                     </select>
                 </div>
@@ -219,54 +235,75 @@
                 @if(session('login'))
                     <div class="col-lg-3 text-right col-md-3">
                         <div class="col-md-8">
-                            <div class="dropdown d-flex align-items-center">
+                            <div class="d-flex align-items-center">
                                 <ul class="nav-right">
+                                    @php
+                                        $cartViews = \App\Models\Cart::where([
+                                                ['user_id', '=', Auth::user()->id],
+                                                ['status', '=', \App\Enums\CartStatus::WAIT_ORDER]
+                                        ])->get();
+                                        $totalHeader = 0;
+                                        foreach ($cartViews as $cart1){
+                                            $totalHeader = $totalHeader + ($cart1->price*$cart1->quantity);
+                                        }
+                                    @endphp
                                     <li class="cart-icon">
                                         <a href="#">
                                             <i class="fa fa-shopping-cart"></i>
-                                            <span>2</span>
+                                            <span>{{count($cartViews)}}</span>
                                         </a>
                                         <div class="cart-hover">
-                                            <div class="select-items">
-                                                <table>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td class="si-pic"><img src="img/select-product-1.jpg" alt="">
-                                                        </td>
-                                                        <td class="si-text">
-                                                            <div class="product-selected">
-                                                                <p>$60.00 x 1</p>
-                                                                <h6>Kabino Bedside Table</h6>
-                                                            </div>
-                                                        </td>
-                                                        <td class="si-close">
-                                                            <i class="ti-close"></i>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="si-pic"><img src="img/select-product-2.jpg" alt="">
-                                                        </td>
-                                                        <td class="si-text">
-                                                            <div class="product-selected">
-                                                                <p>$60.00 x 1</p>
-                                                                <h6>Kabino Bedside Table</h6>
-                                                            </div>
-                                                        </td>
-                                                        <td class="si-close">
-                                                            <i class="ti-close"></i>
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="select-total">
-                                                <span>total:</span>
-                                                <h5>$120.00</h5>
-                                            </div>
-                                            <div class="select-button">
-                                                <a href="#" class="primary-btn view-card">VIEW CARD</a>
-                                                <a href="#" class="primary-btn checkout-btn">CHECK OUT</a>
-                                            </div>
+                                            @if(count($cartViews) > 0)
+                                                @foreach($cartViews as $cartView)
+                                                    <div class="select-items">
+                                                        <table>
+                                                            <thead>
+                                                            <h6>Sản phẩm mới thêm</h6>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td class="si-pic"><img
+                                                                            src="{{$cartView->product->thumbnail}}"
+                                                                            alt="">
+                                                                </td>
+                                                                <td class="si-text">
+                                                                    <div class="product-selected">
+                                                                        <h6>{{$cartView->product->name}}</h6>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="">
+                                                                    <p>${{$cartView->price}}</p>
+                                                                </td>
+                                                                <td class="">
+                                                                    <p>X</p>
+                                                                </td>
+                                                                <td class="">
+                                                                    <p>{{$cartView->quantity}}</p>
+                                                                </td>
+                                                                <td class="si-close">
+                                                                    <p>${{$cartView->price*$cartView->quantity}}</p>
+                                                                </td>
+                                                            </tr>
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                @endforeach
+                                                <div class="select-total">
+                                                    <span>total:</span>
+                                                    <h5>${{$totalHeader}}</h5>
+                                                </div>
+                                                <div class="select-button">
+                                                    <a href="{{route('cart.index')}}" class="primary-btn view-card">VIEW
+                                                        CARD</a>
+                                                    <a href="{{route('checkout.show')}}"
+                                                       class="primary-btn checkout-btn">CHECK OUT</a>
+                                                </div>
+                                            @else
+                                                <div class="">
+                                                    <h6>No product</h6>
+                                                </div>
+                                            @endif
                                         </div>
                                     </li>
                                 </ul>
@@ -316,7 +353,7 @@
 
                                                     <a href="{{route('login.local' , ['locale' => 'kr'])}}"
                                                        class="full-width">
-                                                        <img  class="border img" width="102px" height="68px"
+                                                        <img class="border img" width="102px" height="68px"
                                                              src="{{ asset('images/korea.png') }}" alt="">
                                                     </a>
 
