@@ -97,6 +97,18 @@
         height: 42px !important;
     }
 
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+
+    }
+
+    @media only screen and (max-width: 767px) {
+
+    }
+
+    @media only screen and (max-width: 479px) {
+
+    }
+
 </style>
 <header class="header-section" style="background: #ffffff;">
     <div class="header-top">

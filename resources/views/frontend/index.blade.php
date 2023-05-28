@@ -28,6 +28,7 @@
         /* CSS cho megamenu */
         .megamenu {
             display: none;
+            margin-left: -30px;
         }
 
         .vertical-menu .nav-item:hover .megamenu {
@@ -63,17 +64,35 @@
         .depart-hover .megamenu li a {
             padding-left: 0 !important;
         }
+
+        .img-banner-1 {
+            background-image: url('{{asset('images/img/banner.webp')}}');
+            height: 400px;
+            margin-top: -30px;
+            background-size: contain;
+        }
+
+        .img-banner-2 {
+            background-image: url('{{asset('images/img/banner2.webp')}}');
+            height: 400px;
+            margin-top: -30px;
+            background-size: contain;
+        }
+
+
     </style>
     <!-- Hero Section Begin -->
-    <section class="header_bottom" >
+    <section class="header_bottom">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-4 col-lg-2 ">
+                <div class="col-md-4 col-lg-3">
                     <nav class="navbar navbar-expand-lg">
                         <div class="vertical-menu">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/category/1"><i class="fa fa-laptop" aria-hidden="true"></i>&ensp; Electronic Devices</a>
+                                    <a class="nav-link text-nowrap" href="/category/1"><i class="fa fa-laptop"
+                                                                                          aria-hidden="true"></i>&ensp;
+                                        Electronic Devices</a>
                                     <div class="megamenu">
                                         <div class="row">
                                             <div class="col-sm-4">
@@ -132,10 +151,14 @@
 
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/category/1"><i class="fa fa-television" aria-hidden="true"></i>&ensp; TV & Home Appliances</a>
+                                    <a class="nav-link text-nowrap" href="/category/1"><i class="fa fa-television"
+                                                                                          aria-hidden="true"></i>&ensp;
+                                        TV & Home Appliances</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/category/1"><i class="fa fa-laptop" aria-hidden="true"></i>&ensp; Electronic Devices</a>
+                                    <a class="nav-link text-nowrap" href="/category/1"><i class="fa fa-laptop"
+                                                                                          aria-hidden="true"></i>&ensp;
+                                        Electronic Devices</a>
                                     <div class="megamenu">
                                         <div class="row">
                                             <div class="col-sm-4">
@@ -194,10 +217,14 @@
 
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#"><i class="fa fa-television" aria-hidden="true"></i>&ensp; TV & Home Appliances</a>
+                                    <a class="nav-link text-nowrap" href="#"><i class="fa fa-television"
+                                                                                aria-hidden="true"></i>&ensp; TV & Home
+                                        Appliances</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#"><i class="fa fa-laptop" aria-hidden="true"></i>&ensp; Electronic Devices</a>
+                                    <a class="nav-link text-nowrap" href="#"><i class="fa fa-laptop"
+                                                                                aria-hidden="true"></i>&ensp; Electronic
+                                        Devices</a>
                                     <div class="megamenu">
                                         <div class="row">
                                             <div class="col-sm-4">
@@ -256,10 +283,14 @@
 
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#"><i class="fa fa-television" aria-hidden="true"></i>&ensp; TV & Home Appliances</a>
+                                    <a class="nav-link text-nowrap" href="#"><i class="fa fa-television"
+                                                                                aria-hidden="true"></i>&ensp; TV & Home
+                                        Appliances</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#"><i class="fa fa-laptop" aria-hidden="true"></i>&ensp; Electronic Devices</a>
+                                    <a class="nav-link text-nowrap" href="#"><i class="fa fa-laptop"
+                                                                                aria-hidden="true"></i>&ensp; Electronic
+                                        Devices</a>
                                     <div class="megamenu">
                                         <div class="row">
                                             <div class="col-sm-4">
@@ -318,28 +349,24 @@
 
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#"><i class="fa fa-television" aria-hidden="true"></i>&ensp; TV & Home Appliances</a>
+                                    <a class="nav-link text-nowrap" href="#"><i class="fa fa-television"
+                                                                                aria-hidden="true"></i>&ensp; TV & Home
+                                        Appliances</a>
                                 </li>
                             </ul>
                         </div>
                     </nav>
 
                 </div>
-                <div class="col-lg-7 col-md-6">
+                <div class="col-lg-6 col-md-5">
                     <!-- Hero Section Begin -->
                     <section class="slider-section">
                         <div id="carousel" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner mt-1" role="listbox">
-                                <div class=" carousel-item active"
-                                     style="background-image: url('{{asset('images/img/banner.webp')}}');
-                                    height: 400px;
-                                    margin-top:-30px; background-size: contain;">
+                                <div class="carousel-item active img-banner-1">
                                 </div> <!-- End of Carousel Item -->
 
-                                <div class=" carousel-item"
-                                     style="background-image: url('{{asset('images/img/banner2.webp')}}');
-                                    height: 400px;
-                                    margin-top:-30px;  background-size: contain;">
+                                <div class=" carousel-item img-banner-2">
                                 </div> <!-- End of Carousel Item -->
                             </div> <!-- End of Carousel Content -->
 
