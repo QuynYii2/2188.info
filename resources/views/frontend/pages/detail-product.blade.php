@@ -50,6 +50,28 @@
         .description p {
             text-align: left;
         }
+
+        .btn{
+            padding: 8px 16px;
+            margin: 16px     8px;
+        }
+
+        .btn:hover {
+            background-color: #00bf90;
+        }
+
+        .tabs-product-detail{
+            background-color: #fff;!important;
+        }
+
+        .link-tabs:hover{
+            color: #c69500;!important;
+        }
+
+        .text-more-tabs:hover{
+            color: #c69500;!important;
+        }
+
     </style>
     <div class="container">
         <div class="row mb-5 mt-5" id="mainDetailProduct">
@@ -58,40 +80,8 @@
                     <div class="product-imgs" id="product">
                         <div class="img-display">
                             <div class="img-showcase">
-                                <img src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_1.jpg"
-                                     alt="shoe image">
-                                <img src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg"
-                                     alt="shoe image">
-                                <img src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_3.jpg"
-                                     alt="shoe image">
-                                <img src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_4.jpg"
-                                     alt="shoe image">
-                            </div>
-                        </div>
-                        <div class="img-select">
-                            <div class="img-item">
-                                <a href="#" data-id="1">
-                                    <img src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_1.jpg"
-                                         alt="shoe image">
-                                </a>
-                            </div>
-                            <div class="img-item">
-                                <a href="#" data-id="2">
-                                    <img src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg"
-                                         alt="shoe image">
-                                </a>
-                            </div>
-                            <div class="img-item">
-                                <a href="#" data-id="3">
-                                    <img src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_3.jpg"
-                                         alt="shoe image">
-                                </a>
-                            </div>
-                            <div class="img-item">
-                                <a href="#" data-id="4">
-                                    <img src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_4.jpg"
-                                         alt="shoe image">
-                                </a>
+                                <img class="img" src="{{$product->thumbnail}}"
+                                     alt="image">
                             </div>
                         </div>
                     </div>
@@ -99,19 +89,20 @@
 
                         <form action="{{ route('cart.add', $product) }}" method="POST">
                             @csrf
-                            <h2 class="product-title">nike shoes</h2>
+                            <h2 class="product-title">{{$product->name}}</h2>
+                            <small class="text-warning">{{$product->category->name}}</small>
                             <div class="product-rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-half-o"></i>
                                 <span>4.7(21)</span>
                             </div>
 
                             <div class="product-price">
-                                <p class="last-price">{{ __('home.old price') }}: <span>$257.00</span></p>
-                                <p class="new-price">{{ __('home.new price') }}: <span>$249.00 (5%)</span></p>
+                                <p class="last-price">{{ __('home.old price') }}: <span>${{$product->price}}</span></p>
+                                <p class="new-price">{{ __('home.new price') }}: <span>${{$product->price}} (<span>5%</span>)</span></p>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
@@ -140,12 +131,11 @@
                                        value="1">
                             </div>
 
-                            <div class="purchase-info">
-                                <button type="button" class="btn">
+                            <div class="purchase-info d-flex">
+                                <button type="button" class="btn btn-warning ">
                                     {{ __('home.installment by card') }}
                                 </button>
-
-                                <button type="submit" class="button btn mt-2"><i class="fas fa-shopping-cart"></i>
+                                <button type="submit" class="btn-danger btn"><i class="fa fa-shopping-cart"></i>
                                     {{ __('home.buy now') }}
                                 </button>
 
@@ -155,16 +145,16 @@
                 </div>
                 <div class="col-md-12 mt-4 bg-white">
                     <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link lead active" role="tab" data-toggle="tab"
+                        <li class="nav-item tabs-product-detail">
+                            <a class="nav-link lead active link-tabs" role="tab" data-toggle="tab"
                                href="#tabDescription">{{ __('home.description') }}</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link lead" role="tab" data-toggle="tab"
+                        <li class="nav-item tabs-product-detail">
+                            <a class="nav-link lead link-tabs" role="tab" data-toggle="tab"
                                href="#tabSpecification">{{ __('home.specification') }}</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link lead" role="tab" data-toggle="tab"
+                        <li class="nav-item tabs-product-detail">
+                            <a class="nav-link lead link-tabs" role="tab" data-toggle="tab"
                                href="#tabReview">{{ __('home.review') }}</a>
                         </li>
                     </ul>
@@ -272,7 +262,7 @@
                                 </p>
                             </div>
 
-                            <a href="#more" data-toggle="collapse" class="more-link text-center" id="more-link"
+                            <a href="#more" data-toggle="collapse" class="more-link text-center text-more-tabs" id="more-link"
                                onclick="toggleReadMore()">{{ __('home.read more') }}</a>
                         </div>
 
@@ -606,17 +596,17 @@
 
                                 <h3 class="text-success">$1120.00</h3>
                                 <div class="rating text-warning">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star" ></i>
+                                    <i class="fa fa-star" ></i>
+                                    <i class="fa fa-star" ></i>
+                                    <i class="fa fa-star" ></i>
+                                    <i class="fa fa-star-half-o" ></i>
                                 </div>
                                 <h4>Macbook M1</h4>
                                 <p>Sở hữu thiết kế tinh tế, màn hình xuất sắc và cấu hình mạnh mẽ, đáp ứng được hầu hết
                                     nhu cầu ...</p>
                                 <a href="#" class="btn btn-success btn-block mt-auto">
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                    <i class="fa fa-eye" ></i>
                                     {{ __('home.see now') }}
                                 </a>
                             </div>
@@ -630,17 +620,17 @@
 
                                 <h3 class="text-success">$1120.00</h3>
                                 <div class="rating text-warning">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star" ></i>
+                                    <i class="fa fa-star" ></i>
+                                    <i class="fa fa-star" ></i>
+                                    <i class="fa fa-star" ></i>
+                                    <i class="fa fa-star-half-o" ></i>
                                 </div>
                                 <h4>Macbook M1</h4>
                                 <p>Sở hữu thiết kế tinh tế, màn hình xuất sắc và cấu hình mạnh mẽ, đáp ứng được hầu hết
                                     nhu cầu ...</p>
                                 <a href="#" class="btn btn-success btn-block mt-auto">
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                    <i class="fa fa-eye" ></i>
                                     {{ __('home.see now') }}
                                 </a>
                             </div>
@@ -654,17 +644,17 @@
 
                                 <h3 class="text-success">$1120.00</h3>
                                 <div class="rating text-warning">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star" ></i>
+                                    <i class="fa fa-star" ></i>
+                                    <i class="fa fa-star" ></i>
+                                    <i class="fa fa-star" ></i>
+                                    <i class="fa fa-star-half-o" ></i>
                                 </div>
                                 <h4>Macbook M1</h4>
                                 <p>Sở hữu thiết kế tinh tế, màn hình xuất sắc và cấu hình mạnh mẽ, đáp ứng được hầu hết
                                     nhu cầu ...</p>
                                 <a href="#" class="btn btn-success btn-block mt-auto">
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                    <i class="fa fa-eye" ></i>
                                     {{ __('home.see now') }}
                                 </a>
                             </div>
@@ -678,17 +668,17 @@
 
                                 <h3 class="text-success">$1120.00</h3>
                                 <div class="rating text-warning">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    <i class="fa fa-star" ></i>
+                                    <i class="fa fa-star" ></i>
+                                    <i class="fa fa-star" ></i>
+                                    <i class="fa fa-star" ></i>
+                                    <i class="fa fa-star-half-o" ></i>
                                 </div>
                                 <h4>Macbook M1</h4>
                                 <p>Sở hữu thiết kế tinh tế, màn hình xuất sắc và cấu hình mạnh mẽ, đáp ứng được hầu hết
                                     nhu cầu ...</p>
                                 <a href="#" class="btn btn-success btn-block mt-auto">
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                    <i class="fa fa-eye" ></i>
                                     {{ __('home.see now') }}
                                 </a>
                             </div>

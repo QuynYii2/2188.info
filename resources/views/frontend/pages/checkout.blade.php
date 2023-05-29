@@ -169,7 +169,7 @@
 
                                 <div class="">
                                     {{--                                <button type="submit" class="mr-5 mt-3 btn btn-primary">Continue to checkout</button>--}}
-                                    <button type="submit" class=" mt-3 btn btn-danger">Checkout Now</button>
+                                    <button type="submit" class=" mt-3 mb-3 btn btn-danger">Checkout Now</button>
                                 </div>
                             </form>
                         </div>

@@ -14,8 +14,8 @@ class ProductController extends Controller
     public function detail_product(Request $request, $id)
     {
         (new HomeController())->getLocale($request);
-        if (Auth::check()) {
-            $product = Product::find($id);
+        $product = Product::find($id);
+        if (Auth::check()){
             $result = EvaluateProduct::where([
                 ['product_id', '=', $product->id],
                 ['status', '=', EvaluateProductStatus::APPROVED]
@@ -23,12 +23,16 @@ class ProductController extends Controller
                 ['user_id', '=', Auth::user()->id],
                 ['product_id', '=', $product->id]
             ])->get();
-            return view('frontend/pages/detail-product', [
-                'result' => $result,
-                'product' => $product
-            ]);
-        } else {
-            return view('frontend/pages/login');
+        } else{
+            $result = EvaluateProduct::where([
+                ['product_id', '=', $product->id],
+                ['status', '=', EvaluateProductStatus::APPROVED]
+            ])->get();
         }
+
+        return view('frontend/pages/detail-product', [
+            'result' => $result,
+            'product' => $product
+        ]);
     }
 }
