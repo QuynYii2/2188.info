@@ -14,6 +14,17 @@
     .text-more-tabs:hover{
         color: #c69500;!important;
     }
+
+    .title-search{
+        color: #000;
+    }
+
+    .title-search:hover{
+        color: #c69500;
+    }
+    .list-menu li a:hover{
+        color: #000;
+    }
 </style>
 
 @section('content')
@@ -159,7 +170,7 @@
                                 <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true"
                                    class="">
                                     <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">{{ __('home.product type') }}</h6>
+                                    <span class="title title-search">{{ __('home.product type') }}</span>
                                 </a>
                             </header>
                             <div class="filter-content collapse show" id="collapse_1" style="">
@@ -191,7 +202,7 @@
                                 <a href="#" data-toggle="collapse" data-target="#collapse_2" aria-expanded="true"
                                    class="">
                                     <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">{{ __('home.brands') }}</h6>
+                                    <span class="title title-search">{{ __('home.brands') }}</span>
                                 </a>
                             </header>
                             <div class="filter-content collapse show" id="collapse_2" style="">
@@ -229,7 +240,7 @@
                                 <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true"
                                    class="">
                                     <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">{{ __('home.price range') }}</h6>
+                                    <span class="title title-search">{{ __('home.price range') }}</span>
                                 </a>
                             </header>
                             <div class="filter-content collapse show" id="collapse_3" style="">
@@ -254,7 +265,7 @@
                                 <a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true"
                                    class="">
                                     <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">{{ __('home.size') }}</h6>
+                                    <span class="title title-search">{{ __('home.size') }}</span>
                                 </a>
                             </header>
                             <div class="filter-content collapse show" id="collapse_4" style="">
@@ -286,7 +297,7 @@
                                 <a href="#" data-toggle="collapse" data-target="#collapse_5" aria-expanded="false"
                                    class="">
                                     <i class="icon-control fa fa-chevron-down"></i>
-                                    <h6 class="title">{{ __('home.more filter') }}</h6>
+                                    <span class="title title-search">{{ __('home.more filter') }}</span>
                                 </a>
                             </header>
                             <div class="filter-content collapse in" id="collapse_5" style="">

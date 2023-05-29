@@ -69,7 +69,7 @@
                             </div>
                             <div class="">
                                 <div class="float-left">
-                                    <a class="tabs-product-detail" href="{{route('home')}}">Back to home</a>
+                                    <a class="tabs-product-detail" href="{{route('home')}}">{{ __('home.back home') }}</a>
                                 </div>
                                 <div class="float-right">
                                     <a class="tabs-product-detail" href="{{route('login')}}">{{ __('home.sign in') }}</a>
@@ -121,7 +121,7 @@
 
                             <div class="form-group">
                                 <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="industry">
-                                    <option selected>Chọn ngành...</option>
+                                    <option selected>{{ __('home.choose branch') }}</option>
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
                                     <option value="3">Three</option>
@@ -134,7 +134,7 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="text" class="form-control" id="product_code" placeholder="Mã sản phẩm" name="product_code">
+                                <input type="text" class="form-control" id="product_code" placeholder="{{ __('home.type product') }}" name="product_code">
                             </div>
 
                             <div class="form-group">
@@ -143,7 +143,7 @@
                             </div>
                             <div class="">
                                 <div class="float-left">
-                                    <a class="tabs-product-detail" href="{{route('home')}}">Back to home</a>
+                                    <a class="tabs-product-detail" href="{{route('home')}}">{{ __('home.back home') }}</a>
                                 </div>
                                 <div class="float-right">
                                     <a class="tabs-product-detail" href="{{route('login')}}">{{ __('home.sign in') }}</a>

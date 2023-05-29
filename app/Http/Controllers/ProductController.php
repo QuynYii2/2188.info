@@ -15,7 +15,7 @@ class ProductController extends Controller
     {
         (new HomeController())->getLocale($request);
         $product = Product::find($id);
-        if (Auth::check()){
+        if (Auth::check()) {
             $result = EvaluateProduct::where([
                 ['product_id', '=', $product->id],
                 ['status', '=', EvaluateProductStatus::APPROVED]
@@ -23,16 +23,19 @@ class ProductController extends Controller
                 ['user_id', '=', Auth::user()->id],
                 ['product_id', '=', $product->id]
             ])->get();
-        } else{
+        } else {
             $result = EvaluateProduct::where([
                 ['product_id', '=', $product->id],
                 ['status', '=', EvaluateProductStatus::APPROVED]
             ])->get();
         }
 
+        $otherProduct = Product::where('id', '!=', $id)->limit(4)->get();
+
         return view('frontend/pages/detail-product', [
             'result' => $result,
-            'product' => $product
+            'product' => $product,
+            'otherProduct' => $otherProduct
         ]);
     }
 }

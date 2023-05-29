@@ -327,7 +327,7 @@
                                             {{ Auth::user()->name }}
                                         @endif
                                     </h4>
-                                    <div class="dropdown-content">
+                                    <div class="dropdown-content" style="z-index: 100">
                                         <a class="dropdown-item" href="{{route('profile.show')}}">Profile</a>
                                         <a class="dropdown-item" href="#">Another action</a>
                                         <form action="{{ route('logout') }}" method="POST">
@@ -346,84 +346,45 @@
                                     data-target="#chooseLanguageOrder"
                                     aria-expanded="false">{{ __('home.orders') }}</button>
 
-                            <div class="modal fade" id="chooseLanguageOrder" tabIndex="-1" role="dialog"
-                                 aria-labelledby="editModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Choose Language Orders</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form id="">
-                                                <div class="d-flex justify-content-between" style="margin: 8px 16px">
-                                                    <a href="{{route('login.local' , ['locale' => 'vi'])}}"
-                                                       class="full-width">
-                                                        <img class="img" width="102px" height="68px"
-                                                             src="{{ asset('images/vietnam.webp') }}" alt="">
-                                                    </a>
+{{--                            <div class="modal fade" id="chooseLanguageOrder" tabIndex="-1" role="dialog"--}}
+{{--                                 aria-labelledby="editModalLabel" aria-hidden="true">--}}
+{{--                                <div class="modal-dialog modal-dialog-centered" role="document">--}}
+{{--                                    <div class="modal-content">--}}
+{{--                                        <div class="modal-header">--}}
+{{--                                            <h5 class="modal-title" id="exampleModalLabel">Choose Language Orders</h5>--}}
+{{--                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+{{--                                                <span aria-hidden="true">&times;</span>--}}
+{{--                                            </button>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="modal-body">--}}
+{{--                                            <form id="">--}}
+{{--                                                <div class="d-flex justify-content-between" style="margin: 8px 16px">--}}
+{{--                                                    <a href="{{route('login.local' , ['locale' => 'vi'])}}"--}}
+{{--                                                       class="full-width">--}}
+{{--                                                        <img class="img" width="102px" height="68px"--}}
+{{--                                                             src="{{ asset('images/vietnam.webp') }}" alt="">--}}
+{{--                                                    </a>--}}
 
-                                                    <a href="{{route('login.local' , ['locale' => 'kr'])}}"
-                                                       class="full-width">
-                                                        <img class="border img" width="102px" height="68px"
-                                                             src="{{ asset('images/korea.png') }}" alt="">
-                                                    </a>
+{{--                                                    <a href="{{route('login.local' , ['locale' => 'kr'])}}"--}}
+{{--                                                       class="full-width">--}}
+{{--                                                        <img class="border img" width="102px" height="68px"--}}
+{{--                                                             src="{{ asset('images/korea.png') }}" alt="">--}}
+{{--                                                    </a>--}}
 
-                                                    <a href="{{route('login.local' , ['locale' => 'cn'])}}"
-                                                       class="full-width">
-                                                        <img class="img" width="102px" height="68px"
-                                                             src="{{ asset('images/china.webp') }}" alt="">
-                                                    </a>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+{{--                                                    <a href="{{route('login.local' , ['locale' => 'cn'])}}"--}}
+{{--                                                       class="full-width">--}}
+{{--                                                        <img class="img" width="102px" height="68px"--}}
+{{--                                                             src="{{ asset('images/china.webp') }}" alt="">--}}
+{{--                                                    </a>--}}
+{{--                                                </div>--}}
+{{--                                            </form>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                             <button type="button" class="btn btn-success mr-2 full-width" data-toggle="modal"
                                     data-target="#chooseLanguagePurchase"
-                                    aria-expanded="false">{{ __('home.purchase') }}</button>
-                            <div class="modal fade" id="chooseLanguagePurchase" tabIndex="-1" role="dialog"
-                                 aria-labelledby="editModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Choose Language
-                                                Purchase</h5>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form id="">
-                                                <div class="d-flex justify-content-between"
-                                                     style="margin: 8px 16px">
-                                                    <a href="{{route('login.local' , ['locale' => 'vi'])}}"
-                                                       class="full-width">
-                                                        <img class="img" width="102px" height="68px"
-                                                             src="{{ asset('images/vietnam.webp') }}" alt="">
-                                                    </a>
-
-                                                    <a href="{{route('login.local' , ['locale' => 'kr'])}}"
-                                                       class="full-width">
-                                                        <img width="102px" height="68px" class="img border"
-                                                             src="{{ asset('images/korea.png') }}" alt="">
-                                                    </a>
-
-                                                    <a href="{{route('login.local' , ['locale' => 'cn'])}}"
-                                                       class="full-width">
-                                                        <img class="img" width="102px" height="68px"
-                                                             src="{{ asset('images/china.webp') }}" alt="">
-                                                    </a>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    aria-expanded="false"><a class="text-white" href="{{route('login')}}">{{ __('home.purchase') }}</a></button>
                             @endif
                         </div>
                     </div>
@@ -510,7 +471,6 @@
                             <div class="col-md-8">
                                 <nav class="nav-menu mobile-menu">
                                     <ul>
-                                        <li class="active"><a href="{{route('home')}}">Home</a></li>
                                         <li><a href="{{route('product.index')}}">Shop</a></li>
                                         <li><a href="#">Collection</a>
                                             <ul class="dropdown">

@@ -51,41 +51,129 @@
             text-align: left;
         }
 
-        .btn{
+        .btn {
             padding: 8px 16px;
-            margin: 16px     8px;
+            margin: 0 16px;
         }
+
 
         .btn:hover {
             background-color: #00bf90;
         }
 
-        .tabs-product-detail{
-            background-color: #fff;!important;
+        .tabs-product-detail {
+            background-color: #fff;
+        !important;
         }
 
-        .link-tabs:hover{
-            color: #c69500;!important;
+        .link-tabs:hover {
+            color: #c69500;
+        !important;
         }
 
-        .text-more-tabs:hover{
-            color: #c69500;!important;
+        .text-more-tabs:hover {
+            color: #c69500;
+        !important;
+        }
+
+        .product-content {
+            padding-top: 0;
+        }
+
+        .product-content p {
+            margin-bottom: 0;
+        }
+
+        #img-default{
+            cursor: pointer;
+        }
+
+        .img-focus {
+            width: 80px !important;
+            height: 80px !important;
+            cursor: pointer;
+        }
+
+        .btn-cancel:hover{
+            background-color: #cccccc;
         }
 
     </style>
     <div class="container">
         <div class="row mb-5 mt-5" id="mainDetailProduct">
             <div class="col-8" id="left-col">
-                <div class="card">
+                <div class="card" style="padding: 8px">
                     <div class="product-imgs" id="product">
-                        <div class="img-display">
-                            <div class="img-showcase">
-                                <img class="img" src="{{$product->thumbnail}}"
-                                     alt="image">
+                        <div class="img-display ">
+                            <div class="img-showcase d-flex flex-row bd-highlight ">
+                                <img id="img-default" class="img" src="{{$product->thumbnail}}"
+                                     alt="image" width="360px" height="250px" data-toggle="modal"
+                                     data-target="#seeImageProduct">
+                                <input id="img-rollback" value="{{$product->thumbnail}}" hidden="" disabled>
+
+                                <div class="modal fade" id="seeImageProduct" tabIndex="-1" role="dialog"
+                                     aria-labelledby="editModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row d-flex justify-content-between">
+                                                    <div class="col-md-10 img-main">
+                                                        <img class="img" id="img-modal" src="{{$product->thumbnail}}" alt="">
+                                                    </div>
+                                                    <div class="col-md-2 img-second">
+                                                        <img class="img mt-2" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_1.jpg" alt="">
+                                                        <img class="img mt-2" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg" alt="">
+                                                        <img class="img mt-2" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_3.jpg" alt="">
+                                                        <img class="img mt-2" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_4.jpg" alt="">
+                                                        <img class="img mt-2" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg" alt="">
+                                                    </div>
+                                                    <div class="">
+                                                        <button class="btn btn-secondary btn-cancel mr-5" data-dismiss="modal"
+                                                                aria-label="Close">Cancel</button>
+                                                        <button class="btn btn-danger" id="btn-buy-modal" onclick="orderClick();">Buy now</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="img-select d-flex flex-row bd-highlight mb-2 mt-2">
+                            <div class="img-item">
+                                <img class="img img-focus" onclick="zoomImg(this)"
+                                     src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_1.jpg"
+                                     alt="shoe image">
+                            </div>
+                            <div class="img-item">
+                                <img class="img img-focus" onclick="zoomImg(this)"
+                                     src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg"
+                                     alt="shoe image">
+                            </div>
+                            <div class="img-item">
+                                <img class="img img-focus" onclick="zoomImg(this)"
+                                     src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_3.jpg"
+                                     alt="shoe image">
+                            </div>
+                            <div class="img-item">
+                                <img class="img img-focus" onclick="zoomImg(this)"
+                                     src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_4.jpg"
+                                     alt="shoe image">
+                            </div>
+                            <div class="img-item">
+                                <img class="img img-focus" onclick="zoomImg(this)"
+                                     src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg"
+                                     alt="shoe image">
                             </div>
                         </div>
                     </div>
-                    <div class="product-content">
+                    <div class="product-content" style="z-index: 88;">
 
                         <form action="{{ route('cart.add', $product) }}" method="POST">
                             @csrf
@@ -101,8 +189,10 @@
                             </div>
 
                             <div class="product-price">
-                                <p class="last-price">{{ __('home.old price') }}: <span>${{$product->price}}</span></p>
-                                <p class="new-price">{{ __('home.new price') }}: <span>${{$product->price}} (<span>5%</span>)</span></p>
+                                <p class="last-price">{{ __('home.old price') }}:
+                                    <span>${{$product->price + ($product->price*5/100)}}</span></p>
+                                <p class="new-price">{{ __('home.new price') }}:
+                                    <span>${{$product->price}} (<span>5%</span>)</span></p>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
@@ -135,7 +225,7 @@
                                 <button type="button" class="btn btn-warning ">
                                     {{ __('home.installment by card') }}
                                 </button>
-                                <button type="submit" class="btn-danger btn"><i class="fa fa-shopping-cart"></i>
+                                <button type="submit" class="btn-danger btn" id="btn-order-now"><i class="fa fa-shopping-cart"></i>
                                     {{ __('home.buy now') }}
                                 </button>
 
@@ -262,7 +352,8 @@
                                 </p>
                             </div>
 
-                            <a href="#more" data-toggle="collapse" class="more-link text-center text-more-tabs" id="more-link"
+                            <a href="#more" data-toggle="collapse" class="more-link text-center text-more-tabs"
+                               id="more-link"
                                onclick="toggleReadMore()">{{ __('home.read more') }}</a>
                         </div>
 
@@ -471,12 +562,12 @@
                         </div>
                         <div class="product-detail"
                              style="border: 1px solid black; border-top: none; border-radius: 0 0 5px 5px ">
-                            <ul class="pt-3">
-                                <li>{{ __('home.accumulate points') }}</li>
-                                <li>{{ __('home.free credit card') }}</li>
-                                <li>{{ __('home.free installment') }}</li>
-                                <li>{{ __('home.free delivery') }}</li>
-                                <li>{{ __('home.discount immediately') }}</li>
+                            <ul class="pt-3 ml-3 mb-3">
+                                <li><i class="fa fa-check mr-2"></i>{{ __('home.accumulate points') }}</li>
+                                <li><i class="fa fa-check mr-2"></i>{{ __('home.free credit card') }}</li>
+                                <li><i class="fa fa-check mr-2"></i>{{ __('home.free installment') }}</li>
+                                <li><i class="fa fa-check mr-2"></i>{{ __('home.free delivery') }}</li>
+                                <li><i class="fa fa-check mr-2"></i>{{ __('home.discount immediately') }}</li>
                             </ul>
                         </div>
                     </div>
@@ -485,19 +576,24 @@
                     <div class="card"
                          style="border: 1px solid black; border-radius: 5px ">
                         <div class="card-text">
-                            <div class="card-header"
+                            <div class="card-header text-center"
                                  style="font-weight: 400; font-size: 1.25rem">{{ __('home.product status') }}
                             </div>
                             <div class="card-body">
                                 <ul class="pt-3">
-                                    <li><span class="text-bold">{{ __('home.condition') }}</span><br>
-                                        {{ __('home.genuine product') }}
+                                    <li>
+                                        <i class="fa fa-filter mr-2"></i>
+                                        <span class="text-bold">{{ __('home.condition') }}:</span>
+                                        <span class="text-danger">{{ __('home.genuine product') }} </span>
                                     </li>
                                     <li>
-                                        <span class="text-bold">{{ __('home.box included') }}</span><br>{{ __('home.full accessories') }}
+                                        <i class="fa fa-archive"></i>
+                                        <span class="text-bold">{{ __('home.box included') }}:</span>
+                                        <span class="text-danger">{{ __('home.full accessories') }}</span>
                                     </li>
                                     <li>
-                                        <span class="text-bold">{{ __('home.warranty') }}</span><br>{{ __('home.warranty 1 month') }}
+                                        <i class="fa fa-shield mr-2"></i> <span class="text-bold">{{ __('home.warranty') }}:</span>
+                                        <span class="text-danger">{{ __('home.warranty 1 month') }}</span>
                                     </li>
                                 </ul>
                             </div>
@@ -508,7 +604,7 @@
                     <div class="card"
                          style="border: 1px solid black; border-radius: 5px ">
                         <div class="card-text">
-                            <div class="card-header"
+                            <div class="card-header text-center"
                                  style="font-weight: 400; font-size: 1.25rem">{{ __('home.why choose IL') }}
                             </div>
                             <div class="card-body">
@@ -588,104 +684,32 @@
             <div class="col-12">
                 <div class="mt-5 row">
 
-                    <div class="col-3 mb-3 mb-md-0">
-                        <div class="card h-100">
+                    @foreach($otherProduct as $product)
+                        <div class="col-3 mb-3 mb-md-0">
+                            <div class="card h-100">
 
-                            <img src="https://picsum.photos/300/200" alt="">
-                            <div class="card-body position-relative d-flex flex-column">
+                                <img class="img" src="{{$product->thumbnail}}" alt="">
+                                <div class="card-body position-relative d-flex flex-column">
 
-                                <h3 class="text-success">$1120.00</h3>
-                                <div class="rating text-warning">
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star-half-o" ></i>
+                                    <h3 class="text-success">${{$product->price}}</h3>
+                                    <div class="rating text-warning">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-half-o"></i>
+                                    </div>
+                                    <h4>{{$product->name}}</h4>
+                                    <p>{{$product->description}}</p>
+                                    <a href="{{route('detail_product.show', $product->id)}}"
+                                       class="btn btn-success btn-block mt-auto">
+                                        <i class="fa fa-eye"></i>
+                                        {{ __('home.see now') }}
+                                    </a>
                                 </div>
-                                <h4>Macbook M1</h4>
-                                <p>Sở hữu thiết kế tinh tế, màn hình xuất sắc và cấu hình mạnh mẽ, đáp ứng được hầu hết
-                                    nhu cầu ...</p>
-                                <a href="#" class="btn btn-success btn-block mt-auto">
-                                    <i class="fa fa-eye" ></i>
-                                    {{ __('home.see now') }}
-                                </a>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-3 mb-3 mb-md-0">
-                        <div class="card h-100">
-
-                            <img src="https://picsum.photos/300/200" alt="">
-                            <div class="card-body position-relative d-flex flex-column">
-
-                                <h3 class="text-success">$1120.00</h3>
-                                <div class="rating text-warning">
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star-half-o" ></i>
-                                </div>
-                                <h4>Macbook M1</h4>
-                                <p>Sở hữu thiết kế tinh tế, màn hình xuất sắc và cấu hình mạnh mẽ, đáp ứng được hầu hết
-                                    nhu cầu ...</p>
-                                <a href="#" class="btn btn-success btn-block mt-auto">
-                                    <i class="fa fa-eye" ></i>
-                                    {{ __('home.see now') }}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3 mb-3 mb-md-0">
-                        <div class="card h-100">
-
-                            <img src="https://picsum.photos/300/200" alt="">
-                            <div class="card-body position-relative d-flex flex-column">
-
-                                <h3 class="text-success">$1120.00</h3>
-                                <div class="rating text-warning">
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star-half-o" ></i>
-                                </div>
-                                <h4>Macbook M1</h4>
-                                <p>Sở hữu thiết kế tinh tế, màn hình xuất sắc và cấu hình mạnh mẽ, đáp ứng được hầu hết
-                                    nhu cầu ...</p>
-                                <a href="#" class="btn btn-success btn-block mt-auto">
-                                    <i class="fa fa-eye" ></i>
-                                    {{ __('home.see now') }}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3 mb-3 mb-md-0">
-                        <div class="card h-100">
-
-                            <img src="https://picsum.photos/300/200" alt="">
-                            <div class="card-body position-relative d-flex flex-column">
-
-                                <h3 class="text-success">$1120.00</h3>
-                                <div class="rating text-warning">
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star-half-o" ></i>
-                                </div>
-                                <h4>Macbook M1</h4>
-                                <p>Sở hữu thiết kế tinh tế, màn hình xuất sắc và cấu hình mạnh mẽ, đáp ứng được hầu hết
-                                    nhu cầu ...</p>
-                                <a href="#" class="btn btn-success btn-block mt-auto">
-                                    <i class="fa fa-eye" ></i>
-                                    {{ __('home.see now') }}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-
+                    @endforeach
                 </div>
             </div>
             <div class="col-12">
@@ -794,45 +818,70 @@
         </div>
     </div>
 
-    <script src="{{ asset('vendor/compiled.js') }}"></script>
+    <script>
+        function zoomImg(x) {
+            imgDf = document.getElementById('img-default');
+            imgDf.src = x.src;
+        }
+
+        function normalImg() {
+            imgDf = document.getElementById('img-default');
+            imgRollback = document.getElementById('img-rollback').value;
+            imgDf.src = imgRollback;
+        }
+
+        function zoomImgModal(x) {
+            imgDf = document.getElementById('img-modal');
+            imgDf.src = x.src;
+        }
+
+        function orderClick() {
+            btnOrder = document.getElementById('btn-order-now');
+            btnOrder.click();
+
+        }
+
+
+    </script>
+
     <script>
 
         const imgs = document.querySelectorAll('.img-select a');
         const imgBtns = [...imgs];
         let imgId = 1;
 
-        imgBtns.forEach((imgItem) => {
-            imgItem.addEventListener('click', (event) => {
-                event.preventDefault();
-                imgId = imgItem.dataset.id;
-                slideImage();
-            });
-        });
+        // imgBtns.forEach((imgItem) => {
+        //     imgItem.addEventListener('click', (event) => {
+        //         event.preventDefault();
+        //         imgId = imgItem.dataset.id;
+        //         slideImage();
+        //     });
+        // });
 
 
-        function slideImage() {
-            const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
-            document.querySelector('.img-showcase').style.transform = `translateX(${-(imgId - 1) * displayWidth}px)`;
-        }
-
-        window.addEventListener('resize', slideImage);
-
-        var wrapper = document.querySelector('.count__wrapper'),
-            res = document.querySelector('.subtotal__price'),
-            input = wrapper.querySelector('input[class*=input]');
-
-        wrapper.addEventListener('click', e => {
-            var t = e.target;
-
-            input.value = +input.value;
-
-            if (t.closest('button[class*=--minus]')) {
-                --input.value;
-            } else if (t.closest('button[class*=--add]')) {
-                ++input.value;
-            }
-
-        });
+        // function slideImage() {
+        //     const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
+        //     document.querySelector('.img-showcase').style.transform = `translateX(${-(imgId - 1) * displayWidth}px)`;
+        // }
+        //
+        // window.addEventListener('resize', slideImage);
+        //
+        // var wrapper = document.querySelector('.count__wrapper'),
+        //     res = document.querySelector('.subtotal__price'),
+        //     input = wrapper.querySelector('input[class*=input]');
+        //
+        // wrapper.addEventListener('click', e => {
+        //     var t = e.target;
+        //
+        //     input.value = +input.value;
+        //
+        //     if (t.closest('button[class*=--minus]')) {
+        //         --input.value;
+        //     } else if (t.closest('button[class*=--add]')) {
+        //         ++input.value;
+        //     }
+        //
+        // });
 
         function toggleReadMore() {
             var moreLink = document.getElementById("more-link");

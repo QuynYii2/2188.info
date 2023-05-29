@@ -28,7 +28,6 @@
         /* CSS cho megamenu */
         .megamenu {
             display: none;
-            margin-left: -30px;
         }
 
         .vertical-menu .nav-item:hover .megamenu {
@@ -66,17 +65,19 @@
         }
 
         .img-banner-1 {
-            background-image: url('{{asset('images/img/banner.webp')}}');
             height: 400px;
             margin-top: -30px;
-            background-size: contain;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
         }
 
         .img-banner-2 {
-            background-image: url('{{asset('images/img/banner2.webp')}}');
             height: 400px;
             margin-top: -30px;
-            background-size: contain;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
         }
 
 
@@ -85,7 +86,7 @@
     <section class="header_bottom">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-4 col-lg-3">
+                <div class="col-md-2 col-lg-2">
                     <nav class="navbar navbar-expand-lg">
                         <div class="vertical-menu">
                             <ul class="navbar-nav">
@@ -358,15 +359,17 @@
                     </nav>
 
                 </div>
-                <div class="col-lg-6 col-md-5">
+                <div class="col-lg-7 col-md-6">
                     <!-- Hero Section Begin -->
                     <section class="slider-section">
                         <div id="carousel" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner mt-1" role="listbox">
-                                <div class="carousel-item active img-banner-1">
+                                <div class="carousel-item active img-banner-1 img"
+                                     style="background-image: url('{{asset('images/img/banner.webp')}}');">
                                 </div> <!-- End of Carousel Item -->
 
-                                <div class=" carousel-item img-banner-2">
+                                <div class=" carousel-item img-banner-2 img"
+                                     style="background-image: url('{{asset('images/img/banner2.webp')}}');">
                                 </div> <!-- End of Carousel Item -->
                             </div> <!-- End of Carousel Content -->
 
@@ -384,13 +387,13 @@
                     <!-- Hero Section End -->
                 </div>
 
-                <div class="col-lg-3 col-md-3">
-                    <div class="single-banner">
+                <div class="col-lg-3 col-md-3 mt-2">
+                    <div class="single-banner mb-3">
                         <img class="img" src="{{asset('images/img/Screenshot 2023-05-26 at 2.14.36 AM.png')}}" alt=""
                              height="100%">
                     </div>
 
-                    <div class="single-banner">
+                    <div class="single-banner mb-3">
                         <img class="img" src="{{asset('images/img/banner_sidebar1.jpeg')}}" alt="" height="100%">
                     </div>
 
@@ -402,39 +405,6 @@
         </div>
     </section>
     <!-- Hero Section End -->
-
-    {{--    <!-- Banner Section Begin -->--}}
-    {{--    <div class="banner-section spad">--}}
-    {{--        <div class="container-fluid">--}}
-    {{--            <div class="row">--}}
-    {{--                <div class="col-lg-4">--}}
-    {{--                    <div class="single-banner">--}}
-    {{--                        <img src="img/banner-1.jpg" alt="">--}}
-    {{--                        <div class="inner-text">--}}
-    {{--                            <h4>Men’s</h4>--}}
-    {{--                        </div>--}}
-    {{--                    </div>--}}
-    {{--                </div>--}}
-    {{--                <div class="col-lg-4">--}}
-    {{--                    <div class="single-banner">--}}
-    {{--                        <img src="img/banner-2.jpg" alt="">--}}
-    {{--                        <div class="inner-text">--}}
-    {{--                            <h4>Women’s</h4>--}}
-    {{--                        </div>--}}
-    {{--                    </div>--}}
-    {{--                </div>--}}
-    {{--                <div class="col-lg-4">--}}
-    {{--                    <div class="single-banner">--}}
-    {{--                        <img src="img/banner-3.jpg" alt="">--}}
-    {{--                        <div class="inner-text">--}}
-    {{--                            <h4>Kid’s</h4>--}}
-    {{--                        </div>--}}
-    {{--                    </div>--}}
-    {{--                </div>--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
-    {{--    <!-- Banner Section End -->--}}
 
     <!-- Women Banner Section Begin -->
     <section class="man-banner spad">
@@ -455,7 +425,7 @@
                 <div class="col-lg-8">
                     <div class="product-slider owl-carousel">
                         @foreach($productByLocal as $product)
-                            <div class="row ml-5 ">
+                            <div class="row ">
                                 <div class="col-12">
                                     <div class="product-item">
                                         <div class="pi-pic">
@@ -519,7 +489,6 @@
     </section>
     <!-- Women Banner Section End -->
 
-    <!-- Deal Of The Week Section Begin-->
     <section class="deal-of-week set-bg spad" data-setbg="{{asset('images/img/time-bg.jpg')}}">
         <div class="container">
             <div class="col-lg-6 text-center">
@@ -554,9 +523,7 @@
             </div>
         </div>
     </section>
-    <!-- Deal Of The Week Section End -->
 
-    <!-- Man Banner Section Begin -->
     <section class="man-banner spad">
         <div class="container-fluid">
             <div class="row">
@@ -575,15 +542,16 @@
                 <div class="col-lg-8">
                     <div class=" filter-control d-flex justify-content-between">
                         <ul class="ml-5">
-                            <li><img class="img border" width="102px" height="68px" src="{{ asset('images/korea.png') }}" alt=""></li>
+                            <li><img class="img border" width="60px" height="40px"
+                                     src="{{ asset('images/korea.png') }}" alt=""></li>
                         </ul>
                         <ul class="mr-5">
-                            <li><a class="link-read-more" href="{{route('product.index')}}">Read More</a></li>
+                            <li><a class="link-read-more" href="{{route('product.index')}}">{{ __('home.read more') }}</a></li>
                         </ul>
                     </div>
                     <div class="product-slider owl-carousel">
                         @foreach($productByKr as $product)
-                            <div class="row ml-5 ">
+                            <div class="row ">
                                 <div class="col-12">
                                     <div class="product-item">
                                         <div class="pi-pic">
@@ -663,15 +631,15 @@
                 <div class="col-lg-8">
                     <div class=" filter-control d-flex justify-content-between">
                         <ul class="ml-5">
-                            <li><img class="img border" width="102px" height="68px" src="{{ asset('images/japan.webp') }}" alt=""></li>
+                            <li><img class="img border" width="60px" height="40px" src="{{ asset('images/japan.webp') }}" alt=""></li>
                         </ul>
                         <ul class="mr-5">
-                            <li><a class="link-read-more" href="{{route('product.index')}}">Read More</a></li>
+                            <li><a class="link-read-more" href="{{route('product.index')}}">{{ __('home.read more') }}</a></li>
                         </ul>
                     </div>
                     <div class="product-slider owl-carousel">
                         @foreach($productByJp as $product)
-                            <div class="row ml-5 ">
+                            <div class="row ">
                                 <div class="col-12">
                                     <div class="product-item">
                                         <div class="pi-pic">
@@ -752,15 +720,15 @@
                 <div class="col-lg-8">
                     <div class=" filter-control d-flex justify-content-between">
                         <ul class="ml-5">
-                            <li><img class="img" width="102px" height="68px" src="{{ asset('images/china.webp') }}" alt=""></li>
+                            <li><img class="img" width="60px" height="40px" src="{{ asset('images/china.webp') }}" alt=""></li>
                         </ul>
                         <ul class="mr-5">
-                            <li><a class="link-read-more" href="{{route('product.index')}}">Read More</a></li>
+                            <li><a class="link-read-more" href="{{route('product.index')}}">{{ __('home.read more') }}</a></li>
                         </ul>
                     </div>
                     <div class="product-slider owl-carousel">
                         @foreach($productByCn as $product)
-                            <div class="row ml-5 ">
+                            <div class="row">
                                 <div class="col-12">
                                     <div class="product-item">
                                         <div class="pi-pic">
@@ -822,9 +790,7 @@
             </div>
         </div>
     </section>
-    <!-- Man Banner Section End -->
 
-    <!-- Latest Blog Section Begin -->
     <section class="latest-blog spad">
         <div class="container">
             <div class="row">

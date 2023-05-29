@@ -196,5 +196,9 @@ return [
     'very old' => 'Rất cũ',
     'previous' => 'Trước',
     'next' => 'Sau',
-
+    //
+    'save login' => 'Ghi nhớ đăng nhập',
+    'choose branch' =>'Chọn ngành',
+    'back home' =>'Quay về trang chủ',
+    'type product' =>'Mã sản phẩm',
 ];

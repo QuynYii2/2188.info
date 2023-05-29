@@ -16,7 +16,6 @@
         color: #c69500;!important;
         background-color: #f7f7f7;
     }
-
 </style>
 
 @section('content')
@@ -50,7 +49,7 @@
                             <div class="">
                                 <div class="float-left">
                                     <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                    <label for="remember">Ghi nhớ đăng nhập</label>
+                                    <label for="remember">{{ __('home.save login') }}</label>
                                 </div>
                                 <div class="float-right">
                                     <a class="tabs-product-detail" href="{{route('register.show')}}">{{ __('home.sign up') }}</a>
@@ -79,7 +78,7 @@
                             <div class="">
                                 <div class="float-left">
                                     <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                    <label for="remember">Ghi nhớ đăng nhập</label>
+                                    <label for="remember">{{ __('home.save login') }}</label>
                                 </div>
                                 <div class="float-right">
                                     <a class="tabs-product-detail" href="{{route('register.show')}}">{{ __('home.sign up') }}</a>
