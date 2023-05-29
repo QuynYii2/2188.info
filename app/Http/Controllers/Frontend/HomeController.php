@@ -55,6 +55,9 @@ class HomeController extends Controller
         $productByLocal = Product::whereIn('location', array_slice($locations, 0, 3))
             ->limit(10)
             ->get();
+        $productByKr = Product::where('location', 'kr')->limit(10)->get();
+        $productByJp = Product::where('location', 'jp')->limit(10)->get();
+        $productByCn = Product::where('location', 'cn')->limit(10)->get();
 
         $productByLocal5 = Product::all()->take(5);
 
@@ -62,10 +65,12 @@ class HomeController extends Controller
             'productByLocal' => $productByLocal,
             'currency' => $currency,
             'countryCode' => $locale,
-            'categories' => $categories
+            'categories' => $categories,
+            'productByKr' => $productByKr,
+            'productByJp' => $productByJp,
+            'productByCn' => $productByCn
         ]);
     }
-
 
     public function shop()
     {

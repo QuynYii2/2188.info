@@ -566,20 +566,23 @@
                         <h2>Men’s</h2>
                         <a href="#">Discover More</a>
                     </div>
+                    <div class="product-large set-bg m-large"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                        <h2>Men’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
                 </div>
                 <div class="col-lg-8">
                     <div class=" filter-control d-flex justify-content-between">
                         <ul class="ml-5">
-                            <li><img src="{{ asset('images/korea.png') }}" alt=""></li>
-                            <li><img src="{{ asset('images/japan.webp') }}" alt=""></li>
-                            <li><img src="{{ asset('images/china.webp') }}" alt=""></li>
+                            <li><img class="img border" width="102px" height="68px" src="{{ asset('images/korea.png') }}" alt=""></li>
                         </ul>
                         <ul class="mr-5">
                             <li><a class="link-read-more" href="{{route('product.index')}}">Read More</a></li>
                         </ul>
                     </div>
                     <div class="product-slider owl-carousel">
-                        @foreach($productByLocal as $product)
+                        @foreach($productByKr as $product)
                             <div class="row ml-5 ">
                                 <div class="col-12">
                                     <div class="product-item">
@@ -628,6 +631,188 @@
                     </div>
                 </div>
                 <div class="col-lg-2">
+                    <div class="product-large set-bg m-large"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                        <h2>Men’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                    <div class="product-large set-bg m-large"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                        <h2>Men’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="man-banner spad">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="product-large set-bg m-large"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                        <h2>Men’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                    <div class="product-large set-bg m-large"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                        <h2>Men’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class=" filter-control d-flex justify-content-between">
+                        <ul class="ml-5">
+                            <li><img class="img border" width="102px" height="68px" src="{{ asset('images/japan.webp') }}" alt=""></li>
+                        </ul>
+                        <ul class="mr-5">
+                            <li><a class="link-read-more" href="{{route('product.index')}}">Read More</a></li>
+                        </ul>
+                    </div>
+                    <div class="product-slider owl-carousel">
+                        @foreach($productByJp as $product)
+                            <div class="row ml-5 ">
+                                <div class="col-12">
+                                    <div class="product-item">
+                                        <div class="pi-pic">
+                                            <img class="img" src="{{$product->thumbnail}}" alt="">
+                                            <div class="sale">Sale</div>
+                                            <div class="icon">
+                                                <i class="icon_heart_alt"></i>
+                                            </div>
+                                        </div>
+                                        <div class="pi-text">
+                                            <div class="catagory-name">{{$product->category->name}}</div>
+                                            <a href="{{route('detail_product.show', $product->id)}}">
+                                                <h5>{{$product->name}}</h5>
+                                            </a>
+                                            <div class="product-price">
+                                                ${{$product->price}}
+                                                {{--                                        <span>$35.00</span>--}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="product-item">
+                                        <div class="pi-pic">
+                                            <img class="img" src="{{$product->thumbnail}}" alt="">
+                                            <div class="sale">Sale</div>
+                                            <div class="icon">
+                                                <i class="icon_heart_alt"></i>
+                                            </div>
+                                        </div>
+                                        <div class="pi-text">
+                                            <div class="catagory-name">{{$product->category->name}}</div>
+                                            <a href="{{route('detail_product.show', $product->id)}}">
+                                                <h5>{{$product->name}}</h5>
+                                            </a>
+                                            <div class="product-price">
+                                                ${{$product->price}}
+                                                {{--                                        <span>$35.00</span>--}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="product-large set-bg m-large"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                        <h2>Men’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                    <div class="product-large set-bg m-large"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                        <h2>Men’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="man-banner spad">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="product-large set-bg m-large"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                        <h2>Men’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                    <div class="product-large set-bg m-large"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                        <h2>Men’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class=" filter-control d-flex justify-content-between">
+                        <ul class="ml-5">
+                            <li><img class="img" width="102px" height="68px" src="{{ asset('images/china.webp') }}" alt=""></li>
+                        </ul>
+                        <ul class="mr-5">
+                            <li><a class="link-read-more" href="{{route('product.index')}}">Read More</a></li>
+                        </ul>
+                    </div>
+                    <div class="product-slider owl-carousel">
+                        @foreach($productByCn as $product)
+                            <div class="row ml-5 ">
+                                <div class="col-12">
+                                    <div class="product-item">
+                                        <div class="pi-pic">
+                                            <img class="img" src="{{$product->thumbnail}}" alt="">
+                                            <div class="sale">Sale</div>
+                                            <div class="icon">
+                                                <i class="icon_heart_alt"></i>
+                                            </div>
+                                        </div>
+                                        <div class="pi-text">
+                                            <div class="catagory-name">{{$product->category->name}}</div>
+                                            <a href="{{route('detail_product.show', $product->id)}}">
+                                                <h5>{{$product->name}}</h5>
+                                            </a>
+                                            <div class="product-price">
+                                                ${{$product->price}}
+                                                {{--                                        <span>$35.00</span>--}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="product-item">
+                                        <div class="pi-pic">
+                                            <img class="img" src="{{$product->thumbnail}}" alt="">
+                                            <div class="sale">Sale</div>
+                                            <div class="icon">
+                                                <i class="icon_heart_alt"></i>
+                                            </div>
+                                        </div>
+                                        <div class="pi-text">
+                                            <div class="catagory-name">{{$product->category->name}}</div>
+                                            <a href="{{route('detail_product.show', $product->id)}}">
+                                                <h5>{{$product->name}}</h5>
+                                            </a>
+                                            <div class="product-price">
+                                                ${{$product->price}}
+                                                {{--                                        <span>$35.00</span>--}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="product-large set-bg m-large"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                        <h2>Men’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
                     <div class="product-large set-bg m-large"
                          data-setbg="{{asset('images/img/products/man-large.jpg')}}">
                         <h2>Men’s</h2>
@@ -753,41 +938,7 @@
             </div>
         </div>
     </section>
-    <!-- Latest Blog Section End -->
 
-    {{--    <!-- Partner Logo Section Begin -->--}}
-    {{--    <div class="partner-logo">--}}
-    {{--        <div class="container">--}}
-    {{--            <div class="logo-carousel owl-carousel">--}}
-    {{--                <div class="logo-item">--}}
-    {{--                    <div class="tablecell-inner">--}}
-    {{--                        <img src="img/logo-carousel/logo-1.png" alt="">--}}
-    {{--                    </div>--}}
-    {{--                </div>--}}
-    {{--                <div class="logo-item">--}}
-    {{--                    <div class="tablecell-inner">--}}
-    {{--                        <img src="img/logo-carousel/logo-2.png" alt="">--}}
-    {{--                    </div>--}}
-    {{--                </div>--}}
-    {{--                <div class="logo-item">--}}
-    {{--                    <div class="tablecell-inner">--}}
-    {{--                        <img src="img/logo-carousel/logo-3.png" alt="">--}}
-    {{--                    </div>--}}
-    {{--                </div>--}}
-    {{--                <div class="logo-item">--}}
-    {{--                    <div class="tablecell-inner">--}}
-    {{--                        <img src="img/logo-carousel/logo-4.png" alt="">--}}
-    {{--                    </div>--}}
-    {{--                </div>--}}
-    {{--                <div class="logo-item">--}}
-    {{--                    <div class="tablecell-inner">--}}
-    {{--                        <img src="img/logo-carousel/logo-5.png" alt="">--}}
-    {{--                    </div>--}}
-    {{--                </div>--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
-    {{--    <!-- Partner Logo Section End -->--}}
 @endsection
 
 

@@ -64,13 +64,14 @@
     .dropdown {
         position: relative;
         display: inline-block;
+        width: 150px;
     }
 
     .dropdown-content {
         display: none;
         position: absolute;
         background-color: #f1f1f1;
-        min-width: 120px;
+        min-width: 150px;
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
         z-index: 1;
     }
@@ -108,6 +109,7 @@
     @media only screen and (max-width: 479px) {
 
     }
+
 
 </style>
 <header class="header-section" style="background: #ffffff;">
@@ -326,7 +328,7 @@
                                         @endif
                                     </h4>
                                     <div class="dropdown-content">
-                                        <a class="dropdown-item" href="#">Action</a>
+                                        <a class="dropdown-item" href="{{route('profile.show')}}">Profile</a>
                                         <a class="dropdown-item" href="#">Another action</a>
                                         <form action="{{ route('logout') }}" method="POST">
                                             @csrf

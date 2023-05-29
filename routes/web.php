@@ -38,7 +38,7 @@ Route::get('/detail/{id}', [\App\Http\Controllers\ProductController::class, 'det
 Route::get('/category/{id}', [\App\Http\Controllers\CategoryController::class, 'category'])->name('category.show');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/info/', [\App\Http\Controllers\ProfileController::class, 'info']);
+    Route::get('/info/', [\App\Http\Controllers\ProfileController::class, 'info'])->name('profile.show');
     Route::get('/my-notification/', [\App\Http\Controllers\ProfileController::class, 'my_notification']);
 //    Route::get('/order-management/', [\App\Http\Controllers\ProfileController::class, 'order_management']);
     Route::get('/return-management/', [\App\Http\Controllers\ProfileController::class, 'return_management']);
