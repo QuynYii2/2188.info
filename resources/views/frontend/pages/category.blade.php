@@ -25,6 +25,26 @@
     .list-menu li a:hover{
         color: #000;
     }
+
+    @media only screen and (min-width: 1200px){
+
+    }
+
+    @media only screen and (min-width: 992px) and (max-width: 1199px){
+
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+
+    }
+
+    @media only screen and (max-width: 767px) {
+
+    }
+
+    @media only screen and (max-width: 365px) {
+
+    }
 </style>
 
 @section('content')
@@ -344,7 +364,7 @@
 
                     <div class="row py-2">
                         @foreach($productByLocal9 as $product)
-                            <div class="col-3 rounded">
+                            <div class="col-md-4 rounded">
                                 <div class="product-item bg-light rounded ">
                                     <div class="product-img position-relative overflow-hidden rounded">
                                         <img class=" height-img w-100 img" src="{{ $product->thumbnail }}" alt="">
@@ -359,7 +379,7 @@
                             </div>
                         @endforeach
                     </div>
-                    <nav class="mt-4 d-flex justify-content-center" aria-label="Page navigation sample">
+                    <nav class="mt-4 mb-5 d-flex justify-content-center" aria-label="Page navigation sample">
                         <ul class="pagination">
                             <li class="page-item disabled"><a class="page-link" href="#!">{{ __('home.previous') }}</a></li>
                             <li class="page-item active"><a class="page-link" href="#!">1</a></li>

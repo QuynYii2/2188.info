@@ -62,18 +62,15 @@
         }
 
         .tabs-product-detail {
-            background-color: #fff;
-        !important;
+            background-color: #fff!important;
         }
 
         .link-tabs:hover {
-            color: #c69500;
-        !important;
+            color: #c69500!important;
         }
 
         .text-more-tabs:hover {
-            color: #c69500;
-        !important;
+            color: #c69500!important;
         }
 
         .product-content {
@@ -106,12 +103,57 @@
             color: orange;
         }
 
+        @media only screen and (min-width: 1200px){
+            .tabs-product{
+
+            }
+        }
+
+        @media only screen and (min-width: 992px) and (max-width: 1199px){
+            .tabs-product{
+
+            }
+        }
+
+        @media only screen and (min-width: 768px) and (max-width: 991px) {
+            .tabs-item{
+                max-width: 120px;
+            }
+
+            .tabs-item a{
+                font-size: 15px;
+            }
+            .tabs-product{
+                display: flex!important;
+            }
+        }
+
+        @media only screen and (max-width: 767px) {
+            .tabs-item{
+                max-width: 100px;
+            }
+
+            .tabs-item a{
+                font-size: 15px;
+            }
+        }
+
+        @media only screen and (max-width: 365px) {
+            .tabs-item{
+                max-width: 70px;
+            }
+
+            .tabs-item a{
+                font-size: 12px;
+            }
+        }
+
     </style>
     <div class="container">
         <div class="row mb-5 mt-5" id="mainDetailProduct">
-            <div class="col-8" id="left-col">
-                <div class="card" style="padding: 8px">
-                    <div class="product-imgs" id="product">
+            <div class="col-md-8" id="left-col">
+                <div class="card tabs-product" id="id-tabs-product" style="padding: 8px">
+                    <div class="product-imgs " id="product">
                         <div class="img-display ">
                             <div class="img-showcase d-flex flex-row bd-highlight ">
                                 <img id="img-default" class="img" src="{{$product->thumbnail}}"
@@ -243,15 +285,15 @@
                 </div>
                 <div class="col-md-12 mt-4 bg-white">
                     <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
-                        <li class="nav-item tabs-product-detail">
+                        <li class="nav-item tabs-product-detail tabs-item">
                             <a class="nav-link lead active link-tabs" role="tab" data-toggle="tab"
                                href="#tabDescription">{{ __('home.description') }}</a>
                         </li>
-                        <li class="nav-item tabs-product-detail">
+                        <li class="nav-item tabs-product-detail tabs-item">
                             <a class="nav-link lead link-tabs" role="tab" data-toggle="tab"
                                href="#tabSpecification">{{ __('home.specification') }}</a>
                         </li>
-                        <li class="nav-item tabs-product-detail">
+                        <li class="nav-item tabs-product-detail tabs-item">
                             <a class="nav-link lead link-tabs" role="tab" data-toggle="tab"
                                href="#tabReview">{{ __('home.review') }}</a>
                         </li>
@@ -552,7 +594,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-md-4">
                 <div class="bg-white rounded p-2">
                     <div class="purchase-info mb-5">
                         <div class="btn p-3 text-center text-uppercase text-white text-bold fw-bold"
@@ -689,11 +731,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12">
+            <div class="col-md-12">
                 <div class="mt-5 row">
-
                     @foreach($otherProduct as $product)
-                        <div class="col-3 mb-3 mb-md-0">
+                        <div class="col-md-3 mb-3 mb-md-0">
                             <div class="card h-100">
 
                                 <img class="img" src="{{$product->thumbnail}}" alt="">
@@ -720,9 +761,9 @@
                     @endforeach
                 </div>
             </div>
-            <div class="col-12">
+            <div class="col-md-12">
                 <div class="mt-5 row">
-                    <div class="col-3 mb-3 mb-md-0">
+                    <div class="col-md-3 mb-3 mb-md-0">
                         <div class="card">
                             <div class="d-flex px-3 py-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -734,7 +775,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3 mb-3 mb-md-0">
+                    <div class="col-md-3 mb-3 mb-md-0">
                         <div class="card">
                             <div class="d-flex px-3 py-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
@@ -745,7 +786,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3 mb-3 mb-md-0">
+                    <div class="col-md-3 mb-3 mb-md-0">
                         <div class="card">
                             <div class="d-flex px-3 py-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="40">
@@ -756,7 +797,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3 mb-3 mb-md-0">
+                    <div class="col-md-3 mb-3 mb-md-0">
                         <div class="card">
                             <div class="d-flex px-3 py-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -771,7 +812,7 @@
 
                 </div>
                 <div class="mt-3 row">
-                    <div class="col-3 mb-3 mb-md-0">
+                    <div class="col-md-3 mb-3 mb-md-0">
                         <div class="card">
                             <div class="d-flex px-3 py-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -783,7 +824,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3 mb-3 mb-md-0">
+                    <div class="col-md-3 mb-3 ">
                         <div class="card">
                             <div class="d-flex px-3 py-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
@@ -795,7 +836,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3 mb-3 mb-md-0">
+                    <div class="col-md-3 mb-3">
                         <div class="card">
                             <div class="d-flex px-3 py-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -807,7 +848,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3 mb-3 mb-md-0">
+                    <div class="col-md-3 mb-3">
                         <div class="card">
                             <div class="d-flex px-3 py-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -894,7 +935,6 @@
                     icon5.classList.add("checked");
                     break;
             }
-
         }
 
         function toggleReadMore() {
@@ -916,5 +956,16 @@
         console.log(myParam[num - 1]);
         document.getElementById("product_id").value = myParam[num - 1];
 
+        function myFunction(x) {
+            let tabs = document.getElementById('id-tabs-product');
+            if (x.matches) {
+                tabs.classList.remove("card");
+                // console.log('b')
+                tabs.classList.add("border");
+            }
+        }
+        var x = window.matchMedia("(max-width: 768px)")
+        myFunction(x)
+        x.addListener(myFunction)
     </script>
 @endsection

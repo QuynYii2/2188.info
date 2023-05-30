@@ -80,14 +80,41 @@
             position: relative;
         }
 
+        @media only screen and (min-width: 1200px){
 
+        }
+
+        @media only screen and (min-width: 992px) and (max-width: 1199px){
+
+        }
+
+        @media only screen and (min-width: 768px) and (max-width: 991px) {
+            .menu-header{
+                margin-right: -8px;
+                margin-left: 8px;
+                max-width: 30%!important;
+            }
+
+            .mega-menu-header{
+                margin-right: -8px;
+                margin-left: 8px;
+            }
+
+            .menu-bottom{
+                max-width: 20%!important;
+            }
+        }
+
+        @media only screen and (max-width: 767px) {
+
+        }
     </style>
     <!-- Hero Section Begin -->
     <section class="header_bottom">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-2 col-lg-2">
-                    <nav class="navbar navbar-expand-lg">
+                <div class="col-md-3 col-lg-3 menu-header">
+                    <nav class="navbar navbar-expand-lg mega-menu-header">
                         <div class="vertical-menu">
                             <ul class="navbar-nav">
                                 <li class="nav-item">
@@ -359,7 +386,7 @@
                     </nav>
 
                 </div>
-                <div class="col-lg-7 col-md-6">
+                <div class="col-lg-6 col-md-6">
                     <!-- Hero Section Begin -->
                     <section class="slider-section">
                         <div id="carousel" class="carousel slide" data-ride="carousel">
@@ -387,7 +414,7 @@
                     <!-- Hero Section End -->
                 </div>
 
-                <div class="col-lg-3 col-md-3 mt-2">
+                <div class="col-lg-3 col-md-3 mt-2 menu-bottom">
                     <div class="single-banner mb-3">
                         <img class="img" src="{{asset('images/img/Screenshot 2023-05-26 at 2.14.36 AM.png')}}" alt=""
                              height="100%">
