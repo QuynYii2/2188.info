@@ -53,7 +53,7 @@
 
         .btn {
             padding: 8px 16px;
-            margin: 0 16px;
+            /*margin: 0 16px;*/
         }
 
 
@@ -94,8 +94,16 @@
             cursor: pointer;
         }
 
+        .btn-16{
+            margin: 0 16px;
+        }
+
         .btn-cancel:hover{
             background-color: #cccccc;
+        }
+
+        .checked {
+            color: orange;
         }
 
     </style>
@@ -134,7 +142,7 @@
                                                         <img class="img mt-2" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg" alt="">
                                                     </div>
                                                     <div class="">
-                                                        <button class="btn btn-secondary btn-cancel mr-5" data-dismiss="modal"
+                                                        <button class="btn btn-secondary btn-16 btn-cancel mr-5" data-dismiss="modal"
                                                                 aria-label="Close">Cancel</button>
                                                         <button class="btn btn-danger" id="btn-buy-modal" onclick="orderClick();">Buy now</button>
                                                     </div>
@@ -221,11 +229,11 @@
                                        value="1">
                             </div>
 
-                            <div class="purchase-info d-flex">
-                                <button type="button" class="btn btn-warning ">
+                            <div class="purchase-info d-flex mt-3">
+                                <button type="button" class="btn btn-warning">
                                     {{ __('home.installment by card') }}
                                 </button>
-                                <button type="submit" class="btn-danger btn" id="btn-order-now"><i class="fa fa-shopping-cart"></i>
+                                <button type="submit" class="btn-danger btn btn-16" id="btn-order-now"><i class="fa fa-shopping-cart"></i>
                                     {{ __('home.buy now') }}
                                 </button>
 
@@ -394,16 +402,16 @@
                                         <input type="text" class="form-control" id="product_id" name="product_id"
                                                hidden/>
                                         <div class="rating">
-                                            <input type="radio" name="star_number" id="star1" value="5">
-                                            <label for="star1"><i class="fas fa-star"></i></label>
-                                            <input type="radio" name="star_number" id="star2" value="4">
-                                            <label for="star2"><i class="fas fa-star"></i></label>
-                                            <input type="radio" name="star_number" id="star3" value="3">
-                                            <label for="star3"><i class="fas fa-star"></i></label>
-                                            <input type="radio" name="star_number" id="star4" value="2">
-                                            <label for="star4"><i class="fas fa-star"></i></label>
-                                            <input type="radio" name="star_number" id="star5" value="1">
-                                            <label for="star5"><i class="fas fa-star"></i></label>
+                                            <input type="radio" name="star_number" id="star1" value="1" hidden="">
+                                            <label for="star1" onclick="starCheck(1)"><i id="icon-star-1" class="fa fa-star"></i></label>
+                                            <input type="radio" name="star_number" id="star2" value="2" hidden="">
+                                            <label for="star2" onclick="starCheck(2)"><i id="icon-star-2" class="fa fa-star"></i></label>
+                                            <input type="radio" name="star_number" id="star3" value="3" hidden="">
+                                            <label for="star3" onclick="starCheck(3)"><i id="icon-star-3" class="fa fa-star"></i></label>
+                                            <input type="radio" name="star_number" id="star4" value="4" hidden="">
+                                            <label for="star4" onclick="starCheck(4)"><i id="icon-star-4" class="fa fa-star"></i></label>
+                                            <input type="radio" name="star_number" id="star5" value="5" hidden="">
+                                            <label for="star5" onclick="starCheck(5)"><i id="icon-star-5" class="fa fa-star"></i></label>
                                         </div>
 
                                         <div class="form-group row">
@@ -424,7 +432,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <button class="btn btn-primary" type="submit">Submit</button>
+                                            <button class="btn btn-primary btn-16" type="submit">Submit</button>
                                         </div>
                                     </form>
                                 </div>
@@ -456,80 +464,80 @@
                                             @endif
                                             <tr>
                                                 <td colspan="2">
-                                                    <strong>{{ __('home.customer rating') }}: </strong>
+                                                    <strong class="mr-2">{{ __('home.customer rating') }}: </strong>
                                                     @if($res->star_number == 1)
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack"><i
-                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                                    class="fa fa-star-o"></i></span>
                                                         <span class="fa fa-stack"><i
-                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                                    class="fa fa-star-o"></i></span>
                                                         <span class="fa fa-stack"><i
-                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                                    class="fa fa-star-o"></i></span>
                                                         <span class="fa fa-stack"><i
-                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                                    class="fa fa-star-o"></i></span>
                                                     @endif
                                                     @if($res->star_number == 2)
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack"><i
-                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                                    class="fa fa-star-o"></i></span>
                                                         <span class="fa fa-stack"><i
-                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                                    class="fa fa-star-o"></i></span>
                                                         <span class="fa fa-stack"><i
-                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                                    class="fa fa-star-o"></i></span>
                                                     @endif
                                                     @if($res->star_number == 3)
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack"><i
-                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                                    class="fa fa-star-o"></i></span>
                                                         <span class="fa fa-stack"><i
-                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                                    class="fa fa-star-o"></i></span>
                                                     @endif
                                                     @if($res->star_number == 4)
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack"><i
-                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                                    class="fa fa-star-o"></i></span>
                                                     @endif
                                                     @if($res->star_number == 5)
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                     @endif
                                                 </td>
@@ -546,7 +554,7 @@
             </div>
             <div class="col-4">
                 <div class="bg-white rounded p-2">
-                    <div class="purchase-info">
+                    <div class="purchase-info mb-5">
                         <div class="btn p-3 text-center text-uppercase text-white text-bold fw-bold"
                              style="border-radius: 5px; background-color: red">
                             {{ __('home.exchange old for new') }}
@@ -841,47 +849,53 @@
 
         }
 
+        function starCheck(value) {
+            let star1 = document.getElementById('star1');
+            let star2 = document.getElementById('star2');
+            let star3 = document.getElementById('star3');
+            let star4 = document.getElementById('star4');
+            let star5 = document.getElementById('star5');
+            //
+            let icon1 = document.getElementById('icon-star-1');
+            let icon2 = document.getElementById('icon-star-2');
+            let icon3 = document.getElementById('icon-star-3');
+            let icon4 = document.getElementById('icon-star-4');
+            let icon5 = document.getElementById('icon-star-5');
 
-    </script>
+            switch (value){
+                case 1:
+                    star1.checked = true;
+                    icon1.classList.add("checked");
+                    break;
+                case 2:
+                    star2.checked = true;
+                    icon1.classList.add("checked");
+                    icon2.classList.add("checked");
+                    break;
+                case 3:
+                    star3.checked = true;
+                    icon1.classList.add("checked");
+                    icon2.classList.add("checked");
+                    icon3.classList.add("checked");
+                    break;
+                case 4:
+                    star4.checked = true;
+                    icon1.classList.add("checked");
+                    icon2.classList.add("checked");
+                    icon3.classList.add("checked");
+                    icon4.classList.add("checked");
+                    break;
+                default:
+                    star5.checked = true;
+                    icon1.classList.add("checked");
+                    icon2.classList.add("checked");
+                    icon3.classList.add("checked");
+                    icon4.classList.add("checked");
+                    icon5.classList.add("checked");
+                    break;
+            }
 
-    <script>
-
-        const imgs = document.querySelectorAll('.img-select a');
-        const imgBtns = [...imgs];
-        let imgId = 1;
-
-        // imgBtns.forEach((imgItem) => {
-        //     imgItem.addEventListener('click', (event) => {
-        //         event.preventDefault();
-        //         imgId = imgItem.dataset.id;
-        //         slideImage();
-        //     });
-        // });
-
-
-        // function slideImage() {
-        //     const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
-        //     document.querySelector('.img-showcase').style.transform = `translateX(${-(imgId - 1) * displayWidth}px)`;
-        // }
-        //
-        // window.addEventListener('resize', slideImage);
-        //
-        // var wrapper = document.querySelector('.count__wrapper'),
-        //     res = document.querySelector('.subtotal__price'),
-        //     input = wrapper.querySelector('input[class*=input]');
-        //
-        // wrapper.addEventListener('click', e => {
-        //     var t = e.target;
-        //
-        //     input.value = +input.value;
-        //
-        //     if (t.closest('button[class*=--minus]')) {
-        //         --input.value;
-        //     } else if (t.closest('button[class*=--add]')) {
-        //         ++input.value;
-        //     }
-        //
-        // });
+        }
 
         function toggleReadMore() {
             var moreLink = document.getElementById("more-link");

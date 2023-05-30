@@ -344,7 +344,9 @@
                         <div class="btn-group mb-2 full-width">
                             <button type="button" class="btn btn-warning mr-2 full-width" data-toggle="modal"
                                     data-target="#chooseLanguageOrder"
-                                    aria-expanded="false">{{ __('home.orders') }}</button>
+                                    aria-expanded="false">
+                                <a class="text-white" target="_blank" rel="noopener noreferrer"  href="http://order.2188.info/admin">{{ __('home.orders') }}</a>
+                            </button>
 
 {{--                            <div class="modal fade" id="chooseLanguageOrder" tabIndex="-1" role="dialog"--}}
 {{--                                 aria-labelledby="editModalLabel" aria-hidden="true">--}}
