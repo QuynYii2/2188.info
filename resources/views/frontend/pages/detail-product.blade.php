@@ -115,7 +115,7 @@
             }
         }
 
-        @media only screen and (min-width: 768px) and (max-width: 991px) {
+        @media only screen and (min-width: 769px) and (max-width: 991px) {
             .tabs-item{
                 max-width: 120px;
             }
@@ -123,8 +123,19 @@
             .tabs-item a{
                 font-size: 15px;
             }
+
             .tabs-product{
                 display: flex!important;
+            }
+        }
+
+        @media only screen and (max-width: 769px){
+            .tabs-item{
+                max-width: 120px;
+            }
+
+            .tabs-item a{
+                font-size: 15px;
             }
         }
 
@@ -732,9 +743,9 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="mt-5 row">
+                <div class="mt-5 row" id="product-other">
                     @foreach($otherProduct as $product)
-                        <div class="col-md-3 mb-3 mb-md-0">
+                        <div class="product-other col-md-3 mb-3 mb-md-0">
                             <div class="card h-100">
 
                                 <img class="img" src="{{$product->thumbnail}}" alt="">
@@ -960,12 +971,28 @@
             let tabs = document.getElementById('id-tabs-product');
             if (x.matches) {
                 tabs.classList.remove("card");
-                // console.log('b')
                 tabs.classList.add("border");
+                console.log('b')
             }
         }
-        var x = window.matchMedia("(max-width: 768px)")
+        var x = window.matchMedia("(max-width: 770px)")
         myFunction(x)
         x.addListener(myFunction)
+
+        function responsiveTable(y) {
+            let tabs = document.getElementsByClassName('product-other');
+            console.log(tabs.length)
+            var i;
+            for (i=0; i<tabs.length; i++){
+                if (y.matches) {
+                    tabs[i].classList.remove("col-md-3");
+                    tabs[i].classList.add("col-sm-6");
+                }
+            }
+
+        }
+        var y = window.matchMedia("(max-width: 991px)")
+        responsiveTable(y);
+        x.addListener(responsiveTable)
     </script>
 @endsection

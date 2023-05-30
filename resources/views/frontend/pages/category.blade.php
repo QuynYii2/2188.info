@@ -182,7 +182,7 @@
 
         <div class="container">
             <div class="row">
-                <aside class="col-md-3">
+                <aside class="col-md-4">
 
                     <div class="card  mb-5">
                         <article class="filter-group">
@@ -348,7 +348,7 @@
                     </div>
 
                 </aside>
-                <main class="col-md-9">
+                <main class="col-md-8">
 
                     <header class=" border-bottom mb-4 pb-3 ">
                         <div class="form-inline">
@@ -364,13 +364,13 @@
 
                     <div class="row py-2">
                         @foreach($productByLocal9 as $product)
-                            <div class="col-md-4 rounded">
+                            <div class="col-md-4 rounded product-map">
                                 <div class="product-item bg-light rounded ">
                                     <div class="product-img position-relative overflow-hidden rounded">
                                         <img class=" height-img w-100 img" src="{{ $product->thumbnail }}" alt="">
                                     </div>
                                     <div class="text-center py-4 text-limit">
-                                        <a class="h6 text-decoration-none text-truncate tabs-product-detail" href="">{{ $product->name }}</a>
+                                        <a class="h6 text-decoration-none text-truncate tabs-product-detail" href="{{route('detail_product.show', $product->id)}}">{{ $product->name }}</a>
                                         <div class="d-flex align-items-center justify-content-center mt-2">
                                             <h5 class="text-danger">${{ $product->price }}</h5><h6 class="text-muted ml-2"></h6>
                                         </div>
@@ -394,4 +394,21 @@
         </div>
 
     </div>
+    <script>
+        function responsiveTable(y) {
+            let tabs = document.getElementsByClassName('product-map');
+            console.log(tabs.length)
+            var i;
+            for (i=0; i<tabs.length; i++){
+                if (y.matches) {
+                    tabs[i].classList.remove("col-md-4");
+                    tabs[i].classList.add("col-sm-6");
+                    console.log('a')
+                }
+            }
+        }
+        var y = window.matchMedia("(max-width: 991px)")
+        responsiveTable(y);
+        x.addListener(responsiveTable)
+    </script>
 @endsection
