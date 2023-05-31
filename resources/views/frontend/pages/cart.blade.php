@@ -10,7 +10,7 @@
             @if ($cartItems->isEmpty())
                 <p>Chưa có sản phẩm trong giỏ hàng.</p>
             @else
-                <table class="table">
+                <table id="table-cart" class="table">
                     <thead>
                     <tr>
                         <th>Sản phẩm</th>
@@ -93,7 +93,7 @@
 
         function getAllTotal(){
             let totalMax = document.getElementById('max-total');
-            var firstCells = document.querySelectorAll('td:nth-child(4)');
+            var firstCells = document.querySelectorAll('#table-cart td:nth-child(4)');
             var cellValues = [];
             firstCells.forEach(function(singleCell) {
                 cellValues.push(singleCell.innerText);

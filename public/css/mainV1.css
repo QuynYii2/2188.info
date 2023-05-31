@@ -96,6 +96,13 @@ img {
 	max-width: 100%;
 }
 
+/**/
+.link-read-more:hover{
+	color: #000000;!important;
+}
+
+/**/
+
 input:focus,
 select:focus,
 button:focus,
@@ -1054,11 +1061,12 @@ ol {
 }
 
 .product-large {
-	height: 620px;
+	height: 427px;
 	margin-left: -15px;
 	margin-right: -15px;
 	text-align: center;
 	padding-top: 285px;
+	margin-bottom: 10px;
 }
 
 .product-large h2 {
@@ -3903,6 +3911,26 @@ ol {
 	color: #6B6B6B;
 }
 
+.vertical-menu li:not(:last-child):before{
+	display: inline-block;
+	content: "";
+	border-top: 1px solid  rgb(0 0 0 / 14%);
+	width: 200px;
+	margin: 55px 10px;
+	transform: translateY(-1rem);
+	position: absolute;
+}
+.megamenu li:not(:last-child):before{
+	display: none !important;
+}
+.megamenu h5 {
+	border-bottom: 2px solid rgb(0 0 0 / 14%);;
+	font-weight: 700;
+	margin-bottom: 15px;
+}
+.header_bottom {
+
+}
 /* ------------------------------ Responsive Media Styles ---------------------------- */
 
 @media only screen and (min-width: 1200px) and (max-width: 1920px) {

@@ -2,15 +2,25 @@
 
 @section('title', 'Return Management')
 
+<style>
+    .link-tabs {
+        background-color: #f7f7f7 !important;
+    }
+
+    .link-tabs:hover {
+        color: #c69500 !important;
+    }
+</style>
+
 @section('sub-content')
     <div class="row mt-5 bg-white rounded">
-        <div class="row  rounded pt-1">
+        <div class="row  rounded pt-1 ml-5">
             <h5>{{ __('home.address book') }}</h5>
         </div>
         <div class="border-bottom"></div>
     </div>
     <div class="row bg-white rounded mt-2">
-        <button class="btn btn-outline-info bg-white  py-3" id="addAction" data-toggle="modal"
+        <button class="btn btn-outline-info bg-white py-3 link-tabs" id="addAction" data-toggle="modal"
                 data-target="#modal-address">
             <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                 <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/>
@@ -19,13 +29,13 @@
         </button>
     </div>
 
-    @foreach($addresses as $address)
-        <div class="row bg-white rounded mt-3">
-            <div class="row">
+    <div class="row bg-white mt-3">
+        @foreach($addresses as $address)
+            <div class="ml-3">
                 <div class="py-3">
-                    <div class="d-flex w-100 justify-content-between">
+                    <div class="d-flex justify-content-between">
                         <h5 class="mb-1">{{$address->username}}</h5>
-                        <div>
+                        <div class="">
                             <button class="btn btn-outline- " onclick="editModal()" data-target="#modal-address"
                                     data-toggle="modal" style="color: blue">{{ __('home.edit') }}</button>
                             <button class="btn btn-outline- " style="color: red">{{ __('home.delete') }}</button>
@@ -36,17 +46,17 @@
                     <small>{{ __('home.phone number') }}: {{$address->phone}}</small>
                 </div>
             </div>
-        </div>
-    @endforeach
+        @endforeach
+    </div>
 
     <div class="modal fade" id="modal-address" tabindex="-1" aria-labelledby="modalLabel"
-         >
+    >
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalLabel"></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span >&times;</span>
+                        <span>&times;</span>
                     </button>
                 </div>
                 <form action="{{route('address.create')}}" method="post">

@@ -31,7 +31,7 @@
                                         </span>
                                         </h4>
                                         <p>
-                                        <table class="table">
+                                        <table id="table-checkout" class="table">
                                             <thead>
                                             <tr>
                                                 <th>Sản phẩm</th>
@@ -185,7 +185,7 @@
             let shippingPrice = document.getElementById('shipping-price').value;
             let salePrice = document.getElementById('sale-price').value;
             let checkOutPrice = document.getElementById('checkout-price');
-            var firstCells = document.querySelectorAll('td:nth-child(4)');
+            var firstCells = document.querySelectorAll('#table-checkout td:nth-child(4)');
             var cellValues = [];
             firstCells.forEach(function (singleCell) {
                 cellValues.push(singleCell.innerText);

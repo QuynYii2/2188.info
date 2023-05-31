@@ -2,6 +2,23 @@
 
 @section('title', 'Register')
 
+<style>
+    .register-tags{
+        display: inline-block;
+        margin: auto;
+    }
+    .link-tabs{
+        color: #cccccc;
+        background-color: #f9f9f9 !important;
+    }
+
+    .link-tabs:hover{
+        color: #c69500;!important;
+        background-color: #f7f7f7;
+    }
+
+</style>
+
 @section('content')
 
 
@@ -10,14 +27,14 @@
         <div class="form-title text-center pt-2">
             <h4>{{ __('home.sign up') }}</h4>
         </div>
-        <div class="row">
-            <div class="col-xs-12 ">
+        <div class="row mt-5">
+            <div class="col-md-8 register-tags">
                 <nav>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
 
-                        <a class="nav-item nav-link active" id="nav-buyer-tab" data-toggle="tab" href="#nav-buyer"
+                        <a class="nav-item nav-link active link-tabs" id="nav-buyer-tab" data-toggle="tab" href="#nav-buyer"
                            role="tab" aria-controls="nav-buyer">{{ __('home.buyer') }}</a>
-                        <a class="nav-item nav-link" id="nav-seller-tab" data-toggle="tab" href="#nav-seller" role="tab"
+                        <a class="nav-item nav-link link-tabs" id="nav-seller-tab" data-toggle="tab" href="#nav-seller" role="tab"
                            aria-controls="nav-seller">{{ __('home.seller') }}</a>
                     </div>
                 </nav>
@@ -50,8 +67,16 @@
                                 <input required type="text" class="form-control" name="social_media"
                                        placeholder="{{ __('home.input socialNetwork') }}">
                             </div>
+                            <div class="">
+                                <div class="float-left">
+                                    <a class="tabs-product-detail" href="{{route('home')}}">{{ __('home.back home') }}</a>
+                                </div>
+                                <div class="float-right">
+                                    <a class="tabs-product-detail" href="{{route('login')}}">{{ __('home.sign in') }}</a>
+                                </div>
+                            </div>
                             <button type="submit"
-                                    class="btn btn-info btn-block btn-round">{{ __('home.sign up') }}
+                                    class="btn btn-info btn-block btn-round mt-5">{{ __('home.sign up') }}
                             </button>
                         </form>
                     </div>
@@ -96,7 +121,7 @@
 
                             <div class="form-group">
                                 <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="industry">
-                                    <option selected>Chọn ngành...</option>
+                                    <option selected>{{ __('home.choose branch') }}</option>
                                     <option value="1">One</option>
                                     <option value="2">Two</option>
                                     <option value="3">Three</option>
@@ -109,15 +134,23 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="text" class="form-control" id="product_code" placeholder="Mã sản phẩm" name="product_code">
+                                <input type="text" class="form-control" id="product_code" placeholder="{{ __('home.type product') }}" name="product_code">
                             </div>
 
                             <div class="form-group">
                                 <input required type="text" class="form-control" name="social_media"
                                        placeholder="{{ __('home.input socialNetwork') }}">
                             </div>
+                            <div class="">
+                                <div class="float-left">
+                                    <a class="tabs-product-detail" href="{{route('home')}}">{{ __('home.back home') }}</a>
+                                </div>
+                                <div class="float-right">
+                                    <a class="tabs-product-detail" href="{{route('login')}}">{{ __('home.sign in') }}</a>
+                                </div>
+                            </div>
                             <button type="submit"
-                                    class="btn btn-info btn-block btn-round">{{ __('home.sign up') }}
+                                    class="btn btn-info btn-block btn-round mt-5">{{ __('home.sign up') }}
                             </button>
                         </form>
                     </div>

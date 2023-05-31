@@ -11,9 +11,21 @@ use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
-    public function showLoginForm(Request $request)
+    public function showLogin(Request $request)
     {
         (new HomeController())->getLocale($request);
+        if (Auth::check()) {
+            // nếu đăng nhập thàng công thì
+            return redirect()->route('home');
+        } else {
+            return view('frontend/pages/login');
+        }
+    }
+
+    public function showLoginForm($locale)
+    {
+//        (new HomeController())->getLocale($request);
+        app()->setLocale($locale);
         if (Auth::check()) {
             // nếu đăng nhập thàng công thì
             return redirect()->route('home');

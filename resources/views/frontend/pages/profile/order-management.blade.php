@@ -2,36 +2,46 @@
 
 @section('title', 'Order Management')
 
+<style>
+    .link-tabs{
+        background-color: #f7f7f7!important;
+    }
+
+    .link-tabs:hover{
+        color: #c69500;!important;
+    }
+</style>
+
 @section('sub-content')
     <div class="row mt-5 bg-white rounded">
-        <div class="row rounded pt-1">
+        <div class="row rounded pt-1 ml-5">
             <h5>{{ __('home.order management') }}</h5>
         </div>
         <div class="border-bottom"></div>
-        <div class="col-xs-12">
-            <nav>
-                <div class="nav nav-tabs nav-fill " id="nav-tab" role="tablist">
-                    <a class="nav-item nav-link active" data-toggle="tab" data-target="#nav-1"
+        <div class="col-md-12">
+            <nav >
+                <div class="nav nav-tabs nav-fill d-flex justify-content-between align-items-center" id="nav-tab" role="tablist">
+                    <a class="nav-item link-tabs nav-link active" data-toggle="tab" data-target="#nav-1"
                        role="tab" aria-controls="nav-1" aria-selected="true">
                         {{ __('home.all orders') }}
                     </a>
-                    <a class="nav-item nav-link" data-toggle="tab" data-target="#nav-2" role="tab"
+                    <a class="nav-item link-tabs nav-link" data-toggle="tab" data-target="#nav-2" role="tab"
                        aria-controls="nav-2" aria-selected="false">
                         {{ __('home.waiting for payment') }}
                     </a>
-                    <a class="nav-item nav-link" data-toggle="tab" data-target="#nav-3"
+                    <a class="nav-item link-tabs nav-link" data-toggle="tab" data-target="#nav-3"
                        role="tab" aria-controls="nav-3" aria-selected="false">
                         {{ __('home.processing') }}
                     </a>
-                    <a class="nav-item nav-link" data-toggle="tab" data-target="#nav-4" role="tab"
+                    <a class="nav-item link-tabs nav-link" data-toggle="tab" data-target="#nav-4" role="tab"
                        aria-controls="nav-4" aria-selected="false">
                         {{ __('home.shipping') }}
                     </a>
-                    <a class="nav-item nav-link" data-toggle="tab" data-target="#nav-5" role="tab"
+                    <a class="nav-item link-tabs nav-link" data-toggle="tab" data-target="#nav-5" role="tab"
                        aria-controls="nav-4" aria-selected="false">
                         {{ __('home.delivered') }}
                     </a>
-                    <a class="nav-item nav-link" data-toggle="tab" data-target="#nav-6" role="tab"
+                    <a class="nav-item link-tabs nav-link" data-toggle="tab" data-target="#nav-6" role="tab"
                        aria-controls="nav-4" aria-selected="false">
                         {{ __('home.canceled') }}
                     </a>
@@ -41,7 +51,7 @@
                 <div class="tab-pane fade text-center active show" id="nav-1" role="tabpanel"
                      aria-labelledby="nav-contact-tab">
                     @if ($orderAll->isEmpty())
-                        <img src="{{asset('images/empty.jpg')}}" alt="">
+                        <img class="img" src="{{asset('images/empty.jpg')}}" alt="">
                         <p>{{ __('home.you have no order') }}</p>
                     @else
                         <div class="d-flex justify-content-between">
@@ -138,8 +148,8 @@
                     @endif
                 </div>
                 <div class="tab-pane fade text-center" id="nav-2" role="tabpanel" aria-labelledby="nav-about-tab">
-                    <@if ($orderWaitPay->isEmpty())
-                        <img src="{{asset('images/empty.jpg')}}" alt="">
+                    @if ($orderWaitPay->isEmpty())
+                        <img class="img" src="{{asset('images/empty.jpg')}}" alt="">
                         <p>{{ __('home.you have no order') }}</p>
                     @else
                         <div class="d-flex justify-content-between">
@@ -227,7 +237,7 @@
                 </div>
                 <div class="tab-pane fade text-center" id="nav-3" role="tabpanel" aria-labelledby="nav-contact-tab">
                     @if ($orderProcessing->isEmpty())
-                        <img src="{{asset('images/empty.jpg')}}" alt="">
+                        <img class="img" src="{{asset('images/empty.jpg')}}" alt="">
                         <p>{{ __('home.you have no order') }}</p>
                     @else
                         <div class="d-flex justify-content-between">
@@ -325,7 +335,7 @@
                 </div>
                 <div class="tab-pane fade text-center" id="nav-4" role="tabpanel" aria-labelledby="nav-about-tab">
                     @if ($orderShipping->isEmpty())
-                        <img src="{{asset('images/empty.jpg')}}" alt="">
+                        <img class="img" src="{{asset('images/empty.jpg')}}" alt="">
                         <p>{{ __('home.you have no order') }}</p>
                     @else
                         <div class="d-flex justify-content-between">
@@ -414,7 +424,7 @@
                 </div>
                 <div class="tab-pane fade text-center" id="nav-5" role="tabpanel" aria-labelledby="nav-about-tab">
                     @if ($orderDelivered->isEmpty())
-                        <img src="{{asset('images/empty.jpg')}}" alt="">
+                        <img class="img" src="{{asset('images/empty.jpg')}}" alt="">
                         <p>{{ __('home.you have no order') }}</p>
                     @else
                         <div class="d-flex justify-content-between">
@@ -502,7 +512,7 @@
                 </div>
                 <div class="tab-pane fade text-center" id="nav-6" role="tabpanel" aria-labelledby="nav-about-tab">
                     @if ($orderCancel->isEmpty())
-                        <img src="{{asset('images/empty.jpg')}}" alt="">
+                        <img class="img" src="{{asset('images/empty.jpg')}}" alt="">
                         <p>{{ __('home.you have no order') }}</p>
                     @else
                         <div class="d-flex justify-content-between">
