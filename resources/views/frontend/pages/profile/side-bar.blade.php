@@ -1,8 +1,12 @@
+@php use Illuminate\Support\Facades\Auth;
+ $user = \App\Models\User::find(Auth::user()->id)
+ @endphp
+<link rel="stylesheet" href="{{ mix('css/custom.css') }}">
 <div class="mt-5 pt-2 pl-3 bg-white d-flex">
-    <img src="{{asset('images/ads-1.png')}}" width="60" height="60" style="border-radius: 50%; " alt="">
+    <img class="img" src="{{$user->image}}" width="60" height="60" style="border-radius: 50%; " alt="">
     <div class="d-inline-block ml-3">
         <h6>{{ __('home.account of') }}</h6>
-        <h4>Admin</h4>
+        <h4>{{$user->name}}</h4>
     </div>
 </div>
 <div class="border-end bg-white pt-1" id="sidebar-wrapper">
@@ -51,4 +55,9 @@
 </div>
 
 <script>
+    function myFun(id) {
+        console.log(id)
+    }
+
+    myFun({{Auth::user()->id}})
 </script>

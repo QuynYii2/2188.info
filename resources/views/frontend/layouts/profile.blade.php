@@ -10,7 +10,7 @@
     </style>
 
     <div class="container">
-        <div class="row">
+        <div class="row mb-5">
             <div class="col-3 ">
                 @include('frontend.pages.profile.side-bar')
             </div>

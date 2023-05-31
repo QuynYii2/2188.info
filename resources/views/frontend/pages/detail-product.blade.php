@@ -51,41 +51,217 @@
             text-align: left;
         }
 
-        .btn{
+        .btn {
             padding: 8px 16px;
-            margin: 16px     8px;
+            /*margin: 0 16px;*/
         }
+
 
         .btn:hover {
             background-color: #00bf90;
         }
 
-        .tabs-product-detail{
-            background-color: #fff;!important;
+        .tabs-product-detail {
+            background-color: #fff!important;
         }
 
-        .link-tabs:hover{
-            color: #c69500;!important;
+        .link-tabs:hover {
+            color: #c69500!important;
         }
 
-        .text-more-tabs:hover{
-            color: #c69500;!important;
+        .text-more-tabs:hover {
+            color: #c69500!important;
+        }
+
+        .product-content {
+            padding-top: 0;
+        }
+
+        .product-content p {
+            margin-bottom: 0;
+        }
+
+        #img-default{
+            cursor: pointer;
+        }
+
+        .img-focus {
+            cursor: pointer;
+        }
+
+        .btn-16{
+            margin: 0 16px;
+        }
+
+        .btn-cancel:hover{
+            background-color: #cccccc;
+        }
+
+        .checked {
+            color: orange;
+        }
+
+        .list-items-ml-0{
+            margin-left: 0;
+        }
+
+        @media only screen and (min-width: 1200px){
+            .tabs-product{
+
+            }
+
+            .img-focus {
+                width: 80px ;
+                height: 80px;
+                cursor: pointer;
+            }
+        }
+
+        @media only screen and (min-width: 992px) and (max-width: 1199px){
+            .tabs-product{
+
+            }
+
+            .img-focus {
+                width: 80px ;
+                height: 80px ;
+            }
+        }
+
+        @media only screen and (min-width: 769px) and (max-width: 991px) {
+            .tabs-item{
+                max-width: 120px;
+            }
+
+            .tabs-item a{
+                font-size: 15px;
+            }
+
+            .tabs-product{
+                display: flex!important;
+            }
+        }
+
+        @media only screen and (max-width: 769px){
+            .tabs-item{
+                max-width: 120px;
+            }
+
+            .tabs-item a{
+                font-size: 15px;
+            }
+        }
+
+        @media only screen and (max-width: 767px) {
+            .tabs-item{
+                max-width: 100px;
+            }
+
+            .tabs-item a{
+                font-size: 15px;
+            }
+
+            .img-focus {
+                width: 80px ;
+                height: 80px ;
+            }
+        }
+
+        @media only screen and (max-width: 365px) {
+            .tabs-item{
+                max-width: 70px;
+            }
+
+            .tabs-item a{
+                font-size: 12px;
+            }
+
+            .btn-block{
+                display: block;
+            }
+
+            .img-focus {
+                width: 60px ;
+                height: 60px ;
+            }
         }
 
     </style>
     <div class="container">
         <div class="row mb-5 mt-5" id="mainDetailProduct">
-            <div class="col-8" id="left-col">
-                <div class="card">
-                    <div class="product-imgs" id="product">
-                        <div class="img-display">
-                            <div class="img-showcase">
-                                <img class="img" src="{{$product->thumbnail}}"
-                                     alt="image">
+            <div class="col-md-8" id="left-col">
+                <div class="card tabs-product" id="id-tabs-product" style="padding: 8px">
+                    <div class="product-imgs " id="product">
+                        <div class="img-display ">
+                            <div class="img-showcase d-flex flex-row bd-highlight ">
+                                <img id="img-default" class="img" src="{{$product->thumbnail}}"
+                                     alt="image" width="360px" height="250px" data-toggle="modal"
+                                     data-target="#seeImageProduct">
+                                <input id="img-rollback" value="{{$product->thumbnail}}" hidden="" disabled>
+
+                                <div class="modal fade" id="seeImageProduct" tabIndex="-1" role="dialog"
+                                     aria-labelledby="editModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row d-flex justify-content-between">
+                                                    <div class="col-md-10 img-main">
+                                                        <img class="img" id="img-modal" src="{{$product->thumbnail}}" alt="">
+                                                    </div>
+                                                    <div class="col-md-2 img-second">
+                                                        <img class="img mt-2 img-focus" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_1.jpg" alt="">
+                                                        <img class="img mt-2 img-focus" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg" alt="">
+                                                        <img class="img mt-2 img-focus" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_3.jpg" alt="">
+                                                        <img class="img mt-2 img-focus" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_4.jpg" alt="">
+                                                        <img class="img mt-2 img-focus" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg" alt="">
+                                                    </div>
+                                                    <div class="">
+                                                        <button class="btn btn-secondary btn-16 btn-cancel mr-5" data-dismiss="modal"
+                                                                aria-label="Close">Cancel</button>
+                                                        <button class="btn btn-danger" id="btn-buy-modal" onclick="orderClick();">Buy now</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="img-select d-flex flex-row bd-highlight mb-2 mt-2">
+                            <div class="img-item">
+                                <img class="img img-focus" onclick="zoomImg(this)"
+                                     src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_1.jpg"
+                                     alt="shoe image">
+                            </div>
+                            <div class="img-item">
+                                <img class="img img-focus" onclick="zoomImg(this)"
+                                     src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg"
+                                     alt="shoe image">
+                            </div>
+                            <div class="img-item">
+                                <img class="img img-focus" onclick="zoomImg(this)"
+                                     src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_3.jpg"
+                                     alt="shoe image">
+                            </div>
+                            <div class="img-item">
+                                <img class="img img-focus" onclick="zoomImg(this)"
+                                     src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_4.jpg"
+                                     alt="shoe image">
+                            </div>
+                            <div class="img-item">
+                                <img class="img img-focus" onclick="zoomImg(this)"
+                                     src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg"
+                                     alt="shoe image">
                             </div>
                         </div>
                     </div>
-                    <div class="product-content">
+                    <div class="product-content" style="z-index: 88;">
 
                         <form action="{{ route('cart.add', $product) }}" method="POST">
                             @csrf
@@ -101,8 +277,10 @@
                             </div>
 
                             <div class="product-price">
-                                <p class="last-price">{{ __('home.old price') }}: <span>${{$product->price}}</span></p>
-                                <p class="new-price">{{ __('home.new price') }}: <span>${{$product->price}} (<span>5%</span>)</span></p>
+                                <p class="last-price">{{ __('home.old price') }}:
+                                    <span>${{$product->price + ($product->price*5/100)}}</span></p>
+                                <p class="new-price">{{ __('home.new price') }}:
+                                    <span>${{$product->price}} (<span>5%</span>)</span></p>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
@@ -131,11 +309,11 @@
                                        value="1">
                             </div>
 
-                            <div class="purchase-info d-flex">
-                                <button type="button" class="btn btn-warning ">
+                            <div class="purchase-info d-flex mt-3">
+                                <button type="button" class="btn btn-warning">
                                     {{ __('home.installment by card') }}
                                 </button>
-                                <button type="submit" class="btn-danger btn"><i class="fa fa-shopping-cart"></i>
+                                <button type="submit" class="btn-danger btn btn-16" id="btn-order-now"><i class="fa fa-shopping-cart"></i>
                                     {{ __('home.buy now') }}
                                 </button>
 
@@ -145,15 +323,15 @@
                 </div>
                 <div class="col-md-12 mt-4 bg-white">
                     <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
-                        <li class="nav-item tabs-product-detail">
+                        <li class="nav-item tabs-product-detail tabs-item">
                             <a class="nav-link lead active link-tabs" role="tab" data-toggle="tab"
                                href="#tabDescription">{{ __('home.description') }}</a>
                         </li>
-                        <li class="nav-item tabs-product-detail">
+                        <li class="nav-item tabs-product-detail tabs-item">
                             <a class="nav-link lead link-tabs" role="tab" data-toggle="tab"
                                href="#tabSpecification">{{ __('home.specification') }}</a>
                         </li>
-                        <li class="nav-item tabs-product-detail">
+                        <li class="nav-item tabs-product-detail tabs-item">
                             <a class="nav-link lead link-tabs" role="tab" data-toggle="tab"
                                href="#tabReview">{{ __('home.review') }}</a>
                         </li>
@@ -262,7 +440,8 @@
                                 </p>
                             </div>
 
-                            <a href="#more" data-toggle="collapse" class="more-link text-center text-more-tabs" id="more-link"
+                            <a href="#more" data-toggle="collapse" class="more-link text-center text-more-tabs"
+                               id="more-link"
                                onclick="toggleReadMore()">{{ __('home.read more') }}</a>
                         </div>
 
@@ -303,16 +482,16 @@
                                         <input type="text" class="form-control" id="product_id" name="product_id"
                                                hidden/>
                                         <div class="rating">
-                                            <input type="radio" name="star_number" id="star1" value="5">
-                                            <label for="star1"><i class="fas fa-star"></i></label>
-                                            <input type="radio" name="star_number" id="star2" value="4">
-                                            <label for="star2"><i class="fas fa-star"></i></label>
-                                            <input type="radio" name="star_number" id="star3" value="3">
-                                            <label for="star3"><i class="fas fa-star"></i></label>
-                                            <input type="radio" name="star_number" id="star4" value="2">
-                                            <label for="star4"><i class="fas fa-star"></i></label>
-                                            <input type="radio" name="star_number" id="star5" value="1">
-                                            <label for="star5"><i class="fas fa-star"></i></label>
+                                            <input type="radio" name="star_number" id="star1" value="1" hidden="">
+                                            <label for="star1" onclick="starCheck(1)"><i id="icon-star-1" class="fa fa-star"></i></label>
+                                            <input type="radio" name="star_number" id="star2" value="2" hidden="">
+                                            <label for="star2" onclick="starCheck(2)"><i id="icon-star-2" class="fa fa-star"></i></label>
+                                            <input type="radio" name="star_number" id="star3" value="3" hidden="">
+                                            <label for="star3" onclick="starCheck(3)"><i id="icon-star-3" class="fa fa-star"></i></label>
+                                            <input type="radio" name="star_number" id="star4" value="4" hidden="">
+                                            <label for="star4" onclick="starCheck(4)"><i id="icon-star-4" class="fa fa-star"></i></label>
+                                            <input type="radio" name="star_number" id="star5" value="5" hidden="">
+                                            <label for="star5" onclick="starCheck(5)"><i id="icon-star-5" class="fa fa-star"></i></label>
                                         </div>
 
                                         <div class="form-group row">
@@ -333,7 +512,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <button class="btn btn-primary" type="submit">Submit</button>
+                                            <button class="btn btn-primary btn-16" type="submit">Submit</button>
                                         </div>
                                     </form>
                                 </div>
@@ -365,80 +544,80 @@
                                             @endif
                                             <tr>
                                                 <td colspan="2">
-                                                    <strong>{{ __('home.customer rating') }}: </strong>
+                                                    <strong class="mr-2">{{ __('home.customer rating') }}: </strong>
                                                     @if($res->star_number == 1)
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack"><i
-                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                                    class="fa fa-star-o"></i></span>
                                                         <span class="fa fa-stack"><i
-                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                                    class="fa fa-star-o"></i></span>
                                                         <span class="fa fa-stack"><i
-                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                                    class="fa fa-star-o"></i></span>
                                                         <span class="fa fa-stack"><i
-                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                                    class="fa fa-star-o"></i></span>
                                                     @endif
                                                     @if($res->star_number == 2)
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack"><i
-                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                                    class="fa fa-star-o"></i></span>
                                                         <span class="fa fa-stack"><i
-                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                                    class="fa fa-star-o"></i></span>
                                                         <span class="fa fa-stack"><i
-                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                                    class="fa fa-star-o"></i></span>
                                                     @endif
                                                     @if($res->star_number == 3)
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack"><i
-                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                                    class="fa fa-star-o"></i></span>
                                                         <span class="fa fa-stack"><i
-                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                                    class="fa fa-star-o"></i></span>
                                                     @endif
                                                     @if($res->star_number == 4)
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack"><i
-                                                                    class="far fa-star fa-stack-1x"></i></span>
+                                                                    class="fa fa-star-o"></i></span>
                                                     @endif
                                                     @if($res->star_number == 5)
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fas fa-star fa-stack-1x"></i>
+                                                       <i class="fa fa-star"></i>
                                                     </span>
                                                     @endif
                                                 </td>
@@ -453,10 +632,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-md-4">
                 <div class="bg-white rounded p-2">
-                    <div class="purchase-info">
-                        <div class="btn p-3 text-center text-uppercase text-white text-bold fw-bold"
+                    <div class="purchase-info mb-5">
+                        <div class="btn p-3 text-center text-uppercase text-white text-bold fw-bold btn-block"
                              style="border-radius: 5px; background-color: red">
                             {{ __('home.exchange old for new') }}
                             <br>
@@ -471,12 +650,12 @@
                         </div>
                         <div class="product-detail"
                              style="border: 1px solid black; border-top: none; border-radius: 0 0 5px 5px ">
-                            <ul class="pt-3">
-                                <li>{{ __('home.accumulate points') }}</li>
-                                <li>{{ __('home.free credit card') }}</li>
-                                <li>{{ __('home.free installment') }}</li>
-                                <li>{{ __('home.free delivery') }}</li>
-                                <li>{{ __('home.discount immediately') }}</li>
+                            <ul class="pt-3 ml-3 mb-3">
+                                <li><i class="fa fa-check mr-2"></i>{{ __('home.accumulate points') }}</li>
+                                <li><i class="fa fa-check mr-2"></i>{{ __('home.free credit card') }}</li>
+                                <li><i class="fa fa-check mr-2"></i>{{ __('home.free installment') }}</li>
+                                <li><i class="fa fa-check mr-2"></i>{{ __('home.free delivery') }}</li>
+                                <li><i class="fa fa-check mr-2"></i>{{ __('home.discount immediately') }}</li>
                             </ul>
                         </div>
                     </div>
@@ -485,19 +664,24 @@
                     <div class="card"
                          style="border: 1px solid black; border-radius: 5px ">
                         <div class="card-text">
-                            <div class="card-header"
+                            <div class="card-header text-center"
                                  style="font-weight: 400; font-size: 1.25rem">{{ __('home.product status') }}
                             </div>
                             <div class="card-body">
                                 <ul class="pt-3">
-                                    <li><span class="text-bold">{{ __('home.condition') }}</span><br>
-                                        {{ __('home.genuine product') }}
+                                    <li>
+                                        <i class="fa fa-filter mr-2"></i>
+                                        <span class="text-bold">{{ __('home.condition') }}:</span>
+                                        <span class="text-danger">{{ __('home.genuine product') }} </span>
                                     </li>
                                     <li>
-                                        <span class="text-bold">{{ __('home.box included') }}</span><br>{{ __('home.full accessories') }}
+                                        <i class="fa fa-archive"></i>
+                                        <span class="text-bold">{{ __('home.box included') }}:</span>
+                                        <span class="text-danger">{{ __('home.full accessories') }}</span>
                                     </li>
                                     <li>
-                                        <span class="text-bold">{{ __('home.warranty') }}</span><br>{{ __('home.warranty 1 month') }}
+                                        <i class="fa fa-shield mr-2"></i> <span class="text-bold">{{ __('home.warranty') }}:</span>
+                                        <span class="text-danger">{{ __('home.warranty 1 month') }}</span>
                                     </li>
                                 </ul>
                             </div>
@@ -508,12 +692,12 @@
                     <div class="card"
                          style="border: 1px solid black; border-radius: 5px ">
                         <div class="card-text">
-                            <div class="card-header"
+                            <div class="card-header text-center"
                                  style="font-weight: 400; font-size: 1.25rem">{{ __('home.why choose IL') }}
                             </div>
                             <div class="card-body">
                                 <div>
-                                    <div class="list-group-item list-group-item-action row">
+                                    <div class="list-items-ml-0 list-group-item list-group-item-action row">
 
                                         <div class="d-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="40">
@@ -526,7 +710,8 @@
                                         </div>
                                     </div>
                                     <div class="border-bottom my-3"></div>
-                                    <div class="list-group-item list-group-item-action row">
+
+                                    <div class="list-items-ml-0 list-group-item list-group-item-action row">
 
                                         <div class="d-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -540,7 +725,7 @@
                                     </div>
                                     <div class="border-bottom my-3"></div>
 
-                                    <div class="list-group-item list-group-item-action row">
+                                    <div class="list-items-ml-0 list-group-item list-group-item-action row">
 
                                         <div class="d-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -554,7 +739,7 @@
                                     </div>
                                     <div class="border-bottom my-3"></div>
 
-                                    <div class="list-group-item list-group-item-action row">
+                                    <div class="list-items-ml-0 list-group-item list-group-item-action row">
 
                                         <div class="d-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -567,7 +752,7 @@
                                     </div>
                                     <div class="border-bottom my-3"></div>
 
-                                    <div class="list-group-item list-group-item-action row">
+                                    <div class="list-items-ml-0 list-group-item list-group-item-action row">
 
                                         <div class="d-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
@@ -585,112 +770,39 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12">
-                <div class="mt-5 row">
+            <div class="col-md-12">
+                <div class="mt-5 row" id="product-other">
+                    @foreach($otherProduct as $product)
+                        <div class="product-other col-md-3 mb-3 mb-md-0">
+                            <div class="card h-100">
 
-                    <div class="col-3 mb-3 mb-md-0">
-                        <div class="card h-100">
+                                <img class="img" src="{{$product->thumbnail}}" alt="">
+                                <div class="card-body position-relative d-flex flex-column">
 
-                            <img src="https://picsum.photos/300/200" alt="">
-                            <div class="card-body position-relative d-flex flex-column">
-
-                                <h3 class="text-success">$1120.00</h3>
-                                <div class="rating text-warning">
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star-half-o" ></i>
+                                    <h3 class="text-success">${{$product->price}}</h3>
+                                    <div class="rating text-warning">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-half-o"></i>
+                                    </div>
+                                    <h4>{{$product->name}}</h4>
+                                    <p>{{$product->description}}</p>
+                                    <a href="{{route('detail_product.show', $product->id)}}"
+                                       class="btn btn-success btn-block mt-auto">
+                                        <i class="fa fa-eye"></i>
+                                        {{ __('home.see now') }}
+                                    </a>
                                 </div>
-                                <h4>Macbook M1</h4>
-                                <p>Sở hữu thiết kế tinh tế, màn hình xuất sắc và cấu hình mạnh mẽ, đáp ứng được hầu hết
-                                    nhu cầu ...</p>
-                                <a href="#" class="btn btn-success btn-block mt-auto">
-                                    <i class="fa fa-eye" ></i>
-                                    {{ __('home.see now') }}
-                                </a>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-3 mb-3 mb-md-0">
-                        <div class="card h-100">
-
-                            <img src="https://picsum.photos/300/200" alt="">
-                            <div class="card-body position-relative d-flex flex-column">
-
-                                <h3 class="text-success">$1120.00</h3>
-                                <div class="rating text-warning">
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star-half-o" ></i>
-                                </div>
-                                <h4>Macbook M1</h4>
-                                <p>Sở hữu thiết kế tinh tế, màn hình xuất sắc và cấu hình mạnh mẽ, đáp ứng được hầu hết
-                                    nhu cầu ...</p>
-                                <a href="#" class="btn btn-success btn-block mt-auto">
-                                    <i class="fa fa-eye" ></i>
-                                    {{ __('home.see now') }}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3 mb-3 mb-md-0">
-                        <div class="card h-100">
-
-                            <img src="https://picsum.photos/300/200" alt="">
-                            <div class="card-body position-relative d-flex flex-column">
-
-                                <h3 class="text-success">$1120.00</h3>
-                                <div class="rating text-warning">
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star-half-o" ></i>
-                                </div>
-                                <h4>Macbook M1</h4>
-                                <p>Sở hữu thiết kế tinh tế, màn hình xuất sắc và cấu hình mạnh mẽ, đáp ứng được hầu hết
-                                    nhu cầu ...</p>
-                                <a href="#" class="btn btn-success btn-block mt-auto">
-                                    <i class="fa fa-eye" ></i>
-                                    {{ __('home.see now') }}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3 mb-3 mb-md-0">
-                        <div class="card h-100">
-
-                            <img src="https://picsum.photos/300/200" alt="">
-                            <div class="card-body position-relative d-flex flex-column">
-
-                                <h3 class="text-success">$1120.00</h3>
-                                <div class="rating text-warning">
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star" ></i>
-                                    <i class="fa fa-star-half-o" ></i>
-                                </div>
-                                <h4>Macbook M1</h4>
-                                <p>Sở hữu thiết kế tinh tế, màn hình xuất sắc và cấu hình mạnh mẽ, đáp ứng được hầu hết
-                                    nhu cầu ...</p>
-                                <a href="#" class="btn btn-success btn-block mt-auto">
-                                    <i class="fa fa-eye" ></i>
-                                    {{ __('home.see now') }}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-
+                    @endforeach
                 </div>
             </div>
-            <div class="col-12">
+            <div class="col-md-12">
                 <div class="mt-5 row">
-                    <div class="col-3 mb-3 mb-md-0">
+                    <div class="col-md-3 mb-3 mb-md-0">
                         <div class="card">
                             <div class="d-flex px-3 py-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -702,7 +814,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3 mb-3 mb-md-0">
+                    <div class="col-md-3 mb-3 mb-md-0">
                         <div class="card">
                             <div class="d-flex px-3 py-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
@@ -713,7 +825,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3 mb-3 mb-md-0">
+                    <div class="col-md-3 mb-3 mb-md-0">
                         <div class="card">
                             <div class="d-flex px-3 py-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="40">
@@ -724,7 +836,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3 mb-3 mb-md-0">
+                    <div class="col-md-3 mb-3 mb-md-0">
                         <div class="card">
                             <div class="d-flex px-3 py-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -739,7 +851,7 @@
 
                 </div>
                 <div class="mt-3 row">
-                    <div class="col-3 mb-3 mb-md-0">
+                    <div class="col-md-3 mb-3 mb-md-0">
                         <div class="card">
                             <div class="d-flex px-3 py-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -751,7 +863,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3 mb-3 mb-md-0">
+                    <div class="col-md-3 mb-3 ">
                         <div class="card">
                             <div class="d-flex px-3 py-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
@@ -763,7 +875,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3 mb-3 mb-md-0">
+                    <div class="col-md-3 mb-3">
                         <div class="card">
                             <div class="d-flex px-3 py-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
@@ -775,7 +887,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3 mb-3 mb-md-0">
+                    <div class="col-md-3 mb-3">
                         <div class="card">
                             <div class="d-flex px-3 py-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -794,45 +906,75 @@
         </div>
     </div>
 
-    <script src="{{ asset('vendor/compiled.js') }}"></script>
     <script>
-
-        const imgs = document.querySelectorAll('.img-select a');
-        const imgBtns = [...imgs];
-        let imgId = 1;
-
-        imgBtns.forEach((imgItem) => {
-            imgItem.addEventListener('click', (event) => {
-                event.preventDefault();
-                imgId = imgItem.dataset.id;
-                slideImage();
-            });
-        });
-
-
-        function slideImage() {
-            const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
-            document.querySelector('.img-showcase').style.transform = `translateX(${-(imgId - 1) * displayWidth}px)`;
+        function zoomImg(x) {
+            imgDf = document.getElementById('img-default');
+            imgDf.src = x.src;
         }
 
-        window.addEventListener('resize', slideImage);
+        function normalImg() {
+            imgDf = document.getElementById('img-default');
+            imgRollback = document.getElementById('img-rollback').value;
+            imgDf.src = imgRollback;
+        }
 
-        var wrapper = document.querySelector('.count__wrapper'),
-            res = document.querySelector('.subtotal__price'),
-            input = wrapper.querySelector('input[class*=input]');
+        function zoomImgModal(x) {
+            imgDf = document.getElementById('img-modal');
+            imgDf.src = x.src;
+        }
 
-        wrapper.addEventListener('click', e => {
-            var t = e.target;
+        function orderClick() {
+            btnOrder = document.getElementById('btn-order-now');
+            btnOrder.click();
 
-            input.value = +input.value;
+        }
 
-            if (t.closest('button[class*=--minus]')) {
-                --input.value;
-            } else if (t.closest('button[class*=--add]')) {
-                ++input.value;
+        function starCheck(value) {
+            let star1 = document.getElementById('star1');
+            let star2 = document.getElementById('star2');
+            let star3 = document.getElementById('star3');
+            let star4 = document.getElementById('star4');
+            let star5 = document.getElementById('star5');
+            //
+            let icon1 = document.getElementById('icon-star-1');
+            let icon2 = document.getElementById('icon-star-2');
+            let icon3 = document.getElementById('icon-star-3');
+            let icon4 = document.getElementById('icon-star-4');
+            let icon5 = document.getElementById('icon-star-5');
+
+            switch (value){
+                case 1:
+                    star1.checked = true;
+                    icon1.classList.add("checked");
+                    break;
+                case 2:
+                    star2.checked = true;
+                    icon1.classList.add("checked");
+                    icon2.classList.add("checked");
+                    break;
+                case 3:
+                    star3.checked = true;
+                    icon1.classList.add("checked");
+                    icon2.classList.add("checked");
+                    icon3.classList.add("checked");
+                    break;
+                case 4:
+                    star4.checked = true;
+                    icon1.classList.add("checked");
+                    icon2.classList.add("checked");
+                    icon3.classList.add("checked");
+                    icon4.classList.add("checked");
+                    break;
+                default:
+                    star5.checked = true;
+                    icon1.classList.add("checked");
+                    icon2.classList.add("checked");
+                    icon3.classList.add("checked");
+                    icon4.classList.add("checked");
+                    icon5.classList.add("checked");
+                    break;
             }
-
-        });
+        }
 
         function toggleReadMore() {
             var moreLink = document.getElementById("more-link");
@@ -853,5 +995,32 @@
         console.log(myParam[num - 1]);
         document.getElementById("product_id").value = myParam[num - 1];
 
+        function myFunction(x) {
+            let tabs = document.getElementById('id-tabs-product');
+            if (x.matches) {
+                tabs.classList.remove("card");
+                tabs.classList.add("border");
+                console.log('b')
+            }
+        }
+        var x = window.matchMedia("(max-width: 770px)")
+        myFunction(x)
+        x.addListener(myFunction)
+
+        function responsiveTable(y) {
+            let tabs = document.getElementsByClassName('product-other');
+            console.log(tabs.length)
+            var i;
+            for (i=0; i<tabs.length; i++){
+                if (y.matches) {
+                    tabs[i].classList.remove("col-md-3");
+                    tabs[i].classList.add("col-sm-6");
+                }
+            }
+
+        }
+        var y = window.matchMedia("(max-width: 991px)")
+        responsiveTable(y);
+        x.addListener(responsiveTable)
     </script>
 @endsection

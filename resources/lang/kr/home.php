@@ -196,5 +196,9 @@ return [
     'very old' => '매우 오래된',
     'previous' => '이전',
     'next' => '다음',
-
+    //
+    'save login' => '로그인 기억',
+    'choose branch' =>'산업 선택',
+    'back home' =>'홈페이지로 돌아 가기',
+    'type product' =>'제품 코드',
 ];

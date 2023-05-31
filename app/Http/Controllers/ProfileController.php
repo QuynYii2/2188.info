@@ -35,14 +35,16 @@ class ProfileController extends Controller
         (new HomeController())->getLocale($request);
         return view('frontend/pages/profile/product-evaluation');
     }
-    public function favorite_product() {
+    public function favorite_product(Request $request) {
+        (new HomeController())->getLocale($request);
         return view('frontend/pages/profile/favorite-product');
     }
     public function product_viewed(Request $request) {
         (new HomeController())->getLocale($request);
         return view('frontend/pages/profile/product-viewed');
     }
-    public function my_review() {
+    public function my_review(Request $request) {
+        (new HomeController())->getLocale($request);
         return view('frontend/pages/profile/my-review');
     }
 }
