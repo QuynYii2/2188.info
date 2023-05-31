@@ -149,3 +149,8 @@ storage/.DS_Store
 #
 .idea/inspectionProfiles/
 .idea/*
+.idea/2188.info.iml
+.idea/php.xml
+.idea/phpspec.xml
+.idea*
+*.idea
