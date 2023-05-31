@@ -86,8 +86,6 @@
         }
 
         .img-focus {
-            width: 80px !important;
-            height: 80px !important;
             cursor: pointer;
         }
 
@@ -103,15 +101,30 @@
             color: orange;
         }
 
+        .list-items-ml-0{
+            margin-left: 0;
+        }
+
         @media only screen and (min-width: 1200px){
             .tabs-product{
 
+            }
+
+            .img-focus {
+                width: 80px ;
+                height: 80px;
+                cursor: pointer;
             }
         }
 
         @media only screen and (min-width: 992px) and (max-width: 1199px){
             .tabs-product{
 
+            }
+
+            .img-focus {
+                width: 80px ;
+                height: 80px ;
             }
         }
 
@@ -147,6 +160,11 @@
             .tabs-item a{
                 font-size: 15px;
             }
+
+            .img-focus {
+                width: 80px ;
+                height: 80px ;
+            }
         }
 
         @media only screen and (max-width: 365px) {
@@ -156,6 +174,15 @@
 
             .tabs-item a{
                 font-size: 12px;
+            }
+
+            .btn-block{
+                display: block;
+            }
+
+            .img-focus {
+                width: 60px ;
+                height: 60px ;
             }
         }
 
@@ -188,11 +215,11 @@
                                                         <img class="img" id="img-modal" src="{{$product->thumbnail}}" alt="">
                                                     </div>
                                                     <div class="col-md-2 img-second">
-                                                        <img class="img mt-2" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_1.jpg" alt="">
-                                                        <img class="img mt-2" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg" alt="">
-                                                        <img class="img mt-2" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_3.jpg" alt="">
-                                                        <img class="img mt-2" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_4.jpg" alt="">
-                                                        <img class="img mt-2" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg" alt="">
+                                                        <img class="img mt-2 img-focus" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_1.jpg" alt="">
+                                                        <img class="img mt-2 img-focus" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg" alt="">
+                                                        <img class="img mt-2 img-focus" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_3.jpg" alt="">
+                                                        <img class="img mt-2 img-focus" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_4.jpg" alt="">
+                                                        <img class="img mt-2 img-focus" onclick="zoomImgModal(this)" src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg" alt="">
                                                     </div>
                                                     <div class="">
                                                         <button class="btn btn-secondary btn-16 btn-cancel mr-5" data-dismiss="modal"
@@ -608,7 +635,7 @@
             <div class="col-md-4">
                 <div class="bg-white rounded p-2">
                     <div class="purchase-info mb-5">
-                        <div class="btn p-3 text-center text-uppercase text-white text-bold fw-bold"
+                        <div class="btn p-3 text-center text-uppercase text-white text-bold fw-bold btn-block"
                              style="border-radius: 5px; background-color: red">
                             {{ __('home.exchange old for new') }}
                             <br>
@@ -670,7 +697,7 @@
                             </div>
                             <div class="card-body">
                                 <div>
-                                    <div class="list-group-item list-group-item-action row">
+                                    <div class="list-items-ml-0 list-group-item list-group-item-action row">
 
                                         <div class="d-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="40">
@@ -683,7 +710,8 @@
                                         </div>
                                     </div>
                                     <div class="border-bottom my-3"></div>
-                                    <div class="list-group-item list-group-item-action row">
+
+                                    <div class="list-items-ml-0 list-group-item list-group-item-action row">
 
                                         <div class="d-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -697,7 +725,7 @@
                                     </div>
                                     <div class="border-bottom my-3"></div>
 
-                                    <div class="list-group-item list-group-item-action row">
+                                    <div class="list-items-ml-0 list-group-item list-group-item-action row">
 
                                         <div class="d-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -711,7 +739,7 @@
                                     </div>
                                     <div class="border-bottom my-3"></div>
 
-                                    <div class="list-group-item list-group-item-action row">
+                                    <div class="list-items-ml-0 list-group-item list-group-item-action row">
 
                                         <div class="d-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -724,7 +752,7 @@
                                     </div>
                                     <div class="border-bottom my-3"></div>
 
-                                    <div class="list-group-item list-group-item-action row">
+                                    <div class="list-items-ml-0 list-group-item list-group-item-action row">
 
                                         <div class="d-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">

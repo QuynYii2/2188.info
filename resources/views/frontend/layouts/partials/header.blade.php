@@ -64,16 +64,16 @@
     .dropdown {
         position: relative;
         display: inline-block;
-        width: 150px;
     }
 
     .dropdown-content {
+        padding-top: 16px;
         display: none;
         position: absolute;
         background-color: #f1f1f1;
         min-width: 150px;
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
+        z-index: 99;
     }
 
     .dropdown-content a {
@@ -98,16 +98,29 @@
         height: 42px !important;
     }
 
-    @media only screen and (min-width: 768px) and (max-width: 991px) {
-
+    @media only screen and (min-width: 768px) and (max-width: 1023px){
+        .dropdown {
+            width: 100%;
+        }
+        h4.dropbtn{
+            font-size: 15px;
+        }
     }
 
     @media only screen and (max-width: 767px) {
-
+        h4.dropbtn{
+            font-size: 15px;
+        }
     }
 
     @media only screen and (max-width: 479px) {
+        .cart-hover {
+            margin-left: 32px;
+        }
 
+        h4.dropbtn{
+            font-size: 18px;
+        }
     }
 
 
@@ -327,7 +340,7 @@
                                             {{ Auth::user()->name }}
                                         @endif
                                     </h4>
-                                    <div class="dropdown-content" style="z-index: 100">
+                                    <div class="dropdown-content">
                                         <a class="dropdown-item" href="{{route('profile.show')}}">Profile</a>
                                         <a class="dropdown-item" href="#">Another action</a>
                                         <form action="{{ route('logout') }}" method="POST">
@@ -345,48 +358,51 @@
                             <button type="button" class="btn btn-warning mr-2 full-width" data-toggle="modal"
                                     data-target="#chooseLanguageOrder"
                                     aria-expanded="false">
-                                <a class="text-white" target="_blank" rel="noopener noreferrer"  href="http://order.2188.info/admin">{{ __('home.orders') }}</a>
+                                <a class="text-white" target="_blank" rel="noopener noreferrer"
+                                   href="http://order.2188.info/admin">{{ __('home.orders') }}</a>
                             </button>
 
-{{--                            <div class="modal fade" id="chooseLanguageOrder" tabIndex="-1" role="dialog"--}}
-{{--                                 aria-labelledby="editModalLabel" aria-hidden="true">--}}
-{{--                                <div class="modal-dialog modal-dialog-centered" role="document">--}}
-{{--                                    <div class="modal-content">--}}
-{{--                                        <div class="modal-header">--}}
-{{--                                            <h5 class="modal-title" id="exampleModalLabel">Choose Language Orders</h5>--}}
-{{--                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-{{--                                                <span aria-hidden="true">&times;</span>--}}
-{{--                                            </button>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="modal-body">--}}
-{{--                                            <form id="">--}}
-{{--                                                <div class="d-flex justify-content-between" style="margin: 8px 16px">--}}
-{{--                                                    <a href="{{route('login.local' , ['locale' => 'vi'])}}"--}}
-{{--                                                       class="full-width">--}}
-{{--                                                        <img class="img" width="102px" height="68px"--}}
-{{--                                                             src="{{ asset('images/vietnam.webp') }}" alt="">--}}
-{{--                                                    </a>--}}
+                            {{--                            <div class="modal fade" id="chooseLanguageOrder" tabIndex="-1" role="dialog"--}}
+                            {{--                                 aria-labelledby="editModalLabel" aria-hidden="true">--}}
+                            {{--                                <div class="modal-dialog modal-dialog-centered" role="document">--}}
+                            {{--                                    <div class="modal-content">--}}
+                            {{--                                        <div class="modal-header">--}}
+                            {{--                                            <h5 class="modal-title" id="exampleModalLabel">Choose Language Orders</h5>--}}
+                            {{--                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+                            {{--                                                <span aria-hidden="true">&times;</span>--}}
+                            {{--                                            </button>--}}
+                            {{--                                        </div>--}}
+                            {{--                                        <div class="modal-body">--}}
+                            {{--                                            <form id="">--}}
+                            {{--                                                <div class="d-flex justify-content-between" style="margin: 8px 16px">--}}
+                            {{--                                                    <a href="{{route('login.local' , ['locale' => 'vi'])}}"--}}
+                            {{--                                                       class="full-width">--}}
+                            {{--                                                        <img class="img" width="102px" height="68px"--}}
+                            {{--                                                             src="{{ asset('images/vietnam.webp') }}" alt="">--}}
+                            {{--                                                    </a>--}}
 
-{{--                                                    <a href="{{route('login.local' , ['locale' => 'kr'])}}"--}}
-{{--                                                       class="full-width">--}}
-{{--                                                        <img class="border img" width="102px" height="68px"--}}
-{{--                                                             src="{{ asset('images/korea.png') }}" alt="">--}}
-{{--                                                    </a>--}}
+                            {{--                                                    <a href="{{route('login.local' , ['locale' => 'kr'])}}"--}}
+                            {{--                                                       class="full-width">--}}
+                            {{--                                                        <img class="border img" width="102px" height="68px"--}}
+                            {{--                                                             src="{{ asset('images/korea.png') }}" alt="">--}}
+                            {{--                                                    </a>--}}
 
-{{--                                                    <a href="{{route('login.local' , ['locale' => 'cn'])}}"--}}
-{{--                                                       class="full-width">--}}
-{{--                                                        <img class="img" width="102px" height="68px"--}}
-{{--                                                             src="{{ asset('images/china.webp') }}" alt="">--}}
-{{--                                                    </a>--}}
-{{--                                                </div>--}}
-{{--                                            </form>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                            {{--                                                    <a href="{{route('login.local' , ['locale' => 'cn'])}}"--}}
+                            {{--                                                       class="full-width">--}}
+                            {{--                                                        <img class="img" width="102px" height="68px"--}}
+                            {{--                                                             src="{{ asset('images/china.webp') }}" alt="">--}}
+                            {{--                                                    </a>--}}
+                            {{--                                                </div>--}}
+                            {{--                                            </form>--}}
+                            {{--                                        </div>--}}
+                            {{--                                    </div>--}}
+                            {{--                                </div>--}}
+                            {{--                            </div>--}}
                             <button type="button" class="btn btn-success mr-2 full-width" data-toggle="modal"
                                     data-target="#chooseLanguagePurchase"
-                                    aria-expanded="false"><a class="text-white" href="{{route('login')}}">{{ __('home.purchase') }}</a></button>
+                                    aria-expanded="false"><a class="text-white"
+                                                             href="{{route('login')}}">{{ __('home.purchase') }}</a>
+                            </button>
                             @endif
                         </div>
                     </div>

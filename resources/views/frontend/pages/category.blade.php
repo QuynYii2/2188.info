@@ -39,7 +39,10 @@
     }
 
     @media only screen and (max-width: 767px) {
-
+        .body-main{
+            padding-left: 0!important;
+            padding-right: 0!important;
+        }
     }
 
     @media only screen and (max-width: 365px) {
@@ -180,7 +183,7 @@
         </div>
 
 
-        <div class="container">
+        <div class="container body-main">
             <div class="row">
                 <aside class="col-md-4">
 
@@ -188,7 +191,7 @@
                         <article class="filter-group">
                             <header class="card-header">
                                 <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true"
-                                   class="">
+                                   class="toggle-link">
                                     <i class="icon-control fa fa-chevron-down"></i>
                                     <span class="title title-search">{{ __('home.product type') }}</span>
                                 </a>
@@ -220,7 +223,7 @@
                         <article class="filter-group">
                             <header class="card-header">
                                 <a href="#" data-toggle="collapse" data-target="#collapse_2" aria-expanded="true"
-                                   class="">
+                                   class="toggle-link">
                                     <i class="icon-control fa fa-chevron-down"></i>
                                     <span class="title title-search">{{ __('home.brands') }}</span>
                                 </a>
@@ -258,7 +261,7 @@
                         <article class="filter-group">
                             <header class="card-header">
                                 <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true"
-                                   class="">
+                                   class="toggle-link">
                                     <i class="icon-control fa fa-chevron-down"></i>
                                     <span class="title title-search">{{ __('home.price range') }}</span>
                                 </a>
@@ -283,7 +286,7 @@
                         <article class="filter-group">
                             <header class="card-header">
                                 <a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true"
-                                   class="">
+                                   class="toggle-link">
                                     <i class="icon-control fa fa-chevron-down"></i>
                                     <span class="title title-search">{{ __('home.size') }}</span>
                                 </a>
@@ -397,18 +400,35 @@
     <script>
         function responsiveTable(y) {
             let tabs = document.getElementsByClassName('product-map');
-            console.log(tabs.length)
             var i;
             for (i=0; i<tabs.length; i++){
                 if (y.matches) {
                     tabs[i].classList.remove("col-md-4");
                     tabs[i].classList.add("col-sm-6");
-                    console.log('a')
                 }
             }
         }
         var y = window.matchMedia("(max-width: 991px)")
         responsiveTable(y);
-        x.addListener(responsiveTable)
+        y.addListener(responsiveTable)
+
+        function myFunciton(x) {
+            //filter-content
+            let tabs = document.getElementsByClassName('toggle-link');
+            let items = document.getElementsByClassName('filter-content');
+            var i;
+            for (i=0; i<tabs.length; i++){
+                if (x.matches) {
+                    tabs[i].classList.add("collapsed");
+                    tabs[i].setAttribute('aria-expanded', 'false');
+                    items[i].classList.remove("show");
+                    items[i].classList.add("in");
+                    console.log('a')
+                }
+            }
+        }
+        var x = window.matchMedia("(max-width: 767px)")
+        myFunciton(x);
+        x.addListener(myFunciton)
     </script>
 @endsection
