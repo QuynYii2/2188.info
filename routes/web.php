@@ -58,6 +58,8 @@ Route::middleware(['auth'])->group(function () {
 //    Route::get('/address', [\App\Http\Controllers\Frontend\AddressController::class, 'index']);
     // Permission
     Route::get('/permission-user', [\App\Http\Controllers\PermissionRankController::class, 'index'])->name('permission.user.show');
+    Route::get('/permission-list', [\App\Http\Controllers\PermissionRankController::class, 'list'])->name('permission.list.show');
+    Route::post('/permission', [\App\Http\Controllers\PermissionRankController::class, 'store'])->name('permission.create');
 });
 
 

@@ -13,7 +13,7 @@
     <div class="row bg-white mt-3">
         <table class="table table-bordered">
             <thead>
-            <tr>
+            <tr class="text-center">
                 <th scope="col">#</th>
                 <th scope="col">Permission Name</th>
                 <th scope="col">Activation Date</th>
@@ -24,23 +24,23 @@
             <tbody>
             @foreach($permissions as $userPer)
                 <tr>
-                    <th scope="row">{{ $loop->index + 1 }}</th>
+                    <th scope="row" class="text-center">{{ $loop->index + 1 }}</th>
                     @php
                       $per = \App\Models\Permission::find($userPer->permission_id);
                     @endphp
-                    <td>{{$per->name}}</td>
-                    <td>{{$userPer->created_at}}</td>
-                    <td>
+                    <td class="text-center">{{$per->name}}</td>
+                    <td class="text-center">{{$userPer->created_at}}</td>
+                    <td class="text-center">
                         @php
                         $timeLevel = \App\Models\TimeLevelTable::where('permission_user_id', $userPer->id)->first();
                         @endphp
                         @if($timeLevel == null)
                             <span class="text-uppercase">infinite</span>
                         @else
-                            {{$timeLevel->duration}}
+                            {{$timeLevel->duration}} year
                         @endif
                     </td>
-                    <td>{{$per->status}}</td>
+                    <td class="text-center">{{$userPer->status}}</td>
                 </tr>
             @endforeach
             </tbody>
