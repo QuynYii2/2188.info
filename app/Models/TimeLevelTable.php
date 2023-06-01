@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Models\Permission;
 
 class TimeLevelTable extends Model
 {
@@ -19,6 +20,8 @@ class TimeLevelTable extends Model
         'expiration_date',
         'total_price',
         'type_account',
+        'permission_id',
+        'permission_user_id',
         //
         'status',
     ];
@@ -26,5 +29,10 @@ class TimeLevelTable extends Model
     public function users()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class);
     }
 }

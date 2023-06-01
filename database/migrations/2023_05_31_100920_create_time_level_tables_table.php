@@ -26,6 +26,8 @@ class CreateTimeLevelTablesTable extends Migration
             $table->string('description');
             $table->string('status')->default(\App\Enums\TimeLevelStatus::EXPIRED);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
