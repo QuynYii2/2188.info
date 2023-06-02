@@ -35,6 +35,7 @@ class PermissionLevelUserSeeder extends Seeder
         // Gán permission cho user có level free
         foreach ($userFrees as $userFree) {
             $userFree->permissions()->attach($viewProductPermission);
+            $userFree->permissions()->attach($viewProfilePermission);
         }
         // Gán permission cho user có level vip
         foreach ($userVips as $userVip) {

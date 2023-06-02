@@ -83,6 +83,6 @@ class PermissionRankController extends Controller
 //            $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
 //        });
 
-        return route('permission.user.show');
+        return redirect(route('permission.user.show'));
     }
 }
