@@ -10,8 +10,10 @@ use App\Models\TimeLevelTable;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
@@ -81,6 +83,17 @@ class UserController extends Controller
 
         $success = $user->save();
 
+        $mail = $request->email;
+        $password = $request->password;
+
+        $data = array('mail' => $mail, 'name' => $mail, 'password' => $password);
+
+        Mail::send('frontend/widgets/mailWelcome', $data, function ($message) use ($mail) {
+            $message->to($mail , 'Welcome mail!')->subject
+            ('Welcome mail');
+            $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
+        });
+
 //         Save permission default
         $newUser = User::where('email', $request->email)->first();
 
@@ -107,20 +120,20 @@ class UserController extends Controller
         // Save off list permission
         $permissions = DB::table('permissions')->where([['name', '!=', 'view_all_products'], ['name', '!=', 'view_profile']])->get();
         $listRequest[] = null;
-        foreach ($permissions as $permission){
-            $name = 'permission-'.$permission->id;
+        foreach ($permissions as $permission) {
+            $name = 'permission-' . $permission->id;
             $listRequest[] = $name;
         }
 
         $listIds[] = null;
-        for ($i = 0; $i<count($listRequest); $i++) {
+        for ($i = 0; $i < count($listRequest); $i++) {
             $listIds[] = $request->input($listRequest[$i]);
         }
 
         $newUser = User::where('email', $request->input('email'))->first();
 
-        for ($i=2; $i<count($listIds); $i++){
-            if ($listIds[$i] != null){
+        for ($i = 2; $i < count($listIds); $i++) {
+            if ($listIds[$i] != null) {
                 $permissionUser = [
                     'user_id' => $newUser->id,
                     'created_at' => Carbon::now()->addHours(7),

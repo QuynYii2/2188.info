@@ -69,14 +69,15 @@ class PermissionRankController extends Controller
 
         TimeLevelTable::create($timeLevel);
 
-//        $mail = Auth::user()->email;
-//        $data = array('mail' => $mail, 'name' => $mail,);
-//        Mail::send('frontend/widgets/mailNotifiUpgradeRank', $data, function ($message) {
-//            $message->to(Auth::user()->email, 'Notification mail!')->subject
-//            ('Notification mail');
-//            $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
-//        });
-//
+        $mail = Auth::user()->email;
+
+        $data = array('mail' => $mail, 'name' => $mail,);
+        Mail::send('frontend/widgets/mailNotifiUpgradeRank', $data, function ($message) {
+            $message->to(Auth::user()->email, 'Notification mail!')->subject
+            ('Notification mail');
+            $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
+        });
+
 //        Mail::send('frontend/widgets/mailNotifiUpgradeRank', $data, function ($message) {
 //            $message->to('ngodaix5tp@gmail.com', 'Notification mail!')->subject
 //            ('Notification mail');
