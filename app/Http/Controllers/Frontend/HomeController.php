@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Libraries\GeoIP;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
 class HomeController extends Controller
@@ -80,7 +81,8 @@ class HomeController extends Controller
     public function register(Request $request)
     {
         $this->getLocale($request);
-        return view('frontend/pages/register');
+        $permissions = DB::table('permissions')->where([['name', '!=', 'view_all_products'], ['name', '!=', 'view_profile']])->get();
+        return view('frontend/pages/register', compact('permissions'));
     }
 
     public function getLocale(Request $request)
