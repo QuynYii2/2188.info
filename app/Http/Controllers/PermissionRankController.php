@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\NotificationStatus;
 use App\Enums\PermissionUserStatus;
 use App\Enums\TimeLevelStatus;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Models\Notification;
 use App\Models\TimeLevelTable;
 use App\Models\User;
 use Carbon\Carbon;
@@ -39,7 +41,7 @@ class PermissionRankController extends Controller
             'user_id' => Auth::user()->id,
             'created_at' => Carbon::now()->addHours(7),
             'permission_id' => $request->input('permission-id'),
-            'status' => PermissionUserStatus::ACTIVE
+            'status' => PermissionUserStatus::INACTIVE
         ];
 
         DB::table('permission_user')->insert($permissionUser);
@@ -64,10 +66,19 @@ class PermissionRankController extends Controller
             'description' => 'description',
             'permission_id' => $request->input('permission-id'),
             'permission_user_id' => $permissionUsers[0]->id,
-            'status' => TimeLevelStatus::ACTIVE
+            'status' => TimeLevelStatus::INACTIVE
         ];
 
         TimeLevelTable::create($timeLevel);
+
+        $noti = [
+            'user_id' => Auth::user()->id,
+            'content' => "Đăng ký gói quyền thành công!",
+            'description' => 'Đăng ký gói quyền',
+            'status' => NotificationStatus::UNSEEN,
+        ];
+
+        Notification::create($noti);
 
         $mail = Auth::user()->email;
 
@@ -84,6 +95,29 @@ class PermissionRankController extends Controller
 //            $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
 //        });
 
+        return redirect(route('payment.show'));
+    }
+
+    public function updateRank(){
+        $timeTables = TimeLevelTable::where([['user_id', Auth::user()->id], ['status', TimeLevelStatus::INACTIVE]])->get();
+        for ($i = 0; $i<count($timeTables); $i++){
+            $this->changeStatusTimetable($timeTables[$i]->id);
+        }
+
+        $permissions = DB::table('permission_user')->where([['user_id', Auth::user()->id], ['status', PermissionUserStatus::INACTIVE]])->get();
+        for ($i = 0; $i<count($permissions); $i++){
+            $this->changeStatusPermission($permissions[$i]->id);
+        }
+
         return redirect(route('permission.user.show'));
+    }
+
+    private function changeStatusPermission($id){
+        DB::table('permission_user')->where('id', $id)->update(['status' => PermissionUserStatus::ACTIVE]);;
+    }
+
+    private function changeStatusTimetable($id){
+        $now = Carbon::now()->addHours(7);
+        DB::table('time_level_tables')->where('id', $id)->update(['status' => TimeLevelStatus::ACTIVE,'activation_date' => $now, 'expiration_date' => $now->addYear()]);;
     }
 }

@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\NotificationStatus;
+use App\Enums\OrderMethod;
+use App\Enums\OrderStatus;
 use App\Enums\PermissionUserStatus;
 use App\Enums\TimeLevelStatus;
 use App\Libraries\GeoIP;
+use App\Models\Notification;
 use App\Models\Permission;
 use App\Models\TimeLevelTable;
 use App\Models\User;
@@ -89,7 +93,7 @@ class UserController extends Controller
         $data = array('mail' => $mail, 'name' => $mail, 'password' => $password);
 
         Mail::send('frontend/widgets/mailWelcome', $data, function ($message) use ($mail) {
-            $message->to($mail , 'Welcome mail!')->subject
+            $message->to($mail, 'Welcome mail!')->subject
             ('Welcome mail');
             $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
         });
@@ -117,6 +121,15 @@ class UserController extends Controller
         DB::table('permission_user')->insert($permissionUser1);
         DB::table('permission_user')->insert($permissionUser2);
 
+        // Create notification with content: Register successful
+        $noti = [
+            'user_id' => $newUser->id,
+            'content' => "Đăng ký tài khoản thành công!",
+            'description' => 'Đăng ký tài khoản',
+            'status' => NotificationStatus::UNSEEN,
+        ];
+        Notification::create($noti);
+
         // Save off list permission
         $permissions = DB::table('permissions')->where([['name', '!=', 'view_all_products'], ['name', '!=', 'view_profile']])->get();
         $listRequest[] = null;
@@ -132,13 +145,14 @@ class UserController extends Controller
 
         $newUser = User::where('email', $request->input('email'))->first();
 
+        $totalPrice = null;
         for ($i = 2; $i < count($listIds); $i++) {
             if ($listIds[$i] != null) {
                 $permissionUser = [
                     'user_id' => $newUser->id,
                     'created_at' => Carbon::now()->addHours(7),
                     'permission_id' => $listIds[$i],
-                    'status' => PermissionUserStatus::ACTIVE
+                    'status' => PermissionUserStatus::INACTIVE
                 ];
 
                 DB::table('permission_user')->insert($permissionUser);
@@ -157,12 +171,22 @@ class UserController extends Controller
                     'description' => 'description',
                     'permission_id' => $listIds[$i],
                     'permission_user_id' => $permissionUsers[0]->id,
-                    'status' => TimeLevelStatus::ACTIVE
+                    'status' => TimeLevelStatus::INACTIVE
                 ];
+
+                $totalPrice = $totalPrice + 10;
 
                 TimeLevelTable::create($timeLevel);
             }
         }
+
+        $noti = [
+            'user_id' => $newUser->id,
+            'content' => "Vui lòng thanh toán khoản vay quyền lợi!",
+            'description' => 'Thanh toán khoản vay',
+            'status' => NotificationStatus::UNSEEN,
+        ];
+        Notification::create($noti);
 
         Session::flash('success', 'Đăng ký thành công!');
 
