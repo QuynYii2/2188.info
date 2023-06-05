@@ -19,7 +19,7 @@
         </div>
         <div class="border-bottom"></div>
     </div>
-    <div class="row bg-white rounded mt-2">
+    <div class="row bg-white rounded mt-2" style="display: contents">
         <button class="btn btn-outline-info bg-white py-3 link-tabs" id="addAction" data-toggle="modal"
                 data-target="#modal-address">
             <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">

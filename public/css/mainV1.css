@@ -176,7 +176,7 @@ ol {
 
 .spad {
 	padding-top: 100px;
-	padding-bottom: 100px;
+	/*padding-bottom: 100px;*/
 }
 
 .text-white h1,
@@ -296,7 +296,7 @@ ol {
 	box-shadow: none !important;
 	outline: none;
 	cursor: pointer;
-	padding: 0 20px;
+	padding: 0;
 }
 
 .ht-right .lan-selector .ddcommon .ddTitle .ddTitleText img {
@@ -321,10 +321,14 @@ ol {
 
 .ht-right .lan-selector .ddcommon .ddChild {
 	background: #fff;
-	max-width: 142px;
 	width: 100%;
 	position: relative;
 	left: 0;
+}
+ #countries_child {
+	width: 115px;
+	height: auto;
+	margin-left: -11px;
 }
 
 .ht-right .lan-selector .ddcommon .ddChild ul {
@@ -590,7 +594,7 @@ ol {
 }
 
 .inner-header .nav-right li.cart-icon .cart-hover .select-items table tr td {
-	padding-bottom: 20px;
+	/*padding-bottom: 20px;*/
 }
 
 .inner-header .nav-right li.cart-icon .cart-hover .select-items table tr td.si-pic img {
@@ -1340,8 +1344,11 @@ ol {
 .man-banner {
 	padding-right: 65px;
 	padding-left: 65px;
-	padding-top: 80px;
-	padding-bottom: 80px;
+	/*padding-bottom: 80px;*/
+}
+.man-header {
+	padding-right: 65px;
+	padding-left: 65px;
 }
 
 /*---------------------
@@ -3913,7 +3920,7 @@ ol {
 
 .vertical-menu li:not(:last-child):before{
 	display: inline-block;
-	content: "";
+	/*content: "";*/
 	border-top: 1px solid  rgb(0 0 0 / 14%);
 	width: 200px;
 	margin: 55px 10px;
@@ -4158,11 +4165,13 @@ ol {
 		display: none;
 	}
 	.slicknav_menu {
-		display: block;
+		display: contents;
 		background: transparent;
 		text-align: center;
 		margin-top: -48px;
+		width: 100%;
 	}
+
 	.slicknav_nav {
 		background: #333;
 	}
@@ -4185,6 +4194,7 @@ ol {
 		background-color: #e7ab3c;
 		display: inline-block;
 		right: -16px;
+		width: 100% !important;
 	}
 	.slicknav_nav .slicknav_row,
 	.slicknav_nav a {
@@ -4286,7 +4296,7 @@ ol {
 		max-width: 100%;
 	}
 	.inner-header .nav-right li.cart-icon .cart-hover {
-		width: 270px;
+		width: 85vw;
 		padding: 20px;
 	}
 	.countdown-timer .cd-item {
