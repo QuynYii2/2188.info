@@ -24,7 +24,7 @@ return [
     'input username' => 'Nhập vào tên đăng nhập...',
     'or use a social network' => 'Hoặc sử dụng mạng xã hội',
     'business license' => 'Tải lên giấy phép kinh doanh',
-    'wait a review'=> 'Nội dung đang chờ xét duyệt!',
+    'wait a review' => 'Nội dung đang chờ xét duyệt!',
 
     //thông tin tài khoản, thông báo của tôi, quản lý đơn hàng, quản lý đổi trả, sổ địa chỉ, thông tin thanh toán, đánh giá sản phẩm, sản phẩm bạn đã xem, sản phẩm yêu thích, sản phẩm mua sau, nhận xét của tôi, chia sẻ có lời, hợp đồng bảo hiểm, mua trước trả sau, mã giảm giá, quản lý xu của tôi, bookcare của tôi
     'account information' => 'Thông tin tài khoản',
@@ -128,7 +128,7 @@ return [
     'description' => 'Mô tả sản phẩm',
     'specification' => 'Thông số chi tiết',
     'review' => 'Đánh giá',
-    'read more' => 'Mở rộng',
+    'read more' => 'Xem tất cả',
     'read less' => 'Thu gọn',
     'product status' => 'Trạng thái sản phẩm',
     'condition' => 'Tình trạng',
@@ -198,7 +198,51 @@ return [
     'next' => 'Sau',
     //
     'save login' => 'Ghi nhớ đăng nhập',
-    'choose branch' =>'Chọn ngành',
-    'back home' =>'Quay về trang chủ',
-    'type product' =>'Mã sản phẩm',
+    'choose branch' => 'Chọn ngành',
+    'back home' => 'Quay về trang chủ',
+    'type product' => 'Mã sản phẩm',
+    'orders' => 'Mua hộ',
+    'purchase' => 'Bán hàng',
+    'all_categories' => 'Tất cả danh mục',
+
+    // giỏ hàng, tên sản phẩm, số lượng, giá, tổng số tiền, hành động, xóa, làm trống giỏ hàng, thanh toán,
+    // địa chỉ thanh toán, thẻ được chấp nhận, Thanh toán, tên trên thẻ, số thẻ, Tháng hết hạn, năm hết hạn,
+    //tổng tiền hàng, phí vận chuyển, giảm giá, tổng thanh toán, thanh toán ngay, sử dụng địa chỉ mặc định, sử dụng địa chỉ khác,
+    // thanh toán khi nhận hàng, thẻ ghi nợ hoặc tín dụng, ví điện tử
+
+    'Cart' => 'Giỏ Hàng',
+    'Product Name' => 'Tên Sản Phẩm',
+    'Price' => 'Giá',
+    'Total Amount' => 'Tổng Số Tiền',
+    'Action' => 'Thao tác',
+    'Delete' => 'Xóa',
+    'Clear Cart' => 'Làm Trống Giỏ Hàng',
+    'Payment' => 'Thanh Toán',
+    'Billing Address' => 'Địa Chỉ Thanh Toán',
+    'Accepted Cards' => 'Thẻ Được Chấp Nhận',
+    'Pay' => 'Thanh Toán',
+    'Name on Card' => 'Tên Trên Thẻ',
+    'Card Number' => 'Số Thẻ',
+    'Expiration Month' => 'Tháng Hết Hạn',
+    'Expiration Year' => 'Năm Hết Hạn',
+    'Total Product Cost' => 'Tổng Tiền Hàng',
+    'Shipping Fee' => 'Phí Vận Chuyển',
+    'Discount' => 'Giảm Giá',
+    'Total Payment' => 'Tổng Thanh Toán',
+    'Pay Now' => 'Thanh Toán Ngay',
+    'Use Default Address' => 'Sử Dụng Địa Chỉ Mặc Định',
+    'Use Different Address' => 'Sử Dụng Địa Chỉ Khác',
+    'Cash on Delivery' => 'Thanh Toán Khi Nhận Hàng',
+    'Debit or Credit Card' => 'Thẻ Ghi Nợ Hoặc Tín Dụng',
+    'E-wallet' => 'Ví Điện Tử',
+
+    'log out' => 'Đăng xuất',
+    'profile' => 'Trang cá nhân',
+    'Payment Methods' => 'Phương thức thanh toán',
+    'order' => 'Đơn hàng',
+
+    'was new product' => 'Sản phẩm mới thêm',
+    'view card' => 'Xem giỏ hàng',
+
+
 ];

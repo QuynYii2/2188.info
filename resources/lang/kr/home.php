@@ -24,7 +24,7 @@ return [
     'input username' => '사용자 이름을 입력하십시오 ...',
     'or use a social network' => '또는 소셜 네트워크를 사용하십시오',
     'business license' => '사업 등록증 업로드',
-    'wait a review'=> '검토 대기 중인 콘텐츠',
+    'wait a review' => '검토 대기 중인 콘텐츠',
 
     //thông tin tài khoản, thông báo của tôi, quản lý đơn hàng, quản lý đổi trả, sổ địa chỉ, thông tin thanh toán, đánh giá sản phẩm, sản phẩm bạn đã xem, sản phẩm yêu thích, sản phẩm mua sau, nhận xét của tôi, chia sẻ có lời, hợp đồng bảo hiểm, mua trước trả sau, mã giảm giá, quản lý xu của tôi, bookcare của tôi
     'account information' => '계정 정보',
@@ -198,7 +198,46 @@ return [
     'next' => '다음',
     //
     'save login' => '로그인 기억',
-    'choose branch' =>'산업 선택',
-    'back home' =>'홈페이지로 돌아 가기',
-    'type product' =>'제품 코드',
+    'choose branch' => '산업 선택',
+    'back home' => '홈페이지로 돌아 가기',
+    'type product' => '제품 코드',
+    'orders' => '주문',
+    'purchase' => '구매',
+    'all_categories' => '모든 카테고리',
+
+
+    'Cart' => '장바구니',
+    'Product Name' => '상품명',
+    'Price' => '가격',
+    'Total Amount' => '총 금액',
+    'Action' => '동작',
+    'Delete' => '삭제',
+    'Clear Cart' => '장바구니 비우기',
+    'Payment' => '결제',
+    'Billing Address' => '결제 주소',
+    'Accepted Cards' => '허용된 카드',
+    'Pay' => '지불하기',
+    'Name on Card' => '카드상의 이름',
+    'Card Number' => '카드 번호',
+    'Expiration Month' => '만료 월',
+    'Expiration Year' => '만료 연도',
+    'Total Product Cost' => '총 상품 비용',
+    'Shipping Fee' => '배송비',
+    'Discount' => '할인',
+    'Total Payment' => '총 결제액',
+    'Pay Now' => '지금 결제',
+    'Use Default Address' => '기본 주소 사용',
+    'Use Different Address' => '다른 주소 사용',
+    'Cash on Delivery' => '상품 수령 시 현금 결제',
+    'Debit or Credit Card' => '직불 카드 또는 신용 카드',
+    'E-wallet' => '전자지갑',
+
+    'log out' => '로그아웃',
+    'profile' => '프로필',
+    'Payment Methods' => '결제 방법',
+    'order' => '주문',
+
+    'was new product' => '신제품이 추가됩니다',
+    'view card' => '카트를 참조하십시오',
+
 ];
