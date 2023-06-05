@@ -62,7 +62,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/permission', [\App\Http\Controllers\PermissionRankController::class, 'store'])->name('permission.create');
     //
     Route::get('create-transaction', [\App\Http\Controllers\PaypalPaymentController::class, 'createTransaction'])->name('createTransaction');
-    Route::post('update-permission', [\App\Http\Controllers\PermissionRankController::class, 'updateRank'])->name('permission.update.rank');
+//    Route::post('update-permission', [\App\Http\Controllers\PermissionRankController::class, 'updateRank'])->name('permission.update.rank');
+//    Route::post('down-permission', [\App\Http\Controllers\PermissionRankController::class, 'downRank'])->name('permission.down.rank');
     Route::post('payment', [\App\Http\Controllers\PaypalPaymentController::class, 'processTransaction'])->name('create.payment');
     Route::get('get-payment', [\App\Http\Controllers\PaypalPaymentController::class, 'index'])->name('payment.show');
     //
@@ -75,6 +76,7 @@ Route::middleware(['auth'])->group(function () {
 Route::group(['middleware' => 'role.admin'], function () {
     // Các route dành cho super admin
     Route::get('/admin/dashboard', 'AdminController@dashboard');
+//    Route::post('down-permission', [\App\Http\Controllers\PermissionRankController::class, 'downRank'])->name('permission.down.rank');
     // ...
 });
 

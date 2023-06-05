@@ -10,6 +10,7 @@ use App\Models\Notification;
 use App\Models\TimeLevelTable;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -29,14 +30,15 @@ class PermissionRankController extends Controller
         (new HomeController())->getLocale($request);
         $permissionUsers = DB::table('permission_user')->where([['user_id', Auth::user()->id], ['status', PermissionUserStatus::ACTIVE]])->get();
         $number = [];
-        for ($i=0; $i<count($permissionUsers); $i++){
+        for ($i = 0; $i < count($permissionUsers); $i++) {
             $number[] = $permissionUsers[$i]->permission_id;
         }
         $permissions = DB::table('permissions')->whereNotIn('id', $number)->get();
         return view('frontend/pages/profile/listRank', compact('permissions', 'permissionUsers'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $permissionUser = [
             'user_id' => Auth::user()->id,
             'created_at' => Carbon::now()->addHours(7),
@@ -54,14 +56,15 @@ class PermissionRankController extends Controller
         /*
          * Miss do thieu fillable, kh send duoc request
          * */
+        $now = Carbon::now()->addHours(7);
         $timeLevel = [
             'user_id' => Auth::user()->id,
             'level_old' => $user->level_account,
             'new_level' => $user->level_account,
             'type_account' => $user->type_account,
-            'activation_date' => Carbon::now()->addHours(7),
+            'activation_date' => $now,
             'duration' => 1,
-            'expiration_date' => Carbon::now()->addHours(7)->addYear(),
+            'expiration_date' => $now->addYear(),
             'total_price' => 10,
             'description' => 'description',
             'permission_id' => $request->input('permission-id'),
@@ -98,26 +101,41 @@ class PermissionRankController extends Controller
         return redirect(route('payment.show'));
     }
 
-    public function updateRank(){
+    public function updateRank()
+    {
         $timeTables = TimeLevelTable::where([['user_id', Auth::user()->id], ['status', TimeLevelStatus::INACTIVE]])->get();
-        for ($i = 0; $i<count($timeTables); $i++){
+        for ($i = 0; $i < count($timeTables); $i++) {
             $this->changeStatusTimetable($timeTables[$i]->id);
         }
 
         $permissions = DB::table('permission_user')->where([['user_id', Auth::user()->id], ['status', PermissionUserStatus::INACTIVE]])->get();
-        for ($i = 0; $i<count($permissions); $i++){
+        for ($i = 0; $i < count($permissions); $i++) {
             $this->changeStatusPermission($permissions[$i]->id);
         }
 
         return redirect(route('permission.user.show'));
     }
 
-    private function changeStatusPermission($id){
+    private function changeStatusPermission($id)
+    {
         DB::table('permission_user')->where('id', $id)->update(['status' => PermissionUserStatus::ACTIVE]);;
     }
 
-    private function changeStatusTimetable($id){
+    private function changeStatusTimetable($id)
+    {
         $now = Carbon::now()->addHours(7);
-        DB::table('time_level_tables')->where('id', $id)->update(['status' => TimeLevelStatus::ACTIVE,'activation_date' => $now, 'expiration_date' => $now->addYear()]);;
+        DB::table('time_level_tables')->where('id', $id)->update(['status' => TimeLevelStatus::ACTIVE, 'activation_date' => $now, 'expiration_date' => $now->addYear()]);;
+    }
+
+    public function downRank()
+    {
+        $now = Carbon::now()->addHours(7);
+        $timeTables = TimeLevelTable::where('expiration_date', '<', $now)->get();
+        if (count($timeTables) > 0){
+            for ($i = 0; $i < count($timeTables); $i++) {
+                DB::table('time_level_tables')->where('id', $timeTables[$i]->id)->update(['status' => TimeLevelStatus::EXPIRED]);
+                DB::table('permission_user')->where('id', $timeTables[$i]->permission_user_id)->update(['status' => PermissionUserStatus::EXPIRED]);
+            }
+        }
     }
 }

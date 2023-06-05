@@ -60,7 +60,9 @@
                                     </div>
                                 </div>
                                 <div class="">
-                                    <button type="submit" class=" mt-3 mb-3 btn btn-danger">Checkout Now</button>
+                                    @if(count($permissions) > 0)
+                                        <button type="submit" class=" mt-3 mb-3 btn btn-danger">Checkout Now</button>
+                                    @endif
                                 </div>
                             </form>
                         </div>
