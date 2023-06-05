@@ -56,13 +56,27 @@ Route::middleware(['auth'])->group(function () {
 //    Route::get('/address', [\App\Http\Controllers\Frontend\AddressController::class, 'index']);
 //    Route::get('/address', [\App\Http\Controllers\Frontend\AddressController::class, 'index']);
 //    Route::get('/address', [\App\Http\Controllers\Frontend\AddressController::class, 'index']);
-
+    // Permission
+    Route::get('/permission-user', [\App\Http\Controllers\PermissionRankController::class, 'index'])->name('permission.user.show');
+    Route::get('/permission-list', [\App\Http\Controllers\PermissionRankController::class, 'list'])->name('permission.list.show');
+    Route::post('/permission', [\App\Http\Controllers\PermissionRankController::class, 'store'])->name('permission.create');
+    //
+    Route::get('create-transaction', [\App\Http\Controllers\PaypalPaymentController::class, 'createTransaction'])->name('createTransaction');
+//    Route::post('update-permission', [\App\Http\Controllers\PermissionRankController::class, 'updateRank'])->name('permission.update.rank');
+//    Route::post('down-permission', [\App\Http\Controllers\PermissionRankController::class, 'downRank'])->name('permission.down.rank');
+    Route::post('payment', [\App\Http\Controllers\PaypalPaymentController::class, 'processTransaction'])->name('create.payment');
+    Route::get('get-payment', [\App\Http\Controllers\PaypalPaymentController::class, 'index'])->name('payment.show');
+    //
+    Route::get('process-transaction', [\App\Http\Controllers\PaypalPaymentController::class, 'processTransaction'])->name('processTransaction');
+    Route::get('success-transaction', [\App\Http\Controllers\PaypalPaymentController::class, 'successTransaction'])->name('successTransaction');
+    Route::get('cancel-transaction', [\App\Http\Controllers\PaypalPaymentController::class, 'cancelTransaction'])->name('cancelTransaction');
 });
 
 
 Route::group(['middleware' => 'role.admin'], function () {
     // Các route dành cho super admin
     Route::get('/admin/dashboard', 'AdminController@dashboard');
+//    Route::post('down-permission', [\App\Http\Controllers\PermissionRankController::class, 'downRank'])->name('permission.down.rank');
     // ...
 });
 
