@@ -3,24 +3,25 @@
 @section('title', 'Register')
 
 <style>
-    .register-tags{
+    .register-tags {
         display: inline-block;
         margin: auto;
     }
-    .link-tabs{
+
+    .link-tabs {
         color: #cccccc;
         background-color: #f9f9f9 !important;
     }
 
-    .link-tabs:hover{
-        color: #c69500;!important;
+    .link-tabs:hover {
+        color: #c69500;
+    !important;
         background-color: #f7f7f7;
     }
 
 </style>
 
 @section('content')
-
 
     <div class="container bg-white mt-3">
 
@@ -32,90 +33,129 @@
                 <nav>
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
 
-                        <a class="nav-item nav-link active link-tabs" id="nav-buyer-tab" data-toggle="tab" href="#nav-buyer"
-                           role="tab" aria-controls="nav-buyer">{{ __('home.buyer') }}</a>
-                        <a class="nav-item nav-link link-tabs" id="nav-seller-tab" data-toggle="tab" href="#nav-seller" role="tab"
-                           aria-controls="nav-seller">{{ __('home.seller') }}</a>
+                        <a class="nav-item nav-link active link-tabs" id="nav-buyer-tab" data-toggle="tab"
+                           href="#nav-buyer"
+                           role="tab" aria-controls="nav-buyer" onclick="buyer();">{{ __('home.buyer') }}</a>
+                        <a class="nav-item nav-link link-tabs" id="nav-seller-tab" data-toggle="tab" href="#nav-seller"
+                           role="tab"
+                           aria-controls="nav-seller" onclick="seller();">{{ __('home.seller') }}</a>
                     </div>
                 </nav>
                 <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-                    <div class="tab-pane fade active show" id="nav-buyer" role="tabpanel" aria-labelledby="nav-buyer-tab">
+                    <div class="tab-pane fade active show" id="nav-buyer" role="tabpanel"
+                         aria-labelledby="nav-buyer-tab">
                         <form action="{{ route('register.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                            <input type="text" name="type_account" value="buyer" hidden="">
-                            <div class="form-group">
-                                <input required type="text" class="form-control" name="name"
-                                       placeholder="{{ __('home.input name') }}">
+                            @csrf
+                            <div class="">
+                                <input type="text" name="type_account" value="buyer" hidden="">
+                                <div class="form-group">
+                                    <input required type="text" class="form-control" name="name" id="name-buyer"
+                                           placeholder="{{ __('home.input name') }}">
+                                </div>
+                                <div class="form-group">
+                                    <input required type="number" class="form-control" name="phone" id="phone-buyer"
+                                           placeholder="{{ __('home.input phone') }}">
+                                </div>
+                                <div class="form-group">
+                                    <input required type="password" class="form-control" name="password"
+                                           id="password-buyer"
+                                           placeholder="{{ __('home.input password') }}">
+                                </div>
+                                <div class="form-group">
+                                    <input required type="email" class="form-control" name="email" id="email-buyer"
+                                           placeholder="{{ __('home.input email') }}">
+                                </div>
+                                <div class="form-group">
+                                    <input required type="text" class="form-control" name="address" id="address-buyer"
+                                           placeholder="{{ __('home.input address') }}">
+                                </div>
+                                <div class="form-group">
+                                    <input required type="text" class="form-control" name="social_media"
+                                           placeholder="{{ __('home.input socialNetwork') }}">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <input required type="number" class="form-control" name="phone"
-                                       placeholder="{{ __('home.input phone') }}">
-                            </div>
-                            <div class="form-group">
-                                <input required type="password" class="form-control" name="password"
-                                       placeholder="{{ __('home.input password') }}">
-                            </div>
-                            <div class="form-group">
-                                <input required type="email" class="form-control" name="email"
-                                       placeholder="{{ __('home.input email') }}">
-                            </div>
-                            <div class="form-group">
-                                <input required type="text" class="form-control" name="address"
-                                       placeholder="{{ __('home.input address') }}">
-                            </div>
-                            <div class="form-group">
-                                <input required type="text" class="form-control" name="social_media"
-                                       placeholder="{{ __('home.input socialNetwork') }}">
+                            <div class="mb-3">
+                                <div class="text-center m-2">
+                                    <h5 class="text-danger"> Select the book you want to register here!</h5>
+                                    <a href="#" class="link-tabs">Learn more about my rights...</a>
+                                </div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked1" checked
+                                           disabled>
+                                    <label class="form-check-label"
+                                           for="flexSwitchCheckChecked1">view_all_products</label>
+                                </div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked2" checked
+                                           disabled>
+                                    <label class="form-check-label" for="flexSwitchCheckChecked2">view_profile</label>
+                                </div>
+                                @foreach($permissions as $permission)
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox"
+                                               name="permission-{{$permission->id}}" id="permission-{{$permission->id}}"
+                                               value="{{$permission->id}}">
+                                        <label class="form-check-label"
+                                               for="permission-{{$permission->id}}">{{$permission->name}}</label>
+                                    </div>
+                                @endforeach
+                                <div>
+                                    <button type="submit" id="btn-submit-permission" hidden="">Submit</button>
+                                </div>
                             </div>
                             <div class="">
                                 <div class="float-left">
-                                    <a class="tabs-product-detail" href="{{route('home')}}">{{ __('home.back home') }}</a>
+                                    <a class="tabs-product-detail"
+                                       href="{{route('home')}}">{{ __('home.back home') }}</a>
                                 </div>
                                 <div class="float-right">
-                                    <a class="tabs-product-detail" href="{{route('login')}}">{{ __('home.sign in') }}</a>
+                                    <a class="tabs-product-detail"
+                                       href="{{route('login')}}">{{ __('home.sign in') }}</a>
                                 </div>
                             </div>
-                            <button type="submit"
-                                    class="btn btn-info btn-block btn-round mt-5">{{ __('home.sign up') }}
+                            <button type="submit" onclick="myFun(1)"
+                                    class="btn btn-info btn-info-buyer btn-block btn-round mt-5">{{ __('home.sign up') }}
                             </button>
                         </form>
                     </div>
                     <div class="tab-pane fade" id="nav-seller" role="tabpanel" aria-labelledby="nav-seller-tab">
                         <form action="{{ route('register.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <input type="text" name="type_account" value="seller" hidden>
-                            <div class="form-group">
-                                <input required type="text" class="form-control" name="name"
-                                       placeholder="{{ __('home.input name') }}">
-                            </div>
-                            <div class="form-group">
-                                <input required type="number" class="form-control" name="phone"
-                                       placeholder="{{ __('home.input phone') }}">
-                            </div>
+                           <div class="">
+                               <input type="text" name="type_account" value="seller" hidden>
+                               <div class="form-group">
+                                   <input required type="text" class="form-control" name="name" id="name-seller"
+                                          placeholder="{{ __('home.input name') }}">
+                               </div>
+                               <div class="form-group">
+                                   <input required type="number" class="form-control" name="phone"
+                                          placeholder="{{ __('home.input phone') }}">
+                               </div>
 
-                            <div class="form-group">
-                                <input required type="password" class="form-control" name="password"
-                                       placeholder="{{ __('home.input password') }}">
-                            </div>
-                            <div class="form-group">
-                                <input required type="email" class="form-control" name="email"
-                                       placeholder="{{ __('home.input email') }}">
-                            </div>
-                            <div class="form-group">
-                                <input required type="text" class="form-control" name="address"
-                                       placeholder="{{ __('home.input address') }}">
-                            </div>
-                            <div class="form-group">
-                                <input required type="text" class="form-control" name="rental_code"
-                                       placeholder="{{ __('home.input taxCode') }}">
-                            </div>
+                               <div class="form-group">
+                                   <input required type="password" class="form-control" name="password"
+                                          placeholder="{{ __('home.input password') }}">
+                               </div>
+                               <div class="form-group">
+                                   <input required type="email" class="form-control" name="email" id="email-seller"
+                                          placeholder="{{ __('home.input email') }}">
+                               </div>
+                               <div class="form-group">
+                                   <input required type="text" class="form-control" name="address"
+                                          placeholder="{{ __('home.input address') }}">
+                               </div>
+                               <div class="form-group">
+                                   <input required type="text" class="form-control" name="rental_code"
+                                          placeholder="{{ __('home.input taxCode') }}">
+                               </div>
+                           </div>
                             <div class="form-group">
                                 <div class="custom-file">
-                                <input required type="file" id="inputFile"
-                                       class="form-control"
-                                       name="image">
-                                <label class="custom-file-label"
-                                       for="inputFile">{{ __('home.business license') }}</label>
+                                    <input required type="file" id="inputFile"
+                                           class="form-control"
+                                           name="image">
+                                    <label class="custom-file-label"
+                                           for="inputFile">{{ __('home.business license') }}</label>
                                 </div>
                             </div>
 
@@ -134,23 +174,57 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="text" class="form-control" id="product_code" placeholder="{{ __('home.type product') }}" name="product_code">
+                                <input type="text" class="form-control" id="product_code"
+                                       placeholder="{{ __('home.type product') }}" name="product_code">
                             </div>
 
                             <div class="form-group">
                                 <input required type="text" class="form-control" name="social_media"
                                        placeholder="{{ __('home.input socialNetwork') }}">
                             </div>
-                            <div class="">
-                                <div class="float-left">
-                                    <a class="tabs-product-detail" href="{{route('home')}}">{{ __('home.back home') }}</a>
+
+                            <div class="mb-3">
+                                <div class="text-center m-2">
+                                    <h5 class="text-danger"> Select the book you want to register here!</h5>
+                                    <a href="#" class="link-tabs">Learn more about my rights...</a>
                                 </div>
-                                <div class="float-right">
-                                    <a class="tabs-product-detail" href="{{route('login')}}">{{ __('home.sign in') }}</a>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked1" checked
+                                           disabled>
+                                    <label class="form-check-label"
+                                           for="flexSwitchCheckChecked1">view_all_products</label>
+                                </div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked2" checked
+                                           disabled>
+                                    <label class="form-check-label" for="flexSwitchCheckChecked2">view_profile</label>
+                                </div>
+                                @foreach($permissions as $permission)
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox"
+                                               name="permission-{{$permission->id}}" id="permission-{{$permission->id}}"
+                                               value="{{$permission->id}}">
+                                        <label class="form-check-label"
+                                               for="permission-{{$permission->id}}">{{$permission->name}}</label>
+                                    </div>
+                                @endforeach
+                                <div>
+                                    <button type="submit" id="btn-submit-permission" hidden="">Submit</button>
                                 </div>
                             </div>
-                            <button type="submit"
-                                    class="btn btn-info btn-block btn-round mt-5">{{ __('home.sign up') }}
+
+                            <div class="">
+                                <div class="float-left">
+                                    <a class="tabs-product-detail"
+                                       href="{{route('home')}}">{{ __('home.back home') }}</a>
+                                </div>
+                                <div class="float-right">
+                                    <a class="tabs-product-detail"
+                                       href="{{route('login')}}">{{ __('home.sign in') }}</a>
+                                </div>
+                            </div>
+                            <button type="submit" onclick="myFun(1)"
+                                    class="btn btn-info btn-info-seller btn-block btn-round mt-5">{{ __('home.sign up') }}
                             </button>
                         </form>
                     </div>
@@ -186,6 +260,57 @@
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    // function myFun(x) {
+    //     var btn = document.getElementById('btn-submit-permission');
+    //     btn.click();
+    // }
+
+    // function buyer() {
+    //     $(document).ready(function() {
+    //         $('.btn-info-buyer').prop('disabled', true);
+    //
+    //         function validateNextButton() {
+    //             var buttonDisabled = $('#name-buyer').val().trim() === '' || $('#email-buyer').val().trim() === '' ||
+    //                 $('#name-buyer').val().trim() === '' || $('#email-buyer').val().trim() === '';
+    //             $('.btn-info-buyer').prop('disabled', buttonDisabled);
+    //         }
+    //
+    //         $('#email-buyer').on('keyup', validateNextButton);
+    //         $('#name-seller').on('keyup', validateNextButton);
+    //     });
+    // }
+    //
+    // buyer();
+    //
+    // function seller() {
+    //     $(document).ready(function() {
+    //         $('.btn-info-seller').prop('disabled', true);
+    //
+    //         function validateNextButton() {
+    //             var buttonDisabled = $('#email-seller').val().trim() === '' || $('#name-seller').val().trim() === '';
+    //             $('.btn-info-seller').prop('disabled', buttonDisabled);
+    //         }
+    //
+    //         $('#email-seller').on('keyup', validateNextButton);
+    //         $('#name-seller').on('keyup', validateNextButton);
+    //     });
+    // }
+
+    // jQuery
+    // $(document).ready(function(){
+    //     $('.btn-info').attr('disabled',true);
+    //     $('#name-seller').keyup(function(){
+    //         if($(this).val().length !==0)
+    //             $('.btn-info').attr('disabled', false);
+    //         else
+    //             $('.btn-info').attr('disabled',true);
+    //     })
+    // });
+
+    //
+
+</script>
+<script>
 
     // Sử dụng AJAX để gửi yêu cầu đăng ký
     $.ajaxSetup({
@@ -195,14 +320,14 @@
     });
 
     // Gửi yêu cầu đăng ký khi người dùng nhấn nút đăng ký
-    $('#nav-seller').submit(function(e) {
+    $('#nav-seller').submit(function (e) {
         e.preventDefault(); // Ngăn chặn form submit
 
         $.ajax({
             type: 'POST',
             url: '{{ route("register.store") }}',
             data: $(this).serialize(),
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     // Hiển thị popup thông báo
                     alert('Đăng ký thành công!');

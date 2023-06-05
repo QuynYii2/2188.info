@@ -22,8 +22,24 @@ class PermissionsSeeder extends Seeder
             // Thêm các permission khác tùy theo nhu cầu của bạn
         ];
 
+        // Tạo các permission mẫu
+        $permissions1 = [
+            ['name' => 'view_profile'],
+            ['name' => 'view_all_products'],
+            ['name' => 'view_list_categories'],
+            ['name' => 'order_product'],
+            ['name' => 'view_product_language'],
+            ['name' => 'view_more_product'],
+            ['name' => 'comment_product'],
+            ['name' => 'view_all_blogs'],
+        ];
+
         // Lưu các permission vào bảng
         foreach ($permissions as $permissionData) {
+            Permission::create($permissionData);
+        }
+
+        foreach ($permissions1 as $permissionData) {
             Permission::create($permissionData);
         }
     }
