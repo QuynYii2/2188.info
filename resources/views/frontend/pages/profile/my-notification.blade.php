@@ -3,12 +3,13 @@
 @section('title', 'My Notification')
 
 <style>
-    .link-tabs{
-        background-color: #f7f7f7!important;
+    .link-tabs {
+        background-color: #f7f7f7 !important;
     }
 
-    .link-tabs:hover{
-        color: #c69500;!important;
+    .link-tabs:hover {
+        color: #c69500;
+    !important;
     }
 </style>
 
@@ -36,28 +37,180 @@
                     </a>
                     <a class="nav-item link-tabs nav-link" data-toggle="tab" data-target="#nav-3"
                        role="tab" aria-controls="nav-3" aria-selected="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) --><path d="M128 160h320v192H128V160zm400 96c0 26.51 21.49 48 48 48v96c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48v-96c26.51 0 48-21.49 48-48s-21.49-48-48-48v-96c0-26.51 21.49-48 48-48h480c26.51 0 48 21.49 48 48v96c-26.51 0-48 21.49-48 48zm-48-104c0-13.255-10.745-24-24-24H120c-13.255 0-24 10.745-24 24v208c0 13.255 10.745 24 24 24h336c13.255 0 24-10.745 24-24V152z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                            <!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->
+                            <path d="M128 160h320v192H128V160zm400 96c0 26.51 21.49 48 48 48v96c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48v-96c26.51 0 48-21.49 48-48s-21.49-48-48-48v-96c0-26.51 21.49-48 48-48h480c26.51 0 48 21.49 48 48v96c-26.51 0-48 21.49-48 48zm-48-104c0-13.255-10.745-24-24-24H120c-13.255 0-24 10.745-24 24v208c0 13.255 10.745 24 24 24h336c13.255 0 24-10.745 24-24V152z"/>
+                        </svg>
                     </a>
                     <a class="nav-item link-tabs nav-link" data-toggle="tab" data-target="#nav-4" role="tab"
-                       aria-controls="nav-4" aria-selected="false"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) --><path d="M255.545 8c-66.269.119-126.438 26.233-170.86 68.685L48.971 40.971C33.851 25.851 8 36.559 8 57.941V192c0 13.255 10.745 24 24 24h134.059c21.382 0 32.09-25.851 16.971-40.971l-41.75-41.75c30.864-28.899 70.801-44.907 113.23-45.273 92.398-.798 170.283 73.977 169.484 169.442C423.236 348.009 349.816 424 256 424c-41.127 0-79.997-14.678-110.63-41.556-4.743-4.161-11.906-3.908-16.368.553L89.34 422.659c-4.872 4.872-4.631 12.815.482 17.433C133.798 479.813 192.074 504 256 504c136.966 0 247.999-111.033 248-247.998C504.001 119.193 392.354 7.755 255.545 8z"/></svg></a>
+                       aria-controls="nav-4" aria-selected="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->
+                            <path d="M255.545 8c-66.269.119-126.438 26.233-170.86 68.685L48.971 40.971C33.851 25.851 8 36.559 8 57.941V192c0 13.255 10.745 24 24 24h134.059c21.382 0 32.09-25.851 16.971-40.971l-41.75-41.75c30.864-28.899 70.801-44.907 113.23-45.273 92.398-.798 170.283 73.977 169.484 169.442C423.236 348.009 349.816 424 256 424c-41.127 0-79.997-14.678-110.63-41.556-4.743-4.161-11.906-3.908-16.368.553L89.34 422.659c-4.872 4.872-4.631 12.815.482 17.433C133.798 479.813 192.074 504 256 504c136.966 0 247.999-111.033 248-247.998C504.001 119.193 392.354 7.755 255.545 8z"/>
+                        </svg>
+                    </a>
                 </div>
             </nav>
             <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-                <div class="tab-pane fade text-center active show" id="nav-1" role="tabpanel" aria-labelledby="nav-contact-tab">
-                    <img class="img" src="{{asset('images/empty.jpg')}}" alt="">
-                    <p>{{ __('home.you have no notification') }}</p>
+                <div class="tab-pane fade text-center active show" id="nav-1" role="tabpanel"
+                     aria-labelledby="nav-contact-tab">
+                    @if($notifications->isEmpty())
+                        <div class="">
+                            <img class="img" src="{{asset('images/empty.jpg')}}" alt="">
+                            <p>{{ __('home.you have no notification') }}</p>
+                        </div>
+                    @else
+                        <div class="">
+                            <form method="post" action="{{route('notification.checkAll')}}">
+                                @csrf
+                                <button class="btn btn-primary float-right mb-3" type="submit">Đánh dấu là đã đọc</button>
+                            </form>
+                            <div class="row bg-white mt-3 full-width ">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr class="text-center">
+                                        <th scope="col">#</th>
+                                        <th scope="col">Content</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($notifications as $notification)
+                                        <tr>
+                                            <th scope="row" class="text-center">{{ $loop->index + 1 }}</th>
+                                            @if($notification->status == \App\Enums\NotificationStatus::UNSEEN)
+                                                <td><a href="" class="text-danger">{{$notification->content}}</a></td>
+                                            @else
+                                                <td><a href="" class="" style="color: #ccc">{{$notification->content}}</a>
+                                                </td>
+                                            @endif
+
+                                            <td class="text-center">
+                                                <form method="post" action="{{route('notification.delete', $notification->id)}}">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger mr-2 ">
+                                                        {{ __('home.delete') }}
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    @endif
                 </div>
                 <div class="tab-pane fade text-center" id="nav-2" role="tabpanel" aria-labelledby="nav-about-tab">
-                    <img class="img" src="{{asset('images/empty.jpg')}}" alt="">
-                    <p>{{ __('home.you have no notification') }}</p>
+                    @if($notificationsUnseen->isEmpty())
+                        <div class="">
+                            <img class="img" src="{{asset('images/empty.jpg')}}" alt="">
+                            <p>{{ __('home.you have no notification') }}</p>
+                        </div>
+                    @else
+                        <div class="">
+                            <form method="post" action="{{route('notification.checkAll')}}">
+                                @csrf
+                                <button class="btn btn-primary float-right mb-3" type="submit">Đánh dấu là đã đọc</button>
+                            </form>
+                            <div class="row bg-white mt-3 full-width ">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr class="text-center">
+                                        <th scope="col">#</th>
+                                        <th scope="col">Content</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($notificationsUnseen as $notification)
+                                        <tr>
+                                            <th scope="row" class="text-center">{{ $loop->index + 1 }}</th>
+                                            <td><a href="" class="text-danger">{{$notification->content}}</a></td>
+                                            <td class="text-center">
+                                                <form method="post" action="{{route('notification.delete', $notification->id)}}">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger mr-2 ">
+                                                        {{ __('home.delete') }}
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    @endif
                 </div>
                 <div class="tab-pane fade text-center" id="nav-3" role="tabpanel" aria-labelledby="nav-contact-tab">
-                    <img class="img" src="{{asset('images/empty.jpg')}}" alt="">
-                    <p>{{ __('home.you have no notification') }}</p>
+                    @if($notificationsSeen->isEmpty())
+                        <div class="">
+                            <img class="img" src="{{asset('images/empty.jpg')}}" alt="">
+                            <p>{{ __('home.you have no notification') }}</p>
+                        </div>
+                    @else
+                        <div class="">
+                            <div class="row bg-white mt-3 full-width ">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr class="text-center">
+                                        <th scope="col">#</th>
+                                        <th scope="col">Content</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($notificationsSeen as $notification)
+                                        <tr>
+                                            <th scope="row" class="text-center">{{ $loop->index + 1 }}</th>
+                                            <td><a href="" class="" style="color: #ccc">{{$notification->content}}</a>
+                                            <td class="text-center">
+                                                <form method="post" action="{{route('notification.delete', $notification->id)}}">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-danger mr-2 ">
+                                                        {{ __('home.delete') }}
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    @endif
                 </div>
                 <div class="tab-pane fade text-center" id="nav-4" role="tabpanel" aria-labelledby="nav-about-tab">
-                    <img class="img" src="{{asset('images/empty.jpg')}}" alt="">
-                    <p>{{ __('home.you have no notification') }}</p>
+                    @if($notificationsDelete->isEmpty())
+                        <div class="">
+                            <img class="img" src="{{asset('images/empty.jpg')}}" alt="">
+                            <p>{{ __('home.you have no notification') }}</p>
+                        </div>
+                    @else
+                        <div class="">
+                            <div class="row bg-white mt-3 full-width ">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr class="text-center">
+                                        <th scope="col">#</th>
+                                        <th scope="col">Content</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($notificationsDelete as $notification)
+                                        <tr>
+                                            <th scope="row" class="text-center">{{ $loop->index + 1 }}</th>
+                                            <td><a href="" class="" style="color: #ccc">{{$notification->content}}</a></td>
+                                            <td class="text-center">{{\App\Enums\NotificationStatus::DELETED}}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

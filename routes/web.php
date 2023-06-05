@@ -39,7 +39,7 @@ Route::get('/category/{id}', [\App\Http\Controllers\CategoryController::class, '
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/info/', [\App\Http\Controllers\ProfileController::class, 'info'])->name('profile.show');
-    Route::get('/my-notification/', [\App\Http\Controllers\ProfileController::class, 'my_notification']);
+//    Route::get('/my-notification/', [\App\Http\Controllers\ProfileController::class, 'my_notification']);
 //    Route::get('/order-management/', [\App\Http\Controllers\ProfileController::class, 'order_management']);
     Route::get('/return-management/', [\App\Http\Controllers\ProfileController::class, 'return_management']);
 //    Route::get('/address-book/', [\App\Http\Controllers\ProfileController::class, 'address_book']);
@@ -70,6 +70,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('process-transaction', [\App\Http\Controllers\PaypalPaymentController::class, 'processTransaction'])->name('processTransaction');
     Route::get('success-transaction', [\App\Http\Controllers\PaypalPaymentController::class, 'successTransaction'])->name('successTransaction');
     Route::get('cancel-transaction', [\App\Http\Controllers\PaypalPaymentController::class, 'cancelTransaction'])->name('cancelTransaction');
+    //
+    Route::get('/my-notification/', [\App\Http\Controllers\Frontend\NotificationController::class, 'index'])->name('notification.show');
+    Route::post('/all-notification/', [\App\Http\Controllers\Frontend\NotificationController::class, 'checkAll'])->name('notification.checkAll');
+    Route::post('/delete-notification/{id}', [\App\Http\Controllers\Frontend\NotificationController::class, 'delete'])->name('notification.delete');
+
 });
 
 

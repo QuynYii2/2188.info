@@ -725,7 +725,8 @@
                 </div>
             </div>
             <div id="mobile-menu-wrap" class="mg-menu" style=" width: calc(100vw - 2rem);"></div>
-
+        </div>
+    </div>
 </header>
 <!-- Header End -->
 <script>
