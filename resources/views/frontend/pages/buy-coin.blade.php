@@ -27,16 +27,21 @@
                                     <div class="row">
                                         @foreach($comboCoin as $coin)
                                             <div class="col-lg-4">
-                                                <div class="card p-2">
-                                                    <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/181.webp"
-                                                         class="card-img-top img"
-                                                         alt="Waterfall"/>
-                                                    <div class="card-body">
-                                                        <h4 class="text-center text-nowrap"><span class="mr-1" id="number-coin-{{$coin}}">1</span>coin</h4>
-                                                        <h5 class="card-title text-danger">${{$coin}}</h5>
-                                                        <a href="#" class="btn btn-primary">Buy now</a>
+                                            <form method="post" action="{{route('buy.coin.create')}}">
+                                                @csrf
+                                                    <div class="card p-2">
+                                                        <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/181.webp"
+                                                             class="card-img-top img"
+                                                             alt="Waterfall"/>
+                                                        <div class="card-body">
+                                                            <h4 class="text-center text-nowrap"><span class="mr-1" id="number-coin-{{$coin}}">1</span>coin</h4>
+                                                            <h5 class="card-title text-danger">${{$coin}}</h5>
+                                                            <input type="text" class="d-none" id="input-coin-{{$coin}}" name="quantity" value="1">
+                                                            <input type="text" class="d-none" name="price" value="{{$coin}}">
+                                                            <button type="submit" class="btn btn-primary">Buy now</button>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                            </form>
                                             </div>
                                         @endforeach
                                     </div>
@@ -46,10 +51,11 @@
                                             <h5 class="text-center">If you want to buy coin, please enter the number
                                                 coins</h5>
                                         </div>
-                                        <form class="form-inline">
+                                        <form class="form-inline" method="post" action="{{route('buy.coin.create')}}">
+                                            @csrf
                                             <div class="form-group mx-sm-3 mb-2">
                                                 <label for="number-price" class="sr-only">Number</label>
-                                                <input type="number" class="form-control" id="number-price"
+                                                <input type="number" class="form-control" name="price" id="number-price"
                                                        placeholder="Number">
                                             </div>
                                             <button type="submit" class="btn btn-danger mb-2">Buy</button>
@@ -68,8 +74,10 @@
     <script>
         function checkCoin(value, size) {
             var coins = document.getElementById('number-coin-' + value)
+            var inputValue = document.getElementById('input-coin-' + value)
             var number = parseInt(value) * 10 + parseInt(value)+ parseInt(size);
             coins.innerText = number;
+            inputValue.value = number;
         }
 
         function next() {

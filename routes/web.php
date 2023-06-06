@@ -75,7 +75,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/all-notification/', [\App\Http\Controllers\Frontend\NotificationController::class, 'checkAll'])->name('notification.checkAll');
     Route::post('/delete-notification/{id}', [\App\Http\Controllers\Frontend\NotificationController::class, 'delete'])->name('notification.delete');
     //
-    Route::get('/buy-coin/', [\App\Http\Controllers\CoinController::class, 'index'])->name('buy.coin.show');
+    Route::get('/buy-coin', [\App\Http\Controllers\CoinController::class, 'index'])->name('buy.coin.show');
+    Route::post('/buy-coin', [\App\Http\Controllers\CoinController::class, 'store'])->name('buy.coin.create');
+//    Route::get('/buy-coin-success?price={price}&quantity={quantity}', [\App\Http\Controllers\CoinController::class, 'successPayment'])->name('buy.coin.success');
+    Route::get('/buy-coin-success/{price}/{quantity}', [\App\Http\Controllers\CoinController::class, 'successPayment'])->name('buy.coin.success');
 });
 
 

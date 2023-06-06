@@ -19,6 +19,7 @@ class CreateCoinsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('quantity');
+            $table->float('price');
             $table->string('status')->default(CoinStatus::ACTIVE);
             $table->timestamps();
         });
