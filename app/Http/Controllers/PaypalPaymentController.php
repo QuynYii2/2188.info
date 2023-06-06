@@ -26,31 +26,38 @@ class PaypalPaymentController extends Controller
         return view('transaction');
     }
 
-    public function processTransaction(Request $request)
+    public function paypalTotal(Request $request, $total, $successUrl)
     {
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
         $paypalToken = $provider->getAccessToken();
 
-        $permissions = DB::table('permission_user')->where([['user_id', Auth::user()->id], ['status', PermissionUserStatus::INACTIVE]])->get();
-
-        $number = count($permissions);
-
         $response = $provider->createOrder([
             "intent" => "CAPTURE",
             "application_context" => [
-                "return_url" => route('successTransaction'),
+                "return_url" => $successUrl,
                 "cancel_url" => route('cancelTransaction'),
             ],
             "purchase_units" => [
                 0 => [
                     "amount" => [
                         "currency_code" => "USD",
-                        "value" => $number*10,
+                        "value" => $total,
                     ]
                 ]
             ]
         ]);
+
+        return $response;
+    }
+
+    public function processTransaction(Request $request)
+    {
+        $permissions = DB::table('permission_user')->where([['user_id', Auth::user()->id], ['status', PermissionUserStatus::INACTIVE]])->get();
+
+        $number = count($permissions);
+
+        $response = $this->paypalTotal($request, $number * 10, route('successTransaction'));
 
         if (isset($response['id']) && $response['id'] != null) {
             // redirect to approve href
@@ -81,12 +88,12 @@ class PaypalPaymentController extends Controller
 
         if (isset($response['status']) && $response['status'] == 'COMPLETED') {
             $timeTables = TimeLevelTable::where([['user_id', Auth::user()->id], ['status', TimeLevelStatus::INACTIVE]])->get();
-            for ($i = 0; $i<count($timeTables); $i++){
+            for ($i = 0; $i < count($timeTables); $i++) {
                 $this->changeStatusTimetable($timeTables[$i]->id);
             }
 
             $permissions = DB::table('permission_user')->where([['user_id', Auth::user()->id], ['status', PermissionUserStatus::INACTIVE]])->get();
-            for ($i = 0; $i<count($permissions); $i++){
+            for ($i = 0; $i < count($permissions); $i++) {
                 $this->changeStatusPermission($permissions[$i]->id);
             }
 
@@ -113,16 +120,18 @@ class PaypalPaymentController extends Controller
     public function cancelTransaction(Request $request)
     {
         return redirect()
-            ->route('profile.show')
+            ->route('home')
             ->with('error', $response['message'] ?? 'You have canceled the transaction.');
     }
 
-    private function changeStatusPermission($id){
+    private function changeStatusPermission($id)
+    {
         DB::table('permission_user')->where('id', $id)->update(['status' => PermissionUserStatus::ACTIVE]);;
     }
 
-    private function changeStatusTimetable($id){
+    private function changeStatusTimetable($id)
+    {
         $now = Carbon::now()->addHours(7);
-        DB::table('time_level_tables')->where('id', $id)->update(['status' => TimeLevelStatus::ACTIVE,'activation_date' => $now, 'expiration_date' => $now->addYear()]);;
+        DB::table('time_level_tables')->where('id', $id)->update(['status' => TimeLevelStatus::ACTIVE, 'activation_date' => $now, 'expiration_date' => $now->addYear()]);;
     }
 }
