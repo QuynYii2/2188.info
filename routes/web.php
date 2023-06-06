@@ -74,7 +74,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/my-notification/', [\App\Http\Controllers\Frontend\NotificationController::class, 'index'])->name('notification.show');
     Route::post('/all-notification/', [\App\Http\Controllers\Frontend\NotificationController::class, 'checkAll'])->name('notification.checkAll');
     Route::post('/delete-notification/{id}', [\App\Http\Controllers\Frontend\NotificationController::class, 'delete'])->name('notification.delete');
-
+    //
+    Route::get('/buy-coin/', [\App\Http\Controllers\CoinController::class, 'index'])->name('buy.coin.show');
 });
 
 
