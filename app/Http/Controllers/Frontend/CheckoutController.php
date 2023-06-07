@@ -3,16 +3,24 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Enums\CartStatus;
+use App\Enums\CoinStatus;
 use App\Enums\EvaluateProductStatus;
+use App\Enums\NotificationStatus;
 use App\Enums\OrderItemStatus;
+use App\Enums\OrderMethod;
 use App\Enums\OrderStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\PaypalPaymentController;
 use App\Models\Cart;
+use App\Models\Coin;
+use App\Models\Notification;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class CheckoutController extends Controller
 {
@@ -35,63 +43,180 @@ class CheckoutController extends Controller
         }
     }
 
-    public function store(Request $request)
+    private function realTotal()
     {
-        (new HomeController())->getLocale($request);
-        if (Auth::check()) {
-            $carts = Cart::where([
-                ['user_id', '=', Auth::user()->id],
-                ['status', '=', CartStatus::WAIT_ORDER]
-            ])->get();
-            $total = 0;
+        $carts = Cart::where([
+            ['user_id', '=', Auth::user()->id],
+            ['status', '=', CartStatus::WAIT_ORDER]
+        ])->get();
+        $realTotalPrice = 0;
 
-            foreach ($carts as $cart) {
-                $total = $total + ($cart->price * $cart->quantity);
-            }
+        foreach ($carts as $cart) {
+            $realTotalPrice = $realTotalPrice + ($cart->price * $cart->quantity);
+        }
 
-            $order = [
-                'user_id' => Auth::user()->id,
-                'fullname' => $request->input('fullname'),
-                'email' => $request->input('email'),
-                'phone' => $request->input('phone'),
-                'address' => $request->input('address'),
-                'orders_method' => $request->input('order_method'),
-                'total_price' => $total,
-                'shipping_price' => 1,
-                'discount_price' => 1,
-                'total' => $total,
-                'status' => OrderStatus::PROCESSING
+        return $realTotalPrice;
+    }
+
+    private function checkout(Request $request, $status, $orderMethod, $name, $email, $phone, $address)
+    {
+        $carts = Cart::where([
+            ['user_id', '=', Auth::user()->id],
+            ['status', '=', CartStatus::WAIT_ORDER]
+        ])->get();
+        $realTotalPrice = 0;
+
+        foreach ($carts as $cart) {
+            $realTotalPrice = $realTotalPrice + ($cart->price * $cart->quantity);
+        }
+
+        $order = [
+            'user_id' => Auth::user()->id,
+            'fullname' => $name,
+            'email' => $email,
+            'phone' => $phone,
+            'address' => $address,
+            'orders_method' => $orderMethod,
+            'total_price' => $realTotalPrice,
+            'shipping_price' => 1,
+            'discount_price' => 1,
+            'total' => $realTotalPrice,
+            'status' => $status
+        ];
+
+        Order::create($order);
+
+        $orders = Order::where([
+            ['user_id', '=', Auth::user()->id],
+            ['status', '=', $status]
+        ])->get();
+
+        $number = count($orders);
+
+        foreach ($carts as $cart) {
+            $item = [
+                'order_id' => $orders[$number - 1]->id,
+                'product_id' => $cart->product->id,
+                'quantity' => $cart->quantity,
+                'price' => $cart->product->price,
+                'status' => OrderItemStatus::ACTIVE
             ];
+            OrderItem::create($item);
+        }
 
-           Order::create($order);
+        foreach ($carts as $cart) {
+            $cart->status = CartStatus::ORDERED;
+            $cart->save();
+        }
 
-            $orders = Order::where([
-                ['user_id', '=', Auth::user()->id],
-                ['status', '=', OrderStatus::PROCESSING]
-            ])->get();
+        return $order;
+    }
 
-            $number = count($orders);
+    private function notifiCreate()
+    {
+        $noti = [
+            'user_id' => Auth::user()->id,
+            'content' => "Thanh toán đơn hàng thành công!",
+            'description' => 'Thanh toán thành công',
+            'status' => NotificationStatus::UNSEEN,
+        ];
 
-            foreach ($carts as $cart) {
-                $item = [
-                    'order_id' => $orders[$number-1]->id,
-                    'product_id' => $cart->product->id,
-                    'quantity' => $cart->quantity,
-                    'price' => $cart->product->price,
-                    'status' => OrderItemStatus::ACTIVE
-                ];
-                OrderItem::create($item);
+        Notification::create($noti);
+
+        return $noti;
+    }
+
+    public function checkoutByImme(Request $request)
+    {
+        $status = OrderStatus::WAIT_PAYMENT;
+        $name = $request->input('fullname');
+        $email = $request->input('email');
+        $phone = $request->input('phone');
+        $address = $request->input('address');
+        $this->checkout($request, $status, OrderMethod::IMMEDIATE, $name, $email, $phone, $address);
+        return redirect()->route('order.show');
+    }
+
+    public function checkoutByCoin(Request $request)
+    {
+        $status = OrderStatus::WAIT_PAYMENT;
+        $realTotalPrice = $this->realTotal();
+        $coin = Coin::where([['user_id', Auth::user()->id], ['status', CoinStatus::ACTIVE]])->first();
+        $realTotalPrice9 = $realTotalPrice * 9;
+        if ($coin != null) {
+            if ($coin->quantity >= $realTotalPrice9) {
+                $coin->quantity = $coin->quantity - $realTotalPrice9;
+                $coin->save();
+
+                $this->notifiCreate();
+
+                $status = OrderStatus::PROCESSING;
+
+                $name = $request->input('fullname');
+                $email = $request->input('email');
+                $phone = $request->input('phone');
+                $address = $request->input('address');
+                $order = $this->checkout($request, $status, OrderMethod::SHOPPING_MALL_COIN, $name, $email, $phone, $address);
+                return redirect()->route('order.show')->with('success', 'Transaction complete.');
+            }
+        }
+        return redirect()->route('checkout.show')->with('error', 'Checkout fail');
+    }
+
+    public function checkoutByPaypal(Request $request)
+    {
+        $name = $request->input('fullname');
+        $email = $request->input('email');
+        $phone = $request->input('phone');
+        $address = $request->input('address');
+        $realTotalPrice = $this->realTotal();
+        $response = (new PaypalPaymentController())->paypalTotal($request, $realTotalPrice, route('checkout.success.paypal', [
+            'name' => $name,
+            'email' => $email,
+            'phone' => $phone,
+            'address' => $address]));
+
+        if (isset($response['id']) && $response['id'] != null) {
+            // redirect to approve href
+            foreach ($response['links'] as $links) {
+                if ($links['rel'] == 'approve') {
+                    return redirect()->away($links['href']);
+                }
             }
 
-            foreach ($carts as $cart) {
-                $cart->status = CartStatus::ORDERED;
-                $cart->save();
-            }
-
-            return redirect()->route('home');
+            return redirect()
+                ->route('checkout.show')
+                ->with('error', 'Something went wrong.');
 
         } else {
-            return view('frontend/pages/login');
+            return redirect()
+                ->route('checkout.show')
+                ->with('error', $response['message'] ?? 'Something went wrong back');
+        }
+    }
+
+    public function checkoutSuccess(Request $request, $name, $email, $phone, $address)
+    {
+        $status = OrderStatus::WAIT_PAYMENT;
+        $provider = new PayPalClient;
+        $provider->setApiCredentials(config('paypal'));
+        $provider->getAccessToken();
+        $response = $provider->capturePaymentOrder($request['token']);
+
+        if (isset($response['status']) && $response['status'] == 'COMPLETED') {
+            $status = OrderStatus::PROCESSING;
+
+            $order = $this->checkout($request, $status, OrderMethod::ElectronicWallet, $name, $email, $phone, $address);
+
+            $this->notifiCreate();
+
+            return redirect()
+                ->route('order.show')
+                ->with('success', 'Transaction complete.');
+        } else {
+            return redirect()
+                ->route('checkout.show')
+                ->with('error', $response['message'] ?? 'Something went wrong.');
         }
     }
 }

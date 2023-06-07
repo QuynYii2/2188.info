@@ -140,7 +140,10 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/cart-clear', [\App\Http\Controllers\Frontend\CartController::class, 'clearCart'])->name('cart.clear');
     // Checkout Controller
     Route::get('/checkout', [\App\Http\Controllers\Frontend\CheckoutController::class, 'index'])->name('checkout.show');
-    Route::post('/checkout', [\App\Http\Controllers\Frontend\CheckoutController::class, 'store'])->name('checkout.create');
+    Route::get('/checkout-success/{name}/{email}/{phone}/{address}', [\App\Http\Controllers\Frontend\CheckoutController::class, 'checkoutSuccess'])->name('checkout.success.paypal');
+    Route::post('/checkout-imm', [\App\Http\Controllers\Frontend\CheckoutController::class, 'checkoutByImme'])->name('checkout.create.imm');
+    Route::post('/checkout-coin', [\App\Http\Controllers\Frontend\CheckoutController::class, 'checkoutByCoin'])->name('checkout.create.coin');
+    Route::post('/checkout-paypal', [\App\Http\Controllers\Frontend\CheckoutController::class, 'checkoutByPaypal'])->name('checkout.create.paypal');
     // Order Controller
     Route::get('/order-management/', [\App\Http\Controllers\Frontend\OrderController::class, 'index'])->name('order.show');
     Route::delete('/order-delete/{id}', [\App\Http\Controllers\Frontend\OrderController::class, 'cancel'])->name('order.cancel');
