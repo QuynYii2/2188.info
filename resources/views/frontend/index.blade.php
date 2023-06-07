@@ -149,7 +149,6 @@
     </style>
    <div class="" id="body-content">
        <!-- Hero Section Begin -->
-
        <section class="header_bottom">
            <div class="container-fluid" id="nav-header">
                <div class="row">

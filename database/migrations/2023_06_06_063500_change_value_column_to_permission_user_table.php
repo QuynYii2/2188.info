@@ -15,6 +15,7 @@ class ChangeValueColumnToPermissionUserTable extends Migration
     {
         Schema::table('permission_user', function (Blueprint $table) {
             $table->dateTime('created_at')->default(\Carbon\Carbon::now()->addHours(7));
+            $table->dateTime('updated_at')->nullable();
         });
     }
 
@@ -27,6 +28,7 @@ class ChangeValueColumnToPermissionUserTable extends Migration
     {
         Schema::table('permission_user', function (Blueprint $table) {
             $table->dropColumn('created_at');
+            $table->dropColumn('updated_at');
         });
     }
 }

@@ -25,6 +25,14 @@ Route::get('/', [\App\Http\Controllers\Frontend\HomeController::class, 'index'])
 Route::get('/login/', [\App\Http\Controllers\AuthController::class, 'showLogin'])->name('login');
 Route::get('/login/{locale}', [\App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('login.local');
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login.submit');
+//
+
+// Google Sign In
+Route::get('/login-google', [\App\Http\Controllers\AuthController::class, 'getGoogleSignInUrl'])->name('login.google');
+Route::post('/login-google', [\App\Http\Controllers\AuthController::class, 'getGoogleSignInUrl'])->name('login.google.post');
+Route::get('/callback', [\App\Http\Controllers\AuthController::class, 'loginCallback'])->name('login.google.callback');
+
+//
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
 Route::get('/register/', [\App\Http\Controllers\Frontend\HomeController::class, 'register'])->name('register.show');

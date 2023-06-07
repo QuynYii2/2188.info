@@ -323,7 +323,7 @@
                 @if (session('error'))
                     {{ session('error') }}
                 @endif
-                @if(session('login'))
+                @if(session('login') || Auth::user()!= null)
                     <div class="col-lg-3 col-md-3 text-right col-md-3 col-12">
                         <div class="col-md-12">
                             <div class="d-flex align-items-center">

@@ -28,7 +28,6 @@ class User extends Authenticatable
     }
 
 
-
     /**
      * The attributes that are mass assignable.
      *
@@ -46,6 +45,8 @@ class User extends Authenticatable
         //
         'level_account',
         'status',
+        'provider_name',
+        'provider_id'
     ];
 
     /**
@@ -54,8 +55,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'provider_name', 'provider_id', 'password', 'remember_token',
     ];
 
     /**
