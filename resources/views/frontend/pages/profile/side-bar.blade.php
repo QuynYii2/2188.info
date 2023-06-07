@@ -29,7 +29,7 @@
 
 
 </style>
-<div class="mt-5 pt-2 pl-3 bg-white d-flex desktop-button">
+<div class="mt-5 pt-2 pl-3 bg-white d-flex ">
     <div class="">
         <img class="img" src="{{$user->image}}" width="60" height="60" style="border-radius: 50%; " alt="">
         <div class="d-inline-block ml-3 ">

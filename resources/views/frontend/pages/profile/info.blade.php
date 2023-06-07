@@ -75,11 +75,6 @@
         <div class="border-bottom"></div>
         <div class="row mb-5">
             <div id="form-info" class="col-md-12 col-lg-6 border-bottom border-right">
-                <div class="p-3 py-3">
-                    <div class="d-flex align-items-center experience">
-                        <span>{{ __('home.personal information') }}</span>
-                    </div>
-                </div>
                 <form>
                     <div class="row align-items-center">
                         <div class="col-auto col-md-4">
@@ -437,7 +432,6 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/bootstrap-datepicker.js') }}"></script>
     <script>
 
         var yearSelect = document.getElementById('year');
