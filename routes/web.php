@@ -25,6 +25,14 @@ Route::get('/', [\App\Http\Controllers\Frontend\HomeController::class, 'index'])
 Route::get('/login/', [\App\Http\Controllers\AuthController::class, 'showLogin'])->name('login');
 Route::get('/login/{locale}', [\App\Http\Controllers\AuthController::class, 'showLoginForm'])->name('login.local');
 Route::post('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login.submit');
+//
+
+// Google Sign In
+Route::get('/login-google', [\App\Http\Controllers\AuthController::class, 'getGoogleSignInUrl'])->name('login.google');
+Route::post('/login-google', [\App\Http\Controllers\AuthController::class, 'getGoogleSignInUrl'])->name('login.google.post');
+Route::get('/callback', [\App\Http\Controllers\AuthController::class, 'loginCallback'])->name('login.google.callback');
+
+//
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
 Route::get('/register/', [\App\Http\Controllers\Frontend\HomeController::class, 'register'])->name('register.show');
@@ -140,7 +148,10 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/cart-clear', [\App\Http\Controllers\Frontend\CartController::class, 'clearCart'])->name('cart.clear');
     // Checkout Controller
     Route::get('/checkout', [\App\Http\Controllers\Frontend\CheckoutController::class, 'index'])->name('checkout.show');
-    Route::post('/checkout', [\App\Http\Controllers\Frontend\CheckoutController::class, 'store'])->name('checkout.create');
+    Route::get('/checkout-success/{name}/{email}/{phone}/{address}', [\App\Http\Controllers\Frontend\CheckoutController::class, 'checkoutSuccess'])->name('checkout.success.paypal');
+    Route::post('/checkout-imm', [\App\Http\Controllers\Frontend\CheckoutController::class, 'checkoutByImme'])->name('checkout.create.imm');
+    Route::post('/checkout-coin', [\App\Http\Controllers\Frontend\CheckoutController::class, 'checkoutByCoin'])->name('checkout.create.coin');
+    Route::post('/checkout-paypal', [\App\Http\Controllers\Frontend\CheckoutController::class, 'checkoutByPaypal'])->name('checkout.create.paypal');
     // Order Controller
     Route::get('/order-management/', [\App\Http\Controllers\Frontend\OrderController::class, 'index'])->name('order.show');
     Route::delete('/order-delete/{id}', [\App\Http\Controllers\Frontend\OrderController::class, 'cancel'])->name('order.cancel');

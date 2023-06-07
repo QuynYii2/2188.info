@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Enums\CartStatus;
+use App\Enums\NotificationStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use App\Libraries\GeoIP;
 use App\Models\Product;
@@ -62,7 +64,7 @@ class HomeController extends Controller
 
         $productByLocal5 = Product::all()->take(5);
 
-        return view('frontend/index',[
+        return view('frontend/index', [
             'productByLocal' => $productByLocal,
             'currency' => $currency,
             'countryCode' => $locale,
@@ -102,5 +104,30 @@ class HomeController extends Controller
             }
         }
         app()->setLocale($locale);
+    }
+
+    public function notifiCreate($id, $content, $desc)
+    {
+        $noti = [
+            'user_id' => $id,
+            'content' => $content,
+            'description' => $desc,
+            'status' => NotificationStatus::UNSEEN,
+        ];
+
+        Notification::create($noti);
+
+        return $noti;
+    }
+
+    public function generateRandomString($length)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }

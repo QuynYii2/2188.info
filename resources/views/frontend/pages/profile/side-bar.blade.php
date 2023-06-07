@@ -1,5 +1,14 @@
 @php use Illuminate\Support\Facades\Auth;
- $user = \App\Models\User::find(Auth::user()->id)
+ $user = \App\Models\User::find(Auth::user()->id);
+ $coinUser = \App\Models\Coin::where([
+      ['user_id', Auth::user()->id],
+      ['status', \App\Enums\CoinStatus::ACTIVE]]
+  )->first();
+  if ($coinUser == null){
+     $coin = 0;
+  } else {
+     $coin = $coinUser->quantity;
+  }
 @endphp
 <link rel="stylesheet" href="{{ mix('css/custom.css') }}">
 
@@ -35,6 +44,7 @@
         <div class="d-inline-block ml-3 ">
             <h6>{{ __('home.account of') }}</h6>
             <h4>{{$user->name}}</h4>
+            <h5>Coins: {{$coin}}</h5>
         </div>
     </div>
 </div>

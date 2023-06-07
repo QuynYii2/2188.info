@@ -323,7 +323,7 @@
                 @if (session('error'))
                     {{ session('error') }}
                 @endif
-                @if(session('login'))
+                @if(session('login') || Auth::user()!= null)
                     <div class="col-lg-3 col-md-3 text-right col-md-3 col-12">
                         <div class="col-md-12">
                             <div class="d-flex align-items-center">
@@ -392,7 +392,7 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <div class="dropdown ml-3">
+                                <div class="dropdown ml-3 text-nowrap">
                                     <h4 class="dropbtn text-center" aria-expanded="false">
                                         @if(Auth::user())
                                             {{ Auth::user()->name }}
@@ -406,7 +406,25 @@
 
                                     </div>
                                 </div>
-
+                                @php
+                                    $coinUser = \App\Models\Coin::where([['user_id', Auth::user()->id], ['status', \App\Enums\CoinStatus::ACTIVE]])->first();
+                                    if ($coinUser == null){
+                                        $coin = 0;
+                                    } else {
+                                       $coin = $coinUser->quantity;
+                                    }
+                                @endphp
+                                <div class="btn-group ml-3" role="group" aria-label="First group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text border-0 d-flex flex-column-reverse">
+                                            <span class="text-16 font-weight-700">{{$coin}}</span>
+                                            <span class="text-10">
+                                            Coins
+                                        </span>
+                                        </div>
+                                    </div>
+                                    <a href="{{route('buy.coin.show')}}" class="btn btn-warning rounded border-0 font-weight-500">Mua</a>
+                                </div>
                             </div>
                         </div>
                     </div>

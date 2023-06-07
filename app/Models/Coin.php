@@ -13,7 +13,7 @@ class Coin extends Model
         'id',
         'user_id',
         'quantity',
-        'price'.
+        'price',
         'status',
     ];
 }

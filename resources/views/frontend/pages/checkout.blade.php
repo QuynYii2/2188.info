@@ -19,7 +19,6 @@
         }
 
 
-
         #table-checkout th,
         #table-checkout tr,
         #table-checkout td {
@@ -46,7 +45,7 @@
             @else
                 <div class="row">
                     <div class="col-12">
-                        <form method="post" action="{{route('checkout.create')}}">
+                        <form id="checkout-form" method="post">
                             @csrf
                             <div class="col-11 m-auto">
                                 <h4>
@@ -86,7 +85,7 @@
                             </div>
                             <div class="col-11 m-auto">
                                 <div class="row mt-5">
-                                    <div class="col-12 col-md-12 col-xl-8">
+                                    <div class="col-12 col-md-12 col-xl-8" id="user-info">
                                         <h3>{{ __('home.Billing Address') }}</h3>
                                         <label for="fname">
                                             <i class="fa fa-user"></i>
@@ -97,18 +96,21 @@
                                         <label for="email"><i class="fa fa-envelope"></i>{{ __('home.email') }}</label>
                                         <input type="text" id="email" name="email" placeholder="john@example.com"
                                                value="{{$user->email}}">
-                                        <label for="adr"><i class="fa fa-address-card-o"></i>{{ __('home.phone number') }}</label>
+                                        <label for="adr"><i
+                                                    class="fa fa-address-card-o"></i>{{ __('home.phone number') }}
+                                        </label>
                                         <input type="text" id="phone" name="phone" placeholder="035985935"
                                                value="{{$user->phone}}">
-                                        <label for="city"><i class="fa fa-institution"></i> {{ __('home.address') }}</label>
+                                        <label for="city"><i class="fa fa-institution"></i> {{ __('home.address') }}
+                                        </label>
                                         <input type="radio" id="address-order1" name="address-order" checked>
                                         <span for="address-order1">{{ __('home.Use Default Address') }}</span><br>
                                         <input type="text" id="address1" name="address" placeholder="542 W. 15th Street"
                                                value="{{$user->address}}">
-                                        <input type="radio" id="address-order2" name="address-order" >
+                                        <input type="radio" id="address-order2" name="address-order" disabled>
                                         <span for="address-order2">{{ __('home.Use Different Address') }}</span><br>
                                         <input type="text" id="address2" name="address" placeholder="542 W. 15th Street"
-                                               value="" >
+                                               value="" disabled>
 
                                     </div>
 
@@ -140,17 +142,20 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 col-md-6 col-xl-7">
+                                    <div class="col-12 col-md-6 col-xl-7" id="choose-method-payment">
                                         <h4>{{ __('home.Payment Methods') }}</h4>
-                                        <input type="radio" name="order_method" checked
+                                        <input type="radio" name="order_method" id="order-by-immediate" checked
                                                value="{{\App\Enums\OrderMethod::IMMEDIATE}}"/><span
                                                 class="ml-1">{{ __(\App\Enums\OrderMethod::IMMEDIATE) }}</span><br>
-                                        <input type="radio" name="order_method"
+                                        <input type="radio" name="order_method" id="order-by-card"
                                                value="{{\App\Enums\OrderMethod::CardCredit}}"/><span
                                                 class="ml-1">{{ __(\App\Enums\OrderMethod::CardCredit) }}</span><br>
-                                        <input type="radio" name="order_method"
+                                        <input type="radio" name="order_method" id="order-by-e-wallet"
                                                 {{\App\Enums\OrderMethod::ElectronicWallet}}/>
-                                        <span class="ml-1">{{ __(\App\Enums\OrderMethod::ElectronicWallet) }}</span>
+                                        <span class="ml-1">{{ __(\App\Enums\OrderMethod::ElectronicWallet) }}</span><br>
+                                        <input type="radio" name="order_method" id="order-by-coin"
+                                                {{\App\Enums\OrderMethod::SHOPPING_MALL_COIN}}/>
+                                        <span class="ml-1">{{ __(\App\Enums\OrderMethod::SHOPPING_MALL_COIN) }}</span>
                                     </div>
 
                                     <div class="mt-4 col-12 col-md-6 col-xl-5" style="" id="space-price">
@@ -169,7 +174,7 @@
                                                     <input class="text-warning bg-white"
                                                            name="shipping_price"
                                                            style="border: none;" disabled
-                                                           id="shipping-price" value="566">
+                                                           id="shipping-price" value="1">
                                             </tr>
                                             <tr>
                                                 <td>{{ __('home.Discount') }}:</td>
@@ -200,6 +205,7 @@
             @endif
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
         function getAllTotal() {
             let totalMax = document.getElementById('max-total');
@@ -208,6 +214,7 @@
             let salePrice = document.getElementById('sale-price').value;
             let checkOutPrice = document.getElementById('checkout-price');
             var firstCells = document.querySelectorAll('#table-checkout td:nth-child(4)');
+            console.log(firstCells)
             var cellValues = [];
             firstCells.forEach(function (singleCell) {
                 cellValues.push(singleCell.innerText);
@@ -224,6 +231,38 @@
         }
 
         getAllTotal();
+
+        $(document).ready(function () {
+            if ($("#order-by-immediate").prop("checked")) {
+                $("#payment-info").addClass("d-none");
+                $('#checkout-form').attr('action', '{{route('checkout.create.imm')}}');
+            } else if ($("#order-by-card").is(":checked")) {
+                $("#payment-info").removeClass("d-none");
+                $('#checkout-form').attr('action', '{{route('checkout.create.imm')}}');
+            } else if ($("#order-by-e-wallet").is(":checked")) {
+                $("#payment-info").addClass("d-none");
+                $('#checkout-form').attr('action', '{{route('checkout.create.paypal')}}');
+            } else if ($("#order-by-coin").is(":checked")) {
+                $("#payment-info").addClass("d-none");
+                $('#checkout-form').attr('action', '{{route('checkout.create.coin')}}');
+            }
+        })
+
+        $("#choose-method-payment input").change(function () {
+            if ($("#order-by-immediate").prop("checked")) {
+                $("#payment-info").addClass("d-none");
+                $('#checkout-form').attr('action', '{{route('checkout.create.imm')}}');
+            } else if ($("#order-by-card").is(":checked")) {
+                $("#payment-info").removeClass("d-none");
+                $('#checkout-form').attr('action', '{{route('checkout.create.imm')}}');
+            } else if ($("#order-by-e-wallet").is(":checked")) {
+                $("#payment-info").addClass("d-none");
+                $('#checkout-form').attr('action', '{{route('checkout.create.paypal')}}');
+            } else if ($("#order-by-coin").is(":checked")) {
+                $("#payment-info").addClass("d-none");
+                $('#checkout-form').attr('action', '{{route('checkout.create.coin')}}');
+            }
+        });
 
     </script>
 @endsection

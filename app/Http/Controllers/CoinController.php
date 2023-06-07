@@ -77,13 +77,12 @@ class CoinController extends Controller
                     'status' => CoinStatus::ACTIVE,
                 ];
 
-                DB::table('coins')->insert($coin);
+//                DB::table('coins')->($coin);
+                Coin::create($coin);
             } else {
-                $price = $price + $oldCoin[0]->price;
-                $quantity = $quantity + $oldCoin[0]->quantity;
-                DB::table('coins')->where('user_id', Auth::user()->id)
-                    ->first()
-                    ->update(['quantity' => $quantity, 'price' => $price]);;
+                $price = $price + $oldCoin->price;
+                $quantity = $quantity + $oldCoin->quantity;
+                DB::table('coins')->where([['user_id', Auth::user()->id], ['status', CoinStatus::ACTIVE]])->update(['quantity' => $quantity, 'price' => $price]);;
             }
 
             $noti = [
