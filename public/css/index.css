@@ -44,7 +44,6 @@ p a {
 }
 
 .height-img {
-  width: 223px !important;
   height: 245px;
 }
 
@@ -64,7 +63,7 @@ p a {
   overflow: hidden;
   text-overflow: ellipsis;
 }
- 
+
 .height-side {
   height: 372px;
 }
