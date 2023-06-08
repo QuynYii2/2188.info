@@ -52,7 +52,7 @@
 
 @section('content')
     <div class="container pt-5">
-        <div id="header-carousel" class="carousel slide carousel-fade " data-ride="carousel">
+        <div id="header-carousel" class="carousel slide carousel-fade desktop-button" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#header-carousel" data-slide-to="0" class="active"></li>
                 <li data-target="#header-carousel" data-slide-to="1"></li>
@@ -74,7 +74,7 @@
             </div>
         </div>
 
-        <div class="bg-white mt-3">
+        <div class="bg-white mt-3 only-desktop">
             <h3 class="ml-3">{{ __('home.brands') }}</h3>
             <table class="table table-bordered ">
 
@@ -183,7 +183,7 @@
         </div>
 
 
-        <div class="container body-main">
+        <div class="container body-main mt-5" style="padding-left: 0; padding-right: 0">
             <div class="row">
                 <aside class="col-md-4">
 
@@ -367,7 +367,7 @@
 
                     <div class="row py-2">
                         @foreach($productByLocal9 as $product)
-                            <div class="col-md-4 rounded product-map">
+                            <div class="col-md-4 col-sm-6 col-12 rounded product-map">
                                 <div class="product-item bg-light rounded ">
                                     <div class="product-img position-relative overflow-hidden rounded">
                                         <img class=" height-img w-100 img" src="{{ $product->thumbnail }}" alt="">

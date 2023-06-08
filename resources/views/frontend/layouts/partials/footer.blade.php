@@ -2,7 +2,7 @@
 <footer class="footer-section">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-sm-6">
                 <div class="footer-left">
                     <div class="footer-logo">
                         <a href="#"><img class="img" src="{{asset('images/img/footer-logo.png')}}" alt=""></a>
@@ -20,7 +20,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 offset-lg-1">
+            <div class="col-lg-2 offset-lg-1 col-sm-6">
                 <div class="footer-widget">
                     <h5>Information</h5>
                     <ul>
@@ -31,7 +31,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-sm-6">
                 <div class="footer-widget">
                     <h5>My Account</h5>
                     <ul>
@@ -42,7 +42,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-sm-6">
                 <div class="newslatter-item">
                     <h5>Join Our Newsletter Now</h5>
                     <p>Get E-mail updates about our latest shop and special offers.</p>
@@ -57,7 +57,7 @@
     <div class="copyright-reserved">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-12 col-sm-12">
                     <div class="copyright-text">
                         <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" ></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>

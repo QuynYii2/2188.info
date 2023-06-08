@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="{{asset('css/vendor/jquery-ui.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/vendor/slicknav.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/mainV1.css')}}">
+    <link rel="stylesheet" href="{{asset('css/index.css')}}">
 
 </head>
 <div class="d-none">

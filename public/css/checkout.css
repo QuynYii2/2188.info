@@ -27,12 +27,16 @@
     padding: 0 16px;
 }
 
-input[type=text] {
+#check-out input[type=text] {
     width: 100%;
     margin-bottom: 20px;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 3px;
+}
+
+#check-out i {
+    margin-right: 4px;
 }
 
 label {
