@@ -909,7 +909,7 @@
             </div>
         </section>
 
-        <div class="container-fluid spad">
+        <div class="container-fluid mt-4">
             <div class="row">
                 <div class="col-lg-2 p-left p-side-tablet">
                     <div class="product-large set-bg m-large p-l-1"
@@ -924,12 +924,12 @@
                     </div>
                 </div>
                 <div class="col-lg-8">
-                    <div class="filter-control d-flex justify-content-between">
-                        <ul class="ml-5">
+                    <div class="d-flex justify-content-between mb-3">
+                        <ul>
                             <li><img class="img border" width="60px" height="40px"
                                      src="{{ asset('images/korea.png') }}" alt=""></li>
                         </ul>
-                        <ul class="mr-5">
+                        <ul>
                             <li><a class="link-read-more"
                                    href="{{route('product.index')}}">{{ __('home.read more') }}</a></li>
                         </ul>
@@ -997,7 +997,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid spad">
+        <div class="container-fluid mt-4">
             <div class="row">
                 <div class="col-lg-2 p-left p-side-tablet">
                     <div class="product-large set-bg m-large p-l-1"
@@ -1012,12 +1012,12 @@
                     </div>
                 </div>
                 <div class="col-lg-8">
-                    <div class="filter-control d-flex justify-content-between">
-                        <ul class="ml-5">
+                    <div class="d-flex justify-content-between mb-3">
+                        <ul>
                             <li><img class="img border" width="60px" height="40px"
                                      src="{{ asset('images/japan.webp') }}" alt=""></li>
                         </ul>
-                        <ul class="mr-5">
+                        <ul>
                             <li><a class="link-read-more"
                                    href="{{route('product.index')}}">{{ __('home.read more') }}</a></li>
                         </ul>
@@ -1086,7 +1086,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid spad">
+        <div class="container-fluid mt-4">
             <div class="row">
                 <div class="col-lg-2 p-left p-side-tablet">
                     <div class="product-large set-bg m-large p-l-1"
@@ -1101,12 +1101,12 @@
                     </div>
                 </div>
                 <div class="col-lg-8">
-                    <div class="filter-control d-flex justify-content-between">
-                        <ul class="ml-5">
+                    <div class="d-flex justify-content-between mb-3">
+                        <ul>
                             <li><img class="img" width="60px" height="40px" src="{{ asset('images/china.webp') }}"
                                      alt=""></li>
                         </ul>
-                        <ul class="mr-5">
+                        <ul>
                             <li><a class="link-read-more"
                                    href="{{route('product.index')}}">{{ __('home.read more') }}</a></li>
                         </ul>
@@ -1174,7 +1174,7 @@
             </div>
         </div>
 
-        <section class="latest-blog spad">
+        <section class=" mt-4">
             <div class="col-sm-12">
                 <div class="row">
                     <div class="col-lg-12">
@@ -1251,45 +1251,47 @@
                         </div>
                     </div>
                 </div>
-                <div class="benefit-items">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="single-benefit">
-                                <div class="sb-icon">
-                                    <img class="img" src="{{asset('images/img/icon-1.png')}}" alt="">
-                                </div>
-                                <div class="sb-text">
-                                    <h6>Free Shipping</h6>
-                                    <p>For all order over 99$</p>
-                                </div>
+            </div>
+        </section>
+        <div class="container-fluid latest-blog">
+            <div class="col-12 col-sm-12 benefit-items">
+                <div class="row ">
+                    <div class="col-12 col-sm-4 border-right">
+                        <div class="single-benefit">
+                            <div class="sb-icon">
+                                <img class="img" src="{{asset('images/img/icon-1.png')}}" alt="">
+                            </div>
+                            <div class="sb-text">
+                                <h6>Free Shipping</h6>
+                                <p>For all order over 99$</p>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="single-benefit">
-                                <div class="sb-icon">
-                                    <img class="img" src="{{asset('images/img/icon-2.png')}}" alt="">
-                                </div>
-                                <div class="sb-text">
-                                    <h6>Delivery On Time</h6>
-                                    <p>If good have prolems</p>
-                                </div>
+                    </div>
+                    <div class="col-12 col-sm-4 border-right">
+                        <div class="single-benefit">
+                            <div class="sb-icon">
+                                <img class="img" src="{{asset('images/img/icon-2.png')}}" alt="">
+                            </div>
+                            <div class="sb-text">
+                                <h6>Delivery On Time</h6>
+                                <p>If good have prolems</p>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="single-benefit">
-                                <div class="sb-icon">
-                                    <img class="img" src="{{asset('images/img/icon-3.png')}}" alt="">
-                                </div>
-                                <div class="sb-text">
-                                    <h6>Secure Payment</h6>
-                                    <p>100% secure payment</p>
-                                </div>
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <div class="single-benefit">
+                            <div class="sb-icon">
+                                <img class="img" src="{{asset('images/img/icon-3.png')}}" alt="">
+                            </div>
+                            <div class="sb-text">
+                                <h6>Secure Payment</h6>
+                                <p>100% secure payment</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 
     <script>

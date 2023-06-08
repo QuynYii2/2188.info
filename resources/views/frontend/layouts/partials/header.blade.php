@@ -335,9 +335,8 @@
                     </div>
                 </div>
             </div>
-            <div class="mobile-button">
-                <div class="">
-                    <div class="btn-group m-2 ">
+            <div class="mobile-button m-2">
+                    <div class="btn-group">
                         <button type="button" class="btn btn-warning mr-2 full-width text-nowrap" data-toggle="modal"
                                 data-target="#chooseLanguageOrder"
                                 aria-expanded="false">
@@ -350,12 +349,11 @@
                                                          href="{{route('login')}}">{{ __('home.purchase') }}</a>
                         </button>
                     </div>
-                </div>
             </div>
         </div>
-        <div class="ht-right m-2" style="margin: auto; margin-right: 0">
+        <div class="ht-right" style="margin: auto; margin-right: 0">
             <div class="lan-selector">
-                <select class="language_drop" name="countries" id="countries" style="width: 100%"
+                <select class="language_drop" name="countries" id="countries" style="width: 100%; padding-right: 15px"
                         onchange="location = this.value;">
                     @if(session('locale') == 'vi' || session('locale') == null)
                         <option class="img" value='{{ route('language', ['locale' => 'vi']) }}'
@@ -475,7 +473,7 @@
                     <div class="col-lg-3 col-md-3 text-right col-md-4 col-12 col-sm-4">
                         <div class="col-md-12">
                             <div class="d-flex align-items-center">
-                                <ul class="nav-right">
+                                <ul class="nav-right mb-0" >
                                     @php
                                         $cartViews = \App\Models\Cart::where([
                                                 ['user_id', '=', Auth::user()->id],
@@ -542,7 +540,7 @@
                                     </li>
                                 </ul>
                                 <div class="dropdown ml-3">
-                                    <h4 class="dropbtn text-center" aria-expanded="false">
+                                    <h4 class="dropbtn text-center" style="margin-bottom: 0;" aria-expanded="false">
                                         @if(Auth::user())
                                             {{ Auth::user()->name }}
                                         @endif
@@ -558,7 +556,6 @@
                                                    href="#">{{ __('home.log out') }}</a>
                                             </li>
                                         </ul>
-
                                     </div>
                                 </div>
 
@@ -597,7 +594,7 @@
                 @if(session('login'))
                     <div class="col-lg-3 col-md-3 text-right col-md-4 col-7 mt-2">
                         <div class="d-flex align-items-center">
-                            <ul class="nav-right">
+                            <ul class="nav-right mb-0">
                                 @php
                                     $cartViews = \App\Models\Cart::where([
                                             ['user_id', '=', Auth::user()->id],
@@ -663,14 +660,14 @@
                                     </div>
                                 </li>
                             </ul>
-                            <div class="dropdown ml-3">
-                                <h4 class="dropbtn text-center text-limit" aria-expanded="false">
+                            <div class="dropdown ml-3 ">
+                                <h4 class="dropbtn text-center" style="margin-bottom: 0;" aria-expanded="false">
                                     @if(Auth::user())
                                         {{ Auth::user()->name }}
                                     @endif
                                 </h4>
-                                <div class="dropdown-content text-left">
-                                    <ul>
+                                <div class="dropdown-content text-left pt-0 mt-2" style="margin-left: -35px">
+                                    <ul class="mb-0">
                                         <li>
                                             <a class="dropdown-item"
                                                href="{{route('profile.show')}}">{{ __('home.profile') }}</a>
@@ -680,7 +677,6 @@
                                                href="#">{{ __('home.log out') }}</a>
                                         </li>
                                     </ul>
-
                                 </div>
                             </div>
                         </div>

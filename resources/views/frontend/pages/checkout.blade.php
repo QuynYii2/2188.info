@@ -19,7 +19,6 @@
         }
 
 
-
         #table-checkout th,
         #table-checkout tr,
         #table-checkout td {
@@ -36,7 +35,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('css/checkout.css') }}">
     <div class="container-fluid mt-5">
-        <div class="card" style="border: none">
+        <div class="card" id="check-out" style="border: none">
             <h2 class="mt-3 mb-3 text-center">{{ __('home.order') }}</h2>
             @if($carts->isEmpty())
                 <div>
@@ -89,26 +88,28 @@
                                     <div class="col-12 col-md-12 col-xl-8">
                                         <h3>{{ __('home.Billing Address') }}</h3>
                                         <label for="fname">
-                                            <i class="fa fa-user"></i>
-                                            {{ __('home.full name') }}
+                                            <i class="fa fa-user"></i>{{ __('home.full name') }}
                                         </label>
                                         <input type="text" id="fname" name="fullname" placeholder="John M. Doe"
                                                value="{{$user->name}}">
                                         <label for="email"><i class="fa fa-envelope"></i>{{ __('home.email') }}</label>
                                         <input type="text" id="email" name="email" placeholder="john@example.com"
                                                value="{{$user->email}}">
-                                        <label for="adr"><i class="fa fa-address-card-o"></i>{{ __('home.phone number') }}</label>
+                                        <label for="adr"><i
+                                                    class="fa fa-address-card-o"></i>{{ __('home.phone number') }}
+                                        </label>
                                         <input type="text" id="phone" name="phone" placeholder="035985935"
                                                value="{{$user->phone}}">
-                                        <label for="city"><i class="fa fa-institution"></i> {{ __('home.address') }}</label>
+                                        <label for="city"><i class="fa fa-institution"></i>{{ __('home.address') }}
+                                        </label>
                                         <input type="radio" id="address-order1" name="address-order" checked>
                                         <span for="address-order1">{{ __('home.Use Default Address') }}</span><br>
                                         <input type="text" id="address1" name="address" placeholder="542 W. 15th Street"
                                                value="{{$user->address}}">
-                                        <input type="radio" id="address-order2" name="address-order" >
+                                        <input type="radio" id="address-order2" name="address-order">
                                         <span for="address-order2">{{ __('home.Use Different Address') }}</span><br>
                                         <input type="text" id="address2" name="address" placeholder="542 W. 15th Street"
-                                               value="" >
+                                               value="">
 
                                     </div>
 
@@ -158,40 +159,33 @@
                                             <tr>
                                                 <td>{{ __('home.Total Product Cost') }}:</td>
                                                 <td><span class="text-warning bg-white">$</span>
-                                                    <input class="text-warning bg-white"
-                                                           name="total_price"
-                                                           style="border: none;" disabled
-                                                           id="total-price" value="0"></td>
+                                                    <span class="text-warning bg-white" id="total-price"
+                                                          name="total_price">0</span>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>{{ __('home.Shipping Fee') }}:</td>
                                                 <td><span class="text-warning bg-white">$</span>
-                                                    <input class="text-warning bg-white"
-                                                           name="shipping_price"
-                                                           style="border: none;" disabled
-                                                           id="shipping-price" value="566">
+                                                    <span class="text-warning bg-white" id="shipping-price"
+                                                          name="shipping_price">0</span>
                                             </tr>
                                             <tr>
                                                 <td>{{ __('home.Discount') }}:</td>
                                                 <td><span class="text-warning bg-white">$</span>
-                                                    <input class="text-warning bg-white"
-                                                           name="discount_price"
-                                                           style="border: none;" disabled
-                                                           id="sale-price" value="1">
+                                                    <span class="text-warning bg-white" id="sale-price"
+                                                          name="discount_price">0</span>
                                             </tr>
                                             <tr>
                                                 <td>{{ __('home.Total Payment') }}:</td>
                                                 <td><span class="text-danger bg-white">$</span>
-                                                    <input class="text-danger bg-white"
-                                                           name="total"
-                                                           style="border: none; " disabled
-                                                           id="checkout-price">
+                                                    <span class="text-danger bg-white" id="checkout-price" name="total">0</span>
                                             </tr>
                                         </table>
                                     </div>
 
                                 </div>
-                                <button type="submit" class=" mt-3 mb-3 btn btn-danger">{{ __('home.Pay Now') }}</button>
+                                <button type="submit"
+                                        class=" mt-3 mb-3 btn btn-danger">{{ __('home.Pay Now') }}</button>
 
                             </div>
                         </form>
@@ -217,7 +211,7 @@
                 total = parseFloat(total) + parseFloat(cellValues[i]);
             }
             totalMax.innerText = total;
-            totalPrice.value = total;
+            totalPrice.innerHTML = total;
 
             checkOutPrice.value = parseFloat(total) + parseFloat(shippingPrice) - parseFloat(salePrice);
 

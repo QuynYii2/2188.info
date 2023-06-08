@@ -667,7 +667,9 @@ ol {
 }
 
 .tabs-product-detail{
-	background-color: #fff;!important;
+	/*background-color: #fff;!important;*/
+	text-align: center;
+	padding: 0;
 }
 
 .tabs-product-detail:hover{
@@ -675,7 +677,6 @@ ol {
 }
 
 .nav-item {
-	background: #252525;
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -1420,8 +1421,7 @@ ol {
 -----------------------*/
 
 .latest-blog {
-	padding-top: 72px;
-	padding-bottom: 80px;
+	padding-bottom: 40px;
 }
 
 .latest-blog .section-title {
@@ -1468,15 +1468,12 @@ ol {
 
 .benefit-items {
 	border: 1px solid #ebebeb;
-	margin-top: 45px;
 }
 
 .benefit-items .single-benefit {
 	padding-top: 30px;
 	padding-bottom: 25px;
-	padding-left: 55px;
-	padding-right: 55px;
-	border-right: 1px solid #F3F4F0;
+	/*border-right: 1px solid #F3F4F0;*/
 }
 
 .benefit-items .single-benefit .sb-icon {
@@ -4210,7 +4207,7 @@ ol {
 		color: #fff;
 	}
 	.inner-header .nav-right li.cart-icon .cart-hover {
-		left: -140px;
+		left: -125px;
 	}
 	.product-show-option p {
 		text-align: left;
