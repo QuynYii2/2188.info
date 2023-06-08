@@ -102,6 +102,11 @@ class AuthController extends Controller
             $locale = $geoIp->get_country_from_ip('183.80.130.4');
 
             $googleUser = Socialite::driver('google')->stateless()->user();
+
+            if ($googleUser->getEmail() == null || $googleUser->getName() == null) {
+                return redirect()->route('login')->with('error', 'Error');
+            }
+
             $existingUser = User::where('email', $googleUser->email)->first();
 
             $password = (new HomeController())->generateRandomString(8);

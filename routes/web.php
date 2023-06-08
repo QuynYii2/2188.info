@@ -35,8 +35,10 @@ Route::get('/callback', [\App\Http\Controllers\AuthController::class, 'loginCall
 Route::get('/login-facebook', [\App\Http\Controllers\SocialController::class, 'getFacebookSignInUrl'])->name('login.facebook');
 Route::post('/login-facebook', [\App\Http\Controllers\SocialController::class, 'getFacebookSignInUrl'])->name('login.facebook.post');
 Route::get('/callback/facebook', [\App\Http\Controllers\SocialController::class, 'callback'])->name('login.facebook.callback');
-
-
+// Kakao sign in
+Route::get('/login-kakaotalk', [\App\Http\Controllers\SocialController::class, 'getKakaoSignUrl'])->name('login.kakaotalk');
+Route::post('/login-kakaotalk', [\App\Http\Controllers\SocialController::class, 'getFacebookSignInUrl'])->name('login.kakaotalk.post');
+Route::get('/callback/kakaotalk', [\App\Http\Controllers\SocialController::class, 'callbackKakaotalk'])->name('login.kakaotalk.callback');
 //
 Route::post('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 
