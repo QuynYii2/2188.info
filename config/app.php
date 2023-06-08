@@ -178,8 +178,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         BenSampo\Enum\EnumServiceProvider::class,
         Srmklive\PayPal\Providers\PayPalServiceProvider::class,
-        Laravel\Socialite\SocialiteServiceProvider::class,
-
+//        Laravel\Socialite\SocialiteServiceProvider::class,
+        SocialiteProviders\Manager\ServiceProvider::class,
 
     ],
 
