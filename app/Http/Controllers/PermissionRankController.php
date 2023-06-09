@@ -69,7 +69,6 @@ class PermissionRankController extends Controller
 
         $permissionUsers = DB::table('permission_user')->orderByDesc('id')->limit(1)->get();
 
-
         $user = User::find(Auth::user()->id);
 
         /*
