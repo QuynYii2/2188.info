@@ -124,7 +124,7 @@ class AuthController extends Controller
                 $newUser->address = "null";
                 $newUser->region = $locale;
                 $newUser->password = $passwordHash;
-                $newUser->type_account = "null";
+                $newUser->type_account = "buyer";
                 $newUser->email_verified_at = now();
                 $newUser->image = $googleUser->getAvatar();
 
