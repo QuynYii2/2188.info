@@ -1474,6 +1474,8 @@ ol {
 	padding-top: 30px;
 	padding-bottom: 25px;
 	/*border-right: 1px solid #F3F4F0;*/
+	display: flex;
+	justify-content: center;
 }
 
 .benefit-items .single-benefit .sb-icon {
@@ -1482,7 +1484,7 @@ ol {
 }
 
 .benefit-items .single-benefit .sb-text {
-	display: table;
+	/*display: table;*/
 }
 
 .benefit-items .single-benefit .sb-text h6 {

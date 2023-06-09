@@ -13,6 +13,10 @@
             height: 20px;
         }
 
+        .avatar-upload img {
+            max-width: none;
+        }
+
         @media (max-width: 991px) {
             .border-right {
                 border-right: none !important;

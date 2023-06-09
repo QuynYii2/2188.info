@@ -3,6 +3,119 @@
 @section('title', 'Category')
 
 <style>
+    /*
+ * Developer: Alireza Eskandarpour Shoferi
+ * Designer: Nevide (codecanyon.net/user/Nevide)
+ *
+ * Distributed under the terms of the MIT license
+ * https://opensource.org/licenses/MIT
+ */
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+    }
+    a {
+        color: #646464;
+        text-decoration: none;
+    }
+    body {
+        background-color: #64D7E2;
+        font-family: "Source Sans Pro", sans-serif;
+    }
+    .wrapper {
+        width: 100%;
+        background-color: #fff;
+        font-size: 0.875em;
+    }
+    .items {
+        padding: 18px 0;
+    }
+    .items > li > a {
+        display: block;
+        margin: 0 auto;
+        text-indent: 18px;
+        line-height: 39px;
+    }
+    .items > li > a::after {
+        position: absolute;
+        right: 30px;
+        margin-top: 2px;
+        font-family: "FontAwesome";
+    }
+    .items > li > a::after {
+        right: 30px;
+        content: "\f061";
+    }
+    .items > li:not(:has(ul)) > a::after,
+    .items > li:not(:has(ul)) > a.expanded::after
+    {
+        content: none;
+    }
+    .itemHover {
+        color: #fff;
+        font-weight: 600;
+        transition: background-color 0.4s ease-in-out;
+    }
+    .items > li > a:hover {
+        background-color: #8EE8F1;
+        color: #fff;
+        font-weight: 600;
+        transition: background-color 0.4s ease-in-out;
+    }
+    .items > li > a.expanded {
+        background-color: #64D7E2;
+        color: #fff;
+        font-weight: 600;
+        transition: background-color 0.4s ease-in-out;
+    }
+    .items > li > a.expanded::after {
+        content: "\f063";
+    }
+    .sub-items > li:first-child > a {
+        margin-top: 17px;
+        height: 34px;
+    }
+    .sub-items > li:last-child > a {
+        margin-bottom: 17px;
+        height: 34px;
+    }
+    .sub-items a {
+        position: relative;
+        display: block;
+        margin: 0 auto;
+        width: 212px;
+        text-indent: 24px;
+        line-height: 39px;
+    }
+    .sub-items label {
+        position: relative;
+        display: block;
+        margin: 0 1rem;
+        width: 85%;
+        text-indent: 24px;
+        line-height: 39px;
+    }
+    .sub-items a {
+        border-left: 2px solid #64D7E2;
+    }
+    .sub-items .current {
+        position: relative;
+        color: #64D7E2;
+        border-color: white;
+    }
+    .sub-items > li:hover > a {
+        color: #64D7E2;
+        transition: color 0.4s ease-in-out;
+    }
+    .sub-items {
+        display: none;
+    }
+
+
+
+
+
     .tabs-product-detail{
         background-color: #fff;!important;
     }
@@ -48,6 +161,21 @@
     @media only screen and (max-width: 365px) {
 
     }
+
+
+
+    .sub-items input[type=checkbox] { display:none; } /* to hide the checkbox itself */
+    .sub-items input[type=checkbox] + label:before {
+        font-family: FontAwesome;
+        display: inline-block;
+    }
+
+    .sub-items input[type=checkbox] + label:before { content: "\f096"; } /* unchecked icon */
+    .sub-items input[type=checkbox] + label:before { letter-spacing: 10px; } /* space between checkbox and label */
+
+    .sub-items input[type=checkbox]:checked + label:before { content: "\f046"; } /* checked icon */
+    .sub-items input[type=checkbox]:checked + label:before { letter-spacing: 5px; } /* allow space for check mark */
+
 </style>
 
 @section('content')
@@ -187,169 +315,114 @@
             <div class="row">
                 <aside class="col-md-4">
 
-                    <div class="card  mb-5">
-                        <article class="filter-group">
-                            <header class="card-header">
-                                <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true"
-                                   class="toggle-link">
-                                    <i class="icon-control fa fa-chevron-down"></i>
-                                    <span class="title title-search">{{ __('home.product type') }}</span>
-                                </a>
-                            </header>
-                            <div class="filter-content collapse show" id="collapse_1" style="">
-                                <div class="card-body">
-                                    <form class="pb-3">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="{{ __('home.search') }}">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-light" type="button"><i class="fa fa-search"></i>
-                                                </button>
+                    <div class="card mb-5">
+                        <div class='wrapper'>
+                            <ul class='items'>
+                                <li>
+                                    <a href='#'>{{ __('home.product type') }}</a>
+
+                                    <ul class='sub-items'>
+                                        <form class="p-3">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" placeholder="{{ __('home.search') }}">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-light" type="button"><i class="fa fa-search"></i>
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </form>
-
-                                    <ul class="list-menu">
-                                        <li><a href="#">{{ __('home.people') }}</a></li>
-                                        <li><a href="#">{{ __('home.watches') }}</a></li>
-                                        <li><a href="#">{{ __('home.cinema') }}</a></li>
-                                        <li><a href="#">{{ __('home.clothes') }}</a></li>
-                                        <li><a href="#">{{ __('home.home items') }}</a></li>
-                                        <li><a href="#">{{ __('home.animals') }}</a></li>
+                                        </form>
+                                        <li>
+                                            <input id="box21" type="checkbox" />
+                                            <label for="box21">{{ __('home.people') }}</label>
+                                        </li>
+                                        <li>
+                                            <input id="box22" type="checkbox" />
+                                            <label for="box22">{{ __('home.watches') }}</label>
+                                        </li>
+                                        <li>
+                                            <input id="box23" type="checkbox" />
+                                            <label for="box23">{{ __('home.cinema') }}</label>
+                                        </li>
+                                        <li>
+                                            <input id="box24" type="checkbox" />
+                                            <label for="box24">{{ __('home.clothes') }}</label>
+                                        </li>
+                                        <li>
+                                            <input id="box25" type="checkbox" />
+                                            <label for="box25">{{ __('home.home items') }}</label>
+                                        </li>
                                     </ul>
+                                </li>
+                                <li>
+                                    <a href='#'>{{ __('home.brands') }}</a>
+                                    <ul class='sub-items'>
+                                        <li>
+                                            <input id="box1" type="checkbox" />
+                                            <label for="box1">Mercedes</label>
+                                        </li>
+                                        <li>
+                                            <input id="box2" type="checkbox" />
+                                            <label for="box2">Toyota</label>
+                                        </li>
+                                        <li>
+                                            <input id="box3" type="checkbox" />
+                                            <label for="box3">Mitsubishi</label>
+                                        </li>
+                                        <li>
+                                            <input id="box4" type="checkbox" />
+                                            <label for="box4">Honda</label>
+                                        </li>
+                                        <li>
+                                            <input id="box5" type="checkbox" />
+                                            <label for="box5">Nissan</label>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href='#'>{{ __('home.price range') }}</a>
+                                    <ul class='sub-items'>
+                                        <li class="px-3">
+                                            <input type="range" class="custom-range" min="0" max="100" name="">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label>{{ __('home.min') }}</label>
+                                                    <input class="form-control" placeholder="$0" type="number">
+                                                </div>
+                                                <div class="form-group text-right col-md-6">
+                                                    <label>{{ __('home.max') }}</label>
+                                                    <input class="form-control" placeholder="$1,0000" type="number">
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href='#'>{{ __('home.size') }}</a>
+                                    <ul class='sub-items'>
+                                        <li>
+                                            <input id="box10" type="checkbox" />
+                                            <label for="box10">XS</label>
+                                        </li>
+                                        <li>
+                                            <input id="box11" type="checkbox" />
+                                            <label for="box11">SM</label>
+                                        </li>
+                                        <li>
+                                            <input id="box12" type="checkbox" />
+                                            <label for="box12">LG</label>
+                                        </li>
+                                        <li>
+                                            <input id="box13" type="checkbox" />
+                                            <label for="box13">XXL</label>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
 
-                                </div> <!-- card-body.// -->
-                            </div>
-                        </article> <!-- filter-group  .// -->
-                        <article class="filter-group">
-                            <header class="card-header">
-                                <a href="#" data-toggle="collapse" data-target="#collapse_2" aria-expanded="true"
-                                   class="toggle-link">
-                                    <i class="icon-control fa fa-chevron-down"></i>
-                                    <span class="title title-search">{{ __('home.brands') }}</span>
-                                </a>
-                            </header>
-                            <div class="filter-content collapse show" id="collapse_2" style="">
-                                <div class="card-body">
-                                    <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" checked="" class="custom-control-input">
-                                        <div class="custom-control-label">Mercedes
-                                            <b class="badge badge-pill badge-light float-right">120</b></div>
-                                    </label>
-                                    <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" checked="" class="custom-control-input">
-                                        <div class="custom-control-label">Toyota
-                                            <b class="badge badge-pill badge-light float-right">15</b></div>
-                                    </label>
-                                    <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" checked="" class="custom-control-input">
-                                        <div class="custom-control-label">Mitsubishi
-                                            <b class="badge badge-pill badge-light float-right">35</b></div>
-                                    </label>
-                                    <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" checked="" class="custom-control-input">
-                                        <div class="custom-control-label">Nissan
-                                            <b class="badge badge-pill badge-light float-right">89</b></div>
-                                    </label>
-                                    <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input">
-                                        <div class="custom-control-label">Honda
-                                            <b class="badge badge-pill badge-light float-right">30</b></div>
-                                    </label>
-                                </div> <!-- card-body.// -->
-                            </div>
-                        </article> <!-- filter-group .// -->
-                        <article class="filter-group">
-                            <header class="card-header">
-                                <a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true"
-                                   class="toggle-link">
-                                    <i class="icon-control fa fa-chevron-down"></i>
-                                    <span class="title title-search">{{ __('home.price range') }}</span>
-                                </a>
-                            </header>
-                            <div class="filter-content collapse show" id="collapse_3" style="">
-                                <div class="card-body">
-                                    <input type="range" class="custom-range" min="0" max="100" name="">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label>{{ __('home.min') }}</label>
-                                            <input class="form-control" placeholder="$0" type="number">
-                                        </div>
-                                        <div class="form-group text-right col-md-6">
-                                            <label>{{ __('home.max') }}</label>
-                                            <input class="form-control" placeholder="$1,0000" type="number">
-                                        </div>
-                                    </div> <!-- form-row.// -->
-                                    <button class="btn btn-block btn-primary">{{ __('home.apply') }}</button>
-                                </div><!-- card-body.// -->
-                            </div>
-                        </article> <!-- filter-group .// -->
-                        <article class="filter-group">
-                            <header class="card-header">
-                                <a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true"
-                                   class="toggle-link">
-                                    <i class="icon-control fa fa-chevron-down"></i>
-                                    <span class="title title-search">{{ __('home.size') }}</span>
-                                </a>
-                            </header>
-                            <div class="filter-content collapse show" id="collapse_4" style="">
-                                <div class="card-body">
-                                    <label class="checkbox-btn">
-                                        <input type="checkbox">
-                                        <span class="btn btn-light"> XS </span>
-                                    </label>
-
-                                    <label class="checkbox-btn">
-                                        <input type="checkbox">
-                                        <span class="btn btn-light"> SM </span>
-                                    </label>
-
-                                    <label class="checkbox-btn">
-                                        <input type="checkbox">
-                                        <span class="btn btn-light"> LG </span>
-                                    </label>
-
-                                    <label class="checkbox-btn">
-                                        <input type="checkbox">
-                                        <span class="btn btn-light"> XXL </span>
-                                    </label>
-                                </div><!-- card-body.// -->
-                            </div>
-                        </article> <!-- filter-group .// -->
-                        <article class="filter-group">
-                            <header class="card-header">
-                                <a href="#" data-toggle="collapse" data-target="#collapse_5" aria-expanded="false"
-                                   class="">
-                                    <i class="icon-control fa fa-chevron-down"></i>
-                                    <span class="title title-search">{{ __('home.more filter') }}</span>
-                                </a>
-                            </header>
-                            <div class="filter-content collapse in" id="collapse_5" style="">
-                                <div class="card-body">
-                                    <label class="custom-control custom-radio">
-                                        <input type="radio" name="myfilter_radio" checked=""
-                                               class="custom-control-input">
-                                        <div class="custom-control-label">{{ __('home.any condition') }}</div>
-                                    </label>
-
-                                    <label class="custom-control custom-radio">
-                                        <input type="radio" name="myfilter_radio" class="custom-control-input">
-                                        <div class="custom-control-label">{{ __('home.brand new') }}</div>
-                                    </label>
-
-                                    <label class="custom-control custom-radio">
-                                        <input type="radio" name="myfilter_radio" class="custom-control-input">
-                                        <div class="custom-control-label">{{ __('home.used items') }}</div>
-                                    </label>
-
-                                    <label class="custom-control custom-radio">
-                                        <input type="radio" name="myfilter_radio" class="custom-control-input">
-                                        <div class="custom-control-label">{{ __('home.very old') }}</div>
-                                    </label>
-                                </div><!-- card-body.// -->
-                            </div>
-                        </article> <!-- filter-group .// -->
                     </div>
-
+                    
+                    
                 </aside>
                 <main class="col-md-8">
 
@@ -397,6 +470,7 @@
         </div>
 
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function responsiveTable(y) {
             let tabs = document.getElementsByClassName('product-map');
@@ -430,5 +504,25 @@
         var x = window.matchMedia("(max-width: 767px)")
         myFunciton(x);
         x.addListener(myFunciton)
+
+
+
+        $(".items > li > a").click(function(e) {
+            e.preventDefault();
+            var $this = $(this);
+            if ($this.hasClass("expanded")) {
+                $this.removeClass("expanded");
+            } else {
+                $(".items a.expanded").removeClass("expanded");
+                $this.addClass("expanded");
+                $(".sub-items").filter(":visible").slideUp("normal");
+            }
+            $this.parent().children("ul").stop(true, true).slideToggle("normal");
+        });
+
+        $(".sub-items a").click(function() {
+            $(".sub-items a").removeClass("current");
+            $(this).addClass("current");
+        });
     </script>
 @endsection

@@ -18,56 +18,68 @@
     <div class="container mt-5">
         <div class="card">
             <h2 class="mt-3 mb-3 text-center">Đơn hàng</h2>
-                <div class="row">
-                    <div class="col-75">
-                        <div class="container">
-                            <form method="post" action="{{route('create.payment')}}">
-                                @csrf
-                                <div class="col-25">
-                                    <div class="container">
-                                        <p>
-                                        <table id="table-checkout" class="table">
-                                            <thead>
+            <div class="row">
+                <div class="col-75">
+                    <div class="container">
+                        <form method="post" action="{{route('create.payment')}}">
+                            @csrf
+                            <div class="col-25">
+                                <div class="container">
+                                    <p>
+                                    <table id="table-checkout" class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Loại</th>
+                                            <th>Giá</th>
+                                            <th>Thời hạn</th>
+                                            <th>Tổng</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($permissions as $permission)
                                             <tr>
-                                                <th>#</th>
-                                                <th>Loại</th>
-                                                <th>Giá</th>
-                                                <th>Thời hạn</th>
-                                                <th class="float-end">Tổng</th>
+                                                <td>{{ $loop->index + 1 }}</td>
+                                                @php
+                                                    $per = \App\Models\Permission::find($permission->permission_id);
+                                                @endphp
+                                                <td class="">{{$per->name}}</td>
+                                                <td id="price-{{$permission->permission_id}}">10</td>
+                                                <td id="">1 year</td>
+                                                <td class=""
+                                                    id="total-quantity-{{$permission->permission_id}}">10
+                                                </td>
+                                                <td class="">
+                                                    <button id="btn-delete-{{$permission->id}}" class="btn btn-danger"
+                                                            type="button">Delete
+                                                    </button>
+                                                </td>
                                             </tr>
-                                            </thead>
-                                            <tbody>
-                                              @foreach($permissions as $permission)
-                                                  <tr>
-                                                      <td>{{ $loop->index + 1 }}</td>
-                                                      @php
-                                                          $per = \App\Models\Permission::find($permission->permission_id);
-                                                      @endphp
-                                                      <td class="">{{$per->name}}</td>
-                                                      <td id="price-{{$permission->permission_id}}">10</td>
-                                                      <td id="">1 year</td>
-                                                      <td class="float-end"
-                                                          id="total-quantity-{{$permission->permission_id}}">10</td>
-                                                  </tr>
-                                              @endforeach
-                                            </tbody>
-                                        </table>
-                                        </p>
-                                        <hr>
-                                        <p>Total: <span class="price" style="color:black"><b>$ <span
-                                                            id="max-total" class="text-danger">1</span></b></span>
-                                        </p>
-                                    </div>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                    <hr>
+                                    <p>Total: <span class="price" style="color:black"><b>$ <span
+                                                        id="max-total" class="text-danger">1</span></b></span>
+                                    </p>
                                 </div>
-                                <div class="">
-                                    @if(count($permissions) > 0)
-                                        <button type="submit" class=" mt-3 mb-3 btn btn-danger">Checkout Now</button>
-                                    @endif
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="">
+                                @if(count($permissions) > 0)
+                                    <button type="submit" class=" mt-3 mb-3 btn btn-danger">Checkout Now</button>
+                                @endif
+                            </div>
+                        </form>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="d-none">
+            <form id="form-delete-permission" method="post">
+                @csrf
+                <button id="btn-submit-formDelete" class="btn btn-danger" type="submit">Delete</button>
+            </form>
         </div>
     </div>
     <script>
