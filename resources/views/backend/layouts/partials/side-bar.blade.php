@@ -113,118 +113,6 @@
 
 </style>
 
-<aside class="sidebar" id="side-bar-seller" style="display: none">
-
-    <div id="leftside-navigation" class="nano">
-        <ul class="nano-content">
-            <li class="sub-menu">
-                <a href="#!"><i class="fa fa-cogs"></i>Sản phẩm<i
-                            class="arrow fa fa-angle-right pull-right"></i></a>
-                <ul>
-
-                    <li><a href="/products">Danh sách sản phẩm</a>
-                    </li>
-                    <li><a href="/products/create">Thêm mới sản phẩm</a>
-                    </li>
-                    <li><a href="/categories">Chuyên mục</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="sub-menu">
-                <a href="#!"><i class="fa fa-table"></i>Đơn hàng<i
-                            class="arrow fa fa-angle-right pull-right"></i></a>
-                <ul>
-                    <li><a href="#!">Basic Tables</a>
-                    </li>
-
-                    <li><a href="#!">Data Tables</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="sub-menu">
-                <a href="#!"><i class="fa fa fa-tasks"></i>Quản lý kho<i
-                            class="arrow fa fa-angle-right pull-right"></i></a>
-                <ul>
-                    <li><a href="#!">Components</a>
-                    </li>
-                    <li><a href="#!">Validation</a>
-                    </li>
-                    <li><a href="#!">Mask</a>
-                    </li>
-                    <li><a href="#!">Wizard</a>
-                    </li>
-                    <li><a href="#!">Multiple File Upload</a>
-                    </li>
-                    <li><a href="#!">WYSIWYG Editor</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="sub-menu ">
-                <a href="#!"><i class="fa fa-envelope"></i><span>Quản lý user</span><i
-                            class="arrow fa fa-angle-right pull-right"></i></a>
-                <ul>
-                    <li><a href="#!">Inbox</a>
-                    </li>
-                    <li><a href="#!">Compose Mail</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="sub-menu">
-                <a href="#!"><i class="fa fa-bar-chart-o"></i><span>Thống kê</span><i
-                            class="arrow fa fa-angle-right pull-right"></i></a>
-                <ul>
-                    <li><a href="#!">Chartjs</a>
-                    </li>
-                    <li><a href="#!">Morris</a>
-                    </li>
-                    <li><a href="#!">C3 Charts</a></li>
-                </ul>
-            </li>
-            <li class="sub-menu">
-                <a href="#!"><i class="fa fa-map-marker"></i><span>Quản lý mã giảm giá</span><i
-                            class="arrow fa fa-angle-right pull-right"></i></a>
-                <ul>
-                    <li><a href="#!">Google Map</a>
-                    </li>
-                    <li><a href="#!">Vector Map</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="sub-menu">
-                <a href="#!"><i class="fa fa-text-height"></i><span>Quản lý doanh thu</span></a>
-            </li>
-            <li class="sub-menu">
-                <a href="#!"><i class="fa fa-file"></i><span>Sản phẩm xem nhiều nhất</span><i
-                            class="arrow fa fa-angle-right pull-right"></i></a>
-                <ul>
-                    <li><a href="#!">Blank Page</a>
-                    </li>
-                    <li><a href="#!">Login</a>
-                    </li>
-                    <li><a href="#!">Sign Up</a>
-                    </li>
-                    <li><a href="#!">Calendar</a>
-                    </li>
-                    <li><a href="#!">Timeline</a>
-                    </li>
-                    <li><a href="#!">404</a>
-                    </li>
-                    <li><a href="#!">500</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="sub-menu">
-                <a href="#!"><i class="fa fa-text-height"></i><span>Quản lý bình luận</span><i
-                            class="arrow fa fa-angle-right pull-right"></i></a>
-                <ul>
-                    <li><a href="{{route('seller.evaluates.index')}}">List Evaluate</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</aside>
-
 <div class='wrapper'>
     <ul class='items'>
         <li>
@@ -239,6 +127,21 @@
                         <li><a href="/products/create">Thêm mới sản phẩm</a>
                         </li>
                         <li><a href="/categories">Chuyên mục</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#!"><i class="fa fa-cogs"></i>Thuộc tính sản phẩm<i
+                                class="arrow fa fa-angle-right pull-right"></i></a>
+                    <ul class='sub-items'>
+
+                        <li><a href="{{route('attributes.index')}}">Danh sách thuộc tính</a>
+                        </li>
+                        <li><a href="{{route('attributes.create')}}">Thêm mới thuộc tính</a>
+                        </li>
+                        <li><a href="{{route('properties.index')}}">Quản lí thuộc tính con</a>
+                        </li>
+                        <li><a href="{{route('properties.create')}}">Thêm mới thuộc tính con</a>
                         </li>
                     </ul>
                 </li>
