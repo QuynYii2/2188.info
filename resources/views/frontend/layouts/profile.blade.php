@@ -1,3 +1,6 @@
+@php use Illuminate\Support\Facades\Auth;
+ $user = \App\Models\User::find(Auth::user()->id)
+@endphp
 @extends('frontend.layouts.master')
 
 @section('title', 'Profile')
