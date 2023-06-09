@@ -75,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/permission-user', [\App\Http\Controllers\PermissionRankController::class, 'index'])->name('permission.user.show');
     Route::get('/permission-list', [\App\Http\Controllers\PermissionRankController::class, 'list'])->name('permission.list.show');
     Route::post('/permission', [\App\Http\Controllers\PermissionRankController::class, 'store'])->name('permission.create');
+    Route::post('/delete-payment/{id}', [\App\Http\Controllers\PermissionRankController::class, 'deletePermission'])->name('permission.delete');
     //
     Route::get('create-transaction', [\App\Http\Controllers\PaypalPaymentController::class, 'createTransaction'])->name('createTransaction');
 //    Route::post('update-permission', [\App\Http\Controllers\PermissionRankController::class, 'updateRank'])->name('permission.update.rank');

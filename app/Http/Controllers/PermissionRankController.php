@@ -39,6 +39,25 @@ class PermissionRankController extends Controller
 
     public function store(Request $request)
     {
+        $exitPermission = DB::table('permission_user')->where([
+            ['user_id', Auth::user()->id],
+            ['permission_id', $request->input('permission-id')],
+            ['status', PermissionUserStatus::ACTIVE]
+        ])->first();
+
+        $exitPermissionIN = DB::table('permission_user')->where([
+            ['user_id', Auth::user()->id],
+            ['permission_id', $request->input('permission-id')],
+            ['status', PermissionUserStatus::INACTIVE]
+        ])->first();
+
+        if ($exitPermission != null) {
+            return redirect(route('permission.user.show'));
+        }
+
+        if ($exitPermissionIN != null) {
+            return redirect(route('payment.show'));
+        }
         $permissionUser = [
             'user_id' => Auth::user()->id,
             'created_at' => Carbon::now()->addHours(7),
@@ -101,6 +120,12 @@ class PermissionRankController extends Controller
         return redirect(route('payment.show'));
     }
 
+    public function deletePermission($id)
+    {
+        DB::table('permission_user')->where('id', $id)->update(['status' => PermissionUserStatus::DELETED]);
+        return redirect(route('permission.user.show'));
+    }
+
     public function updateRank()
     {
         $timeTables = TimeLevelTable::where([['user_id', Auth::user()->id], ['status', TimeLevelStatus::INACTIVE]])->get();
@@ -131,7 +156,7 @@ class PermissionRankController extends Controller
     {
         $now = Carbon::now()->addHours(7);
         $timeTables = TimeLevelTable::where('expiration_date', '<', $now)->get();
-        if (count($timeTables) > 0){
+        if (count($timeTables) > 0) {
             for ($i = 0; $i < count($timeTables); $i++) {
                 DB::table('time_level_tables')->where('id', $timeTables[$i]->id)->update(['status' => TimeLevelStatus::EXPIRED]);
                 DB::table('permission_user')->where('id', $timeTables[$i]->permission_user_id)->update(['status' => PermissionUserStatus::EXPIRED]);
