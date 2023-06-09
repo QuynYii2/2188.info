@@ -48,7 +48,7 @@
                     <div class="col-12">
                         <form id="checkout-form" method="post">
                             @csrf
-                            <div class="col-11 m-auto">
+                            <div class="col-12">
                                 <h4>
                                     {{ __('home.Cart') }}
                                     <span class="price" style="color:black">
@@ -84,7 +84,7 @@
                                                     id="max-total">{{ $cartItem->price*$cartItem->quantity }}</span></b></span>
                                 </p>
                             </div>
-                            <div class="col-11 m-auto">
+                            <div class="col-12">
                                 <div class="row mt-5">
                                     <div class="col-12 col-md-12 col-xl-8">
                                         <h3>{{ __('home.Billing Address') }}</h3>

@@ -70,7 +70,7 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th></th>
+                            <th><input type="checkbox" id="select-all"></th>
                             <th>ID</th>
                             <th>Tên</th>
                             <th>Danh mục cha</th>
@@ -108,4 +108,32 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Lấy tham chiếu đến ô checkbox "select-all"
+        const selectAllCheckbox = document.getElementById('select-all');
+
+        // Lấy tất cả các ô checkbox trong tbody
+        const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+
+        // Thêm sự kiện "click" vào ô checkbox "select-all"
+        selectAllCheckbox.addEventListener('click', function () {
+            // Lặp qua tất cả các ô checkbox và thiết lập trạng thái tích chọn tương ứng
+            checkboxes.forEach(function (checkbox) {
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+        });
+
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('click', function () {
+                // Kiểm tra nếu có ít nhất một ô checkbox không được tích chọn
+                const isAnyCheckboxUnchecked = Array.from(checkboxes).some(function (checkbox) {
+                    return !checkbox.checked;
+                });
+
+                // Cập nhật trạng thái của ô checkbox "select-all" dựa trên kết quả kiểm tra
+                selectAllCheckbox.checked = !isAnyCheckboxUnchecked;
+            });
+        });
+    </script>
 @endsection

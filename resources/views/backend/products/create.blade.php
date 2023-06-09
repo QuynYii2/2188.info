@@ -123,14 +123,33 @@
             .border-right {
                 border-right: none;
             }
+
+            .rm-pd-on-mobile {
+                padding-right: 0;
+                padding-left: 0;
+            }
+
+            .border {
+                border: none !important;
+                border-bottom: 1px solid #dee2e6!important;
+            }
         }
+
+
     </style>
 
     <script src="https://cdn.tiny.cloud/1/rrryhd716ssj0ml91tpdlpyh2bobk9eqsqqrleem5ae0g91g/tinymce/6/tinymce.min.js"
             referrerpolicy="origin"></script>
 
+    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <h5 class="card-title">Thêm mới sản phẩm</h5>
+        @if (session('success_update_product'))
+            <div class="alert alert-success">
+                {{ session('success_update_product') }}
+            </div>
+        @endif
+    </div>
     <div class="container-fluid">
-        <h3 class="">Thêm mới sản phẩm</h3>
         <form action="{{ route('seller.products.store') }}" method="POST" enctype="multipart/form-data"
               class="form-horizontal row" role="form">
             @csrf
@@ -140,7 +159,7 @@
                 </div>
             @endif
 
-            <div class="col-md-8 col-sm-8 border-right">
+            <div class="col-md-8 col-sm-8 border-right mt-2 rm-pd-on-mobile">
                 <div class="form-group">
                     <label for="name" class="col-12 control-label">Tên sản phẩm</label>
                     <div class="col-sm-12">
@@ -151,7 +170,7 @@
                 <div class="form-group">
                     <label for="name" class="col-12 control-label">Mã sản phẩm</label>
                     <div class="col-12">
-                        <input type="text" class="form-control" name="name" id="name"
+                        <input type="text" class="form-control" name="" id=""
                                placeholder="Nhập mã sản phẩm">
                     </div>
                 </div>
@@ -170,7 +189,7 @@
 
 
             </div>
-            <div class="col-md-4 col-sm-4">
+            <div class="col-md-4 col-sm-4 mt-2 rm-pd-on-mobile">
                 <div class="form-group">
                     <label class="col-12 control-label">Giá sản phẩm</label>
 
@@ -196,7 +215,7 @@
                     </div>
                 </div>
 
-                <div class="form-group" id="cat-parameter">
+                <div class="form-group border" id="cat-parameter">
                     <label for="category" class="col-sm-12 control-label">Chuyên mục:</label>
                     <div class="col-sm-12 overflow-scroll custom-scrollbar" style="height: 200px;">
                         <ul id="category" class="list-unstyled overflow-auto">
@@ -223,7 +242,7 @@
                     </div>
                 @endforeach
 
-                <div class="form-group" id="pr-parameter">
+                <div class="form-group border" id="pr-parameter">
                     <label class="col-md-12 control-label">Thông số sản phẩm</label>
                     <label class="control-label small offset-1" for="color">Màu sắc</label>
 
@@ -286,14 +305,15 @@
                         </ul>
                     </div>
 
-                    <div class="col-md-12">
+                    <div class="col-md-12 pb-2">
                         <label class="control-label small" for="weight">Khối lượng</label>
                         <input type="text" class="form-control" name="weight" id="weight" placeholder="Khối lượng">
                     </div>
 
                 </div>
 
-                <div class="col-sm-12 d-inline-block">
+                <div class="border">
+                <div class="col-sm-12 d-inline-block ">
                     <label class="control-label small" for="date_start">Hình thức thanh toán</label>
                     <input type="text" class="form-control"
                            onclick="showDropdown('payment-method', 'payment-dropdownList')"
@@ -340,20 +360,20 @@
                         </label>
                     </div>
                 </div>
-
-                <div class="form-group col-12 col-sm-12 ">
+                </div>
+                <div class="form-group col-12 col-sm-12 pt-3">
                     <label for="thumbnail">Ảnh đại diện:</label>
                     <label class='__lk-fileInput'>
                         <span data-default='Choose file'>Choose file</span>
-                        <input type="file" id="thumbnail" name="thumbnail" accept="image/*" required>
+                        <input type="file" id="thumbnail" class="img-cfg" name="thumbnail" accept="image/*" required>
                     </label>
                 </div>
 
-                <div class="form-group col-12 col-sm-12">
+                <div class="form-group col-12 col-sm-12 ">
                     <label for="gallery">Thư viện ảnh:</label>
                     <label class='__lk-fileInput'>
                         <span data-default='Choose file'>Choose file</span>
-                        <input type="file" id="gallery" name="gallery[]" accept="image/*" multiple required>
+                        <input type="file" id="gallery" class="img-cfg" name="gallery[]" accept="image/*" multiple required>
                     </label>
                 </div>
             </div>
@@ -369,23 +389,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-
-        $(document).on("change", ".uploadFile", function () {
-            var uploadFile = $(this);
-            var files = !!this.files ? this.files : [];
-            if (!files.length || !window.FileReader) return; // Không có tệp nào được chọn hoặc không hỗ trợ FileReader
-
-            if (/^image/.test(files[0].type)) {
-                // Chỉ chấp nhận tệp ảnh
-                var reader = new FileReader(); // Đối tượng FileReader
-                reader.readAsDataURL(files[0]); // Đọc tệp cục bộ
-
-                reader.onloadend = function () {
-                    // Đặt dữ liệu ảnh làm nền cho div
-                    uploadFile.closest(".imgUp").find('.imagePreview').css("background-image", "url(" + this.result + ")");
-                }
-            }
-        });
 
         function showDropdown(inputId, dropdownId) {
             var dropdownList = document.getElementById(dropdownId);
@@ -414,25 +417,24 @@
 
 
         $(function () {
-            $('input').change(function () {
+            $('input.img-cfg').change(function () {
                 var label = $(this).parent().find('span');
                 if (typeof (this.files) != 'undefined') {
                     let lengthListImg = this.files.length;
                     if (lengthListImg === 0) {
                         label.removeClass('withFile').text(label.data('default'));
                     } else if (lengthListImg === 1) {
-                        var name = '';
+                        var name = lengthListImg + ' file';
                         var size = 0;
                         for (let i = 0; i < this.files.length; i++) {
                             var file = this.files[i];
-                            name += file.name + ',';
 
                             let sizeImg = (file.size / 1048576).toFixed(3);
 
                             size = size + Number(sizeImg);
                         }
                         label.addClass('withFile').text(name + ' (' + size + 'mb)');
-                    }else {
+                    } else {
                         var name = lengthListImg + ' files';
                         var size = 0;
                         for (let i = 0; i < this.files.length; i++) {
