@@ -190,7 +190,7 @@
             display: flex;
         }
 
-        @media only screen and (min-width: 575px){
+        @media only screen and (min-width: 576px){
             .not-mobile-button {
                 display: flex;
             }
@@ -198,6 +198,12 @@
 
             .only-mobile-button {
                 display: none;
+            }
+        }
+        @media only screen and (max-width: 575px){
+            .benefit-items .border-right {
+                border-right: none;
+                border-bottom: 1px solid #dee2e6!important;
             }
         }
     </style>
@@ -1255,7 +1261,7 @@
         </section>
         <div class="container-fluid latest-blog">
             <div class="col-12 col-sm-12 benefit-items">
-                <div class="row ">
+                <div class="row">
                     <div class="col-12 col-sm-4 border-right">
                         <div class="single-benefit">
                             <div class="sb-icon">

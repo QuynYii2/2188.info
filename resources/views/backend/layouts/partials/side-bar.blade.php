@@ -1,123 +1,124 @@
 <style>
-    @import url('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css');
 
-    @font-face {
-        font-family: 'Open Sans';
-        font-style: normal;
-        font-weight: 300;
-        font-stretch: normal;
-        src: url(https://fonts.gstatic.com/s/opensans/v35/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsiH0B4gaVc.ttf) format('truetype');
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
     }
 
-    @font-face {
-        font-family: 'Open Sans';
-        font-style: normal;
-        font-weight: 400;
-        font-stretch: normal;
-        src: url(https://fonts.gstatic.com/s/opensans/v35/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0B4gaVc.ttf) format('truetype');
+    a {
+        color: #646464;
+        text-decoration: none;
     }
 
-    @font-face {
-        font-family: 'Open Sans';
-        font-style: normal;
-        font-weight: 700;
-        font-stretch: normal;
-        src: url(https://fonts.gstatic.com/s/opensans/v35/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsg-1x4gaVc.ttf) format('truetype');
-    }
-
-    .sidebar-toggle {
-        margin-left: -240px;
-    }
-
-    .sidebar {
-        overflow-y: scroll;
+    .wrapper {
+        /*position: absolute;*/
         width: 100%;
         height: 100%;
-        background: #293949;
+        background-color: #fff;
+        font-size: 0.875em;
+    }
+
+    .items {
+        padding: 18px 0;
+    }
+
+    .items > li > a {
+        display: block;
+        text-indent: 18px;
+        line-height: 39px;
+    }
+
+    .items > li > a::after {
         position: absolute;
-        -webkit-transition: all 0.3s ease-in-out;
-        -moz-transition: all 0.3s ease-in-out;
-        -o-transition: all 0.3s ease-in-out;
-        -ms-transition: all 0.3s ease-in-out;
-        transition: all 0.3s ease-in-out;
-        z-index: 100;
+        right: 30px;
+        font-family: "FontAwesome";
     }
 
-    .sidebar #leftside-navigation ul,
-    .sidebar #leftside-navigation ul ul {
-        margin: -2px 0 0;
-        padding: 0;
+    .items > li > a::after {
+        right: 30px;
+        content: "\2192";
     }
 
-    .sidebar #leftside-navigation ul li {
-        list-style-type: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    .itemHover {
+        color: #fff;
+        font-weight: 600;
+        transition: background-color 0.4s ease-in-out;
     }
 
-    .sidebar #leftside-navigation ul li.active > a {
-        color: #1abc9c;
+    .items > li > a:hover {
+        background-color: black;
+        color: #fff;
+        font-weight: 600;
+        transition: background-color 0.4s ease-in-out;
+        text-decoration: none !important;
     }
 
-    .sidebar #leftside-navigation ul li.active ul {
+    .items > li > a.expanded {
+        background-color: #64D7E2;
+        color: #fff;
+        font-weight: 600;
+        transition: background-color 0.4s ease-in-out;
+    }
+
+    .items > li > a.expanded::after {
+        content: "\2193";
+    }
+
+    .items > li:not(:has(ul)) > a::after,
+    .items > li:not(:has(ul)) > a.expanded::after {
+        content: none;
+    }
+
+    .sub-items > li:first-child > a {
+        margin-top: 17px;
+        height: 34px;
+    }
+
+    .sub-items > li:last-child > a {
+        margin-bottom: 17px;
+        height: 34px;
+    }
+
+    .sub-items a {
+        position: relative;
         display: block;
+        margin: 0 1rem;
+        width: 212px;
+        text-indent: 24px;
+        line-height: 39px;
     }
 
-    .sidebar #leftside-navigation ul li a {
-        color: #aeb2b7;
+    .sub-items a {
+        border-left: 2px solid #64D7E2;
+    }
+
+    .sub-items .current {
+        position: relative;
+        color: #64D7E2;
+        border-color: white;
+    }
+
+    .sub-items > li:hover > a {
+        color: #64D7E2;
+        transition: color 0.4s ease-in-out;
         text-decoration: none;
-        display: block;
-        padding: 18px 0 18px 25px;
-        font-size: 12px;
-        outline: 0;
-        -webkit-transition: all 200ms ease-in;
-        -moz-transition: all 200ms ease-in;
-        -o-transition: all 200ms ease-in;
-        -ms-transition: all 200ms ease-in;
-        transition: all 200ms ease-in;
+
     }
 
-    .sidebar #leftside-navigation ul li a:hover {
-        color: #1abc9c;
-    }
-
-    .sidebar #leftside-navigation ul li a span {
-        display: inline-block;
-    }
-
-    .sidebar #leftside-navigation ul li a i {
-        width: 20px;
-    }
-
-    .sidebar #leftside-navigation ul li a i .fa-angle-left,
-    .sidebar #leftside-navigation ul li a i .fa-angle-right {
-        padding-top: 3px;
-    }
-
-    .sidebar #leftside-navigation ul ul {
+    .sub-items {
         display: none;
-    }
-
-    .sidebar #leftside-navigation ul ul li {
-        background: #23313f;
-        margin-bottom: 0;
-        margin-left: 0;
-        margin-right: 0;
-        border-bottom: none;
-    }
-
-    .sidebar #leftside-navigation ul ul li a {
-        padding-top: 13px;
-        padding-bottom: 13px;
-        color: #aeb2b7;
     }
 
 
 </style>
-<aside class="sidebar" id="side-bar-seller">
+
+<aside class="sidebar" id="side-bar-seller" style="display: none">
+
     <div id="leftside-navigation" class="nano">
         <ul class="nano-content">
             <li class="sub-menu">
-                <a href="#!"><i class="fa fa-cogs"></i><span>Sản phẩm</span><i
+                <a href="#!"><i class="fa fa-cogs"></i>Sản phẩm<i
                             class="arrow fa fa-angle-right pull-right"></i></a>
                 <ul>
 
@@ -130,7 +131,7 @@
                 </ul>
             </li>
             <li class="sub-menu">
-                <a href="#!"><i class="fa fa-table"></i><span>Đơn hàng</span><i
+                <a href="#!"><i class="fa fa-table"></i>Đơn hàng<i
                             class="arrow fa fa-angle-right pull-right"></i></a>
                 <ul>
                     <li><a href="#!">Basic Tables</a>
@@ -141,7 +142,7 @@
                 </ul>
             </li>
             <li class="sub-menu">
-                <a href="#!"><i class="fa fa fa-tasks"></i><span>Quản lý kho</span><i
+                <a href="#!"><i class="fa fa fa-tasks"></i>Quản lý kho<i
                             class="arrow fa fa-angle-right pull-right"></i></a>
                 <ul>
                     <li><a href="#!">Components</a>
@@ -162,7 +163,7 @@
                 <a href="#!"><i class="fa fa-envelope"></i><span>Quản lý user</span><i
                             class="arrow fa fa-angle-right pull-right"></i></a>
                 <ul>
-                    <li ><a href="#!">Inbox</a>
+                    <li><a href="#!">Inbox</a>
                     </li>
                     <li><a href="#!">Compose Mail</a>
                     </li>
@@ -212,7 +213,6 @@
                     </li>
                 </ul>
             </li>
-
             <li class="sub-menu">
                 <a href="#!"><i class="fa fa-text-height"></i><span>Quản lý bình luận</span><i
                             class="arrow fa fa-angle-right pull-right"></i></a>
@@ -225,11 +225,136 @@
     </div>
 </aside>
 
+<div class='wrapper'>
+    <ul class='items'>
+        <li>
+            <a href="#">Menu</a>
+            <ul class='items'>
+                <li>
+                    <a href='#'><i class="fa fa-cogs"></i>Sản phẩm<i
+                                class="arrow fa fa-angle-right pull-right"></i></a>
+                    <ul class='sub-items'>
+                        <li><a href="/products">Danh sách sản phẩm</a>
+                        </li>
+                        <li><a href="/products/create">Thêm mới sản phẩm</a>
+                        </li>
+                        <li><a href="/categories">Chuyên mục</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href='#'><i class="fa fa-table"></i>Đơn hàng<i
+                                class="arrow fa fa-angle-right pull-right"></i></a>
+                    <ul class='sub-items'>
+                        <li><a href="#!">Basic Tables</a>
+                        </li>
+
+                        <li><a href="#!">Data Tables</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#!"><i class="fa fa fa-tasks"></i>Quản lý kho<i
+                                class="arrow fa fa-angle-right pull-right"></i></a>
+                    <ul class='sub-items'>
+                        <li>
+                            <a href='#'>Lorem ipsum dolor sit amet.</a>
+                        </li>
+                        <li>
+                            <a href='#'>Lorem ipsum dolor sit amet.</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href='#'>Quản lý user</a>
+                    <ul class='sub-items'>
+                        <li>
+                            <a href='#'>Lorem ipsum dolor sit amet.</a>
+                        </li>
+                        <li>
+                            <a href='#'>Lorem ipsum dolor sit amet.</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#!"><i class="fa fa-bar-chart-o"></i><span>Thống kê</span><i
+                                class="arrow fa fa-angle-right pull-right"></i></a>
+                    <ul class='sub-items'>
+                        <li><a href="#!">Chartjs</a>
+                        </li>
+                        <li><a href="#!">Morris</a>
+                        </li>
+                        <li><a href="#!">C3 Charts</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#!"><i class="fa fa-map-marker"></i><span>Quản lý mã giảm giá</span><i
+                                class="arrow fa fa-angle-right pull-right"></i></a>
+                </li>
+                <li>
+                    <a href="#!"><i class="fa fa-text-height"></i><span>Quản lý doanh thu</span></a>
+                </li>
+                <li>
+                    <a href="#!"><i class="fa fa-file"></i><span>Sản phẩm xem nhiều nhất</span><i
+                                class="arrow fa fa-angle-right pull-right"></i></a>
+                    <ul class='sub-items'>
+                        <li><a href="#!">Blank Page</a>
+                        </li>
+                        <li><a href="#!">Login</a>
+                        </li>
+                        <li><a href="#!">Sign Up</a>
+                        </li>
+                        <li><a href="#!">Calendar</a>
+                        </li>
+                        <li><a href="#!">Timeline</a>
+                        </li>
+                        <li><a href="#!">404</a>
+                        </li>
+                        <li><a href="#!">500</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#!"><i class="fa fa-text-height"></i><span>Quản lý bình luận</span><i
+                                class="arrow fa fa-angle-right pull-right"></i></a>
+                    <ul class='sub-items'>
+                        <li><a href="{{route('seller.evaluates.index')}}">List Evaluate</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+</div>
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    $("#leftside-navigation .sub-menu > a").click(function (e) {
-        $("#leftside-navigation ul ul").slideUp(), $(this).next().is(":visible") || $(this).next().slideDown(),
-            e.stopPropagation();
-    })
+    // $("#leftside-navigation .sub-menu > a").click(function (e) {
+    //     $("#leftside-navigation ul ul").slideUp(), $(this).next().is(":visible") || $(this).next().slideDown(),
+    //         e.stopPropagation();
+    // })
+
+    $(".items > li > a").click(function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        if ($this.hasClass("expanded")) {
+            $this.removeClass("expanded");
+        } else {
+            $(".items a.expanded").removeClass("expanded");
+            $this.addClass("expanded");
+            $(".sub-items").filter(":visible").slideUp("normal");
+        }
+        $this.parent().children("ul").stop(true, true).slideToggle("normal");
+    });
+
+    $(".sub-items a").click(function () {
+        $(".sub-items a").removeClass("current");
+        $(this).addClass("current");
+    });
+
+
 </script>
