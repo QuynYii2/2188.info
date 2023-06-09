@@ -240,4 +240,10 @@ return [
     'was new product' => '신제품이 추가됩니다',
     'view card' => '카트를 참조하십시오',
 
+    'buy coin' => '코인 구매',
+    'permission management' => '권리 관리',
+    'upgrade permission' => '권한 업그레이드',
+    'payment management' => '결제 관리',
+
+
 ];

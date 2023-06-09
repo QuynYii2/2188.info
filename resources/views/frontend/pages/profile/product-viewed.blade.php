@@ -3,7 +3,7 @@
 @section('title', 'Product Viewed')
 
 @section('sub-content')
-    <div class="row mt-5 bg-white rounded">
+    <div class="row mt-2 bg-white rounded">
         <div class="row rounded pt-1 ml-5">
             <h5>{{ __('home.product viewed') }}</h5>
         </div>

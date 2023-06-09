@@ -245,4 +245,8 @@ return [
     'view card' => 'Xem giỏ hàng',
 
 
+    'buy coin' => 'Mua Coin',
+    'permission management' => 'Quản lý quyền',
+    'upgrade permission' => 'Nâng cấp quyền',
+    'payment management' => 'Quản lý thanh toán',
 ];

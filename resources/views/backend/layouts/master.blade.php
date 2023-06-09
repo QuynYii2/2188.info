@@ -26,12 +26,12 @@
 <div class="container-fluid bg-white">
     <div class="row">
         <!-- Sidebar -->
-        <div class="col-md-2">
+        <div class="col-sm-3 col-12" style="padding: 0">
             @include('backend.layouts.partials.side-bar')
         </div>
 
         <!-- Page Content -->
-        <div class="col-md-10">
+        <div class="col-sm-9 col-12" style="padding: 0">
             <div class="content">
                 @yield('content')
             </div>
