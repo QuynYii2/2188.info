@@ -203,8 +203,8 @@
         function getAllTotal() {
             let totalMax = document.getElementById('max-total');
             let totalPrice = document.getElementById('total-price');
-            let shippingPrice = document.getElementById('shipping-price').value;
-            let salePrice = document.getElementById('sale-price').value;
+            let shippingPrice = document.getElementById('shipping-price').innerText;
+            let salePrice = document.getElementById('sale-price').innerText;
             let checkOutPrice = document.getElementById('checkout-price');
             var firstCells = document.querySelectorAll('#table-checkout td:nth-child(4)');
             console.log(firstCells)
@@ -219,7 +219,7 @@
             totalMax.innerText = total;
             totalPrice.innerHTML = total;
 
-            checkOutPrice.value = parseFloat(total) + parseFloat(shippingPrice) - parseFloat(salePrice);
+            checkOutPrice.innerHTML = parseFloat(total) + parseFloat(shippingPrice) - parseFloat(salePrice);
 
         }
 
