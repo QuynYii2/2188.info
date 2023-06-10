@@ -6,14 +6,13 @@ use App\Enums\AttributeStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Testing\Fluent\Concerns\Has;
+use Illuminate\Support\Facades\Auth;
 
 class AttributeController extends Controller
 {
     public function index()
     {
-        $attributes = Attribute::where('status', '!=', AttributeStatus::DELETED)->get();
+        $attributes = Attribute::where([['status', '!=', AttributeStatus::DELETED], ['user_id', Auth::user()->id]])->get();
         return view('backend.attributes.index', compact('attributes'));
 
     }
@@ -26,11 +25,12 @@ class AttributeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:attributes',
+            'name' => 'required|unique:attributes'
         ]);
 
         $attribute = Attribute::create([
             'name' => $request->name,
+            'user_id' => Auth::user()->id,
         ]);
 
         return redirect()->route('attributes.index')->with('success', 'Attribute created successfully.');
@@ -38,7 +38,7 @@ class AttributeController extends Controller
 
     public function show($id)
     {
-        $attribute = Attribute::where([['status', AttributeStatus::ACTIVE], ['id', $id]])->first();
+        $attribute = Attribute::where([['status', AttributeStatus::ACTIVE], ['id', $id], ['user_id', Auth::user()->id]])->first();
         if ($attribute == null) {
             return redirect()->route('attributes.index');
         }
@@ -47,7 +47,7 @@ class AttributeController extends Controller
 
     public function update(Request $request, $id)
     {
-        $attribute = Attribute::where([['status', AttributeStatus::ACTIVE], ['id', $id]])->first();
+        $attribute = Attribute::where([['status', AttributeStatus::ACTIVE], ['id', $id], ['user_id', Auth::user()->id]])->first();
         if ($attribute == null) {
             return redirect()->route('attributes.index');
         }

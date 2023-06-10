@@ -3,32 +3,40 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Enums\AttributeStatus;
+use App\Enums\EvaluateProductStatus;
 use App\Enums\PropertiStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\Properties;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PropertiesController extends Controller
 {
     public function index()
     {
-        $properties = Properties::where('status', '!=', PropertiStatus::DELETED)->get();
+        $properties = DB::table('properties')
+            ->join('attributes', 'attributes.id', '=', 'properties.attribute_id')
+            ->where([['attributes.user_id', '=', Auth::user()->id], ['attributes.status', '!=', AttributeStatus::DELETED]])
+            ->select('properties.*')
+            ->get();
+
         return view('backend.properties.index', compact('properties'));
 
     }
 
     public function create()
     {
-        $attributes = Attribute::where('status', '=', AttributeStatus::ACTIVE)->get();
+        $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', Auth::user()->id]])->get();
         return view('backend.properties.create', compact('attributes'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:properties',
-            'attribute_id' => 'required|unique:properties',
+            'name' => 'required',
+            'attribute_id' => 'required',
         ]);
 
         $properties = Properties::create([
@@ -42,7 +50,7 @@ class PropertiesController extends Controller
     public function show($id)
     {
         $propertie = Properties::where([['status', PropertiStatus::ACTIVE], ['id', $id]])->first();
-        $attributes = Attribute::where('status', '=', AttributeStatus::ACTIVE)->get();
+        $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', Auth::user()->id]])->get();
         if ($propertie == null) {
             return redirect()->route('properties.index');
         }
@@ -57,7 +65,7 @@ class PropertiesController extends Controller
         }
         $request->validate([
             'name' => 'required',
-            'attribute_id' => 'required|unique:properties',
+            'attribute_id' => 'required',
         ]);
 
         $propertie->name = $request->name;

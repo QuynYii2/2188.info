@@ -64,7 +64,7 @@
     <div class="card">
         <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
             <h5 class="card-title">Danh sách thuộc tính con</h5>
-            <a href="{{ route('attributes.create') }}" class="btn btn-primary">Thêm mới</a>
+            <a href="{{ route('properties.create') }}" class="btn btn-primary">Thêm mới</a>
             @if (session('success_update_product'))
                 <div class="alert alert-success">
                     {{ session('success_update_product') }}
@@ -88,7 +88,10 @@
                     <tr>
                         <td class="text-center">{{ $loop->index + 1 }}</td>
                         <td>{{ $property->name }}</td>
-                        <td class="text-center">{{ $property->attribute->name }}</td>
+                        @php
+                            $attribute = \App\Models\Attribute::find($property->attribute_id);
+                        @endphp
+                        <td class="text-center">{{ $attribute->name }}</td>
                         <td class="text-center">
                             {{ $property->status }}
                         </td>
