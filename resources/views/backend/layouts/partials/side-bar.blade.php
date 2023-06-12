@@ -7,15 +7,14 @@
     }
 
     a {
-        color: #646464;
+        color: #FFFFFF;
         text-decoration: none;
     }
 
     .wrapper {
-        /*position: absolute;*/
         width: 100%;
         height: 100%;
-        background-color: #fff;
+        background-color: #000000;
         font-size: 0.875em;
     }
 
@@ -201,22 +200,7 @@
                 <li>
                     <a href="#!"><i class="fa fa-file"></i><span>Sản phẩm xem nhiều nhất</span><i
                                 class="arrow fa fa-angle-right pull-right"></i></a>
-                    <ul class='sub-items'>
-                        <li><a href="#!">Blank Page</a>
-                        </li>
-                        <li><a href="#!">Login</a>
-                        </li>
-                        <li><a href="#!">Sign Up</a>
-                        </li>
-                        <li><a href="#!">Calendar</a>
-                        </li>
-                        <li><a href="#!">Timeline</a>
-                        </li>
-                        <li><a href="#!">404</a>
-                        </li>
-                        <li><a href="#!">500</a>
-                        </li>
-                    </ul>
+
                 </li>
                 <li>
                     <a href="#!"><i class="fa fa-text-height"></i><span>Quản lý bình luận</span><i
@@ -236,10 +220,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    // $("#leftside-navigation .sub-menu > a").click(function (e) {
-    //     $("#leftside-navigation ul ul").slideUp(), $(this).next().is(":visible") || $(this).next().slideDown(),
-    //         e.stopPropagation();
-    // })
 
     $(".items > li > a").click(function (e) {
         e.preventDefault();

@@ -1,13 +1,19 @@
 @extends('backend.layouts.master')
 
 @section('content')
-    <div class="container p-0 m-0 evaluate-list" style="height: 100vh">
+    <style>
+        .table th {
+            width: 100%;
+            white-space: nowrap;
+        }
+    </style>
+    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <h5 class="card-title">Danh sách Đánh giá</h5>
+    </div>
+    <div class="container-fluid evaluate-list" style="height: 100vh">
         <div class="card">
-            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                <h5 class="card-title">Danh sách Đánh giá</h5>
-            </div>
             <div class="card-body row">
-                <div class="col-md-9">
+                <div class="col-12 col-sm-12 table-responsive-sm">
                     <table class="table table-bordered">
                         <thead>
                         <tr>
