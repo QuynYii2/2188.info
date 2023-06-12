@@ -131,7 +131,7 @@
 
             .border {
                 border: none !important;
-                border-bottom: 1px solid #dee2e6!important;
+                border-bottom: 1px solid #dee2e6 !important;
             }
         }
 
@@ -187,7 +187,6 @@
                     </div>
                 </div>
 
-
             </div>
             <div class="col-md-4 col-sm-4 mt-2 rm-pd-on-mobile">
                 <div class="form-group">
@@ -203,7 +202,6 @@
                         <label class="control-label small" for="date_start">Giá khuyến mãi</label>
                         <input type="text" class="form-control" name="qty" id="qty"
                                placeholder="Nhập giá khuyến mãi">
-
                     </div>
 
                 </div>
@@ -313,53 +311,53 @@
                 </div>
 
                 <div class="border">
-                <div class="col-sm-12 d-inline-block ">
-                    <label class="control-label small" for="date_start">Hình thức thanh toán</label>
-                    <input type="text" class="form-control"
-                           onclick="showDropdown('payment-method', 'payment-dropdownList')"
-                           placeholder="Chọn hình thức thanh toán" id="payment-method">
-                    <div class="dropdown-content" id="payment-dropdownList">
-                        <label>
-                            <input type="checkbox" value="option1"
-                                   onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
-                            Nhận hàng thanh toán
-                        </label>
-                        <label>
-                            <input type="checkbox" value="option2"
-                                   onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
-                            Thanh toán thẻ nội địa
-                        </label>
-                        <label>
-                            <input type="checkbox" value="option3"
-                                   onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
-                            Thanh toán qua paypal
-                        </label>
+                    <div class="col-sm-12 d-inline-block ">
+                        <label class="control-label small" for="date_start">Hình thức thanh toán</label>
+                        <input type="text" class="form-control"
+                               onclick="showDropdown('payment-method', 'payment-dropdownList')"
+                               placeholder="Chọn hình thức thanh toán" id="payment-method">
+                        <div class="dropdown-content" id="payment-dropdownList">
+                            <label>
+                                <input type="checkbox" value="option1"
+                                       onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
+                                Nhận hàng thanh toán
+                            </label>
+                            <label>
+                                <input type="checkbox" value="option2"
+                                       onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
+                                Thanh toán thẻ nội địa
+                            </label>
+                            <label>
+                                <input type="checkbox" value="option3"
+                                       onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
+                                Thanh toán qua paypal
+                            </label>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group col-sm-12 d-inline-block">
-                    <label class="control-label small" for="date_start">Hình thức vận chuyển</label>
-                    <input type="text" class="form-control"
-                           onclick="showDropdown('transport-method', 'transport-dropdownList')"
-                           placeholder="Chọn hình thức vận chuyển" id="transport-method">
-                    <div class="dropdown-content" id="transport-dropdownList">
-                        <label>
-                            <input type="checkbox" value="option1"
-                                   onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
-                            Đường bộ
-                        </label>
-                        <label>
-                            <input type="checkbox" value="option2"
-                                   onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
-                            Đường thủy
-                        </label>
-                        <label>
-                            <input type="checkbox" value="option3"
-                                   onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
-                            Đường hàng không
-                        </label>
+                    <div class="form-group col-sm-12 d-inline-block">
+                        <label class="control-label small" for="date_start">Hình thức vận chuyển</label>
+                        <input type="text" class="form-control"
+                               onclick="showDropdown('transport-method', 'transport-dropdownList')"
+                               placeholder="Chọn hình thức vận chuyển" id="transport-method">
+                        <div class="dropdown-content" id="transport-dropdownList">
+                            <label>
+                                <input type="checkbox" value="option1"
+                                       onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
+                                Đường bộ
+                            </label>
+                            <label>
+                                <input type="checkbox" value="option2"
+                                       onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
+                                Đường thủy
+                            </label>
+                            <label>
+                                <input type="checkbox" value="option3"
+                                       onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
+                                Đường hàng không
+                            </label>
+                        </div>
                     </div>
-                </div>
                 </div>
                 <div class="form-group col-12 col-sm-12 pt-3">
                     <label for="thumbnail">Ảnh đại diện:</label>
@@ -373,7 +371,8 @@
                     <label for="gallery">Thư viện ảnh:</label>
                     <label class='__lk-fileInput'>
                         <span data-default='Choose file'>Choose file</span>
-                        <input type="file" id="gallery" class="img-cfg" name="gallery[]" accept="image/*" multiple required>
+                        <input type="file" id="gallery" class="img-cfg" name="gallery[]" accept="image/*" multiple
+                               required>
                     </label>
                 </div>
             </div>
@@ -418,34 +417,24 @@
 
         $(function () {
             $('input.img-cfg').change(function () {
-                var label = $(this).parent().find('span');
+                const label = $(this).parent().find('span');
+                let name = '';
                 if (typeof (this.files) != 'undefined') {
                     let lengthListImg = this.files.length;
                     if (lengthListImg === 0) {
                         label.removeClass('withFile').text(label.data('default'));
-                    } else if (lengthListImg === 1) {
-                        var name = lengthListImg + ' file';
-                        var size = 0;
-                        for (let i = 0; i < this.files.length; i++) {
-                            var file = this.files[i];
-
-                            let sizeImg = (file.size / 1048576).toFixed(3);
-
-                            size = size + Number(sizeImg);
-                        }
-                        label.addClass('withFile').text(name + ' (' + size + 'mb)');
                     } else {
-                        var name = lengthListImg + ' files';
-                        var size = 0;
+                        name = lengthListImg === 1 ? lengthListImg + ' file' : lengthListImg + ' files';
+                        let size = 0;
                         for (let i = 0; i < this.files.length; i++) {
-                            var file = this.files[i];
+                            const file = this.files[i];
                             let sizeImg = (file.size / 1048576).toFixed(3);
                             size = size + Number(sizeImg);
                         }
                         label.addClass('withFile').text(name + ' (' + size + 'mb)');
                     }
                 } else {
-                    var name = this.value.split("\\");
+                    name = this.value.split("\\");
                     label.addClass('withFile').text(name[name.length - 1]);
                 }
                 return false;
