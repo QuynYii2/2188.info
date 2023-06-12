@@ -211,104 +211,53 @@
                     <div class="col-4 col-sm-4">
                         <input type="checkbox">
                     </div>
-                </div>
-
-                <div class="form-group border" id="cat-parameter">
-                    <label for="category" class="col-sm-12 control-label">Chuyên mục:</label>
-                    <div class="col-sm-12 overflow-scroll custom-scrollbar" style="height: 200px;">
-                        <ul id="category" class="list-unstyled overflow-auto">
-                            @foreach($categories as $category)
-                                <li>
-                                    <label>
-                                        <input type="radio" name="category_id" value="{{ $category->id }}" required>
-                                        {{ $category->name }}
-                                    </label>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-                @foreach($attributes as $attribute)
 
                     <div class="form-group">
-                        <label for="variations">{{ $attribute->name }}:</label>
-                        <select class="form-control" name="variations[]" id="variations" multiple>
-                            @foreach($attribute->variations as $variation)
-                                <option value="{{ $variation->id }}">{{ $variation->name }}</option>
+                        <label for="attribute">Chọn thuộc tính sản phẩm có sẵn:</label>
+                        <select class="form-control" name="attribute" id="attribute">
+                            @foreach($attributes as $attribute)
+                                <option id="attribute-option-{{$attribute->id}}"
+                                        value="{{$attribute->id}}">{{ $attribute->name }}</option>
                             @endforeach
                         </select>
                     </div>
-                @endforeach
 
-                <div class="form-group border" id="pr-parameter">
-                    <label class="col-md-12 control-label">Thông số sản phẩm</label>
-                    <label class="control-label small offset-1" for="color">Màu sắc</label>
 
-                    <div class="col-md-12 overflow-scroll custom-scrollbar" style="height: 150px;">
-                        <ul class="list-unstyled">
-                            <li>
-                                <label>
-                                    <input type="radio" name="color" value="" required>
-                                    Đỏ
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="radio" name="color" value="texnolog2">
-                                    Cam
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="radio" name="color" value="texnolog3">
-                                    Vàng
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="radio" name="color" value="texnolog3">
-                                    Tím
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <label class="control-label small offset-1" for="size">Size</label>
-                    <div class="col-md-12 overflow-scroll custom-scrollbar" style="height: 150px;">
-                        <ul class="list-unstyled">
-                            <li>
-                                <label>
-                                    <input type="radio" name="size" value="" required>
-                                    S
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="radio" name="size" value="texnolog2">
-                                    M
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="radio" name="size" value="texnolog3">
-                                    L
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="radio" name="size" value="texnolog3">
-                                    XL
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="col-md-12 pb-2">
-                        <label class="control-label small" for="weight">Khối lượng</label>
-                        <input type="text" class="form-control" name="weight" id="weight" placeholder="Khối lượng">
-                    </div>
-
-                </div>
+                    <div class="form-group" id="pr-parameter">
+                        <label class="col-md-12 control-label">Thông số sản phẩm</label>
+                        @foreach($attributes as $attribute)
+                            <div id="{{$attribute->name}}-{{$attribute->id}}" class="d-none">
+                                <label class="control-label small offset-2" for="color">{{$attribute->name}}</label>
+                                <div class="col-md-12 overflow-scroll custom-scrollbar" style="height: 150px;">
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <label>
+                                                <input type="radio" name="color" value="" required>
+                                                Đỏ
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="radio" name="color" value="texnolog2">
+                                                Cam
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="radio" name="color" value="texnolog3">
+                                                Vàng
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="radio" name="color" value="texnolog3">
+                                                Tím
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        @endforeach
 
                 <div class="border">
                     <div class="col-sm-12 d-inline-block ">
@@ -381,11 +330,22 @@
                     <button type="submit" class="btn btn-primary">Gửi</button>
                 </div>
             </div>
+            </form>
+        </div>
+        <div class="d-none">
+            <form id="form-create-attribute">
 
-
+            </form>
+        </div>
         </form>
+
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+        })
+    </script>
 
     <script>
 

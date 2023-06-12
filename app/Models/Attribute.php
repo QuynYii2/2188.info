@@ -8,10 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Attribute extends Model
 {
     use HasFactory;
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'status', 'user_id'];
 
-    public function variations()
+    public function product()
     {
-        return $this->belongsToMany(Variation::class, 'attribute_variation');
+        return $this->belongsTo(Product::class);
+    }
+
+    public function property()
+    {
+        return $this->belongsTo(Properties::class);
     }
 }

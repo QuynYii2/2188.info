@@ -63,8 +63,8 @@
 @section('content')
     <div class="card">
         <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-            <h5 class="card-title">Danh sách thuộc tính</h5>
-            <a href="{{ route('attributes.create') }}" class="btn btn-primary">Thêm mới</a>
+            <h5 class="card-title">Danh sách thuộc tính con</h5>
+            <a href="{{ route('properties.create') }}" class="btn btn-primary">Thêm mới</a>
             @if (session('success_update_product'))
                 <div class="alert alert-success">
                     {{ session('success_update_product') }}
@@ -77,26 +77,26 @@
                 <tr class="text-center">
                     <th scope="col">#</th>
                     <th>Tên thuộc tính</th>
-                    <th>Số lượng thuộc tính con</th>
+                    <th>Tên thuộc tính cha</th>
                     <th>Trạng thái</th>
                     <th>Hành động</th>
                     <th>Thêm</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($attributes as $attribute)
+                @foreach($properties as $property)
                     <tr>
                         <td class="text-center">{{ $loop->index + 1 }}</td>
-                        <td>{{ $attribute->name }}</td>
+                        <td>{{ $property->name }}</td>
                         @php
-                            $properties = \App\Models\Properties::where('attribute_id', $attribute->id)->get();
+                            $attribute = \App\Models\Attribute::find($property->attribute_id);
                         @endphp
-                        <td class="text-center">{{ count($properties) }}</td>
+                        <td class="text-center">{{ $attribute->name }}</td>
                         <td class="text-center">
-                            {{ $attribute->status }}
+                            {{ $property->status }}
                         </td>
                         <td class="text-center">
-                            @if($attribute->status == \App\Enums\AttributeStatus::ACTIVE)
+                            @if($property->status == \App\Enums\PropertiStatus::ACTIVE)
                                 <label class="switch">
                                     <input id="input-check" type="checkbox" checked>
                                     <span class="slider round"></span>
@@ -110,7 +110,7 @@
                         </td>
                         <td class="text-center">
                                 <div class="">
-                                    <a href="{{route('attributes.detail', $attribute->id)}}" class="btn btn-success">Chi tiết</a>
+                                    <a href="{{route('properties.detail', $property->id)}}" class="btn btn-success">Chi tiết</a>
                                     <form>
                                         <button type="submit" class="btn btn-danger">Xoá</button>
                                     </form>
