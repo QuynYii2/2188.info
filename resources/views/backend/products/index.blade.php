@@ -45,7 +45,7 @@
                                 <a href="{{ route('seller.products.edit', $product->id) }}"
                                    class="btn btn-primary mr-2">Sửa</a>
                                 <form action="{{ route('seller.products.destroy', $product->id) }}" method="POST"
-                                      style="display: inline-block">
+                                      style="">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger"

@@ -606,7 +606,7 @@
                         </a>
                     </div>
                 </div>
-                @if(session('login'))
+                @if(session('login') || Auth::user()!= null)
                     <div class="col-lg-3 col-md-3 text-right col-md-4 col-7 mt-2">
                         <div class="d-flex align-items-center">
                             <ul class="nav-right mb-0">
@@ -681,6 +681,14 @@
                                         {{ Auth::user()->name }}
                                     @endif
                                 </h4>
+                                @php
+                                    $coinUser = \App\Models\Coin::where([['user_id', Auth::user()->id], ['status', \App\Enums\CoinStatus::ACTIVE]])->first();
+                                    if ($coinUser == null){
+                                        $coin = 0;
+                                    } else {
+                                       $coin = $coinUser->quantity;
+                                    }
+                                @endphp
                                 <div class="dropdown-content text-left pt-0 mt-2" style="margin-left: -35px">
                                     <ul class="mb-0">
                                         <li>

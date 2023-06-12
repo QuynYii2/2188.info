@@ -311,7 +311,7 @@
         </div>
 
 
-        <div class="container body-main mt-5" style="padding-left: 0; padding-right: 0">
+        <div class="container body-main px-0">
             <div class="row">
                 <aside class="col-md-4">
 
