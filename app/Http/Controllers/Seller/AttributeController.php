@@ -25,7 +25,7 @@ class AttributeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:attributes'
+            'name' => 'required'
         ]);
 
         $attribute = Attribute::create([
@@ -52,7 +52,7 @@ class AttributeController extends Controller
             return redirect()->route('attributes.index');
         }
         $request->validate([
-            'name' => 'required|unique:attributes',
+            'name' => 'required',
         ]);
 
         $attribute->name = $request->name;
