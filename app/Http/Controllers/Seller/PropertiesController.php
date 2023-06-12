@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Enums\AttributeStatus;
-use App\Enums\EvaluateProductStatus;
 use App\Enums\PropertiStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;

@@ -1,3 +1,8 @@
+@php
+    use Illuminate\Support\Facades\DB;
+    use App\Enums\PropertiStatus;
+@endphp
+
 @extends('backend.layouts.master')
 
 @section('content')
@@ -150,7 +155,7 @@
         @endif
     </div>
     <div class="container-fluid">
-        <form action="{{ route('seller.products.store') }}" method="POST" enctype="multipart/form-data"
+        <form action="{{ route('seller.products.store') }}" method="post" enctype="multipart/form-data"
               class="form-horizontal row" role="form">
             @csrf
             @if (session('success_update_product'))
@@ -174,19 +179,24 @@
                                placeholder="Nhập mã sản phẩm">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="less-description" class="col-12 control-label">Mô tả ngắn</label>
-                    <div class="col-sm-12">
-                        <textarea class="tiny"></textarea>
-                    </div>
-                </div>
+                {{--                <div class="form-group">--}}
+                {{--                    <label for="less-description" class="col-12 control-label">Mô tả ngắn</label>--}}
+                {{--                    <div class="col-sm-12">--}}
+                {{--                        <textarea class="tiny"></textarea>--}}
+                {{--                    </div>--}}
+                {{--                </div>--}}
+                {{--                <div class="form-group">--}}
+                {{--                    <label for="description" class="col-12 control-label">Mô tả chi tiết</label>--}}
+                {{--                    <div class="col-sm-12">--}}
+                {{--                        <textarea class="form-control tiny" name="description-ffff" ></textarea>--}}
+                {{--                    </div>--}}
+                {{--                </div>--}}
                 <div class="form-group">
                     <label for="description" class="col-12 control-label">Mô tả chi tiết</label>
                     <div class="col-sm-12">
-                        <textarea class="form-control tiny" name="description" required></textarea>
+                        <textarea class="form-control" name="description"></textarea>
                     </div>
                 </div>
-
             </div>
             <div class="col-md-4 col-sm-4 mt-2 rm-pd-on-mobile">
                 <div class="form-group">
@@ -211,140 +221,164 @@
                     <div class="col-4 col-sm-4">
                         <input type="checkbox">
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label for="attribute">Chọn thuộc tính sản phẩm có sẵn:</label>
-                        <select class="form-control" name="attribute" id="attribute">
-                            @foreach($attributes as $attribute)
-                                <option id="attribute-option-{{$attribute->id}}"
-                                        value="{{$attribute->id}}">{{ $attribute->name }}</option>
+                <div class="form-group" id="cat-parameter">
+                    <label for="category" class="col-sm-12 control-label">Chuyên mục:</label>
+                    <div class="col-sm-12 overflow-scroll custom-scrollbar" style="height: 200px;">
+                        <ul id="category" class="list-unstyled">
+                            @foreach($categories as $category)
+                                <li>
+                                    <label>
+                                        <input type="radio" name="category_id" value="{{ $category->id }}" required>
+                                        {{ $category->name }}
+                                    </label>
+                                </li>
                             @endforeach
-                        </select>
+                        </ul>
+
                     </div>
+                </div>
 
-
-                    <div class="form-group" id="pr-parameter">
-                        <label class="col-md-12 control-label">Thông số sản phẩm</label>
-                        @foreach($attributes as $attribute)
-                            <div id="{{$attribute->name}}-{{$attribute->id}}" class="d-none">
-                                <label class="control-label small offset-2" for="color">{{$attribute->name}}</label>
-                                <div class="col-md-12 overflow-scroll custom-scrollbar" style="height: 150px;">
+                <div class="form-group">
+                    <label for="attribute">Chọn thuộc tính sản phẩm có sẵn:</label>
+                    {{--                    <select class="form-control" name="attribute" id="attribute">--}}
+                    {{--                        @foreach($attributes as $attribute)--}}
+                    {{--                            <option id="attribute-option-{{$attribute->id}}"--}}
+                    {{--                                    value="{{$attribute->id}}">{{ $attribute->name }}</option>--}}
+                    {{--                        @endforeach--}}
+                    {{--                    </select>--}}
+                </div>
+                <div class="form-group border pt-3 pb-3 mt-3 mb-3" id="pr-parameter">
+                    <label class="col-md-12 control-label">Thông số sản phẩm</label>
+                    @foreach($attributes as $attribute)
+                        @php
+                            $properties = DB::table('properties')->where([['status', PropertiStatus::ACTIVE], ['attribute_id', $attribute->id]])->get();
+                        @endphp
+                        @if(!$properties->isEmpty())
+                            <div id="{{$attribute->name}}-{{$attribute->id}}" class="">
+                                <label class="control-label offset-2" for="color">{{$attribute->name}}</label>
+                                <div class="col-md-12 overflow-scroll custom-scrollbar">
                                     <ul class="list-unstyled">
-                                        <li>
-                                            <label>
-                                                <input type="radio" name="color" value="" required>
-                                                Đỏ
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label>
-                                                <input type="radio" name="color" value="texnolog2">
-                                                Cam
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label>
-                                                <input type="radio" name="color" value="texnolog3">
-                                                Vàng
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <label>
-                                                <input type="radio" name="color" value="texnolog3">
-                                                Tím
-                                            </label>
-                                        </li>
+                                        @foreach($properties as $property)
+                                            <li>
+                                                <label>
+                                                    <input onchange="checkInput();" class="property-attribute"
+                                                           id="property-{{$property->id}}"
+                                                           type="checkbox" name="property-{{$attribute->name}}"
+                                                           value="{{$attribute->id}}-{{$property->id}}">
+                                                    {{$property->name}}
+                                                </label>
+                                            </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>
-                        @endforeach
+                        @endif
+                    @endforeach
 
-                <div class="border">
-                    <div class="col-sm-12 d-inline-block ">
-                        <label class="control-label small" for="date_start">Hình thức thanh toán</label>
-                        <input type="text" class="form-control"
-                               onclick="showDropdown('payment-method', 'payment-dropdownList')"
-                               placeholder="Chọn hình thức thanh toán" id="payment-method">
-                        <div class="dropdown-content" id="payment-dropdownList">
-                            <label>
-                                <input type="checkbox" value="option1"
-                                       onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
-                                Nhận hàng thanh toán
-                            </label>
-                            <label>
-                                <input type="checkbox" value="option2"
-                                       onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
-                                Thanh toán thẻ nội địa
-                            </label>
-                            <label>
-                                <input type="checkbox" value="option3"
-                                       onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
-                                Thanh toán qua paypal
-                            </label>
+                    <div class="border">
+                        <div class="col-sm-12 d-inline-block ">
+                            <label class="control-label small" for="date_start">Hình thức thanh toán</label>
+                            <input type="text" class="form-control"
+                                   onclick="showDropdown('payment-method', 'payment-dropdownList')"
+                                   placeholder="Chọn hình thức thanh toán" id="payment-method">
+                            <div class="dropdown-content" id="payment-dropdownList">
+                                <label>
+                                    <input type="checkbox" value="option1"
+                                           onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
+                                    Nhận hàng thanh toán
+                                </label>
+                                <label>
+                                    <input type="checkbox" value="option2"
+                                           onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
+                                    Thanh toán thẻ nội địa
+                                </label>
+                                <label>
+                                    <input type="checkbox" value="option3"
+                                           onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
+                                    Thanh toán qua paypal
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-sm-12 d-inline-block">
+                            <label class="control-label small" for="date_start">Hình thức vận chuyển</label>
+                            <input type="text" class="form-control"
+                                   onclick="showDropdown('transport-method', 'transport-dropdownList')"
+                                   placeholder="Chọn hình thức vận chuyển" id="transport-method">
+                            <div class="dropdown-content" id="transport-dropdownList">
+                                <label>
+                                    <input type="checkbox" value="option1"
+                                           onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
+                                    Đường bộ
+                                </label>
+                                <label>
+                                    <input type="checkbox" value="option2"
+                                           onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
+                                    Đường thủy
+                                </label>
+                                <label>
+                                    <input type="checkbox" value="option3"
+                                           onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
+                                    Đường hàng không
+                                </label>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="form-group col-sm-12 d-inline-block">
-                        <label class="control-label small" for="date_start">Hình thức vận chuyển</label>
-                        <input type="text" class="form-control"
-                               onclick="showDropdown('transport-method', 'transport-dropdownList')"
-                               placeholder="Chọn hình thức vận chuyển" id="transport-method">
-                        <div class="dropdown-content" id="transport-dropdownList">
-                            <label>
-                                <input type="checkbox" value="option1"
-                                       onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
-                                Đường bộ
-                            </label>
-                            <label>
-                                <input type="checkbox" value="option2"
-                                       onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
-                                Đường thủy
-                            </label>
-                            <label>
-                                <input type="checkbox" value="option3"
-                                       onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
-                                Đường hàng không
-                            </label>
-                        </div>
+                    <div class="form-group col-12 col-sm-12 pt-3">
+                        <label for="thumbnail">Ảnh đại diện:</label>
+                        <label class='__lk-fileInput'>
+                            <span data-default='Choose file'>Choose file</span>
+                            <input type="file" id="thumbnail" class="img-cfg" name="thumbnail" accept="image/*"
+                                   required>
+                        </label>
                     </div>
-                </div>
-                <div class="form-group col-12 col-sm-12 pt-3">
-                    <label for="thumbnail">Ảnh đại diện:</label>
-                    <label class='__lk-fileInput'>
-                        <span data-default='Choose file'>Choose file</span>
-                        <input type="file" id="thumbnail" class="img-cfg" name="thumbnail" accept="image/*" required>
-                    </label>
-                </div>
 
-                <div class="form-group col-12 col-sm-12 ">
-                    <label for="gallery">Thư viện ảnh:</label>
-                    <label class='__lk-fileInput'>
-                        <span data-default='Choose file'>Choose file</span>
-                        <input type="file" id="gallery" class="img-cfg" name="gallery[]" accept="image/*" multiple
-                               required>
-                    </label>
+                    <div class="form-group col-12 col-sm-12 ">
+                        <label for="gallery">Thư viện ảnh:</label>
+                        <label class='__lk-fileInput'>
+                            <span data-default='Choose file'>Choose file</span>
+                            <input type="file" id="gallery" class="img-cfg" name="gallery[]" accept="image/*" required>
+                        </label>
+                    </div>
                 </div>
             </div>
+            <input id="input-form-create-attribute" name="attribute_property" type="text" value="1" hidden>
             <div class="form-group col-12 col-md-7 col-sm-8 ">
                 <div class="row justify-content-center">
                     <button type="submit" class="btn btn-primary">Gửi</button>
                 </div>
             </div>
-            </form>
-        </div>
-        <div class="d-none">
-            <form id="form-create-attribute">
-
-            </form>
-        </div>
         </form>
-
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function () {
 
-        })
+        var properties = document.getElementsByClassName('property-attribute')
+        var number = properties.length
+
+        function checkInput() {
+            var propertyArray = [];
+            var attributeArray = [];
+            var myArray = [];
+            for (i = 0; i < number; i++) {
+                if (properties[i].checked) {
+                    const ArrPro = properties[i].value.split('-');
+                    myArray.push(properties[i].value);
+                    let attribute = ArrPro[0];
+                    let property = ArrPro[1];
+                    attributeArray.push(attribute);
+                    propertyArray.push(property);
+                }
+            }
+            var attPro = document.getElementById('input-form-create-attribute')
+            attPro.value = myArray;
+            localStorage.setItem('attributeArray', attributeArray);
+            localStorage.setItem('propertyArray', propertyArray);
+        }
+
+
     </script>
 
     <script>
