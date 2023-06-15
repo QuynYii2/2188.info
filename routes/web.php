@@ -169,4 +169,7 @@ Route::middleware(['auth'])->group(function () {
     // Order Controller
     Route::get('/order-management/', [\App\Http\Controllers\Frontend\OrderController::class, 'index'])->name('order.show');
     Route::delete('/order-delete/{id}', [\App\Http\Controllers\Frontend\OrderController::class, 'cancel'])->name('order.cancel');
+    // Product Interest
+    Route::get('/product-interest', [\App\Http\Controllers\ProductInterestController::class, 'index'])->name('product.interest.index');
+    Route::post('/product-interest/{id}', [\App\Http\Controllers\ProductInterestController::class, 'delete'])->name('product.interest.delete');
 });
