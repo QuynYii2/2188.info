@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Frontend\HomeController;
 use App\Libraries\GeoIP;
 use App\Models\ProductInterested;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ class ProductInterestController extends Controller
 {
     public function index(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $geoIp = new GeoIP();
         $locale = $geoIp->get_country_from_ip('183.80.130.4');
         if ($locale !== null && is_array($locale)) {
