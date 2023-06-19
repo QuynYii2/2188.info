@@ -306,14 +306,14 @@
                             @csrf
                             <h2 class="product-title">{{$product->name}}</h2>
                             <small class="text-warning">{{$product->category->name}}</small>
-                            <div class="product-rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-half-o"></i>
-                                <span>4.7(21)</span>
-                            </div>
+                                <div class="product-rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-half-o"></i>
+                                    <span>4.7(21)</span>
+                                </div>
 
                             <div class="product-price d-flex" style="gap: 3rem">
                                 <p class="last-price">{{ __('home.old price') }}:
