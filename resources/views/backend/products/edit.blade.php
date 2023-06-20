@@ -100,8 +100,10 @@
                         $array = json_decode($input, true);
 
                         $modifiedArray = [];
-                        foreach ($array as $value) {
-                            $modifiedArray[] = str_replace(['gallery\/', '\\'], '', $value);
+                        if($array != null){
+                            foreach ($array as $value) {
+                                $modifiedArray[] = str_replace(['gallery\/', '\\'], '', $value);
+                            }
                         }
                     @endphp
                     @if ($product->gallery )

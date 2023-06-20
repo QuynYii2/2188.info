@@ -13,6 +13,7 @@ use App\Libraries\GeoIP;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 
 class HomeController extends Controller

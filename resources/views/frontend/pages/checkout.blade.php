@@ -92,7 +92,7 @@
                                             <i class="fa fa-user"></i>{{ __('home.full name') }}
                                         </label>
                                         <input type="text" id="fname" name="fullname" placeholder="John M. Doe"
-                                               value="{{$user->name}}">
+                                               value="{{$user->name}}" required>
                                         <label for="email"><i class="fa fa-envelope"></i>{{ __('home.email') }}</label>
                                         <input type="text" id="email" name="email" placeholder="john@example.com"
                                                value="{{$user->email}}">
@@ -100,7 +100,7 @@
                                                     class="fa fa-address-card-o"></i>{{ __('home.phone number') }}
                                         </label>
                                         <input type="text" id="phone" name="phone" placeholder="035985935"
-                                               value="{{$user->phone}}">
+                                               value="{{$user->phone}}" required>
                                         <label for="city"><i class="fa fa-institution"></i>{{ __('home.address') }}
                                         </label>
                                         <input type="radio" id="address-order1" name="address-order" checked>

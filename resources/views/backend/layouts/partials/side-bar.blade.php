@@ -112,7 +112,6 @@
 
 </style>
 
-
 <div class='wrapper'>
     <ul class='items'>
         <li>
@@ -127,6 +126,21 @@
                         <li><a href="/products/create">Thêm mới sản phẩm</a>
                         </li>
                         <li><a href="/categories">Chuyên mục</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#!"><i class="fa fa-cogs"></i>Thuộc tính sản phẩm<i
+                                class="arrow fa fa-angle-right pull-right"></i></a>
+                    <ul class='sub-items'>
+
+                        <li><a href="{{route('attributes.index')}}">Danh sách thuộc tính</a>
+                        </li>
+                        <li><a href="{{route('attributes.create')}}">Thêm mới thuộc tính</a>
+                        </li>
+                        <li><a href="{{route('properties.index')}}">Quản lí thuộc tính con</a>
+                        </li>
+                        <li><a href="{{route('properties.create')}}">Thêm mới thuộc tính con</a>
                         </li>
                     </ul>
                 </li>
