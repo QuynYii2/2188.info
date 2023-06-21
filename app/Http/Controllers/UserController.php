@@ -226,4 +226,21 @@ class UserController extends Controller
 
     }
 
+    public function changePassword(Request $request)
+    {
+        $oldPassword = Auth::user()->password;
+        $currentPassword = $request->input('current-password');
+        $check = Hash::check($currentPassword, $oldPassword);
+        if ($check) {
+            $newPassword = $request->input('new-password');
+            $user = Auth::user();
+            $user->password = Hash::make($newPassword);
+            $user->save();
+
+        } else {
+            Notification::create("sai mật khẩu rồi");
+        }
+
+    }
+
 }

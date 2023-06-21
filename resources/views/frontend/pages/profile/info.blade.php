@@ -428,8 +428,9 @@
                         <span>&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form action="">
+                <form action="{{route('user.changePassword')}}" method="post">
+                    @csrf
+                    <div class="modal-body">
                         <div class="form-group">
                             <label for="inputPassword" class="col-form-label">Mật khẩu hiện tại</label>
                             <div>
@@ -445,15 +446,16 @@
                         <div class="form-group">
                             <label for="inputPassword" class="col-form-label">Nhập lại mật khẩu mới</label>
                             <div>
-                                <input type="password" class="form-control" name="renew-password">
+                                <input type="password" class="form-control" name="renew-password"
+                                       onchange="checkPasswordMatch()">
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -540,5 +542,15 @@
                 // Các tùy chọn và cấu hình khác của Bootstrap Datepicker
             });
         });
+
+
+        function checkPasswordMatch() {
+            var newPassword = document.getElementsByName("new-password")[0].value;
+            var renewPassword = document.getElementsByName("renew-password")[0].value;
+
+            if (newPassword !== renewPassword) {
+                alert("Mật khẩu mới và nhập lại mật khẩu không khớp nhau.");
+            }
+        }
     </script>
 @endsection

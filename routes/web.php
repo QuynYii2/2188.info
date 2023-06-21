@@ -95,6 +95,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/buy-coin', [\App\Http\Controllers\CoinController::class, 'store'])->name('buy.coin.create');
 //    Route::get('/buy-coin-success?price={price}&quantity={quantity}', [\App\Http\Controllers\CoinController::class, 'successPayment'])->name('buy.coin.success');
     Route::get('/buy-coin-success/{price}/{quantity}', [\App\Http\Controllers\CoinController::class, 'successPayment'])->name('buy.coin.success');
+
+    // thông tin cá nhân
+
+    Route::post('change-password', [\App\Http\Controllers\UserController::class, 'changePassword'])->name('user.changePassword');
 });
 
 
