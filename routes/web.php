@@ -106,16 +106,22 @@ Route::group(['middleware' => 'role.admin'], function () {
 });
 
 Route::group(['middleware' => 'role.seller'], function () {
-
+    //
     Route::get('/attributes', [\App\Http\Controllers\Seller\AttributeController::class, 'index'])->name('attributes.index');
-
+    //
     Route::get('/attributes/create', [\App\Http\Controllers\Seller\AttributeController::class, 'create'])->name('attributes.create');
     Route::post('/attributes', [\App\Http\Controllers\Seller\AttributeController::class, 'store'])->name('attributes.store');
-
-    Route::get('/variations/create', [\App\Http\Controllers\Seller\VariationController::class, 'create'])->name('variations.create');
-    Route::post('/variations', [\App\Http\Controllers\Seller\VariationController::class, 'store'])->name('variations.store');
-
-
+    //
+    Route::get('/attributes/{id}', [\App\Http\Controllers\Seller\AttributeController::class, 'show'])->name('attributes.detail');
+    Route::post('/attributes/{id}', [\App\Http\Controllers\Seller\AttributeController::class, 'update'])->name('attributes.update');
+    //
+    Route::get('/properties', [\App\Http\Controllers\Seller\PropertiesController::class, 'index'])->name('properties.index');
+    Route::get('/properties/create', [\App\Http\Controllers\Seller\PropertiesController::class, 'create'])->name('properties.create');
+    Route::post('/properties', [\App\Http\Controllers\Seller\PropertiesController::class, 'store'])->name('properties.store');
+    //
+    Route::get('/properties/{id}', [\App\Http\Controllers\Seller\PropertiesController::class, 'show'])->name('properties.detail');
+    Route::post('/properties/{id}', [\App\Http\Controllers\Seller\PropertiesController::class, 'update'])->name('properties.update');
+    //
     Route::get('/products', [\App\Http\Controllers\Seller\ProductController::class, 'index'])->name('seller.products.index');
     Route::get('/products/create', [\App\Http\Controllers\Seller\ProductController::class, 'create'])->name('seller.products.create');
     Route::post('/products', [\App\Http\Controllers\Seller\ProductController::class, 'store'])->name('seller.products.store');
@@ -163,4 +169,7 @@ Route::middleware(['auth'])->group(function () {
     // Order Controller
     Route::get('/order-management/', [\App\Http\Controllers\Frontend\OrderController::class, 'index'])->name('order.show');
     Route::delete('/order-delete/{id}', [\App\Http\Controllers\Frontend\OrderController::class, 'cancel'])->name('order.cancel');
+    // Product Interest
+    Route::get('/product-interest', [\App\Http\Controllers\ProductInterestController::class, 'index'])->name('product.interest.index');
+    Route::post('/product-interest/{id}', [\App\Http\Controllers\ProductInterestController::class, 'delete'])->name('product.interest.delete');
 });

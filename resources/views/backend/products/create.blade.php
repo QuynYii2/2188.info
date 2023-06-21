@@ -197,6 +197,7 @@
                         <textarea class="form-control" name="description"></textarea>
                     </div>
                 </div>
+
             </div>
             <div class="col-md-4 col-sm-4 mt-2 rm-pd-on-mobile">
                 <div class="form-group">
@@ -236,12 +237,12 @@
                                 </li>
                             @endforeach
                         </ul>
-
                     </div>
                 </div>
+                @foreach($attributes as $attribute)
 
                 <div class="form-group">
-{{--                    <label for="attribute">Chọn thuộc tính sản phẩm có sẵn:</label>--}}
+                    <label for="attribute">Chọn thuộc tính sản phẩm có sẵn:</label>
                     {{--                    <select class="form-control" name="attribute" id="attribute">--}}
                     {{--                        @foreach($attributes as $attribute)--}}
                     {{--                            <option id="attribute-option-{{$attribute->id}}"--}}
@@ -250,14 +251,14 @@
                     {{--                    </select>--}}
                 </div>
                 <div class="form-group border pt-3 pb-3 mt-3 mb-3" id="pr-parameter">
-                    <label for="attribute" class="col-md-12 control-label">Chọn thuộc tính sản phẩm có sẵn</label>
+                    <label for="attribute" class="col-md-12 control-label">Thông số sản phẩm</label>
                     @foreach($attributes as $attribute)
                         @php
                             $properties = DB::table('properties')->where([['status', PropertiStatus::ACTIVE], ['attribute_id', $attribute->id]])->get();
                         @endphp
                         @if(!$properties->isEmpty())
                             <div id="{{$attribute->name}}-{{$attribute->id}}" class="">
-                                <label class="control-label offset-1" for="color">{{$attribute->name}}</label>
+                                <label class="control-label offset-2" for="color">{{$attribute->name}}</label>
                                 <div class="col-md-12 overflow-scroll custom-scrollbar">
                                     <ul class="list-unstyled">
                                         @foreach($properties as $property)
@@ -350,6 +351,8 @@
                     <button type="submit" class="btn btn-primary">Gửi</button>
                 </div>
             </div>
+
+
         </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

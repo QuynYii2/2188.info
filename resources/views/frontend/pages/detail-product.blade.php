@@ -1096,6 +1096,7 @@
         let urlParams = window.location.href;
         let myParam = urlParams.split('/');
         let num = myParam.length;
+        console.log(myParam[num - 1]);
         document.getElementById("product_id").value = myParam[num - 1];
 
         function myFunction(x) {
@@ -1103,6 +1104,7 @@
             if (x.matches) {
                 tabs.classList.remove("card");
                 tabs.classList.add("border");
+                console.log('b')
             }
         }
 
