@@ -2,30 +2,37 @@
 
 namespace App\Http\Controllers\Seller;
 
-use App\Enums\AttributeProductStatus;
-use App\Enums\AttributeStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
-class ProductController extends Controller
+class ProductControllerBackup extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $products = Product::where('user_id', Auth::user()->id)->orderByDesc('id')->get();
+        $products = Product::all();
         return view('backend/products/index', ['products' => $products]);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         $categories = Category::all();
-        $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', Auth::user()->id]])->get();
+        $attributes = Attribute::all();
 
         return view('backend/products/create', [
             'categories' => $categories,
@@ -33,12 +40,17 @@ class ProductController extends Controller
         ]);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
             $thumbnailPath = $thumbnail->store('thumbnails', 'public');
-
         }
 
         if ($request->hasFile('gallery')) {
@@ -49,6 +61,21 @@ class ProductController extends Controller
                 $galleryPaths[] = $galleryPath;
             }
         }
+
+        $variationsArray = [];
+        $variations = $request->input('variations');
+
+        dd($variations);
+
+//        foreach ($variations as $variationId) {
+//            $variation = Variation::find($variationId);
+//            if ($variation) {
+//                $variationsArray[] = $variation->name;
+//            }
+//        }
+
+        $variationsString = implode(', ', $variationsArray);
+
 
         $userLogin = $request->session()->get('login');
         $userInfo = User::where('email', $userLogin)->first();
@@ -64,66 +91,6 @@ class ProductController extends Controller
         $product->user_id = $userInfo->id;
         $product->location = $userInfo->region;
         $createProduct = $product->save();
-
-        $proAtt = $request->input('attribute_property');
-//        $arrayProAtt = explode(',', $proAtt);
-//        $result = array();
-//        $object = new StdClass;
-//        for ($i = 0; $i < count($arrayProAtt); $i++) {
-//            $text = $arrayProAtt[$i];
-//            $value = explode('-', $text);
-//            $object->attribute = $value[0];
-//            $object->property = $value[1];
-//            $result[] = $object;
-//        }
-//        dd($result);
-
-        $newArray = collect(explode(",", $proAtt))
-            ->reduce(function ($carry, $item) {
-                $parts = explode('-', $item);
-                $firstValue = $parts[0];
-                $secondValue = $parts[1];
-
-                if ($carry->isEmpty()) {
-                    $carry->push($item);
-                } else {
-                    $lastItem = $carry->last();
-                    $lastParts = explode('-', $lastItem);
-                    $lastFirstValue = $lastParts[0];
-
-                    if ($lastFirstValue == $firstValue) {
-                        $newLastItem = $lastFirstValue . '-' . $lastParts[1] . '-' . $secondValue;
-                        $carry->pop();
-                        $carry->push($newLastItem);
-                    } else {
-                        $carry->push($item);
-                    }
-                }
-
-                return $carry;
-            }, collect())
-            ->toArray();
-
-        $product = Product::where('user_id', $userInfo->id)->orderByDesc('id')->first();
-
-        for ($i = 0; $i < count($newArray); $i++) {
-//            dd($newArray[$i]);
-            $myArray = array();
-            $arraySplit = explode('-', $newArray[$i]);
-            for ($j = 1; $j < count($arraySplit); $j++) {
-                $myArray[] = $arraySplit[$j];
-            }
-
-            $attribute_property = [
-                'product_id' => $product->id,
-                'attribute_id' => $arraySplit[0],
-                'value' => implode(",", $myArray),
-                'status' => AttributeProductStatus::ACTIVE
-            ];
-//            dd($attribute_property);
-            DB::table('product_attribute')->insert($attribute_property);
-        }
-
         if ($createProduct) {
             $request->session()->flash('success_create_product', 'Tạo mới sản phẩm thành công.');
             return redirect()->route('seller.products.index')->with('success', 'Category đã được cập nhật thành công!');
@@ -133,11 +100,23 @@ class ProductController extends Controller
         }
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
         //
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit($id)
     {
         $product = Product::findOrFail($id);
@@ -148,6 +127,13 @@ class ProductController extends Controller
         return view('backend.products.edit', compact('product', 'categories', 'attributes', 'att_of_product'));
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
@@ -184,6 +170,12 @@ class ProductController extends Controller
 
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy(Product $product)
     {
         $product->delete();

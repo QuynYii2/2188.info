@@ -46,7 +46,12 @@ class User extends Authenticatable
         'level_account',
         'status',
         'provider_name',
-        'provider_id'
+        'provider_id',
+        'region',
+        'gender',
+        'nickname',
+        'date_of_birth',
+        'image'
     ];
 
     /**

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Enums\NotificationStatus;
 use App\Enums\PermissionUserStatus;
 use App\Enums\TimeLevelStatus;
-use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Notification;
 use App\Models\TimeLevelTable;
 use Carbon\Carbon;
@@ -16,9 +15,8 @@ use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class PaypalPaymentController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        (new HomeController())->getLocale($request);
         $permissions = DB::table('permission_user')->where([['user_id', Auth::user()->id], ['status', PermissionUserStatus::INACTIVE]])->get();
         return view('frontend/pages/payment', compact('permissions'));
     }
