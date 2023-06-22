@@ -1,5 +1,6 @@
 @php use Illuminate\Support\Facades\Auth;
- $user = \App\Models\User::find(Auth::user()->id)
+// $user = \App\Models\User::find(Auth::user()->id)
+ $user = Auth::user();
 @endphp
 
 @extends('frontend.layouts.master')

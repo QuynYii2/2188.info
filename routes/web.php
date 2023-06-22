@@ -99,6 +99,9 @@ Route::middleware(['auth'])->group(function () {
     // thông tin cá nhân
 
     Route::post('change-password', [\App\Http\Controllers\UserController::class, 'changePassword'])->name('user.changePassword');
+    Route::post('change-email', [\App\Http\Controllers\UserController::class, 'changeEmail'])->name('user.changeEmail');
+    Route::post('change-phone-number', [\App\Http\Controllers\UserController::class, 'changePhoneNumber'])->name('user.changePhoneNumber');
+    Route::post('update-info', [\App\Http\Controllers\UserController::class, 'updateInfo'])->name('user.updateInfo');
 });
 
 
