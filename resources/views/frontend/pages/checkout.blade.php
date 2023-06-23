@@ -48,7 +48,7 @@
                     <div class="col-12">
                         <form id="checkout-form" method="post">
                             @csrf
-                            <div class="col-11 m-auto">
+                            <div class="col-12">
                                 <h4>
                                     {{ __('home.Cart') }}
                                     <span class="price" style="color:black">
@@ -84,7 +84,7 @@
                                                     id="max-total">{{ $cartItem->price*$cartItem->quantity }}</span></b></span>
                                 </p>
                             </div>
-                            <div class="col-11 m-auto">
+                            <div class="col-12">
                                 <div class="row mt-5">
                                     <div class="col-12 col-md-12 col-xl-8">
                                         <h3>{{ __('home.Billing Address') }}</h3>
@@ -92,7 +92,7 @@
                                             <i class="fa fa-user"></i>{{ __('home.full name') }}
                                         </label>
                                         <input type="text" id="fname" name="fullname" placeholder="John M. Doe"
-                                               value="{{$user->name}}">
+                                               value="{{$user->name}}" required>
                                         <label for="email"><i class="fa fa-envelope"></i>{{ __('home.email') }}</label>
                                         <input type="text" id="email" name="email" placeholder="john@example.com"
                                                value="{{$user->email}}">
@@ -100,7 +100,7 @@
                                                     class="fa fa-address-card-o"></i>{{ __('home.phone number') }}
                                         </label>
                                         <input type="text" id="phone" name="phone" placeholder="035985935"
-                                               value="{{$user->phone}}">
+                                               value="{{$user->phone}}" required>
                                         <label for="city"><i class="fa fa-institution"></i>{{ __('home.address') }}
                                         </label>
                                         <input type="radio" id="address-order1" name="address-order" checked>
@@ -203,8 +203,8 @@
         function getAllTotal() {
             let totalMax = document.getElementById('max-total');
             let totalPrice = document.getElementById('total-price');
-            let shippingPrice = document.getElementById('shipping-price').value;
-            let salePrice = document.getElementById('sale-price').value;
+            let shippingPrice = document.getElementById('shipping-price').innerText;
+            let salePrice = document.getElementById('sale-price').innerText;
             let checkOutPrice = document.getElementById('checkout-price');
             var firstCells = document.querySelectorAll('#table-checkout td:nth-child(4)');
             console.log(firstCells)
@@ -219,7 +219,7 @@
             totalMax.innerText = total;
             totalPrice.innerHTML = total;
 
-            checkOutPrice.value = parseFloat(total) + parseFloat(shippingPrice) - parseFloat(salePrice);
+            checkOutPrice.innerHTML = parseFloat(total) + parseFloat(shippingPrice) - parseFloat(salePrice);
 
         }
 

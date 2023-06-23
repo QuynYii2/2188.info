@@ -1,3 +1,8 @@
+@php
+    use App\Models\Attribute;
+    use App\Models\Properties;
+@endphp
+
 @extends('frontend.layouts.master')
 
 @section('title', 'Detail')
@@ -322,23 +327,25 @@
                                     <span>${{$product->price}} (<span>5%</span>)</span></p>
                             </div>
                             <div class="row">
-                                <div class="col-sm-6 col-6">
-                                    <label for="size">{{ __('home.size') }}</label>
-                                    <select id="size" name="size" class="form-control">
-                                        <option>S</option>
-                                        <option>M</option>
-                                        <option>L</option>
-                                        <option>XL</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-6 col-6">
-                                    <label for="color">{{ __('home.color') }}</label>
-                                    <select id="color" name="color" class="form-control">
-                                        <option>Blue</option>
-                                        <option>Green</option>
-                                        <option>Red</option>
-                                    </select>
-                                </div>
+                                @foreach($attributes as $attribute)
+                                    @php
+                                        $att = Attribute::find($attribute->attribute_id);
+                                        $properties_id = $attribute->value;
+                                        $arrayAtt = array();
+                                        $arrayAtt = explode(',', $properties_id);
+                                    @endphp
+                                    <div class="col-sm-6 col-6">
+                                        <label for="{{$att->name}}">{{$att->name}}</label>
+                                        <select id="{{$att->name}}" name="{{$att->name}}" class="form-control">
+                                            @foreach($arrayAtt as $data)
+                                                @php
+                                                    $property = Properties::find($data);
+                                                @endphp
+                                                <option value="{{$data}}">{{$property->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                @endforeach
                             </div>
 
                             <div class="count__wrapper count__wrapper--ml mt-3">
@@ -363,12 +370,15 @@
                 </div>
                 <div class="mt-4 bg-white">
                     <ul class="nav nav-tabs row justify-content-around " id="myTab" role="tablist">
-                        <li class="col-sm-4 col-4 nav-item tabs-product-detail tabs-item"> <a class="nav-link lead active link-tabs" role="tab" data-toggle="tab"
-                                                       href="#tabDescription">{{ __('home.description') }}</a></li>
-                        <li class="col-sm-4 col-4 nav-item tabs-product-detail tabs-item"> <a class="nav-link lead link-tabs" role="tab" data-toggle="tab"
-                                                       href="#tabSpecification">{{ __('home.specification') }}</a></li>
-                        <li class="col-sm-4 col-4 nav-item tabs-product-detail tabs-item"> <a class="nav-link lead link-tabs" role="tab" data-toggle="tab"
-                                                       href="#tabReview">{{ __('home.review') }}</a></li>
+                        <li class="col-sm-4 col-4 nav-item tabs-product-detail tabs-item"><a
+                                    class="nav-link lead active link-tabs w-100" role="tab" data-toggle="tab"
+                                    href="#tabDescription">{{ __('home.description') }}</a></li>
+                        <li class="col-sm-4 col-4 nav-item tabs-product-detail tabs-item"><a
+                                    class="nav-link lead link-tabs w-100" role="tab" data-toggle="tab"
+                                    href="#tabSpecification">{{ __('home.specification') }}</a></li>
+                        <li class="col-sm-4 col-4 nav-item tabs-product-detail tabs-item"><a
+                                    class="nav-link lead link-tabs w-100" role="tab" data-toggle="tab"
+                                    href="#tabReview">{{ __('home.review') }}</a></li>
 
                     </ul>
                     <div class="tab-content mb-5" id="myTabContent">
@@ -1086,7 +1096,6 @@
         let urlParams = window.location.href;
         let myParam = urlParams.split('/');
         let num = myParam.length;
-        console.log(myParam[num - 1]);
         document.getElementById("product_id").value = myParam[num - 1];
 
         function myFunction(x) {
@@ -1094,7 +1103,6 @@
             if (x.matches) {
                 tabs.classList.remove("card");
                 tabs.classList.add("border");
-                console.log('b')
             }
         }
 

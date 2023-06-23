@@ -75,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/permission-user', [\App\Http\Controllers\PermissionRankController::class, 'index'])->name('permission.user.show');
     Route::get('/permission-list', [\App\Http\Controllers\PermissionRankController::class, 'list'])->name('permission.list.show');
     Route::post('/permission', [\App\Http\Controllers\PermissionRankController::class, 'store'])->name('permission.create');
+    Route::post('/delete-payment/{id}', [\App\Http\Controllers\PermissionRankController::class, 'deletePermission'])->name('permission.delete');
     //
     Route::get('create-transaction', [\App\Http\Controllers\PaypalPaymentController::class, 'createTransaction'])->name('createTransaction');
 //    Route::post('update-permission', [\App\Http\Controllers\PermissionRankController::class, 'updateRank'])->name('permission.update.rank');
@@ -94,6 +95,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/buy-coin', [\App\Http\Controllers\CoinController::class, 'store'])->name('buy.coin.create');
 //    Route::get('/buy-coin-success?price={price}&quantity={quantity}', [\App\Http\Controllers\CoinController::class, 'successPayment'])->name('buy.coin.success');
     Route::get('/buy-coin-success/{price}/{quantity}', [\App\Http\Controllers\CoinController::class, 'successPayment'])->name('buy.coin.success');
+
+    // thông tin cá nhân
+
+    Route::post('change-password', [\App\Http\Controllers\UserController::class, 'changePassword'])->name('user.changePassword');
+    Route::post('change-email', [\App\Http\Controllers\UserController::class, 'changeEmail'])->name('user.changeEmail');
+    Route::post('change-phone-number', [\App\Http\Controllers\UserController::class, 'changePhoneNumber'])->name('user.changePhoneNumber');
+    Route::post('update-info', [\App\Http\Controllers\UserController::class, 'updateInfo'])->name('user.updateInfo');
 });
 
 
@@ -105,16 +113,22 @@ Route::group(['middleware' => 'role.admin'], function () {
 });
 
 Route::group(['middleware' => 'role.seller'], function () {
-
+    //
     Route::get('/attributes', [\App\Http\Controllers\Seller\AttributeController::class, 'index'])->name('attributes.index');
-
+    //
     Route::get('/attributes/create', [\App\Http\Controllers\Seller\AttributeController::class, 'create'])->name('attributes.create');
     Route::post('/attributes', [\App\Http\Controllers\Seller\AttributeController::class, 'store'])->name('attributes.store');
-
-    Route::get('/variations/create', [\App\Http\Controllers\Seller\VariationController::class, 'create'])->name('variations.create');
-    Route::post('/variations', [\App\Http\Controllers\Seller\VariationController::class, 'store'])->name('variations.store');
-
-
+    //
+    Route::get('/attributes/{id}', [\App\Http\Controllers\Seller\AttributeController::class, 'show'])->name('attributes.detail');
+    Route::post('/attributes/{id}', [\App\Http\Controllers\Seller\AttributeController::class, 'update'])->name('attributes.update');
+    //
+    Route::get('/properties', [\App\Http\Controllers\Seller\PropertiesController::class, 'index'])->name('properties.index');
+    Route::get('/properties/create', [\App\Http\Controllers\Seller\PropertiesController::class, 'create'])->name('properties.create');
+    Route::post('/properties', [\App\Http\Controllers\Seller\PropertiesController::class, 'store'])->name('properties.store');
+    //
+    Route::get('/properties/{id}', [\App\Http\Controllers\Seller\PropertiesController::class, 'show'])->name('properties.detail');
+    Route::post('/properties/{id}', [\App\Http\Controllers\Seller\PropertiesController::class, 'update'])->name('properties.update');
+    //
     Route::get('/products', [\App\Http\Controllers\Seller\ProductController::class, 'index'])->name('seller.products.index');
     Route::get('/products/create', [\App\Http\Controllers\Seller\ProductController::class, 'create'])->name('seller.products.create');
     Route::post('/products', [\App\Http\Controllers\Seller\ProductController::class, 'store'])->name('seller.products.store');
@@ -162,4 +176,7 @@ Route::middleware(['auth'])->group(function () {
     // Order Controller
     Route::get('/order-management/', [\App\Http\Controllers\Frontend\OrderController::class, 'index'])->name('order.show');
     Route::delete('/order-delete/{id}', [\App\Http\Controllers\Frontend\OrderController::class, 'cancel'])->name('order.cancel');
+    // Product Interest
+    Route::get('/product-interest', [\App\Http\Controllers\ProductInterestController::class, 'index'])->name('product.interest.index');
+    Route::post('/product-interest/{id}', [\App\Http\Controllers\ProductInterestController::class, 'delete'])->name('product.interest.delete');
 });

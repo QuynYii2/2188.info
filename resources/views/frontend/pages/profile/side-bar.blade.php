@@ -42,7 +42,6 @@
         <div class="d-inline-block">
             <h6>{{ __('home.account of') }}</h6>
             <h4>{{$user->name}}</h4>
-            <h5>Coins: {{$coin}}</h5>
         </div>
 </div>
 

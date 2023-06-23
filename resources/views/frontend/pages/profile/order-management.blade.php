@@ -35,7 +35,7 @@
     @for($i = 0; $i< count($permissionUsers); $i++)
         @if($permissionUsers[0] != null)
             @if($permissionUsers[$i]->name == 'manage_orders')
-                <div class="row mt-5 bg-white rounded">
+                <div class="row mt-2 bg-white rounded">
                     <div class="row rounded pt-1 ml-5">
                         <h5>{{ __('home.order management') }}</h5>
                     </div>
@@ -625,6 +625,7 @@
                     </div>
                 </div>
             @endif
+            @break
         @endif
     @endfor
 @endsection

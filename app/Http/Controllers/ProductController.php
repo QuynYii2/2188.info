@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AttributeProductStatus;
 use App\Enums\EvaluateProductStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\EvaluateProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -32,10 +34,13 @@ class ProductController extends Controller
 
         $otherProduct = Product::where('id', '!=', $id)->limit(4)->get();
 
+        $attributes = DB::table('product_attribute')->where([['product_id', $product->id], ['status', AttributeProductStatus::ACTIVE]])->get();
+
         return view('frontend/pages/detail-product', [
             'result' => $result,
             'product' => $product,
-            'otherProduct' => $otherProduct
+            'otherProduct' => $otherProduct,
+            'attributes' => $attributes
         ]);
     }
 }

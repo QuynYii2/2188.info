@@ -461,7 +461,7 @@
                 </div>
                 <div class="col-lg-7 col-sm-6 col-md-6 col-12" id="in-search">
                     <form class="search-wrapper cf">
-                        <input type="text" placeholder="{{ __('home.placeholder search') }}" required
+                        <input type="text" placeholder="{{ __('home.placeholder search') }}"
                                style="box-shadow: none">
                         <button type="submit">{{ __('home.search') }}</button>
                     </form>
@@ -545,11 +545,26 @@
                                             {{ Auth::user()->name }}
                                         @endif
                                     </h4>
-                                    <div class="dropdown-content text-left">
-                                        <ul>
+                                    @php
+                                        $coinUser = \App\Models\Coin::where([['user_id', Auth::user()->id], ['status', \App\Enums\CoinStatus::ACTIVE]])->first();
+                                        if ($coinUser == null){
+                                            $coin = 0;
+                                        } else {
+                                           $coin = $coinUser->quantity;
+                                        }
+                                    @endphp
+                                    <div class="dropdown-content text-left pt-0">
+                                        <ul class="mb-0">
                                             <li>
                                                 <a class="dropdown-item"
                                                    href="{{route('profile.show')}}">{{ __('home.profile') }}</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item"
+                                                   href="#">Coins: {{$coin}}</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('buy.coin.show')}}" class="dropdown-item">{{ __('home.buy coin') }}</a>
                                             </li>
                                             <li>
                                                 <a class="dropdown-item" onclick="logout()"
@@ -558,25 +573,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                @php
-                                    $coinUser = \App\Models\Coin::where([['user_id', Auth::user()->id], ['status', \App\Enums\CoinStatus::ACTIVE]])->first();
-                                    if ($coinUser == null){
-                                        $coin = 0;
-                                    } else {
-                                       $coin = $coinUser->quantity;
-                                    }
-                                @endphp
-                                <div class="btn-group ml-3" role="group" aria-label="First group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text border-0 d-flex flex-column-reverse">
-                                            <span class="text-16 font-weight-700">{{$coin}}</span>
-                                            <span class="text-10">
-                                            Coins
-                                        </span>
-                                        </div>
-                                    </div>
-                                    <a href="{{route('buy.coin.show')}}" class="btn btn-warning rounded border-0 font-weight-500">Mua</a>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -609,7 +606,7 @@
                         </a>
                     </div>
                 </div>
-                @if(session('login'))
+                @if(session('login') || Auth::user()!= null)
                     <div class="col-lg-3 col-md-3 text-right col-md-4 col-7 mt-2">
                         <div class="d-flex align-items-center">
                             <ul class="nav-right mb-0">
@@ -684,11 +681,26 @@
                                         {{ Auth::user()->name }}
                                     @endif
                                 </h4>
+                                @php
+                                    $coinUser = \App\Models\Coin::where([['user_id', Auth::user()->id], ['status', \App\Enums\CoinStatus::ACTIVE]])->first();
+                                    if ($coinUser == null){
+                                        $coin = 0;
+                                    } else {
+                                       $coin = $coinUser->quantity;
+                                    }
+                                @endphp
                                 <div class="dropdown-content text-left pt-0 mt-2" style="margin-left: -35px">
                                     <ul class="mb-0">
                                         <li>
                                             <a class="dropdown-item"
                                                href="{{route('profile.show')}}">{{ __('home.profile') }}</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item"
+                                               href="#">Coins: {{$coin}}</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{route('buy.coin.show')}}" class="dropdown-item">{{ __('home.buy coin') }}</a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item" onclick="logout()"

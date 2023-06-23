@@ -2,95 +2,65 @@
 
 namespace App\Http\Controllers\Seller;
 
+use App\Enums\AttributeStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Testing\Fluent\Concerns\Has;
+use Illuminate\Support\Facades\Auth;
 
 class AttributeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $attributes = Attribute::withCount('variations')->get();
+        $attributes = Attribute::where([['status', '!=', AttributeStatus::DELETED], ['user_id', Auth::user()->id]])->get();
         return view('backend.attributes.index', compact('attributes'));
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('backend.attributes.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:attributes',
+            'name' => 'required'
         ]);
 
         $attribute = Attribute::create([
             'name' => $request->name,
+            'user_id' => Auth::user()->id,
         ]);
 
-        return redirect()->route('attributes.create')->with('success', 'Attribute created successfully.');
+        return redirect()->route('attributes.index')->with('success', 'Attribute created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        $attribute = Attribute::where([['status', AttributeStatus::ACTIVE], ['id', $id], ['user_id', Auth::user()->id]])->first();
+        if ($attribute == null) {
+            return redirect()->route('attributes.index');
+        }
+        return view('backend.attributes.detail', compact('attribute'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        $attribute = Attribute::where([['status', AttributeStatus::ACTIVE], ['id', $id], ['user_id', Auth::user()->id]])->first();
+        if ($attribute == null) {
+            return redirect()->route('attributes.index');
+        }
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $attribute->name = $request->name;
+        $attribute->save();
+
+        return redirect()->route('attributes.index')->with('success', 'Attribute updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

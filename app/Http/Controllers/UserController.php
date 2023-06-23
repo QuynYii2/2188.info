@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Enums\NotificationStatus;
-use App\Enums\OrderMethod;
-use App\Enums\OrderStatus;
 use App\Enums\PermissionUserStatus;
 use App\Enums\TimeLevelStatus;
 use App\Libraries\GeoIP;
+use App\Models\Category;
 use App\Models\Notification;
 use App\Models\Permission;
+use App\Models\ProductInterested;
 use App\Models\TimeLevelTable;
 use App\Models\User;
 use Carbon\Carbon;
@@ -22,11 +22,6 @@ use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
-    public function create()
-    {
-        return view('register');
-    }
-
     public function store(Request $request)
     {
 
@@ -90,6 +85,38 @@ class UserController extends Controller
         $mail = $request->email;
         $password = $request->password;
 
+        //         Save permission default
+        $newUser = User::where('email', $request->email)->first();
+
+        if ($request->type_account == 'buyer') {
+            $categories = Category::get()->toTree();
+            $listCategoryName[] = null;
+            foreach ($categories as $category) {
+                $name = 'category-' . $category->id;
+                $listCategoryName[] = $name;
+            }
+
+            $listValues = null;
+            for ($i = 0; $i < count($listCategoryName); $i++) {
+                $listValues[] = $request->input($listCategoryName[$i]);
+            }
+
+//            dd($listValues);
+            $arrayIds = null;
+            for ($i = 1; $i < count($listValues); $i++) {
+                if ($listValues[$i] != null) {
+                    $arrayIds[] = $listValues[$i];
+                }
+            }
+//            dd($arrayIds);
+            $value = implode(",", $arrayIds);
+//            dd($value);
+            ProductInterested::create([
+                'user_id' => $newUser->id,
+                'categories_id' => $value,
+            ]);
+        }
+
         $data = array('mail' => $mail, 'name' => $mail, 'password' => $password);
 
         Mail::send('frontend/widgets/mailWelcome', $data, function ($message) use ($mail) {
@@ -97,9 +124,6 @@ class UserController extends Controller
             ('Welcome mail');
             $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
         });
-
-//         Save permission default
-        $newUser = User::where('email', $request->email)->first();
 
         $defaultPermission1 = Permission::where('name', 'view_all_products')->first();
         $defaultPermission2 = Permission::where('name', 'view_profile')->first();
@@ -199,5 +223,65 @@ class UserController extends Controller
         }
 
     }
+
+    public function changePassword(Request $request)
+    {
+        $oldPassword = Auth::user()->password;
+        $currentPassword = $request->input('current-password');
+        $check = Hash::check($currentPassword, $oldPassword);
+        if ($check) {
+            $newPassword = $request->input('new-password');
+            $user = Auth::user();
+            $user->password = Hash::make($newPassword);
+            $user->save();
+            return redirect(route('profile.show'));
+
+        } else {
+            return redirect(route('profile.show'));
+        }
+
+    }
+
+    public function changeEmail(Request $request)
+    {
+        $user = Auth::user();
+        $user->email = $request->input('edit-email');
+        $user->save();
+        return redirect(route('profile.show'));
+    }
+
+    public function changePhoneNumber(Request $request)
+    {
+        $user = Auth::user();
+        $user->phone = $request->input('edit-phone');
+        $user->save();
+        return redirect(route('profile.show'));
+    }
+
+    public function updateInfo(Request $request)
+    {
+        $user = Auth::user();
+        $listParam = $request->input();
+
+        foreach ($listParam as $key => $value) {
+            if ($value != null && $key != '_token') {
+                $user->$key = $value;
+            }
+        }
+
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $avatarPath = $avatar->store('avatar', 'public');
+            $user->image = $avatarPath;
+        }
+
+
+
+        $user->region = strtolower($user->region);
+        $user->save();
+        return redirect(route('profile.show'));
+
+    }
+
 
 }
