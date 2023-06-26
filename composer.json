@@ -16,6 +16,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/socialite": "^5.6",
         "laravel/tinker": "^2.5",
+        "realrashid/sweet-alert": "^7.0",
         "socialiteproviders/kakao": "^4.2",
         "socialiteproviders/manager": "^4.3",
         "srmklive/paypal": "*"
