@@ -3,13 +3,6 @@
 @section('title', 'Category')
 
 <style>
-    /*
- * Developer: Alireza Eskandarpour Shoferi
- * Designer: Nevide (codecanyon.net/user/Nevide)
- *
- * Distributed under the terms of the MIT license
- * https://opensource.org/licenses/MIT
- */
     ul {
         margin: 0;
         padding: 0;
@@ -176,6 +169,51 @@
     .sub-items input[type=checkbox]:checked + label:before { content: "\f046"; } /* checked icon */
     .sub-items input[type=checkbox]:checked + label:before { letter-spacing: 5px; } /* allow space for check mark */
 
+
+
+
+    .price-range-slider {
+        width: 100%;
+        float: left;
+        padding: 10px 20px;
+    }
+    .price-range-slider .range-value {
+        margin: 0;
+    }
+    .price-range-slider .range-value input {
+        width: 100%;
+        background: none;
+        color: #000;
+        font-size: 16px;
+        font-weight: initial;
+        box-shadow: none;
+        border: none;
+        margin: 20px 0 20px 0;
+    }
+    .price-range-slider .range-bar {
+        border: none;
+        background: #000;
+        height: 3px;
+        width: 96%;
+        margin-left: 8px;
+    }
+    .price-range-slider .range-bar .ui-slider-range {
+        background: #06b9c0;
+    }
+    .price-range-slider .range-bar .ui-slider-handle {
+        border: none;
+        border-radius: 25px;
+        background: #fff;
+        border: 2px solid #06b9c0;
+        height: 17px;
+        width: 17px;
+        top: -0.52em;
+        cursor: pointer;
+    }
+    .price-range-slider .range-bar .ui-slider-handle + span {
+        background: #06b9c0;
+    }
+
 </style>
 
 @section('content')
@@ -331,6 +369,15 @@
                                                 </div>
                                             </div>
                                         </form>
+                                        @php
+                                            $listAtt = DB::table('attributes')->get();
+                                        @endphp
+                                        @foreach($listAtt as $att)
+                                            <li>
+                                                <input id="check{{ $att->id }}" type="checkbox" />
+                                                <label for="check{{ $att->id }}">{{ $att->name }}</label>
+                                            </li>
+                                        @endforeach
                                         <li>
                                             <input id="box21" type="checkbox" />
                                             <label for="box21">{{ __('home.people') }}</label>
@@ -382,16 +429,13 @@
                                     <a href='#'>{{ __('home.price range') }}</a>
                                     <ul class='sub-items'>
                                         <li class="px-3">
-                                            <input type="range" class="custom-range" min="0" max="100" name="">
-                                            <div class="form-row">
-                                                <div class="form-group col-md-6">
-                                                    <label>{{ __('home.min') }}</label>
-                                                    <input class="form-control" placeholder="$0" type="number">
-                                                </div>
-                                                <div class="form-group text-right col-md-6">
-                                                    <label>{{ __('home.max') }}</label>
-                                                    <input class="form-control" placeholder="$1,0000" type="number">
-                                                </div>
+                                            <div class="price-range-slider">
+
+                                                <p class="range-value">
+                                                    <input type="text" id="amount" readonly>
+                                                </p>
+                                                <div id="slider-range" class="range-bar"></div>
+
                                             </div>
                                         </li>
                                     </ul>
@@ -421,14 +465,15 @@
                         </div>
 
                     </div>
-                    
-                    
+
+
                 </aside>
+
                 <main class="col-md-8">
 
                     <header class=" border-bottom mb-4 pb-3 ">
                         <div class="form-inline">
-                            <span class="mr-md-auto">{{count($productByLocal9)}} {{ __('home.items found') }}</span>
+                            <span class="mr-md-auto">{{$listProduct->total()}} {{ __('home.items found') }}</span>
                             <select class="form-control">
                                 <option>{{ __('home.latest items') }}</option>
                                 <option>{{ __('home.trending') }}</option>
@@ -439,11 +484,11 @@
                     </header>
 
                     <div class="row py-2">
-                        @foreach($productByLocal9 as $product)
+                        @foreach($listProduct as $product)
                             <div class="col-md-4 col-sm-6 col-12 rounded product-map">
                                 <div class="product-item bg-light rounded ">
                                     <div class="product-img position-relative overflow-hidden rounded">
-                                        <img class=" height-img w-100 img" src="{{ $product->thumbnail }}" alt="">
+                                        <img class=" height-img w-100 img" src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
                                     </div>
                                     <div class="text-center py-4 text-limit">
                                         <a class="h6 text-decoration-none text-truncate tabs-product-detail" href="{{route('detail_product.show', $product->id)}}">{{ $product->name }}</a>
@@ -455,8 +500,10 @@
                             </div>
                         @endforeach
                     </div>
+                    @dd($listProduct->links()->e)
                     <nav class="mt-4 mb-5 d-flex justify-content-center" aria-label="Page navigation sample">
                         <ul class="pagination">
+
                             <li class="page-item disabled"><a class="page-link" href="#!">{{ __('home.previous') }}</a></li>
                             <li class="page-item active"><a class="page-link" href="#!">1</a></li>
                             <li class="page-item"><a class="page-link" href="#!">2</a></li>
@@ -524,5 +571,22 @@
             $(".sub-items a").removeClass("current");
             $(this).addClass("current");
         });
+
+
+
+        $(function() {
+            $( "#slider-range" ).slider({
+                range: true,
+                min: 0,
+                max: 1000,
+                values: [ 130, 250 ],
+                slide: function( event, ui ) {
+                    $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+                }
+            });
+            $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+                " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+        });
+
     </script>
 @endsection

@@ -80,10 +80,12 @@
         @media only screen and (min-width: 1200px) {
 
         }
+
         @media only screen and (min-width: 992px) {
             .p-left {
                 padding-right: 0;
             }
+
             .p-right {
                 padding-left: 0;
             }
@@ -158,6 +160,7 @@
             .p-left .product-large.m-large.p-l-1 {
                 margin-right: 25px;
             }
+
             .p-right .product-large.m-large.p-r-1 {
                 margin-left: 25px;
             }
@@ -190,7 +193,7 @@
             display: flex;
         }
 
-        @media only screen and (min-width: 576px){
+        @media only screen and (min-width: 576px) {
             .not-mobile-button {
                 display: flex;
             }
@@ -200,10 +203,11 @@
                 display: none;
             }
         }
-        @media only screen and (max-width: 575px){
+
+        @media only screen and (max-width: 575px) {
             .benefit-items .border-right {
                 border-right: none;
-                border-bottom: 1px solid #dee2e6!important;
+                border-bottom: 1px solid #dee2e6 !important;
             }
         }
     </style>
@@ -212,11 +216,23 @@
         <section class="header_bottom">
             <div class="container-fluid" id="nav-header">
                 <div class="row">
-                    <div class="col-lg-3 col-sm-3 col-md-3 col-12 col-xl-2 menu-header not-mobile-button" id="left-cate">
+                    <div class="col-lg-3 col-sm-3 col-md-3 col-12 col-xl-2 menu-header not-mobile-button"
+                         id="left-cate">
                         <nav class="navbar navbar-expand-lg mega-menu-header"
                              style="padding: 0; width: 100%; align-items: start">
                             <div class="vertical-menu">
+                                @php
+                                    $listCate = DB::table('categories')->get();
+                                @endphp
                                 <ul class="navbar-nav" id="side-cate" style="overflow-y: scroll; ">
+                                    @foreach($listCate as $cate)
+                                        <li class="nav-item d-grid">
+                                            <a class="nav-link text-nowrap text-limit " href="{{ route('category.show', $cate->id) }}"><i class="fa fa-laptop"
+                                                                                                    aria-hidden="true"></i>&ensp;
+                                                {{ $cate->name }}</a>
+                                        </li>
+                                        <li class="border-bottom"></li>
+                                    @endforeach
                                     <li class="nav-item d-grid">
                                         <a class="nav-link text-nowrap text-limit " href="#"><i class="fa fa-laptop"
                                                                                                 aria-hidden="true"></i>&ensp;
