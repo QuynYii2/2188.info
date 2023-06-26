@@ -39,6 +39,10 @@ class PermissionRankController extends Controller
 
     public function store(Request $request)
     {
+        $isPermission = DB::table('permission_user')->where([['user_id', Auth::user()->id], ['permission_id',  $request->input('permission-id')]])->first();
+
+        if ($isPermission == null) {
+
         $permissionUser = [
             'user_id' => Auth::user()->id,
             'created_at' => Carbon::now()->addHours(7),
@@ -98,6 +102,7 @@ class PermissionRankController extends Controller
 //            $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
 //        });
 
+        };
         return redirect(route('payment.show'));
     }
 

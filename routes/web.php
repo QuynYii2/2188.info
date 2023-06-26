@@ -68,8 +68,8 @@ Route::middleware(['auth'])->group(function () {
     // Address Controller
     Route::get('/address-book', [\App\Http\Controllers\Frontend\AddressController::class, 'index'])->name('address.show');
     Route::post('/address', [\App\Http\Controllers\Frontend\AddressController::class, 'store'])->name('address.create');
-//    Route::get('/address', [\App\Http\Controllers\Frontend\AddressController::class, 'index']);
-//    Route::get('/address', [\App\Http\Controllers\Frontend\AddressController::class, 'index']);
+    Route::get('/address/delete/{id}', [\App\Http\Controllers\Frontend\AddressController::class, 'destroy'])->name('address.delete');
+    Route::post('/address-update/{id}', [\App\Http\Controllers\Frontend\AddressController::class, 'update'])->name('address.update');
 //    Route::get('/address', [\App\Http\Controllers\Frontend\AddressController::class, 'index']);
     // Permission
     Route::get('/permission-user', [\App\Http\Controllers\PermissionRankController::class, 'index'])->name('permission.user.show');

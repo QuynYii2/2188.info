@@ -22,7 +22,7 @@ class CategoryController extends Controller
     public function category(Request $request, $id) {
         (new HomeController())->getLocale($request);
         $categories = Category::get()->toTree();
-        $productByLocal9 = Product::where('category_id', '=', $id)->get()->take(9);
-        return view('frontend/pages/category', compact('categories', 'productByLocal9'));
+        $listProduct = Product::where('category_id', '=', $id)->paginate(9);
+        return view('frontend/pages/category', compact('categories', 'listProduct'));
     }
 }

@@ -70,11 +70,35 @@ class AddressController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $address = OrderAddress::findOrFail($id);
+        $address->username = $request->input('username');
+        $address->company = $request->input('company');
+        $address->phone = $request->input('phone');
+        $address->city = $request->input('city');
+        $address->province = $request->input('province');
+        $address->location = $request->input('location');
+        $address->address_detail = $request->input('address_detail');
+        $address->address_option = $request->input('address_option');
+
+        if ($request->input('default') == null) {
+            $check = 0;
+        } else {
+            $check = 1;
+        }
+
+        $address->default = $check;
+
+        $address->save();
+        return redirect(route('address.show'));
+
     }
 
     public function destroy($id)
     {
-        //
+        $address = OrderAddress::findOrFail($id);
+        $address->delete();
+
+        return redirect(route('address.show'));
+
     }
 }
