@@ -211,9 +211,9 @@ return [
     // thanh toán khi nhận hàng, thẻ ghi nợ hoặc tín dụng, ví điện tử
 
     'Cart' => 'Giỏ Hàng',
-    'Product Name' => 'Tên Sản Phẩm',
+    'Product Name' => 'Sản Phẩm',
     'Price' => 'Giá',
-    'Total Amount' => 'Tổng Số Tiền',
+    'Total Amount' => 'Số Tiền',
     'Action' => 'Thao tác',
     'Delete' => 'Xóa',
     'Clear Cart' => 'Làm Trống Giỏ Hàng',

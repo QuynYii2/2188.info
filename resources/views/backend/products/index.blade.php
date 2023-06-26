@@ -18,7 +18,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table">
+                <table  class="table">
                     <thead>
                     <tr>
                         <th>Tên sản phẩm</th>

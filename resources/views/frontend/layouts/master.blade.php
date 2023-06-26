@@ -39,6 +39,7 @@
     <link rel="stylesheet" href="{{asset('css/vendor/slicknav.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/mainV1.css')}}">
     <link rel="stylesheet" href="{{asset('css/index.css')}}">
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
 </head>
 <div class="d-none">
