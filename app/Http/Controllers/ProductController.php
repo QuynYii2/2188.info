@@ -7,6 +7,7 @@ use App\Enums\EvaluateProductStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\EvaluateProduct;
 use App\Models\Product;
+use App\Models\ProductViewed;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +18,8 @@ class ProductController extends Controller
     {
         (new HomeController())->getLocale($request);
         $product = Product::find($id);
+        $product->views = $product->views + 1;
+        $product->save();
         if (Auth::check()) {
             $result = EvaluateProduct::where([
                 ['product_id', '=', $product->id],
@@ -42,5 +45,19 @@ class ProductController extends Controller
             'otherProduct' => $otherProduct,
             'attributes' => $attributes
         ]);
+    }
+
+    public function productViewed(Request $request)
+    {
+        try {
+            $item = [
+                'user_id' => Auth::user()->id,
+                'productIds' => $request->input('productIds'),
+            ];
+            $list = ProductViewed::create($item);
+            return $list;
+        } catch (\Exception $exception) {
+            return $error = "Error";
+        }
     }
 }

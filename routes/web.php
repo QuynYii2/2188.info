@@ -179,4 +179,7 @@ Route::middleware(['auth'])->group(function () {
     // Product Interest
     Route::get('/product-interest', [\App\Http\Controllers\ProductInterestController::class, 'index'])->name('product.interest.index');
     Route::post('/product-interest/{id}', [\App\Http\Controllers\ProductInterestController::class, 'delete'])->name('product.interest.delete');
+    //
+    Route::post('/product-viewed', [\App\Http\Controllers\ProductController::class, 'productViewed'])->name('product.viewed');
+
 });
