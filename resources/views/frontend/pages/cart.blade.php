@@ -68,8 +68,8 @@
                         </div>
                     </div>
 
-                <div class="">
-                    <a href="{{route('checkout.show')}}" class="btn btn-primary mt-2">{{ __('home.Pay') }}</a>
+                <div class="mt-3 mb-3 d-flex justify-content-center">
+                    <a href="{{route('checkout.show')}}" class="btn btn-success mt-2">{{ __('home.Pay') }}</a>
                 </div>
                 @endif
             </div>

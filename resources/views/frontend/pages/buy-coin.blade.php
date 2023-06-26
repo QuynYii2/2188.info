@@ -4,14 +4,14 @@
 
 @section('content')
     <div style="background-color: #f7f7f7">
-        <div class="container mt-2 mb-2 p-5">
+        <div class="container mb-2">
             <div class="category" >{{ __('home.buy coin') }}</div>
             <div class="row mt-3">
                 <div class="row p-3">
                     <div class="col-12 col-lg-5" style="width: 100%" >
                         <div class="row mt-4" >
                             <div class="mb-3 ml-3">
-                                <h5 class="text-center">If you want to buy coin, please enter the number coins</h5>
+                                <h5 class="text-center">Enter the coin you want to buy</h5>
                             </div>
                             <form class="form-inline" method="post" action="{{route('buy.coin.create')}}">
                                 @csrf
@@ -52,7 +52,7 @@
                                                                 <h5 class="card-title text-danger">${{$coin}}</h5>
                                                                 <input type="text" class="d-none" id="input-coin-{{$coin}}" name="quantity" value="1">
                                                                 <input type="text" class="d-none" name="price" value="{{$coin}}">
-                                                                <button type="submit" class="btn btn-primary">Buy now</button>
+                                                                <button type="submit" class="btn btn-success">Buy now</button>
                                                             </div>
                                                         </div>
                                                     </form>

@@ -53,16 +53,15 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
 }
 
-body {
-  margin: 0;
-  font-family: "Roboto", sans-serif;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #6C757D;
-  text-align: left;
-  background-color: #F5F5F5;
-}
+/*body {*/
+/*  margin: 0;*/
+/*  font-family: "Roboto", sans-serif;*/
+/*  font-size: 1rem;*/
+/*  font-weight: 400;*/
+/*  line-height: 1.5;*/
+/*  text-align: left;*/
+/*  background-color: #F5F5F5;*/
+/*}*/
 
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
@@ -153,15 +152,16 @@ sup {
   top: -0.5em;
 }
 
-a {
-  color: #FFD333;
-  text-decoration: none;
-  background-color: transparent;
-}
-a:hover {
-  color: #e6b400;
-  text-decoration: underline;
-}
+/*a {*/
+/*  color: #FFD333!important;*/
+/*  text-decoration: none;*/
+/*  background-color: transparent;*/
+/*}*/
+/*a:hover {*/
+/*  color: #e6b400;*/
+/*  text-decoration: underline;*/
+/*}*/
+
 
 a:not([href]):not([class]) {
   color: inherit;
@@ -1848,7 +1848,7 @@ pre code {
 .form-control:focus {
   color: #495057;
   background-color: #fff;
-  border-color: #ffefb3;
+  border-color: #999999;
   outline: 0;
   box-shadow: none;
 }
@@ -2313,12 +2313,12 @@ fieldset:disabled a.btn {
 
 .btn-secondary {
   color: #212529;
-  background-color: #F5F5F5;
+  background-color: #cccccc;
   border-color: #F5F5F5;
 }
 .btn-secondary:hover {
   color: #212529;
-  background-color: #e2e2e2;
+  background-color: #afafaf;
   border-color: gainsboro;
 }
 .btn-secondary:focus, .btn-secondary.focus {
@@ -5716,9 +5716,6 @@ button.bg-light:focus {
   background-color: #e6e6e6 !important;
 }
 
-.bg-dark {
-  background-color: #3D464D !important;
-}
 
 a.bg-dark:hover, a.bg-dark:focus,
 button.bg-dark:hover,

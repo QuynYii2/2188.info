@@ -6,6 +6,7 @@
             width: 100%;
             white-space: nowrap;
         }
+
     </style>
     <div class="card">
         <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
@@ -34,24 +35,21 @@
                     <tbody>
                     @foreach($products as $product)
                         <tr>
-                            <td>{{ $product->name }}</td>
+                            <td>{{ $product->name}}</td>
                             <td></td>
-                            <td>{{ $product->category->name }}</td>
+                            <td>{{ $product->category->name}}</td>
                             <td>{{ $product->price }}</td>
                             <td>
                                 <img src="{{ asset('public/storage/'.$product->thumbnail) }}" height="180" alt="Thumbnail">
                             </td>
                             <td></td>
-                            <td class="d-flex">
-                                <a href="{{ route('seller.products.edit', $product->id) }}"
-                                   class="btn btn-primary mr-2">Sửa</a>
+                            <td class="d-flex justify-content-center">
+                                <a href="{{ route('seller.products.edit', $product->id) }}"><i style="color: black; margin-right: 15px" class="fa-solid fa-pen-to-square"></i></a>
                                 <form action="{{ route('seller.products.destroy', $product->id) }}" method="POST"
                                       style="">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger"
-                                            onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa
-                                    </button>
+                                    <a type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa?')"><i style="color: #d52727" class="fa-solid fa-trash-can"></i></a>
                                 </form>
                             </td>
                         </tr>

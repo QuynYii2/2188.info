@@ -218,8 +218,7 @@
                             <div class="vertical-menu">
                                 <ul class="navbar-nav" id="side-cate" style="overflow-y: scroll; ">
                                     <li class="nav-item d-grid">
-                                        <a class="nav-link text-nowrap text-limit " href="#"><i class="fa fa-laptop"
-                                                                                                aria-hidden="true"></i>&ensp;
+                                        <a class="nav-link text-nowrap text-limit " href="#"><i class="fa fa-laptop" aria-hidden="true"></i>&ensp;
                                             Electronic Devices</a>
                                         <div class="megamenu">
                                             <div class="row">

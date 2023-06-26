@@ -1,50 +1,40 @@
 <style>
 
-    ul {
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-    }
 
     a {
         color: #FFFFFF;
-        text-decoration: none;
     }
-
     .wrapper {
-        width: 100%;
-        height: 100%;
+        position: fixed;
+        width: 15%;
+        height: 100vh;
+        overflow-y: auto;
         background-color: #000000;
         font-size: 0.875em;
     }
-
     .items {
         padding: 18px 0;
+        font-size: 18px;
     }
-
     .items > li > a {
         display: block;
         text-indent: 18px;
         line-height: 39px;
     }
-
     .items > li > a::after {
         position: absolute;
         right: 30px;
         font-family: "FontAwesome";
     }
-
     .items > li > a::after {
         right: 30px;
         content: "\2192";
     }
-
     .itemHover {
         color: #fff;
         font-weight: 600;
         transition: background-color 0.4s ease-in-out;
     }
-
     .items > li > a:hover {
         background-color: black;
         color: #fff;
@@ -52,33 +42,27 @@
         transition: background-color 0.4s ease-in-out;
         text-decoration: none !important;
     }
-
     .items > li > a.expanded {
         background-color: #64D7E2;
         color: #fff;
         font-weight: 600;
         transition: background-color 0.4s ease-in-out;
     }
-
     .items > li > a.expanded::after {
         content: "\2193";
     }
-
     .items > li:not(:has(ul)) > a::after,
     .items > li:not(:has(ul)) > a.expanded::after {
         content: none;
     }
-
     .sub-items > li:first-child > a {
         margin-top: 17px;
         height: 34px;
     }
-
     .sub-items > li:last-child > a {
         margin-bottom: 17px;
         height: 34px;
     }
-
     .sub-items a {
         position: relative;
         display: block;
@@ -87,39 +71,32 @@
         text-indent: 24px;
         line-height: 39px;
     }
-
     .sub-items a {
         border-left: 2px solid #64D7E2;
     }
-
     .sub-items .current {
         position: relative;
         color: #64D7E2;
         border-color: white;
     }
-
     .sub-items > li:hover > a {
         color: #64D7E2;
         transition: color 0.4s ease-in-out;
         text-decoration: none;
 
     }
-
     .sub-items {
         display: none;
     }
-
-
 </style>
 
-<div class='wrapper'>
+<div class='wrapper text-nowrap'>
     <ul class='items'>
         <li>
             <a href="#">Menu</a>
             <ul class='items'>
                 <li>
-                    <a href='#'><i class="fa fa-cogs"></i>Sản phẩm<i
-                                class="arrow fa fa-angle-right pull-right"></i></a>
+                    <a href='#'>Sản phẩm</a>
                     <ul class='sub-items'>
                         <li><a href="/products">Danh sách sản phẩm</a>
                         </li>
@@ -130,8 +107,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#!"><i class="fa fa-cogs"></i>Thuộc tính sản phẩm<i
-                                class="arrow fa fa-angle-right pull-right"></i></a>
+                    <a href="#!">Thuộc tính sản phẩm</a>
                     <ul class='sub-items'>
 
                         <li><a href="{{route('attributes.index')}}">Danh sách thuộc tính</a>
@@ -145,8 +121,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href='#'><i class="fa fa-table"></i>Đơn hàng<i
-                                class="arrow fa fa-angle-right pull-right"></i></a>
+                    <a href='#'>Đơn hàng</a>
                     <ul class='sub-items'>
                         <li><a href="#!">Basic Tables</a>
                         </li>
@@ -156,8 +131,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#!"><i class="fa fa fa-tasks"></i>Quản lý kho<i
-                                class="arrow fa fa-angle-right pull-right"></i></a>
+                    <a href="#!">Quản lý kho</a>
                     <ul class='sub-items'>
                         <li>
                             <a href='#'>Lorem ipsum dolor sit amet.</a>
@@ -180,8 +154,7 @@
                 </li>
 
                 <li>
-                    <a href="#!"><i class="fa fa-bar-chart-o"></i><span>Thống kê</span><i
-                                class="arrow fa fa-angle-right pull-right"></i></a>
+                    <a href="#!"><span>Thống kê</span></a>
                     <ul class='sub-items'>
                         <li><a href="#!">Chartjs</a>
                         </li>
@@ -191,20 +164,17 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#!"><i class="fa fa-map-marker"></i><span>Quản lý mã giảm giá</span><i
-                                class="arrow fa fa-angle-right pull-right"></i></a>
+                    <a href="#!"><span>Quản lý mã giảm giá</span></a>
                 </li>
                 <li>
-                    <a href="#!"><i class="fa fa-text-height"></i><span>Quản lý doanh thu</span></a>
+                    <a href="#!"><span>Quản lý doanh thu</span></a>
                 </li>
                 <li>
-                    <a href="#!"><i class="fa fa-file"></i><span>Sản phẩm xem nhiều nhất</span><i
-                                class="arrow fa fa-angle-right pull-right"></i></a>
+                    <a href="#!"><span>Sản phẩm xem nhiều nhất</span></a>
 
                 </li>
                 <li>
-                    <a href="#!"><i class="fa fa-text-height"></i><span>Quản lý bình luận</span><i
-                                class="arrow fa fa-angle-right pull-right"></i></a>
+                    <a href="#!"><span>Quản lý bình luận</span></a>
                     <ul class='sub-items'>
                         <li><a href="{{route('seller.evaluates.index')}}">List Evaluate</a>
                         </li>

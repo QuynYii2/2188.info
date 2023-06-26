@@ -1,0 +1,11 @@
+.name{
+    font-size: 17px;
+}
+.category{
+    text-align: center;
+    font-weight: 700;
+    font-size: 25px;
+}
+li{
+    list-style: none;
+}

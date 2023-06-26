@@ -32,8 +32,8 @@
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Lưu</button>
-                <a href="{{ route('seller.categories.index') }}" class="btn btn-primary">Hủy</a>
+                <button type="submit" class="btn btn-success mr-3">Lưu</button>
+                <a href="{{ route('seller.categories.index') }}" class="btn btn-secondary">Hủy</a>
             </form>
         </div>
     </div>
