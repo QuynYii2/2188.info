@@ -371,13 +371,13 @@
                 <div class="mt-4 bg-white">
                     <ul class="nav nav-tabs row justify-content-around " id="myTab" role="tablist">
                         <li class="col-sm-4 col-4 nav-item tabs-product-detail tabs-item"><a
-                                    class="nav-link lead active link-tabs" role="tab" data-toggle="tab"
+                                    class="nav-link lead active link-tabs w-100" role="tab" data-toggle="tab"
                                     href="#tabDescription">{{ __('home.description') }}</a></li>
                         <li class="col-sm-4 col-4 nav-item tabs-product-detail tabs-item"><a
-                                    class="nav-link lead link-tabs" role="tab" data-toggle="tab"
+                                    class="nav-link lead link-tabs w-100" role="tab" data-toggle="tab"
                                     href="#tabSpecification">{{ __('home.specification') }}</a></li>
                         <li class="col-sm-4 col-4 nav-item tabs-product-detail tabs-item"><a
-                                    class="nav-link lead link-tabs" role="tab" data-toggle="tab"
+                                    class="nav-link lead link-tabs w-100" role="tab" data-toggle="tab"
                                     href="#tabReview">{{ __('home.review') }}</a></li>
 
                     </ul>

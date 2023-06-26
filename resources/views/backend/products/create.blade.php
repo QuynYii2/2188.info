@@ -197,6 +197,7 @@
                         <textarea class="form-control" name="description"></textarea>
                     </div>
                 </div>
+
             </div>
             <div class="col-md-4 col-sm-4 mt-2 rm-pd-on-mobile">
                 <div class="form-group">
@@ -236,9 +237,9 @@
                                 </li>
                             @endforeach
                         </ul>
-
                     </div>
                 </div>
+                @foreach($attributes as $attribute)
 
                 <div class="form-group">
                     <label for="attribute">Chọn thuộc tính sản phẩm có sẵn:</label>
@@ -250,7 +251,7 @@
                     {{--                    </select>--}}
                 </div>
                 <div class="form-group border pt-3 pb-3 mt-3 mb-3" id="pr-parameter">
-                    <label class="col-md-12 control-label">Thông số sản phẩm</label>
+                    <label for="attribute" class="col-md-12 control-label">Thông số sản phẩm</label>
                     @foreach($attributes as $attribute)
                         @php
                             $properties = DB::table('properties')->where([['status', PropertiStatus::ACTIVE], ['attribute_id', $attribute->id]])->get();
@@ -350,6 +351,8 @@
                     <button type="submit" class="btn btn-primary">Gửi</button>
                 </div>
             </div>
+
+
         </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

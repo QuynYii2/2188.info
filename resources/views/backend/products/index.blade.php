@@ -16,6 +16,7 @@
                 </div>
             @endif
         </div>
+
         <div class="card-body">
             <div class="table-responsive">
                 <table  class="table">
@@ -38,7 +39,7 @@
                             <td>{{ $product->category->name }}</td>
                             <td>{{ $product->price }}</td>
                             <td>
-                                <img src="{{ asset($product->thumbnail) }}" height="180" alt="Thumbnail">
+                                <img src="{{ asset('public/storage/'.$product->thumbnail) }}" height="180" alt="Thumbnail">
                             </td>
                             <td></td>
                             <td class="d-flex">

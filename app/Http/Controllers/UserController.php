@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Enums\NotificationStatus;
-use App\Enums\OrderMethod;
-use App\Enums\OrderStatus;
 use App\Enums\PermissionUserStatus;
 use App\Enums\TimeLevelStatus;
 use App\Libraries\GeoIP;
@@ -225,5 +223,65 @@ class UserController extends Controller
         }
 
     }
+
+    public function changePassword(Request $request)
+    {
+        $oldPassword = Auth::user()->password;
+        $currentPassword = $request->input('current-password');
+        $check = Hash::check($currentPassword, $oldPassword);
+        if ($check) {
+            $newPassword = $request->input('new-password');
+            $user = Auth::user();
+            $user->password = Hash::make($newPassword);
+            $user->save();
+            return redirect(route('profile.show'));
+
+        } else {
+            return redirect(route('profile.show'));
+        }
+
+    }
+
+    public function changeEmail(Request $request)
+    {
+        $user = Auth::user();
+        $user->email = $request->input('edit-email');
+        $user->save();
+        return redirect(route('profile.show'));
+    }
+
+    public function changePhoneNumber(Request $request)
+    {
+        $user = Auth::user();
+        $user->phone = $request->input('edit-phone');
+        $user->save();
+        return redirect(route('profile.show'));
+    }
+
+    public function updateInfo(Request $request)
+    {
+        $user = Auth::user();
+        $listParam = $request->input();
+
+        foreach ($listParam as $key => $value) {
+            if ($value != null && $key != '_token') {
+                $user->$key = $value;
+            }
+        }
+
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            $avatarPath = $avatar->store('avatar', 'public');
+            $user->image = $avatarPath;
+        }
+
+
+
+        $user->region = strtolower($user->region);
+        $user->save();
+        return redirect(route('profile.show'));
+
+    }
+
 
 }
