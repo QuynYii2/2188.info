@@ -50,14 +50,20 @@ class ProductController extends Controller
     public function productViewed(Request $request)
     {
         try {
-            $item = [
-                'user_id' => Auth::user()->id,
-                'productIds' => $request->input('productIds'),
-            ];
-            $list = ProductViewed::create($item);
+            $list = ProductViewed::where('user_id', Auth::user()->id)->first();
+            if ($list) {
+                $list->productIds = $request->input('productIds');
+                $list->save();
+            } else {
+                $item = [
+                    'user_id' => Auth::user()->id,
+                    'productIds' => $request->input('productIds'),
+                ];
+                $list = ProductViewed::create($item);
+            }
             return $list;
         } catch (\Exception $exception) {
-            return $error = "Error";
+            return $exception;
         }
     }
 }
