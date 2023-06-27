@@ -49,7 +49,12 @@
                                       style="">
                                     @csrf
                                     @method('DELETE')
-                                    <a type="submit" onclick="return confirm('Bạn có chắc chắn muốn xóa?')"><i style="color: #d52727" class="fa-solid fa-trash-can"></i></a>
+                                    <a href="#" onclick="clickBtn({{ $product->id}})"><i style="color: #d52727"
+                                                                                         class="fa-solid fa-trash-can"></i></a>
+                                    <button id="btn-delete-product-{{ $product->id}}" hidden type="submit"
+                                            onclick="return confirm('Bạn có chắc chắn muốn xóa?')">
+                                        Xoa
+                                    </button>
                                 </form>
                             </td>
                         </tr>
@@ -59,4 +64,9 @@
             </div>
         </div>
     </div>
+    <script>
+        function clickBtn(id) {
+            document.getElementById('btn-delete-product-' + id).click();
+        }
+    </script>
 @endsection
