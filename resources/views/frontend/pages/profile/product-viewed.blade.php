@@ -10,13 +10,26 @@
         <div class="border-bottom"></div>
         <div class="col-md-12">
             <div class="tab-content py-3 px-3 px-sm-0">
-                <div class="text-center">
-                    <img class="img" src="{{asset('images/empty.jpg')}}" alt="">
-                    <p>{{ __('home.you have no product viewed') }}
-                    </p>
-                </div>
+                @if(count($arrayProducts) == 0)
+                    <div class="text-center">
+                        <img class="img" src="{{asset('images/empty.jpg')}}" alt="">
+                        <p>{{ __('home.you have no product viewed') }}
+                        </p>
+                    </div>
+                @else
+                    <div class="row">
+                        @foreach($arrayProducts as $product)
+                            <div class="col-md-3 border mb-3">
+                                <h5 class="text-center">
+                                    <a href="{{route('detail_product.show', $product->id)}}"> {{$product->name}}</a>
+                                </h5>
+                                <img class="img" src="{{$product->thumbnail}}" alt="Product image">
+                                <div class="text-center text-danger">${{$product->price}}</div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
             </div>
-
         </div>
     </div>
 @endsection

@@ -52,7 +52,11 @@ class ProductController extends Controller
         try {
             $list = ProductViewed::where('user_id', Auth::user()->id)->first();
             if ($list) {
-                $list->productIds = $request->input('productIds');
+//                $list->productIds = $request->input('productIds');
+                $arrayIdsOld = explode(",", $list->productIds);
+                $arrayIdsNew = explode(",", $request->input('productIds'));
+                $listArray = array_unique(array_merge($arrayIdsOld, $arrayIdsNew), SORT_REGULAR);
+                $list->productIds = implode(",", $listArray);;
                 $list->save();
             } else {
                 $item = [
