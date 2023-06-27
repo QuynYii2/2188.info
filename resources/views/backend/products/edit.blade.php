@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header">
+        <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title">Edit Product</h5>
         </div>
         <div class="card-body">
@@ -38,14 +38,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-12 control-label">Thông số sản phẩm</label>
+                    <label class="control-label">Thông số sản phẩm</label>
                     @foreach($attributes as $attribute)
                         @php
                             $properties = DB::table('properties')->where([['status', PropertiStatus::ACTIVE], ['attribute_id', $attribute->id]])->get();
                         @endphp
                         @if(!$properties->isEmpty())
                             <div id="{{$attribute->name}}-{{$attribute->id}}" class="">
-                                <label class="control-label offset-2" for="color">{{$attribute->name}}</label>
+                                <label class="control-label" for="color">{{$attribute->name}}</label>
                                 <div class="col-md-12 overflow-scroll custom-scrollbar">
                                     <ul class="list-unstyled">
                                         @foreach($properties as $property)
@@ -87,7 +87,9 @@
                     <label for="thumbnail">Thumbnail</label>
                     <input type="file" class="form-control-file" id="thumbnail" name="thumbnail">
                     @if ($product->thumbnail)
-                        <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="Thumbnail" width="100">
+                        <a href="{{ asset('storage/' . $product->thumbnail) }}" data-fancybox="group" data-caption="This image has a caption 1">
+                            <img class="mt-2" style="height: 100px" src="{{ asset('storage/' . $product->thumbnail) }}" alt="Thumbnail">
+                        </a>
                     @endif
                 </div>
 
@@ -108,13 +110,26 @@
                     @endphp
                     @if ($product->gallery )
                         @foreach ($modifiedArray as $image)
-                            <img src="{{ asset('storage/' . $image) }}" alt="Gallery Image" width="100">
+                            <a href="{{ asset('storage/' . $image) }}" data-fancybox="group" data-caption="This image has a caption 1">
+                                <img class="mt-2" style="height: 100px; width: 100px " src="{{ asset('storage/' . $image) }}" alt="Gallery Image" width="100">
+                            </a>
                         @endforeach
                     @endif
                 </div>
-
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-success">Save</button>
             </form>
         </div>
     </div>
+    <script>
+        $('[data-fancybox]').fancybox({
+            buttons : [
+                'close'
+            ],
+            wheel : false,
+            transitionEffect: "slide",
+            loop            : true,
+            toolbar         : false,
+            clickContent    : false
+        });
+    </script>
 @endsection

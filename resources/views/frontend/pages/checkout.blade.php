@@ -35,7 +35,7 @@
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('css/checkout.css') }}">
-    <div class="container-fluid mt-5">
+    <div class="container mt-5">
         <div class="card" id="check-out" style="border: none">
             <h2 class="mt-3 mb-3 text-center">{{ __('home.order') }}</h2>
             @if($carts->isEmpty())

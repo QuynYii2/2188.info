@@ -62,7 +62,7 @@
 </style>
 @section('content')
     <div class="card">
-        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="card-header d-flex justify-content-between align-items-center" >
             <h5 class="card-title">Danh sách thuộc tính</h5>
             <a href="{{ route('attributes.create') }}" class="btn btn-primary">Thêm mới</a>
             @if (session('success_update_product'))

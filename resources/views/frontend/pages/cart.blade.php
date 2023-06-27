@@ -11,66 +11,68 @@
             width: 100%;
         }
     </style>
-    <div class="container mt-5" style="margin-bottom: 30px">
-        <div class="card" style="border: none">
-            <h2>{{ __('home.Cart') }}</h2>
+    <div class="category pb-3" style="background-color: #f7f7f7">{{ __('home.Cart') }}</div>
+    <div style="background-color: #f7f7f7; padding-bottom: 50px">
+        <div class="container pt-3">
+            <div class="card" style="border: none">
 
-            @if ($cartItems->isEmpty())
-                <p>Chưa có sản phẩm trong giỏ hàng.</p>
-            @else
-                <div class="table-responsive-sm">
-                    <table id="table-cart" class="table">
-                        <thead>
-                        <tr>
-                            <th>{{ __('home.Product Name') }}</th>
-                            <th>{{ __('home.quantity') }}</th>
-                            <th>{{ __('home.Price') }}</th>
-                            <th>{{ __('home.Total Amount') }}</th>
-                            <th>{{ __('home.Action') }}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach ($cartItems as $cartItem)
-                            <tr>
-                                <td>{{ $cartItem->product->name }}</td>
-                                <td>
-                                    <form>
-                                        <input type="text" id="id-cart" value="{{ $cartItem->id }}" hidden/>
-                                        <input type="text" id="id-link" value="{{ asset('/') }}" hidden/>
-                                        <input class="col-12" type="number" id="quantity-{{ $cartItem->id }}"
-                                               name="quantity"
-                                               value="{{ $cartItem->quantity }}"
-                                               onchange="myfunction({{ $cartItem->id }}); "
-                                               min="1"/>
-                                    </form>
-                                </td>
-                                <td id="price-{{ $cartItem->id }}">{{ $cartItem->price }}</td>
-                                <td id="total-quantity-{{ $cartItem->id }}">{{ $cartItem->price*$cartItem->quantity }}</td>
-                                <td>
-                                    <form action="{{ route('cart.delete', $cartItem->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">{{ __('home.Delete') }}</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <p class="ml-2">Tổng: $ <span id="max-total">{{ $cartItem->price*$cartItem->quantity }}</span></p>
-                    <div class="mr-2">
-                        <form action="{{route('cart.clear')}}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger" type="submit">{{ __('home.Clear Cart') }}</button>
-                        </form>
+                @if ($cartItems->isEmpty())
+                    <p>Chưa có sản phẩm trong giỏ hàng.</p>
+                @else
+                    <div class="table-responsive-sm">
+                        <table id="table-cart" class="table">
+                            <thead>
+                                <th>{{ __('home.Product Name') }}</th>
+                                <th>{{ __('home.Price') }}</th>
+                                <th>{{ __('home.quantity') }}</th>
+                                <th>{{ __('home.Total Amount') }}</th>
+                                <th>{{ __('home.Action') }}</th>
+                            </thead>
+                            <tbody>
+                            @foreach ($cartItems as $cartItem)
+                                <tr>
+                                    <td>{{ $cartItem->product->name }}</td>
+                                    <td style="text-align: center" id="price-{{ $cartItem->id }}">{{ $cartItem->price }}</td>
+                                    <td style="text-align: center" >
+                                        <form>
+                                            <input type="text" id="id-cart" value="{{ $cartItem->id }}" hidden/>
+                                            <input type="text" id="id-link" value="{{ asset('/') }}" hidden/>
+                                            <input class="col-7" type="number" id="quantity-{{ $cartItem->id }}"
+                                                   name="quantity"
+                                                   value="{{ $cartItem->quantity }}"
+                                                   onchange="myfunction({{ $cartItem->id }}); "
+                                                   min="1"/>
+                                        </form>
+                                    </td>
+                                    <td style="text-align: center"  id="total-quantity-{{ $cartItem->id }}">{{ $cartItem->price*$cartItem->quantity }}</td>
+                                    <td style="text-align: center" >
+                                        <form action="{{ route('cart.delete', $cartItem->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">{{ __('home.Delete') }}</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                     </div>
-                </div>
+                    <div class="d-flex justify-content-between">
+                        <p class="ml-2">Tổng: $ <span id="max-total">{{ $cartItem->price*$cartItem->quantity }}</span></p>
+                        <div class="mr-2">
+                            <form action="{{route('cart.clear')}}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger" type="submit">{{ __('home.Clear Cart') }}</button>
+                            </form>
+                        </div>
+                    </div>
 
-                <a href="{{route('checkout.show')}}" class="btn btn-primary mt-2">{{ __('home.Pay') }}</a>
-            @endif
+                <div class="mt-3 mb-3 d-flex justify-content-center">
+                    <a href="{{route('checkout.show')}}" class="btn btn-success mt-2">{{ __('home.Pay') }}</a>
+                </div>
+                @endif
+            </div>
         </div>
     </div>
     <script>

@@ -7,7 +7,7 @@
             white-space: nowrap;
         }
     </style>
-    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center">
         <h5 class="card-title">Danh sách Đánh giá</h5>
     </div>
     <div class="container-fluid evaluate-list" style="height: 100vh">

@@ -49,8 +49,8 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Lưu</button>
-                    <a href="{{ route('seller.evaluates.index') }}" class="btn btn-primary">Hủy</a>
+                    <button type="submit" class="btn btn-success">Lưu</button>
+                    <a href="{{ route('seller.evaluates.index') }}" class="btn btn-secondary">Hủy</a>
                 </form>
             </div>
         </div>
