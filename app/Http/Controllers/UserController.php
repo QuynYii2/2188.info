@@ -95,26 +95,30 @@ class UserController extends Controller
                 $name = 'category-' . $category->id;
                 $listCategoryName[] = $name;
             }
-
-            $listValues = null;
-            for ($i = 0; $i < count($listCategoryName); $i++) {
-                $listValues[] = $request->input($listCategoryName[$i]);
-            }
-
-//            dd($listValues);
-            $arrayIds = null;
-            for ($i = 1; $i < count($listValues); $i++) {
-                if ($listValues[$i] != null) {
-                    $arrayIds[] = $listValues[$i];
+            if ($listCategoryName != null) {
+                $listValues = null;
+                for ($i = 0; $i < count($listCategoryName); $i++) {
+                    $listValues[] = $request->input($listCategoryName[$i]);
                 }
-            }
+//            dd($listValues);
+                if ($listValues != null) {
+                    $arrayIds = null;
+                    for ($i = 1; $i < count($listValues); $i++) {
+                        if ($listValues[$i] != null) {
+                            $arrayIds[] = $listValues[$i];
+                        }
+                    }
 //            dd($arrayIds);
-            $value = implode(",", $arrayIds);
+                    if ($arrayIds != null) {
+                        $value = implode(",", $arrayIds);
+                        ProductInterested::create([
+                            'user_id' => $newUser->id,
+                            'categories_id' => $value,
+                        ]);
+                    }
+                }
 //            dd($value);
-            ProductInterested::create([
-                'user_id' => $newUser->id,
-                'categories_id' => $value,
-            ]);
+            }
         }
 
         $data = array('mail' => $mail, 'name' => $mail, 'password' => $password);
@@ -219,6 +223,7 @@ class UserController extends Controller
             return redirect(route('login'));
         } else {
 //            return response()->json(['success' => false]);
+            dd('afaf');
             return back();
         }
 
@@ -274,7 +279,6 @@ class UserController extends Controller
             $avatarPath = $avatar->store('avatar', 'public');
             $user->image = $avatarPath;
         }
-
 
 
         $user->region = strtolower($user->region);

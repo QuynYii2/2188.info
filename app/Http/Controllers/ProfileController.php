@@ -62,12 +62,18 @@ class ProfileController extends Controller
     {
         (new HomeController())->getLocale($request);
         $listProductIDs = ProductViewed::where('user_id', Auth::user()->id)->first();
-        $productIds = $listProductIDs->productIds;
-        $arrayIds = explode(",", $productIds);
         $arrayProducts = null;
-        for ($i = 0; $i < count($arrayIds); $i++) {
-            $product = Product::find($arrayIds[$i]);
-            $arrayProducts[] = $product;
+        if ($listProductIDs) {
+            $productIds = $listProductIDs->productIds;
+            if ($productIds != null) {
+                $arrayIds = explode(",", $productIds);
+                for ($i = 0; $i < count($arrayIds); $i++) {
+                    if ($arrayIds[$i] != null) {
+                        $product = Product::find($arrayIds[$i]);
+                        $arrayProducts[] = $product;
+                    }
+                }
+            }
         }
         return view('frontend/pages/profile/product-viewed', compact('arrayProducts'));
     }

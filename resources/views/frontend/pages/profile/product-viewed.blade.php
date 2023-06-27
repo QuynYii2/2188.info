@@ -10,7 +10,7 @@
         <div class="border-bottom"></div>
         <div class="col-md-12">
             <div class="tab-content py-3 px-3 px-sm-0">
-                @if(count($arrayProducts) == 0)
+                @if($arrayProducts == null)
                     <div class="text-center">
                         <img class="img" src="{{asset('images/empty.jpg')}}" alt="">
                         <p>{{ __('home.you have no product viewed') }}
