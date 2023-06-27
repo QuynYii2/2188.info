@@ -129,10 +129,14 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/cache" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/socialiteproviders/kakao" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/socialiteproviders/manager" />
+<<<<<<< HEAD
       <excludeFolder url="file://$MODULE_DIR$/storage/app" />
       <excludeFolder url="file://$MODULE_DIR$/storage/framework" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/dbal" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/fakerphp/faker" />
+=======
+      <excludeFolder url="file://$MODULE_DIR$/vendor/realrashid/sweet-alert" />
+>>>>>>> a10a703d9eeb66a7195d5b1b6c62827a63f62e3b
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -5,12 +5,14 @@
         color: #FFFFFF;
     }
     .wrapper {
-        position: fixed;
-        width: 15%;
-        height: 100vh;
+        width: 16%;
+        height: 100%;
         overflow-y: auto;
         background-color: #000000;
-        font-size: 0.875em;
+        font-size: 0.875em;position: fixed;
+        top: 55px;
+        left: 0;
+        bottom: 0;
     }
     .items {
         padding: 18px 0;

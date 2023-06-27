@@ -335,6 +335,7 @@
                         </div>
                     </div>
                 </div>
+<<<<<<< HEAD
                 <div class="mobile-button m-2">
                     <div class="btn-group">
                         <button type="button" class="btn btn-warning mr-2 full-width text-nowrap" data-toggle="modal"
@@ -349,6 +350,22 @@
                                                          href="{{route('login')}}">{{ __('home.purchase') }}</a>
                         </button>
                     </div>
+=======
+            </div>
+            <div class="mobile-button m-2">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-warning mr-2 full-width text-nowrap" data-toggle="modal"
+                            data-target="#chooseLanguageOrder"
+                            aria-expanded="false">
+                        <a class="text-white" target="_blank" rel="noopener noreferrer"
+                           href="http://order.2188.info/">{{ __('home.orders') }}</a>
+                    </button>
+                    <button type="button" class="btn btn-success mr-2 full-width text-nowrap" data-toggle="modal"
+                            data-target="#chooseLanguagePurchase"
+                            aria-expanded="false"><a class="text-white"
+                                                     href="{{route('login')}}">{{ __('home.purchase') }}</a>
+                    </button>
+>>>>>>> a10a703d9eeb66a7195d5b1b6c62827a63f62e3b
                 </div>
             </div>
             <div class="ht-right" style="margin: auto; margin-right: 0">
@@ -471,9 +488,16 @@
                     {{ session('error') }}
                 @endif
                 @if(session('login') || Auth::user()!= null)
+<<<<<<< HEAD
                     <div class="col-lg-3 col-md-4 col-12 col-sm-4 text-right ">
                         <div class="d-flex align-items-center">
                                 <ul class="nav-right mb-0" >
+=======
+                    <div class="col-lg-3 col-md-3 text-right col-md-4 col-12 col-sm-4">
+                        <div class="col-md-12">
+                            <div class="d-flex align-items-center">
+                                <ul class="nav-right mb-0">
+>>>>>>> a10a703d9eeb66a7195d5b1b6c62827a63f62e3b
                                     @php
                                         $cartViews = \App\Models\Cart::where([
                                                 ['user_id', '=', Auth::user()->id],
@@ -564,7 +588,8 @@
                                                    href="#">Coins: {{$coin}}</a>
                                             </li>
                                             <li>
-                                                <a href="{{route('buy.coin.show')}}" class="dropdown-item">{{ __('home.buy coin') }}</a>
+                                                <a href="{{route('buy.coin.show')}}"
+                                                   class="dropdown-item">{{ __('home.buy coin') }}</a>
                                             </li>
                                             <li>
                                                 <a class="dropdown-item" onclick="logout()"
@@ -698,7 +723,8 @@
                                                href="#">Coins: {{$coin}}</a>
                                         </li>
                                         <li>
-                                            <a href="{{route('buy.coin.show')}}" class="dropdown-item">{{ __('home.buy coin') }}</a>
+                                            <a href="{{route('buy.coin.show')}}"
+                                               class="dropdown-item">{{ __('home.buy coin') }}</a>
                                         </li>
                                         <li>
                                             <a class="dropdown-item" onclick="logout()"
@@ -1026,9 +1052,26 @@
 </header>
 <!-- Header End -->
 <script>
-
     // Hàm logout
     function logout() {
+        let productIDs = localStorage.getItem('productIDs');
+
+        $.ajax({
+            url: '/product-viewed',
+            method: 'POST',
+            data: {
+                productIds: productIDs,
+                _token: '{{ csrf_token() }}'
+            },
+            success: function (response) {
+                localStorage.clear();
+                console.log(response);
+            },
+            error: function (response) {
+                console.log(response)
+            }
+        });
+
         // Tạo một form
         var form = document.createElement('form');
 

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\NotificationStatus;
 use App\Enums\PermissionUserStatus;
+use App\Enums\StatisticStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Libraries\GeoIP;
-use App\Models\Notification;
 use App\Models\Permission;
+use App\Models\StatisticAccess;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -26,6 +26,26 @@ class AuthController extends Controller
     {
         (new HomeController())->getLocale($request);
         if (Auth::check()) {
+            //
+            $statisticAccess = StatisticAccess::where([
+                ['user_id', Auth::user()->id],
+                ['datetime', '<', Carbon::now()->addHours(7)->copy()->endOfDay()],
+                ['datetime', '>', Carbon::now()->addHours(7)->copy()->startOfDay()],
+                ['status', StatisticStatus::ACTIVE],
+            ])->first();
+
+            if ($statisticAccess) {
+                $statisticAccess->numbers = $statisticAccess->numbers + 1;
+                $statisticAccess->save();
+            } else {
+                $statisticRevenue = [
+                    'user_id' => Auth::user()->id,
+                    'numbers' => 1,
+                    'datetime' => Carbon::now()->addHours(7),
+                ];
+
+                StatisticAccess::create($statisticRevenue);
+            }
             // nếu đăng nhập thàng công thì
             return redirect()->route('home');
         } else {

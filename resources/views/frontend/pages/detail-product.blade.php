@@ -1,6 +1,6 @@
 @php
     use App\Models\Attribute;
-    use App\Models\Properties;
+    use App\Models\Properties;use Illuminate\Support\Facades\Auth;
 @endphp
 
 @extends('frontend.layouts.master')
@@ -346,6 +346,10 @@
                                         </select>
                                     </div>
                                 @endforeach
+                            </div>
+
+                            <div class="">
+                                <input id="product_id" hidden value="{{$product->id}}">
                             </div>
 
                             <div class="count__wrapper count__wrapper--ml mt-3">
@@ -1009,6 +1013,29 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function checkProductReviews() {
+            let product_id = document.getElementById('product_id').value;
+
+            const arrayID = [];
+            if (localStorage.getItem('productIDs') != null) {
+                const oldValue = localStorage.getItem('productIDs');
+                const result = oldValue.split(',');
+                for (let i = 0; i < result.length; i++) {
+                    if (result[i] != product_id) {
+                        arrayID.push(result[i])
+                    }
+                }
+                arrayID.push(product_id);
+            } else {
+                arrayID.push(product_id);
+            }
+            localStorage.setItem('productIDs', arrayID.toString());
+        }
+
+        checkProductReviews();
+    </script>
 
     <script>
         function zoomImg(x) {

@@ -9,7 +9,7 @@
 
     </style>
     <div class="card">
-        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center">
             <h5 class="card-title">Danh sách sản phẩm</h5>
             @if (session('success_update_product'))
                 <div class="alert alert-success">

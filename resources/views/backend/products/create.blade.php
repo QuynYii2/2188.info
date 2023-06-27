@@ -7,7 +7,7 @@
 
 @section('content')
 
-    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0;">
         <h5 class="category">Thêm mới sản phẩm</h5>
         @if (session('success_update_product'))
             <div class="alert alert-success">
@@ -40,7 +40,7 @@
                 </div>
                 <div class="form-group">
                     <div class="name">Mô tả chi tiết</div>
-                    <textarea class="form-control tiny" name="description-ffff"></textarea>
+                    <textarea class="form-control tiny" name="description"></textarea>
                 </div>
                 <div class="form-group row">
                     <div class="col-6 d-inline-block">
@@ -58,9 +58,27 @@
 {{--                        <input type="checkbox">--}}
 {{--                    </div>--}}
 {{--                </div>--}}
+                <div class="form-group col-12 col-sm-12 pt-3">
+                    <label for="thumbnail">Ảnh đại diện:</label>
+                    <label class='__lk-fileInput'>
+                        <span data-default='Choose file'>Choose file</span>
+                        <input type="file" id="thumbnail" class="img-cfg" name="thumbnail" accept="image/*"
+                               required>
+                    </label>
+                </div>
+
+                <div class="form-group col-12 col-sm-12 ">
+                    <label for="gallery">Thư viện ảnh:</label>
+                    <label class='__lk-fileInput'>
+                        <span data-default='Choose file'>Choose file</span>
+                        <input type="file" id="gallery" class="img-cfg" name="gallery[]" accept="image/*" required>
+                    </label>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 mt-2 rm-pd-on-mobile">
                 <div class="form-group" id="cat-parameter">
                     <div for="category" class="col-sm-12 control-label name">Chuyên mục:</div>
-                    <div class="col-sm-12 overflow-scroll custom-scrollbar" style="height: 200px;">
+                    <div class="col-sm-12 custom-scrollbar" style="height: 200px;overflow-y: auto">
                         <ul id="category" class="list-unstyled">
                             @foreach($categories as $category)
                                 <li>
@@ -74,8 +92,6 @@
 
                     </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-6 mt-2 rm-pd-on-mobile">
 
                 {{--                <div class="form-group">--}}
                 {{--                    <label for="attribute">Chọn thuộc tính sản phẩm có sẵn:</label>--}}
@@ -113,7 +129,7 @@
                             </div>
                         @endif
                     @endforeach
-
+                </div>
                     <div class="border">
                         <div class="col-sm-12 d-inline-block ">
                             <label class="name" for="date_start">Hình thức thanh toán</label>
@@ -163,22 +179,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group col-12 col-sm-12 pt-3">
-                        <label for="thumbnail">Ảnh đại diện:</label>
-                        <label class='__lk-fileInput'>
-                            <span data-default='Choose file'>Choose file</span>
-                            <input type="file" id="thumbnail" class="img-cfg" name="thumbnail" accept="image/*"
-                                   required>
-                        </label>
-                    </div>
 
-                    <div class="form-group col-12 col-sm-12 ">
-                        <label for="gallery">Thư viện ảnh:</label>
-                        <label class='__lk-fileInput'>
-                            <span data-default='Choose file'>Choose file</span>
-                            <input type="file" id="gallery" class="img-cfg" name="gallery[]" accept="image/*" required>
-                        </label>
-                    </div>
                 </div>
             </div>
             <input id="input-form-create-attribute" name="attribute_property" type="text" value="1" hidden>
