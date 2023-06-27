@@ -118,4 +118,10 @@
             </div>
         </div>
     </div>
+    <script>
+        function clearLocal() {
+            localStorage.clear();
+        }
+        clearLocal();
+    </script>
 @endsection
