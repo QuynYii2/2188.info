@@ -82,7 +82,7 @@ class ProductController extends Controller
             ->reduce(function ($carry, $item) {
                 $parts = explode('-', $item);
                 $firstValue = $parts[0];
-                $secondValue = $parts[1];
+//                $secondValue = $parts[1];
 
                 if ($carry->isEmpty()) {
                     $carry->push($item);
@@ -92,7 +92,8 @@ class ProductController extends Controller
                     $lastFirstValue = $lastParts[0];
 
                     if ($lastFirstValue == $firstValue) {
-                        $newLastItem = $lastFirstValue . '-' . $lastParts[1] . '-' . $secondValue;
+//                        $newLastItem = $lastFirstValue . '-' . $lastParts[1] . '-' . $secondValue;
+                        $newLastItem = $lastFirstValue . '-' . $lastParts[1];
                         $carry->pop();
                         $carry->push($newLastItem);
                     } else {
