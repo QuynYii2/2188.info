@@ -91,9 +91,10 @@
                                         <tr>
                                             <td class="float-left">
                                                 <button class="text-decoration-none" data-toggle="modal"
-                                                        data-target="#updateOrder"
+                                                        data-target="#updateOrder{{$order->id}}"
                                                         style="cursor: pointer">{{$order->id}}</button>
-                                                <div class="modal fade" id="updateOrder" tabIndex="-1" role="dialog"
+                                                <div class="modal fade" id="updateOrder{{$order->id}}" tabIndex="-1"
+                                                     role="dialog"
                                                      aria-labelledby="editModalLabel">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
@@ -142,18 +143,17 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="d-flex justify-content-around">
-                                                                        @if($order->status == \App\Enums\OrderStatus::PROCESSING)
+                                                                        @if($order->status == \App\Enums\OrderStatus::PROCESSING  || $order->status == \App\Enums\OrderStatus::WAIT_PAYMENT)
                                                                             <button type="submit"
                                                                                     class="btn w-25 btn-danger">
                                                                                 Cancel
                                                                             </button>
                                                                         @else
-                                                                            <button type="" class="btn w-25 btn-danger"
+                                                                            <button class="btn w-25 btn-danger"
                                                                                     disabled>
                                                                                 Cancel
                                                                             </button>
                                                                         @endif
-
                                                                         <button type="button"
                                                                                 class="btn w-25 btn-secondary"
                                                                                 data-dismiss="modal">Back
@@ -196,9 +196,10 @@
                                         <tr>
                                             <td class="float-left">
                                                 <button class="text-decoration-none" data-toggle="modal"
-                                                        data-target="#updateOrder"
+                                                        data-target="#updateOrderWait{{$order->id}}"
                                                         style="cursor: pointer">{{$order->id}}</button>
-                                                <div class="modal fade" id="updateOrder" tabIndex="-1" role="dialog"
+                                                <div class="modal fade" id="updateOrderWait{{$order->id}}" tabIndex="-1"
+                                                     role="dialog"
                                                      aria-labelledby="editModalLabel">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
@@ -211,7 +212,10 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form id="delete-account-form">
+                                                                <form action="{{route('order.cancel', $order->id)}}"
+                                                                      method="post">
+                                                                    @csrf
+                                                                    @method('DELETE')
                                                                     <div class="row mb-5">
                                                                         <div class="col">
                                                                             <label for="fname">Full name:</label>
@@ -244,8 +248,7 @@
                                                                     </div>
                                                                     <div class="d-flex justify-content-around">
                                                                         <button type="submit"
-                                                                                class="btn w-25 btn-danger"
-                                                                                disabled>
+                                                                                class="btn w-25 btn-danger">
                                                                             Cancel
                                                                         </button>
                                                                         <button type="button"
