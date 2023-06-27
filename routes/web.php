@@ -181,5 +181,4 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/product-interest/{id}', [\App\Http\Controllers\ProductInterestController::class, 'delete'])->name('product.interest.delete');
     //
     Route::post('/product-viewed', [\App\Http\Controllers\ProductController::class, 'productViewed'])->name('product.viewed');
-
 });
