@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="card">
-        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center">
+        <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title">Edit Product</h5>
         </div>
         <div class="card-body">

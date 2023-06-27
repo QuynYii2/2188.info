@@ -17,7 +17,7 @@
 
 <body>
 <!-- Header -->
-<header style="position: fixed; top: 0; left: 0; right: 0; height: 55px; z-index: 1;">
+<header class="header_back">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Admin Dashboard</a>
         <!-- Add navigation links here -->

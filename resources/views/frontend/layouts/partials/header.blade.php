@@ -349,7 +349,6 @@
                             aria-expanded="false"><a class="text-white"
                                                      href="{{route('login')}}">{{ __('home.purchase') }}</a>
                     </button>
->>>>>>> a10a703d9eeb66a7195d5b1b6c62827a63f62e3b
                 </div>
             </div>
             <div class="ht-right" style="margin: auto; margin-right: 0">
