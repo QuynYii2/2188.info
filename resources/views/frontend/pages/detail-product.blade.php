@@ -529,6 +529,7 @@
                                     <form method="post" action="{{route('create.evaluate')}}">
                                         @csrf
                                         <input type="text" class="form-control" id="product_id" name="product_id"
+                                               value="{{$product->id}}"
                                                hidden/>
                                         <div class="rating">
                                             <input type="radio" name="star_number" id="star1" value="1" hidden="">

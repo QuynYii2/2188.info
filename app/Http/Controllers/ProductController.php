@@ -51,7 +51,7 @@ class ProductController extends Controller
     {
         try {
             $list = ProductViewed::where('user_id', Auth::user()->id)->first();
-            if ($list) {
+            if ($list && $list->productIds != null && $request->input('productIds') != null) {
 //                $list->productIds = $request->input('productIds');
                 $arrayIdsOld = explode(",", $list->productIds);
                 $arrayIdsNew = explode(",", $request->input('productIds'));
