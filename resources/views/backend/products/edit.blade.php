@@ -87,8 +87,10 @@
                     <label for="thumbnail">Thumbnail</label>
                     <input type="file" class="form-control-file" id="thumbnail" name="thumbnail">
                     @if ($product->thumbnail)
-                        <a href="{{ asset('storage/' . $product->thumbnail) }}" data-fancybox="group" data-caption="This image has a caption 1">
-                            <img class="mt-2" style="height: 100px" src="{{ asset('storage/' . $product->thumbnail) }}" alt="Thumbnail">
+                        <a href="{{ asset('storage/' . $product->thumbnail) }}" data-fancybox="group"
+                           data-caption="This image has a caption 1">
+                            <img class="mt-2" style="height: 100px" src="{{ asset('storage/' . $product->thumbnail) }}"
+                                 alt="Thumbnail">
                         </a>
                     @endif
                 </div>
@@ -110,13 +112,15 @@
                     @endphp
                     @if ($product->gallery )
                         @foreach ($modifiedArray as $image)
-                            <a href="{{ asset('storage/' . $image) }}" data-fancybox="group" data-caption="This image has a caption 1">
-                                <img class="mt-2" style="height: 100px; width: 100px " src="{{ asset('storage/' . $image) }}" alt="Gallery Image" width="100">
+                            <a href="{{ asset('storage/' . $image) }}" data-fancybox="group"
+                               data-caption="This image has a caption 1">
+                                <img class="mt-2" style="height: 100px; width: 100px "
+                                     src="{{ asset('storage/' . $image) }}" alt="Gallery Image" width="100">
                             </a>
                         @endforeach
                     @endif
                 </div>
-                <input id="input-form-create-attribute" name="attribute_property" type="text" value="1" hidden>
+                <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
                 <button type="submit" class="btn btn-success">Save</button>
             </form>
         </div>
@@ -143,17 +147,19 @@
             var attPro = document.getElementById('input-form-create-attribute')
             attPro.value = myArray;
         }
+
+        checkInput();
     </script>
     <script>
         $('[data-fancybox]').fancybox({
-            buttons : [
+            buttons: [
                 'close'
             ],
-            wheel : false,
+            wheel: false,
             transitionEffect: "slide",
-            loop            : true,
-            toolbar         : false,
-            clickContent    : false
+            loop: true,
+            toolbar: false,
+            clickContent: false
         });
     </script>
 @endsection
