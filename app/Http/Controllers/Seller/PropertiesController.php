@@ -80,15 +80,17 @@ class PropertiesController extends Controller
 
     public function toggle($id)
     {
-//        $property = Properties::where([['status', PropertiStatus::ACTIVE], ['id', $id]])->first();
-//        if ($property == null) {
-//            return redirect()->route('properties.index');
-//        }
-//
-//        $property->status = PropertiStatus::DELETED;
-//        $property->save();
-//
-//        return redirect()->route('properties.index')->with('success', 'Delete property success!');
+        $property = Properties::where('id', $id)->first();
+        if ($property == null) {
+            return back([400], ['Error']);
+        }
+        if ($property->status == PropertiStatus::ACTIVE) {
+            $property->status = PropertiStatus::INACTIVE;
+        } elseif ($property->status == PropertiStatus::INACTIVE) {
+            $property->status = PropertiStatus::ACTIVE;
+        }
+        $property->save();
+        return $property;
     }
 
     public function destroy($id)

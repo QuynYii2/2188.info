@@ -149,6 +149,7 @@ Route::group(['middleware' => 'role.seller'], function () {
     Route::get('/properties/{id}', [PropertiesController::class, 'show'])->name('properties.detail');
     Route::post('/properties/{id}', [PropertiesController::class, 'update'])->name('properties.update');
     Route::post('/delete-properties/{id}', [PropertiesController::class, 'destroy'])->name('properties.delete');
+    Route::post('/toggle-properties/{id}', [PropertiesController::class, 'toggle'])->name('properties.toggle');
     //
     Route::get('/products', [ProductController::class, 'index'])->name('seller.products.index');
     Route::get('/products/create', [ProductController::class, 'create'])->name('seller.products.create');
