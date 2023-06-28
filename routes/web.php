@@ -140,6 +140,7 @@ Route::group(['middleware' => 'role.seller'], function () {
     Route::get('/attributes/{id}', [AttributeController::class, 'show'])->name('attributes.detail');
     Route::post('/attributes/{id}', [AttributeController::class, 'update'])->name('attributes.update');
     Route::post('/delete-attributes/{id}', [AttributeController::class, 'destroy'])->name('attributes.delete');
+    Route::post('/toggle-attributes/{id}', [AttributeController::class, 'toggle'])->name('attributes.toggle');
     //
     Route::get('/properties', [PropertiesController::class, 'index'])->name('properties.index');
     Route::get('/properties/create', [PropertiesController::class, 'create'])->name('properties.create');
