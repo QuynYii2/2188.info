@@ -92,7 +92,7 @@
                                             <td class="float-left">
                                                 <button class="text-decoration-none" data-toggle="modal"
                                                         data-target="#updateOrder{{$order->id}}"
-                                                        style="cursor: pointer">{{$order->id}}</button>
+                                                        style="cursor: pointer">{{ $loop->index+1 }}</button>
                                                 <div class="modal fade" id="updateOrder{{$order->id}}" tabIndex="-1"
                                                      role="dialog"
                                                      aria-labelledby="editModalLabel">
@@ -197,7 +197,7 @@
                                             <td class="float-left">
                                                 <button class="text-decoration-none" data-toggle="modal"
                                                         data-target="#updateOrderWait{{$order->id}}"
-                                                        style="cursor: pointer">{{$order->id}}</button>
+                                                        style="cursor: pointer">{{ $loop->index+1 }}</button>
                                                 <div class="modal fade" id="updateOrderWait{{$order->id}}" tabIndex="-1"
                                                      role="dialog"
                                                      aria-labelledby="editModalLabel">
@@ -293,9 +293,9 @@
                                         <tr>
                                             <td class="float-left">
                                                 <button class="text-decoration-none" data-toggle="modal"
-                                                        data-target="#updateOrder"
-                                                        style="cursor: pointer">{{$order->id}}</button>
-                                                <div class="modal fade" id="updateOrder" tabIndex="-1" role="dialog"
+                                                        data-target="#updateOrderProcess{{$order->id}}"
+                                                        style="cursor: pointer">{{ $loop->index+1 }}</button>
+                                                <div class="modal fade" id="updateOrderProcess{{$order->id}}" tabIndex="-1" role="dialog"
                                                      aria-labelledby="editModalLabel">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
@@ -398,9 +398,9 @@
                                         <tr>
                                             <td class="float-left">
                                                 <button class="text-decoration-none" data-toggle="modal"
-                                                        data-target="#updateOrder"
-                                                        style="cursor: pointer">{{$order->id}}</button>
-                                                <div class="modal fade" id="updateOrder" tabIndex="-1" role="dialog"
+                                                        data-target="#updateOrderShip{{$order->id}}"
+                                                        style="cursor: pointer">{{ $loop->index+1 }}</button>
+                                                <div class="modal fade" id="updateOrderShip{{$order->id}}" tabIndex="-1" role="dialog"
                                                      aria-labelledby="editModalLabel">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
@@ -493,9 +493,9 @@
                                         <tr>
                                             <td class="float-left">
                                                 <button class="text-decoration-none" data-toggle="modal"
-                                                        data-target="#updateOrder"
-                                                        style="cursor: pointer">{{$order->id}}</button>
-                                                <div class="modal fade" id="updateOrder" tabIndex="-1" role="dialog"
+                                                        data-target="#updateOrderDelivery{{$order->id}}"
+                                                        style="cursor: pointer">{{ $loop->index+1 }}</button>
+                                                <div class="modal fade" id="updateOrderDelivery{{$order->id}}" tabIndex="-1" role="dialog"
                                                      aria-labelledby="editModalLabel">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
@@ -587,9 +587,9 @@
                                         <tr>
                                             <td class="float-left">
                                                 <button class="text-decoration-none" data-toggle="modal"
-                                                        data-target="#updateOrder"
-                                                        style="cursor: pointer">{{$order->id}}</button>
-                                                <div class="modal fade" id="updateOrder" tabIndex="-1" role="dialog"
+                                                        data-target="#updateOrderCancel{{$order->id}}"
+                                                        style="cursor: pointer">{{ $loop->index+1 }}</button>
+                                                <div class="modal fade" id="updateOrderCancel{{$order->id}}" tabIndex="-1" role="dialog"
                                                      aria-labelledby="editModalLabel">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
