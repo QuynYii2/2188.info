@@ -33,6 +33,53 @@ class ProductController extends Controller
         ]);
     }
 
+    private function getAttributeProperty(Request $request)
+    {
+        $proAtt = $request->input('attribute_property');
+        $newArray = collect(explode(",", $proAtt))
+            ->reduce(function ($carry, $item) {
+                $parts = explode('-', $item);
+                $firstValue = $parts[0];
+                $secondValue = $parts[1];
+                if ($carry->isEmpty()) {
+                    $carry->push($item);
+                } else {
+                    $lastItem = $carry->last();
+                    $lastParts = explode('-', $lastItem);
+                    $lastFirstValue = $lastParts[0];
+                    if ($lastFirstValue == $firstValue) {
+                        $newLastItem = $lastFirstValue . '-' . $lastParts[1] . '-' . $secondValue;
+                        $carry->pop();
+                        $carry->push($newLastItem);
+                    } else {
+                        $carry->push($item);
+                    }
+                }
+                return $carry;
+            }, collect())
+            ->toArray();
+        return $newArray;
+    }
+
+    private function createAttributeProduct(Product $product, $newArray)
+    {
+        for ($i = 0; $i < count($newArray); $i++) {
+            $myArray = array();
+            $arraySplit = explode('-', $newArray[$i]);
+            for ($j = 1; $j < count($arraySplit); $j++) {
+                $myArray[] = $arraySplit[$j];
+            }
+
+            $attribute_property = [
+                'product_id' => $product->id,
+                'attribute_id' => $arraySplit[0],
+                'value' => implode(",", $myArray),
+                'status' => AttributeProductStatus::ACTIVE
+            ];
+            DB::table('product_attribute')->insert($attribute_property);
+        }
+    }
+
     public function store(Request $request)
     {
         if ($request->hasFile('thumbnail')) {
@@ -65,65 +112,11 @@ class ProductController extends Controller
         $product->location = $userInfo->region;
         $createProduct = $product->save();
 
-        $proAtt = $request->input('attribute_property');
-//        $arrayProAtt = explode(',', $proAtt);
-//        $result = array();
-//        $object = new StdClass;
-//        for ($i = 0; $i < count($arrayProAtt); $i++) {
-//            $text = $arrayProAtt[$i];
-//            $value = explode('-', $text);
-//            $object->attribute = $value[0];
-//            $object->property = $value[1];
-//            $result[] = $object;
-//        }
-//        dd($result);
-
-        $newArray = collect(explode(",", $proAtt))
-            ->reduce(function ($carry, $item) {
-                $parts = explode('-', $item);
-                $firstValue = $parts[0];
-//                $secondValue = $parts[1];
-
-                if ($carry->isEmpty()) {
-                    $carry->push($item);
-                } else {
-                    $lastItem = $carry->last();
-                    $lastParts = explode('-', $lastItem);
-                    $lastFirstValue = $lastParts[0];
-
-                    if ($lastFirstValue == $firstValue) {
-//                        $newLastItem = $lastFirstValue . '-' . $lastParts[1] . '-' . $secondValue;
-                        $newLastItem = $lastFirstValue . '-' . $lastParts[1];
-                        $carry->pop();
-                        $carry->push($newLastItem);
-                    } else {
-                        $carry->push($item);
-                    }
-                }
-
-                return $carry;
-            }, collect())
-            ->toArray();
+        $newArray = $this->getAttributeProperty($request);
 
         $product = Product::where('user_id', $userInfo->id)->orderByDesc('id')->first();
 
-        for ($i = 0; $i < count($newArray); $i++) {
-//            dd($newArray[$i]);
-            $myArray = array();
-            $arraySplit = explode('-', $newArray[$i]);
-            for ($j = 1; $j < count($arraySplit); $j++) {
-                $myArray[] = $arraySplit[$j];
-            }
-
-            $attribute_property = [
-                'product_id' => $product->id,
-                'attribute_id' => $arraySplit[0],
-                'value' => implode(",", $myArray),
-                'status' => AttributeProductStatus::ACTIVE
-            ];
-//            dd($attribute_property);
-            DB::table('product_attribute')->insert($attribute_property);
-        }
+        $this->createAttributeProduct($product, $newArray);
 
         if ($createProduct) {
             $request->session()->flash('success_create_product', 'Tạo mới sản phẩm thành công.');
@@ -143,7 +136,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $categories = Category::all();
-        $attributes = Attribute::all();
+        $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', Auth::user()->id]])->get();
         $att_of_product = DB::table('product_attribute')->where('product_id', $product->id)->get();
 
         return view('backend.products.edit', compact('product', 'categories', 'attributes', 'att_of_product'));
@@ -172,6 +165,16 @@ class ProductController extends Controller
             }
             $product->gallery = $galleryPaths;
         }
+
+        $newArray = $this->getAttributeProperty($request);
+
+        $product_attributes = DB::table('product_attribute')->where('product_id', $product->id)->get();
+
+        foreach ($product_attributes as $item) {
+            DB::table('product_attribute')->where('product_id', $product->id)->delete($item->id);
+        }
+
+        $this->createAttributeProduct($product, $newArray);
 
         $updateProduct = $product->save();
 
