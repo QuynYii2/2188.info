@@ -1,3 +1,4 @@
+@php use App\Enums\AttributeStatus;use App\Models\Properties; @endphp
 @extends('backend.layouts.master')
 <style>
     .switch {
@@ -62,7 +63,7 @@
 </style>
 @section('content')
     <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center" >
+        <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title">Danh sách thuộc tính</h5>
             <a href="{{ route('attributes.create') }}" class="btn btn-primary">Thêm mới</a>
             @if (session('success_update_product'))
@@ -72,7 +73,7 @@
             @endif
         </div>
         <div class="card-body">
-            <table class="table" >
+            <table class="table">
                 <thead>
                 <tr class="text-center">
                     <th scope="col">#</th>
@@ -89,14 +90,14 @@
                         <td class="text-center">{{ $loop->index + 1 }}</td>
                         <td>{{ $attribute->name }}</td>
                         @php
-                            $properties = \App\Models\Properties::where('attribute_id', $attribute->id)->get();
+                            $properties = Properties::where('attribute_id', $attribute->id)->get();
                         @endphp
                         <td class="text-center">{{ count($properties) }}</td>
                         <td class="text-center">
                             {{ $attribute->status }}
                         </td>
                         <td class="text-center">
-                            @if($attribute->status == \App\Enums\AttributeStatus::ACTIVE)
+                            @if($attribute->status == AttributeStatus::ACTIVE)
                                 <label class="switch">
                                     <input id="input-check" type="checkbox" checked>
                                     <span class="slider round"></span>
@@ -109,12 +110,14 @@
                             @endif
                         </td>
                         <td class="text-center">
-                                <div class="">
-                                    <a href="{{route('attributes.detail', $attribute->id)}}" class="btn btn-success">Chi tiết</a>
-                                    <form>
-                                        <button type="submit" class="btn btn-danger">Xoá</button>
-                                    </form>
-                                </div>
+                            <div class="">
+                                <a href="{{route('attributes.detail', $attribute->id)}}" class="btn btn-success">Chi
+                                    tiết</a>
+                                <form action="{{route('attributes.delete', $attribute->id)}}" method="post">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">Xoá</button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @endforeach

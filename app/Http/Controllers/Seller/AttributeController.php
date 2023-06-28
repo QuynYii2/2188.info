@@ -61,8 +61,25 @@ class AttributeController extends Controller
         return redirect()->route('attributes.index')->with('success', 'Attribute updated successfully.');
     }
 
+    public function toggle($id)
+    {
+//        $attribute = Attribute::where([['status', AttributeStatus::ACTIVE], ['id', $id], ['user_id', Auth::user()->id]])->first();
+//        if ($attribute == null) {
+//            return redirect()->route('attributes.index');
+//        }
+//        $attribute->status = AttributeStatus::DELETED;
+//        $attribute->save();
+//        return redirect()->route('attributes.index')->with('success', 'Attribute updated successfully.');
+    }
+
     public function destroy($id)
     {
-        //
+        $attribute = Attribute::where([['status', AttributeStatus::ACTIVE], ['id', $id], ['user_id', Auth::user()->id]])->first();
+        if ($attribute == null) {
+            return redirect()->route('attributes.index');
+        }
+        $attribute->status = AttributeStatus::DELETED;
+        $attribute->save();
+        return redirect()->route('attributes.index')->with('success', 'Delete');
     }
 }

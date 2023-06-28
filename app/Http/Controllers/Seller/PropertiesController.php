@@ -17,7 +17,11 @@ class PropertiesController extends Controller
     {
         $properties = DB::table('properties')
             ->join('attributes', 'attributes.id', '=', 'properties.attribute_id')
-            ->where([['attributes.user_id', '=', Auth::user()->id], ['attributes.status', '!=', AttributeStatus::DELETED]])
+            ->where([
+                ['attributes.user_id', '=', Auth::user()->id],
+                ['attributes.status', '!=', AttributeStatus::DELETED],
+                ['properties.status', '!=', PropertiStatus::DELETED]
+                ])
             ->select('properties.*')
             ->get();
 
@@ -74,8 +78,29 @@ class PropertiesController extends Controller
         return redirect()->route('properties.index')->with('success', 'Properties updated successfully.');
     }
 
+    public function toggle($id)
+    {
+//        $property = Properties::where([['status', PropertiStatus::ACTIVE], ['id', $id]])->first();
+//        if ($property == null) {
+//            return redirect()->route('properties.index');
+//        }
+//
+//        $property->status = PropertiStatus::DELETED;
+//        $property->save();
+//
+//        return redirect()->route('properties.index')->with('success', 'Delete property success!');
+    }
+
     public function destroy($id)
     {
-        //
+        $property = Properties::where([['status', PropertiStatus::ACTIVE], ['id', $id]])->first();
+        if ($property == null) {
+            return redirect()->route('properties.index');
+        }
+
+        $property->status = PropertiStatus::DELETED;
+        $property->save();
+
+        return redirect()->route('properties.index')->with('success', 'Delete property success!');
     }
 }
