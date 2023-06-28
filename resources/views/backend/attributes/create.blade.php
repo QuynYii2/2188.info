@@ -4,7 +4,7 @@
     <form method="POST" action="{{ route('attributes.store') }}">
         @csrf
 
-        <div class="form-group">
+        <div class="card-header form-group mb-3">
             <label for="name">Tên biến thể</label>
             <input type="text" class="form-control" name="name" id="name" required>
             @error('name')
@@ -12,6 +12,6 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-primary">Tạo mới</button>
+        <button type="submit" class="btn btn-success">Tạo mới</button>
     </form>
 @endsection

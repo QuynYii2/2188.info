@@ -26,7 +26,7 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Tạo mới</button>
+                    <button type="submit" class="btn btn-success">Tạo mới</button>
                 </form>
             </div>
         </div>
