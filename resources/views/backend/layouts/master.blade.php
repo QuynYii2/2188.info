@@ -25,7 +25,7 @@
 </header>
 
 <!-- Main Content -->
-<div class="container-fluid bg-white">
+<div class="container-fluid bg-white card-header">
     <div class="row">
         <!-- Sidebar -->
         <div class="col-sm-3 col-12 col-md-3 col-lg-2" style="padding: 0">

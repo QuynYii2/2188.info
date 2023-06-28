@@ -66,10 +66,11 @@
                         </form>
                     </div>
                     <div class="tab-pane fade" id="nav-seller" role="tabpanel" aria-labelledby="nav-seller-tab">
-                        <form>
+                        <form method="post" action="{{ route('login.submit') }}">
+                            @csrf
                             <div class="form-group">
-                                <input type="text" class="form-control" name="name"
-                                       placeholder="{{ __('home.input username') }}" required>
+                                <input id="login_field" type="text" class="form-control" name="login_field"
+                                       placeholder="{{ __('home.input username') }}" value="{{ old('login_field') }}" required autofocus>
                             </div>
                             <div class="form-group">
                                 <input type="password" class="form-control" name="password"

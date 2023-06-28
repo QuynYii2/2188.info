@@ -173,26 +173,20 @@
                 </li>
                 <li>
                     <a href="#!"><span>Sản phẩm xem nhiều nhất</span></a>
-
                 </li>
                 <li>
                     <a href="#!"><span>Quản lý bình luận</span></a>
                     <ul class='sub-items'>
-                        <li><a href="{{route('seller.evaluates.index')}}">List Evaluate</a>
-                        </li>
+                        <li><a href="{{route('seller.evaluates.index')}}">List Evaluate</a></li>
                     </ul>
                 </li>
             </ul>
         </li>
     </ul>
-
 </div>
 
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <script>
-
     $(".items > li > a").click(function (e) {
         e.preventDefault();
         var $this = $(this);
@@ -210,6 +204,4 @@
         $(".sub-items a").removeClass("current");
         $(this).addClass("current");
     });
-
-
 </script>
