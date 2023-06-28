@@ -72,7 +72,7 @@
                     <label for="gallery">Thư viện ảnh:</label>
                     <label class='__lk-fileInput'>
                         <span data-default='Choose file'>Choose file</span>
-                        <input type="file" id="gallery" class="img-cfg" name="gallery[]" accept="image/*" required>
+                        <input type="file" id="gallery" class="img-cfg" name="gallery[]" accept="image/*" multiple required>
                     </label>
                 </div>
             </div>
