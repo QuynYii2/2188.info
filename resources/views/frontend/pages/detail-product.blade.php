@@ -354,7 +354,7 @@
 
                             <div class="count__wrapper count__wrapper--ml mt-3">
                                 <label for="qty">{{ __('home.quantity') }}</label>
-                                <input class="product-qty input" type="number" name="quantity" min="0"
+                                <input class="product-qty input" type="number" name="quantity" min="1"
                                        style="width: 55px"
                                        value="1">
                             </div>
