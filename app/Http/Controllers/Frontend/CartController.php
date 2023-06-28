@@ -56,6 +56,9 @@ class CartController extends Controller
                 $cart->save();
             } else {
                 $quantity = $request->input('quantity', 1);// Số lượng mặc định là 1, có thể điều chỉnh tùy ý
+                if ($quantity < 1 ){
+                    return back();
+                }
                 $cart = [
                     'user_id' => Auth::user()->id,
                     'product_id' => $product->id,
