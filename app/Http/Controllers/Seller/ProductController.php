@@ -36,47 +36,54 @@ class ProductController extends Controller
     private function getAttributeProperty(Request $request)
     {
         $proAtt = $request->input('attribute_property');
-        $newArray = collect(explode(",", $proAtt))
-            ->reduce(function ($carry, $item) {
-                $parts = explode('-', $item);
-                $firstValue = $parts[0];
-                $secondValue = $parts[1];
-                if ($carry->isEmpty()) {
-                    $carry->push($item);
-                } else {
-                    $lastItem = $carry->last();
-                    $lastParts = explode('-', $lastItem);
-                    $lastFirstValue = $lastParts[0];
-                    if ($lastFirstValue == $firstValue) {
-                        $newLastItem = $lastFirstValue . '-' . $lastParts[1] . '-' . $secondValue;
-                        $carry->pop();
-                        $carry->push($newLastItem);
-                    } else {
+        if ($proAtt != null) {
+            $newArray = collect(explode(",", $proAtt))
+                ->reduce(function ($carry, $item) {
+                    $parts = explode('-', $item);
+                    $firstValue = $parts[0];
+                    $secondValue = $parts[1];
+                    if ($carry->isEmpty()) {
                         $carry->push($item);
+                    } else {
+                        $lastItem = $carry->last();
+                        $lastParts = explode('-', $lastItem);
+                        $lastFirstValue = $lastParts[0];
+                        if ($lastFirstValue == $firstValue) {
+                            $newLastItem = $lastFirstValue . '-' . $lastParts[1] . '-' . $secondValue;
+                            $carry->pop();
+                            $carry->push($newLastItem);
+                        } else {
+                            $carry->push($item);
+                        }
                     }
-                }
-                return $carry;
-            }, collect())
-            ->toArray();
+                    return $carry;
+                }, collect())
+                ->toArray();
+        } else {
+            $newArray = null;
+        }
+
         return $newArray;
     }
 
     private function createAttributeProduct(Product $product, $newArray)
     {
-        for ($i = 0; $i < count($newArray); $i++) {
-            $myArray = array();
-            $arraySplit = explode('-', $newArray[$i]);
-            for ($j = 1; $j < count($arraySplit); $j++) {
-                $myArray[] = $arraySplit[$j];
-            }
+        if ($newArray != null) {
+            for ($i = 0; $i < count($newArray); $i++) {
+                $myArray = array();
+                $arraySplit = explode('-', $newArray[$i]);
+                for ($j = 1; $j < count($arraySplit); $j++) {
+                    $myArray[] = $arraySplit[$j];
+                }
 
-            $attribute_property = [
-                'product_id' => $product->id,
-                'attribute_id' => $arraySplit[0],
-                'value' => implode(",", $myArray),
-                'status' => AttributeProductStatus::ACTIVE
-            ];
-            DB::table('product_attribute')->insert($attribute_property);
+                $attribute_property = [
+                    'product_id' => $product->id,
+                    'attribute_id' => $arraySplit[0],
+                    'value' => implode(",", $myArray),
+                    'status' => AttributeProductStatus::ACTIVE
+                ];
+                DB::table('product_attribute')->insert($attribute_property);
+            }
         }
     }
 

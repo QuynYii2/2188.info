@@ -181,7 +181,7 @@
                     </div>
                 </div>
             </div>
-            <input id="input-form-create-attribute" name="attribute_property" type="text" value="1" hidden>
+            <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
             <div class="form-group col-12 col-md-7 col-sm-8 ">
                 <div class="row justify-content-center">
                     <button type="submit" class="btn btn-success">Gửi</button>
@@ -211,6 +211,8 @@
             var attPro = document.getElementById('input-form-create-attribute')
             attPro.value = myArray;
         }
+
+        checkInput();
     </script>
 
     <script>
