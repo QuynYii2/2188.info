@@ -84,11 +84,22 @@ class UserController extends Controller
 
         $success = $user->save();
 
+        // Save permission default
+        $newUser = User::where('email', $request->email)->first();
+
+        if ($request->type_account == 'seller') {
+            $roleUser = DB::table('role_user')->insert([
+                'role_id' => 2,
+                'user_id' => $newUser->id
+            ]);
+            if (!$roleUser) {
+                alert()->error('Error', 'Error, Please try again!!');
+                return back();
+            }
+        }
+
         $mail = $request->email;
         $password = $request->password;
-
-        //         Save permission default
-        $newUser = User::where('email', $request->email)->first();
 
         if ($request->type_account == 'buyer') {
             $categories = Category::get()->toTree();
@@ -217,7 +228,8 @@ class UserController extends Controller
             'status' => NotificationStatus::UNSEEN,
         ];
         Notification::create($noti);
-        alert()->success('Success', 'Đăng ký thành công!');
+        alert()->success('Success', 'Đăng ký thành công!
+        Vui lòng đăng nhập để tiếp tục sử  dịch vụ của chúng tôi');
         Session::flash('success', 'Đăng ký thành công!');
 
         if ($success) {
@@ -239,7 +251,7 @@ class UserController extends Controller
             $user = Auth::user();
             $user->password = Hash::make($newPassword);
             $success = $user->save();
-            if ($success){
+            if ($success) {
                 alert()->success('Success', 'Change Password Success!');
             } else {
                 alert()->error('Error', 'Change Password error!');
@@ -259,13 +271,13 @@ class UserController extends Controller
             $user = Auth::user();
             $email = $request->input('edit-email');
             $oldUser = User::where('email', $email)->first();
-            if ($oldUser){
+            if ($oldUser) {
                 alert()->error('Error', 'Email already used!');
                 return back();
             } else {
                 $user->email = $email;
                 $success = $user->save();
-                if ($success){
+                if ($success) {
                     alert()->success('Success', 'Change Email Success!');
                 } else {
                     alert()->error('Error', 'Change Email error!');
@@ -284,7 +296,7 @@ class UserController extends Controller
             $user = Auth::user();
             $user->phone = $request->input('edit-phone');
             $success = $user->save();
-            if ($success){
+            if ($success) {
                 alert()->success('Success', 'Change PhoneNumber Success!');
             } else {
                 alert()->error('Error', 'Change PhoneNumber error!');
@@ -315,7 +327,7 @@ class UserController extends Controller
 
         $user->region = strtolower($user->region);
         $success = $user->save();
-        if ($success){
+        if ($success) {
             alert()->success('Success', 'Update Info Success!');
         } else {
             alert()->error('Error', 'Update Info Error!');
