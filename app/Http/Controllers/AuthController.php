@@ -55,10 +55,8 @@ class AuthController extends Controller
 
     public function showLoginForm($locale)
     {
-//        (new HomeController())->getLocale($request);
         app()->setLocale($locale);
         if (Auth::check()) {
-            // nếu đăng nhập thàng công thì
             return redirect()->route('home');
         } else {
             return view('frontend/pages/login');
@@ -85,19 +83,9 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->put('login', $loginField);
             $login = $request->session()->get('login');
-//            $dataUser = User::where(function ($query) use ($login, $isEmail) {
-//                if ($isEmail) {
-//                    $query->where('email', $login);
-//                } else {
-//                    $query->where('phone', $login);
-//                }
-//            })->first();
-            (new HomeController())->getLocale($request);
-            //
-//                return view('frontend.layouts.master', ['infoUser' => $dataUser]);
             return redirect()->route('home');
-
-
+        } else {
+            toast('Error, Please try again!', 'error', 'top-right');
         }
 
         return redirect()->route('login')->with('error', 'Email hoặc mật khẩu không chính xác');
