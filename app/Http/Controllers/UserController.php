@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Mockery\Exception;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
@@ -215,15 +217,13 @@ class UserController extends Controller
             'status' => NotificationStatus::UNSEEN,
         ];
         Notification::create($noti);
-
+        alert()->success('Success', 'Đăng ký thành công!');
         Session::flash('success', 'Đăng ký thành công!');
 
         if ($success) {
-//            return response()->json(['success' => true]);
             return redirect(route('login'));
         } else {
-//            return response()->json(['success' => false]);
-            dd('afaf');
+            alert()->error('Error', 'Error, Please try again!!');
             return back();
         }
 
@@ -238,10 +238,16 @@ class UserController extends Controller
             $newPassword = $request->input('new-password');
             $user = Auth::user();
             $user->password = Hash::make($newPassword);
-            $user->save();
+            $success = $user->save();
+            if ($success){
+                alert()->success('Success', 'Change Password Success!');
+            } else {
+                alert()->error('Error', 'Change Password error!');
+            }
             return redirect(route('profile.show'));
 
         } else {
+            alert()->error('Error', 'Change Password error!');
             return redirect(route('profile.show'));
         }
 
@@ -249,17 +255,43 @@ class UserController extends Controller
 
     public function changeEmail(Request $request)
     {
-        $user = Auth::user();
-        $user->email = $request->input('edit-email');
-        $user->save();
+        try {
+            $user = Auth::user();
+            $email = $request->input('edit-email');
+            $oldUser = User::where('email', $email)->first();
+            if ($oldUser){
+                alert()->error('Error', 'Email already used!');
+                return back();
+            } else {
+                $user->email = $email;
+                $success = $user->save();
+                if ($success){
+                    alert()->success('Success', 'Change Email Success!');
+                } else {
+                    alert()->error('Error', 'Change Email error!');
+                }
+            }
+        } catch (Exception $exception) {
+            alert()->error('Error', 'Change Email error!');
+            return back();
+        }
         return redirect(route('profile.show'));
     }
 
     public function changePhoneNumber(Request $request)
     {
-        $user = Auth::user();
-        $user->phone = $request->input('edit-phone');
-        $user->save();
+        try {
+            $user = Auth::user();
+            $user->phone = $request->input('edit-phone');
+            $success = $user->save();
+            if ($success){
+                alert()->success('Success', 'Change PhoneNumber Success!');
+            } else {
+                alert()->error('Error', 'Change PhoneNumber error!');
+            }
+        } catch (Exception $exception) {
+            return back([400], ['Error']);
+        }
         return redirect(route('profile.show'));
     }
 
@@ -282,7 +314,12 @@ class UserController extends Controller
 
 
         $user->region = strtolower($user->region);
-        $user->save();
+        $success = $user->save();
+        if ($success){
+            alert()->success('Success', 'Update Info Success!');
+        } else {
+            alert()->error('Error', 'Update Info Error!');
+        }
         return redirect(route('profile.show'));
 
     }

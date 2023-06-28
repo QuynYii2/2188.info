@@ -85,19 +85,10 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->put('login', $loginField);
             $login = $request->session()->get('login');
-//            $dataUser = User::where(function ($query) use ($login, $isEmail) {
-//                if ($isEmail) {
-//                    $query->where('email', $login);
-//                } else {
-//                    $query->where('phone', $login);
-//                }
-//            })->first();
-            (new HomeController())->getLocale($request);
-            //
-//                return view('frontend.layouts.master', ['infoUser' => $dataUser]);
+            toast('Your Post as been submited!', 'success', 'top-right');
             return redirect()->route('home');
-
-
+        } else {
+            toast('Your Post as been submited!', 'success', 'top-right');
         }
 
         return redirect()->route('login')->with('error', 'Email hoặc mật khẩu không chính xác');
