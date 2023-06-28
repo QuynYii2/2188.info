@@ -116,10 +116,34 @@
                         @endforeach
                     @endif
                 </div>
+                <input id="input-form-create-attribute" name="attribute_property" type="text" value="1" hidden>
                 <button type="submit" class="btn btn-success">Save</button>
             </form>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var properties = document.getElementsByClassName('property-attribute')
+        var number = properties.length
+
+        function checkInput() {
+            var propertyArray = [];
+            var attributeArray = [];
+            var myArray = [];
+            for (i = 0; i < number; i++) {
+                if (properties[i].checked) {
+                    const ArrPro = properties[i].value.split('-');
+                    myArray.push(properties[i].value);
+                    let attribute = ArrPro[0];
+                    let property = ArrPro[1];
+                    attributeArray.push(attribute);
+                    propertyArray.push(property);
+                }
+            }
+            var attPro = document.getElementById('input-form-create-attribute')
+            attPro.value = myArray;
+        }
+    </script>
     <script>
         $('[data-fancybox]').fancybox({
             buttons : [
