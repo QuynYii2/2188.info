@@ -9,7 +9,8 @@
         height: 100%;
         overflow-y: auto;
         background-color: #000000;
-        font-size: 0.875em;position: fixed;
+        font-size: 0.875em;
+        position: fixed;
         top: 55px;
         left: 0;
         bottom: 0;
