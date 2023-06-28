@@ -140,6 +140,7 @@ Route::group(['middleware' => 'role.seller'], function () {
     Route::get('/attributes/{id}', [AttributeController::class, 'show'])->name('attributes.detail');
     Route::post('/attributes/{id}', [AttributeController::class, 'update'])->name('attributes.update');
     Route::post('/delete-attributes/{id}', [AttributeController::class, 'destroy'])->name('attributes.delete');
+    Route::post('/toggle-attributes/{id}', [AttributeController::class, 'toggle'])->name('attributes.toggle');
     //
     Route::get('/properties', [PropertiesController::class, 'index'])->name('properties.index');
     Route::get('/properties/create', [PropertiesController::class, 'create'])->name('properties.create');
@@ -148,6 +149,7 @@ Route::group(['middleware' => 'role.seller'], function () {
     Route::get('/properties/{id}', [PropertiesController::class, 'show'])->name('properties.detail');
     Route::post('/properties/{id}', [PropertiesController::class, 'update'])->name('properties.update');
     Route::post('/delete-properties/{id}', [PropertiesController::class, 'destroy'])->name('properties.delete');
+    Route::post('/toggle-properties/{id}', [PropertiesController::class, 'toggle'])->name('properties.toggle');
     //
     Route::get('/products', [ProductController::class, 'index'])->name('seller.products.index');
     Route::get('/products/create', [ProductController::class, 'create'])->name('seller.products.create');
