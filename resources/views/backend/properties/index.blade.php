@@ -92,26 +92,29 @@
                             $attribute = \App\Models\Attribute::find($property->attribute_id);
                         @endphp
                         <td class="text-center">{{ $attribute->name }}</td>
-                        <td class="text-center">
+                        <td class="text-center" id="status{{$property->id}}" >
                             {{ $property->status }}
                         </td>
                         <td class="text-center">
                             @if($property->status == \App\Enums\PropertiStatus::ACTIVE)
                                 <label class="switch">
-                                    <input id="input-check" type="checkbox" checked>
+                                    <input value="{{$property->id}}" class="inputCheckbox"
+                                           name="inputCheckbox-{{$property->id}}" id="input-check-{{$property->id}}"
+                                           type="checkbox" checked>
                                     <span class="slider round"></span>
                                 </label>
                             @else
                                 <label class="switch">
-                                    <input id="input-check" type="checkbox">
+                                    <input value="{{$property->id}}" class="inputCheckbox"
+                                           name="inputCheckbox-{{$property->id}}" id="input-check-{{$property->id}}"
+                                           type="checkbox">
                                     <span class="slider round"></span>
                                 </label>
                             @endif
                         </td>
                         <td class="text-center">
                             <div class="">
-                                <a href="{{route('properties.detail', $property->id)}}" class="btn btn-success">Chi
-                                    tiết</a>
+                                <a href="{{route('properties.detail', $property->id)}}" class="btn btn-success">Chi tiết</a>
                                 <form action="{{route('properties.delete', $property->id)}}" method="post">
                                     @csrf
                                     <button type="submit" class="btn btn-danger">Xoá</button>
@@ -125,7 +128,30 @@
 
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
-
+        $(document).ready(function () {
+            $(".inputCheckbox").click(function () {
+                var attributeID = jQuery(this).val();
+                function toggleAttribute(attributeID) {
+                    $.ajax({
+                        url: '/toggle-properties/' + attributeID,
+                        method: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function (response) {
+                            console.log(response)
+                            let status = document.getElementById('status' + attributeID)
+                            status.innerText = response['status'];
+                        },
+                        error: function (exception) {
+                            console.log(exception)
+                        }
+                    });
+                }
+                toggleAttribute(attributeID);
+            });
+        });
     </script>
 @endsection
