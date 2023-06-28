@@ -72,7 +72,7 @@
             @endif
         </div>
         <div class="card-body">
-            <table class="table" >
+            <table class="table">
                 <thead>
                 <tr class="text-center">
                     <th scope="col">#</th>
@@ -109,12 +109,14 @@
                             @endif
                         </td>
                         <td class="text-center">
-                                <div class="">
-                                    <a href="{{route('properties.detail', $property->id)}}" class="btn btn-success">Chi tiết</a>
-                                    <form>
-                                        <button type="submit" class="btn btn-danger">Xoá</button>
-                                    </form>
-                                </div>
+                            <div class="">
+                                <a href="{{route('properties.detail', $property->id)}}" class="btn btn-success">Chi
+                                    tiết</a>
+                                <form action="{{route('properties.delete', $property->id)}}" method="post">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">Xoá</button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @endforeach
