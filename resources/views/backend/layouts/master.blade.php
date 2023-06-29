@@ -13,35 +13,37 @@
     <link rel="stylesheet" href="{{ mix('css/custom.css') }}">
     <link rel="stylesheet" href="{{asset('css/style_backend.css')}}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
+
 </head>
 
 <body>
-<div class="">
-    <!-- Header -->
-    <div class="header_back ">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Admin Dashboard</a>
-            <!-- Add navigation links here -->
-        </nav>
-    </div>
-    <!-- Main Content -->
-    <div class="">
-        <div class="d-flex">
-            <!-- Sidebar -->
-            <div class="flex-grow-2" style="flex-grow: 2">
-                @include('backend.layouts.partials.side-bar')
-            </div>
+@include('sweetalert::alert')
+<!-- Header -->
+<header class="header_back">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Admin Dashboard</a>
+        <!-- Add navigation links here -->
+    </nav>
+</header>
 
-            <!-- Page Content -->
-            <div
-                    style="flex-grow: 8">
-                <div class="content">
-                    @yield('content')
-                </div>
+<!-- Main Content -->
+<div class="container-fluid bg-white card-header">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-sm-3 col-12 col-md-3 col-lg-2" style="padding: 0">
+            @include('backend.layouts.partials.side-bar')
+        </div>
+
+        <!-- Page Content -->
+        <div class="col-sm-9 col-12 col-md-9 col-lg-10" style="padding: 0">
+            <div class="content">
+                @yield('content')
             </div>
         </div>
     </div>
 </div>
+
 {{--<!-- Footer -->--}}
 {{--<footer>--}}
 {{--    <div class="container">--}}

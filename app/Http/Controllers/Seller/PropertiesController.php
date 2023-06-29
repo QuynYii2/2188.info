@@ -46,8 +46,9 @@ class PropertiesController extends Controller
             'name' => $request->name,
             'attribute_id' => $request->attribute_id
         ]);
+        alert()->success('Success', 'Properties created successfully');
 
-        return redirect()->route('properties.index')->with('success', 'Properties created successfully.');
+        return redirect()->route('properties.index');
     }
 
     public function show($id)
@@ -74,8 +75,9 @@ class PropertiesController extends Controller
         $propertie->name = $request->name;
         $propertie->attribute_id = $request->attribute_id;
         $propertie->save();
+        alert()->success('Success', 'Properties updated successfully');
 
-        return redirect()->route('properties.index')->with('success', 'Properties updated successfully.');
+        return redirect()->route('properties.index');
     }
 
     public function toggle($id)
@@ -95,14 +97,15 @@ class PropertiesController extends Controller
 
     public function destroy($id)
     {
-        $property = Properties::where([['status', PropertiStatus::ACTIVE], ['id', $id]])->first();
+        $property = Properties::where([['id', $id]])->first();
         if ($property == null) {
             return redirect()->route('properties.index');
         }
 
         $property->status = PropertiStatus::DELETED;
         $property->save();
+        alert()->success('Success', 'Delete property success!');
 
-        return redirect()->route('properties.index')->with('success', 'Delete property success!');
+        return redirect()->route('properties.index');
     }
 }

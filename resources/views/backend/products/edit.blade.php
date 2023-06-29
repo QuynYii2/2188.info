@@ -88,7 +88,7 @@
 
                 <div class="form-group">
                     <label for="thumbnail">Thumbnail</label>
-                    <input type="file" class="form-control-file" id="thumbnail" name="thumbnail">
+                    <input type="file" class="form-control-file" id="thumbnail" name="thumbnail" accept="image/*">
                     @if ($product->thumbnail)
                         <a href="{{ asset('storage/' . $product->thumbnail) }}" data-fancybox="group"
                            data-caption="This image has a caption 1">
@@ -105,13 +105,7 @@
                     @php
                         $input = $product->gallery;
                         $array = json_decode($input, true);
-
-                        $modifiedArray = [];
-                        if($array != null){
-                            foreach ($array as $value) {
-                                $modifiedArray[] = str_replace(['gallery\/', '\\'], '', $value);
-                            }
-                        }
+                        $modifiedArray = explode(",", $input);
                     @endphp
                     @if ($product->gallery )
                         @foreach ($modifiedArray as $image)

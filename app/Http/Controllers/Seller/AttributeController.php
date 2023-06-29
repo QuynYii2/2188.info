@@ -32,8 +32,8 @@ class AttributeController extends Controller
             'name' => $request->name,
             'user_id' => Auth::user()->id,
         ]);
-
-        return redirect()->route('attributes.index')->with('success', 'Attribute created successfully.');
+        alert()->success('Success', 'Attribute created successfully.');
+        return redirect()->route('attributes.index');
     }
 
     public function show($id)
@@ -57,8 +57,8 @@ class AttributeController extends Controller
 
         $attribute->name = $request->name;
         $attribute->save();
-
-        return redirect()->route('attributes.index')->with('success', 'Attribute updated successfully.');
+        alert()->success('Success', 'Attribute updated successfully.');
+        return redirect()->route('attributes.index');
     }
 
     public function toggle($id)
@@ -85,6 +85,7 @@ class AttributeController extends Controller
         }
         $attribute->status = AttributeStatus::DELETED;
         $attribute->save();
-        return redirect()->route('attributes.index')->with('success', 'Delete');
+        alert()->success('Success', 'Attribute Delete successfully.');
+        return redirect()->route('attributes.index');
     }
 }
