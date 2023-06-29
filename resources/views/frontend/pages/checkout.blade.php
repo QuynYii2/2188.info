@@ -18,8 +18,6 @@
             }
         }
 
-
-
         #table-checkout th,
         #table-checkout tr,
         #table-checkout td {
@@ -95,11 +93,11 @@
                                                value="{{$user->name}}" required>
                                         <label for="email"><i class="fa fa-envelope"></i>{{ __('home.email') }}</label>
                                         <input type="text" id="email" name="email" placeholder="john@example.com"
-                                               value="{{$user->email}}">
+                                               value="{{$user->email}}" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" required>
                                         <label for="adr"><i
                                                     class="fa fa-address-card-o"></i>{{ __('home.phone number') }}
                                         </label>
-                                        <input type="text" id="phone" name="phone" placeholder="035985935"
+                                        <input type="number" id="phone" name="phone" placeholder="035985935"
                                                value="{{$user->phone}}" required>
                                         <label for="city"><i class="fa fa-institution"></i>{{ __('home.address') }}
                                         </label>
