@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Enums\AttributeProductStatus;
 use App\Enums\EvaluateProductStatus;
+use App\Enums\VoucherStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\EvaluateProduct;
 use App\Models\Product;
 use App\Models\ProductViewed;
+use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -37,13 +39,26 @@ class ProductController extends Controller
 
         $otherProduct = Product::where('id', '!=', $id)->limit(4)->get();
 
+        $vouchers = Voucher::where([['status', VoucherStatus::ACTIVE], ['user_id', $product->user_id]])->get();
+        $arrayVouchers = null;
+        foreach ($vouchers as $voucher) {
+            $listIds = $voucher->apply;
+            $arrayID = explode(",", $listIds);
+            for ($i = 0; $i < count($arrayID); $i++) {
+                if ($arrayID[$i] == $product->category_id) {
+                    $arrayVouchers[] = $voucher;
+                }
+            }
+        }
+
         $attributes = DB::table('product_attribute')->where([['product_id', $product->id], ['status', AttributeProductStatus::ACTIVE]])->get();
 
         return view('frontend/pages/detail-product', [
             'result' => $result,
             'product' => $product,
             'otherProduct' => $otherProduct,
-            'attributes' => $attributes
+            'attributes' => $attributes,
+            'arrayVouchers' => $arrayVouchers
         ]);
     }
 

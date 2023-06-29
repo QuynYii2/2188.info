@@ -1,0 +1,50 @@
+.register-tags {
+    display: inline-block;
+    margin: auto;
+}
+
+.link-tabs {
+    color: #cccccc;
+    background-color: #f9f9f9 !important;
+}
+
+.link-tabs:hover {
+    color: #c69500;
+!important;
+    background-color: #f7f7f7;
+}
+
+.multiselect {
+    max-width: 100%;
+}
+
+.selectBox {
+    position: relative;
+}
+
+.selectBox select {
+    width: 100%;
+    height: 36px;
+    font-weight: bold;
+}
+
+.overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+#checkboxes {
+    display: none;
+    border: 1px #dadada solid;
+}
+
+#checkboxes label {
+    display: block;
+}
+
+#checkboxes label:hover {
+    background-color: #cccccc;
+}
