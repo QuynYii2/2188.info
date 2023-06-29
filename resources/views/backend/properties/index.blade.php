@@ -65,11 +65,6 @@
         <div class="mt-5 d-flex justify-content-between align-items-center">
             <h5 class="card-title">Danh sách thuộc tính con</h5>
             <a href="{{ route('properties.create') }}" class="btn btn-success">Thêm mới</a>
-            @if (session('success_update_product'))
-                <div class="alert alert-success">
-                    {{ session('success_update_product') }}
-                </div>
-            @endif
         </div>
         <div class="card-body">
             <table class="table">
@@ -114,9 +109,17 @@
                         </td>
                         <td class="text-center">
                             <a href="{{route('properties.detail', $property->id)}}" class="btn btn-success">Chi tiết</a>
-                            <button id="deleteButton" onclick="deleteProperty({{ $property->id }})"
-                                    class="btn btn-danger">Xoá
-                            </button>
+{{--                            <form action="{{ route('properties.delete', $property->id) }}" method="post">--}}
+{{--                                @csrf--}}
+{{--                                <button id="deleteButton"--}}
+{{--                                        class="btn btn-danger" type="submit">Xoá--}}
+{{--                                </button>--}}
+{{--                            </form>--}}
+                            <form action="{{route('properties.delete', $property->id)}}" method="post">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Xoá</button>
+                            </form>
+
                         </td>
                     </tr>
                 @endforeach
@@ -162,17 +165,6 @@
                         'X-CSRF-TOKEN': '{{ csrf_token() }}' // Đảm bảo gửi CSRF token
                     },
                 })
-                    .then(response => {
-                        if (response.ok) {
-                            alert('Xoá thành công');
-                            location.reload();
-                        } else {
-                            alert('Đã xảy ra lỗi khi xoá');
-                        }
-                    })
-                    .catch(error => {
-                        alert('Đã xảy ra lỗi khi xoá: ' + error);
-                    });
             }
         }
     </script>

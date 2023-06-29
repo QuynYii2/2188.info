@@ -28,11 +28,11 @@
             <div class="col-12 col-md-6 border-right mt-2 rm-pd-on-mobile">
                 <div class="form-group">
                     <div class="name">Tên sản phẩm</div>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Nhập tên sản phẩm">
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Nhập tên sản phẩm" required>
                 </div>
                 <div class="form-group">
                     <div class="name">Mã sản phẩm</div>
-                    <input type="text" class="form-control" name="" id="" placeholder="Nhập mã sản phẩm">
+                    <input type="text" class="form-control" name="" id="" placeholder="Nhập mã sản phẩm" required>
                 </div>
                 <div class="form-group">
                     <div class="name">Mô tả ngắn</div>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="form-group">
                     <div class="name">Mô tả chi tiết</div>
-                    <textarea class="form-control tiny" name="description"></textarea>
+                    <textarea class="form-control tiny" name="description" required></textarea>
                 </div>
                 <div class="form-group row">
                     <div class="col-6 d-inline-block">
@@ -93,16 +93,6 @@
 
                     </div>
                 </div>
-
-                {{--                <div class="form-group">--}}
-                {{--                    <label for="attribute">Chọn thuộc tính sản phẩm có sẵn:</label>--}}
-                {{--                    <select class="form-control" name="attribute" id="attribute">--}}
-                {{--                        @foreach($attributes as $attribute)--}}
-                {{--                            <option id="attribute-option-{{$attribute->id}}"--}}
-                {{--                                    value="{{$attribute->id}}">{{ $attribute->name }}</option>--}}
-                {{--                        @endforeach--}}
-                {{--                    </select>--}}
-                {{--                </div>--}}
                 <div class="form-group border p-3 " id="pr-parameter">
                     <label class="name">Thông số sản phẩm</label>
                     @foreach($attributes as $attribute)
@@ -136,7 +126,7 @@
                         <label class="name" for="date_start">Hình thức thanh toán</label>
                         <input type="text" class="form-control"
                                onclick="showDropdown('payment-method', 'payment-dropdownList')"
-                               placeholder="Chọn hình thức thanh toán" id="payment-method">
+                               placeholder="Chọn hình thức thanh toán" id="payment-method" required>
                         <div class="dropdown-content" id="payment-dropdownList">
                             <label>
                                 <input type="checkbox" value="option1"
@@ -160,7 +150,7 @@
                         <label class="control-label small" for="date_start">Hình thức vận chuyển</label>
                         <input type="text" class="form-control"
                                onclick="showDropdown('transport-method', 'transport-dropdownList')"
-                               placeholder="Chọn hình thức vận chuyển" id="transport-method">
+                               placeholder="Chọn hình thức vận chuyển" id="transport-method" required>
                         <div class="dropdown-content" id="transport-dropdownList">
                             <label>
                                 <input type="checkbox" value="option1"

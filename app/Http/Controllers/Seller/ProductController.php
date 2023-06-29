@@ -103,11 +103,11 @@ class ProductController extends Controller
                 $galleryPaths[] = $galleryPath;
             }
         }
+        $product = new Product();
 
         $userLogin = $request->session()->get('login');
         $userInfo = User::where('email', $userLogin)->first();
 
-        $product = new Product();
         $product->name = $request->input('name');
         $product->description = $request->input('description');
         $product->price = $request->input('price');
@@ -126,10 +126,11 @@ class ProductController extends Controller
         $this->createAttributeProduct($product, $newArray);
 
         if ($createProduct) {
-            $request->session()->flash('success_create_product', 'Tạo mới sản phẩm thành công.');
-            return redirect()->route('seller.products.index')->with('success', 'Category đã được cập nhật thành công!');
+            alert()->success('Success', 'Tạo mới sản phẩm thành công.');
+            return redirect()->route('seller.products.index');
         } else {
-            $request->session()->flash('error_create_product', 'Tạo mới sản phẩm không thành công.');
+            alert()->error('Success', 'Tạo mới sản phẩm không thành công.');
+
             return redirect()->route('seller.products.edit');
         }
     }
@@ -162,7 +163,6 @@ class ProductController extends Controller
             $thumbnailPath = $thumbnail->store('thumbnails', 'public');
             $product->thumbnail = $thumbnailPath;
         }
-
         if ($request->hasFile('gallery')) {
             $gallery = $request->file('gallery');
             $galleryPaths = [];
@@ -170,8 +170,9 @@ class ProductController extends Controller
                 $galleryPath = $image->store('gallery', 'public');
                 $galleryPaths[] = $galleryPath;
             }
-            $product->gallery = $galleryPaths;
         }
+        $galleryString = implode(',', $galleryPaths);
+        $product->gallery = $galleryString;
 
         $newArray = $this->getAttributeProperty($request);
 
@@ -186,10 +187,10 @@ class ProductController extends Controller
         $updateProduct = $product->save();
 
         if ($updateProduct) {
-            $request->session()->flash('success_update_product', 'Cập nhật thành công.');
-            return redirect()->route('seller.products.index')->with('success', 'Category đã được cập nhật thành công!');
+            alert()->success('Success', 'Cập nhật thành công.');
+            return redirect()->route('seller.products.index');
         } else {
-            $request->session()->flash('error_update_product', 'Cập nhật không thành công.');
+            alert()->error('Success', 'Cập nhật không thành công.');
             return redirect()->route('seller.products.edit');
         }
 
@@ -198,7 +199,7 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-
-        return redirect()->route('seller.products.index')->with('success', 'Product đã được xóa thành công!');
+        alert()->success('Success', 'Product đã được xóa thành công!');
+        return redirect()->route('seller.products.index');
     }
 }

@@ -57,6 +57,7 @@ class CategoryController extends Controller
         } else {
             $category->saveAsRoot();
         }
+        alert()->success('Success', 'Tạo mới địa chỉ thành công');
 
         return redirect()->route('seller.categories.index')->with('success', 'Danh mục đã được tạo thành công.');
     }
@@ -97,6 +98,7 @@ class CategoryController extends Controller
         $category->name = $request->input('name');
         $category->parent_id = $request->input('parent_id');
         $updateCategory = $category->save();
+        alert()->success('Success', 'Tạo mới địa chỉ thành công');
 
         if ($updateCategory) {
             $request->session()->flash('success_update_cat', 'Cập nhật thành công.');
