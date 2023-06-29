@@ -10,7 +10,7 @@
 @section('title', 'Product Interest')
 
 @section('content')
-    <div class="container-fluid mt-5">
+    <div class="container">
         <div class="card p-3">
             <div class="row p-2">
                 <div class="col-md-12 d-flex justify-content-between align-items-center">
