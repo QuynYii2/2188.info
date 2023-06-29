@@ -107,10 +107,16 @@ class ProductController extends Controller
         $userLogin = $request->session()->get('login');
         $userInfo = User::where('email', $userLogin)->first();
 
+        $price = $request->input('price');
+        $pricePercent = $request->input('price-percent');
+        if ($pricePercent != null || $pricePercent > 0) {
+            $price = $pricePercent;
+        }
+
         $product = new Product();
         $product->name = $request->input('name');
         $product->description = $request->input('description');
-        $product->price = $request->input('price');
+        $product->price = $price;
         $product->category_id = $request->input('category_id');
         $product->thumbnail = $thumbnailPath;
         $galleryString = implode(',', $galleryPaths);

@@ -42,15 +42,29 @@
                     <div class="name">Mô tả chi tiết</div>
                     <textarea class="form-control tiny" name="description"></textarea>
                 </div>
+                <div class="form-group">
+                    <label class="qty">Số lượng sản phẩm</label>
+                    <input type="number" class="form-control" name="qty" id="qty" min="1" required
+                           placeholder="Nhập số lượng sản phẩm">
+                </div>
                 <div class="form-group row">
                     <div class="col-6 d-inline-block">
-                        <div class="control-label small name" for="date_start">Giá bán</div>
-                        <input type="text" class="form-control" required name="price" id="price"
+                        <label class="control-label small name" for="price">Giá bán</label>
+                        <input onchange="checkPrice()" min="1" type="number" class="form-control" required name="price"
+                               id="price"
                                placeholder="Nhập giá bán">
+                        <p class="valid-price text-danger" hidden>
+                            Giá khuyến mại không thể lớn hơn giá bán!
+                        </p>
                     </div>
                     <div class="col-6 d-inline-block">
-                        <div class="control-label small name" for="date_start">Giá khuyến mãi</div>
-                        <input type="text" class="form-control" name="qty" id="qty" placeholder="Nhập giá khuyến mãi">
+                        <label class="control-label small name" for="price-percent">Giá khuyến mãi</label>
+                        <input onchange="checkPrice()" min="0" type="number" class="form-control" name="price-percent"
+                               id="price-percent"
+                               placeholder="Nhập giá khuyến mãi">
+                        <p class="valid-price text-danger" hidden>
+                            Giá khuyến mại không thể lớn hơn giá bán!
+                        </p>
                     </div>
                 </div>
                 {{--                <div class="form-group d-flex">--}}
@@ -94,15 +108,6 @@
                     </div>
                 </div>
 
-                {{--                <div class="form-group">--}}
-                {{--                    <label for="attribute">Chọn thuộc tính sản phẩm có sẵn:</label>--}}
-                {{--                    <select class="form-control" name="attribute" id="attribute">--}}
-                {{--                        @foreach($attributes as $attribute)--}}
-                {{--                            <option id="attribute-option-{{$attribute->id}}"--}}
-                {{--                                    value="{{$attribute->id}}">{{ $attribute->name }}</option>--}}
-                {{--                        @endforeach--}}
-                {{--                    </select>--}}
-                {{--                </div>--}}
                 <div class="form-group border p-3 " id="pr-parameter">
                     <label class="name">Thông số sản phẩm</label>
                     @foreach($attributes as $attribute)
@@ -216,6 +221,21 @@
     </script>
 
     <script>
+        function checkPrice() {
+            let price = document.getElementById('price').value;
+            let pricePercent = document.getElementById('price-percent').value;
+            $("price-percent").attr({
+                "max": price
+            });
+            if (price <= pricePercent) {
+                $('.valid-price').removeAttr('hidden');
+            } else {
+                $('.valid-price').attr("hidden", "true")
+            }
+        }
+    </script>
+
+    <script>
         function showDropdown(inputId, dropdownId) {
             var dropdownList = document.getElementById(dropdownId);
             if (dropdownList.style.display === "block") {
@@ -234,11 +254,6 @@
             selectedOptionsInput.value = selectedLabels.join(", ");
         }
 
-        tinymce.init({
-            selector: 'textarea.tiny',
-            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-        });
         $(function () {
             $('input.img-cfg').change(function () {
                 const label = $(this).parent().find('span');
