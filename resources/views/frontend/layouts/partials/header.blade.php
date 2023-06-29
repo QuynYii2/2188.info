@@ -477,9 +477,6 @@
                         <button type="submit">{{ __('home.search') }}</button>
                     </form>
                 </div>
-                @if (session('error'))
-                    {{ session('error') }}
-                @endif
                 @if(session('login') || Auth::user()!= null)
                     <div class="col-lg-3 col-md-3 text-right col-md-4 col-12 col-sm-4">
                         <div class="col-md-12">
