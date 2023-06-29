@@ -49,6 +49,7 @@ class AddressController extends Controller
                 'status' => AddressOrderStatus::ACTIVE,
             ];
             OrderAddress::create($address);
+            alert()->success('Success', 'Tạo mới địa chỉ thành công');
             return redirect(route('address.show'));
         } else {
             (new HomeController())->getLocale($request);
@@ -84,11 +85,15 @@ class AddressController extends Controller
             $check = 0;
         } else {
             $check = 1;
+            OrderAddress::where('user_id', Auth::user()->id)
+                ->where('id', '<>', $id)
+                ->update(['default' => 0]);
         }
 
         $address->default = $check;
 
         $address->save();
+        alert()->success('Success', 'Cập nhật địa chỉ thành công');
         return redirect(route('address.show'));
 
     }

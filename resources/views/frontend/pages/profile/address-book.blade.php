@@ -71,26 +71,26 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Họ và tên</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="username">
+                                <input type="text" class="form-control" name="username" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Công ty</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="company">
+                                <input type="text" class="form-control" name="company" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Số điện thoại</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="phone"
+                                <input type="number" class="form-control" name="phone" required
                                        pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Tỉnh/Thành phố</label>
                             <div class="col-sm-9">
-                                <select class="form-control" id="city" name="city">
+                                <select class="form-control" id="city" name="city" required>
                                     <option value="" selected>Chọn tỉnh thành</option>
                                 </select>
                             </div>
@@ -98,7 +98,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Quận huyện</label>
                             <div class="col-sm-9">
-                                <select class="form-control" id="district" name="province">
+                                <select class="form-control" id="district" name="province" required>
                                     <option value="" selected>Chọn quận huyện</option>
                                 </select>
                             </div>
@@ -106,7 +106,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Phường xã</label>
                             <div class="col-sm-9">
-                                <select class="form-control" id="ward" name="location">
+                                <select class="form-control" id="ward" name="location" required>
                                     <option value="" selected>Chọn phường xã</option>
                                 </select>
                             </div>
@@ -114,7 +114,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Địa chỉ</label>
                             <div class="col-sm-9">
-                                <textarea type="text" class="form-control" name="address_detail"></textarea>
+                                <textarea type="text" class="form-control" name="address_detail" required></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -177,26 +177,26 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Họ và tên</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="username" id="username-edit">
+                                <input type="text" class="form-control" name="username" id="username-edit" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Công ty</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="company" id="company-edit">
+                                <input type="text" class="form-control" name="company" id="company-edit" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Số điện thoại</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="phone"
-                                       pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b" id="phone-edit">
+                                <input type="number" class="form-control" name="phone"
+                                       pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b" id="phone-edit" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Tỉnh/Thành phố</label>
                             <div class="col-sm-9">
-                                <select class="form-control" name="city" id="city-edit">
+                                <select class="form-control" name="city" id="city-edit" required>
                                     <option value="" selected>Chọn tỉnh thành</option>
                                 </select>
                             </div>
@@ -204,7 +204,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Quận huyện</label>
                             <div class="col-sm-9">
-                                <select class="form-control" name="province" id="province-edit">
+                                <select class="form-control" name="province" id="province-edit" required>
                                     <option value="" selected>Chọn quận huyện</option>
                                 </select>
                             </div>
@@ -212,7 +212,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Phường xã</label>
                             <div class="col-sm-9">
-                                <select class="form-control" name="location" id="location-edit">
+                                <select class="form-control" name="location" id="location-edit" required>
                                     <option value="" selected>Chọn phường xã</option>
                                 </select>
                             </div>
@@ -220,7 +220,7 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Địa chỉ</label>
                             <div class="col-sm-9">
-                                <textarea type="text" class="form-control" name="address_detail" id="address_detail-edit"></textarea>
+                                <textarea type="text" class="form-control" name="address_detail" id="address_detail-edit" required></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -343,11 +343,11 @@
                 companyRadio.checked = true;
             }
 
+            var checkbox = document.getElementById('default-edit');
             if (obj.default == 1) {
-
-                var checkbox = document.getElementById('default-edit');
                 checkbox.checked = true;
-
+            } else {
+                checkbox.checked = false;
             }
 
             let formInput = document.getElementById('formInput');
