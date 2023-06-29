@@ -45,12 +45,12 @@
                 <div class="form-group row">
                     <div class="col-6 d-inline-block">
                         <div class="control-label small name" for="date_start">Giá bán</div>
-                        <input type="text" class="form-control" required name="price" id="price"
+                        <input type="number" class="form-control" required name="price" id="price"
                                placeholder="Nhập giá bán">
                     </div>
                     <div class="col-6 d-inline-block">
                         <div class="control-label small name" for="date_start">Giá khuyến mãi</div>
-                        <input type="text" class="form-control" name="qty" id="qty" placeholder="Nhập giá khuyến mãi">
+                        <input type="number" class="form-control" name="qty" id="qty" placeholder="Nhập giá khuyến mãi">
                     </div>
                 </div>
                 {{--                <div class="form-group d-flex">--}}

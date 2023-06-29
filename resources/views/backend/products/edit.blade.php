@@ -19,10 +19,13 @@
                     <label for="name">Name</label>
                     <input type="text" class="form-control" id="name" name="name" value="{{ $product->name }}">
                 </div>
-
                 <div class="form-group">
-                    <label for="price">Price</label>
+                    <label for="price">Giá bán</label>
                     <input type="number" class="form-control" id="price" name="price" value="{{ $product->price }}">
+                </div>
+                <div class="form-group">
+                    <label for="qty">Giá khuyến mãi</label>
+                    <input type="number" class="form-control" id="qty" name="qty" value="">
                 </div>
 
                 <div class="form-group">
@@ -171,6 +174,19 @@
             loop: true,
             toolbar: false,
             clickContent: false
+        });
+
+        var priceInput = document.getElementById('price');
+        var qtyInput = document.getElementById('qty');
+
+        qtyInput.addEventListener('input', function() {
+            var price = parseFloat(priceInput.value);
+            var qty = parseFloat(qtyInput.value);
+
+            if (qty > price) {
+                alert('Giá khuyến mãi không được lớn hơn giá bán.');
+                qtyInput.value = ''; // Xóa giá trị khuyến mãi
+            }
         });
     </script>
 @endsection
