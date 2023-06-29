@@ -606,7 +606,7 @@
             @endif
         </div>
 
-        <div class="row only-mobile-button justify-content-center">
+        <div class="m-0 row only-mobile-button justify-content-center">
             <div class="col-lg-2 col-md-2 col-sm-2 col-5 mt-2">
                 <div class="logo">
                     <a href="{{route('home')}}">
@@ -1035,7 +1035,7 @@
             <div id="mobile-menu-wrap" class="mg-menu" style=" width: calc(100vw - 2rem);"></div>
         </div>
     </div>
-    @unless(request()->is('/'))
+    @unless(request()->is('/') || request()->is('login') || request()->is('register'))
         <div class="nav-item" id="nav-black">
             <div class="container">
                 <div class="col-sm-12">
