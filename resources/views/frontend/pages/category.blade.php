@@ -107,8 +107,6 @@
 
 
 
-
-
     .tabs-product-detail{
         background-color: #fff;!important;
     }
@@ -352,19 +350,17 @@
         <div class="container body-main px-0">
             <div class="row">
                 <aside class="col-md-4">
-
                     <div class="card mb-5">
                         <div class='wrapper'>
                             <ul class='items'>
                                 <li>
                                     <a href='#'>{{ __('home.product type') }}</a>
-
                                     <ul class='sub-items'>
-                                        <form class="p-3">
+                                        <form class="p-2">
                                             <div class="input-group">
                                                 <input type="text" class="form-control" placeholder="{{ __('home.search') }}">
                                                 <div class="input-group-append">
-                                                    <button class="btn btn-light" type="button"><i class="fa fa-search"></i>
+                                                    <button style="border: 1px solid #ced4da" class="btn btn-light" type="button"><i class="fa fa-search"></i>
                                                     </button>
                                                 </div>
                                             </div>
@@ -375,28 +371,28 @@
                                         @foreach($listAtt as $att)
                                             <li>
                                                 <input id="check{{ $att->id }}" type="checkbox" />
-                                                <label for="check{{ $att->id }}">{{ $att->name }}</label>
+                                                <label style="text-indent: 0px" for="check{{ $att->id }}">{{ $att->name }}</label>
                                             </li>
                                         @endforeach
                                         <li>
                                             <input id="box21" type="checkbox" />
-                                            <label for="box21">{{ __('home.people') }}</label>
+                                            <label style="text-indent: 0px" for="box21">{{ __('home.people') }}</label>
                                         </li>
                                         <li>
                                             <input id="box22" type="checkbox" />
-                                            <label for="box22">{{ __('home.watches') }}</label>
+                                            <label style="text-indent: 0px" for="box22">{{ __('home.watches') }}</label>
                                         </li>
                                         <li>
                                             <input id="box23" type="checkbox" />
-                                            <label for="box23">{{ __('home.cinema') }}</label>
+                                            <label style="text-indent: 0px" for="box23">{{ __('home.cinema') }}</label>
                                         </li>
                                         <li>
                                             <input id="box24" type="checkbox" />
-                                            <label for="box24">{{ __('home.clothes') }}</label>
+                                            <label style="text-indent: 0px" for="box24">{{ __('home.clothes') }}</label>
                                         </li>
                                         <li>
                                             <input id="box25" type="checkbox" />
-                                            <label for="box25">{{ __('home.home items') }}</label>
+                                            <label style="text-indent: 0px" for="box25">{{ __('home.home items') }}</label>
                                         </li>
                                     </ul>
                                 </li>
@@ -405,23 +401,23 @@
                                     <ul class='sub-items'>
                                         <li>
                                             <input id="box1" type="checkbox" />
-                                            <label for="box1">Mercedes</label>
+                                            <label style="text-indent: 0px" for="box1">Mercedes</label>
                                         </li>
                                         <li>
                                             <input id="box2" type="checkbox" />
-                                            <label for="box2">Toyota</label>
+                                            <label style="text-indent: 0px" for="box2">Toyota</label>
                                         </li>
                                         <li>
                                             <input id="box3" type="checkbox" />
-                                            <label for="box3">Mitsubishi</label>
+                                            <label style="text-indent: 0px" for="box3">Mitsubishi</label>
                                         </li>
                                         <li>
                                             <input id="box4" type="checkbox" />
-                                            <label for="box4">Honda</label>
+                                            <label style="text-indent: 0px" for="box4">Honda</label>
                                         </li>
                                         <li>
                                             <input id="box5" type="checkbox" />
-                                            <label for="box5">Nissan</label>
+                                            <label style="text-indent: 0px" for="box5">Nissan</label>
                                         </li>
                                     </ul>
                                 </li>
@@ -430,12 +426,10 @@
                                     <ul class='sub-items'>
                                         <li class="px-3">
                                             <div class="price-range-slider">
-
                                                 <p class="range-value">
                                                     <input type="text" id="amount" readonly>
                                                 </p>
                                                 <div id="slider-range" class="range-bar"></div>
-
                                             </div>
                                         </li>
                                     </ul>
@@ -445,19 +439,19 @@
                                     <ul class='sub-items'>
                                         <li>
                                             <input id="box10" type="checkbox" />
-                                            <label for="box10">XS</label>
+                                            <label style="text-indent: 0px" for="box10">XS</label>
                                         </li>
                                         <li>
                                             <input id="box11" type="checkbox" />
-                                            <label for="box11">SM</label>
+                                            <label style="text-indent: 0px" for="box11">SM</label>
                                         </li>
                                         <li>
                                             <input id="box12" type="checkbox" />
-                                            <label for="box12">LG</label>
+                                            <label style="text-indent: 0px" for="box12">LG</label>
                                         </li>
                                         <li>
                                             <input id="box13" type="checkbox" />
-                                            <label for="box13">XXL</label>
+                                            <label style="text-indent: 0px" for="box13">XXL</label>
                                         </li>
                                     </ul>
                                 </li>

@@ -10,10 +10,6 @@ li{
     list-style: none;
 }
 
-.card-header{
-    margin-top: 22px;
-}
-
 .header_back{
     position: fixed;
     top: 0;
