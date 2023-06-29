@@ -18,6 +18,7 @@ use App\Http\Controllers\Seller\PropertiesController;
 use App\Http\Controllers\Seller\SellerEvaluateProductController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VoucherController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -170,6 +171,13 @@ Route::group(['middleware' => 'role.seller'], function () {
     Route::get('/evaluates/{id}', [SellerEvaluateProductController::class, 'detail'])->name('seller.evaluates.detail');
     Route::put('/evaluates/{id}', [SellerEvaluateProductController::class, 'update'])->name('seller.evaluates.update');
     Route::delete('/evaluates/{id}', [SellerEvaluateProductController::class, 'delete'])->name('seller.evaluates.delete');
+    // Voucher
+    Route::get('/vouchers', [VoucherController::class, 'getListSeller'])->name('seller.vouchers.list');
+    Route::get('/process-vouchers', [VoucherController::class, 'processCreate'])->name('seller.vouchers.create.process');
+    Route::post('/vouchers', [VoucherController::class, 'create'])->name('seller.vouchers.create');
+    Route::get('/vouchers/{id}', [VoucherController::class, 'detail'])->name('seller.vouchers.detail');
+    Route::post('/vouchers/{id}', [VoucherController::class, 'update'])->name('seller.vouchers.update');
+    Route::delete('/vouchers/{id}', [VoucherController::class, 'delete'])->name('seller.vouchers.delete');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {
@@ -203,4 +211,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/product-interest/{id}', [\App\Http\Controllers\ProductInterestController::class, 'delete'])->name('product.interest.delete');
     //
     Route::post('/product-viewed', [\App\Http\Controllers\ProductController::class, 'productViewed'])->name('product.viewed');
+    Route::post('/vouchers-item', [VoucherController::class, 'createVoucherItems'])->name('seller.vouchers.item.create');
 });

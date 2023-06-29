@@ -1,5 +1,6 @@
 @php
     use App\Models\Attribute;
+    use App\Models\VoucherItem;
     use App\Models\Properties;use Illuminate\Support\Facades\Auth;
 @endphp
 
@@ -690,12 +691,81 @@
             <div class="col-md-4">
                 <div class="bg-white rounded">
                     <div class="purchase-info mb-5">
-                        <div class="btn p-3 text-center text-uppercase text-white text-bold fw-bold btn-block"
-                             style="border-radius: 5px; background-color: red">
-                            {{ __('home.exchange old for new') }}
-                            <br>
-                            <span style="font-size: 1.25rem">{{ __('home.discount') }} 1.000.000đ</span>
-                        </div>
+                        {{--                        <div class="btn p-3 text-center text-uppercase text-white text-bold fw-bold btn-block"--}}
+                        {{--                             style="border-radius: 5px; background-color: red">--}}
+                        {{--                            {{ __('home.exchange old for new') }}--}}
+                        {{--                            <br>--}}
+                        {{--                            <span style="font-size: 1.25rem">{{ __('home.discount') }} 1.000.000đ</span>--}}
+                        {{--                        </div>--}}
+                        @if(count($arrayVouchers) > 0)
+                            <div class="btn p-3 text-center text-uppercase text-white text-bold fw-bold btn-block"
+                                 style="border-radius: 5px; background-color: red"
+                                 data-toggle="modal" data-target="#exampleModalCenter">
+                                Mã giảm giá dành cho bạn
+                                <br>
+                                <span style="font-size: 1.25rem">Nhận ngay</span>
+                            </div>
+
+                            <div class="modal fade" id="exampleModalCenter"
+                                 tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle"> Mã giảm giá dành cho
+                                                bạn</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Code</th>
+                                                    <th scope="col">Percent</th>
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($arrayVouchers as $itemVoucher)
+                                                    <tr>
+                                                        <td>{{$itemVoucher->name}}</td>
+                                                        <td>{{$itemVoucher->code}}</td>
+                                                        <td>{{$itemVoucher->percent}}</td>
+                                                        <td>
+                                                            @php
+                                                                $voucherItemOld = VoucherItem::where([
+                                                                    ['voucher_id', $itemVoucher->id],
+                                                                    ['customer_id', Auth::user()->id]])->first();
+                                                            @endphp
+                                                            @if($voucherItemOld)
+                                                                <a href="{{route('cart.index')}}" class="btn btn-success">
+                                                                    Sử dụng ngay
+                                                                </a>
+                                                            @else
+                                                                <button class="btn btn-success"
+                                                                        onclick="createVoucherItems({{$itemVoucher->id}})">
+                                                                    Nhận ngay
+                                                                </button>
+                                                            @endif
+
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
 
                     <div>
@@ -1014,6 +1084,37 @@
             </div>
         </div>
     </div>
+    <script>
+        function createVoucherItems(id) {
+            $.ajax({
+                url: '/vouchers-item',
+                method: 'POST',
+                data: {
+                    'voucher_id': id,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (response) {
+                    console.log(response)
+                    if (response == "Error") {
+                        alert('Voucher đã có sẵn trong giỏ hàng rồi! Sử dụng thôi!')
+                    } else {
+                        alert("Nhận voucher thành công")
+                    }
+                },
+                error: function (exception) {
+                    console.log(exception)
+                    if (exception['status'] == 403) {
+                        alert('Error, please try again!')
+                    } else if (exception['status'] == 401) {
+                        alert('Please login to continue!')
+                        window.location.href = '/login';
+                    } else {
+                        alert('Error, please try again!')
+                    }
+                }
+            });
+        }
+    </script>
 
     <script>
         function checkProductReviews() {

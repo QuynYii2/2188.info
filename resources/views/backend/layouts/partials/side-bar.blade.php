@@ -182,6 +182,17 @@
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a href="#!"><span>Quản lý mã giảm giá</span></a>
+                    <ul class='sub-items'>
+                        <li>
+                            <a href="{{route('seller.vouchers.list')}}">List Vouchers</a>
+                        </li>
+                        <li>
+                            <a href="{{route('seller.vouchers.create.process')}}">Create Voucher</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </li>
     </ul>

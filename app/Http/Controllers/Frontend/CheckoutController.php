@@ -17,6 +17,7 @@ use App\Models\Notification;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
+use App\Models\VoucherItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -37,7 +38,8 @@ class CheckoutController extends Controller
                 ['status', '=', CartStatus::WAIT_ORDER]
             ])->get();
             $user = User::find(Auth::user()->id);
-            return view('frontend/pages/checkout', compact('number', 'carts', 'user'));
+            $voucherItems = VoucherItem::where('customer_id', Auth::user()->id)->get();
+            return view('frontend/pages/checkout', compact('number', 'carts', 'user', 'voucherItems'));
         } else {
             return view('frontend/pages/login');
         }

@@ -18,8 +18,6 @@
             }
         }
 
-
-
         #table-checkout th,
         #table-checkout tr,
         #table-checkout td {
@@ -111,7 +109,14 @@
                                         <span for="address-order2">{{ __('home.Use Different Address') }}</span><br>
                                         <input type="text" id="address2" name="address" placeholder="542 W. 15th Street"
                                                value="" disabled>
-
+                                        <label for="voucher">
+                                            <i class="fa fa-user"></i>Mã giảm giá có sẵn
+                                        </label>
+                                        <select name="voucher" id="voucher" class="form-control mb-3">
+                                            @foreach($voucherItems as $item)
+                                                <option>{{$item->voucher_id}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
 
                                     <div class="col-12 col-md-12 col-xl-4" id="payment-info">
