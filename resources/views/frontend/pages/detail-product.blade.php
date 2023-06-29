@@ -223,7 +223,8 @@
                     <div class="product-imgs col-md-12 py-1" id="product">
                         <div class="img-display ">
                             <div class="img-showcase d-flex flex-row bd-highlight">
-                                <img id="img-default" class="img w-100" src="{{$product->thumbnail}}"
+                                <img id="img-default" class="img w-100"
+                                     src="{{ asset('storage/' . $product->thumbnail) }}"
                                      alt="image" width="360px" height="250px" data-toggle="modal"
                                      data-target="#seeImageProduct">
                                 <input id="img-rollback" value="{{$product->thumbnail}}" hidden="" disabled>
@@ -241,13 +242,14 @@
                                             <div class="modal-body">
                                                 <div class="row d-flex justify-content-between">
                                                     <div class="col-md-10 img-main">
-                                                        <img class="img" id="img-modal" src="{{$product->thumbnail}}"
+                                                        <img class="img" id="img-modal"
+                                                             src="{{ asset('storage/' . $product->thumbnail) }}"
                                                              alt="">
                                                     </div>
                                                     <div class="col-md-2 img-second">
+
                                                         <img class="img mt-2 img-focus" onclick="zoomImgModal(this)"
-                                                             src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_1.jpg"
-                                                             alt="">
+                                                             src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
                                                         <img class="img mt-2 img-focus" onclick="zoomImgModal(this)"
                                                              src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg"
                                                              alt="">
@@ -277,32 +279,38 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="img-select d-flex flex-row bd-highlight mb-2 mt-2 w-100">
-                            <div class="img-item">
-                                <img class="img img-focus" onclick="zoomImg(this)"
-                                     src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_1.jpg"
-                                     alt="shoe image">
-                            </div>
-                            <div class="img-item">
-                                <img class="img img-focus" onclick="zoomImg(this)"
-                                     src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg"
-                                     alt="shoe image">
-                            </div>
-                            <div class="img-item">
-                                <img class="img img-focus" onclick="zoomImg(this)"
-                                     src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_3.jpg"
-                                     alt="shoe image">
-                            </div>
-                            <div class="img-item">
-                                <img class="img img-focus" onclick="zoomImg(this)"
-                                     src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_4.jpg"
-                                     alt="shoe image">
-                            </div>
-                            <div class="img-item">
-                                <img class="img img-focus" onclick="zoomImg(this)"
-                                     src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg"
-                                     alt="shoe image">
-                            </div>
+                        <div class="img-select d-flex flex-row bd-highlight mb-2 mt-2 ">
+{{--                            <div class="product-slider owl-carousel">--}}
+{{--                                @foreach(explode(",", $product->gallery) as $gallery)--}}
+
+{{--                                    <div class="img-item">--}}
+{{--                                        <img class="img img-focus" onclick="zoomImg(this)"--}}
+{{--                                             src="{{ asset('storage/' . $gallery) }}"--}}
+{{--                                             alt="shoe image" width="100">--}}
+{{--                                    </div>--}}
+{{--                                @endforeach--}}
+                                <div class="img-item">
+                                    <img class="img img-focus" onclick="zoomImg(this)"
+                                         src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg"
+                                         alt="shoe image">
+                                </div>
+                                <div class="img-item">
+                                    <img class="img img-focus" onclick="zoomImg(this)"
+                                         src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_3.jpg"
+                                         alt="shoe image">
+                                </div>
+                                <div class="img-item">
+                                    <img class="img img-focus" onclick="zoomImg(this)"
+                                         src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_4.jpg"
+                                         alt="shoe image">
+                                </div>
+                                <div class="img-item">
+                                    <img class="img img-focus" onclick="zoomImg(this)"
+                                         src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg"
+                                         alt="shoe image">
+                                </div>
+{{--                            </div>--}}
+
                         </div>
                     </div>
                     <div class="product-content col-md-12 py-1" style="z-index: 88;">

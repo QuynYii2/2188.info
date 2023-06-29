@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Mockery\Exception;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
@@ -228,11 +227,11 @@ class UserController extends Controller
             'status' => NotificationStatus::UNSEEN,
         ];
         Notification::create($noti);
-        alert()->success('Success', 'Đăng ký thành công!
-        Vui lòng đăng nhập để tiếp tục sử  dịch vụ của chúng tôi');
         Session::flash('success', 'Đăng ký thành công!');
 
         if ($success) {
+            alert()->success('Success', 'Đăng ký thành công!
+        Vui lòng đăng nhập để tiếp tục sử  dịch vụ của chúng tôi');
             return redirect(route('login'));
         } else {
             alert()->error('Error', 'Error, Please try again!!');
