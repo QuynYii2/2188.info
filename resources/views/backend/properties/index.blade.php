@@ -62,7 +62,7 @@
 </style>
 @section('content')
     <div class="card">
-        <div class="m-3 d-flex justify-content-between align-items-center">
+        <div class="mt-5 d-flex justify-content-between align-items-center">
             <h5 class="card-title">Danh sách thuộc tính con</h5>
             <a href="{{ route('properties.create') }}" class="btn btn-success">Thêm mới</a>
             @if (session('success_update_product'))
@@ -92,7 +92,7 @@
                             $attribute = \App\Models\Attribute::find($property->attribute_id);
                         @endphp
                         <td class="text-center">{{ $attribute->name }}</td>
-                        <td class="text-center" id="status{{$property->id}}" >
+                        <td class="text-center" id="status{{$property->id}}">
                             {{ $property->status }}
                         </td>
                         <td class="text-center">
@@ -113,13 +113,10 @@
                             @endif
                         </td>
                         <td class="text-center">
-                            <div class="">
-                                <a href="{{route('properties.detail', $property->id)}}" class="btn btn-success">Chi tiết</a>
-                                <form action="{{route('properties.delete', $property->id)}}" method="post">
-                                    @csrf
-                                    <button type="submit" class="btn btn-danger">Xoá</button>
-                                </form>
-                            </div>
+                            <a href="{{route('properties.detail', $property->id)}}" class="btn btn-success">Chi tiết</a>
+                            <button id="deleteButton" onclick="deleteProperty({{ $property->id }})"
+                                    class="btn btn-danger">Xoá
+                            </button>
                         </td>
                     </tr>
                 @endforeach
@@ -133,6 +130,7 @@
         $(document).ready(function () {
             $(".inputCheckbox").click(function () {
                 var attributeID = jQuery(this).val();
+
                 function toggleAttribute(attributeID) {
                     $.ajax({
                         url: '/toggle-properties/' + attributeID,
@@ -150,8 +148,32 @@
                         }
                     });
                 }
+
                 toggleAttribute(attributeID);
             });
         });
+
+        function deleteProperty(id) {
+            if (confirm('Bạn có chắc chắn muốn xoá?')) {
+                fetch('/delete-properties/' + id, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}' // Đảm bảo gửi CSRF token
+                    },
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Xoá thành công');
+                            location.reload();
+                        } else {
+                            alert('Đã xảy ra lỗi khi xoá');
+                        }
+                    })
+                    .catch(error => {
+                        alert('Đã xảy ra lỗi khi xoá: ' + error);
+                    });
+            }
+        }
     </script>
 @endsection

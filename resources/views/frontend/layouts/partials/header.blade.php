@@ -1114,8 +1114,8 @@
                         </div>
                         <div class="col-sm-8">
                             <nav class="nav-menu row">
-                                <ul>
-                                    <li class="active"><a href="{{route('home')}}">Home</a></li>
+                                <ul class="mb-0">
+                                    <li><a href="{{route('home')}}">Home</a></li>
                                     <li><a href="{{route('product.index')}}">Shop</a></li>
                                     <li><a href="#">Collection</a>
                                         <ul class="dropdown">
