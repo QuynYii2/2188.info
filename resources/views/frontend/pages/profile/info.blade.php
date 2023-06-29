@@ -332,7 +332,7 @@
                         <div class="form-group">
                             <label for="inputPassword" class="col-sm-4 col-form-label">Số điện thoại</label>
                             <div>
-                                <input type="tel" class="form-control" id="edit-phone-input" required name="edit-phone"/>
+                                <input type="number" class="form-control" value="{{ Auth::user()->phone }}" id="edit-phone-input" required name="edit-phone" inputmode="numeric" />
                             </div>
                         </div>
                     </div>
@@ -360,7 +360,7 @@
                         <div class="form-group">
                             <label for="inputPassword" class="col-sm-4 col-form-label">Email</label>
                             <div>
-                                <input type="email" required class="form-control" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+                                <input type="email" value="{{ Auth::user()->email }}" required class="form-control" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
                                        name="edit-email"/>
                             </div>
                         </div>

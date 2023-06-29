@@ -16,39 +16,39 @@
                 <div class="col-md-12 d-flex justify-content-between align-items-center">
                     <div class="">
                         @if($locale == 'vi' || $locale == null)
-                            <img width="80px" height="60px" class="img" src="{{ asset('/images/vietnam.webp') }}"
+                            <img width="50px" class="img" src="{{ asset('/images/vietnam.webp') }}"
                                  alt="">
                             <span>Việt Nam</span>
                         @endif
                         @if($locale == 'kr')
-                            <img width="80px" height="60px" class="img" src="{{ asset('/images/korea.png') }}" alt="">
+                            <img width="50px" class="img" src="{{ asset('/images/korea.png') }}" alt="">
                             <span>Korea</span>
                         @endif
                         @if($locale == 'jp')
-                            <img width="80px" height="60px" class="img" src="{{ asset('/images/japan.webp') }}" alt="">
+                            <img width="50px" class="img" src="{{ asset('/images/japan.webp') }}" alt="">
                             <span>Japan</span>
                         @endif
                         @if($locale == 'cn')
-                            <img width="80px" height="60px" class="img" src="{{ asset('/images/china.webp') }}" alt="">
+                            <img width="50px" class="img" src="{{ asset('/images/china.webp') }}" alt="">
                             <span>China</span>
                         @endif
                     </div>
                     <div class="">
                         @if(session('locale') == 'vi' || session('locale') == null)
-                            <img width="80px" height="60px" class="img" src="{{ asset('/images/vietnam.webp') }}"
+                            <img width="50px" class="img" src="{{ asset('/images/vietnam.webp') }}"
                                  alt="">
                             <span>Việt Nam</span>
                         @endif
                         @if(session('locale') == 'kr')
-                            <img width="80px" height="60px" class="img" src="{{ asset('/images/korea.png') }}" alt="">
+                            <img width="50px" class="img" src="{{ asset('/images/korea.png') }}" alt="">
                             <span>Korea</span>
                         @endif
                         @if(session('locale') == 'jp')
-                            <img width="80px" height="60px" class="img" src="{{ asset('/images/japan.webp') }}" alt="">
+                            <img width="50px" class="img" src="{{ asset('/images/japan.webp') }}" alt="">
                             <span>Japan</span>
                         @endif
                         @if(session('locale') == 'cn')
-                            <img width="80px" height="60px" class="img" src="{{ asset('/images/china.webp') }}" alt="">
+                            <img width="50px" class="img" src="{{ asset('/images/china.webp') }}" alt="">
                             <span>China</span>
                         @endif
                     </div>

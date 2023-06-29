@@ -134,6 +134,7 @@ class CheckoutController extends Controller
         $phone = $request->input('phone');
         $address = $request->input('address');
         $this->checkout($request, $status, OrderMethod::IMMEDIATE, $name, $email, $phone, $address);
+        alert()->success('Success', 'Đặt hàng thành công');
         return redirect()->route('order.show');
     }
 

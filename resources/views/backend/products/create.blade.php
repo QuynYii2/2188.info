@@ -194,6 +194,18 @@
         var properties = document.getElementsByClassName('property-attribute')
         var number = properties.length
 
+        var priceInput = document.getElementById('price');
+        var qtyInput = document.getElementById('qty');
+
+        qtyInput.addEventListener('input', function() {
+            var price = parseFloat(priceInput.value);
+            var qty = parseFloat(qtyInput.value);
+
+            if (qty > price) {
+                alert('Giá khuyến mãi không được lớn hơn giá bán.');
+                qtyInput.value = ''; // Xóa giá trị khuyến mãi
+            }
+        });
         function checkInput() {
             var propertyArray = [];
             var attributeArray = [];
@@ -213,9 +225,7 @@
         }
 
         checkInput();
-    </script>
 
-    <script>
         function showDropdown(inputId, dropdownId) {
             var dropdownList = document.getElementById(dropdownId);
             if (dropdownList.style.display === "block") {
@@ -234,11 +244,7 @@
             selectedOptionsInput.value = selectedLabels.join(", ");
         }
 
-        tinymce.init({
-            selector: 'textarea.tiny',
-            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
-        });
+
         $(function () {
             $('input.img-cfg').change(function () {
                 const label = $(this).parent().find('span');

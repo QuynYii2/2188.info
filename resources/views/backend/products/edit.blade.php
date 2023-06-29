@@ -130,6 +130,18 @@
         var properties = document.getElementsByClassName('property-attribute')
         var number = properties.length
 
+        var priceInput = document.getElementById('price');
+        var qtyInput = document.getElementById('qty');
+
+        qtyInput.addEventListener('input', function() {
+            var price = parseFloat(priceInput.value);
+            var qty = parseFloat(qtyInput.value);
+
+            if (qty > price) {
+                alert('Giá khuyến mãi không được lớn hơn giá bán.');
+                qtyInput.value = ''; // Xóa giá trị khuyến mãi
+            }
+        });
         function checkInput() {
             var propertyArray = [];
             var attributeArray = [];
@@ -149,8 +161,7 @@
         }
 
         checkInput();
-    </script>
-    <script>
+
         $('[data-fancybox]').fancybox({
             buttons: [
                 'close'

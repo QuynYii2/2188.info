@@ -85,10 +85,10 @@ class AuthController extends Controller
             $login = $request->session()->get('login');
             return redirect()->route('home');
         } else {
-            toast('Error, Please try again!', 'error', 'top-right');
+            toast('Tên đăng nhập hoặc mật khẩu không chính xác', 'error', 'top-right');
         }
 
-        return redirect()->route('login')->with('error', 'Email hoặc mật khẩu không chính xác');
+        return redirect()->route('login');
     }
 
     public function getGoogleSignInUrl()
