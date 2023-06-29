@@ -22,10 +22,10 @@
     <div style="background: rgb(255, 235, 225)">
         <div class="background container p-5 ">
             <div class="row">
-                <div class="col-6">
+                <div class="col-lg-7 col-md-5 col-sm-5 col-1">
 
                 </div>
-                <div class="col-6 bg bg-white p-4 rounded">
+                <div class="col-lg-5 col-md-7 col-sm-7 col-12 bg bg-white p-4 rounded">
                     <div class="form-title text-center pt-2 mb-5 ">
                         <div class="title">{{ __('home.sign in') }}</div>
                     </div>
