@@ -169,11 +169,12 @@
                                                     <label class="form-check-label" for="flexSwitchCheckChecked2">view_profile</label>
                                                 </div>
                                                 @foreach($permissions as $permission)
-                                                    <label class="ml-2" for="category-{{$permission->id}}">
-                                                        <input type="checkbox" id="category-{{$permission->id}}"
-                                                               name="category-{{$permission->id}}"
+                                                    <label class="form-check-label ml-2"  for="permission-{{$permission->id}}">
+                                                        <input type="checkbox"
+                                                               name="permission-{{$permission->id}}"
+                                                               id="permission-{{$permission->id}}"
                                                                value="{{$permission->id}}"
-                                                               class="mr-2 p-3"/>
+                                                               class="form-check-input mr-2 p-3"/>
                                                         {{$permission->name}}
                                                     </label>
                                                 @endforeach
@@ -276,11 +277,12 @@
                                                     <label class="form-check-label" for="flexSwitchCheckChecked2">view_profile</label>
                                                 </div>
                                                 @foreach($permissions as $permission)
-                                                    <label class="ml-2" for="category-{{$permission->id}}">
-                                                        <input type="checkbox" id="category-{{$permission->id}}"
-                                                               name="category-{{$permission->id}}"
+                                                    <label class="form-check-label ml-2"  for="permission-{{$permission->id}}">
+                                                        <input type="checkbox"
+                                                               name="permission-{{$permission->id}}"
+                                                               id="permission-{{$permission->id}}"
                                                                value="{{$permission->id}}"
-                                                               class="mr-2 p-3"/>
+                                                               class="form-check-input mr-2 p-3"/>
                                                         {{$permission->name}}
                                                     </label>
                                                 @endforeach
@@ -303,7 +305,6 @@
                                 </button>
                             </form>
                         </div>
-                        <div class="text-center text-muted delimiter">{{ __('home.or use a social network') }}</div>
                         <div class="d-flex justify-content-center social-buttons form-group">
                             <button type="button" class="btn btn-round mg-icon button mr-2"
                                     data-toggle="tooltip"

@@ -327,9 +327,9 @@
 
 </style>
 <header>
-    <div class="container">
-        <div class="header-top align-items-center justify-content-between row"
-             style="padding-left: 2vw; padding-right: 2vw">
+    <div class="header-top align-items-center justify-content-between row"
+         style="padding-left: 2vw; padding-right: 2vw">
+        <div class="container">
             <div style="float: left">
                 <div class="ht-left">
                     <div class="desktop-button">
@@ -1029,15 +1029,16 @@
             </div>
         </div>
 
-        <div id="mobile-menu-wrap" class="mg-menu" style=" width: calc(100vw - 2rem);"></div>
+            <div id="mobile-menu-wrap" class="mg-menu" style=" width: calc(100vw - 2rem);"></div>
+        </div>
     </div>
     @unless(request()->is('/') || request()->is('login') || request()->is('register'))
-        <div class="nav-item mb-4" id="nav-black">
+        <div class="nav-item mb-4" id="nav-black" style="background: black">
             <div class="container">
                 <div class="col-sm-12">
                     <div class="row" style="background: black">
                         <div class="col-sm-4">
-                            <div class="nav-depart ">
+                            <div class="nav-depart">
                                 <div class="depart-btn">
                                     <i class="fa fa-bars"></i>
                                     <span>{{ __('home.all_categories') }}</span>
@@ -1113,7 +1114,7 @@
                         </div>
                         <div class="col-sm-8">
                             <nav class="nav-menu row">
-                                <ul class="mb-0">
+                                <ul>
                                     <li class="active"><a href="{{route('home')}}">Home</a></li>
                                     <li><a href="{{route('product.index')}}">Shop</a></li>
                                     <li><a href="#">Collection</a>
