@@ -1037,7 +1037,7 @@
         </div>
     </div>
     @unless(request()->is('/') || request()->is('login') || request()->is('register'))
-        <div class="nav-item" id="nav-black">
+        <div class="nav-item" id="nav-black" style="background: black">
             <div class="container">
                 <div class="col-sm-12">
                     <div class="row" style="background: black">
@@ -1118,7 +1118,7 @@
                         </div>
                         <div class="col-sm-8">
                             <nav class="nav-menu row">
-                                <ul>
+                                <ul class="mb-0">
                                     <li class="active"><a href="{{route('home')}}">Home</a></li>
                                     <li><a href="{{route('product.index')}}">Shop</a></li>
                                     <li><a href="#">Collection</a>

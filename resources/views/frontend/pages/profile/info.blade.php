@@ -8,6 +8,12 @@
 
 @section('sub-content')
     <style>
+        #dateOfBirth select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
         .size-img {
             width: 20px;
             height: 20px;
@@ -98,7 +104,8 @@
                                         </svg>
                                     </label>
                                 </div>
-                                <img class=" img preview mb-3" id="avatarPreview" src="{{ asset('public/storage/'.$user->image) }}">
+                                <img class=" img preview mb-3" id="avatarPreview"
+                                     src="{{ asset('public/storage/'.$user->image) }}">
                             </div>
                         </div>
 
@@ -111,7 +118,8 @@
                                 <label for="staticEmail"
                                        class="col-md-3 col-12 col-form-label">{{ __('home.full name') }}</label>
                                 <div class="col-md-9 col-12">
-                                    <input type="text" class="form-control" id="staticEmail" name="name" value="{{$user->name}}">
+                                    <input type="text" class="form-control" id="staticEmail" name="name"
+                                           value="{{$user->name}}">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -124,24 +132,13 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="row form-group">
-                        <label for="day"
-                               class="col-md-3 col-12 col-form-label col-lg-4 col-xl-3">{{ __('home.date of birth') }}</label>
-
-                        <div class="col-md-3 col-12 pb-1 col-lg-4 col-xl-3">
-                            <select class="form-control" id="day">
-                            </select>
+                    <div class="row form-group" id="dateOfBirth">
+                        <label for="date_of_birth"
+                               class="col-sm-3 col-12 col-form-label">{{ __('home.date of birth') }}</label>
+                        <div class="col-md-9 col-12">
+                            <input type="date" class="form-control" name="date_of_birth"
+                                   value="{{ $user->date_of_birth }}">
                         </div>
-                        <div class="col-md-3 col-12 pb-1 col-lg-4 col-xl-3">
-                            <select class="form-control" id="month">
-                            </select>
-                        </div>
-                        <div class="col-md-3 col-12 pb-1 col-lg-12 col-xl-3">
-                            <select class="form-control" id="year">
-                            </select>
-                        </div>
-                        <input type="text" hidden name="date_of_birth">
                     </div>
 
                     <div class="row form-group">
@@ -332,7 +329,8 @@
                         <div class="form-group">
                             <label for="inputPassword" class="col-sm-4 col-form-label">Số điện thoại</label>
                             <div>
-                                <input type="number" class="form-control" value="{{ Auth::user()->phone }}" id="edit-phone-input" required name="edit-phone" inputmode="numeric" />
+                                <input type="number" class="form-control" value="{{ Auth::user()->phone }}"
+                                       id="edit-phone-input" required name="edit-phone" inputmode="numeric"/>
                             </div>
                         </div>
                     </div>
@@ -360,7 +358,8 @@
                         <div class="form-group">
                             <label for="inputPassword" class="col-sm-4 col-form-label">Email</label>
                             <div>
-                                <input type="email" value="{{ Auth::user()->email }}" required class="form-control" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+                                <input type="email" value="{{ Auth::user()->email }}" required class="form-control"
+                                       pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
                                        name="edit-email"/>
                             </div>
                         </div>
@@ -416,75 +415,6 @@
     </div>
 
     <script>
-
-        var yearSelect = document.getElementById('year');
-        var currentYear = new Date().getFullYear();
-        var daySelect = document.getElementById('day');
-        var monthSelect = document.getElementById('month');
-        var dateOfBirth = "{{ Auth::user()->date_of_birth }}";
-        var dateParts = dateOfBirth.split('/');
-        var dayUser = parseInt(dateParts[0]);
-        var monthUser = parseInt(dateParts[1]);
-        var yearUser = parseInt(dateParts[2]);
-
-
-        for (var i = currentYear; i >= currentYear - 100; i--) {
-            var option = document.createElement('option');
-            option.value = i;
-            option.text = i;
-            yearSelect.add(option);
-        }
-        for (var i = 1; i <= 12; i++) {
-            var option = document.createElement('option');
-            option.value = i;
-            option.text = i;
-            monthSelect.add(option);
-        }
-
-        var year = parseInt(yearSelect.value);
-        var month = parseInt(monthSelect.value);
-        var daysInMonth = new Date(year, month, 0).getDate();
-
-
-
-        monthSelect.addEventListener('change', updateDaysInMonth);
-        yearSelect.addEventListener('change', updateDaysInMonth);
-        daySelect.addEventListener('change', updateDateOfBirth);
-
-        for (var i = 1; i <= daysInMonth; i++) {
-            var option = document.createElement('option');
-            option.value = i;
-            option.text = i;
-            daySelect.add(option);
-        }
-
-        daySelect.value = dayUser;
-        monthSelect.value = monthUser;
-        yearSelect.value = yearUser;
-
-        function updateDaysInMonth() {
-            var year = parseInt(yearSelect.value);
-            var month = parseInt(monthSelect.value);
-            var daysInMonth = new Date(year, month, 0).getDate();
-            daySelect.innerHTML = '';
-            for (var i = 1; i <= daysInMonth; i++) {
-                var option = document.createElement('option');
-                option.value = i;
-                option.text = i;
-                daySelect.add(option);
-            }
-            updateDateOfBirth();
-        }
-
-        function updateDateOfBirth() {
-            var dayValue = daySelect.value;
-            var monthValue = monthSelect.value;
-            var yearValue = yearSelect.value;
-
-            var dateOfBirthInput = document.querySelector('input[name="date_of_birth"]');
-            dateOfBirthInput.value = dayValue + '/' + monthValue + '/' + yearValue;
-        }
-
         function previewImage(event) {
             var reader = new FileReader();
             reader.onload = function () {

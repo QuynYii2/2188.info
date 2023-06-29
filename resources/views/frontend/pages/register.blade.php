@@ -46,9 +46,6 @@
         display: block;
     }
 
-    #checkboxes label:hover {
-        background-color: #cccccc;
-    }
     /**/
     #checkboxesPre {
         display: none;
@@ -59,28 +56,24 @@
         display: block;
     }
 
-    #checkboxesPre label:hover {
-        background-color: #cccccc;
-    }
-
-    #checkboxesPresell {
+    #checkboxesPersell {
         display: none;
         border: 1px #dadada solid;
     }
 
-    #checkboxesPresell label {
+    #checkboxesPersell label {
         display: block;
     }
 
-    #checkboxesPresell label:hover {
-        background-color: #cccccc;
+    .form-check {
+        padding-left: 30px;
     }
 </style>
 
 @section('content')
-<div style="background: rgb(255, 235, 225)">
-    <div class="background container pt-3 justify-content-center">
-        <div class="col-lg-8 col-md-10 col-12 bg-white p-4 mt-3 m-auto">
+    <div style="background: rgb(255, 235, 225)">
+        <div class="background container pt-3 justify-content-center">
+            <div class="col-lg-8 col-md-10 col-12 bg-white p-4 mt-3 m-auto">
                 <div class="form-title text-center pt-2">
                     <div class="title">{{ __('home.sign up') }}</div>
                 </div>
@@ -90,7 +83,8 @@
                             <a class="nav-item nav-link active link-tabs" id="nav-buyer-tab" data-toggle="tab"
                                href="#nav-buyer"
                                role="tab" aria-controls="nav-buyer" onclick="buyer();">{{ __('home.buyer') }}</a>
-                            <a class="nav-item nav-link link-tabs" id="nav-seller-tab" data-toggle="tab" href="#nav-seller"
+                            <a class="nav-item nav-link link-tabs" id="nav-seller-tab" data-toggle="tab"
+                               href="#nav-seller"
                                role="tab"
                                aria-controls="nav-seller" onclick="seller();">{{ __('home.seller') }}</a>
                         </div>
@@ -120,7 +114,8 @@
                                                placeholder="{{ __('home.input email') }}">
                                     </div>
                                     <div class="form-group col-md-6 col-12">
-                                        <input required type="text" class="form-control" name="address" id="address-buyer"
+                                        <input required type="text" class="form-control" name="address"
+                                               id="address-buyer"
                                                placeholder="{{ __('home.input address') }}">
                                     </div>
                                     <div class="form-group col-md-6 col-12">
@@ -129,13 +124,14 @@
                                     </div>
                                     <div class="form-group col-md-6 col-12">
                                         <div class="multiselect position-relative">
-                                            <div class="selectBox" onclick="showCheckboxes()">
+                                            <div class="selectBox" id="div-click" onclick="showCheckboxes()">
                                                 <select>
                                                     <option>Please select the type of product you are interested in</option>
                                                 </select>
                                                 <div class="overSelect"></div>
                                             </div>
-                                            <div id="checkboxes" class="mt-1 position-absolute bg-white" style="left:0; right: 0; z-index: 1">
+                                            <div id="checkboxes" class="mt-1 position-absolute bg-white p-2"
+                                                 style="left:0; right: 0; z-index: 1">
                                                 @foreach($categories as $category)
                                                     <label class="ml-2" for="category-{{$category->id}}">
                                                         <input type="checkbox" id="category-{{$category->id}}"
@@ -148,28 +144,33 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="form-group col-md-6 col-12">
                                         <div class="multiselect position-relative">
-                                            <div class="selectBox" onclick="showCheckboxesPer()">
+                                            <div class="selectBox" id="div-clickPer" onclick="showCheckboxesPer()">
                                                 <select>
                                                     <option>Select the book you want to register here!</option>
                                                 </select>
                                                 <div class="overSelect"></div>
                                             </div>
-                                            <div id="checkboxesPre" class="mt-1 position-absolute bg-white" style="left:0; right: 0; z-index: 1">
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked1" checked
+                                            <div id="checkboxesPre" class="mt-1 position-absolute bg-white p-2"
+                                                 style="left:0; right: 0; z-index: 1">
+                                                <div class="form-check form-switch pl-4">
+                                                    <input class="form-check-input" type="checkbox"
+                                                           id="flexSwitchCheckChecked1" checked
                                                            disabled>
                                                     <label class="form-check-label"
                                                            for="flexSwitchCheckChecked1">view_all_products</label>
                                                 </div>
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked2" checked
+                                                <div class="form-check form-switch pl-4">
+                                                    <input class="form-check-input" type="checkbox"
+                                                           id="flexSwitchCheckChecked2" checked
                                                            disabled>
                                                     <label class="form-check-label" for="flexSwitchCheckChecked2">view_profile</label>
                                                 </div>
                                                 @foreach($permissions as $permission)
-                                                    <label class="form-check-label ml-2"  for="permission-{{$permission->id}}">
+                                                    <label class="form-check-label ml-2 pl-3"
+                                                           for="permission-{{$permission->id}}">
                                                         <input type="checkbox"
                                                                name="permission-{{$permission->id}}"
                                                                id="permission-{{$permission->id}}"
@@ -210,7 +211,6 @@
                                         <input required type="number" class="form-control" name="phone"
                                                placeholder="{{ __('home.input phone') }}">
                                     </div>
-
                                     <div class="form-group col-md-6 col-12">
                                         <input required type="password" class="form-control" name="password"
                                                placeholder="{{ __('home.input password') }}">
@@ -237,7 +237,8 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6 col-12">
-                                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="industry">
+                                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect"
+                                                name="industry">
                                             <option selected>{{ __('home.choose branch') }}</option>
                                             <option value="1">One</option>
                                             <option value="2">Two</option>
@@ -258,26 +259,30 @@
                                     </div>
                                     <div class="form-group col-md-6 col-12">
                                         <div class="multiselect position-relative">
-                                            <div class="selectBox" onclick="showCheckboxesPersell()">
+                                            <div class="selectBox" id="div-clickPersell" onclick="showCheckboxesPersell()">
                                                 <select>
                                                     <option>Select the book you want to register here!</option>
                                                 </select>
                                                 <div class="overSelect"></div>
                                             </div>
-                                            <div id="checkboxesPresell" class="mt-1 position-absolute bg-white" style="left:0; right: 0; z-index: 1">
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked1" checked
+                                            <div id="checkboxesPersell" class="mt-1 position-absolute bg-white p-2"
+                                                 style="left:0; right: 0; z-index: 1">
+                                                <div class="form-check form-switch pl-4">
+                                                    <input class="form-check-input" type="checkbox"
+                                                           id="flexSwitchCheckChecked1" checked
                                                            disabled>
                                                     <label class="form-check-label"
                                                            for="flexSwitchCheckChecked1">view_all_products</label>
                                                 </div>
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked2" checked
+                                                <div class="form-check form-switch pl-4">
+                                                    <input class="form-check-input" type="checkbox"
+                                                           id="flexSwitchCheckChecked2" checked
                                                            disabled>
                                                     <label class="form-check-label" for="flexSwitchCheckChecked2">view_profile</label>
                                                 </div>
                                                 @foreach($permissions as $permission)
-                                                    <label class="form-check-label ml-2"  for="permission-{{$permission->id}}">
+                                                    <label class="form-check-label ml-2 pl-3"
+                                                           for="permission-{{$permission->id}}">
                                                         <input type="checkbox"
                                                                name="permission-{{$permission->id}}"
                                                                id="permission-{{$permission->id}}"
@@ -287,6 +292,7 @@
                                                     </label>
                                                 @endforeach
                                             </div>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
@@ -331,9 +337,8 @@
                     </div>
                 </div>
             </div>
+        </div>
     </div>
-</div>
-
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -389,9 +394,29 @@
     var expanded = false;
     var expandedPer = false;
     var expandedPersell = false;
+
     function showCheckboxes() {
         var checkboxes = document.getElementById("checkboxes");
         if (!expanded) {
+            // checkboxes.style.display = "block";
+            window.addEventListener('click', function (e) {
+                var checkboxes = document.getElementById("checkboxes");
+                var div = document.getElementById('div-click');
+                if (checkboxes.contains(e.target) || div.contains(e.target)) {
+                    div.on('click', function () {
+                        if (!expanded) {
+                            checkboxes.style.display = "block";
+                            expanded = true;
+                        } else {
+                            checkboxes.style.display = "none";
+                            expanded = false;
+                        }
+                    });
+                } else {
+                    checkboxes.style.display = "none";
+                    expanded = false;
+                }
+            })
             checkboxes.style.display = "block";
             expanded = true;
         } else {
@@ -403,6 +428,25 @@
     function showCheckboxesPer() {
         var checkboxes = document.getElementById("checkboxesPre");
         if (!expandedPer) {
+            // checkboxes.style.display = "block";
+            window.addEventListener('click', function (e) {
+                var checkboxes = document.getElementById("checkboxesPre");
+                var div = document.getElementById('div-clickPer');
+                if (checkboxes.contains(e.target) || div.contains(e.target)) {
+                    div.on('click', function () {
+                        if (!expandedPer) {
+                            checkboxes.style.display = "block";
+                            expandedPer = true;
+                        } else {
+                            checkboxes.style.display = "none";
+                            expandedPer = false;
+                        }
+                    });
+                } else {
+                    checkboxes.style.display = "none";
+                    expandedPer = false;
+                }
+            })
             checkboxes.style.display = "block";
             expandedPer = true;
         } else {
@@ -412,8 +456,26 @@
     }
 
     function showCheckboxesPersell() {
-        var checkboxes = document.getElementById("checkboxesPresell");
+        var checkboxes = document.getElementById("checkboxesPersell");
         if (!expandedPersell) {
+            window.addEventListener('click', function (e) {
+                var checkboxes = document.getElementById("checkboxesPersell");
+                var div = document.getElementById('div-clickPersell');
+                if (checkboxes.contains(e.target) || div.contains(e.target)) {
+                    div.on('click', function () {
+                        if (!expandedPersell) {
+                            checkboxes.style.display = "block";
+                            expandedPersell = true;
+                        } else {
+                            checkboxes.style.display = "none";
+                            expandedPersell = false;
+                        }
+                    });
+                } else {
+                    checkboxes.style.display = "none";
+                    expandedPersell = false;
+                }
+            })
             checkboxes.style.display = "block";
             expandedPersell = true;
         } else {

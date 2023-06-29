@@ -11,7 +11,8 @@
 
 @section('content')
     <div class="container">
-        <div class="card p-3">
+        <div class="title mt-3 mb-3 text-center">Sản phẩm quan tâm</div>
+        <div class=" p-3">
             <div class="row p-2">
                 <div class="col-md-12 d-flex justify-content-between align-items-center">
                     <div class="">
@@ -61,10 +62,10 @@
                 @if($userProduct == null)
                     No category
                 @else
-                    <table class="table table-bordered">
+                    <table class="table">
                         <thead>
                         <tr>
-                            <th scope="col">Sản phẩm quan tâm</th>
+                            <th scope="col">Danh mục</th>
                             <th scope="col">Action</th>
                         </tr>
                         </thead>
@@ -105,7 +106,7 @@
             </div>
 
             <div class="row p-2 ">
-                <table class="table table-bordered">
+                <table class="table">
                     <thead>
                     <tr>
                         <th scope="col">Tên công ty</th>
