@@ -45,7 +45,7 @@ class ProductController extends Controller
             $listIds = $voucher->apply;
             $arrayID = explode(",", $listIds);
             for ($i = 0; $i < count($arrayID); $i++) {
-                if ($arrayID[$i] == $product->category_id) {
+                if ($arrayID[$i] == $product->id) {
                     $arrayVouchers[] = $voucher;
                 }
             }
@@ -84,5 +84,13 @@ class ProductController extends Controller
         } catch (\Exception $exception) {
             return $exception;
         }
+    }
+
+    public function detailProduct($id)
+    {
+        $product = Product::find($id);
+        $product->views = $product->views + 1;
+        $product->save();
+        return $product;
     }
 }

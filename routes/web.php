@@ -69,6 +69,7 @@ Route::middleware('auth.product')->group(function () {
 });
 
 Route::get('/detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
+Route::get('/detail-product/{id}', [\App\Http\Controllers\ProductController::class, 'detailProduct'])->name('detail_product.api');
 Route::get('/category/{id}', [\App\Http\Controllers\CategoryController::class, 'category'])->name('category.show');
 
 Route::middleware(['auth'])->group(function () {
@@ -114,13 +115,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/buy-coin', [CoinController::class, 'store'])->name('buy.coin.create');
 //    Route::get('/buy-coin-success?price={price}&quantity={quantity}', [\App\Http\Controllers\CoinController::class, 'successPayment'])->name('buy.coin.success');
     Route::get('/buy-coin-success/{price}/{quantity}', [CoinController::class, 'successPayment'])->name('buy.coin.success');
-
     // thông tin cá nhân
-
     Route::post('change-password', [UserController::class, 'changePassword'])->name('user.changePassword');
     Route::post('change-email', [UserController::class, 'changeEmail'])->name('user.changeEmail');
     Route::post('change-phone-number', [UserController::class, 'changePhoneNumber'])->name('user.changePhoneNumber');
     Route::post('update-info', [UserController::class, 'updateInfo'])->name('user.updateInfo');
+    //
+    Route::get('/my-vouchers', [UserController::class, 'myVoucher'])->name('my.voucher.show');
 });
 
 
@@ -199,7 +200,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/cart-clear', [CartController::class, 'clearCart'])->name('cart.clear');
     // Checkout Controller
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.show');
-    Route::get('/checkout-success/{name}/{email}/{phone}/{address}', [CheckoutController::class, 'checkoutSuccess'])->name('checkout.success.paypal');
+    Route::get('/checkout-success/{name}/{email}/{phone}/{address}/{idVoucher}', [CheckoutController::class, 'checkoutSuccess'])->name('checkout.success.paypal');
     Route::post('/checkout-imm', [CheckoutController::class, 'checkoutByImme'])->name('checkout.create.imm');
     Route::post('/checkout-coin', [CheckoutController::class, 'checkoutByCoin'])->name('checkout.create.coin');
     Route::post('/checkout-paypal', [CheckoutController::class, 'checkoutByPaypal'])->name('checkout.create.paypal');

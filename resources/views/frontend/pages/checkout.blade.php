@@ -112,9 +112,28 @@
                                         <label for="voucher">
                                             <i class="fa fa-user"></i>Mã giảm giá có sẵn
                                         </label>
-                                        <select name="voucher" id="voucher" class="form-control mb-3">
+                                        <select name="voucher" id="voucher" class="form-control mb-3"
+                                                onchange="getvoucher()">
                                             @foreach($voucherItems as $item)
-                                                <option>{{$item->voucher_id}}</option>
+                                                @php
+                                                    $voucher = \App\Models\Voucher::find($item->voucher_id);
+                                                    $listCategory = $voucher->apply;
+                                                    $arrayCategory = explode(',', $listCategory);
+                                                    $productIDs = null;
+                                                    foreach ($carts as $cart){
+                                                        $productIDs[] = $cart->product_id;
+                                                    }
+                                                    $allArr = array_intersect($arrayCategory, $productIDs);
+                                                    $voucherConvert = implode(',', $allArr);
+                                                @endphp
+                                                @if($allArr!=null)
+                                                    <option class="choose"
+                                                            value="{{$voucherConvert}}-{{$voucher->percent}}-{{$voucher->id}}">
+                                                        {{$voucher->name}} - {{$voucher->code}}
+                                                    </option>
+                                                @else
+                                                    <option disabled>{{$voucher->name}} - Không thể sử dụng</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
@@ -197,6 +216,8 @@
                                         class=" mt-3 mb-3 btn btn-danger">{{ __('home.Pay Now') }}</button>
 
                             </div>
+                            <input type="text" id="price_id" name="priceID" value="0" hidden="">
+                            <input type="text" id="voucher_id" name="voucherID" value="0" hidden="">
                         </form>
                     </div>
                 </div>
@@ -205,30 +226,73 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
-        function getAllTotal() {
-            let totalMax = document.getElementById('max-total');
-            let totalPrice = document.getElementById('total-price');
-            let shippingPrice = document.getElementById('shipping-price').innerText;
-            let salePrice = document.getElementById('sale-price').innerText;
-            let checkOutPrice = document.getElementById('checkout-price');
-            var firstCells = document.querySelectorAll('#table-checkout td:nth-child(4)');
-            console.log(firstCells)
-            var cellValues = [];
-            firstCells.forEach(function (singleCell) {
-                cellValues.push(singleCell.innerText);
-            });
-            let i, total = 0;
-            for (i = 0; i < cellValues.length; i++) {
-                total = parseFloat(total) + parseFloat(cellValues[i]);
-            }
-            totalMax.innerText = total;
-            totalPrice.innerHTML = total;
+        function getvoucher() {
+            $('#voucher option').each(function () {
+                if ($(this).is(':selected')) {
+                    // this.value.split("-")
+                    let array = this.value.split("-");
+                    // let arrayProducts = getDiscount(array);
+                    let myArray = this.value.split("-");
+                    let arrayProducts = myArray[0].split(",");
+                    let arrayPrice = [];
+                    for (let i = 0; i < arrayProducts.length; i++) {
+                        $.ajax({
+                            url: '/detail-product/' + arrayProducts[i],
+                            method: 'GET',
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function (response) {
+                                let price = response['price'];
+                                let pricePercent = price * myArray[1] / 100;
+                                arrayPrice.push(pricePercent)
+                                let totalPriceDiscount = 0;
+                                for (let i = 0; i < arrayPrice.length; i++) {
+                                    totalPriceDiscount = parseFloat(totalPriceDiscount) + parseFloat(arrayPrice[i]);
+                                }
+                                let salePrice = document.getElementById('sale-price');
+                                salePrice.innerText = totalPriceDiscount;
 
-            checkOutPrice.innerHTML = parseFloat(total) + parseFloat(shippingPrice) - parseFloat(salePrice);
+                                let voucherID = document.getElementById('voucher_id');
+                                voucherID.value = myArray[2];
 
+                                function getAllTotal() {
+                                    let totalMax = document.getElementById('max-total');
+                                    let totalPrice = document.getElementById('total-price');
+                                    let shippingPrice = document.getElementById('shipping-price').innerText;
+                                    let salePrice = document.getElementById('sale-price').innerText;
+                                    let checkOutPrice = document.getElementById('checkout-price');
+                                    var firstCells = document.querySelectorAll('#table-checkout td:nth-child(4)');
+                                    var cellValues = [];
+                                    firstCells.forEach(function (singleCell) {
+                                        cellValues.push(singleCell.innerText);
+                                    });
+                                    let i, total = 0;
+                                    for (i = 0; i < cellValues.length; i++) {
+                                        total = parseFloat(total) + parseFloat(cellValues[i]);
+                                    }
+                                    totalMax.innerText = total;
+                                    totalPrice.innerHTML = total;
+
+                                    let max = parseFloat(total) + parseFloat(shippingPrice) - parseFloat(salePrice)
+
+                                    checkOutPrice.innerHTML = max.toFixed(1);
+                                    let price = document.getElementById('price_id');
+                                    price.value = checkOutPrice.innerHTML;
+                                }
+
+                                getAllTotal();
+                            },
+                            error: function (exception) {
+                                console.log(exception)
+                            }
+                        })
+                    }
+                }
+            })
         }
 
-        getAllTotal();
+        getvoucher();
 
         $(document).ready(function () {
             if ($("#order-by-immediate").prop("checked")) {
