@@ -118,7 +118,7 @@ class CheckoutController extends Controller
 
     private function deleteVoucher($id)
     {
-        VoucherItem::where([['voucher_id', $id], ['user_id', Auth::user()->id]])->delete();
+        VoucherItem::where([['voucher_id', $id], ['customer_id', Auth::user()->id]])->delete();
     }
 
     private function notifiCreate()
