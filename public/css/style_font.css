@@ -32,3 +32,10 @@
 
 .table td{
 }
+
+a{
+    color: black;
+}
+a:focus {
+    color: black;
+}

@@ -13,6 +13,10 @@ class EvaluateProductController extends Controller
     public function store(Request $request)
     {
         if (Auth::check()) {
+//            if($request->input('star_number') == null){
+//                alert()->error('Error', '');
+//                return back();
+//            }
             $evaluate = [
                 'user_id' => Auth::user()->id,
                 'username' => $request->input('username'),
@@ -21,8 +25,14 @@ class EvaluateProductController extends Controller
                 'content' => $request->input('content'),
                 'status' => EvaluateProductStatus::PENDING
             ];
-            EvaluateProduct::create($evaluate);
-            return redirect(route('detail_product.show', ["id" => $request->input('product_id')]));
+            $success = EvaluateProduct::create($evaluate);
+            if ($success) {
+                alert()->success('Success', 'Change Email Success!');
+                return redirect(route('detail_product.show', ["id" => $request->input('product_id')]));
+            } else {
+                alert()->error('Error', 'Change Email error!');
+                return back();
+            }
         } else {
             (new HomeController())->getLocale($request);
             return view('frontend/pages/login');

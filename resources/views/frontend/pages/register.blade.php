@@ -228,12 +228,12 @@
                                                placeholder="{{ __('home.input taxCode') }}">
                                     </div>
                                     <div class="form-group col-md-6 col-12">
+
                                         <div class="custom-file">
                                             <input required type="file" id="inputFile"
-                                                   class="form-control"
                                                    name="image">
-                                            <label class="custom-file-label"
-                                                   for="inputFile">{{ __('home.business license') }}</label>
+{{--                                            <label class="custom-file-label"--}}
+{{--                                                   for="inputFile">{{ __('home.business license') }}</label>--}}
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6 col-12">
@@ -295,7 +295,6 @@
                                         </div>
                                         </div>
                                     </div>
-                                </div>
                                 <div class="">
                                     <div class="float-left">
                                         <a class="tabs-product-detail"
@@ -515,4 +514,12 @@
             }
         });
     });
+    const fileUploader = document.getElementById('inputFile');
+
+    fileUploader.addEventListener('change', (event) => {
+        const file = event.target.file;
+        console.log('file', file);
+    });
+
+
 </script>

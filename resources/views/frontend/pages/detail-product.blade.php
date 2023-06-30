@@ -4,9 +4,12 @@
     use App\Models\Properties;use Illuminate\Support\Facades\Auth;
 @endphp
 
+
 @extends('frontend.layouts.master')
 
+
 @section('title', 'Detail')
+
 
 @section('content')
 
@@ -17,15 +20,18 @@
             grid-gap: 1.5rem;
         }
 
+
         .d-flex > svg {
             width: 40px;
             height: 40px;
         }
 
+
         .labels > div {
             width: 150px;
             position: absolute;
         }
+
 
         .labels > div.label-new {
             left: -40px;
@@ -33,29 +39,35 @@
             transform: rotate(-45deg);
         }
 
+
         .labels > div.label-sale {
             right: -40px;
             top: 20px;
             transform: rotate(45deg);
         }
 
+
         .card {
             overflow: hidden;
             box-shadow: 0 3px 17px rgba(0, 0, 0, 0.15), 0 0 5px rgba(0, 0, 0, 0.15);
         }
+
 
         .card img {
             width: 100%;
             height: auto !important;
         }
 
+
         .description {
             text-align: center;
         }
 
+
         .description p {
             text-align: left;
         }
+
 
         .btn {
             padding: 8px 16px;
@@ -67,50 +79,63 @@
             background-color: #00bf90;
         }
 
+
         .link-tabs:hover {
             color: #c69500 !important;
         }
+
 
         .text-more-tabs:hover {
             color: #c69500 !important;
         }
 
+
         .product-content {
             padding-top: 0;
         }
+
 
         .product-content p {
             margin-bottom: 0;
         }
 
+
         #img-default {
             cursor: pointer;
         }
+
 
         .img-focus {
             cursor: pointer;
         }
 
+
         .btn-16 {
             margin: 0 16px;
         }
+
 
         .btn-cancel:hover {
             background-color: #cccccc;
         }
 
+
         .checked {
             color: orange;
         }
+
 
         .list-items-ml-0 {
             margin-left: 0;
         }
 
+
         @media only screen and (min-width: 1200px) {
             .tabs-product {
 
+
             }
+
 
             .img-focus {
                 width: 80px;
@@ -119,39 +144,49 @@
             }
         }
 
+
         @media only screen and (min-width: 992px) and (max-width: 1199px) {
             .tabs-product {
 
+
             }
+
 
             .img-focus {
                 width: 80px;
                 height: 80px;
             }
         }
+
 
         @media only screen and (min-width: 769px) and (max-width: 991px) {
             .tabs-item a {
                 font-size: 15px;
             }
 
+
             .tabs-product {
                 display: flex !important;
             }
         }
 
+
         @media only screen and (max-width: 767px) {
+
 
             .tabs-item a {
                 font-size: 15px;
             }
         }
 
+
         @media only screen and (max-width: 767px) {
+
 
             .tabs-item a {
                 font-size: 15px;
             }
+
 
             .img-focus {
                 width: 80px;
@@ -159,21 +194,26 @@
             }
         }
 
+
         @media only screen and (max-width: 365px) {
+
 
             .tabs-item a {
                 font-size: 12px;
             }
 
+
             .btn-block {
                 display: block;
             }
+
 
             .img-focus {
                 width: 60px;
                 height: 60px;
             }
         }
+
 
         .col-2_5 {
             width: 20%;
@@ -182,9 +222,11 @@
             padding-left: 10px;
         }
 
+
         .col-2_5 .card {
             height: 100%;
         }
+
 
         .col-2_5 .card .d-flex {
             height: 100%;
@@ -192,29 +234,35 @@
             align-content: center;
         }
 
+
         .tablet-button {
             display: none;
         }
 
-        @media only screen and (min-width: 576px ) and  (max-width: 991px) {
+
+        @media only screen and (min-width: 576px ) and (max-width: 991px) {
             .tablet-button {
                 display: block;
             }
+
 
             .not-tablet-button {
                 display: none !important;
             }
         }
 
-        @media not (min-width: 576px ) and  (max-width: 991px) {
+
+        @media not (min-width: 576px ) and (max-width: 991px) {
             .tablet-button {
                 display: none;
             }
+
 
             .not-tablet-button {
                 display: block !important;
             }
         }
+
 
     </style>
     <div class="container">
@@ -229,6 +277,7 @@
                                      alt="image" width="360px" height="250px" data-toggle="modal"
                                      data-target="#seeImageProduct">
                                 <input id="img-rollback" value="{{$product->thumbnail}}" hidden="" disabled>
+
 
                                 <div class="modal fade" id="seeImageProduct" tabIndex="-1" role="dialog"
                                      aria-labelledby="editModalLabel" aria-hidden="true">
@@ -248,6 +297,7 @@
                                                              alt="">
                                                     </div>
                                                     <div class="col-md-2 img-second">
+
 
                                                         <img class="img mt-2 img-focus" onclick="zoomImgModal(this)"
                                                              src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
@@ -281,40 +331,43 @@
                             </div>
                         </div>
                         <div class="img-select d-flex flex-row bd-highlight mb-2 mt-2 ">
-{{--                            <div class="product-slider owl-carousel">--}}
-{{--                                @foreach(explode(",", $product->gallery) as $gallery)--}}
+                            {{-- <div class="product-slider owl-carousel">--}}
+                            {{-- @foreach(explode(",", $product->gallery) as $gallery)--}}
 
-{{--                                    <div class="img-item">--}}
-{{--                                        <img class="img img-focus" onclick="zoomImg(this)"--}}
-{{--                                             src="{{ asset('storage/' . $gallery) }}"--}}
-{{--                                             alt="shoe image" width="100">--}}
-{{--                                    </div>--}}
-{{--                                @endforeach--}}
-                                <div class="img-item">
-                                    <img class="img img-focus" onclick="zoomImg(this)"
-                                         src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg"
-                                         alt="shoe image">
-                                </div>
-                                <div class="img-item">
-                                    <img class="img img-focus" onclick="zoomImg(this)"
-                                         src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_3.jpg"
-                                         alt="shoe image">
-                                </div>
-                                <div class="img-item">
-                                    <img class="img img-focus" onclick="zoomImg(this)"
-                                         src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_4.jpg"
-                                         alt="shoe image">
-                                </div>
-                                <div class="img-item">
-                                    <img class="img img-focus" onclick="zoomImg(this)"
-                                         src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg"
-                                         alt="shoe image">
-                                </div>
-{{--                            </div>--}}
+
+                            {{-- <div class="img-item">--}}
+                            {{-- <img class="img img-focus" onclick="zoomImg(this)"--}}
+                            {{-- src="{{ asset('storage/' . $gallery) }}"--}}
+                            {{-- alt="shoe image" width="100">--}}
+                            {{-- </div>--}}
+                            {{-- @endforeach--}}
+                            <div class="img-item">
+                                <img class="img img-focus" onclick="zoomImg(this)"
+                                     src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg"
+                                     alt="shoe image">
+                            </div>
+                            <div class="img-item">
+                                <img class="img img-focus" onclick="zoomImg(this)"
+                                     src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_3.jpg"
+                                     alt="shoe image">
+                            </div>
+                            <div class="img-item">
+                                <img class="img img-focus" onclick="zoomImg(this)"
+                                     src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_4.jpg"
+                                     alt="shoe image">
+                            </div>
+                            <div class="img-item">
+                                <img class="img img-focus" onclick="zoomImg(this)"
+                                     src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg"
+                                     alt="shoe image">
+                            </div>
+                            {{-- </div>--}}
+
 
                         </div>
                     </div>
                     <div class="product-content col-md-12 py-1" style="z-index: 88;">
+
 
                         <form action="{{ route('cart.add', $product) }}" method="POST">
                             @csrf
@@ -328,6 +381,7 @@
                                 <i class="fa fa-star-half-o"></i>
                                 <span>4.7(21)</span>
                             </div>
+
 
                             <div class="product-price d-flex" style="gap: 3rem">
                                 <p class="last-price">{{ __('home.old price') }}:
@@ -357,9 +411,11 @@
                                 @endforeach
                             </div>
 
+
                             <div class="">
                                 <input id="product_id" hidden value="{{$product->id}}">
                             </div>
+
 
                             <div class="count__wrapper count__wrapper--ml mt-3">
                                 <label for="qty">{{ __('home.quantity') }}</label>
@@ -367,6 +423,7 @@
                                        style="width: 55px"
                                        value="1">
                             </div>
+
 
                             <div class="purchase-info d-flex mt-3">
                                 <button type="button" class="btn btn-warning">
@@ -376,6 +433,7 @@
                                             class="fa fa-shopping-cart"></i>
                                     {{ __('home.buy now') }}
                                 </button>
+
 
                             </div>
                         </form>
@@ -392,7 +450,6 @@
                         <li class="col-sm-4 col-4 nav-item tabs-product-detail tabs-item"><a
                                     class="nav-link lead link-tabs w-100" role="tab" data-toggle="tab"
                                     href="#tabReview">{{ __('home.review') }}</a></li>
-
                     </ul>
                     <div class="tab-content mb-5" id="myTabContent">
                         <div class="description tab-pane active show" role="tabpanel" id="tabDescription">
@@ -403,7 +460,9 @@
                                 thể
                                 làm được, đã xuất hiện trên iPad Pro 12.9 inch Wifi (2020).
 
+
                                 Màn hình tuyệt đẹp, nhiều công nghệ tích hợp
+
 
                                 iPad Pro 12.9 inch 2020 có một thiết kế khá vuông vức với viền màn hình 4 cạnh không quá
                                 dày
@@ -411,14 +470,15 @@
                                 hài
                                 hòa và đẹp mắt hơn.
                             </p>
-
                             <div class="collapse" id="more">
                                 <p>
                                     Tổng thể chiếc máy có khối lượng chỉ 471 g và mỏng 5.9 mm so với kích thước 12.9
                                     inch
                                     thì điều đó cho thấy iPad Pro 12.9 inch 2020 rất mỏng nhẹ, gọn gàng.
 
+
                                     Trên tay kích thước iPad Pro 12.9 2020
+
 
                                     Thật khó lòng khi tìm ra khuyết điểm về màn hình của iPad Pro 12.9 inch 2020, với
                                     kích
@@ -426,9 +486,12 @@
                                     cùng
                                     sắc nét và không gian làm việc lớn.
 
+
                                     Xem thêm: Tìm hiểu về các loại độ phân giải màn hình
 
+
                                     kích thước màn hình iPad Pro 12.9 2020
+
 
                                     Máy sử dụng công nghệ màn hình Liquid Retina Display với các công nghệ hỗ trợ như
                                     Pro
@@ -436,11 +499,15 @@
                                     sống
                                     động.
 
+
                                     Xem thêm: Màn hình Retina là gì?
+
 
                                     màn hình hiển thị trên iPad Pro 12.9 2020
 
+
                                     Hiệu năng mạnh mẽ với chip CPU A12Z với 8 nhân đồ họa
+
 
                                     iPad Pro 12.9 inch 2020 được trang bị bộ vi xử lý Apple A12Z Bionic mạnh mẽ hơn
                                     người
@@ -448,28 +515,37 @@
                                     illustrator
                                     mượt mà và phản hồi nhanh chóng hơn.
 
+
                                     Cấu hình iPad Pro 2020
+
 
                                     Với việc có thể kết nối với bàn phím, chuột không dây và con trỏ chuột được làm mới,
                                     giúp người dùng thao tác và sử dụng một cách dễ dàng.
 
+
                                     iPad Pro 12.9 2020 kết nối bàn phím
+
 
                                     Hơn thế nữa, bộ vi xử lý A12Z với 8 nhân đồ hoạ thì máy có thể chiến hầu hết các tựa
                                     game hiện có trên thị trường như PUBG, Liên Quân, Asphalt 9,… với mức thiết lập đồ
                                     họa
                                     cao nhất với tốc độ khung hình ổn định trong suốt quá trình chơi.
 
+
                                     chơi game với iPad Pro 12.9 2020
+
 
                                     Bằng việc tích hợp sẵn bộ nhớ trong 128 GB giúp cho người dùng có nhiều không gian
                                     lưu
                                     trữ hơn, làm được nhiều việc hơn trên chiếc iPad Pro 12.9 inch 2020. Đây là mức dung
                                     lượng hoàn hảo cho tùy chọn cơ bản nhất của chiếc máy.
 
+
                                     Bộ nhớ trên iPad Pro 12.9 2020
 
+
                                     Cụm camera “Pro”, nâng tầm trải nghiệm AR
+
 
                                     Apple thật sự ưu ái khi tích hợp cho chiếc máy này với 2 camera sau, 1 camera chính
                                     12
@@ -477,7 +553,9 @@
                                     công
                                     nghệ TrueDepth. Giúp bạn hoàn toàn có thể chụp ra những bức ảnh ưng ý nhất.
 
+
                                     Cụm camera trên iPad Pro 12.9 2020
+
 
                                     Việc quay video, chụp ảnh và chỉnh sửa trực tiếp một cách chuyên nghiệp để gửi đi
                                     khách
@@ -485,11 +563,14 @@
                                     dùng
                                     iPad Pro 2020.
 
+
                                     Hơn thế nữa, iPad Pro 12.9 inch 2020 còn được tích hợp thêm cảm biến Lidar đo chiều
                                     sâu,
                                     giúp hỗ trợ những ứng dụng AR nhận diện bối cảnh một cách chính xác nhất.
 
+
                                     Lidar hỗ trợ AR trên iPad Pro 12.9 2020
+
 
                                     Cảm biến này cực kì hữu ích đặc biệt trong các lĩnh vực thiết kế, thi công bởi người
                                     dùng có thể “ướm” thử các mô hình 3D của thiết kế lên thực tế và quan sát nhiều góc
@@ -497,7 +578,6 @@
                                     một cách trực quan nhất bằng công nghệ thực tại ảo AR.
                                 </p>
                             </div>
-
                             <a href="#more" data-toggle="collapse" class="more-link text-center text-more-tabs"
                                id="more-link"
                                onclick="toggleReadMore()">{{ __('home.read more') }}</a>
@@ -531,6 +611,7 @@
                             </table>
                         </div>
 
+
                         <div class="tab-pane pt-4" role="tabpanel" id="tabReview">
                             <div class="card mb-4">
                                 <div class="card-body">
@@ -538,8 +619,7 @@
                                     <form method="post" action="{{route('create.evaluate')}}">
                                         @csrf
                                         <input type="text" class="form-control" id="product_id" name="product_id"
-                                               value="{{$product->id}}"
-                                               hidden/>
+                                               value="{{$product->id}}" hidden/>
                                         <div class="rating">
                                             <input type="radio" name="star_number" id="star1" value="1" hidden="">
                                             <label for="star1" onclick="starCheck(1)"><i id="icon-star-1"
@@ -557,12 +637,17 @@
                                             <label for="star5" onclick="starCheck(5)"><i id="icon-star-5"
                                                                                          class="fa fa-star"></i></label>
                                         </div>
+                                        <input id="input-star" value="0" hidden="">
+                                        <div id="text-message" class="text-danger d-none">Please select star rating
+                                        </div>
+
 
                                         <div class="form-group row">
                                             <label for=""
                                                    class="col-sm-12 col-form-label">{{ __('home.your name') }}</label>
                                             <div class="col-sm-12">
-                                                <input type="text" class="form-control" id="" name="username"
+                                                <input onclick="checkStar()" type="text" class="form-control" id=""
+                                                       name="username"
                                                        placeholder="{{ __('home.your name') }}" required/>
                                             </div>
                                         </div>
@@ -570,16 +655,17 @@
                                             <label for=""
                                                    class="col-sm-12 col-form-label">{{ __('home.your review') }}</label>
                                             <div class="col-sm-12">
-                                            <textarea class="form-control" id="" name="content"
-                                                      placeholder="{{ __('home.your review') }}"
-                                                      rows="3" required></textarea>
+                                                <textarea onclick="checkStar()" class="form-control" id="" name="content"
+                                                          placeholder="{{ __('home.your review') }}"
+                                                          rows="3" required></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <button class="btn btn-primary btn-16" type="submit">Submit</button>
+                                            <button id="btn-submit" class="btn btn-primary btn-16" type="submit">Submit</button>
                                         </div>
                                     </form>
                                 </div>
+
 
                             </div>
                             <div class="card">
@@ -611,8 +697,8 @@
                                                     <strong class="mr-2">{{ __('home.customer rating') }}: </strong>
                                                     @if($res->star_number == 1)
                                                         <span class="fa fa-stack">
-                                                       <i class="fa fa-star"></i>
-                                                    </span>
+<i class="fa fa-star"></i>
+</span>
                                                         <span class="fa fa-stack"><i
                                                                     class="fa fa-star-o"></i></span>
                                                         <span class="fa fa-stack"><i
@@ -624,11 +710,11 @@
                                                     @endif
                                                     @if($res->star_number == 2)
                                                         <span class="fa fa-stack">
-                                                       <i class="fa fa-star"></i>
-                                                    </span>
+<i class="fa fa-star"></i>
+</span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fa fa-star"></i>
-                                                    </span>
+<i class="fa fa-star"></i>
+</span>
                                                         <span class="fa fa-stack"><i
                                                                     class="fa fa-star-o"></i></span>
                                                         <span class="fa fa-stack"><i
@@ -638,14 +724,14 @@
                                                     @endif
                                                     @if($res->star_number == 3)
                                                         <span class="fa fa-stack">
-                                                       <i class="fa fa-star"></i>
-                                                    </span>
+<i class="fa fa-star"></i>
+</span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fa fa-star"></i>
-                                                    </span>
+<i class="fa fa-star"></i>
+</span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fa fa-star"></i>
-                                                    </span>
+<i class="fa fa-star"></i>
+</span>
                                                         <span class="fa fa-stack"><i
                                                                     class="fa fa-star-o"></i></span>
                                                         <span class="fa fa-stack"><i
@@ -653,36 +739,36 @@
                                                     @endif
                                                     @if($res->star_number == 4)
                                                         <span class="fa fa-stack">
-                                                       <i class="fa fa-star"></i>
-                                                    </span>
+<i class="fa fa-star"></i>
+</span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fa fa-star"></i>
-                                                    </span>
+<i class="fa fa-star"></i>
+</span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fa fa-star"></i>
-                                                    </span>
+<i class="fa fa-star"></i>
+</span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fa fa-star"></i>
-                                                    </span>
+<i class="fa fa-star"></i>
+</span>
                                                         <span class="fa fa-stack"><i
                                                                     class="fa fa-star-o"></i></span>
                                                     @endif
                                                     @if($res->star_number == 5)
                                                         <span class="fa fa-stack">
-                                                       <i class="fa fa-star"></i>
-                                                    </span>
+<i class="fa fa-star"></i>
+</span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fa fa-star"></i>
-                                                    </span>
+<i class="fa fa-star"></i>
+</span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fa fa-star"></i>
-                                                    </span>
+<i class="fa fa-star"></i>
+</span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fa fa-star"></i>
-                                                    </span>
+<i class="fa fa-star"></i>
+</span>
                                                         <span class="fa fa-stack">
-                                                       <i class="fa fa-star"></i>
-                                                    </span>
+<i class="fa fa-star"></i>
+</span>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -693,19 +779,20 @@
                             </div>
                         </div>
 
+
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="bg-white rounded">
                     <div class="purchase-info mb-5">
-                        {{--                        <div class="btn p-3 text-center text-uppercase text-white text-bold fw-bold btn-block"--}}
-                        {{--                             style="border-radius: 5px; background-color: red">--}}
-                        {{--                            {{ __('home.exchange old for new') }}--}}
-                        {{--                            <br>--}}
-                        {{--                            <span style="font-size: 1.25rem">{{ __('home.discount') }} 1.000.000đ</span>--}}
-                        {{--                        </div>--}}
-                        @if(count($arrayVouchers) > 0)
+                        {{-- <div class="btn p-3 text-center text-uppercase text-white text-bold fw-bold btn-block"--}}
+                        {{-- style="border-radius: 5px; background-color: red">--}}
+                        {{-- {{ __('home.exchange old for new') }}--}}
+                        {{-- <br>--}}
+                        {{-- <span style="font-size: 1.25rem">{{ __('home.discount') }} 1.000.000đ</span>--}}
+                        {{-- </div>--}}
+                        @if($arrayVouchers!=null)
                             <div class="btn p-3 text-center text-uppercase text-white text-bold fw-bold btn-block"
                                  style="border-radius: 5px; background-color: red"
                                  data-toggle="modal" data-target="#exampleModalCenter">
@@ -713,6 +800,7 @@
                                 <br>
                                 <span style="font-size: 1.25rem">Nhận ngay</span>
                             </div>
+
 
                             <div class="modal fade" id="exampleModalCenter"
                                  tabindex="-1" role="dialog"
@@ -745,11 +833,12 @@
                                                         <td>
                                                             @php
                                                                 $voucherItemOld = VoucherItem::where([
-                                                                    ['voucher_id', $itemVoucher->id],
-                                                                    ['customer_id', Auth::user()->id]])->first();
+                                                                ['voucher_id', $itemVoucher->id],
+                                                                ['customer_id', Auth::user()->id]])->first();
                                                             @endphp
                                                             @if($voucherItemOld)
-                                                                <a href="{{route('cart.index')}}" class="btn btn-success">
+                                                                <a href="{{route('cart.index')}}"
+                                                                   class="btn btn-success">
                                                                     Sử dụng ngay
                                                                 </a>
                                                             @else
@@ -758,6 +847,7 @@
                                                                     Nhận ngay
                                                                 </button>
                                                             @endif
+
 
                                                         </td>
                                                     </tr>
@@ -775,6 +865,7 @@
                             </div>
                         @endif
                     </div>
+
 
                     <div>
                         <div class="p-3 text-center text-uppercase text-white text-bold fw-bold"
@@ -832,6 +923,7 @@
                                 <div>
                                     <div class="list-items-ml-0 list-group-item list-group-item-action row random-color">
 
+
                                         <div class="d-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="40">
                                                 <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -844,7 +936,9 @@
                                     </div>
                                     <div class="border-bottom my-3"></div>
 
+
                                     <div class="list-items-ml-0 list-group-item list-group-item-action row random-color">
+
 
                                         <div class="d-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -858,7 +952,9 @@
                                     </div>
                                     <div class="border-bottom my-3"></div>
 
+
                                     <div class="list-items-ml-0 list-group-item list-group-item-action row random-color">
+
 
                                         <div class="d-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -872,7 +968,9 @@
                                     </div>
                                     <div class="border-bottom my-3"></div>
 
+
                                     <div class="list-items-ml-0 list-group-item list-group-item-action row random-color">
+
 
                                         <div class="d-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -885,7 +983,9 @@
                                     </div>
                                     <div class="border-bottom my-3"></div>
 
+
                                     <div class="list-items-ml-0 list-group-item list-group-item-action row random-color">
+
 
                                         <div class="d-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
@@ -896,6 +996,7 @@
                                             </h5>
                                         </div>
                                     </div>
+
 
                                 </div>
                             </div>
@@ -948,11 +1049,13 @@
                                         <div class="d-flex px-2 py-3 random-color text-center">
                                             <div class="">
 
+
                                                 <div class="d-flex">
                                                     <h5 class="">{{ __('home.super fast delivery') }}<br>
                                                     </h5>
                                                 </div>
                                             </div>
+
 
                                         </div>
                                     </div>
@@ -964,13 +1067,16 @@
             </div>
             <div class="col-md-12">
 
+
                 <div class="row" id="product-other">
                     @foreach($otherProduct as $product)
                         <div class="product-other mt-4 col-xl-3 col-md-4 col-sm-6 col-12 mb-3 mb-md-0">
                             <div class="card h-100">
 
+
                                 <img class="img" src="{{$product->thumbnail}}" alt="">
-                                <div class="card-body position-relative d-flex flex-column">
+                                <div class="card-body position-relative d-flex flex-column" >
+
 
                                     <h3 class="text-success">${{$product->price}}</h3>
                                     <div class="rating text-warning">
@@ -1088,6 +1194,7 @@
                         </div>
                     </div>
 
+
                 </div>
             </div>
         </div>
@@ -1124,9 +1231,11 @@
         }
     </script>
 
+
     <script>
         function checkProductReviews() {
             let product_id = document.getElementById('product_id').value;
+
 
             const arrayID = [];
             if (localStorage.getItem('productIDs') != null) {
@@ -1144,8 +1253,10 @@
             localStorage.setItem('productIDs', arrayID.toString());
         }
 
+
         checkProductReviews();
     </script>
+
 
     <script>
         function zoomImg(x) {
@@ -1167,8 +1278,21 @@
         function orderClick() {
             btnOrder = document.getElementById('btn-order-now');
             btnOrder.click();
-
         }
+
+        function checkStar() {
+            let btn = document.getElementById('btn-submit');
+            let input = document.getElementById('input-star');
+            let message = document.getElementById('text-message');
+            if (input.value == 0) {
+                message.classList.remove("d-none");
+                btn.disabled = true;
+            } else {
+                message.classList.add("d-none");
+                btn.disabled = false;
+            }
+        }
+
 
         function starCheck(value) {
             let star1 = document.getElementById('star1');
@@ -1176,31 +1300,37 @@
             let star3 = document.getElementById('star3');
             let star4 = document.getElementById('star4');
             let star5 = document.getElementById('star5');
-            //
+            let input = document.getElementById('input-star');
+//
             let icon1 = document.getElementById('icon-star-1');
             let icon2 = document.getElementById('icon-star-2');
             let icon3 = document.getElementById('icon-star-3');
             let icon4 = document.getElementById('icon-star-4');
             let icon5 = document.getElementById('icon-star-5');
 
+
             switch (value) {
                 case 1:
                     star1.checked = true;
+                    input.value = 1;
                     icon1.classList.add("checked");
                     break;
                 case 2:
                     star2.checked = true;
+                    input.value = 2;
                     icon1.classList.add("checked");
                     icon2.classList.add("checked");
                     break;
                 case 3:
                     star3.checked = true;
+                    input.value = 3;
                     icon1.classList.add("checked");
                     icon2.classList.add("checked");
                     icon3.classList.add("checked");
                     break;
                 case 4:
                     star4.checked = true;
+                    input.value = 4;
                     icon1.classList.add("checked");
                     icon2.classList.add("checked");
                     icon3.classList.add("checked");
@@ -1208,6 +1338,7 @@
                     break;
                 default:
                     star5.checked = true;
+                    input.value = 5;
                     icon1.classList.add("checked");
                     icon2.classList.add("checked");
                     icon3.classList.add("checked");
@@ -1215,6 +1346,7 @@
                     icon5.classList.add("checked");
                     break;
             }
+            checkStar();
         }
 
         function toggleReadMore() {
@@ -1222,6 +1354,7 @@
             var moreContent = document.getElementById("more");
             var readMore = '{{ __("home.read more") }}';
             var readLess = '{{ __("home.read less") }}';
+
 
             if (moreContent.classList.contains("show")) {
                 moreLink.textContent = readMore;
@@ -1258,7 +1391,9 @@
                 }
             }
 
+
         }
+
 
         var y = window.matchMedia("(max-width: 991px)")
         responsiveTable(y);
@@ -1267,31 +1402,38 @@
 
         var elements = document.getElementsByClassName('random-color');
 
+
         // for (var i = 0; i < elements.length; i++) {
-        //     let random_color = Math.floor(Math.random()*16777215).toString(16);
-        //     elements[i].style.backgroundColor = '#' + random_color;
+        // let random_color = Math.floor(Math.random()*16777215).toString(16);
+        // elements[i].style.backgroundColor = '#' + random_color;
         // }
+
 
         for (var i = 0; i < elements.length; i++) {
             let random_color = getBrightRandomColor();
             elements[i].style.backgroundColor = '#' + random_color;
         }
 
+
         // chỉ lấy màu sáng
         function getBrightRandomColor() {
             var minBrightness = 128; // Độ sáng tối thiểu
             var maxBrightness = 255; // Độ sáng tối đa
 
+
             var color;
             var brightness;
+
 
             do {
                 color = Math.floor(Math.random() * 16777215).toString(16);
                 brightness = getBrightness(color);
             } while (brightness < minBrightness || brightness > maxBrightness);
 
+
             return color;
         }
+
 
         function getBrightness(color) {
             var hexColor = color.replace('#', '');
@@ -1299,9 +1441,11 @@
             var green = parseInt(hexColor.substr(2, 2), 16);
             var blue = parseInt(hexColor.substr(4, 2), 16);
 
-            // Áp dụng công thức để tính độ sáng
+
+// Áp dụng công thức để tính độ sáng
             var brightness = (red * 299 + green * 587 + blue * 114) / 1000;
             return brightness;
         }
     </script>
 @endsection
+
