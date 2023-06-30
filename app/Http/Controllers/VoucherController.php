@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\Voucher;
 use App\Models\VoucherItem;
 use App\Services\Utils;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class VoucherController extends Controller
@@ -16,15 +18,24 @@ class VoucherController extends Controller
     public function getListSeller(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $vouchers = Voucher::where([['user_id', Auth::user()->id], ['status', '!=', VoucherStatus::DELETED]])->get();
+        $vouchers = Voucher::where([
+            ['user_id', Auth::user()->id],
+            ['status', '!=', VoucherStatus::DELETED]
+        ])->get();
+        foreach ($vouchers as $voucher) {
+            if ($voucher->endDate < Carbon::now()->addHours(7)) {
+                $voucher->status = VoucherStatus::INACTIVE;
+                $voucher->save();
+            }
+        }
         return view('backend/voucher/list', compact('vouchers'));
     }
 
     public function processCreate(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $categories = Category::all();
-        return view('backend/voucher/create', compact('categories'));
+        $products = Product::where('user_id', Auth::user()->id)->get();
+        return view('backend/voucher/create', compact('products'));
     }
 
     public function create(Request $request)
@@ -74,8 +85,8 @@ class VoucherController extends Controller
         if ($voucher->status == VoucherStatus::DELETED) {
             return back();
         }
-        $categories = Category::all();
-        return view('backend/voucher/detail', compact('categories', 'voucher'));
+        $products = Product::where('user_id', Auth::user()->id)->get();
+        return view('backend/voucher/detail', compact('products', 'voucher'));
     }
 
     public function update(Request $request, $id)
@@ -150,6 +161,13 @@ class VoucherController extends Controller
                 'quantity' => 1
             ];
             $voucherItem = VoucherItem::create($item);
+            $voucher = Voucher::find($voucherID);
+            $voucher->quantity = $voucher->quantity - 1;
+            $voucher->save();
+            if ($voucher->quantity == 0 || $voucher->endDate < Carbon::now()->addHours(7)) {
+                $voucher->status = VoucherStatus::INACTIVE;
+                $voucher->save();
+            }
             if ($voucherItem) {
                 return $voucherItem;
             }
@@ -161,10 +179,10 @@ class VoucherController extends Controller
 
     private function getArrayIds(Request $request)
     {
-        $categories = Category::get()->toTree();
+        $products = Product::where('user_id', Auth::user()->id)->get();
         $listCategoryName[] = null;
         $arrayIds = null;
-        foreach ($categories as $category) {
+        foreach ($products as $category) {
             $name = 'category-' . $category->id;
             $listCategoryName[] = $name;
         }

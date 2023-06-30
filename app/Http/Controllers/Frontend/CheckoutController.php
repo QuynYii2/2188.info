@@ -60,7 +60,7 @@ class CheckoutController extends Controller
         return $realTotalPrice;
     }
 
-    private function checkout(Request $request, $status, $orderMethod, $name, $email, $phone, $address)
+    private function checkout(Request $request, $status, $orderMethod, $name, $email, $phone, $address, $idVoucher)
     {
         $carts = Cart::where([
             ['user_id', '=', Auth::user()->id],
@@ -106,12 +106,19 @@ class CheckoutController extends Controller
             OrderItem::create($item);
         }
 
+        $this->deleteVoucher($idVoucher);
+
         foreach ($carts as $cart) {
             $cart->status = CartStatus::ORDERED;
             $cart->save();
         }
 
         return $order;
+    }
+
+    private function deleteVoucher($id)
+    {
+        VoucherItem::where([['voucher_id', $id], ['user_id', Auth::user()->id]])->delete();
     }
 
     private function notifiCreate()
@@ -131,11 +138,12 @@ class CheckoutController extends Controller
     public function checkoutByImme(Request $request)
     {
         $status = OrderStatus::WAIT_PAYMENT;
+        $idVoucher = $request->input('voucherID');
         $name = $request->input('fullname');
         $email = $request->input('email');
         $phone = $request->input('phone');
         $address = $request->input('address');
-        $this->checkout($request, $status, OrderMethod::IMMEDIATE, $name, $email, $phone, $address);
+        $this->checkout($request, $status, OrderMethod::IMMEDIATE, $name, $email, $phone, $address, $idVoucher);
         alert()->success('Success', 'Đặt hàng thành công');
         return redirect()->route('order.show');
     }
@@ -143,7 +151,7 @@ class CheckoutController extends Controller
     public function checkoutByCoin(Request $request)
     {
         $status = OrderStatus::WAIT_PAYMENT;
-        $realTotalPrice = $this->realTotal();
+        $realTotalPrice = $request->input('priceID');
         $coin = Coin::where([['user_id', Auth::user()->id], ['status', CoinStatus::ACTIVE]])->first();
         $realTotalPrice9 = $realTotalPrice * 9;
         if ($coin != null) {
@@ -154,12 +162,12 @@ class CheckoutController extends Controller
                 $this->notifiCreate();
 
                 $status = OrderStatus::PROCESSING;
-
+                $idVoucher = $request->input('voucherID');
                 $name = $request->input('fullname');
                 $email = $request->input('email');
                 $phone = $request->input('phone');
                 $address = $request->input('address');
-                $order = $this->checkout($request, $status, OrderMethod::SHOPPING_MALL_COIN, $name, $email, $phone, $address);
+                $order = $this->checkout($request, $status, OrderMethod::SHOPPING_MALL_COIN, $name, $email, $phone, $address, $idVoucher);
                 return redirect()->route('order.show')->with('success', 'Transaction complete.');
             }
         }
@@ -168,16 +176,18 @@ class CheckoutController extends Controller
 
     public function checkoutByPaypal(Request $request)
     {
+        $idVoucher = $request->input('voucherID');
         $name = $request->input('fullname');
         $email = $request->input('email');
         $phone = $request->input('phone');
         $address = $request->input('address');
-        $realTotalPrice = $this->realTotal();
+        $realTotalPrice = $request->input('priceID');
         $response = (new PaypalPaymentController())->paypalTotal($request, $realTotalPrice, route('checkout.success.paypal', [
             'name' => $name,
             'email' => $email,
             'phone' => $phone,
-            'address' => $address]));
+            'address' => $address,
+            'idVoucher' => $idVoucher]));
 
         if (isset($response['id']) && $response['id'] != null) {
             // redirect to approve href
@@ -198,7 +208,7 @@ class CheckoutController extends Controller
         }
     }
 
-    public function checkoutSuccess(Request $request, $name, $email, $phone, $address)
+    public function checkoutSuccess(Request $request, $name, $email, $phone, $address, $idVoucher)
     {
         $status = OrderStatus::WAIT_PAYMENT;
         $provider = new PayPalClient;
@@ -209,7 +219,7 @@ class CheckoutController extends Controller
         if (isset($response['status']) && $response['status'] == 'COMPLETED') {
             $status = OrderStatus::PROCESSING;
 
-            $order = $this->checkout($request, $status, OrderMethod::ElectronicWallet, $name, $email, $phone, $address);
+            $order = $this->checkout($request, $status, OrderMethod::ElectronicWallet, $name, $email, $phone, $address, $idVoucher);
 
             $this->notifiCreate();
 
