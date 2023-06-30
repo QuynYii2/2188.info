@@ -12,6 +12,7 @@ use App\Models\Permission;
 use App\Models\ProductInterested;
 use App\Models\TimeLevelTable;
 use App\Models\User;
+use App\Models\VoucherItem;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -335,5 +336,9 @@ class UserController extends Controller
 
     }
 
-
+    public function myVoucher()
+    {
+        $voucherItems = VoucherItem::where('customer_id', Auth::user()->id)->get();
+        return view('frontend.pages.profile.my-voucher', compact('voucherItems'));
+    }
 }

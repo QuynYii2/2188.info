@@ -115,13 +115,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/buy-coin', [CoinController::class, 'store'])->name('buy.coin.create');
 //    Route::get('/buy-coin-success?price={price}&quantity={quantity}', [\App\Http\Controllers\CoinController::class, 'successPayment'])->name('buy.coin.success');
     Route::get('/buy-coin-success/{price}/{quantity}', [CoinController::class, 'successPayment'])->name('buy.coin.success');
-
     // thông tin cá nhân
-
     Route::post('change-password', [UserController::class, 'changePassword'])->name('user.changePassword');
     Route::post('change-email', [UserController::class, 'changeEmail'])->name('user.changeEmail');
     Route::post('change-phone-number', [UserController::class, 'changePhoneNumber'])->name('user.changePhoneNumber');
     Route::post('update-info', [UserController::class, 'updateInfo'])->name('user.updateInfo');
+    //
+    Route::get('/my-vouchers', [UserController::class, 'myVoucher'])->name('my.voucher.show');
 });
 
 
