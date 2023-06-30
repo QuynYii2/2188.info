@@ -12,7 +12,7 @@
     border: 1px solid rgba(0,0,0,.26);
 }
 .title{
-    font-size: 30px;
+    font-size: 35px;
 }
 
 .logo{
@@ -31,4 +31,11 @@
 }
 
 .table td{
+}
+
+a{
+    color: black;
+}
+a:focus {
+    color: black;
 }

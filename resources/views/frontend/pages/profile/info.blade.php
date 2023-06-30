@@ -186,8 +186,7 @@
                         <label for="day" class="col-sm-3 col-form-label col-12"></label>
 
                         <div class="col-md-9 col-12">
-                            <button class="btn btn-outline-primary -align-center"
-                                    type="submit">{{ __('home.save changes') }}</button>
+                            <button class="btn btn-outline-primary align-center" type="submit">{{ __('home.save changes') }}</button>
                         </div>
                     </div>
 

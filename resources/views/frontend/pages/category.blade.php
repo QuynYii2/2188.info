@@ -107,8 +107,6 @@
 
 
 
-
-
     .tabs-product-detail{
         background-color: #fff;!important;
     }
@@ -212,6 +210,132 @@
     }
     .price-range-slider .range-bar .ui-slider-handle + span {
         background: #06b9c0;
+    }
+
+
+    ::selection {
+        color: #fff;
+        background: #17a2b8;
+    }
+    .sub-items .wrapper {
+        width: 400px;
+        background: #fff;
+        border-radius: 10px;
+        padding: 25px;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+    }
+    header h2 {
+        font-size: 24px;
+        font-weight: 600;
+    }
+    header p {
+        margin-top: 5px;
+        font-size: 16px;
+    }
+    .price-input {
+        width: 100%;
+        display: flex;
+        margin-bottom: 20px;
+    }
+    .price-input .field {
+        display: flex;
+        width: 100%;
+        height: 35px;
+        align-items: center;
+    }
+    .field input {
+        width: 100%;
+        height: 100%;
+        outline: none;
+        font-size: 19px;
+        margin-left: 12px;
+        border-radius: 5px;
+        text-align: center;
+        border: 1px solid #999;
+        -moz-appearance: textfield;
+    }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+    .price-input .separator {
+        width: 130px;
+        display: flex;
+        font-size: 19px;
+        align-items: center;
+        justify-content: center;
+    }
+    .slider {
+        height: 5px;
+        position: relative;
+        background: #ddd;
+        border-radius: 5px;
+    }
+    .slider .progress {
+        height: 100%;
+        left: 25%;
+        right: 25%;
+        position: absolute;
+        border-radius: 5px;
+        background: #17a2b8;
+    }
+    .range-input {
+        position: relative;
+    }
+    .range-input input {
+        position: absolute;
+        width: 100%;
+        height: 5px;
+        top: -5px;
+        background: none;
+        pointer-events: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+        height: 17px;
+        width: 17px;
+        border-radius: 50%;
+        background: #17a2b8;
+        pointer-events: auto;
+        -webkit-appearance: none;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    }
+    input[type="range"]::-moz-range-thumb {
+        height: 17px;
+        width: 17px;
+        border: none;
+        border-radius: 50%;
+        background: #17a2b8;
+        pointer-events: auto;
+        -moz-appearance: none;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Support */
+    .support-box {
+        top: 2rem;
+        position: relative;
+        bottom: 0;
+        text-align: center;
+        display: block;
+    }
+    .b-btn {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .b-btn.paypal i {
+        color: blue;
+    }
+    .b-btn:hover {
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .b-btn i {
+        font-size: 20px;
+        color: yellow;
+        margin-top: 2rem;
     }
 
 </style>
@@ -352,19 +476,17 @@
         <div class="container body-main px-0">
             <div class="row">
                 <aside class="col-md-4">
-
                     <div class="card mb-5">
                         <div class='wrapper'>
                             <ul class='items'>
                                 <li>
                                     <a href='#'>{{ __('home.product type') }}</a>
-
                                     <ul class='sub-items'>
-                                        <form class="p-3">
+                                        <form class="p-2">
                                             <div class="input-group">
                                                 <input type="text" class="form-control" placeholder="{{ __('home.search') }}">
                                                 <div class="input-group-append">
-                                                    <button class="btn btn-light" type="button"><i class="fa fa-search"></i>
+                                                    <button style="border: 1px solid #ced4da" class="btn btn-light" type="button"><i class="fa fa-search"></i>
                                                     </button>
                                                 </div>
                                             </div>
@@ -375,28 +497,28 @@
                                         @foreach($listAtt as $att)
                                             <li>
                                                 <input id="check{{ $att->id }}" type="checkbox" />
-                                                <label for="check{{ $att->id }}">{{ $att->name }}</label>
+                                                <label style="text-indent: 0px" for="check{{ $att->id }}">{{ $att->name }}</label>
                                             </li>
                                         @endforeach
                                         <li>
                                             <input id="box21" type="checkbox" />
-                                            <label for="box21">{{ __('home.people') }}</label>
+                                            <label style="text-indent: 0px" for="box21">{{ __('home.people') }}</label>
                                         </li>
                                         <li>
                                             <input id="box22" type="checkbox" />
-                                            <label for="box22">{{ __('home.watches') }}</label>
+                                            <label style="text-indent: 0px" for="box22">{{ __('home.watches') }}</label>
                                         </li>
                                         <li>
                                             <input id="box23" type="checkbox" />
-                                            <label for="box23">{{ __('home.cinema') }}</label>
+                                            <label style="text-indent: 0px" for="box23">{{ __('home.cinema') }}</label>
                                         </li>
                                         <li>
                                             <input id="box24" type="checkbox" />
-                                            <label for="box24">{{ __('home.clothes') }}</label>
+                                            <label style="text-indent: 0px" for="box24">{{ __('home.clothes') }}</label>
                                         </li>
                                         <li>
                                             <input id="box25" type="checkbox" />
-                                            <label for="box25">{{ __('home.home items') }}</label>
+                                            <label style="text-indent: 0px" for="box25">{{ __('home.home items') }}</label>
                                         </li>
                                     </ul>
                                 </li>
@@ -405,39 +527,51 @@
                                     <ul class='sub-items'>
                                         <li>
                                             <input id="box1" type="checkbox" />
-                                            <label for="box1">Mercedes</label>
+                                            <label style="text-indent: 0px" for="box1">Mercedes</label>
                                         </li>
                                         <li>
                                             <input id="box2" type="checkbox" />
-                                            <label for="box2">Toyota</label>
+                                            <label style="text-indent: 0px" for="box2">Toyota</label>
                                         </li>
                                         <li>
                                             <input id="box3" type="checkbox" />
-                                            <label for="box3">Mitsubishi</label>
+                                            <label style="text-indent: 0px" for="box3">Mitsubishi</label>
                                         </li>
                                         <li>
                                             <input id="box4" type="checkbox" />
-                                            <label for="box4">Honda</label>
+                                            <label style="text-indent: 0px" for="box4">Honda</label>
                                         </li>
                                         <li>
                                             <input id="box5" type="checkbox" />
-                                            <label for="box5">Nissan</label>
+                                            <label style="text-indent: 0px" for="box5">Nissan</label>
                                         </li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a href='#'>{{ __('home.price range') }}</a>
                                     <ul class='sub-items'>
-                                        <li class="px-3">
-                                            <div class="price-range-slider">
-
-                                                <p class="range-value">
-                                                    <input type="text" id="amount" readonly>
-                                                </p>
-                                                <div id="slider-range" class="range-bar"></div>
-
+                                        <div class="d-flex">
+                                            <div class="wrapper">
+                                                <div class="price-input">
+                                                    <div class="field">
+                                                        <span style="font-size: 16px">Min</span>
+                                                        <input type="number" class="input-min" value="2500">
+                                                    </div>
+                                                    <div class="separator">-</div>
+                                                    <div class="field">
+                                                        <span style="font-size: 16px">Max</span>
+                                                        <input type="number" class="input-max" value="7500">
+                                                    </div>
+                                                </div>
+                                                <div class="slider">
+                                                    <div class="progress"></div>
+                                                </div>
+                                                <div class="range-input">
+                                                    <input type="range" class="range-min" min="0" max="10000" value="2500" step="100">
+                                                    <input type="range" class="range-max" min="0" max="10000" value="7500" step="100">
+                                                </div>
                                             </div>
-                                        </li>
+                                        </div>
                                     </ul>
                                 </li>
                                 <li>
@@ -445,19 +579,19 @@
                                     <ul class='sub-items'>
                                         <li>
                                             <input id="box10" type="checkbox" />
-                                            <label for="box10">XS</label>
+                                            <label style="text-indent: 0px" for="box10">XS</label>
                                         </li>
                                         <li>
                                             <input id="box11" type="checkbox" />
-                                            <label for="box11">SM</label>
+                                            <label style="text-indent: 0px" for="box11">SM</label>
                                         </li>
                                         <li>
                                             <input id="box12" type="checkbox" />
-                                            <label for="box12">LG</label>
+                                            <label style="text-indent: 0px" for="box12">LG</label>
                                         </li>
                                         <li>
                                             <input id="box13" type="checkbox" />
-                                            <label for="box13">XXL</label>
+                                            <label style="text-indent: 0px" for="box13">XXL</label>
                                         </li>
                                     </ul>
                                 </li>
@@ -582,6 +716,48 @@
             });
             $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
                 " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+        });
+
+        const rangeInput = document.querySelectorAll(".range-input input"),
+            priceInput = document.querySelectorAll(".price-input input"),
+            range = document.querySelector(".slider .progress");
+        let priceGap = 1000;
+
+        priceInput.forEach((input) => {
+            input.addEventListener("input", (e) => {
+                let minPrice = parseInt(priceInput[0].value),
+                    maxPrice = parseInt(priceInput[1].value);
+
+                if (maxPrice - minPrice >= priceGap && maxPrice <= rangeInput[1].max) {
+                    if (e.target.className === "input-min") {
+                        rangeInput[0].value = minPrice;
+                        range.style.left = (minPrice / rangeInput[0].max) * 100 + "%";
+                    } else {
+                        rangeInput[1].value = maxPrice;
+                        range.style.right = 100 - (maxPrice / rangeInput[1].max) * 100 + "%";
+                    }
+                }
+            });
+        });
+
+        rangeInput.forEach((input) => {
+            input.addEventListener("input", (e) => {
+                let minVal = parseInt(rangeInput[0].value),
+                    maxVal = parseInt(rangeInput[1].value);
+
+                if (maxVal - minVal < priceGap) {
+                    if (e.target.className === "range-min") {
+                        rangeInput[0].value = maxVal - priceGap;
+                    } else {
+                        rangeInput[1].value = minVal + priceGap;
+                    }
+                } else {
+                    priceInput[0].value = minVal;
+                    priceInput[1].value = maxVal;
+                    range.style.left = (minVal / rangeInput[0].max) * 100 + "%";
+                    range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+                }
+            });
         });
 
     </script>

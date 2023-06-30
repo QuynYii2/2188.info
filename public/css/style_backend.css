@@ -9,11 +9,10 @@
 li{
     list-style: none;
 }
-
-.card-header{
-    margin-top: 22px;
+.content{
+    margin-top: 45px;
+    margin-left: 10px;
 }
-
 .header_back{
     position: fixed;
     top: 0;

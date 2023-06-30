@@ -5,7 +5,7 @@
         color: #FFFFFF;
     }
     .wrapper {
-        width: 16%;
+        width: 17%;
         height: 100%;
         overflow-y: auto;
         background-color: #000000;
@@ -100,7 +100,7 @@
             <ul class='items'>
                 <li>
                     <a href='#'>Sản phẩm</a>
-                    <ul class='sub-items'>
+                    <ul class='sub-items pl-3'>
                         <li><a href="/products">Danh sách sản phẩm</a>
                         </li>
                         <li><a href="/products/create">Thêm mới sản phẩm</a>
@@ -111,7 +111,7 @@
                 </li>
                 <li>
                     <a href="#!">Thuộc tính sản phẩm</a>
-                    <ul class='sub-items'>
+                    <ul class='sub-items pl-3'>
 
                         <li><a href="{{route('attributes.index')}}">Danh sách thuộc tính</a>
                         </li>
@@ -125,7 +125,7 @@
                 </li>
                 <li>
                     <a href='#'>Đơn hàng</a>
-                    <ul class='sub-items'>
+                    <ul class='sub-items pl-3'>
                         <li><a href="#!">Basic Tables</a>
                         </li>
 
@@ -135,7 +135,7 @@
                 </li>
                 <li>
                     <a href="#!">Quản lý kho</a>
-                    <ul class='sub-items'>
+                    <ul class='sub-items pl-3'>
                         <li>
                             <a href='#'>Lorem ipsum dolor sit amet.</a>
                         </li>
@@ -146,7 +146,7 @@
                 </li>
                 <li>
                     <a href='#'>Quản lý user</a>
-                    <ul class='sub-items'>
+                    <ul class='sub-items pl-3'>
                         <li>
                             <a href='#'>Lorem ipsum dolor sit amet.</a>
                         </li>
@@ -158,7 +158,7 @@
 
                 <li>
                     <a href="#!"><span>Thống kê</span></a>
-                    <ul class='sub-items'>
+                    <ul class='sub-items pl-3'>
                         <li><a href="#!">Chartjs</a>
                         </li>
                         <li><a href="#!">Morris</a>
@@ -177,7 +177,7 @@
                 </li>
                 <li>
                     <a href="#!"><span>Quản lý bình luận</span></a>
-                    <ul class='sub-items'>
+                    <ul class='sub-items pl-3'>
                         <li><a href="{{route('seller.evaluates.index')}}">List Evaluate</a></li>
                     </ul>
                 </li>

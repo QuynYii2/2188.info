@@ -25,7 +25,7 @@
                 </div>
             @endif
 
-            <div class="col-12 col-md-6 border-right mt-2 rm-pd-on-mobile">
+            <div class="col-12 col-md-7 border-right mt-2 rm-pd-on-mobile">
                 <div class="form-group">
                     <div class="name">Tên sản phẩm</div>
                     <input type="text" class="form-control" name="name" id="name" placeholder="Nhập tên sản phẩm" required>
@@ -76,7 +76,7 @@
                     </label>
                 </div>
             </div>
-            <div class="col-12 col-md-6 mt-2 rm-pd-on-mobile">
+            <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
                 <div class="form-group" id="cat-parameter">
                     <div for="category" class="col-sm-12 control-label name">Chuyên mục:</div>
                     <div class="col-sm-12 custom-scrollbar" style="height: 200px;overflow-y: auto">
