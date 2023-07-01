@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Enums\AttributeProductStatus;
 use App\Enums\EvaluateProductStatus;
+use App\Enums\PromotionStatus;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\EvaluateProduct;
 use App\Models\Product;
 use App\Models\ProductViewed;
+use App\Models\Promotion;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -51,6 +53,18 @@ class ProductController extends Controller
             }
         }
 
+        $promotions = Promotion::where([['status', PromotionStatus::ACTIVE], ['user_id', $product->user_id]])->get();
+        $arrayPromotions = null;
+        foreach ($promotions as $promotion) {
+            $listIds = $promotion->apply;
+            $arrayID = explode(",", $listIds);
+            for ($i = 0; $i < count($arrayID); $i++) {
+                if ($arrayID[$i] == $product->id) {
+                    $arrayPromotions[] = $promotion;
+                }
+            }
+        }
+
         $attributes = DB::table('product_attribute')->where([['product_id', $product->id], ['status', AttributeProductStatus::ACTIVE]])->get();
 
         return view('frontend/pages/detail-product', [
@@ -58,7 +72,8 @@ class ProductController extends Controller
             'product' => $product,
             'otherProduct' => $otherProduct,
             'attributes' => $attributes,
-            'arrayVouchers' => $arrayVouchers
+            'arrayVouchers' => $arrayVouchers,
+            'arrayPromotions' => $arrayPromotions
         ]);
     }
 

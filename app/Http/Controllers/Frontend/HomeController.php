@@ -4,10 +4,15 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Enums\CartStatus;
 use App\Enums\NotificationStatus;
+use App\Enums\PromotionStatus;
+use App\Enums\VoucherStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Notification;
+use App\Models\Promotion;
+use App\Models\Voucher;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Libraries\GeoIP;
 use App\Models\Product;
@@ -64,6 +69,31 @@ class HomeController extends Controller
         $productByCn = Product::where('location', 'cn')->limit(10)->get();
 
         $productByLocal5 = Product::all()->take(5);
+
+        $vouchers = Voucher::where([
+            ['status', '!=', VoucherStatus::DELETED],
+            ['endDate', '<', Carbon::now()->addHours(7)]
+        ])->update(['status' => VoucherStatus::INACTIVE]);
+
+        $vouchers = Voucher::where([
+            ['status', '!=', VoucherStatus::DELETED],
+            ['quantity', 0]
+        ])->update(['status' => VoucherStatus::INACTIVE]);
+
+        $vouchers = Voucher::where([
+            ['status', '!=', VoucherStatus::DELETED],
+            ['startDate', '>=', Carbon::now()->addHours(7)]
+        ])->update(['status' => VoucherStatus::ACTIVE]);
+
+        $promotion = Promotion::where([
+            ['status', PromotionStatus::ACTIVE],
+            ['endDate', '<', Carbon::now()->addHours(7)]
+        ])->update(['status' => PromotionStatus::INACTIVE]);
+
+        $promotion = DB::table('promotions')->where([
+            ['status', '!=', PromotionStatus::DELETED],
+            ['startDate', '<', Carbon::now()->addHours(7)]
+        ])->update(['status' => PromotionStatus::ACTIVE]);
 
         return view('frontend/index', [
             'productByLocal' => $productByLocal,
