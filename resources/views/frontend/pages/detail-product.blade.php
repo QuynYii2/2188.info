@@ -277,8 +277,6 @@
                                      alt="image" width="360px" height="250px" data-toggle="modal"
                                      data-target="#seeImageProduct">
                                 <input id="img-rollback" value="{{$product->thumbnail}}" hidden="" disabled>
-
-
                                 <div class="modal fade" id="seeImageProduct" tabIndex="-1" role="dialog"
                                      aria-labelledby="editModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -297,8 +295,6 @@
                                                              alt="">
                                                     </div>
                                                     <div class="col-md-2 img-second">
-
-
                                                         <img class="img mt-2 img-focus" onclick="zoomImgModal(this)"
                                                              src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
                                                         <img class="img mt-2 img-focus" onclick="zoomImgModal(this)"
@@ -331,16 +327,6 @@
                             </div>
                         </div>
                         <div class="img-select d-flex flex-row bd-highlight mb-2 mt-2 ">
-                            {{-- <div class="product-slider owl-carousel">--}}
-                            {{-- @foreach(explode(",", $product->gallery) as $gallery)--}}
-
-
-                            {{-- <div class="img-item">--}}
-                            {{-- <img class="img img-focus" onclick="zoomImg(this)"--}}
-                            {{-- src="{{ asset('storage/' . $gallery) }}"--}}
-                            {{-- alt="shoe image" width="100">--}}
-                            {{-- </div>--}}
-                            {{-- @endforeach--}}
                             <div class="img-item">
                                 <img class="img img-focus" onclick="zoomImg(this)"
                                      src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg"
@@ -361,14 +347,9 @@
                                      src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_2.jpg"
                                      alt="shoe image">
                             </div>
-                            {{-- </div>--}}
-
-
                         </div>
                     </div>
                     <div class="product-content col-md-12 py-1" style="z-index: 88;">
-
-
                         <form action="{{ route('cart.add', $product) }}" method="POST">
                             @csrf
                             <h2 class="product-title">{{$product->name}}</h2>
@@ -381,8 +362,6 @@
                                 <i class="fa fa-star-half-o"></i>
                                 <span>4.7(21)</span>
                             </div>
-
-
                             <div class="product-price d-flex" style="gap: 3rem">
                                 <p class="last-price">{{ __('home.old price') }}:
                                     <span>${{$product->price + ($product->price*5/100)}}</span></p>
@@ -410,21 +389,15 @@
                                     </div>
                                 @endforeach
                             </div>
-
-
                             <div class="">
                                 <input id="product_id" hidden value="{{$product->id}}">
                             </div>
-
-
                             <div class="count__wrapper count__wrapper--ml mt-3">
                                 <label for="qty">{{ __('home.quantity') }}</label>
                                 <input class="product-qty input" type="number" name="quantity" min="1"
                                        style="width: 55px"
                                        value="1">
                             </div>
-
-
                             <div class="purchase-info d-flex mt-3">
                                 <button type="button" class="btn btn-warning">
                                     {{ __('home.installment by card') }}
@@ -433,8 +406,6 @@
                                             class="fa fa-shopping-cart"></i>
                                     {{ __('home.buy now') }}
                                 </button>
-
-
                             </div>
                         </form>
                     </div>
@@ -459,11 +430,7 @@
                                 của một người sáng tạo chuyên nghiệp. Điều khó có một thế hệ máy tính bảng nào khác có
                                 thể
                                 làm được, đã xuất hiện trên iPad Pro 12.9 inch Wifi (2020).
-
-
                                 Màn hình tuyệt đẹp, nhiều công nghệ tích hợp
-
-
                                 iPad Pro 12.9 inch 2020 có một thiết kế khá vuông vức với viền màn hình 4 cạnh không quá
                                 dày
                                 và đều nhau, giúp cho trải nghiệm cầm nắm dễ dàng, giúp cho tổng thể mặt trước của iPad
@@ -475,103 +442,57 @@
                                     Tổng thể chiếc máy có khối lượng chỉ 471 g và mỏng 5.9 mm so với kích thước 12.9
                                     inch
                                     thì điều đó cho thấy iPad Pro 12.9 inch 2020 rất mỏng nhẹ, gọn gàng.
-
-
                                     Trên tay kích thước iPad Pro 12.9 2020
-
-
                                     Thật khó lòng khi tìm ra khuyết điểm về màn hình của iPad Pro 12.9 inch 2020, với
                                     kích
                                     thước 12.9 inch cùng với độ phân giải 2048 x 2732 pixels giúp cho máy hiển thị vô
                                     cùng
                                     sắc nét và không gian làm việc lớn.
-
-
                                     Xem thêm: Tìm hiểu về các loại độ phân giải màn hình
-
-
                                     kích thước màn hình iPad Pro 12.9 2020
-
-
                                     Máy sử dụng công nghệ màn hình Liquid Retina Display với các công nghệ hỗ trợ như
                                     Pro
                                     Motion và True Tone, giúp màu sắc được thể hiện một cách tự nhiên, trung thực và
                                     sống
                                     động.
-
-
                                     Xem thêm: Màn hình Retina là gì?
-
-
                                     màn hình hiển thị trên iPad Pro 12.9 2020
-
-
                                     Hiệu năng mạnh mẽ với chip CPU A12Z với 8 nhân đồ họa
-
-
                                     iPad Pro 12.9 inch 2020 được trang bị bộ vi xử lý Apple A12Z Bionic mạnh mẽ hơn
                                     người
                                     tiền nhiệm, giúp cho thao tác sử dụng những phần mềm đồ họa như Photoshop,
                                     illustrator
                                     mượt mà và phản hồi nhanh chóng hơn.
-
-
                                     Cấu hình iPad Pro 2020
-
-
                                     Với việc có thể kết nối với bàn phím, chuột không dây và con trỏ chuột được làm mới,
                                     giúp người dùng thao tác và sử dụng một cách dễ dàng.
-
-
                                     iPad Pro 12.9 2020 kết nối bàn phím
-
-
                                     Hơn thế nữa, bộ vi xử lý A12Z với 8 nhân đồ hoạ thì máy có thể chiến hầu hết các tựa
                                     game hiện có trên thị trường như PUBG, Liên Quân, Asphalt 9,… với mức thiết lập đồ
                                     họa
                                     cao nhất với tốc độ khung hình ổn định trong suốt quá trình chơi.
-
-
                                     chơi game với iPad Pro 12.9 2020
-
-
                                     Bằng việc tích hợp sẵn bộ nhớ trong 128 GB giúp cho người dùng có nhiều không gian
                                     lưu
                                     trữ hơn, làm được nhiều việc hơn trên chiếc iPad Pro 12.9 inch 2020. Đây là mức dung
                                     lượng hoàn hảo cho tùy chọn cơ bản nhất của chiếc máy.
-
-
                                     Bộ nhớ trên iPad Pro 12.9 2020
-
-
                                     Cụm camera “Pro”, nâng tầm trải nghiệm AR
-
-
                                     Apple thật sự ưu ái khi tích hợp cho chiếc máy này với 2 camera sau, 1 camera chính
                                     12
                                     MP và 1 camera góc siêu rộng 125 độ 10 MP, cùng với đó là camera selfie 7 MP hỗ trợ
                                     công
                                     nghệ TrueDepth. Giúp bạn hoàn toàn có thể chụp ra những bức ảnh ưng ý nhất.
-
-
                                     Cụm camera trên iPad Pro 12.9 2020
-
-
                                     Việc quay video, chụp ảnh và chỉnh sửa trực tiếp một cách chuyên nghiệp để gửi đi
                                     khách
                                     hàng, đối tác chỉ với một thiết bị duy nhất đã không còn là điều xa vời với người
                                     dùng
                                     iPad Pro 2020.
-
-
                                     Hơn thế nữa, iPad Pro 12.9 inch 2020 còn được tích hợp thêm cảm biến Lidar đo chiều
                                     sâu,
                                     giúp hỗ trợ những ứng dụng AR nhận diện bối cảnh một cách chính xác nhất.
-
-
                                     Lidar hỗ trợ AR trên iPad Pro 12.9 2020
-
-
                                     Cảm biến này cực kì hữu ích đặc biệt trong các lĩnh vực thiết kế, thi công bởi người
                                     dùng có thể “ướm” thử các mô hình 3D của thiết kế lên thực tế và quan sát nhiều góc
                                     độ
@@ -582,8 +503,6 @@
                                id="more-link"
                                onclick="toggleReadMore()">{{ __('home.read more') }}</a>
                         </div>
-
-
                         <div class="tab-pane pt-4" role="tabpanel" id="tabSpecification">
                             <table class="table table-bordered">
                                 <thead>
@@ -610,8 +529,6 @@
                                 </tbody>
                             </table>
                         </div>
-
-
                         <div class="tab-pane pt-4" role="tabpanel" id="tabReview">
                             <div class="card mb-4">
                                 <div class="card-body">
@@ -641,7 +558,6 @@
                                         <div id="text-message" class="text-danger d-none">Please select star rating
                                         </div>
 
-
                                         <div class="form-group row">
                                             <label for=""
                                                    class="col-sm-12 col-form-label">{{ __('home.your name') }}</label>
@@ -655,18 +571,19 @@
                                             <label for=""
                                                    class="col-sm-12 col-form-label">{{ __('home.your review') }}</label>
                                             <div class="col-sm-12">
-                                                <textarea onclick="checkStar()" class="form-control" id="" name="content"
+                                                <textarea onclick="checkStar()" class="form-control" id=""
+                                                          name="content"
                                                           placeholder="{{ __('home.your review') }}"
                                                           rows="3" required></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <button id="btn-submit" class="btn btn-primary btn-16" type="submit">Submit</button>
+                                            <button id="btn-submit" class="btn btn-primary btn-16" type="submit">
+                                                Submit
+                                            </button>
                                         </div>
                                     </form>
                                 </div>
-
-
                             </div>
                             <div class="card">
                                 <div class="card-body">
@@ -697,78 +614,63 @@
                                                     <strong class="mr-2">{{ __('home.customer rating') }}: </strong>
                                                     @if($res->star_number == 1)
                                                         <span class="fa fa-stack">
-<i class="fa fa-star"></i>
-</span>
-                                                        <span class="fa fa-stack"><i
-                                                                    class="fa fa-star-o"></i></span>
-                                                        <span class="fa fa-stack"><i
-                                                                    class="fa fa-star-o"></i></span>
-                                                        <span class="fa fa-stack"><i
-                                                                    class="fa fa-star-o"></i></span>
-                                                        <span class="fa fa-stack"><i
-                                                                    class="fa fa-star-o"></i></span>
+                                                            <i class="fa fa-star"></i></span>
+                                                        <span class="fa fa-stack">
+                                                            <i class="fa fa-star-o"></i></span>
+                                                        <span class="fa fa-stack">
+                                                            <i class="fa fa-star-o"></i></span>
+                                                        <span class="fa fa-stack">
+                                                            <i class="fa fa-star-o"></i></span>
+                                                        <span class="fa fa-stack">
+                                                            <i class="fa fa-star-o"></i></span>
                                                     @endif
                                                     @if($res->star_number == 2)
                                                         <span class="fa fa-stack">
-<i class="fa fa-star"></i>
-</span>
+                                                            <i class="fa fa-star"></i></span>
                                                         <span class="fa fa-stack">
-<i class="fa fa-star"></i>
-</span>
-                                                        <span class="fa fa-stack"><i
-                                                                    class="fa fa-star-o"></i></span>
-                                                        <span class="fa fa-stack"><i
-                                                                    class="fa fa-star-o"></i></span>
-                                                        <span class="fa fa-stack"><i
-                                                                    class="fa fa-star-o"></i></span>
+                                                            <i class="fa fa-star"></i></span>
+                                                        <span class="fa fa-stack">
+                                                            <i class="fa fa-star-o"></i></span>
+                                                        <span class="fa fa-stack">
+                                                            <i class="fa fa-star-o"></i></span>
+                                                        <span class="fa fa-stack">
+                                                            <i class="fa fa-star-o"></i></span>
                                                     @endif
                                                     @if($res->star_number == 3)
                                                         <span class="fa fa-stack">
-<i class="fa fa-star"></i>
-</span>
+                                                            <i class="fa fa-star"></i></span>
                                                         <span class="fa fa-stack">
-<i class="fa fa-star"></i>
-</span>
+                                                            <i class="fa fa-star"></i></span>
                                                         <span class="fa fa-stack">
-<i class="fa fa-star"></i>
-</span>
-                                                        <span class="fa fa-stack"><i
-                                                                    class="fa fa-star-o"></i></span>
-                                                        <span class="fa fa-stack"><i
-                                                                    class="fa fa-star-o"></i></span>
+                                                            <i class="fa fa-star"></i></span>
+                                                        <span class="fa fa-stack">
+                                                            <i class="fa fa-star-o"></i></span>
+                                                        <span class="fa fa-stack">
+                                                            <i class="fa fa-star-o"></i></span>
                                                     @endif
                                                     @if($res->star_number == 4)
                                                         <span class="fa fa-stack">
-<i class="fa fa-star"></i>
-</span>
+                                                            <i class="fa fa-star"></i></span>
                                                         <span class="fa fa-stack">
-<i class="fa fa-star"></i>
-</span>
+                                                            <i class="fa fa-star"></i></span>
                                                         <span class="fa fa-stack">
-<i class="fa fa-star"></i>
-</span>
+                                                            <i class="fa fa-star"></i></span>
                                                         <span class="fa fa-stack">
-<i class="fa fa-star"></i>
-</span>
-                                                        <span class="fa fa-stack"><i
-                                                                    class="fa fa-star-o"></i></span>
+                                                            <i class="fa fa-star"></i></span>
+                                                        <span class="fa fa-stack">
+                                                            <i class="fa fa-star-o"></i></span>
                                                     @endif
                                                     @if($res->star_number == 5)
                                                         <span class="fa fa-stack">
-<i class="fa fa-star"></i>
-</span>
+                                                            <i class="fa fa-star"></i></span>
                                                         <span class="fa fa-stack">
-<i class="fa fa-star"></i>
-</span>
+                                                            <i class="fa fa-star"></i></span>
                                                         <span class="fa fa-stack">
-<i class="fa fa-star"></i>
-</span>
+                                                            <i class="fa fa-star"></i></span>
                                                         <span class="fa fa-stack">
-<i class="fa fa-star"></i>
-</span>
+                                                            <i class="fa fa-star"></i></span>
                                                         <span class="fa fa-stack">
-<i class="fa fa-star"></i>
-</span>
+                                                            <i class="fa fa-star"></i></span>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -778,8 +680,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -800,8 +700,6 @@
                                 <br>
                                 <span style="font-size: 1.25rem">Nhận ngay</span>
                             </div>
-
-
                             <div class="modal fade" id="exampleModalCenter"
                                  tabindex="-1" role="dialog"
                                  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -847,8 +745,6 @@
                                                                     Nhận ngay
                                                                 </button>
                                                             @endif
-
-
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -865,24 +761,90 @@
                             </div>
                         @endif
                     </div>
-
-
-                    <div>
-                        <div class="p-3 text-center text-uppercase text-white text-bold fw-bold"
-                             style="border-radius: 5px 5px 0 0; background-color: #00bf90">
-                            {{ __('home.promotion information') }}
+                    @if($arrayPromotions!=null)
+                        <div>
+                            {{--                        <div class="p-3 text-center text-uppercase text-white text-bold fw-bold"--}}
+                            {{--                             style="border-radius: 5px 5px 0 0; background-color: #00bf90">--}}
+                            {{--                            {{ __('home.promotion information') }}--}}
+                            {{--                        </div>--}}
+                            {{--                        <div class="product-detail"--}}
+                            {{--                             style="border: 1px solid black; border-top: none; border-radius: 0 0 5px 5px ">--}}
+                            {{--                            <ul class="pt-3 ml-3 mb-3">--}}
+                            {{--                                <li><i class="fa fa-check mr-2"></i>{{ __('home.accumulate points') }}</li>--}}
+                            {{--                                <li><i class="fa fa-check mr-2"></i>{{ __('home.free credit card') }}</li>--}}
+                            {{--                                <li><i class="fa fa-check mr-2"></i>{{ __('home.free installment') }}</li>--}}
+                            {{--                                <li><i class="fa fa-check mr-2"></i>{{ __('home.free delivery') }}</li>--}}
+                            {{--                                <li><i class="fa fa-check mr-2"></i>{{ __('home.discount immediately') }}</li>--}}
+                            {{--                            </ul>--}}
+                            {{--                        </div>--}}
+                            <div class="p-3 text-center text-uppercase text-white text-bold fw-bold"
+                                 style="border-radius: 5px 5px 0 0; background-color: #00bf90"
+                                 data-toggle="modal" data-target="#exampleModalPromotion">
+                                {{ __('home.promotion information') }}
+                                <br>
+                                <span style="font-size: 1.25rem">Tham gia ngay</span>
+                            </div>
+                            <div class="modal fade" id="exampleModalPromotion"
+                                 tabindex="-1" role="dialog"
+                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle"> Chương trình khuyến
+                                                mãi dành cho bạn</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">Name</th>
+                                                    <th scope="col">Code</th>
+                                                    <th scope="col">Percent</th>
+                                                    <th scope="col">Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($arrayPromotions as $itemPromotion)
+                                                    <tr>
+                                                        <td>{{$itemPromotion->name}}</td>
+                                                        <td>{{$itemPromotion->code}}</td>
+                                                        <td>{{$itemPromotion->percent}}</td>
+                                                        <td>
+                                                            @php
+                                                                $promotionItemsOld = \App\Models\PromotionItems::where([
+                                                                ['promotion_id', $itemPromotion->id],
+                                                                ['customer_id', Auth::user()->id]])->first();
+                                                            @endphp
+                                                            @if($promotionItemsOld)
+                                                                <a href="{{route('cart.index')}}"
+                                                                   class="btn btn-success">
+                                                                    Sử dụng ngay
+                                                                </a>
+                                                            @else
+                                                                <button class="btn btn-success"
+                                                                        onclick="createVoucherItems({{$itemPromotion->id}})">
+                                                                   Tham gia ngay
+                                                                </button>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="product-detail"
-                             style="border: 1px solid black; border-top: none; border-radius: 0 0 5px 5px ">
-                            <ul class="pt-3 ml-3 mb-3">
-                                <li><i class="fa fa-check mr-2"></i>{{ __('home.accumulate points') }}</li>
-                                <li><i class="fa fa-check mr-2"></i>{{ __('home.free credit card') }}</li>
-                                <li><i class="fa fa-check mr-2"></i>{{ __('home.free installment') }}</li>
-                                <li><i class="fa fa-check mr-2"></i>{{ __('home.free delivery') }}</li>
-                                <li><i class="fa fa-check mr-2"></i>{{ __('home.discount immediately') }}</li>
-                            </ul>
-                        </div>
-                    </div>
+                    @endif
                 </div>
                 <div class="bg-white rounded mt-5">
                     <div class="card"
@@ -922,8 +884,6 @@
                             <div class="card-body">
                                 <div>
                                     <div class="list-items-ml-0 list-group-item list-group-item-action row random-color">
-
-
                                         <div class="d-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="40">
                                                 <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -935,11 +895,7 @@
                                         </div>
                                     </div>
                                     <div class="border-bottom my-3"></div>
-
-
                                     <div class="list-items-ml-0 list-group-item list-group-item-action row random-color">
-
-
                                         <div class="d-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                                                 <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -951,11 +907,7 @@
                                         </div>
                                     </div>
                                     <div class="border-bottom my-3"></div>
-
-
                                     <div class="list-items-ml-0 list-group-item list-group-item-action row random-color">
-
-
                                         <div class="d-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                                                 <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -967,11 +919,7 @@
                                         </div>
                                     </div>
                                     <div class="border-bottom my-3"></div>
-
-
                                     <div class="list-items-ml-0 list-group-item list-group-item-action row random-color">
-
-
                                         <div class="d-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                                                 <path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64v64H448zm64-192c-35.3 0-64-28.7-64-64h64v64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/>
@@ -982,11 +930,7 @@
                                         </div>
                                     </div>
                                     <div class="border-bottom my-3"></div>
-
-
                                     <div class="list-items-ml-0 list-group-item list-group-item-action row random-color">
-
-
                                         <div class="d-flex">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
                                                 <path d="M112 0C85.5 0 64 21.5 64 48V96H16c-8.8 0-16 7.2-16 16s7.2 16 16 16H64 272c8.8 0 16 7.2 16 16s-7.2 16-16 16H64 48c-8.8 0-16 7.2-16 16s7.2 16 16 16H64 240c8.8 0 16 7.2 16 16s-7.2 16-16 16H64 16c-8.8 0-16 7.2-16 16s7.2 16 16 16H64 208c8.8 0 16 7.2 16 16s-7.2 16-16 16H64V416c0 53 43 96 96 96s96-43 96-96H384c0 53 43 96 96 96s96-43 96-96h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V288 256 237.3c0-17-6.7-33.3-18.7-45.3L512 114.7c-12-12-28.3-18.7-45.3-18.7H416V48c0-26.5-21.5-48-48-48H112zM544 237.3V256H416V160h50.7L544 237.3zM160 368a48 48 0 1 1 0 96 48 48 0 1 1 0-96zm272 48a48 48 0 1 1 96 0 48 48 0 1 1 -96 0z"/>
@@ -996,8 +940,6 @@
                                             </h5>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
@@ -1048,15 +990,11 @@
                                     <div class="card">
                                         <div class="d-flex px-2 py-3 random-color text-center">
                                             <div class="">
-
-
                                                 <div class="d-flex">
                                                     <h5 class="">{{ __('home.super fast delivery') }}<br>
                                                     </h5>
                                                 </div>
                                             </div>
-
-
                                         </div>
                                     </div>
                                 </div>
@@ -1066,18 +1004,12 @@
                 </div>
             </div>
             <div class="col-md-12">
-
-
                 <div class="row" id="product-other">
                     @foreach($otherProduct as $product)
                         <div class="product-other mt-4 col-xl-3 col-md-4 col-sm-6 col-12 mb-3 mb-md-0">
                             <div class="card h-100">
-
-
                                 <img class="img" src="{{$product->thumbnail}}" alt="">
-                                <div class="card-body position-relative d-flex flex-column" >
-
-
+                                <div class="card-body position-relative d-flex flex-column">
                                     <h3 class="text-success">${{$product->price}}</h3>
                                     <div class="rating text-warning">
                                         <i class="fa fa-star"></i>
@@ -1193,8 +1125,6 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -1230,8 +1160,6 @@
             });
         }
     </script>
-
-
     <script>
         function checkProductReviews() {
             let product_id = document.getElementById('product_id').value;
@@ -1256,8 +1184,6 @@
 
         checkProductReviews();
     </script>
-
-
     <script>
         function zoomImg(x) {
             imgDf = document.getElementById('img-default');

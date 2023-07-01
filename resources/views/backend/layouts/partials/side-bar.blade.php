@@ -192,6 +192,17 @@
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a href="#!"><span>Quản lý khuyến mãi</span></a>
+                    <ul class='sub-items'>
+                        <li>
+                            <a href="{{route('seller.promotion.list')}}">List Promotion</a>
+                        </li>
+                        <li>
+                            <a href="{{route('seller.promotion.create.process')}}">Create Promotion</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </li>
     </ul>

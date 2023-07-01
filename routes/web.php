@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\PaypalPaymentController;
 use App\Http\Controllers\PermissionRankController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\Seller\AttributeController;
 use App\Http\Controllers\Seller\CategoryController;
 use App\Http\Controllers\Seller\ProductController;
@@ -179,6 +180,13 @@ Route::group(['middleware' => 'role.seller'], function () {
     Route::get('/vouchers/{id}', [VoucherController::class, 'detail'])->name('seller.vouchers.detail');
     Route::post('/vouchers/{id}', [VoucherController::class, 'update'])->name('seller.vouchers.update');
     Route::delete('/vouchers/{id}', [VoucherController::class, 'delete'])->name('seller.vouchers.delete');
+    // Voucher
+    Route::get('/promotions', [PromotionController::class, 'getList'])->name('seller.promotion.list');
+    Route::get('/process-promotion', [PromotionController::class, 'processCreate'])->name('seller.promotion.create.process');
+    Route::post('/promotion', [PromotionController::class, 'create'])->name('seller.promotion.create');
+    Route::get('/promotion/{id}', [PromotionController::class, 'detail'])->name('seller.promotion.detail');
+    Route::post('/promotion/{id}', [PromotionController::class, 'update'])->name('seller.promotion.update');
+    Route::delete('/promotion/{id}', [PromotionController::class, 'delete'])->name('seller.promotion.delete');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {
