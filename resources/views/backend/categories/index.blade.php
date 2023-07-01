@@ -112,8 +112,7 @@
                                   style="display: inline-block">
                                 @csrf
                                 @method('DELETE')
-                                <a href="#" onclick="clickBtn({{$category->id}})"><i style="color: #d52727"
-                                                                                     class="fa-solid fa-trash-can"></i></a>
+                                <a href="#" onclick="clickBtn({{$category->id}})"><i style="color: #d52727" class="fa-solid fa-trash-can"></i></a>
                                 <button id="btn-delete-category-{{$category->id}}" hidden type="submit"
                                         onclick="return confirm('Bạn có chắc chắn muốn xóa?')">
                                     Xoa

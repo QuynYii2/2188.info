@@ -5,14 +5,10 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $categories = Category::all();
@@ -22,11 +18,6 @@ class CategoryController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $categories = Category::all();
@@ -35,18 +26,19 @@ class CategoryController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'name' => 'required',
             'parent_id' => 'nullable|exists:categories,id',
         ]);
+
+        $name = DB::table('categories')->where('name', $validatedData['name'])->first();
+        if($name){
+            alert()->error('Error', 'Tên chuyên mục tồn tại');
+            return back();
+        }
 
         $category = new Category();
         $category->name = $validatedData['name'];
@@ -57,42 +49,25 @@ class CategoryController extends Controller
         } else {
             $category->saveAsRoot();
         }
-        alert()->success('Success', 'Tạo mới địa chỉ thành công');
+        alert()->success('Success', 'Tạo mới chuyên mục thành công');
 
         return redirect()->route('seller.categories.index')->with('success', 'Danh mục đã được tạo thành công.');
     }
 
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Category $category)
     {
         return view('backend/categories/edit', compact('category'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit(Category $category)
     {
         $categories = Category::all();
         return view('backend/categories/edit', compact('category', 'categories'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, Category $category )
     {
         $category->name = $request->input('name');
@@ -109,12 +84,7 @@ class CategoryController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Category $category)
     {
         $category->delete();
