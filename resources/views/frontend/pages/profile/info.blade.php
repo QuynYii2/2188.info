@@ -105,7 +105,7 @@
                                     </label>
                                 </div>
                                 <img class=" img preview mb-3" id="avatarPreview"
-                                     src="{{ asset('public/storage/'.$user->image) }}">
+                                     src="{{ asset('storage/'.$user->image) }}">
                             </div>
                         </div>
 
