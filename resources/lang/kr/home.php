@@ -244,6 +244,7 @@ return [
     'permission management' => '권리 관리',
     'upgrade permission' => '권한 업그레이드',
     'payment management' => '결제 관리',
+    'account manage' => '계정 관리',
 
 
 ];

@@ -4,6 +4,7 @@
     a {
         color: #FFFFFF;
     }
+
     .wrapper {
         width: 17%;
         height: 100%;
@@ -15,29 +16,35 @@
         left: 0;
         bottom: 0;
     }
+
     .items {
         padding: 18px 0;
         font-size: 18px;
     }
+
     .items > li > a {
         display: block;
         text-indent: 18px;
         line-height: 39px;
     }
+
     .items > li > a::after {
         position: absolute;
         right: 30px;
         font-family: "FontAwesome";
     }
+
     .items > li > a::after {
         right: 30px;
         content: "\2192";
     }
+
     .itemHover {
         color: #fff;
         font-weight: 600;
         transition: background-color 0.4s ease-in-out;
     }
+
     .items > li > a:hover {
         background-color: black;
         color: #fff;
@@ -45,27 +52,33 @@
         transition: background-color 0.4s ease-in-out;
         text-decoration: none !important;
     }
+
     .items > li > a.expanded {
         background-color: #64D7E2;
         color: #fff;
         font-weight: 600;
         transition: background-color 0.4s ease-in-out;
     }
+
     .items > li > a.expanded::after {
         content: "\2193";
     }
+
     .items > li:not(:has(ul)) > a::after,
     .items > li:not(:has(ul)) > a.expanded::after {
         content: none;
     }
+
     .sub-items > li:first-child > a {
         margin-top: 17px;
         height: 34px;
     }
+
     .sub-items > li:last-child > a {
         margin-bottom: 17px;
         height: 34px;
     }
+
     .sub-items a {
         position: relative;
         display: block;
@@ -74,20 +87,24 @@
         text-indent: 24px;
         line-height: 39px;
     }
+
     .sub-items a {
         border-left: 2px solid #64D7E2;
     }
+
     .sub-items .current {
         position: relative;
         color: #64D7E2;
         border-color: white;
     }
+
     .sub-items > li:hover > a {
         color: #64D7E2;
         transition: color 0.4s ease-in-out;
         text-decoration: none;
 
     }
+
     .sub-items {
         display: none;
     }
@@ -203,6 +220,32 @@
                         </li>
                     </ul>
                 </li>
+                @php
+                    use Illuminate\Support\Facades\DB;
+
+                    if (auth()->check() != null){
+                        $roleUsers = DB::table('role_user')
+                        ->where([['user_id', Auth::user()->id], ['role_id', 1]])
+                        ->get();
+
+                    } else {
+                        $roleUsers = null;
+                    }
+                @endphp
+
+                @if(sizeof($roleUsers) != 0)
+                    <li>
+                        <a href="#!"><span>Quản lý tài khoản</span></a>
+                        <ul class='sub-items'>
+                            <li>
+                                <a href="{{route('account.manage.show')}}">Danh sách tài khoản</a>
+                            </li>
+                            <li>
+                                <a href="{{route('seller.promotion.create.process')}}">Create Promotion</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
             </ul>
         </li>
     </ul>

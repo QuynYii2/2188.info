@@ -31,6 +31,12 @@ class UserController extends Controller
         $geoIp = new GeoIP();
         $locale = $geoIp->get_country_from_ip('183.80.130.4');
 
+        $existingUser = User::where('email', $request->email)->first();
+        if ($existingUser) {
+            toast('Địa chỉ email đã tồn tại.', 'error', 'top-right');
+            return back();
+        }
+
         if ($request->type_account == 'seller') {
             $validatedData = $request->validate([
                 'email' => 'required|email|unique:users',
@@ -60,6 +66,8 @@ class UserController extends Controller
                 'password' => 'required|min:6',
             ]);
         }
+
+
 
         // Lưu thông tin người dùng vào cơ sở dữ liệu
         $user = new User;
@@ -113,7 +121,6 @@ class UserController extends Controller
                 for ($i = 0; $i < count($listCategoryName); $i++) {
                     $listValues[] = $request->input($listCategoryName[$i]);
                 }
-//            dd($listValues);
                 if ($listValues != null) {
                     $arrayIds = null;
                     for ($i = 1; $i < count($listValues); $i++) {
@@ -121,7 +128,6 @@ class UserController extends Controller
                             $arrayIds[] = $listValues[$i];
                         }
                     }
-//            dd($arrayIds);
                     if ($arrayIds != null) {
                         $value = implode(",", $arrayIds);
                         ProductInterested::create([
@@ -130,7 +136,6 @@ class UserController extends Controller
                         ]);
                     }
                 }
-//            dd($value);
             }
         }
 
@@ -341,4 +346,6 @@ class UserController extends Controller
         $voucherItems = VoucherItem::where('customer_id', Auth::user()->id)->get();
         return view('frontend.pages.profile.my-voucher', compact('voucherItems'));
     }
+
+
 }

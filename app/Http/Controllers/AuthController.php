@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\PermissionUserStatus;
 use App\Enums\StatisticStatus;
+use App\Enums\UserStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Libraries\GeoIP;
 use App\Models\Permission;
@@ -17,7 +18,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
-use function Symfony\Component\String\u;
 
 
 class AuthController extends Controller
@@ -78,6 +78,13 @@ class AuthController extends Controller
                 'phone' => $loginField,
                 'password' => $request->input('password'),
             ];
+        }
+
+        $user = User::where($isEmail ? 'email' : 'phone', $loginField)->first();
+
+        if ($user && $user->status !== UserStatus::ACTIVE) {
+            toast('Tài khoản của bạn đã bị khóa.', 'error', 'top-right');
+            return redirect()->route('login');
         }
 
         if (Auth::attempt($credentials)) {
