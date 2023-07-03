@@ -130,8 +130,7 @@
                                                 </select>
                                                 <div class="overSelect"></div>
                                             </div>
-                                            <div id="checkboxes" class="mt-1 position-absolute bg-white p-2"
-                                                 style="left:0; right: 0; z-index: 1">
+                                            <div id="checkboxes" class="mt-1 position-absolute bg-white p-2" style="left:0; right: 0; z-index: 1">
                                                 @foreach($categories as $category)
                                                     <label class="ml-2" for="category-{{$category->id}}">
                                                         <input type="checkbox" id="category-{{$category->id}}"

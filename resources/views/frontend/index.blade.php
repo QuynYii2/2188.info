@@ -25,6 +25,18 @@
             padding: 10px;
         }
 
+        .img-banner-1 {
+            /*height: 30vw;*/
+            margin-top: -30px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .tablet-button {
+            display: none;
+        }
         /* CSS cho megamenu */
         .megamenu {
             display: none;
@@ -33,12 +45,13 @@
         .vertical-menu .nav-item:hover .megamenu {
             display: block;
             position: absolute;
+            top: 8px;
+            left: 94%;
+            z-index: 999;
+            width: 700px;
             background-color: #fff;
-            top: 0;
             padding: 20px;
             box-shadow: 0 0 4px 0 rgba(0, 0, 0, .25);
-            height: auto;
-            width: 300px;
         }
 
         .megamenu a:hover, a:focus {
@@ -60,19 +73,6 @@
 
         .depart-hover .megamenu li a {
             padding-left: 0 !important;
-        }
-
-        .img-banner-1 {
-            /*height: 30vw;*/
-            margin-top: -30px;
-            background-repeat: no-repeat;
-            background-size: cover;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        .tablet-button {
-            display: none;
         }
 
         @media only screen and (min-width: 1200px) {
@@ -223,23 +223,36 @@
                                     $listCate = DB::table('categories')->where('parent_id', null)->get();
                                 @endphp
                                 <ul class="navbar-nav" id="side-cate" style="overflow-y: scroll; ">
-                                    @foreach($listCate as $cate)
-                                        <li class="nav-item d-grid">
-                                            <a class="nav-link text-nowrap text-limit position-relative" href="{{ route('category.show', $cate->id) }}">
+                                        @foreach($listCate as $cate)
+                                        <li class="nav-item d-grid ">
+                                            <a class="nav-link text-nowrap text-limit position-relative " href="{{ route('category.show', $cate->id) }}">
                                                 <i class="fa fa-laptop" aria-hidden="true"></i>
                                                 {{ $cate->name }}
                                             </a>
-                                            @php
-                                                $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
-                                            @endphp
+                                            @if(!$listCate->isEmpty())
                                             <div class="megamenu">
-                                                @foreach($listChild as $child)
-                                                <div class="mt-2">
-                                                   <a href="{{ route('category.show', $child->id) }}">{{ $child->name }}</a>
+                                                <div class="row">
+                                                    @php
+                                                        $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
+                                                    @endphp
+                                                    @foreach($listChild as $child)
+                                                    <div class="col-sm-4 mt-1 mb-1">
+                                                        <h4><a href="{{ route('category.show', $child->id) }}">{{ $child->name }}</a></h4>
+                                                        <ul>
+                                                            @php
+                                                                $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
+                                                            @endphp
+                                                            @foreach($listChild2 as $child2)
+                                                                <li>
+                                                                    <a href="{{ route('category.show', $child2->id) }}">{{ $child2->name }}</a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                    @endforeach
                                                 </div>
-                                                <div class="border-bottom"></div>
-                                                @endforeach
                                             </div>
+                                            @endif
                                         </li>
                                         <li class="border-bottom"></li>
                                     @endforeach
