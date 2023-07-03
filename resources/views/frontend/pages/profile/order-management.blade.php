@@ -82,14 +82,20 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th class="float-left">OrderID</th>
-                                        <th class="float-right">Total Price</th>
+                                        <th>{{ __('OrderID') }}</th>
+                                        <th>{{ __('Payment Method') }}</th>
+                                        <th>{{ __('Shipping Price') }}</th>
+                                        <th>{{ __('Discount Price') }}</th>
+                                        <th>{{ __('Quantity') }}</th>
+                                        <th>{{ __('Total Price') }}</th>
+                                        <th>{{ __('Status') }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
+
                                     @foreach ($orderAll as $order)
                                         <tr>
-                                            <td class="float-left">
+                                            <td>
                                                 <button class="text-decoration-none" data-toggle="modal"
                                                         data-target="#updateOrder{{$order->id}}"
                                                         style="cursor: pointer">{{ $loop->index+1 }}</button>
@@ -112,35 +118,37 @@
                                                                       method="post">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <div class="row mb-5">
-                                                                        <div class="col">
-                                                                            <label for="fname">Full name:</label>
-                                                                            <input type="text"
-                                                                                   value="{{$order->fullname}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <label for="fname">Email:</label>
-                                                                            <input type="text" value="{{$order->email}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <label for="fname">Phone:</label>
-                                                                            <input type="text" value="{{$order->phone}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <label for="fname">Address:</label>
-                                                                            <input type="text"
-                                                                                   value="{{$order->address}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col mt-3">
-                                                                            <label for="fname">Total Price:</label>
-                                                                            <input type="text"
-                                                                                   value="${{$order->total}}"
-                                                                                   disabled>
-                                                                        </div>
+                                                                    <div class="">
+                                                                        <table class="table">
+                                                                            <thead>
+                                                                            <tr>
+                                                                                <th>{{ __('Name') }}</th>
+                                                                                <th>{{ __('Quantity') }}</th>
+                                                                                <th>{{ __('Price') }}</th>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            @php
+                                                                                $order_items = \App\Models\OrderItem::where('order_id', $order->id)->get();
+                                                                            @endphp
+                                                                            @foreach ($order_items as $order_item)
+                                                                                @php
+                                                                                    $product = \App\Models\Product::find($order_item->product_id);
+                                                                                @endphp
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        {{ $product->name }}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{$order_item->quantity}}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{$order_item->price}}
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @endforeach
+                                                                            </tbody>
+                                                                        </table>
                                                                     </div>
                                                                     <div class="d-flex justify-content-around">
                                                                         @if($order->status == \App\Enums\OrderStatus::PROCESSING  || $order->status == \App\Enums\OrderStatus::WAIT_PAYMENT)
@@ -165,9 +173,26 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="float-right">
-                                                {{$order->total}}
-                                                <div class="small">{{$order->status}}</div>
+                                            <td>
+                                                {{$order->orders_method}}
+                                            </td>
+                                            <td>
+                                                {{$order->shipping_price}}
+                                            </td>
+                                            <td>
+                                                {{$order->discount_price}}
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $quantity = DB::table('order_items')->where('order_id', $order->id)->get();
+                                                @endphp
+                                                {{count($quantity)}}
+                                            </td>
+                                            <td>
+                                                {{$order->total_price}}
+                                            </td>
+                                            <td>
+                                                {{$order->status}}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -295,7 +320,8 @@
                                                 <button class="text-decoration-none" data-toggle="modal"
                                                         data-target="#updateOrderProcess{{$order->id}}"
                                                         style="cursor: pointer">{{ $loop->index+1 }}</button>
-                                                <div class="modal fade" id="updateOrderProcess{{$order->id}}" tabIndex="-1" role="dialog"
+                                                <div class="modal fade" id="updateOrderProcess{{$order->id}}"
+                                                     tabIndex="-1" role="dialog"
                                                      aria-labelledby="editModalLabel">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
@@ -400,7 +426,8 @@
                                                 <button class="text-decoration-none" data-toggle="modal"
                                                         data-target="#updateOrderShip{{$order->id}}"
                                                         style="cursor: pointer">{{ $loop->index+1 }}</button>
-                                                <div class="modal fade" id="updateOrderShip{{$order->id}}" tabIndex="-1" role="dialog"
+                                                <div class="modal fade" id="updateOrderShip{{$order->id}}" tabIndex="-1"
+                                                     role="dialog"
                                                      aria-labelledby="editModalLabel">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
@@ -495,7 +522,8 @@
                                                 <button class="text-decoration-none" data-toggle="modal"
                                                         data-target="#updateOrderDelivery{{$order->id}}"
                                                         style="cursor: pointer">{{ $loop->index+1 }}</button>
-                                                <div class="modal fade" id="updateOrderDelivery{{$order->id}}" tabIndex="-1" role="dialog"
+                                                <div class="modal fade" id="updateOrderDelivery{{$order->id}}"
+                                                     tabIndex="-1" role="dialog"
                                                      aria-labelledby="editModalLabel">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
@@ -589,7 +617,8 @@
                                                 <button class="text-decoration-none" data-toggle="modal"
                                                         data-target="#updateOrderCancel{{$order->id}}"
                                                         style="cursor: pointer">{{ $loop->index+1 }}</button>
-                                                <div class="modal fade" id="updateOrderCancel{{$order->id}}" tabIndex="-1" role="dialog"
+                                                <div class="modal fade" id="updateOrderCancel{{$order->id}}"
+                                                     tabIndex="-1" role="dialog"
                                                      aria-labelledby="editModalLabel">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
