@@ -35,7 +35,10 @@
                                 <div class="overSelect"></div>
                             </div>
                             <div id="checkboxes" class="mt-1">
-                                @foreach($products as $product)
+                                @foreach($products as $ID)
+                                    @php
+                                        $product = \App\Models\Product::find($ID);
+                                    @endphp
                                     <label class="ml-2" for="category-{{$product->id}}">
                                         <input type="checkbox" id="category-{{$product->id}}"
                                                name="category-{{$product->id}}"
