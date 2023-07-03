@@ -249,4 +249,5 @@ return [
     'permission management' => 'Quản lý quyền',
     'upgrade permission' => 'Nâng cấp quyền',
     'payment management' => 'Quản lý thanh toán',
+    'account manage' => 'Quản lý tài khoản',
 ];

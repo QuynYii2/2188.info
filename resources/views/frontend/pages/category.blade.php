@@ -636,7 +636,7 @@
                     </div>
                     <nav class="mt-4 mb-5 d-flex justify-content-center" aria-label="Page navigation sample">
                         <ul class="pagination">
-                            @foreach($listProduct->links()->elements[0] as  $index => $page)
+                            @foreach($listProduct->links()->elements[0] as $index => $page)
                                 <li class="page-item"><a class="page-link" href="{{ $page }}">{{ $index }}</a></li>
                             @endforeach
                         </ul>

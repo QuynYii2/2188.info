@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CoinController;
 use App\Http\Controllers\EvaluateProductController;
@@ -123,6 +124,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('update-info', [UserController::class, 'updateInfo'])->name('user.updateInfo');
     //
     Route::get('/my-vouchers', [UserController::class, 'myVoucher'])->name('my.voucher.show');
+
+
+
 });
 
 
@@ -130,11 +134,11 @@ Route::group(['middleware' => 'role.admin'], function () {
     // Các route dành cho super admin
     Route::get('/admin/dashboard', 'AdminController@dashboard');
 //    Route::post('down-permission', [\App\Http\Controllers\PermissionRankController::class, 'downRank'])->name('permission.down.rank');
-    // ...
+
 });
 
-Route::group(['middleware' => 'role.seller'], function () {
-    //
+Route::group(['middleware' => 'role.seller-or-admin'], function () {
+
     Route::get('/attributes', [AttributeController::class, 'index'])->name('attributes.index');
     //
     Route::get('/attributes/create', [AttributeController::class, 'create'])->name('attributes.create');
@@ -187,6 +191,12 @@ Route::group(['middleware' => 'role.seller'], function () {
     Route::get('/promotion/{id}', [PromotionController::class, 'detail'])->name('seller.promotion.detail');
     Route::post('/promotion/{id}', [PromotionController::class, 'update'])->name('seller.promotion.update');
     Route::delete('/promotion/{id}', [PromotionController::class, 'delete'])->name('seller.promotion.delete');
+    //quản lý tài khoản
+    Route::get('/account-manage', [AccountController::class, 'index'])->name('account.manage.show');
+    Route::get('/account-manage/lock/{id}', [AccountController::class, 'update'])->name('account.lock');
+    Route::get('/account-manage/delete/{id}', [AccountController::class, 'destroy'])->name('account.delete');
+    Route::get('/account-manage/view/{id}', [AccountController::class, 'show'])->name('account.show.shop');
+    Route::get('/account-manage/view-cart/{id}', [AccountController::class, 'viewCart'])->name('account.show.order');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {
