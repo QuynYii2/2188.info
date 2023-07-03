@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Enums\PromotionStatus;
+use App\Enums\VoucherStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Product;
 use App\Models\Promotion;
 use App\Models\PromotionItems;
+use App\Models\Voucher;
 use App\Services\Utils;
 use Auth;
 use Carbon\Carbon;
@@ -29,7 +31,7 @@ class PromotionController extends Controller
             alert()->error('Error', 'Error, No promotion match found, try again!');
             return back();
         }
-        $products = Product::where('user_id', Auth::user()->id)->get();
+        $products = $this->mergeDuplicate($request);
         return view('backend/promotion/detail', compact('promotion', 'products'));
     }
 
@@ -74,7 +76,7 @@ class PromotionController extends Controller
     public function processCreate(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $products = Product::where('user_id', Auth::user()->id)->get();
+        $products = $this->mergeDuplicate($request);
         return view('backend/promotion/create', compact('products'));
     }
 
@@ -130,6 +132,22 @@ class PromotionController extends Controller
         return redirect(route('seller.promotion.list'));
     }
 
+    private function mergeDuplicate(Request $request)
+    {
+        $products = Product::where('user_id', Auth::user()->id)->get();
+        $vouchers = Voucher::where([['user_id', Auth::user()->id], ['status', '!=', VoucherStatus::DELETED]])->get();
+        $myArray = null;
+        foreach ($products as $product) {
+            $myArray[] = $product->id;
+        }
+        foreach ($vouchers as $voucher) {
+            $listIDs = $voucher->apply;
+            $arrayIDs = explode(',', $listIDs);
+        }
+        $products = array_diff($myArray, $arrayIDs);
+        return $products;
+    }
+
     private function getArrayIds(Request $request)
     {
         $products = Product::where('user_id', Auth::user()->id)->get();
@@ -153,6 +171,17 @@ class PromotionController extends Controller
             }
         }
         return $arrayIds;
+    }
+
+    public function index(Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $promotions = Promotion::where('status', '=', PromotionStatus::ACTIVE)->get();
+        $promotionIDs = null;
+        foreach ($promotions as $promotion) {
+            $promotionIDs[] = $promotion->id . '-' . $promotion->user_id;
+        }
+        return view('frontend/pages/promotions', compact('promotions', 'promotionIDs'));
     }
 
     public function createPromotionItems(Request $request)

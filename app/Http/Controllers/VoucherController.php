@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PromotionStatus;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Promotion;
 use App\Models\Voucher;
 use App\Models\VoucherItem;
 use App\Services\Utils;
@@ -34,7 +36,7 @@ class VoucherController extends Controller
     public function processCreate(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $products = Product::where('user_id', Auth::user()->id)->get();
+        $products = $this->mergeDuplicate($request);
         return view('backend/voucher/create', compact('products'));
     }
 
@@ -85,7 +87,7 @@ class VoucherController extends Controller
         if ($voucher->status == VoucherStatus::DELETED) {
             return back();
         }
-        $products = Product::where('user_id', Auth::user()->id)->get();
+        $products = $this->mergeDuplicate($request);
         return view('backend/voucher/detail', compact('products', 'voucher'));
     }
 
@@ -200,5 +202,21 @@ class VoucherController extends Controller
             }
         }
         return $arrayIds;
+    }
+
+    private function mergeDuplicate(Request $request)
+    {
+        $products = Product::where('user_id', Auth::user()->id)->get();
+        $vouchers = Promotion::where([['user_id', Auth::user()->id], ['status', '!=', PromotionStatus::DELETED]])->get();
+        $myArray = null;
+        foreach ($products as $product) {
+            $myArray[] = $product->id;
+        }
+        foreach ($vouchers as $voucher) {
+            $listIDs = $voucher->apply;
+            $arrayIDs = explode(',', $listIDs);
+        }
+        $products = array_diff($myArray, $arrayIDs);
+        return $products;
     }
 }

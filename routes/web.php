@@ -10,6 +10,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\PaypalPaymentController;
 use App\Http\Controllers\PermissionRankController;
+use App\Http\Controllers\ProductInterestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\Seller\AttributeController;
@@ -216,9 +217,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/order-management/', [OrderController::class, 'index'])->name('order.show');
     Route::delete('/order-delete/{id}', [OrderController::class, 'cancel'])->name('order.cancel');
     // Product Interest
-    Route::get('/product-interest', [\App\Http\Controllers\ProductInterestController::class, 'index'])->name('product.interest.index');
-    Route::post('/product-interest/{id}', [\App\Http\Controllers\ProductInterestController::class, 'delete'])->name('product.interest.delete');
+    Route::get('/product-interest', [ProductInterestController::class, 'index'])->name('product.interest.index');
+    Route::post('/product-interest/{id}', [ProductInterestController::class, 'delete'])->name('product.interest.delete');
     //
-    Route::post('/product-viewed', [\App\Http\Controllers\ProductController::class, 'productViewed'])->name('product.viewed');
-    Route::post('/vouchers-item', [VoucherController::class, 'createVoucherItems'])->name('seller.vouchers.item.create');
+    Route::post('/product-viewed', [ProductController::class, 'productViewed'])->name('product.viewed');
+    Route::post('/vouchers-item', [VoucherController::class, 'createVoucherItems'])->name('vouchers.item.create');
+    Route::post('/promotions-item', [PromotionController::class, 'createPromotionItems'])->name('promotions.item.create');
+    Route::get('/promotion', [PromotionController::class, 'index'])->name('promotions.index');
+    Route::post('/add-cart/{product}/{percent}', [CartController::class, 'addToCartPromotion'])->name('cart.add.promotion');
 });

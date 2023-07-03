@@ -324,7 +324,26 @@
     #nav-black.nav-item .nav-menu li .dropdown {
     }
 
+    .alert {
+        padding: 20px;
+        background-color: #04AA6D;
+        color: white;
+    }
 
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .closebtn:hover {
+        color: black;
+    }
 
 </style>
 <header>
@@ -460,6 +479,14 @@
             </div>
         </div>
     </div>
+    <div class="" id="popup-alert">
+        <div class="col-md-2 float-right">
+            <div class="alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                <strong>Hello world!</strong> <a class="text-decoration-none text-white" href="{{route('promotions.index')}}">Review now</a>.
+            </div>
+        </div>
+    </div>
     <div class="inner-header container">
         <div class="row not-mobile-button my-2">
             <div class="col-lg-2 col-md-2 col-12 col-sm-2">
@@ -585,456 +612,452 @@
                                 </div>
                             </div>
                         </div>
-                </div>
-            @else
-                <div class="col-lg-3 col-md-4 col-sm-4 desktop-button d-flex align-items-center">
-                    <div class="btn-group full-width">
-                        <button type="button" class="btn btn-warning mr-2 full-width text-nowrap"
-                                data-toggle="modal"
-                                data-target="#chooseLanguageOrder"
-                                aria-expanded="false">
-                            <a class="text-white" target="_blank" rel="noopener noreferrer"
-                               href="http://order.2188.info/">{{ __('home.orders') }}</a>
-                        </button>
-                        <button type="button" class="btn btn-success mr-2 full-width text-nowrap"
-                                data-toggle="modal"
-                                data-target="#chooseLanguagePurchase"
-                                aria-expanded="false"><a class="text-white"
-                                                         href="{{route('login')}}">{{ __('home.purchase') }}</a>
-                        </button>
                     </div>
-                </div>
-            @endif
-        </div>
-
-        <div class="m-0 row only-mobile-button justify-content-center">
-            <div class="col-lg-2 col-md-2 col-sm-2 col-5 mt-2">
-                <div class="logo">
-                    <a href="{{route('home')}}">
-                        <img src="{{asset('images/img/logo.png')}}" alt="">
-                    </a>
-                </div>
-            </div>
-            @if(session('login') || Auth::user()!= null)
-                <div class="col-lg-3 col-md-3 text-right col-md-4 col-7 mt-2">
-                    <div class="d-flex align-items-center">
-                        <ul class="nav-right mb-0">
-                            @php
-                                $cartViews = \App\Models\Cart::where([
-                                        ['user_id', '=', Auth::user()->id],
-                                        ['status', '=', \App\Enums\CartStatus::WAIT_ORDER]
-                                ])->get();
-                                $totalHeader = 0;
-                                foreach ($cartViews as $cart1){
-                                    $totalHeader = $totalHeader + ($cart1->price*$cart1->quantity);
-                                }
-                            @endphp
-                            <li class="cart-icon">
-                                <a href="#">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    <span>{{count($cartViews)}}</span>
-                                </a>
-                                <div class="cart-hover">
-
-                                    <div class="select-items table-responsive-sm">
-                                        @if(count($cartViews) > 0)
-                                            <table>
-                                                <thead>
-                                                <h6>{{ __('home.was new product') }}</h6>
-                                                </thead>
-                                                <tbody>
-                                                @foreach($cartViews as $cartView)
-                                                    <tr>
-                                                        <td class="si-pic"><img
-                                                                    src="{{$cartView->product->thumbnail}}"
-                                                                    alt="">
-                                                        </td>
-                                                        <td class="si-text">
-                                                            <div class="product-selected">
-                                                                <p>{{$cartView->product->name}}</p>
-                                                            </div>
-                                                        </td>
-                                                        <td class="si-text">
-                                                            <p>${{$cartView->price}}
-                                                                x {{$cartView->quantity}} </p>
-                                                            <p>${{$cartView->price*$cartView->quantity}}</p>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-
-                                                </tbody>
-                                            </table>
-
-                                    </div>
-                                    <div class="select-total">
-                                        <span>{{ __('home.Total Payment') }}:</span>
-                                        <h5>${{$totalHeader}}</h5>
-                                    </div>
-                                    <div class="select-button">
-                                        <a href="{{route('cart.index')}}"
-                                           class="primary-btn view-card">{{ __('home.view card') }}</a>
-                                        <a href="{{route('checkout.show')}}"
-                                           class="primary-btn checkout-btn">{{ __('home.Pay Now') }}</a>
-                                    </div>
-                                    @else
-                                        <div class="">
-                                            <h6>No product</h6>
-                                        </div>
-                                    @endif
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="dropdown ml-3 ">
-                            <h4 class="dropbtn text-center" style="margin-bottom: 0;" aria-expanded="false">
-                                @if(Auth::user())
-                                    {{ Auth::user()->name }}
-                                @endif
-                            </h4>
-                            @php
-                                $coinUser = \App\Models\Coin::where([['user_id', Auth::user()->id], ['status', \App\Enums\CoinStatus::ACTIVE]])->first();
-                                if ($coinUser == null){
-                                    $coin = 0;
-                                } else {
-                                   $coin = $coinUser->quantity;
-                                }
-                            @endphp
-                            <div class="dropdown-content text-left pt-0 mt-2" style="margin-left: -35px">
-                                <ul class="mb-0">
-                                    <li>
-                                        <a class="dropdown-item"
-                                           href="{{route('profile.show')}}">{{ __('home.profile') }}</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item"
-                                           href="#">Coins: {{$coin}}</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{route('buy.coin.show')}}"
-                                           class="dropdown-item">{{ __('home.buy coin') }}</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" onclick="logout()"
-                                           href="#">{{ __('home.log out') }}</a>
-                                    </li>
-                                </ul>
+                    @else
+                        <div class="col-lg-3 col-md-4 col-sm-4 desktop-button d-flex align-items-center">
+                            <div class="btn-group full-width">
+                                <button type="button" class="btn btn-warning mr-2 full-width text-nowrap"
+                                        data-toggle="modal"
+                                        data-target="#chooseLanguageOrder"
+                                        aria-expanded="false">
+                                    <a class="text-white" target="_blank" rel="noopener noreferrer"
+                                       href="http://order.2188.info/">{{ __('home.orders') }}</a>
+                                </button>
+                                <button type="button" class="btn btn-success mr-2 full-width text-nowrap"
+                                        data-toggle="modal"
+                                        data-target="#chooseLanguagePurchase"
+                                        aria-expanded="false"><a class="text-white"
+                                                                 href="{{route('login')}}">{{ __('home.purchase') }}</a>
+                                </button>
                             </div>
                         </div>
+                    @endif
+                </div>
+                <div class="m-0 row only-mobile-button justify-content-center">
+                    <div class="col-lg-2 col-md-2 col-sm-2 col-5 mt-2">
+                        <div class="logo">
+                            <a href="{{route('home')}}">
+                                <img src="{{asset('images/img/logo.png')}}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                    @if(session('login') || Auth::user()!= null)
+                        <div class="col-lg-3 col-md-3 text-right col-md-4 col-7 mt-2">
+                            <div class="d-flex align-items-center">
+                                <ul class="nav-right mb-0">
+                                    @php
+                                        $cartViews = \App\Models\Cart::where([
+                                                ['user_id', '=', Auth::user()->id],
+                                                ['status', '=', \App\Enums\CartStatus::WAIT_ORDER]
+                                        ])->get();
+                                        $totalHeader = 0;
+                                        foreach ($cartViews as $cart1){
+                                            $totalHeader = $totalHeader + ($cart1->price*$cart1->quantity);
+                                        }
+                                    @endphp
+                                    <li class="cart-icon">
+                                        <a href="#">
+                                            <i class="fa fa-shopping-cart"></i>
+                                            <span>{{count($cartViews)}}</span>
+                                        </a>
+                                        <div class="cart-hover">
+
+                                            <div class="select-items table-responsive-sm">
+                                                @if(count($cartViews) > 0)
+                                                    <table>
+                                                        <thead>
+                                                        <h6>{{ __('home.was new product') }}</h6>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($cartViews as $cartView)
+                                                            <tr>
+                                                                <td class="si-pic"><img
+                                                                            src="{{$cartView->product->thumbnail}}"
+                                                                            alt="">
+                                                                </td>
+                                                                <td class="si-text">
+                                                                    <div class="product-selected">
+                                                                        <p>{{$cartView->product->name}}</p>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="si-text">
+                                                                    <p>${{$cartView->price}}
+                                                                        x {{$cartView->quantity}} </p>
+                                                                    <p>${{$cartView->price*$cartView->quantity}}</p>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+
+                                                        </tbody>
+                                                    </table>
+
+                                            </div>
+                                            <div class="select-total">
+                                                <span>{{ __('home.Total Payment') }}:</span>
+                                                <h5>${{$totalHeader}}</h5>
+                                            </div>
+                                            <div class="select-button">
+                                                <a href="{{route('cart.index')}}"
+                                                   class="primary-btn view-card">{{ __('home.view card') }}</a>
+                                                <a href="{{route('checkout.show')}}"
+                                                   class="primary-btn checkout-btn">{{ __('home.Pay Now') }}</a>
+                                            </div>
+                                            @else
+                                                <div class="">
+                                                    <h6>No product</h6>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="dropdown ml-3 ">
+                                    <h4 class="dropbtn text-center" style="margin-bottom: 0;" aria-expanded="false">
+                                        @if(Auth::user())
+                                            {{ Auth::user()->name }}
+                                        @endif
+                                    </h4>
+                                    @php
+                                        $coinUser = \App\Models\Coin::where([['user_id', Auth::user()->id], ['status', \App\Enums\CoinStatus::ACTIVE]])->first();
+                                        if ($coinUser == null){
+                                            $coin = 0;
+                                        } else {
+                                           $coin = $coinUser->quantity;
+                                        }
+                                    @endphp
+                                    <div class="dropdown-content text-left pt-0 mt-2" style="margin-left: -35px">
+                                        <ul class="mb-0">
+                                            <li>
+                                                <a class="dropdown-item"
+                                                   href="{{route('profile.show')}}">{{ __('home.profile') }}</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item"
+                                                   href="#">Coins: {{$coin}}</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{route('buy.coin.show')}}"
+                                                   class="dropdown-item">{{ __('home.buy coin') }}</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" onclick="logout()"
+                                                   href="#">{{ __('home.log out') }}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                    <div class="col-md-6 col-10 mt-2" id="in-search">
+                        <div class="advanced-search">
+                            <form class="search-wrapper cf">
+                                <input type="text" placeholder="{{ __('home.placeholder search') }}"
+                                       style="box-shadow: none">
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    @if (session('error'))
+                        {{ session('error') }}
+                    @endif
+                </div>
+        </div>
+        <div class="nav-item mobile-button mt-2">
+            <div class="container">
+                <div class="row">
+                    <div>
+                        <nav class="nav-menu mobile-menu">
+                            <ul>
+                                <li class="nav-item">
+                                    <a class="nav-link text-nowrap" href="#"><i class="fa fa-laptop"
+                                                                                aria-hidden="true"></i>&ensp; Electronic</a>
+                                    <ul>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-nowrap" href="#">Điều hòa</a>
+                                            <ul>
+                                                <li class="nav-item">123</li>
+                                            </ul>
+                                        </li>
+                                        <li class="nav-item">hi</li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-nowrap" href="/category/1"><i class="fa fa-laptop"
+                                                                                          aria-hidden="true"></i>&ensp;
+                                        Electronic Device123s</a>
+                                    <div class="megamenu">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h5>Desktops Computers</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">All-In-One</a></li>
+                                                    <li><a href="/category/1">Gaming Desktops</a></li>
+                                                    <li><a href="/category/1">DIY</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Laptops</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">Traditional Laptops</a></li>
+                                                    <li><a href="/category/1">Gaming Laptops</a></li>
+                                                    <li><a href="/category/1">2-in-1s</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Audio</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">Headphones & Headsets</a></li>
+                                                    <li><a href="/category/1">Portable Speakers</a></li>
+                                                    <li><a href="/category/1">Home Audio</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h5>Desktops Computers</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">All-In-One</a></li>
+                                                    <li><a href="/category/1">Gaming Desktops</a></li>
+                                                    <li><a href="/category/1">DIY</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Laptops</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">Traditional Laptops</a></li>
+                                                    <li><a href="/category/1">Gaming Laptops</a></li>
+                                                    <li><a href="/category/1">2-in-1s</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Audio</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">Headphones & Headsets</a></li>
+                                                    <li><a href="/category/1">Portable Speakers</a></li>
+                                                    <li><a href="/category/1">Home Audio</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-nowrap" href="/category/1"><i class="fa fa-television"
+                                                                                          aria-hidden="true"></i>&ensp;
+                                        TV & Home Appliances</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-nowrap" href="/category/1"><i class="fa fa-laptop"
+                                                                                          aria-hidden="true"></i>&ensp;
+                                        Electronic Devices</a>
+                                    <div class="megamenu">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h5>Desktops Computers</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">All-In-One</a></li>
+                                                    <li><a href="/category/1">Gaming Desktops</a></li>
+                                                    <li><a href="/category/1">DIY</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Laptops</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">Traditional Laptops</a></li>
+                                                    <li><a href="/category/1">Gaming Laptops</a></li>
+                                                    <li><a href="/category/1">2-in-1s</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Audio</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">Headphones & Headsets</a></li>
+                                                    <li><a href="/category/1">Portable Speakers</a></li>
+                                                    <li><a href="/category/1">Home Audio</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h5>Desktops Computers</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">All-In-One</a></li>
+                                                    <li><a href="/category/1">Gaming Desktops</a></li>
+                                                    <li><a href="/category/1">DIY</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Laptops</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">Traditional Laptops</a></li>
+                                                    <li><a href="/category/1">Gaming Laptops</a></li>
+                                                    <li><a href="/category/1">2-in-1s</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Audio</h5>
+                                                <ul>
+                                                    <li><a href="/category/1">Headphones & Headsets</a></li>
+                                                    <li><a href="/category/1">Portable Speakers</a></li>
+                                                    <li><a href="/category/1">Home Audio</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-nowrap" href="#"><i class="fa fa-television"
+                                                                                aria-hidden="true"></i>&ensp; TV &
+                                        Home
+                                        Appliances</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-nowrap" href="#"><i class="fa fa-laptop"
+                                                                                aria-hidden="true"></i>&ensp;
+                                        Electronic
+                                        Devices</a>
+                                    <div class="megamenu">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h5>Desktops Computers</h5>
+                                                <ul>
+                                                    <li><a href="#">All-In-One</a></li>
+                                                    <li><a href="#">Gaming Desktops</a></li>
+                                                    <li><a href="#">DIY</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Laptops</h5>
+                                                <ul>
+                                                    <li><a href="#">Traditional Laptops</a></li>
+                                                    <li><a href="#">Gaming Laptops</a></li>
+                                                    <li><a href="#">2-in-1s</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Audio</h5>
+                                                <ul>
+                                                    <li><a href="#">Headphones & Headsets</a></li>
+                                                    <li><a href="#">Portable Speakers</a></li>
+                                                    <li><a href="#">Home Audio</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h5>Desktops Computers</h5>
+                                                <ul>
+                                                    <li><a href="#">All-In-One</a></li>
+                                                    <li><a href="#">Gaming Desktops</a></li>
+                                                    <li><a href="#">DIY</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Laptops</h5>
+                                                <ul>
+                                                    <li><a href="#">Traditional Laptops</a></li>
+                                                    <li><a href="#">Gaming Laptops</a></li>
+                                                    <li><a href="#">2-in-1s</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Audio</h5>
+                                                <ul>
+                                                    <li><a href="#">Headphones & Headsets</a></li>
+                                                    <li><a href="#">Portable Speakers</a></li>
+                                                    <li><a href="#">Home Audio</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-nowrap" href="#"><i class="fa fa-television"
+                                                                                aria-hidden="true"></i>&ensp; TV &
+                                        Home
+                                        Appliances</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-nowrap" href="#"><i class="fa fa-laptop"
+                                                                                aria-hidden="true"></i>&ensp;
+                                        Electronic
+                                        Devices</a>
+                                    <div class="megamenu">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h5>Desktops Computers</h5>
+                                                <ul>
+                                                    <li><a href="#">All-In-One</a></li>
+                                                    <li><a href="#">Gaming Desktops</a></li>
+                                                    <li><a href="#">DIY</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Laptops</h5>
+                                                <ul>
+                                                    <li><a href="#">Traditional Laptops</a></li>
+                                                    <li><a href="#">Gaming Laptops</a></li>
+                                                    <li><a href="#">2-in-1s</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Audio</h5>
+                                                <ul>
+                                                    <li><a href="#">Headphones & Headsets</a></li>
+                                                    <li><a href="#">Portable Speakers</a></li>
+                                                    <li><a href="#">Home Audio</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <h5>Desktops Computers</h5>
+                                                <ul>
+                                                    <li><a href="#">All-In-One</a></li>
+                                                    <li><a href="#">Gaming Desktops</a></li>
+                                                    <li><a href="#">DIY</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Laptops</h5>
+                                                <ul>
+                                                    <li><a href="#">Traditional Laptops</a></li>
+                                                    <li><a href="#">Gaming Laptops</a></li>
+                                                    <li><a href="#">2-in-1s</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5>Audio</h5>
+                                                <ul>
+                                                    <li><a href="#">Headphones & Headsets</a></li>
+                                                    <li><a href="#">Portable Speakers</a></li>
+                                                    <li><a href="#">Home Audio</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-nowrap" href="#"><i class="fa fa-television"
+                                                                                aria-hidden="true"></i>&ensp; TV &
+                                        Home
+                                        Appliances</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
-            @endif
-            <div class="col-md-6 col-10 mt-2" id="in-search">
-                <div class="advanced-search">
-                    <form class="search-wrapper cf">
-                        <input type="text" placeholder="{{ __('home.placeholder search') }}"
-                               style="box-shadow: none">
-                        <button type="submit"><i class="fa fa-search"></i></button>
-                    </form>
-                </div>
-            </div>
-            @if (session('error'))
-                {{ session('error') }}
-            @endif
-        </div>
-
-    </div>
-    <div class="nav-item mobile-button mt-2">
-        <div class="container">
-            <div class="row">
-                <div>
-                    <nav class="nav-menu mobile-menu">
-                        <ul>
-                            <li class="nav-item">
-                                <a class="nav-link text-nowrap" href="#"><i class="fa fa-laptop"
-                                                                            aria-hidden="true"></i>&ensp; Electronic</a>
-                                <ul>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-nowrap" href="#">Điều hòa</a>
-                                        <ul>
-                                            <li class="nav-item">123</li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">hi</li>
-                                </ul>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link text-nowrap" href="/category/1"><i class="fa fa-laptop"
-                                                                                      aria-hidden="true"></i>&ensp;
-                                    Electronic Device123s</a>
-                                <div class="megamenu">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <h5>Desktops Computers</h5>
-                                            <ul>
-                                                <li><a href="/category/1">All-In-One</a></li>
-                                                <li><a href="/category/1">Gaming Desktops</a></li>
-                                                <li><a href="/category/1">DIY</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <h5>Laptops</h5>
-                                            <ul>
-                                                <li><a href="/category/1">Traditional Laptops</a></li>
-                                                <li><a href="/category/1">Gaming Laptops</a></li>
-                                                <li><a href="/category/1">2-in-1s</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <h5>Audio</h5>
-                                            <ul>
-                                                <li><a href="/category/1">Headphones & Headsets</a></li>
-                                                <li><a href="/category/1">Portable Speakers</a></li>
-                                                <li><a href="/category/1">Home Audio</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <h5>Desktops Computers</h5>
-                                            <ul>
-                                                <li><a href="/category/1">All-In-One</a></li>
-                                                <li><a href="/category/1">Gaming Desktops</a></li>
-                                                <li><a href="/category/1">DIY</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <h5>Laptops</h5>
-                                            <ul>
-                                                <li><a href="/category/1">Traditional Laptops</a></li>
-                                                <li><a href="/category/1">Gaming Laptops</a></li>
-                                                <li><a href="/category/1">2-in-1s</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <h5>Audio</h5>
-                                            <ul>
-                                                <li><a href="/category/1">Headphones & Headsets</a></li>
-                                                <li><a href="/category/1">Portable Speakers</a></li>
-                                                <li><a href="/category/1">Home Audio</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-nowrap" href="/category/1"><i class="fa fa-television"
-                                                                                      aria-hidden="true"></i>&ensp;
-                                    TV & Home Appliances</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-nowrap" href="/category/1"><i class="fa fa-laptop"
-                                                                                      aria-hidden="true"></i>&ensp;
-                                    Electronic Devices</a>
-                                <div class="megamenu">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <h5>Desktops Computers</h5>
-                                            <ul>
-                                                <li><a href="/category/1">All-In-One</a></li>
-                                                <li><a href="/category/1">Gaming Desktops</a></li>
-                                                <li><a href="/category/1">DIY</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <h5>Laptops</h5>
-                                            <ul>
-                                                <li><a href="/category/1">Traditional Laptops</a></li>
-                                                <li><a href="/category/1">Gaming Laptops</a></li>
-                                                <li><a href="/category/1">2-in-1s</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <h5>Audio</h5>
-                                            <ul>
-                                                <li><a href="/category/1">Headphones & Headsets</a></li>
-                                                <li><a href="/category/1">Portable Speakers</a></li>
-                                                <li><a href="/category/1">Home Audio</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <h5>Desktops Computers</h5>
-                                            <ul>
-                                                <li><a href="/category/1">All-In-One</a></li>
-                                                <li><a href="/category/1">Gaming Desktops</a></li>
-                                                <li><a href="/category/1">DIY</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <h5>Laptops</h5>
-                                            <ul>
-                                                <li><a href="/category/1">Traditional Laptops</a></li>
-                                                <li><a href="/category/1">Gaming Laptops</a></li>
-                                                <li><a href="/category/1">2-in-1s</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <h5>Audio</h5>
-                                            <ul>
-                                                <li><a href="/category/1">Headphones & Headsets</a></li>
-                                                <li><a href="/category/1">Portable Speakers</a></li>
-                                                <li><a href="/category/1">Home Audio</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-nowrap" href="#"><i class="fa fa-television"
-                                                                            aria-hidden="true"></i>&ensp; TV &
-                                    Home
-                                    Appliances</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-nowrap" href="#"><i class="fa fa-laptop"
-                                                                            aria-hidden="true"></i>&ensp;
-                                    Electronic
-                                    Devices</a>
-                                <div class="megamenu">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <h5>Desktops Computers</h5>
-                                            <ul>
-                                                <li><a href="#">All-In-One</a></li>
-                                                <li><a href="#">Gaming Desktops</a></li>
-                                                <li><a href="#">DIY</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <h5>Laptops</h5>
-                                            <ul>
-                                                <li><a href="#">Traditional Laptops</a></li>
-                                                <li><a href="#">Gaming Laptops</a></li>
-                                                <li><a href="#">2-in-1s</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <h5>Audio</h5>
-                                            <ul>
-                                                <li><a href="#">Headphones & Headsets</a></li>
-                                                <li><a href="#">Portable Speakers</a></li>
-                                                <li><a href="#">Home Audio</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <h5>Desktops Computers</h5>
-                                            <ul>
-                                                <li><a href="#">All-In-One</a></li>
-                                                <li><a href="#">Gaming Desktops</a></li>
-                                                <li><a href="#">DIY</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <h5>Laptops</h5>
-                                            <ul>
-                                                <li><a href="#">Traditional Laptops</a></li>
-                                                <li><a href="#">Gaming Laptops</a></li>
-                                                <li><a href="#">2-in-1s</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <h5>Audio</h5>
-                                            <ul>
-                                                <li><a href="#">Headphones & Headsets</a></li>
-                                                <li><a href="#">Portable Speakers</a></li>
-                                                <li><a href="#">Home Audio</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-nowrap" href="#"><i class="fa fa-television"
-                                                                            aria-hidden="true"></i>&ensp; TV &
-                                    Home
-                                    Appliances</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-nowrap" href="#"><i class="fa fa-laptop"
-                                                                            aria-hidden="true"></i>&ensp;
-                                    Electronic
-                                    Devices</a>
-                                <div class="megamenu">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <h5>Desktops Computers</h5>
-                                            <ul>
-                                                <li><a href="#">All-In-One</a></li>
-                                                <li><a href="#">Gaming Desktops</a></li>
-                                                <li><a href="#">DIY</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <h5>Laptops</h5>
-                                            <ul>
-                                                <li><a href="#">Traditional Laptops</a></li>
-                                                <li><a href="#">Gaming Laptops</a></li>
-                                                <li><a href="#">2-in-1s</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <h5>Audio</h5>
-                                            <ul>
-                                                <li><a href="#">Headphones & Headsets</a></li>
-                                                <li><a href="#">Portable Speakers</a></li>
-                                                <li><a href="#">Home Audio</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <h5>Desktops Computers</h5>
-                                            <ul>
-                                                <li><a href="#">All-In-One</a></li>
-                                                <li><a href="#">Gaming Desktops</a></li>
-                                                <li><a href="#">DIY</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <h5>Laptops</h5>
-                                            <ul>
-                                                <li><a href="#">Traditional Laptops</a></li>
-                                                <li><a href="#">Gaming Laptops</a></li>
-                                                <li><a href="#">2-in-1s</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <h5>Audio</h5>
-                                            <ul>
-                                                <li><a href="#">Headphones & Headsets</a></li>
-                                                <li><a href="#">Portable Speakers</a></li>
-                                                <li><a href="#">Home Audio</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-nowrap" href="#"><i class="fa fa-television"
-                                                                            aria-hidden="true"></i>&ensp; TV &
-                                    Home
-                                    Appliances</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
             </div>
         </div>
-    </div>
-
-            <div id="mobile-menu-wrap" class="mg-menu" style=" width: calc(100vw - 2rem);"></div>
-        </div>
+        <div id="mobile-menu-wrap" class="mg-menu" style=" width: calc(100vw - 2rem);"></div>
     </div>
     @unless(request()->is('/') || request()->is('login') || request()->is('register'))
         <div class="nav-item" id="nav-black" style="background: black">
@@ -1147,6 +1170,35 @@
     @endunless
 </header>
 <!-- Header End -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script>
+    // variable to store our intervalID
+    let nIntervId;
+
+    function changeColor() {
+        // check if an interval has already been set up
+        if (!nIntervId) {
+            nIntervId = setInterval(flashText, 1500);
+        }
+    }
+
+    function flashText() {
+        const oElem = document.getElementById("popup-alert");
+        if (oElem.className == 'd-none') {
+            oElem.className = 'd-block'
+        } else {
+            oElem.className = 'd-none'
+        }
+    }
+
+    function stopTextColor() {
+        clearInterval(nIntervId);
+        // release our intervalID from the variable
+        nIntervId = null;
+    }
+
+    changeColor();
+</script>
 <script>
     // Hàm logout
     function logout() {
