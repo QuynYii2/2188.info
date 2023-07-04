@@ -154,7 +154,7 @@
                     <a href="#!">Quản lý kho</a>
                     <ul class='sub-items pl-3'>
                         <li>
-                            <a href='#'>Lorem ipsum dolor sit amet.</a>
+                            <a href='{{ route('storage.manage.show') }}'>Thông tin kho hàng</a>
                         </li>
                         <li>
                             <a href='#'>Lorem ipsum dolor sit amet.</a>

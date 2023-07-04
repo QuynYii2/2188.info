@@ -32,7 +32,7 @@
                 </div>
                 <div class="form-group">
                     <div class="name">Mã sản phẩm</div>
-                    <input type="text" class="form-control" name="" id="" placeholder="Nhập mã sản phẩm" required>
+                    <input type="text" class="form-control" name="product_code" id="product_code" placeholder="Nhập mã sản phẩm" required>
                 </div>
                 <div class="form-group">
                     <div class="name">Mô tả ngắn</div>
@@ -43,14 +43,18 @@
                     <textarea class="form-control tiny" name="description" required></textarea>
                 </div>
                 <div class="form-group row">
-                    <div class="col-6 d-inline-block">
-                        <div class="control-label small name" for="date_start">Giá bán</div>
+                    <div class="col-4 d-inline-block">
+                        <div class="control-label small name" for="price">Giá bán</div>
                         <input type="number" class="form-control" required name="price" id="price"
                                placeholder="Nhập giá bán">
                     </div>
-                    <div class="col-6 d-inline-block">
-                        <div class="control-label small name" for="date_start">Giá khuyến mãi</div>
-                        <input type="number" class="form-control" name="qty" id="qty" placeholder="Nhập giá khuyến mãi">
+                    <div class="col-4 d-inline-block">
+                        <div class="control-label small name" for="">Giá khuyến mãi</div>
+                        <input type="number" class="form-control" name="" id="" placeholder="Nhập giá khuyến mãi">
+                    </div>
+                    <div class="col-4 d-inline-block">
+                        <div class="control-label small name" for="qty">Số lương</div>
+                        <input type="number" class="form-control" name="qty" id="qty" placeholder="Nhập số lượng sản phẩm">
                     </div>
                 </div>
                 {{--                <div class="form-group d-flex">--}}

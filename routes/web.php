@@ -19,6 +19,7 @@ use App\Http\Controllers\Seller\CategoryController;
 use App\Http\Controllers\Seller\ProductController;
 use App\Http\Controllers\Seller\PropertiesController;
 use App\Http\Controllers\Seller\SellerEvaluateProductController;
+use App\Http\Controllers\Seller\StorageController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
@@ -138,6 +139,9 @@ Route::group(['middleware' => 'role.admin'], function () {
 
 });
 
+Route::group(['middleware' => 'role.seller'], function () {
+
+});
 Route::group(['middleware' => 'role.seller-or-admin'], function () {
 
     Route::get('/attributes', [AttributeController::class, 'index'])->name('attributes.index');
@@ -198,6 +202,10 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::get('/account-manage/delete/{id}', [AccountController::class, 'destroy'])->name('account.delete');
     Route::get('/account-manage/view/{id}', [AccountController::class, 'show'])->name('account.show.shop');
     Route::get('/account-manage/view-cart/{id}', [AccountController::class, 'viewCart'])->name('account.show.order');
+
+    //Quản lý kho hàng
+    Route::get('/storage-manage', [StorageController::class, 'index'])->name('storage.manage.show');
+
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {

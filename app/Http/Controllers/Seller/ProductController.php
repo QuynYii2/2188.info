@@ -110,6 +110,8 @@ class ProductController extends Controller
 
         $product->name = $request->input('name');
         $product->description = $request->input('description');
+        $product->product_code = $request->input('product_code');
+        $product->qty = $request->input('qty');
         $product->price = $request->input('price');
         $product->category_id = $request->input('category_id');
         $product->thumbnail = $thumbnailPath;
