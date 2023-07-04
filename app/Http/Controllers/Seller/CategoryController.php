@@ -94,6 +94,7 @@ class CategoryController extends Controller
             return redirect()->route('seller.categories.index');
         }
         $category->delete();
+        alert()->success('Success', 'Category đã được xóa thành công!');
         return redirect()->route('seller.categories.index')->with('success', 'Category đã được xóa thành công!');
     }
 }
