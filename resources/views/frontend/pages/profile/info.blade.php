@@ -91,8 +91,8 @@
             <div id="form-info" class="col-md-12 col-lg-6 border-bottom border-right">
                 <form action="{{ route('user.updateInfo') }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <div class="row align-items-center">
-                        <div class="col-auto col-md-4">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-auto">
                             <div class="avatar-upload">
                                 <div class="avatar-edit">
                                     <input type="file" id="avatarUpload" class="imageUpload" name="avatar"
