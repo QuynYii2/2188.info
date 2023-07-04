@@ -1,13 +1,11 @@
 @extends('backend.layouts.master')
 
 @section('content')
-    <div class="container mt-3">
+    <div class="mt-3 p-2">
         <div class="">
             <h5>Tạo mới thuộc tính con</h5>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <form method="POST" action="{{ route('properties.store') }}">
+        <form method="POST" action="{{ route('properties.store') }}">
                     @csrf
 
                     <div class="form-group">
@@ -28,8 +26,6 @@
 
                     <button type="submit" class="btn btn-success">Tạo mới</button>
                 </form>
-            </div>
-        </div>
     </div>
 
 @endsection

@@ -257,6 +257,7 @@ class UserController extends Controller
             $user->password = Hash::make($newPassword);
             $success = $user->save();
             if ($success) {
+                $request->session()->flush();
                 alert()->success('Success', 'Change Password Success!');
             } else {
                 alert()->error('Error', 'Change Password error!');

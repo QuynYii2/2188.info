@@ -62,7 +62,7 @@
 </style>
 @section('content')
     <div class="card">
-        <div class="pt-4 d-flex justify-content-between align-items-center">
+        <div class="pt-4 pl-4 pr-4 d-flex justify-content-between align-items-center">
             <h5 class="card-title">Danh sách thuộc tính con</h5>
             <a href="{{ route('properties.create') }}" class="btn btn-success">Thêm mới</a>
         </div>
