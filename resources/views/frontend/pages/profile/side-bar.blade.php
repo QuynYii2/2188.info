@@ -38,7 +38,7 @@
 
 
 </style>
-<div class="mt-5 pt-2 pl-3 bg-white d-flex desktop-button">
+<div class="pt-2 pl-3 bg-white d-flex desktop-button">
         <div class="d-inline-block">
             <h6>{{ __('home.account of') }}</h6>
             <h4>{{$user->name}}</h4>

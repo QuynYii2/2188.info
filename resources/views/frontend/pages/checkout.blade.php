@@ -68,9 +68,9 @@
                                         @foreach ($carts as $cartItem)
                                             <tr>
                                                 <td>{{ $cartItem->product->name }}</td>
-                                                <td>{{ $cartItem->quantity }}</td>
-                                                <td id="price-{{ $cartItem->id }}">{{ $cartItem->price }}</td>
-                                                <td class="float-end"
+                                                <td class="text-center">{{ $cartItem->quantity }}</td>
+                                                <td class="text-center" id="price-{{ $cartItem->id }}">{{ $cartItem->price }}</td>
+                                                <td class="float-end text-center"
                                                     id="total-quantity-{{ $cartItem->id }}">{{ $cartItem->price*$cartItem->quantity }}</td>
                                             </tr>
                                         @endforeach
@@ -94,21 +94,28 @@
                                         <label for="email"><i class="fa fa-envelope"></i>{{ __('home.email') }}</label>
                                         <input type="text" id="email" name="email" placeholder="john@example.com"
                                                value="{{$user->email}}" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" required>
-                                        <label for="adr"><i
+                                        <label for="phone"><i
                                                     class="fa fa-address-card-o"></i>{{ __('home.phone number') }}
                                         </label>
                                         <input type="number" id="phone" name="phone" placeholder="035985935"
                                                value="{{$user->phone}}" required>
-                                        <label for="city"><i class="fa fa-institution"></i>{{ __('home.address') }}
+                                        <label for="address">
+                                        <i class="fa fa-institution"></i>{{ __('home.address') }}</br>
                                         </label>
-                                        <input type="radio" id="address-order1" name="address-order" checked>
-                                        <span for="address-order1">{{ __('home.Use Default Address') }}</span><br>
-                                        <input type="text" id="address1" name="address" placeholder="542 W. 15th Street"
-                                               value="{{$user->address}}">
-                                        <input type="radio" id="address-order2" name="address-order">
-                                        <span for="address-order2">{{ __('home.Use Different Address') }}</span><br>
-                                        <input type="text" id="address2" name="address" placeholder="542 W. 15th Street"
-                                               value="" disabled>
+                                        <input type="text" id="address" name="address" placeholder="542 W. 15th Street"
+                                               value="{{$user->address}}" required>
+                                        <input onclick="check();" type="radio" id="address-order2" name="address-order">
+                                        <span>{{ __('home.Use Different Address') }}</span><br>
+                                        <select id="address2" name="address2" disabled class="form-control" onchange="check();">
+                                            @php
+                                                $addresses = \App\Models\OrderAddress::where([['user_id', Auth::user()->id], ['status', \App\Enums\AddressOrderStatus::ACTIVE]])->get();
+                                            @endphp
+                                            @foreach($addresses as $address)
+                                                <option value="{{$address}}">{{$address->address_detail}}
+                                                    -{{$address->location}}-{{$address->province}}
+                                                    -{{$address->city}}</option>
+                                            @endforeach
+                                        </select>
                                         <label for="voucher">
                                             <i class="fa fa-user"></i>Mã giảm giá có sẵn
                                         </label>
@@ -216,6 +223,9 @@
                                         class=" mt-3 mb-3 btn btn-danger">{{ __('home.Pay Now') }}</button>
 
                             </div>
+                            <input type="text" id="total_price" name="total_price" value="0" hidden="">
+                            <input type="text" id="shipping_price" name="shipping_price" value="0" hidden="">
+                            <input type="text" id="discount_price" name="discount_price" value="0" hidden="">
                             <input type="text" id="price_id" name="priceID" value="0" hidden="">
                             <input type="text" id="voucher_id" name="voucherID" value="0" hidden="">
                         </form>
@@ -256,31 +266,6 @@
                                 let voucherID = document.getElementById('voucher_id');
                                 voucherID.value = myArray[2];
 
-                                function getAllTotal() {
-                                    let totalMax = document.getElementById('max-total');
-                                    let totalPrice = document.getElementById('total-price');
-                                    let shippingPrice = document.getElementById('shipping-price').innerText;
-                                    let salePrice = document.getElementById('sale-price').innerText;
-                                    let checkOutPrice = document.getElementById('checkout-price');
-                                    var firstCells = document.querySelectorAll('#table-checkout td:nth-child(4)');
-                                    var cellValues = [];
-                                    firstCells.forEach(function (singleCell) {
-                                        cellValues.push(singleCell.innerText);
-                                    });
-                                    let i, total = 0;
-                                    for (i = 0; i < cellValues.length; i++) {
-                                        total = parseFloat(total) + parseFloat(cellValues[i]);
-                                    }
-                                    totalMax.innerText = total;
-                                    totalPrice.innerHTML = total;
-
-                                    let max = parseFloat(total) + parseFloat(shippingPrice) - parseFloat(salePrice)
-
-                                    checkOutPrice.innerHTML = max.toFixed(1);
-                                    let price = document.getElementById('price_id');
-                                    price.value = checkOutPrice.innerHTML;
-                                }
-
                                 getAllTotal();
                             },
                             error: function (exception) {
@@ -291,6 +276,32 @@
                 }
             })
         }
+
+        function getAllTotal() {
+            let totalMax = document.getElementById('max-total');
+            let totalPrice = document.getElementById('total-price');
+            let shippingPrice = document.getElementById('shipping-price').innerText;
+            let salePrice = document.getElementById('sale-price').innerText;
+            let checkOutPrice = document.getElementById('checkout-price');
+            var firstCells = document.querySelectorAll('#table-checkout td:nth-child(4)');
+            var cellValues = [];
+            firstCells.forEach(function (singleCell) {
+                cellValues.push(singleCell.innerText);
+            });
+            let i, total = 0;
+            for (i = 0; i < cellValues.length; i++) {
+                total = parseFloat(total) + parseFloat(cellValues[i]);
+            }
+            totalMax.innerText = total;
+            totalPrice.innerHTML = total;
+
+            let max = parseFloat(total) + parseFloat(shippingPrice) - parseFloat(salePrice)
+
+            checkOutPrice.innerHTML = max.toFixed(1);
+            let price = document.getElementById('price_id');
+            price.value = checkOutPrice.innerHTML;
+        }
+        getAllTotal();
 
         getvoucher();
 
@@ -326,5 +337,27 @@
             }
         });
 
+    </script>
+    <script>
+        function check() {
+            let btnRadio = document.getElementById('address-order2')
+            let inputSelect = document.getElementById('address2')
+
+            if (btnRadio.checked === true) {
+                inputSelect.disabled = false;
+                addressObj = JSON.parse(inputSelect.value);
+                change(addressObj)
+            }
+        }
+
+        function change(addressObj) {
+            let fname = document.getElementById('fname')
+            let phone = document.getElementById('phone')
+            let address = document.getElementById('address')
+
+            fname.value = addressObj.username;
+            phone.value = addressObj.phone
+            address.value = addressObj.address_detail + ', ' + addressObj.location + '-' + addressObj.province + '-' + addressObj.city;
+        }
     </script>
 @endsection

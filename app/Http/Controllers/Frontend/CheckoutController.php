@@ -9,6 +9,8 @@ use App\Enums\NotificationStatus;
 use App\Enums\OrderItemStatus;
 use App\Enums\OrderMethod;
 use App\Enums\OrderStatus;
+use App\Enums\PriceUpLevel;
+use App\Enums\UserInterestEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PaypalPaymentController;
 use App\Models\Cart;
@@ -60,7 +62,7 @@ class CheckoutController extends Controller
         return $realTotalPrice;
     }
 
-    private function checkout(Request $request, $status, $orderMethod, $name, $email, $phone, $address, $idVoucher)
+    private function checkout(Request $request, $status, $orderMethod, $name, $email, $phone, $address, $idVoucher, $array)
     {
         $carts = Cart::where([
             ['user_id', '=', Auth::user()->id],
@@ -72,6 +74,8 @@ class CheckoutController extends Controller
             $realTotalPrice = $realTotalPrice + ($cart->price * $cart->quantity);
         }
 
+        $array = explode(',', $array);
+
         $order = [
             'user_id' => Auth::user()->id,
             'fullname' => $name,
@@ -79,14 +83,53 @@ class CheckoutController extends Controller
             'phone' => $phone,
             'address' => $address,
             'orders_method' => $orderMethod,
-            'total_price' => $realTotalPrice,
-            'shipping_price' => 1,
-            'discount_price' => 1,
-            'total' => $realTotalPrice,
+            'total_price' => $array[0],
+            'shipping_price' => $array[1],
+            'discount_price' => $array[2],
+            'total' => $array[3],
             'status' => $status
         ];
 
         Order::create($order);
+
+        $totalCheck = 0;
+        $listOrder = Order::where('user_id', Auth::user()->id)->get();
+        $user = User::find(Auth::user()->id);
+        foreach ($listOrder as $item) {
+            $totalCheck = $totalCheck + $item->total;
+        }
+
+        if (1 <= count($listOrder) && count($listOrder) < 10) {
+            if (PriceUpLevel::LEVEL1 <= $totalCheck && $totalCheck < PriceUpLevel::LEVEL2) {
+                $user->level_account = UserInterestEnum::VIP;
+            } elseif (PriceUpLevel::LEVEL2 <= $totalCheck && $totalCheck < PriceUpLevel::LEVEL3) {
+                $user->level_account = UserInterestEnum::VVIP;
+            } elseif (PriceUpLevel::LEVEL3 <= $totalCheck) {
+                $user->level_account = UserInterestEnum::SVIP;
+            } else {
+                $user->level_account = UserInterestEnum::FREE;
+            }
+        } elseif (10 <= count($listOrder) && count($listOrder) < 20) {
+            if (PriceUpLevel::LEVEL2 <= $totalCheck && $totalCheck < PriceUpLevel::LEVEL3) {
+                $user->level_account = UserInterestEnum::VVIP;
+            } elseif (PriceUpLevel::LEVEL3 <= $totalCheck) {
+                $user->level_account = UserInterestEnum::SVIP;
+            } else {
+                $user->level_account = UserInterestEnum::VIP;
+            }
+        } elseif (20 <= count($listOrder) && count($listOrder) < 50) {
+            if (PriceUpLevel::LEVEL3 <= $totalCheck) {
+                $user->level_account = UserInterestEnum::SVIP;
+            } else {
+                $user->level_account = UserInterestEnum::VVIP;
+            }
+        } elseif (50 <= count($listOrder)) {
+            $user->level_account = UserInterestEnum::SVIP;
+        } else {
+            $user->level_account = UserInterestEnum::FREE;
+        }
+
+        $user->save();
 
         $orders = Order::where([
             ['user_id', '=', Auth::user()->id],
@@ -143,7 +186,16 @@ class CheckoutController extends Controller
         $email = $request->input('email');
         $phone = $request->input('phone');
         $address = $request->input('address');
-        $this->checkout($request, $status, OrderMethod::IMMEDIATE, $name, $email, $phone, $address, $idVoucher);
+        $total = $request->input('total_price');
+        $shippingPrice = $request->input('shipping_price');
+        $salePrice = $request->input('discount_price');
+        $checkOutPrice = $request->input('priceID');
+        $array[] = $total;
+        $array[] = $shippingPrice;
+        $array[] = $salePrice;
+        $array[] = $checkOutPrice;
+        $array = implode(',', $array);
+        $this->checkout($request, $status, OrderMethod::IMMEDIATE, $name, $email, $phone, $address, $idVoucher, $array);
         alert()->success('Success', 'Đặt hàng thành công');
         return redirect()->route('order.show');
     }
@@ -167,7 +219,16 @@ class CheckoutController extends Controller
                 $email = $request->input('email');
                 $phone = $request->input('phone');
                 $address = $request->input('address');
-                $order = $this->checkout($request, $status, OrderMethod::SHOPPING_MALL_COIN, $name, $email, $phone, $address, $idVoucher);
+                $total = $request->input('total_price');
+                $shippingPrice = $request->input('shipping_price');
+                $salePrice = $request->input('discount_price');
+                $checkOutPrice = $request->input('priceID');
+                $array[] = $total;
+                $array[] = $shippingPrice;
+                $array[] = $salePrice;
+                $array[] = $checkOutPrice;
+                $array = implode(',', $array);
+                $order = $this->checkout($request, $status, OrderMethod::SHOPPING_MALL_COIN, $name, $email, $phone, $address, $idVoucher, $array);
                 return redirect()->route('order.show')->with('success', 'Transaction complete.');
             }
         }
@@ -182,12 +243,23 @@ class CheckoutController extends Controller
         $phone = $request->input('phone');
         $address = $request->input('address');
         $realTotalPrice = $request->input('priceID');
+        $total = $request->input('total_price');
+        $shippingPrice = $request->input('shipping_price');
+        $salePrice = $request->input('discount_price');
+        $checkOutPrice = $request->input('priceID');
+        $array[] = $total;
+        $array[] = $shippingPrice;
+        $array[] = $salePrice;
+        $array[] = $checkOutPrice;
+        $array = implode(',', $array);
         $response = (new PaypalPaymentController())->paypalTotal($request, $realTotalPrice, route('checkout.success.paypal', [
             'name' => $name,
             'email' => $email,
             'phone' => $phone,
             'address' => $address,
-            'idVoucher' => $idVoucher]));
+            'idVoucher' => $idVoucher,
+            'array' => $array,
+        ]));
 
         if (isset($response['id']) && $response['id'] != null) {
             // redirect to approve href
@@ -208,7 +280,7 @@ class CheckoutController extends Controller
         }
     }
 
-    public function checkoutSuccess(Request $request, $name, $email, $phone, $address, $idVoucher)
+    public function checkoutSuccess(Request $request, $name, $email, $phone, $address, $idVoucher, $array)
     {
         $status = OrderStatus::WAIT_PAYMENT;
         $provider = new PayPalClient;
@@ -219,7 +291,7 @@ class CheckoutController extends Controller
         if (isset($response['status']) && $response['status'] == 'COMPLETED') {
             $status = OrderStatus::PROCESSING;
 
-            $order = $this->checkout($request, $status, OrderMethod::ElectronicWallet, $name, $email, $phone, $address, $idVoucher);
+            $order = $this->checkout($request, $status, OrderMethod::ElectronicWallet, $name, $email, $phone, $address, $idVoucher, $array);
 
             $this->notifiCreate();
 

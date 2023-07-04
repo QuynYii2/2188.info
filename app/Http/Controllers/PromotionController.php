@@ -32,6 +32,10 @@ class PromotionController extends Controller
             return back();
         }
         $products = $this->mergeDuplicate($request);
+        if (count($products) < 1) {
+            alert()->error('Error', 'Không có sản phẩm phù hợp!');
+            return redirect(route('seller.promotion.list'));
+        }
         return view('backend/promotion/detail', compact('promotion', 'products'));
     }
 
@@ -77,6 +81,10 @@ class PromotionController extends Controller
     {
         (new HomeController())->getLocale($request);
         $products = $this->mergeDuplicate($request);
+        if (count($products) < 1) {
+            alert()->error('Error', 'Không có sản phẩm phù hợp!');
+            return redirect(route('seller.promotion.list'));
+        }
         return view('backend/promotion/create', compact('products'));
     }
 

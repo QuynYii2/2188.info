@@ -191,7 +191,7 @@
                                                 {{count($quantity)}}
                                             </td>
                                             <td>
-                                                {{$order->total_price}}
+                                                {{$order->total}}
                                             </td>
                                             <td>
                                                 {{$order->status}}
@@ -214,18 +214,24 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th class="float-left">OrderID</th>
-                                        <th class="float-right">Total Price</th>
+                                        <th>{{ __('OrderID') }}</th>
+                                        <th>{{ __('Payment Method') }}</th>
+                                        <th>{{ __('Shipping Price') }}</th>
+                                        <th>{{ __('Discount Price') }}</th>
+                                        <th>{{ __('Quantity') }}</th>
+                                        <th>{{ __('Total Price') }}</th>
+                                        <th>{{ __('Status') }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
+
                                     @foreach ($orderWaitPay as $order)
                                         <tr>
-                                            <td class="float-left">
+                                            <td>
                                                 <button class="text-decoration-none" data-toggle="modal"
-                                                        data-target="#updateOrderWait{{$order->id}}"
+                                                        data-target="#updateOrder1{{$order->id}}"
                                                         style="cursor: pointer">{{ $loop->index+1 }}</button>
-                                                <div class="modal fade" id="updateOrderWait{{$order->id}}" tabIndex="-1"
+                                                <div class="modal fade" id="updateOrder1{{$order->id}}" tabIndex="-1"
                                                      role="dialog"
                                                      aria-labelledby="editModalLabel">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -239,45 +245,57 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form action="{{route('order.cancel', $order->id)}}"
+                                                                <form id="delete-account-form"
+                                                                      action="{{route('order.cancel', $order->id)}}"
                                                                       method="post">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <div class="row mb-5">
-                                                                        <div class="col">
-                                                                            <label for="fname">Full name:</label>
-                                                                            <input type="text"
-                                                                                   value="{{$order->fullname}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <label for="fname">Email:</label>
-                                                                            <input type="text" value="{{$order->email}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <label for="fname">Phone:</label>
-                                                                            <input type="text" value="{{$order->phone}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <label for="fname">Address:</label>
-                                                                            <input type="text"
-                                                                                   value="{{$order->address}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col mt-3">
-                                                                            <label for="fname">Total Price:</label>
-                                                                            <input type="text"
-                                                                                   value="${{$order->total}}"
-                                                                                   disabled>
-                                                                        </div>
+                                                                    <div class="">
+                                                                        <table class="table">
+                                                                            <thead>
+                                                                            <tr>
+                                                                                <th>{{ __('Name') }}</th>
+                                                                                <th>{{ __('Quantity') }}</th>
+                                                                                <th>{{ __('Price') }}</th>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            @php
+                                                                                $orderItems = \App\Models\OrderItem::where('order_id', $order->id)->get();
+                                                                            @endphp
+                                                                            @foreach ($orderItems as $orderItem)
+                                                                                @php
+                                                                                    $product1 = \App\Models\Product::find($orderItem->product_id);
+                                                                                @endphp
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        @if ($product1)
+                                                                                            {{ $product1->name }}
+                                                                                        @endif
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{$orderItem->quantity}}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{$orderItem->price}}
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @endforeach
+                                                                            </tbody>
+                                                                        </table>
                                                                     </div>
                                                                     <div class="d-flex justify-content-around">
-                                                                        <button type="submit"
-                                                                                class="btn w-25 btn-danger">
-                                                                            Cancel
-                                                                        </button>
+                                                                        @if($order->status == \App\Enums\OrderStatus::PROCESSING  || $order->status == \App\Enums\OrderStatus::WAIT_PAYMENT)
+                                                                            <button type="submit"
+                                                                                    class="btn w-25 btn-danger">
+                                                                                Cancel
+                                                                            </button>
+                                                                        @else
+                                                                            <button class="btn w-25 btn-danger"
+                                                                                    disabled>
+                                                                                Cancel
+                                                                            </button>
+                                                                        @endif
                                                                         <button type="button"
                                                                                 class="btn w-25 btn-secondary"
                                                                                 data-dismiss="modal">Back
@@ -289,9 +307,26 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="float-right">
+                                            <td>
+                                                {{$order->orders_method}}
+                                            </td>
+                                            <td>
+                                                {{$order->shipping_price}}
+                                            </td>
+                                            <td>
+                                                {{$order->discount_price}}
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $quantity = DB::table('order_items')->where('order_id', $order->id)->get();
+                                                @endphp
+                                                {{count($quantity)}}
+                                            </td>
+                                            <td>
                                                 {{$order->total}}
-                                                <div class="small">{{$order->status}}</div>
+                                            </td>
+                                            <td>
+                                                {{$order->status}}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -311,19 +346,25 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th class="float-left">OrderID</th>
-                                        <th class="float-right">Total Price</th>
+                                        <th>{{ __('OrderID') }}</th>
+                                        <th>{{ __('Payment Method') }}</th>
+                                        <th>{{ __('Shipping Price') }}</th>
+                                        <th>{{ __('Discount Price') }}</th>
+                                        <th>{{ __('Quantity') }}</th>
+                                        <th>{{ __('Total Price') }}</th>
+                                        <th>{{ __('Status') }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
+
                                     @foreach ($orderProcessing as $order)
                                         <tr>
-                                            <td class="float-left">
+                                            <td>
                                                 <button class="text-decoration-none" data-toggle="modal"
-                                                        data-target="#updateOrderProcess{{$order->id}}"
+                                                        data-target="#updateOrder2{{$order->id}}"
                                                         style="cursor: pointer">{{ $loop->index+1 }}</button>
-                                                <div class="modal fade" id="updateOrderProcess{{$order->id}}"
-                                                     tabIndex="-1" role="dialog"
+                                                <div class="modal fade" id="updateOrder2{{$order->id}}" tabIndex="-1"
+                                                     role="dialog"
                                                      aria-labelledby="editModalLabel">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
@@ -341,49 +382,53 @@
                                                                       method="post">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <div class="row mb-5">
-                                                                        <div class="col">
-                                                                            <label for="fname">Full name:</label>
-                                                                            <input type="text"
-                                                                                   value="{{$order->fullname}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <label for="fname">Email:</label>
-                                                                            <input type="text" value="{{$order->email}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <label for="fname">Phone:</label>
-                                                                            <input type="text" value="{{$order->phone}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <label for="fname">Address:</label>
-                                                                            <input type="text"
-                                                                                   value="{{$order->address}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col mt-3">
-                                                                            <label for="fname">Total Price:</label>
-                                                                            <input type="text"
-                                                                                   value="${{$order->total}}"
-                                                                                   disabled>
-                                                                        </div>
+                                                                    <div class="">
+                                                                        <table class="table">
+                                                                            <thead>
+                                                                            <tr>
+                                                                                <th>{{ __('Name') }}</th>
+                                                                                <th>{{ __('Quantity') }}</th>
+                                                                                <th>{{ __('Price') }}</th>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            @php
+                                                                                $orderItem1s = \App\Models\OrderItem::where('order_id', $order->id)->get();
+                                                                            @endphp
+                                                                            @foreach ($orderItem1s as $order_item2)
+                                                                                @php
+                                                                                    $product2 = \App\Models\Product::find($order_item2->product_id);
+                                                                                @endphp
+                                                                                <tr>
+                                                                                    <td>
+
+                                                                                        @if ($product2)
+                                                                                            {{ $product2->name }}
+                                                                                        @endif
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{$order_item2->quantity}}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{$order_item2->price}}
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @endforeach
+                                                                            </tbody>
+                                                                        </table>
                                                                     </div>
                                                                     <div class="d-flex justify-content-around">
-                                                                        @if($order->status == \App\Enums\OrderStatus::PROCESSING)
+                                                                        @if($order->status == \App\Enums\OrderStatus::PROCESSING  || $order->status == \App\Enums\OrderStatus::WAIT_PAYMENT)
                                                                             <button type="submit"
                                                                                     class="btn w-25 btn-danger">
                                                                                 Cancel
                                                                             </button>
                                                                         @else
-                                                                            <button type="" class="btn w-25 btn-danger"
+                                                                            <button class="btn w-25 btn-danger"
                                                                                     disabled>
                                                                                 Cancel
                                                                             </button>
                                                                         @endif
-
                                                                         <button type="button"
                                                                                 class="btn w-25 btn-secondary"
                                                                                 data-dismiss="modal">Back
@@ -395,9 +440,26 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="float-right">
+                                            <td>
+                                                {{$order->orders_method}}
+                                            </td>
+                                            <td>
+                                                {{$order->shipping_price}}
+                                            </td>
+                                            <td>
+                                                {{$order->discount_price}}
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $quantity = DB::table('order_items')->where('order_id', $order->id)->get();
+                                                @endphp
+                                                {{count($quantity)}}
+                                            </td>
+                                            <td>
                                                 {{$order->total}}
-                                                <div class="small">{{$order->status}}</div>
+                                            </td>
+                                            <td>
+                                                {{$order->status}}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -417,18 +479,24 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th class="float-left">OrderID</th>
-                                        <th class="float-right">Total Price</th>
+                                        <th>{{ __('OrderID') }}</th>
+                                        <th>{{ __('Payment Method') }}</th>
+                                        <th>{{ __('Shipping Price') }}</th>
+                                        <th>{{ __('Discount Price') }}</th>
+                                        <th>{{ __('Quantity') }}</th>
+                                        <th>{{ __('Total Price') }}</th>
+                                        <th>{{ __('Status') }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
+
                                     @foreach ($orderShipping as $order)
                                         <tr>
-                                            <td class="float-left">
+                                            <td>
                                                 <button class="text-decoration-none" data-toggle="modal"
-                                                        data-target="#updateOrderShip{{$order->id}}"
+                                                        data-target="#updateOrder3{{$order->id}}"
                                                         style="cursor: pointer">{{ $loop->index+1 }}</button>
-                                                <div class="modal fade" id="updateOrderShip{{$order->id}}" tabIndex="-1"
+                                                <div class="modal fade" id="updateOrder3{{$order->id}}" tabIndex="-1"
                                                      role="dialog"
                                                      aria-labelledby="editModalLabel">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -442,44 +510,57 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form id="delete-account-form">
-                                                                    <div class="row mb-5">
-                                                                        <div class="col">
-                                                                            <label for="fname">Full name:</label>
-                                                                            <input type="text"
-                                                                                   value="{{$order->fullname}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <label for="fname">Email:</label>
-                                                                            <input type="text" value="{{$order->email}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <label for="fname">Phone:</label>
-                                                                            <input type="text" value="{{$order->phone}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <label for="fname">Address:</label>
-                                                                            <input type="text"
-                                                                                   value="{{$order->address}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col mt-3">
-                                                                            <label for="fname">Total Price:</label>
-                                                                            <input type="text"
-                                                                                   value="${{$order->total}}"
-                                                                                   disabled>
-                                                                        </div>
+                                                                <form id="delete-account-form"
+                                                                      action="{{route('order.cancel', $order->id)}}"
+                                                                      method="post">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <div class="">
+                                                                        <table class="table">
+                                                                            <thead>
+                                                                            <tr>
+                                                                                <th>{{ __('Name') }}</th>
+                                                                                <th>{{ __('Quantity') }}</th>
+                                                                                <th>{{ __('Price') }}</th>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            @php
+                                                                                $orderItem2s = \App\Models\OrderItem::where('order_id', $order->id)->get();
+                                                                            @endphp
+                                                                            @foreach ($orderItem2s as $order_item3)
+                                                                                @php
+                                                                                    $product3 = \App\Models\Product::find($order_item3->product_id);
+                                                                                @endphp
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        @if ($product3)
+                                                                                            {{ $product3->name }}
+                                                                                        @endif
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{$order_item3->quantity}}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{$order_item3->price}}
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @endforeach
+                                                                            </tbody>
+                                                                        </table>
                                                                     </div>
                                                                     <div class="d-flex justify-content-around">
-                                                                        <button type="submit"
-                                                                                class="btn w-25 btn-danger"
-                                                                                disabled>
-                                                                            Cancel
-                                                                        </button>
-
+                                                                        @if($order->status == \App\Enums\OrderStatus::PROCESSING  || $order->status == \App\Enums\OrderStatus::WAIT_PAYMENT)
+                                                                            <button type="submit"
+                                                                                    class="btn w-25 btn-danger">
+                                                                                Cancel
+                                                                            </button>
+                                                                        @else
+                                                                            <button class="btn w-25 btn-danger"
+                                                                                    disabled>
+                                                                                Cancel
+                                                                            </button>
+                                                                        @endif
                                                                         <button type="button"
                                                                                 class="btn w-25 btn-secondary"
                                                                                 data-dismiss="modal">Back
@@ -491,9 +572,26 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="float-right">
+                                            <td>
+                                                {{$order->orders_method}}
+                                            </td>
+                                            <td>
+                                                {{$order->shipping_price}}
+                                            </td>
+                                            <td>
+                                                {{$order->discount_price}}
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $quantity = DB::table('order_items')->where('order_id', $order->id)->get();
+                                                @endphp
+                                                {{count($quantity)}}
+                                            </td>
+                                            <td>
                                                 {{$order->total}}
-                                                <div class="small">{{$order->status}}</div>
+                                            </td>
+                                            <td>
+                                                {{$order->status}}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -513,19 +611,25 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th class="float-left">OrderID</th>
-                                        <th class="float-right">Total Price</th>
+                                        <th>{{ __('OrderID') }}</th>
+                                        <th>{{ __('Payment Method') }}</th>
+                                        <th>{{ __('Shipping Price') }}</th>
+                                        <th>{{ __('Discount Price') }}</th>
+                                        <th>{{ __('Quantity') }}</th>
+                                        <th>{{ __('Total Price') }}</th>
+                                        <th>{{ __('Status') }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
+
                                     @foreach ($orderDelivered as $order)
                                         <tr>
-                                            <td class="float-left">
+                                            <td>
                                                 <button class="text-decoration-none" data-toggle="modal"
-                                                        data-target="#updateOrderDelivery{{$order->id}}"
+                                                        data-target="#updateOrder4{{$order->id}}"
                                                         style="cursor: pointer">{{ $loop->index+1 }}</button>
-                                                <div class="modal fade" id="updateOrderDelivery{{$order->id}}"
-                                                     tabIndex="-1" role="dialog"
+                                                <div class="modal fade" id="updateOrder4{{$order->id}}" tabIndex="-1"
+                                                     role="dialog"
                                                      aria-labelledby="editModalLabel">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
@@ -538,43 +642,57 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form id="delete-account-form">
-                                                                    <div class="row mb-5">
-                                                                        <div class="col">
-                                                                            <label for="fname">Full name:</label>
-                                                                            <input type="text"
-                                                                                   value="{{$order->fullname}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <label for="fname">Email:</label>
-                                                                            <input type="text" value="{{$order->email}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <label for="fname">Phone:</label>
-                                                                            <input type="text" value="{{$order->phone}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <label for="fname">Address:</label>
-                                                                            <input type="text"
-                                                                                   value="{{$order->address}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col mt-3">
-                                                                            <label for="fname">Total Price:</label>
-                                                                            <input type="text"
-                                                                                   value="${{$order->total}}"
-                                                                                   disabled>
-                                                                        </div>
+                                                                <form id="delete-account-form"
+                                                                      action="{{route('order.cancel', $order->id)}}"
+                                                                      method="post">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <div class="">
+                                                                        <table class="table">
+                                                                            <thead>
+                                                                            <tr>
+                                                                                <th>{{ __('Name') }}</th>
+                                                                                <th>{{ __('Quantity') }}</th>
+                                                                                <th>{{ __('Price') }}</th>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            @php
+                                                                                $orderItem3s = \App\Models\OrderItem::where('order_id', $order->id)->get();
+                                                                            @endphp
+                                                                            @foreach ($orderItem3s as $order_item4)
+                                                                                @php
+                                                                                    $product4 = \App\Models\Product::find($order_item4->product_id);
+                                                                                @endphp
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        @if ($product4)
+                                                                                            {{ $product4->name }}
+                                                                                        @endif
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{$order_item4->quantity}}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{$order_item4->price}}
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @endforeach
+                                                                            </tbody>
+                                                                        </table>
                                                                     </div>
                                                                     <div class="d-flex justify-content-around">
-                                                                        <button type="submit"
-                                                                                class="btn w-25 btn-danger"
-                                                                                disabled>
-                                                                            Cancel
-                                                                        </button>
+                                                                        @if($order->status == \App\Enums\OrderStatus::PROCESSING  || $order->status == \App\Enums\OrderStatus::WAIT_PAYMENT)
+                                                                            <button type="submit"
+                                                                                    class="btn w-25 btn-danger">
+                                                                                Cancel
+                                                                            </button>
+                                                                        @else
+                                                                            <button class="btn w-25 btn-danger"
+                                                                                    disabled>
+                                                                                Cancel
+                                                                            </button>
+                                                                        @endif
                                                                         <button type="button"
                                                                                 class="btn w-25 btn-secondary"
                                                                                 data-dismiss="modal">Back
@@ -586,9 +704,26 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="float-right">
+                                            <td>
+                                                {{$order->orders_method}}
+                                            </td>
+                                            <td>
+                                                {{$order->shipping_price}}
+                                            </td>
+                                            <td>
+                                                {{$order->discount_price}}
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $quantity = DB::table('order_items')->where('order_id', $order->id)->get();
+                                                @endphp
+                                                {{count($quantity)}}
+                                            </td>
+                                            <td>
                                                 {{$order->total}}
-                                                <div class="small">{{$order->status}}</div>
+                                            </td>
+                                            <td>
+                                                {{$order->status}}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -608,19 +743,25 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th class="float-left">OrderID</th>
-                                        <th class="float-right">Total Price</th>
+                                        <th>{{ __('OrderID') }}</th>
+                                        <th>{{ __('Payment Method') }}</th>
+                                        <th>{{ __('Shipping Price') }}</th>
+                                        <th>{{ __('Discount Price') }}</th>
+                                        <th>{{ __('Quantity') }}</th>
+                                        <th>{{ __('Total Price') }}</th>
+                                        <th>{{ __('Status') }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
+
                                     @foreach ($orderCancel as $order)
                                         <tr>
-                                            <td class="float-left">
+                                            <td>
                                                 <button class="text-decoration-none" data-toggle="modal"
-                                                        data-target="#updateOrderCancel{{$order->id}}"
+                                                        data-target="#updateOrder5{{$order->id}}"
                                                         style="cursor: pointer">{{ $loop->index+1 }}</button>
-                                                <div class="modal fade" id="updateOrderCancel{{$order->id}}"
-                                                     tabIndex="-1" role="dialog"
+                                                <div class="modal fade" id="updateOrder5{{$order->id}}" tabIndex="-1"
+                                                     role="dialog"
                                                      aria-labelledby="editModalLabel">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
@@ -633,43 +774,58 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form id="delete-account-form">
-                                                                    <div class="row mb-5">
-                                                                        <div class="col">
-                                                                            <label for="fname">Full name:</label>
-                                                                            <input type="text"
-                                                                                   value="{{$order->fullname}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <label for="fname">Email:</label>
-                                                                            <input type="text" value="{{$order->email}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <label for="fname">Phone:</label>
-                                                                            <input type="text" value="{{$order->phone}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col">
-                                                                            <label for="fname">Address:</label>
-                                                                            <input type="text"
-                                                                                   value="{{$order->address}}"
-                                                                                   disabled>
-                                                                        </div>
-                                                                        <div class="col mt-3">
-                                                                            <label for="fname">Total Price:</label>
-                                                                            <input type="text"
-                                                                                   value="${{$order->total}}"
-                                                                                   disabled>
-                                                                        </div>
+                                                                <form id="delete-account-form"
+                                                                      action="{{route('order.cancel', $order->id)}}"
+                                                                      method="post">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <div class="">
+                                                                        <table class="table">
+                                                                            <thead>
+                                                                            <tr>
+                                                                                <th>{{ __('Name') }}</th>
+                                                                                <th>{{ __('Quantity') }}</th>
+                                                                                <th>{{ __('Price') }}</th>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                            @php
+                                                                                $orderItem4s = \App\Models\OrderItem::where('order_id', $order->id)->get();
+                                                                            @endphp
+                                                                            @foreach ($orderItem4s as $order_item5)
+                                                                                @php
+                                                                                    $product5 = \App\Models\Product::find($order_item5->product_id);
+                                                                                @endphp
+                                                                                <tr>
+                                                                                    <td>
+
+                                                                                        @if ($product5)
+                                                                                            {{ $product5->name }}
+                                                                                        @endif
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{$order_item5->quantity}}
+                                                                                    </td>
+                                                                                    <td>
+                                                                                        {{$order_item5->price}}
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @endforeach
+                                                                            </tbody>
+                                                                        </table>
                                                                     </div>
                                                                     <div class="d-flex justify-content-around">
-                                                                        <button type="submit"
-                                                                                class="btn w-25 btn-danger"
-                                                                                disabled>
-                                                                            Cancel
-                                                                        </button>
+                                                                        @if($order->status == \App\Enums\OrderStatus::PROCESSING  || $order->status == \App\Enums\OrderStatus::WAIT_PAYMENT)
+                                                                            <button type="submit"
+                                                                                    class="btn w-25 btn-danger">
+                                                                                Cancel
+                                                                            </button>
+                                                                        @else
+                                                                            <button class="btn w-25 btn-danger"
+                                                                                    disabled>
+                                                                                Cancel
+                                                                            </button>
+                                                                        @endif
                                                                         <button type="button"
                                                                                 class="btn w-25 btn-secondary"
                                                                                 data-dismiss="modal">Back
@@ -681,9 +837,26 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="float-right">
+                                            <td>
+                                                {{$order->orders_method}}
+                                            </td>
+                                            <td>
+                                                {{$order->shipping_price}}
+                                            </td>
+                                            <td>
+                                                {{$order->discount_price}}
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $quantity = DB::table('order_items')->where('order_id', $order->id)->get();
+                                                @endphp
+                                                {{count($quantity)}}
+                                            </td>
+                                            <td>
                                                 {{$order->total}}
-                                                <div class="small">{{$order->status}}</div>
+                                            </td>
+                                            <td>
+                                                {{$order->status}}
                                             </td>
                                         </tr>
                                     @endforeach

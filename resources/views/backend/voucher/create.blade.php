@@ -50,7 +50,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
+                        <label for="assign_to">Assign To</label>
+                        <select id="assign_to" name="assign_to" class="form-control">
+                            <option value="0">No Assgin</option>
+                            @foreach($levels as $level)
+                                <option value="{{$level}}">{{$level}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
                         <label for="status">Status</label>
                         <select id="status" name="status" class="form-control">
                             <option value="{{\App\Enums\VoucherStatus::ACTIVE}}">{{\App\Enums\VoucherStatus::ACTIVE}}</option>

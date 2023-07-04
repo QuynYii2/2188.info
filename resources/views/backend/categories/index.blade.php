@@ -6,7 +6,7 @@
             white-space: nowrap;
         }
     </style>
-    <div class="card-header" style="margin-top: 60px">
+    <div class="card-header" style="margin-top: 45px">
         <div class="d-flex justify-content-between align-items-center">
             <h5 class="card-title">Danh sách Categories</h5>
             <button type="button" class="btn btn-success " data-toggle="modal" data-target="#flipFlop">

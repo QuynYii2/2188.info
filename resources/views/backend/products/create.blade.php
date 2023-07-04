@@ -8,7 +8,7 @@
 @section('content')
 
     <div class="card-header d-flex justify-content-between align-items-center" style="padding: 15px;">
-        <h5 class="category">Thêm mới sản phẩm</h5>
+        <h5 class="card-title">Thêm mới sản phẩm</h5>
         @if (session('success_update_product'))
             <div class="alert alert-success">
                 {{ session('success_update_product') }}
@@ -82,7 +82,7 @@
             </div>
             <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
                 <div class="form-group" id="cat-parameter">
-                    <div for="category" class="col-sm-12 control-label name">Chuyên mục:</div>
+                    <div for="card-title" class="col-sm-12 control-label name">Chuyên mục:</div>
                     <div class="col-sm-12 custom-scrollbar" style="height: 200px;overflow-y: auto">
                         <ul id="category" class="list-unstyled">
                             @foreach($categories as $category)
