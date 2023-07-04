@@ -37,6 +37,10 @@ class VoucherController extends Controller
     {
         (new HomeController())->getLocale($request);
         $products = $this->mergeDuplicate($request);
+        if (count($products) < 1) {
+            alert()->error('Error', 'Không có sản phẩm phù hợp!');
+            return redirect(route('seller.vouchers.list'));
+        }
         return view('backend/voucher/create', compact('products'));
     }
 
@@ -88,6 +92,10 @@ class VoucherController extends Controller
             return back();
         }
         $products = $this->mergeDuplicate($request);
+        if (count($products) < 1) {
+            alert()->error('Error', 'Không có sản phẩm phù hợp!');
+            return redirect(route('seller.vouchers.list'));
+        }
         return view('backend/voucher/detail', compact('products', 'voucher'));
     }
 

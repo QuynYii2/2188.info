@@ -219,7 +219,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/cart-clear', [CartController::class, 'clearCart'])->name('cart.clear');
     // Checkout Controller
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.show');
-    Route::get('/checkout-success/{name}/{email}/{phone}/{address}/{idVoucher}', [CheckoutController::class, 'checkoutSuccess'])->name('checkout.success.paypal');
+    Route::get('/checkout-success/{name}/{email}/{phone}/{address}/{idVoucher}/{array}', [CheckoutController::class, 'checkoutSuccess'])->name('checkout.success.paypal');
     Route::post('/checkout-imm', [CheckoutController::class, 'checkoutByImme'])->name('checkout.create.imm');
     Route::post('/checkout-coin', [CheckoutController::class, 'checkoutByCoin'])->name('checkout.create.coin');
     Route::post('/checkout-paypal', [CheckoutController::class, 'checkoutByPaypal'])->name('checkout.create.paypal');

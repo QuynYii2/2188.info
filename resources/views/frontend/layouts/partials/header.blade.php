@@ -479,8 +479,8 @@
             </div>
         </div>
     </div>
-    <div class="" id="popup-alert">
-        <div class="col-md-2 float-right">
+    <div class="position-relative" id="popup-alert" >
+        <div class="col-md-2 position-fixed" style="z-index: 100; top: 0">
             <div class="alert">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                 <strong>Hello world!</strong> <a class="text-decoration-none text-white" href="{{route('promotions.index')}}">Review now</a>.
