@@ -9,6 +9,8 @@ use App\Enums\NotificationStatus;
 use App\Enums\OrderItemStatus;
 use App\Enums\OrderMethod;
 use App\Enums\OrderStatus;
+use App\Enums\PriceUpLevel;
+use App\Enums\UserInterestEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PaypalPaymentController;
 use App\Models\Cart;
@@ -89,6 +91,45 @@ class CheckoutController extends Controller
         ];
 
         Order::create($order);
+
+        $totalCheck = 0;
+        $listOrder = Order::where('user_id', Auth::user()->id)->get();
+        $user = User::find(Auth::user()->id);
+        foreach ($listOrder as $item) {
+            $totalCheck = $totalCheck + $item->total;
+        }
+
+        if (1 <= count($listOrder) && count($listOrder) < 10) {
+            if (PriceUpLevel::LEVEL1 <= $totalCheck && $totalCheck < PriceUpLevel::LEVEL2) {
+                $user->level_account = UserInterestEnum::VIP;
+            } elseif (PriceUpLevel::LEVEL2 <= $totalCheck && $totalCheck < PriceUpLevel::LEVEL3) {
+                $user->level_account = UserInterestEnum::VVIP;
+            } elseif (PriceUpLevel::LEVEL3 <= $totalCheck) {
+                $user->level_account = UserInterestEnum::SVIP;
+            } else {
+                $user->level_account = UserInterestEnum::FREE;
+            }
+        } elseif (10 <= count($listOrder) && count($listOrder) < 20) {
+            if (PriceUpLevel::LEVEL2 <= $totalCheck && $totalCheck < PriceUpLevel::LEVEL3) {
+                $user->level_account = UserInterestEnum::VVIP;
+            } elseif (PriceUpLevel::LEVEL3 <= $totalCheck) {
+                $user->level_account = UserInterestEnum::SVIP;
+            } else {
+                $user->level_account = UserInterestEnum::VIP;
+            }
+        } elseif (20 <= count($listOrder) && count($listOrder) < 50) {
+            if (PriceUpLevel::LEVEL3 <= $totalCheck) {
+                $user->level_account = UserInterestEnum::SVIP;
+            } else {
+                $user->level_account = UserInterestEnum::VVIP;
+            }
+        } elseif (50 <= count($listOrder)) {
+            $user->level_account = UserInterestEnum::SVIP;
+        } else {
+            $user->level_account = UserInterestEnum::FREE;
+        }
+
+        $user->save();
 
         $orders = Order::where([
             ['user_id', '=', Auth::user()->id],

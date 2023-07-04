@@ -207,6 +207,12 @@
                         <li>
                             <a href="{{route('seller.vouchers.create.process')}}">Create Voucher</a>
                         </li>
+                        <li>
+                            <a href="{{route('seller.rank.setup.show')}}">List Rank Setup</a>
+                        </li>
+                        <li>
+                            <a href="{{route('seller.rank.setup.processCreate')}}">Create Rank Setup</a>
+                        </li>
                     </ul>
                 </li>
                 <li>
