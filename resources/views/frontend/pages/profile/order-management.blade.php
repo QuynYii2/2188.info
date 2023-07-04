@@ -191,7 +191,7 @@
                                                 {{count($quantity)}}
                                             </td>
                                             <td>
-                                                {{$order->total_price}}
+                                                {{$order->total}}
                                             </td>
                                             <td>
                                                 {{$order->status}}
@@ -269,7 +269,9 @@
                                                                                 @endphp
                                                                                 <tr>
                                                                                     <td>
-                                                                                        {{ $product1->name }}
+                                                                                        @if ($product1)
+                                                                                            {{ $product1->name }}
+                                                                                        @endif
                                                                                     </td>
                                                                                     <td>
                                                                                         {{$orderItem->quantity}}
@@ -321,7 +323,7 @@
                                                 {{count($quantity)}}
                                             </td>
                                             <td>
-                                                {{$order->total_price}}
+                                                {{$order->total}}
                                             </td>
                                             <td>
                                                 {{$order->status}}
@@ -399,7 +401,10 @@
                                                                                 @endphp
                                                                                 <tr>
                                                                                     <td>
-                                                                                        {{ $product2->name }}
+
+                                                                                        @if ($product2)
+                                                                                            {{ $product2->name }}
+                                                                                        @endif
                                                                                     </td>
                                                                                     <td>
                                                                                         {{$order_item2->quantity}}
@@ -451,7 +456,7 @@
                                                 {{count($quantity)}}
                                             </td>
                                             <td>
-                                                {{$order->total_price}}
+                                                {{$order->total}}
                                             </td>
                                             <td>
                                                 {{$order->status}}
@@ -529,7 +534,9 @@
                                                                                 @endphp
                                                                                 <tr>
                                                                                     <td>
-                                                                                        {{ $product3->name }}
+                                                                                        @if ($product3)
+                                                                                            {{ $product3->name }}
+                                                                                        @endif
                                                                                     </td>
                                                                                     <td>
                                                                                         {{$order_item3->quantity}}
@@ -581,7 +588,7 @@
                                                 {{count($quantity)}}
                                             </td>
                                             <td>
-                                                {{$order->total_price}}
+                                                {{$order->total}}
                                             </td>
                                             <td>
                                                 {{$order->status}}
@@ -659,7 +666,9 @@
                                                                                 @endphp
                                                                                 <tr>
                                                                                     <td>
-                                                                                        {{ $product4->name }}
+                                                                                        @if ($product4)
+                                                                                            {{ $product4->name }}
+                                                                                        @endif
                                                                                     </td>
                                                                                     <td>
                                                                                         {{$order_item4->quantity}}
@@ -711,7 +720,7 @@
                                                 {{count($quantity)}}
                                             </td>
                                             <td>
-                                                {{$order->total_price}}
+                                                {{$order->total}}
                                             </td>
                                             <td>
                                                 {{$order->status}}
@@ -789,7 +798,10 @@
                                                                                 @endphp
                                                                                 <tr>
                                                                                     <td>
-                                                                                        {{ $product5->name }}
+
+                                                                                        @if ($product5)
+                                                                                            {{ $product5->name }}
+                                                                                        @endif
                                                                                     </td>
                                                                                     <td>
                                                                                         {{$order_item5->quantity}}
@@ -841,7 +853,7 @@
                                                 {{count($quantity)}}
                                             </td>
                                             <td>
-                                                {{$order->total_price}}
+                                                {{$order->total}}
                                             </td>
                                             <td>
                                                 {{$order->status}}
