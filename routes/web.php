@@ -18,10 +18,12 @@ use App\Http\Controllers\Seller\AttributeController;
 use App\Http\Controllers\Seller\CategoryController;
 use App\Http\Controllers\Seller\ProductController;
 use App\Http\Controllers\Seller\PropertiesController;
+use App\Http\Controllers\Seller\RankUserSellerController;
 use App\Http\Controllers\Seller\SellerEvaluateProductController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
+use App\Models\RankUserSeller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -198,6 +200,13 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::get('/account-manage/delete/{id}', [AccountController::class, 'destroy'])->name('account.delete');
     Route::get('/account-manage/view/{id}', [AccountController::class, 'show'])->name('account.show.shop');
     Route::get('/account-manage/view-cart/{id}', [AccountController::class, 'viewCart'])->name('account.show.order');
+    // Rank setup
+    Route::get('/rank-setups', [RankUserSellerController::class, 'index'])->name('seller.rank.setup.show');
+    Route::get('/rank-setups/create', [RankUserSellerController::class, 'processCreate'])->name('seller.rank.setup.processCreate');
+    Route::post('/rank-setup', [RankUserSellerController::class, 'create'])->name('seller.rank.setup.create');
+    Route::get('/rank-setup/{id}', [RankUserSellerController::class, 'detail'])->name('seller.rank.setup.detail');
+    Route::post('/rank-setup/{id}', [RankUserSellerController::class, 'update'])->name('seller.rank.setup.update');
+    Route::delete('/rank-delete/{id}', [RankUserSellerController::class, 'delete'])->name('seller.rank.setup.delete');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {
@@ -219,7 +228,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/cart-clear', [CartController::class, 'clearCart'])->name('cart.clear');
     // Checkout Controller
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.show');
-    Route::get('/checkout-success/{name}/{email}/{phone}/{address}/{idVoucher}', [CheckoutController::class, 'checkoutSuccess'])->name('checkout.success.paypal');
+    Route::get('/checkout-success/{name}/{email}/{phone}/{address}/{idVoucher}/{array}', [CheckoutController::class, 'checkoutSuccess'])->name('checkout.success.paypal');
     Route::post('/checkout-imm', [CheckoutController::class, 'checkoutByImme'])->name('checkout.create.imm');
     Route::post('/checkout-coin', [CheckoutController::class, 'checkoutByCoin'])->name('checkout.create.coin');
     Route::post('/checkout-paypal', [CheckoutController::class, 'checkoutByPaypal'])->name('checkout.create.paypal');

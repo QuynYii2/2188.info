@@ -223,6 +223,9 @@
                                         class=" mt-3 mb-3 btn btn-danger">{{ __('home.Pay Now') }}</button>
 
                             </div>
+                            <input type="text" id="total_price" name="total_price" value="0" hidden="">
+                            <input type="text" id="shipping_price" name="shipping_price" value="0" hidden="">
+                            <input type="text" id="discount_price" name="discount_price" value="0" hidden="">
                             <input type="text" id="price_id" name="priceID" value="0" hidden="">
                             <input type="text" id="voucher_id" name="voucherID" value="0" hidden="">
                         </form>
