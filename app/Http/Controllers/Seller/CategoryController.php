@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::where('user_id', Auth::user()->id)->get();
         return view('backend/categories/index', [
             'categories' => $categories
         ]);
@@ -20,7 +21,7 @@ class CategoryController extends Controller
 
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::where('user_id', Auth::user()->id)->get();
         return view('backend/categories/create', [
             'categories' => $categories
         ]);
@@ -35,13 +36,14 @@ class CategoryController extends Controller
         ]);
 
         $name = DB::table('categories')->where('name', $validatedData['name'])->first();
-        if($name){
+        if ($name) {
             alert()->error('Error', 'Tên chuyên mục tồn tại');
             return back();
         }
 
         $category = new Category();
         $category->name = $validatedData['name'];
+        $category->user_id = Auth::user()->id;
 
         if ($validatedData['parent_id']) {
             $parentCategory = Category::find($validatedData['parent_id']);
@@ -63,12 +65,12 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
-        $categories = Category::all();
+        $categories = Category::where('user_id', Auth::user()->id)->get();
         return view('backend/categories/edit', compact('category', 'categories'));
     }
 
 
-    public function update(Request $request, Category $category )
+    public function update(Request $request, Category $category)
     {
         $category->name = $request->input('name');
         $category->parent_id = $request->input('parent_id');
@@ -78,7 +80,7 @@ class CategoryController extends Controller
         if ($updateCategory) {
             $request->session()->flash('success_update_cat', 'Cập nhật thành công.');
             return redirect()->route('seller.categories.index')->with('success', 'Category đã được cập nhật thành công!');
-        } else{
+        } else {
             $request->session()->flash('error_update_cat', 'Cập nhật không thành công.');
             return redirect()->route('seller.categories.edit');
         }
@@ -87,8 +89,11 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
+        if ($category->user_id != Auth::user()->id) {
+            alert()->error('Error', 'Không thể xoá, Vui lòng thử lại');
+            return redirect()->route('seller.categories.index');
+        }
         $category->delete();
-
         return redirect()->route('seller.categories.index')->with('success', 'Category đã được xóa thành công!');
     }
 }
