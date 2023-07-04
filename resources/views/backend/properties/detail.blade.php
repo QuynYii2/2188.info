@@ -1,13 +1,11 @@
 @extends('backend.layouts.master')
 
 @section('content')
-    <div class="container mt-3">
+    <div class="mt-3">
         <div class="">
             <h5>Sửa thuộc tính con</h5>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <form method="POST" action="{{ route('properties.update', $propertie->id) }}">
+        <form method="POST" action="{{ route('properties.update', $propertie->id) }}">
                     @csrf
                     <div class="form-group">
                         <label for="name">Tên thuộc tính</label>
@@ -30,7 +28,5 @@
 
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
-            </div>
-        </div>
     </div>
 @endsection
