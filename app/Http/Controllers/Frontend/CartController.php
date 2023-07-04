@@ -56,7 +56,7 @@ class CartController extends Controller
                 $cart->save();
             } else {
                 $quantity = $request->input('quantity', 1);// Số lượng mặc định là 1, có thể điều chỉnh tùy ý
-                if ($quantity < 1 ){
+                if ($quantity < 1) {
                     return back();
                 }
                 $cart = [
@@ -123,5 +123,55 @@ class CartController extends Controller
             $cart->save();
         }
         return redirect(route('cart.index'));
+    }
+
+    public function addToCartPromotion(Request $request, Product $product, $percent)
+    {
+        if (Auth::check()) {
+            $productID = $product->id;
+            $valid = false;
+
+            $oldCarts = Cart::where([
+                ['user_id', '=', Auth::user()->id],
+                ['status', '=', CartStatus::WAIT_ORDER]
+            ])->get();
+
+            foreach ($oldCarts as $oldCart) {
+                if ($oldCart->product_id == $productID) {
+                    $valid = true;
+                    break;
+                }
+            }
+
+            if ($valid == true) {
+                $quantity = $request->input('quantity');
+                $oldCart = Cart::where([
+                    ['product_id', '=', $productID],
+                    ['status', '=', CartStatus::WAIT_ORDER]
+                ])->get();
+                $cart = $oldCart[0];
+                $cart->price = $product->price - $product->price * $percent / 100;
+                $cart->quantity = $cart->quantity + $quantity;
+                $cart->save();
+            } else {
+                $quantity = $request->input('quantity', 1);
+                if ($quantity < 1) {
+                    return back();
+                }
+                $cart = [
+                    'user_id' => Auth::user()->id,
+                    'product_id' => $product->id,
+                    'price' => $product->price - $product->price * $percent / 100,
+                    'quantity' => $quantity,
+                    'status' => CartStatus::WAIT_ORDER,
+                ];
+                Cart::create($cart);
+            }
+            return redirect()->route('cart.index')->with('success', 'Product added to cart successfully!');
+        } else {
+            (new HomeController())->getLocale($request);
+            return view('frontend/pages/login');
+        }
+
     }
 }

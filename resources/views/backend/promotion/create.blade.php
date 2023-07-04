@@ -17,7 +17,8 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="percent">Phần trăm khuyến mãi</label>
-                        <input type="number" min="1" max="100" class="form-control" name="percent" id="percent" placeholder="60">
+                        <input type="number" min="1" max="100" class="form-control" name="percent" id="percent"
+                               placeholder="60">
                     </div>
                 </div>
                 <div class="form-row">
@@ -31,7 +32,10 @@
                                 <div class="overSelect"></div>
                             </div>
                             <div id="checkboxes" class="mt-1">
-                                @foreach($products as $product)
+                                @foreach($products as $ID)
+                                    @php
+                                        $product = \App\Models\Product::find($ID);
+                                    @endphp
                                     <label class="ml-2" for="category-{{$product->id}}">
                                         <input type="checkbox" id="category-{{$product->id}}"
                                                name="category-{{$product->id}}"
@@ -63,7 +67,8 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea type="text" name="description" class="form-control" id="description" placeholder="Description"></textarea>
+                    <textarea type="text" name="description" class="form-control" id="description"
+                              placeholder="Description"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Create</button>
             </form>

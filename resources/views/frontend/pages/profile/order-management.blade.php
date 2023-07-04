@@ -137,7 +137,9 @@
                                                                                 @endphp
                                                                                 <tr>
                                                                                     <td>
-                                                                                        {{ $product->name }}
+                                                                                        @if ($product)
+                                                                                            {{ $product->name }}
+                                                                                        @endif
                                                                                     </td>
                                                                                     <td>
                                                                                         {{$order_item->quantity}}

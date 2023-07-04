@@ -763,86 +763,77 @@
                     </div>
                     @if($arrayPromotions!=null)
                         <div>
-                            {{--                        <div class="p-3 text-center text-uppercase text-white text-bold fw-bold"--}}
-                            {{--                             style="border-radius: 5px 5px 0 0; background-color: #00bf90">--}}
-                            {{--                            {{ __('home.promotion information') }}--}}
-                            {{--                        </div>--}}
-                            {{--                        <div class="product-detail"--}}
-                            {{--                             style="border: 1px solid black; border-top: none; border-radius: 0 0 5px 5px ">--}}
-                            {{--                            <ul class="pt-3 ml-3 mb-3">--}}
-                            {{--                                <li><i class="fa fa-check mr-2"></i>{{ __('home.accumulate points') }}</li>--}}
-                            {{--                                <li><i class="fa fa-check mr-2"></i>{{ __('home.free credit card') }}</li>--}}
-                            {{--                                <li><i class="fa fa-check mr-2"></i>{{ __('home.free installment') }}</li>--}}
-                            {{--                                <li><i class="fa fa-check mr-2"></i>{{ __('home.free delivery') }}</li>--}}
-                            {{--                                <li><i class="fa fa-check mr-2"></i>{{ __('home.discount immediately') }}</li>--}}
-                            {{--                            </ul>--}}
-                            {{--                        </div>--}}
                             <div class="p-3 text-center text-uppercase text-white text-bold fw-bold"
-                                 style="border-radius: 5px 5px 0 0; background-color: #00bf90"
-                                 data-toggle="modal" data-target="#exampleModalPromotion">
+                                 style="border-radius: 5px 5px 0 0; background-color: #00bf90">
                                 {{ __('home.promotion information') }}
-                                <br>
-                                <span style="font-size: 1.25rem">Tham gia ngay</span>
                             </div>
-                            <div class="modal fade" id="exampleModalPromotion"
-                                 tabindex="-1" role="dialog"
-                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle"> Chương trình khuyến
-                                                mãi dành cho bạn</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                <tr>
-                                                    <th scope="col">Name</th>
-                                                    <th scope="col">Code</th>
-                                                    <th scope="col">Percent</th>
-                                                    <th scope="col">Action</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                @foreach($arrayPromotions as $itemPromotion)
-                                                    <tr>
-                                                        <td>{{$itemPromotion->name}}</td>
-                                                        <td>{{$itemPromotion->code}}</td>
-                                                        <td>{{$itemPromotion->percent}}</td>
-                                                        <td>
-                                                            @php
-                                                                $promotionItemsOld = \App\Models\PromotionItems::where([
-                                                                ['promotion_id', $itemPromotion->id],
-                                                                ['customer_id', Auth::user()->id]])->first();
-                                                            @endphp
-                                                            @if($promotionItemsOld)
-                                                                <a href="{{route('cart.index')}}"
-                                                                   class="btn btn-success">
-                                                                    Sử dụng ngay
-                                                                </a>
-                                                            @else
-                                                                <button class="btn btn-success"
-                                                                        onclick="createVoucherItems({{$itemPromotion->id}})">
-                                                                   Tham gia ngay
-                                                                </button>
-                                                            @endif
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                Close
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
+{{--                            <div class="p-3 text-center text-uppercase text-white text-bold fw-bold"--}}
+{{--                                 style="border-radius: 5px 5px 0 0; background-color: #00bf90"--}}
+{{--                                 data-toggle="modal" data-target="#exampleModalPromotion">--}}
+{{--                                {{ __('home.promotion information') }}--}}
+{{--                                <br>--}}
+{{--                                <span style="font-size: 1.25rem">Tham gia ngay</span>--}}
+{{--                            </div>--}}
+{{--                            <div class="modal fade" id="exampleModalPromotion"--}}
+{{--                                 tabindex="-1" role="dialog"--}}
+{{--                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">--}}
+{{--                                <div class="modal-dialog modal-dialog-centered" role="document">--}}
+{{--                                    <div class="modal-content">--}}
+{{--                                        <div class="modal-header">--}}
+{{--                                            <h5 class="modal-title" id="exampleModalLongTitle"> Chương trình khuyến--}}
+{{--                                                mãi dành cho bạn</h5>--}}
+{{--                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+{{--                                                <span aria-hidden="true">&times;</span>--}}
+{{--                                            </button>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="modal-body">--}}
+{{--                                            <table class="table table-bordered">--}}
+{{--                                                <thead>--}}
+{{--                                                <tr>--}}
+{{--                                                    <th scope="col">Name</th>--}}
+{{--                                                    <th scope="col">Code</th>--}}
+{{--                                                    <th scope="col">Percent</th>--}}
+{{--                                                    <th scope="col">Action</th>--}}
+{{--                                                </tr>--}}
+{{--                                                </thead>--}}
+{{--                                                <tbody>--}}
+{{--                                                @foreach($arrayPromotions as $itemPromotion)--}}
+{{--                                                    <tr>--}}
+{{--                                                        <td>{{$itemPromotion->name}}</td>--}}
+{{--                                                        <td>{{$itemPromotion->code}}</td>--}}
+{{--                                                        <td>{{$itemPromotion->percent}}</td>--}}
+{{--                                                        <td>--}}
+{{--                                                            @php--}}
+{{--                                                                $promotionItemsOld = \App\Models\PromotionItems::where([--}}
+{{--                                                                ['promotion_id', $itemPromotion->id],--}}
+{{--                                                                ['customer_id', Auth::user()->id]])->first();--}}
+{{--                                                            @endphp--}}
+{{--                                                            @if($promotionItemsOld)--}}
+{{--                                                                <a href="{{route('cart.index')}}"--}}
+{{--                                                                   class="btn btn-success">--}}
+{{--                                                                    Sử dụng ngay--}}
+{{--                                                                </a>--}}
+{{--                                                            @else--}}
+{{--                                                                <button class="btn btn-success" id="btn-join-now"--}}
+{{--                                                                        onclick="createPromotionItems({{$itemPromotion->id}})"--}}
+{{--                                                                >Tham gia ngay--}}
+{{--                                                                </button>--}}
+{{--                                                            @endif--}}
+{{--                                                        </td>--}}
+{{--                                                    </tr>--}}
+{{--                                                @endforeach--}}
+{{--                                                </tbody>--}}
+{{--                                            </table>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="modal-footer">--}}
+{{--                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">--}}
+{{--                                                Close--}}
+{{--                                            </button>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                     @endif
                 </div>
@@ -1159,6 +1150,38 @@
                 }
             });
         }
+
+        {{--function createPromotionItems(id) {--}}
+        {{--    $.ajax({--}}
+        {{--        url: '/promotions-item',--}}
+        {{--        method: 'POST',--}}
+        {{--        data: {--}}
+        {{--            'promotion_id': id,--}}
+        {{--            _token: '{{ csrf_token() }}'--}}
+        {{--        },--}}
+        {{--        success: function (response) {--}}
+        {{--            console.log(response)--}}
+        {{--            if (response == "Error") {--}}
+        {{--                alert('Bạn đã tham gia chương trình rồi!')--}}
+        {{--            } else {--}}
+        {{--                alert("Tham gia chương trình thành công!")--}}
+        {{--                let btn = document.getElementById('btn-join-now');--}}
+        {{--                btn.innerText = "Sử dụng ngay";--}}
+        {{--            }--}}
+        {{--        },--}}
+        {{--        error: function (exception) {--}}
+        {{--            console.log(exception)--}}
+        {{--            if (exception['status'] == 403) {--}}
+        {{--                alert('Error, please try again!')--}}
+        {{--            } else if (exception['status'] == 401) {--}}
+        {{--                alert('Please login to continue!')--}}
+        {{--                window.location.href = '/login';--}}
+        {{--            } else {--}}
+        {{--                alert('Error, please try again!')--}}
+        {{--            }--}}
+        {{--        }--}}
+        {{--    });--}}
+        {{--}--}}
     </script>
     <script>
         function checkProductReviews() {
