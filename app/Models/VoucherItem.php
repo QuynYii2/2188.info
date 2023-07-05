@@ -14,5 +14,6 @@ class VoucherItem extends Model
         'voucher_id',
         'quantity',
         'customer_id',
+        'checked'
     ];
 }

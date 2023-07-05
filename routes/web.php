@@ -16,12 +16,16 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\Seller\AttributeController;
 use App\Http\Controllers\Seller\CategoryController;
+use App\Http\Controllers\Seller\ExportFileController;
 use App\Http\Controllers\Seller\ProductController;
 use App\Http\Controllers\Seller\PropertiesController;
+use App\Http\Controllers\Seller\RankUserSellerController;
 use App\Http\Controllers\Seller\SellerEvaluateProductController;
+use App\Http\Controllers\Seller\StorageController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
+use App\Models\RankUserSeller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -160,6 +164,8 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::post('/toggle-properties/{id}', [PropertiesController::class, 'toggle'])->name('properties.toggle');
     //
     Route::get('/products', [ProductController::class, 'index'])->name('seller.products.index');
+    Route::get('/list/products-views', [ProductController::class, 'getProductsViews'])->name('seller.products.views');
+    Route::post('/filter/products-views', [ProductController::class, 'getProductsViews'])->name('seller.products.views.filter');
     Route::get('/products/create', [ProductController::class, 'create'])->name('seller.products.create');
     Route::post('/products', [ProductController::class, 'store'])->name('seller.products.store');
     Route::get('/products/{product}', [ProductController::class, 'show'])->name('seller.products.show');
@@ -203,6 +209,20 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::get('/account-manage/delete/{id}', [AccountController::class, 'destroy'])->name('account.delete');
     Route::get('/account-manage/view/{id}', [AccountController::class, 'show'])->name('account.show.shop');
     Route::get('/account-manage/view-cart/{id}', [AccountController::class, 'viewCart'])->name('account.show.order');
+
+    //Quản lý kho hàng
+    Route::get('/storage-manage-user', [StorageController::class, 'index'])->name('storage.manage.show.user');
+    Route::get('/storage-manage-all', [StorageController::class, 'allStorage'])->name('storage.manage.show.all');
+    Route::get('/export-excel', [ExportFileController::class, 'exportExcel'])->name('storage.manage.export.excel');
+    Route::get('/export-pdf', [ExportFileController::class, 'exportToPDF'])->name('storage.manage.export.pdf');
+
+    // Rank setup
+    Route::get('/rank-setups', [RankUserSellerController::class, 'index'])->name('seller.rank.setup.show');
+    Route::get('/rank-setups/create', [RankUserSellerController::class, 'processCreate'])->name('seller.rank.setup.processCreate');
+    Route::post('/rank-setup', [RankUserSellerController::class, 'create'])->name('seller.rank.setup.create');
+    Route::get('/rank-setup/{id}', [RankUserSellerController::class, 'detail'])->name('seller.rank.setup.detail');
+    Route::post('/rank-setup/{id}', [RankUserSellerController::class, 'update'])->name('seller.rank.setup.update');
+    Route::delete('/rank-delete/{id}', [RankUserSellerController::class, 'delete'])->name('seller.rank.setup.delete');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {
@@ -240,4 +260,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/promotions-item', [PromotionController::class, 'createPromotionItems'])->name('promotions.item.create');
     Route::get('/promotion', [PromotionController::class, 'index'])->name('promotions.index');
     Route::post('/add-cart/{product}/{percent}', [CartController::class, 'addToCartPromotion'])->name('cart.add.promotion');
+    //
+    Route::get('/product-views', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByViews'])->name('product.views');
 });

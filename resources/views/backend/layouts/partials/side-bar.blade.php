@@ -109,7 +109,17 @@
         display: none;
     }
 </style>
+@php
+    use Illuminate\Support\Facades\DB;
 
+    if (auth()->check() != null){
+        $roleUsers = DB::table('role_user')
+        ->where([['user_id', Auth::user()->id], ['role_id', 1]])
+        ->get();
+    } else {
+        $roleUsers = null;
+    }
+@endphp
 <div class='wrapper text-nowrap'>
     <ul class='items'>
         <li>
@@ -121,6 +131,8 @@
                         <li><a href="/products">Danh sách sản phẩm</a>
                         </li>
                         <li><a href="/products/create">Thêm mới sản phẩm</a>
+                        </li>
+                        <li><a href="{{route('seller.products.views')}}">Sort by views</a>
                         </li>
                         <li><a href="/categories">Chuyên mục</a>
                         </li>
@@ -154,11 +166,13 @@
                     <a href="#!">Quản lý kho</a>
                     <ul class='sub-items pl-3'>
                         <li>
-                            <a href='#'>Lorem ipsum dolor sit amet.</a>
+                            <a href='{{ route('storage.manage.show.user') }}'>Thông tin kho hàng</a>
                         </li>
-                        <li>
-                            <a href='#'>Lorem ipsum dolor sit amet.</a>
-                        </li>
+                        @if(sizeof($roleUsers) != 0)
+                            <li>
+                                <a href='{{ route('storage.manage.show.all') }}'>Tất cả kho hàng</a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
                 <li>
@@ -172,6 +186,7 @@
                         </li>
                     </ul>
                 </li>
+
                 <li>
                     <a href="#!"><span>Thống kê</span></a>
                     <ul class='sub-items pl-3'>
@@ -192,7 +207,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#!"><span>Sản phẩm xem nhiều nhất</span></a>
+                    <a href="{{route('seller.products.views')}}">Sản phẩm xem nhiều nhất</a>
                 </li>
                 <li>
                     <a href="#!"><span>Quản lý bình luận</span></a>
@@ -209,6 +224,12 @@
                         <li>
                             <a href="{{route('seller.vouchers.create.process')}}">Create Voucher</a>
                         </li>
+                        <li>
+                            <a href="{{route('seller.rank.setup.show')}}">List Rank Setup</a>
+                        </li>
+                        <li>
+                            <a href="{{route('seller.rank.setup.processCreate')}}">Create Rank Setup</a>
+                        </li>
                     </ul>
                 </li>
                 <li>
@@ -222,18 +243,6 @@
                         </li>
                     </ul>
                 </li>
-                @php
-                    use Illuminate\Support\Facades\DB;
-
-                    if (auth()->check() != null){
-                        $roleUsers = DB::table('role_user')
-                        ->where([['user_id', Auth::user()->id], ['role_id', 1]])
-                        ->get();
-
-                    } else {
-                        $roleUsers = null;
-                    }
-                @endphp
 
                 @if(sizeof($roleUsers) != 0)
                     <li>

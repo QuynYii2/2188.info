@@ -1,4 +1,4 @@
-@php use Illuminate\Support\Facades\Auth; @endphp
+@php use App\Enums\AddressOrderStatus;use App\Enums\OrderMethod;use App\Models\OrderAddress;use App\Models\Product;use App\Models\RankUserSeller;use App\Models\User;use App\Models\Voucher;use Illuminate\Support\Facades\Auth; @endphp
 
 @extends('frontend.layouts.master')
 
@@ -69,7 +69,8 @@
                                             <tr>
                                                 <td>{{ $cartItem->product->name }}</td>
                                                 <td class="text-center">{{ $cartItem->quantity }}</td>
-                                                <td class="text-center" id="price-{{ $cartItem->id }}">{{ $cartItem->price }}</td>
+                                                <td class="text-center"
+                                                    id="price-{{ $cartItem->id }}">{{ $cartItem->price }}</td>
                                                 <td class="float-end text-center"
                                                     id="total-quantity-{{ $cartItem->id }}">{{ $cartItem->price*$cartItem->quantity }}</td>
                                             </tr>
@@ -100,15 +101,16 @@
                                         <input type="number" id="phone" name="phone" placeholder="035985935"
                                                value="{{$user->phone}}" required>
                                         <label for="address">
-                                        <i class="fa fa-institution"></i>{{ __('home.address') }}</br>
+                                            <i class="fa fa-institution"></i>{{ __('home.address') }}</br>
                                         </label>
                                         <input type="text" id="address" name="address" placeholder="542 W. 15th Street"
                                                value="{{$user->address}}" required>
                                         <input onclick="check();" type="radio" id="address-order2" name="address-order">
                                         <span>{{ __('home.Use Different Address') }}</span><br>
-                                        <select id="address2" name="address2" disabled class="form-control" onchange="check();">
+                                        <select id="address2" name="address2" disabled class="form-control"
+                                                onchange="check();">
                                             @php
-                                                $addresses = \App\Models\OrderAddress::where([['user_id', Auth::user()->id], ['status', \App\Enums\AddressOrderStatus::ACTIVE]])->get();
+                                                $addresses = OrderAddress::where([['user_id', Auth::user()->id], ['status', AddressOrderStatus::ACTIVE]])->get();
                                             @endphp
                                             @foreach($addresses as $address)
                                                 <option value="{{$address}}">{{$address->address_detail}}
@@ -123,7 +125,7 @@
                                                 onchange="getvoucher()">
                                             @foreach($voucherItems as $item)
                                                 @php
-                                                    $voucher = \App\Models\Voucher::find($item->voucher_id);
+                                                    $voucher = Voucher::find($item->voucher_id);
                                                     $listCategory = $voucher->apply;
                                                     $arrayCategory = explode(',', $listCategory);
                                                     $productIDs = null;
@@ -176,17 +178,17 @@
                                     <div class="col-12 col-md-6 col-xl-7" id="choose-method-payment">
                                         <h4>{{ __('home.Payment Methods') }}</h4>
                                         <input type="radio" name="order_method" id="order-by-immediate" checked
-                                               value="{{\App\Enums\OrderMethod::IMMEDIATE}}"/><span
-                                                class="ml-1">{{ __(\App\Enums\OrderMethod::IMMEDIATE) }}</span><br>
+                                               value="{{OrderMethod::IMMEDIATE}}"/><span
+                                                class="ml-1">{{ __(OrderMethod::IMMEDIATE) }}</span><br>
                                         <input type="radio" name="order_method" id="order-by-card"
-                                               value="{{\App\Enums\OrderMethod::CardCredit}}"/><span
-                                                class="ml-1">{{ __(\App\Enums\OrderMethod::CardCredit) }}</span><br>
+                                               value="{{OrderMethod::CardCredit}}"/><span
+                                                class="ml-1">{{ __(OrderMethod::CardCredit) }}</span><br>
                                         <input type="radio" name="order_method" id="order-by-e-wallet"
-                                                {{\App\Enums\OrderMethod::ElectronicWallet}}/>
-                                        <span class="ml-1">{{ __(\App\Enums\OrderMethod::ElectronicWallet) }}</span><br>
+                                                {{OrderMethod::ElectronicWallet}}/>
+                                        <span class="ml-1">{{ __(OrderMethod::ElectronicWallet) }}</span><br>
                                         <input type="radio" name="order_method" id="order-by-coin"
-                                                {{\App\Enums\OrderMethod::SHOPPING_MALL_COIN}}/>
-                                        <span class="ml-1">{{ __(\App\Enums\OrderMethod::SHOPPING_MALL_COIN) }}</span>
+                                                {{OrderMethod::SHOPPING_MALL_COIN}}/>
+                                        <span class="ml-1">{{ __(OrderMethod::SHOPPING_MALL_COIN) }}</span>
                                     </div>
 
                                     <div class="mt-4 col-12 col-md-6 col-xl-5" style="" id="space-price">
@@ -194,26 +196,23 @@
                                             <tr>
                                                 <td>{{ __('home.Total Product Cost') }}:</td>
                                                 <td><span class="text-warning bg-white">$</span>
-                                                    <span class="text-warning bg-white" id="total-price"
-                                                          name="total_price">0</span>
+                                                    <span class="text-warning bg-white" id="total-price">0</span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>{{ __('home.Shipping Fee') }}:</td>
                                                 <td><span class="text-warning bg-white">$</span>
-                                                    <span class="text-warning bg-white" id="shipping-price"
-                                                          name="shipping_price">0</span>
+                                                    <span class="text-warning bg-white" id="shipping-price">0</span>
                                             </tr>
                                             <tr>
                                                 <td>{{ __('home.Discount') }}:</td>
                                                 <td><span class="text-warning bg-white">$</span>
-                                                    <span class="text-warning bg-white" id="sale-price"
-                                                          name="discount_price">0</span>
+                                                    <span class="text-warning bg-white" id="sale-price">0</span>
                                             </tr>
                                             <tr>
                                                 <td>{{ __('home.Total Payment') }}:</td>
                                                 <td><span class="text-danger bg-white">$</span>
-                                                    <span class="text-danger bg-white" id="checkout-price" name="total">0</span>
+                                                    <span class="text-danger bg-white" id="checkout-price">0</span>
                                             </tr>
                                         </table>
                                     </div>
@@ -223,8 +222,54 @@
                                         class=" mt-3 mb-3 btn btn-danger">{{ __('home.Pay Now') }}</button>
 
                             </div>
+                            <input type="text" id="total_price" name="total_price" value="0" hidden="">
+                            <input type="text" id="shipping_price" name="shipping_price" value="0" hidden="">
+                            <input type="text" id="discount_price" name="discount_price" value="0" hidden="">
                             <input type="text" id="price_id" name="priceID" value="0" hidden="">
                             <input type="text" id="voucher_id" name="voucherID" value="0" hidden="">
+
+                            @php
+                                $user = User::find(Auth::user()->id);
+                                $rank = $user->level_account;
+                                $arrayShops = null;
+                                $rankUsers = RankUserSeller::all();
+                                foreach ($rankUsers as $rankUser){
+                                    $listRanks = $rankUser->apply;
+                                    $array = explode(',', $listRanks);
+                                    for ($i = 0; $i<count($array); $i++){
+                                        if ($rank == $array[$i]){
+                                            $arrayShops[] = $rankUser->user_id."-".$rankUser->percent;
+                                        }
+                                    }
+                                }
+                                $arrayProducts = null;
+                                if ($arrayShops != null){
+                                     for ($i = 0; $i<count($arrayShops); $i++){
+                                        $myArray = explode('-', $arrayShops[$i]);
+                                        foreach ($carts as $cart){
+                                            $product = Product::find($cart->product_id);
+                                            if ($product->user_id == $myArray[0]){
+                                                $arrayProducts[] = $product->id."-".$myArray[1];
+                                            }
+                                        }
+                                    }
+                                }
+                                $totalSaleByRank = 0;
+                                if ($arrayProducts!= null){
+                                    for ($i = 0; $i<count($arrayProducts); $i++){
+                                        $saleArray = explode('-', $arrayProducts[$i]);
+                                        $product = Product::find($saleArray[0]);
+                                        $totalPrice = $product->price*$saleArray[1]/100;
+                                        if ($totalSaleByRank < $totalPrice){
+                                            $totalSaleByRank = $totalPrice;
+                                        }
+                                    }
+                                }
+
+                            @endphp
+
+                            <input type="text" id="discount_price_by_rank" name="discount_price_by_rank"
+                                   value="{{$totalSaleByRank}}" hidden="">
                         </form>
                     </div>
                 </div>
@@ -278,7 +323,8 @@
             let totalMax = document.getElementById('max-total');
             let totalPrice = document.getElementById('total-price');
             let shippingPrice = document.getElementById('shipping-price').innerText;
-            let salePrice = document.getElementById('sale-price').innerText;
+            let salePrice = document.getElementById('sale-price');
+            let salePriceByRank = document.getElementById('discount_price_by_rank');
             let checkOutPrice = document.getElementById('checkout-price');
             var firstCells = document.querySelectorAll('#table-checkout td:nth-child(4)');
             var cellValues = [];
@@ -291,13 +337,16 @@
             }
             totalMax.innerText = total;
             totalPrice.innerHTML = total;
-
-            let max = parseFloat(total) + parseFloat(shippingPrice) - parseFloat(salePrice)
+            salePrice.innerText = salePriceByRank.value;
+            let max = parseFloat(total) + parseFloat(shippingPrice) - parseFloat(salePrice.innerText)
 
             checkOutPrice.innerHTML = max.toFixed(1);
             let price = document.getElementById('price_id');
             price.value = checkOutPrice.innerHTML;
+            let discount_price = document.getElementById('discount_price');
+            discount_price.value = salePriceByRank.value;
         }
+
         getAllTotal();
 
         getvoucher();

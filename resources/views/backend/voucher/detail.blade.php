@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-2">
                         <label for="percent">Mã voucher</label>
                         <input type="text" class="form-control"
                                value="{{$voucher->code}}"
@@ -63,7 +63,16 @@
                         </div>
                     </div>
                     <input type="text" id="category_apply" value="{{$voucher->apply}}" hidden>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
+                        <label for="assign_to">Assign To</label>
+                        <select id="assign_to" name="assign_to" class="form-control">
+                            <option value="0">No Assgin</option>
+                            @foreach($levels as $level)
+                                <option value="{{$level}}">{{$level}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
                         <label for="status">Status</label>
                         <select id="status" name="status" class="form-control">
                             @if($voucher->status == \App\Enums\VoucherStatus::ACTIVE)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Enums\AttributeProductStatus;
 use App\Enums\AttributeStatus;
+use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\Category;
@@ -20,6 +21,66 @@ class ProductController extends Controller
     {
         $products = Product::where('user_id', Auth::user()->id)->orderByDesc('id')->get();
         return view('backend/products/index', ['products' => $products]);
+    }
+
+    public function getProductsViews(Request $request)
+    {
+        $user = Auth::user()->id;
+        $role_id = DB::table('role_user')->where('user_id', $user)->get();
+        $isAdmin = false;
+        foreach ($role_id as $item) {
+            if ($item->role_id == 1) {
+                $isAdmin = true;
+            }
+        }
+        $views = $request->input('views');
+        $sellerID = $request->input('user_seller');
+        $listUserId = null;
+        if ($isAdmin) {
+            $products = Product::where('status', '!=', ProductStatus::DELETED)->get();
+            foreach ($products as $product) {
+                $listUserId[] = $product->user_id;
+                $listUserId = array_unique($listUserId);
+            }
+            if ($sellerID == null && $views == null) {
+                $products = Product::where('status', '!=', ProductStatus::DELETED)->get();
+            } elseif ($sellerID == null && $views != null) {
+                if ($views == 'asc') {
+                    $products = Product::where('status', '!=', ProductStatus::DELETED)->orderBy('views', 'ASC')->get();
+                } elseif ($views == 'desc') {
+                    $products = Product::where('status', '!=', ProductStatus::DELETED)->orderBy('views', 'DESC')->get();
+                } else {
+                    $products = Product::where('status', '!=', ProductStatus::DELETED)->get();
+                }
+            } elseif ($sellerID != null && $views == null) {
+                if ($sellerID == '0') {
+                    $products = Product::where('status', '!=', ProductStatus::DELETED)->get();
+                } else {
+                    $products = Product::where([['status', '!=', ProductStatus::DELETED], ['user_id', $sellerID]])->get();
+                }
+            } elseif ($sellerID != null && $views != null) {
+                if ($sellerID == '0' && $views == 'asc') {
+                    $products = Product::where('status', '!=', ProductStatus::DELETED)->orderBy('views', 'ASC')->get();
+                } elseif ($sellerID == '0' && $views == 'desc') {
+                    $products = Product::where('status', '!=', ProductStatus::DELETED)->orderBy('views', 'DESC')->get();
+                } elseif ($sellerID != '0' && $views == 'asc') {
+                    $products = Product::where([['status', '!=', ProductStatus::DELETED], ['user_id', $sellerID]])->orderBy('views', 'ASC')->get();
+                } elseif ($sellerID != '0' && $views == 'desc') {
+                    $products = Product::where([['status', '!=', ProductStatus::DELETED], ['user_id', $sellerID]])->orderBy('views', 'DESC')->get();
+                } else {
+                    $products = Product::where([['status', '!=', ProductStatus::DELETED], ['user_id', $sellerID]])->get();
+                }
+            }
+        } else {
+            if ($views == 'asc') {
+                $products = Product::where([['user_id', $user], ['status', '!=', ProductStatus::DELETED]])->orderBy('views', 'ASC')->get();
+            } elseif ($views == 'desc') {
+                $products = Product::where([['user_id', $user], ['status', '!=', ProductStatus::DELETED]])->orderBy('views', 'DESC')->get();
+            } elseif ($views == 'no' || $views == null) {
+                $products = Product::where([['user_id', $user], ['status', '!=', ProductStatus::DELETED]])->get();
+            }
+        }
+        return view('backend/products/views', compact('products', 'isAdmin', 'listUserId'));
     }
 
     public function create()
@@ -110,6 +171,8 @@ class ProductController extends Controller
 
         $product->name = $request->input('name');
         $product->description = $request->input('description');
+        $product->product_code = $request->input('product_code');
+        $product->qty = $request->input('qty');
         $product->price = $request->input('price');
         $product->category_id = $request->input('category_id');
         $product->thumbnail = $thumbnailPath;

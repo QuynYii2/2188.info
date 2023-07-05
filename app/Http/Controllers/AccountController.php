@@ -119,9 +119,14 @@ class AccountController extends Controller
     public function update($id)
     {
         $user = User::findOrFail($id);
-        $user->status = UserStatus::INACTIVE;
+        switch ($user->status) {
+            case UserStatus::ACTIVE:
+                $user->status = UserStatus::INACTIVE;
+                break;
+            default:
+                $user->status = UserStatus::ACTIVE;
+        }
         $user->save();
-
         return redirect(route('account.manage.show'));
     }
 

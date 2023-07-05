@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Enums\PromotionStatus;
+use App\Enums\UserInterestEnum;
+use App\Enums\UserStatus;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Promotion;
+use App\Models\User;
 use App\Models\Voucher;
 use App\Models\VoucherItem;
 use App\Services\Utils;
@@ -37,7 +40,13 @@ class VoucherController extends Controller
     {
         (new HomeController())->getLocale($request);
         $products = $this->mergeDuplicate($request);
-        return view('backend/voucher/create', compact('products'));
+        if (count($products) < 1) {
+            alert()->error('Error', 'Không có sản phẩm phù hợp!');
+            return redirect(route('seller.vouchers.list'));
+        }
+        $reflector = new \ReflectionClass('App\Enums\UserInterestEnum');
+        $levels = $reflector->getConstants();
+        return view('backend/voucher/create', compact('products', 'levels'));
     }
 
     public function create(Request $request)
@@ -51,6 +60,7 @@ class VoucherController extends Controller
             $description = $request->input('description');
             $code = 'SMV' . (new Utils())->generateString();
             $status = $request->input('status');
+            $assign_to = $request->input('assign_to');
 
             $arrayIds = $this->getArrayIds($request);
 
@@ -65,14 +75,31 @@ class VoucherController extends Controller
                 'user_id' => Auth::user()->id,
                 'status' => $status,
                 'apply' => implode(',', $arrayIds),
+                'assign_to' => $assign_to,
             ];
 
             $create = Voucher::create($voucher);
+            $newVoucher = Voucher::where('user_id', Auth::user()->id)->orderBy('id', 'DESC')->limit(1)->get();
+//            if ($assign_to == UserInterestEnum::FREE) {
+//                $this->voucherItems($newVoucher[0], UserInterestEnum::FREE);
+//                $this->voucherItems($newVoucher[0], UserInterestEnum::VIP);
+//                $this->voucherItems($newVoucher[0], UserInterestEnum::VVIP);
+//                $this->voucherItems($newVoucher[0], UserInterestEnum::SVIP);
+//            } elseif ($assign_to == UserInterestEnum::VIP) {
+//                $this->voucherItems($newVoucher[0], UserInterestEnum::VIP);
+//                $this->voucherItems($newVoucher[0], UserInterestEnum::VVIP);
+//                $this->voucherItems($newVoucher[0], UserInterestEnum::SVIP);
+//            } elseif ($assign_to == UserInterestEnum::VVIP) {
+//                $this->voucherItems($newVoucher[0], UserInterestEnum::VVIP);
+//                $this->voucherItems($newVoucher[0], UserInterestEnum::SVIP);
+//            } elseif ($assign_to == UserInterestEnum::SVIP) {
+//                $this->voucherItems($newVoucher[0], UserInterestEnum::SVIP);
+//            }
             if ($create) {
                 alert()->success('Success', 'Create voucher success!');
                 return redirect(route('seller.vouchers.list'));
             }
-            alert()->error('Error', 'Error, Please try again!');
+            alert()->error('Error', 'Error, Create error!');
             return back();
         } catch (\Exception $exception) {
             alert()->error('Error', 'Error, Please try again!');
@@ -88,7 +115,13 @@ class VoucherController extends Controller
             return back();
         }
         $products = $this->mergeDuplicate($request);
-        return view('backend/voucher/detail', compact('products', 'voucher'));
+        if (count($products) < 1) {
+            alert()->error('Error', 'Không có sản phẩm phù hợp!');
+            return redirect(route('seller.vouchers.list'));
+        }
+        $reflector = new \ReflectionClass('App\Enums\UserInterestEnum');
+        $levels = $reflector->getConstants();
+        return view('backend/voucher/detail', compact('products', 'voucher', 'levels'));
     }
 
     public function update(Request $request, $id)
@@ -101,6 +134,7 @@ class VoucherController extends Controller
             $endDate = $request->input('endDate');
             $description = $request->input('description');
             $status = $request->input('status');
+            $assign_to = $request->input('assign_to');
             $arrayIds = $this->getArrayIds($request);
             if ($arrayIds == null) {
                 alert()->error('Error', 'Error, Please enter the apply!');
@@ -121,7 +155,30 @@ class VoucherController extends Controller
             $voucher->description = $description;
             $voucher->status = $status;
             $voucher->apply = $arrayIds;
+            $voucher->assign_to = $assign_to;
             $voucher->save();
+
+//            $oldVoucherItemsn = VoucherItem::where([
+//                ['voucher_id', $voucher->id],
+//                ['checked', 1],
+//            ])->delete();
+//
+//            if ($assign_to == UserInterestEnum::FREE) {
+//                $this->voucherItems($voucher, UserInterestEnum::FREE);
+//                $this->voucherItems($voucher, UserInterestEnum::VIP);
+//                $this->voucherItems($voucher, UserInterestEnum::VVIP);
+//                $this->voucherItems($voucher, UserInterestEnum::SVIP);
+//            } elseif ($assign_to == UserInterestEnum::VIP) {
+//                $this->voucherItems($voucher, UserInterestEnum::VIP);
+//                $this->voucherItems($voucher, UserInterestEnum::VVIP);
+//                $this->voucherItems($voucher, UserInterestEnum::SVIP);
+//            } elseif ($assign_to == UserInterestEnum::VVIP) {
+//                $this->voucherItems($voucher, UserInterestEnum::VVIP);
+//                $this->voucherItems($voucher, UserInterestEnum::SVIP);
+//            } elseif ($assign_to == UserInterestEnum::SVIP) {
+//                $this->voucherItems($voucher, UserInterestEnum::SVIP);
+//            }
+
             alert()->success('Success', 'Update voucher success!');
             return redirect(route('seller.vouchers.list'));
 
@@ -218,5 +275,21 @@ class VoucherController extends Controller
         }
         $products = array_diff($myArray, $arrayIDs);
         return $products;
+    }
+
+    private function voucherItems($newVoucher, $status)
+    {
+        $users = User::where([
+            ['status', UserStatus::ACTIVE],
+            ['level_account', $status]
+        ])->get();
+        foreach ($users as $user) {
+            VoucherItem::create([
+                'voucher_id' => $newVoucher->id,
+                'customer_id' => $user->id,
+                'quantity' => 1,
+                'checked' => 1,
+            ]);
+        }
     }
 }
