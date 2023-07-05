@@ -16,6 +16,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\Seller\AttributeController;
 use App\Http\Controllers\Seller\CategoryController;
+use App\Http\Controllers\Seller\ExportFileController;
 use App\Http\Controllers\Seller\ProductController;
 use App\Http\Controllers\Seller\PropertiesController;
 use App\Http\Controllers\Seller\RankUserSellerController;
@@ -203,7 +204,10 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::get('/account-manage/view-cart/{id}', [AccountController::class, 'viewCart'])->name('account.show.order');
 
     //Quản lý kho hàng
-    Route::get('/storage-manage', [StorageController::class, 'index'])->name('storage.manage.show');
+    Route::get('/storage-manage-user', [StorageController::class, 'index'])->name('storage.manage.show.user');
+    Route::get('/storage-manage-all', [StorageController::class, 'allStorage'])->name('storage.manage.show.all');
+    Route::get('/export-excel', [ExportFileController::class, 'exportExcel'])->name('storage.manage.export.excel');
+    Route::get('/export-pdf', [ExportFileController::class, 'exportToPDF'])->name('storage.manage.export.pdf');
 
     // Rank setup
     Route::get('/rank-setups', [RankUserSellerController::class, 'index'])->name('seller.rank.setup.show');

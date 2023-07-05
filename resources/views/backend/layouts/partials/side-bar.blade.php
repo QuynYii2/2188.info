@@ -109,7 +109,17 @@
         display: none;
     }
 </style>
+@php
+    use Illuminate\Support\Facades\DB;
 
+    if (auth()->check() != null){
+        $roleUsers = DB::table('role_user')
+        ->where([['user_id', Auth::user()->id], ['role_id', 1]])
+        ->get();
+    } else {
+        $roleUsers = null;
+    }
+@endphp
 <div class='wrapper text-nowrap'>
     <ul class='items'>
         <li>
@@ -154,25 +164,15 @@
                     <a href="#!">Quản lý kho</a>
                     <ul class='sub-items pl-3'>
                         <li>
-                            <a href='{{ route('storage.manage.show') }}'>Thông tin kho hàng</a>
+                            <a href='{{ route('storage.manage.show.user') }}'>Thông tin kho hàng</a>
                         </li>
-                        <li>
-                            <a href='#'>Lorem ipsum dolor sit amet.</a>
-                        </li>
+                        @if(sizeof($roleUsers) != 0)
+                            <li>
+                                <a href='{{ route('storage.manage.show.all') }}'>Tất cả kho hàng</a>
+                            </li>
+                        @endif
                     </ul>
                 </li>
-                <li>
-                    <a href='#'>Quản lý user</a>
-                    <ul class='sub-items pl-3'>
-                        <li>
-                            <a href='#'>Lorem ipsum dolor sit amet.</a>
-                        </li>
-                        <li>
-                            <a href='#'>Lorem ipsum dolor sit amet.</a>
-                        </li>
-                    </ul>
-                </li>
-
                 <li>
                     <a href="#!"><span>Thống kê</span></a>
                     <ul class='sub-items pl-3'>
@@ -226,18 +226,7 @@
                         </li>
                     </ul>
                 </li>
-                @php
-                    use Illuminate\Support\Facades\DB;
 
-                    if (auth()->check() != null){
-                        $roleUsers = DB::table('role_user')
-                        ->where([['user_id', Auth::user()->id], ['role_id', 1]])
-                        ->get();
-
-                    } else {
-                        $roleUsers = null;
-                    }
-                @endphp
 
                 @if(sizeof($roleUsers) != 0)
                     <li>

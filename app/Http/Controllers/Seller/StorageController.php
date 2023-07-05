@@ -17,16 +17,18 @@ class StorageController extends Controller
      */
     public function index()
     {
+        $products = Product::where('user_id', Auth::user()->id)->orderByDesc('id')->get();
+        return view('backend.storage-manage.index', compact('products'));
+    }
+
+    public function allStorage()
+    {
         $id = Auth::user()->id;
         $roles = DB::table('role_user')->where('user_id', $id)->orderBy('role_id')->get('role_id');
         foreach ($roles as $role) {
-            switch ($role ->role_id) {
-                case 1:
-                    $products = Product::all();
-                    return view('backend.storage-manage.index', compact('products'));
-                case 2:
-                    $products = Product::where('user_id', Auth::user()->id)->orderByDesc('id')->get();
-                    return view('backend.storage-manage.index', compact('products'));
+            if ($role->role_id == 1) {
+                $products = Product::all();
+                return view('backend.storage-manage.index', compact('products'));
             }
         }
     }
@@ -45,7 +47,7 @@ class StorageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -56,7 +58,7 @@ class StorageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -67,7 +69,7 @@ class StorageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -78,8 +80,8 @@ class StorageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -90,7 +92,7 @@ class StorageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -19,6 +19,7 @@
         "realrashid/sweet-alert": "^7.0",
         "socialiteproviders/kakao": "^4.2",
         "socialiteproviders/manager": "^4.3",
+        "spatie/simple-excel": "^3.2",
         "srmklive/paypal": "*"
     },
     "require-dev": {
