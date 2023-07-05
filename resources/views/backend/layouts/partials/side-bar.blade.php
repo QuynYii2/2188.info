@@ -172,7 +172,6 @@
                         </li>
                     </ul>
                 </li>
-
                 <li>
                     <a href="#!"><span>Thống kê</span></a>
                     <ul class='sub-items pl-3'>
@@ -188,6 +187,9 @@
                 </li>
                 <li>
                     <a href="#!"><span>Quản lý doanh thu</span></a>
+                    <ul class='sub-items pl-3'>
+                        <li><a href="{{route('revenues.index')}}">List Revenue</a></li>
+                    </ul>
                 </li>
                 <li>
                     <a href="#!"><span>Sản phẩm xem nhiều nhất</span></a>

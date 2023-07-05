@@ -16,8 +16,11 @@ use App\Models\Coin;
 use App\Models\Notification;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
+use App\Models\Revenue;
 use App\Models\User;
 use App\Models\VoucherItem;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -104,6 +107,29 @@ class CheckoutController extends Controller
                 'status' => OrderItemStatus::ACTIVE
             ];
             OrderItem::create($item);
+
+            $product = Product::find($cart->product->id);
+            $seller_id = $product->user_id;
+
+            $revenue = Revenue::where([
+                ['seller_id', $seller_id],
+                ['date', '>', Carbon::now()->addHours(7)->startOfDay()],
+                ['date', '<', Carbon::now()->addHours(7)->endOfDay()]
+            ])->first();
+
+            if ($revenue) {
+                $revenue->revenue = $revenue->revenue + $cart->quantity * $cart->product->price;
+                $revenue->save();
+            } else {
+                $revenue = [
+                    'seller_id' => $seller_id,
+                    'rank' => 'FREE',
+                    'date' => Carbon::now()->addHours(7),
+                    'revenue' => $cart->quantity * $cart->product->price,
+                ];
+
+                Revenue::create($revenue);
+            }
         }
 
         $this->deleteVoucher($idVoucher);
