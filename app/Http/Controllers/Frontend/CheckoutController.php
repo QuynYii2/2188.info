@@ -125,8 +125,6 @@ class CheckoutController extends Controller
             }
         } elseif (50 <= count($listOrder)) {
             $user->level_account = UserInterestEnum::SVIP;
-        } else {
-            $user->level_account = UserInterestEnum::FREE;
         }
 
         $user->save();
