@@ -164,6 +164,8 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::post('/toggle-properties/{id}', [PropertiesController::class, 'toggle'])->name('properties.toggle');
     //
     Route::get('/products', [ProductController::class, 'index'])->name('seller.products.index');
+    Route::get('/list/products-views', [ProductController::class, 'getProductsViews'])->name('seller.products.views');
+    Route::post('/filter/products-views', [ProductController::class, 'getProductsViews'])->name('seller.products.views.filter');
     Route::get('/products/create', [ProductController::class, 'create'])->name('seller.products.create');
     Route::post('/products', [ProductController::class, 'store'])->name('seller.products.store');
     Route::get('/products/{product}', [ProductController::class, 'show'])->name('seller.products.show');
@@ -253,4 +255,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/promotions-item', [PromotionController::class, 'createPromotionItems'])->name('promotions.item.create');
     Route::get('/promotion', [PromotionController::class, 'index'])->name('promotions.index');
     Route::post('/add-cart/{product}/{percent}', [CartController::class, 'addToCartPromotion'])->name('cart.add.promotion');
+    //
+    Route::get('/product-views', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByViews'])->name('product.views');
 });
