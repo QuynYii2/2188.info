@@ -176,6 +176,18 @@
                     </ul>
                 </li>
                 <li>
+                    <a href='#'>Quản lý user</a>
+                    <ul class='sub-items pl-3'>
+                        <li>
+                            <a href='#'>Lorem ipsum dolor sit amet.</a>
+                        </li>
+                        <li>
+                            <a href='#'>Lorem ipsum dolor sit amet.</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
                     <a href="#!"><span>Thống kê</span></a>
                     <ul class='sub-items pl-3'>
                         <li><a href="#!">Chartjs</a>
@@ -190,6 +202,9 @@
                 </li>
                 <li>
                     <a href="#!"><span>Quản lý doanh thu</span></a>
+                    <ul class='sub-items pl-3'>
+                        <li><a href="{{route('revenues.index')}}">List Revenue</a></li>
+                    </ul>
                 </li>
                 <li>
                     <a href="{{route('seller.products.views')}}">Sản phẩm xem nhiều nhất</a>
@@ -228,7 +243,6 @@
                         </li>
                     </ul>
                 </li>
-
 
                 @if(sizeof($roleUsers) != 0)
                     <li>

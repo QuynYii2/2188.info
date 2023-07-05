@@ -179,6 +179,11 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('seller.categories.edit');
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('seller.categories.update');
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('seller.categories.destroy');
+
+    //Revenue
+    Route::get('/revenues', [\App\Http\Controllers\RevenusController::class, 'index'])->name('revenues.index');
+    Route::post('/revenues', [\App\Http\Controllers\RevenusController::class, 'index'])->name('revenues.filter');
+
     // Evaluate Product
     Route::get('/evaluates', [SellerEvaluateProductController::class, 'index'])->name('seller.evaluates.index');
     Route::get('/evaluates/{id}', [SellerEvaluateProductController::class, 'detail'])->name('seller.evaluates.detail');

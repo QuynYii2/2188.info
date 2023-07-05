@@ -6,7 +6,6 @@
             width: 100%;
             white-space: nowrap;
         }
-
     </style>
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
