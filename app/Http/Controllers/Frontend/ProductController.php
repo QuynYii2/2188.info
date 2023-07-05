@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
 use App\Libraries\GeoIP;
 use App\Models\Category;
 use App\Models\Product;
-use App\Traits\CountryCodeTrait;
 use Illuminate\Http\Request;
-use GuzzleHttp\Client;
 
 
 class ProductController extends Controller
@@ -56,11 +55,18 @@ class ProductController extends Controller
 
         $productByLocal = Product::all();
 
-        return view('frontend/pages/product',[
+        return view('frontend/pages/product', [
             'productByLocal' => $productByLocal,
             'currency' => $currency,
             'countryCode' => $locale,
             'categories' => $categories
         ]);
+    }
+
+    public function getListByViews(Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $products = Product::where('status', ProductStatus::ACTIVE)->orderBy('views', 'DESC')->limit(9)->get();
+        return view('frontend.pages.profile.my-review', compact('products'));
     }
 }

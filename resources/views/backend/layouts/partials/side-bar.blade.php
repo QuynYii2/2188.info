@@ -122,6 +122,8 @@
                         </li>
                         <li><a href="/products/create">Thêm mới sản phẩm</a>
                         </li>
+                        <li><a href="{{route('seller.products.views')}}">Sort by views</a>
+                        </li>
                         <li><a href="/categories">Chuyên mục</a>
                         </li>
                     </ul>
