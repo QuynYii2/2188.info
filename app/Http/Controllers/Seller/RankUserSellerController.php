@@ -45,6 +45,12 @@ class RankUserSellerController extends Controller
                 return back();
             }
 
+            $rankSeller = RankUserSeller::where('apply', $listIDs)->first();
+            if ($rankSeller){
+                alert()->error('Error', 'Error, The apply exited!');
+                return back();
+            }
+
             $create = RankUserSeller::create([
                 'percent' => $percent,
                 'user_id' => Auth::user()->id,

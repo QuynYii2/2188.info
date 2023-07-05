@@ -192,7 +192,7 @@
                     <a href="#!"><span>Quản lý doanh thu</span></a>
                 </li>
                 <li>
-                    <a href="#!"><span>Sản phẩm xem nhiều nhất</span></a>
+                    <a href="{{route('seller.products.views')}}">Sản phẩm xem nhiều nhất</a>
                 </li>
                 <li>
                     <a href="#!"><span>Quản lý bình luận</span></a>
