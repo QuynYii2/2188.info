@@ -186,9 +186,6 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#!"><span>Quản lý mã giảm giá</span></a>
-                </li>
-                <li>
                     <a href="#!"><span>Quản lý doanh thu</span></a>
                 </li>
                 <li>
