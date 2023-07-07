@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Spatie\SimpleExcel\SimpleExcelWriter;
 
 class ExportFileController extends Controller
@@ -16,7 +17,7 @@ class ExportFileController extends Controller
 
         $writer->addRows($users->toArray());
 
-        return response()->download(storage_path('app/public/users.xlsx'))->deleteFileAfterSend();
+        return response()->download(storage_path('app/public/users.xlsx'),'storage-'.Auth::user()->name.'-'.rand().'.xlsx')->deleteFileAfterSend();
     }
 
 }

@@ -198,9 +198,6 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#!"><span>Quản lý mã giảm giá</span></a>
-                </li>
-                <li>
                     <a href="#!"><span>Quản lý doanh thu</span></a>
                     <ul class='sub-items pl-3'>
                         <li><a href="{{route('revenues.index')}}">List Revenue</a></li>

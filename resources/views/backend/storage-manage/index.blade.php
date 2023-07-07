@@ -152,7 +152,7 @@
 @section('content')
     <div class="container-fluid">
         <a href="{{ route('storage.manage.export.excel') }}"><button>Excel</button></a>
-        <a href="{{ route('storage.manage.export.pdf') }}"><button>Pdf</button></a>
+{{--        <a href="{{ route('storage.manage.export.pdf') }}"><button>Pdf</button></a>--}}
         <h2>Quản lý kho hàng</h2>
 
         <input type="search" class="light-table-filter form-control" data-table="order-table" placeholder="Filter"/>
