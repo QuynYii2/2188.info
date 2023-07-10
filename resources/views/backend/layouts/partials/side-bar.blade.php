@@ -221,12 +221,6 @@
                         <li>
                             <a href="{{route('seller.vouchers.create.process')}}">Create Voucher</a>
                         </li>
-                        <li>
-                            <a href="{{route('seller.rank.setup.show')}}">List Rank Setup</a>
-                        </li>
-                        <li>
-                            <a href="{{route('seller.rank.setup.processCreate')}}">Create Rank Setup</a>
-                        </li>
                     </ul>
                 </li>
                 <li>
@@ -254,6 +248,24 @@
                         </ul>
                     </li>
                 @endif
+
+                <li>
+                    <a href="#!"><span>Quản lý rank</span></a>
+                    <ul class='sub-items'>
+                        <li>
+                            <a href="{{route('seller.rank.setup.show')}}">List Rank Setup</a>
+                        </li>
+                        <li>
+                            <a href="{{route('seller.rank.setup.processCreate')}}">Create Rank Setup</a>
+                        </li>
+                        <li>
+                            <a href="{{route('seller.setup.show')}}">List Rank</a>
+                        </li>
+                        <li>
+                            <a href="{{route('seller.setup.processCreate')}}">Create Rank</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </li>
     </ul>
