@@ -226,6 +226,12 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::get('/rank-setup/{id}', [RankUserSellerController::class, 'detail'])->name('seller.rank.setup.detail');
     Route::post('/rank-setup/{id}', [RankUserSellerController::class, 'update'])->name('seller.rank.setup.update');
     Route::delete('/rank-delete/{id}', [RankUserSellerController::class, 'delete'])->name('seller.rank.setup.delete');
+    // Setup
+    Route::get('/seller-setups', [RankUserSellerController::class, 'indexSetup'])->name('seller.setup.show');
+    Route::get('/seller-setups/create', [RankUserSellerController::class, 'processSetupCreate'])->name('seller.setup.processCreate');
+    Route::post('/seller-setup', [RankUserSellerController::class, 'createSetup'])->name('seller.setup.create');
+    Route::get('/seller-setup/{id}', [RankUserSellerController::class, 'detailSetup'])->name('seller.setup.detail');
+    Route::post('/seller-setup/{id}', [RankUserSellerController::class, 'updateSetUp'])->name('seller.setup.update');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {

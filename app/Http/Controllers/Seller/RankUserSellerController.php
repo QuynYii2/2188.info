@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers\Seller;
 
-use App\Enums\PromotionStatus;
-use App\Enums\VoucherStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\HomeController;
-use App\Models\Product;
-use App\Models\Promotion;
+use App\Models\RankSetUpSeller;
 use App\Models\RankUserSeller;
-use App\Models\Voucher;
-use App\Models\VoucherItem;
 use App\Services\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +22,7 @@ class RankUserSellerController extends Controller
     public function processCreate(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $reflector = new \ReflectionClass('App\Enums\UserInterestEnum');
+        $reflector = new \ReflectionClass('App\Enums\RankSetupSeller');
         $levels = $reflector->getConstants();
         return view('backend/rankSeller/create', compact('levels'));
     }
@@ -46,7 +41,7 @@ class RankUserSellerController extends Controller
             }
 
             $rankSeller = RankUserSeller::where('apply', $listIDs)->first();
-            if ($rankSeller){
+            if ($rankSeller) {
                 alert()->error('Error', 'Error, The apply exited!');
                 return back();
             }
@@ -73,7 +68,7 @@ class RankUserSellerController extends Controller
     {
         (new HomeController())->getLocale($request);
         $rankSeller = RankUserSeller::find($id);
-        $reflector = new \ReflectionClass('App\Enums\UserInterestEnum');
+        $reflector = new \ReflectionClass('App\Enums\RankSetupSeller');
         $levels = $reflector->getConstants();
         return view('backend/rankSeller/detail', compact('rankSeller', 'levels'));
     }
@@ -118,11 +113,130 @@ class RankUserSellerController extends Controller
         }
     }
 
+    public function indexSetup(Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $rankSetups = RankSetUpSeller::where('user_id', Auth::user()->id)->get();
+        return view('backend/rankSeller/setup/list', compact('rankSetups'));
+    }
+
+    public function processSetupCreate(Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        return view('backend/rankSeller/setup/create');
+    }
+
+    public function createSetup(Request $request)
+    {
+        try {
+            $copper_price = $request->input('copper_price');
+            $silver_price = $request->input('silver_price');
+            $gold_price = $request->input('gold_price');
+            $diamond_price = $request->input('diamond_price');
+
+            if ($copper_price > $silver_price || $copper_price > $gold_price || $copper_price > $diamond_price) {
+                alert()->error('Error', 'Create Fail, The copper price unable to be bigger to silver price or gold price or diamond price!');
+                return back();
+            }
+
+            if ($silver_price > $gold_price || $silver_price > $diamond_price) {
+                alert()->error('Error', 'Create Fail, The silver price unable to be bigger to gold price or diamond price!');
+                return back();
+            }
+
+            if ($gold_price > $diamond_price) {
+                alert()->error('Error', 'Create Fail, The gold price unable to be bigger to diamond price!');
+                return back();
+            }
+
+            $readNow = "COPPER: " . $copper_price . ", SILVER: " . $silver_price . ", GOLD: " . $gold_price . ", DIAMOND: " . $diamond_price;
+
+            $old = RankSetUpSeller::where('user_id', Auth::user()->id)->first();
+            $check = null;
+            if ($old) {
+                $old->setup = $readNow;
+                $update = $old->save();
+                $check = 0;
+            } else {
+                $create = RankSetUpSeller::create([
+                    'user_id' => Auth::user()->id,
+                    'setup' => $readNow,
+                ]);
+                $check = 1;
+            }
+            if ($check == 1) {
+                alert()->success('Success', 'Create rank success!');
+                return redirect(route('seller.setup.show'));
+            } elseif ($check == 0) {
+                alert()->success('Success', 'Update rank success!');
+                return redirect(route('seller.setup.show'));
+            }
+
+            alert()->error('Error', 'Error, Create error!');
+            return back();
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error, Please try again!');
+            return back();
+        }
+    }
+
+    public function detailSetup(Request $request, $id)
+    {
+        (new HomeController())->getLocale($request);
+        $rankSetup = RankSetUpSeller::where('id', $id)->first();
+        $myList = $rankSetup->setup;
+        $myArray = explode(',', $myList);
+        return view('backend/rankSeller/setup/detail', compact('rankSetup', 'myArray'));
+    }
+
+    public function updateSetUp(Request $request, $id)
+    {
+        try {
+            $copper_price = $request->input('COPPER_price');
+            $silver_price = $request->input('SILVER_price');
+            $gold_price = $request->input('GOLD_price');
+            $diamond_price = $request->input('DIAMOND_price');
+
+            if ($copper_price > $silver_price || $copper_price > $gold_price || $copper_price > $diamond_price) {
+                alert()->error('Error', 'Create Fail, The copper price unable to be bigger to silver price or gold price or diamond price!');
+                return back();
+            }
+
+            if ($silver_price > $gold_price || $silver_price > $diamond_price) {
+                alert()->error('Error', 'Create Fail, The silver price unable to be bigger to gold price or diamond price!');
+                return back();
+            }
+
+            if ($gold_price > $diamond_price) {
+                alert()->error('Error', 'Create Fail, The gold price unable to be bigger to diamond price!');
+                return back();
+            }
+
+            $readNow = "COPPER: " . $copper_price . ", SILVER: " . $silver_price . ", GOLD: " . $gold_price . ", DIAMOND: " . $diamond_price;
+
+            $old = RankSetUpSeller::where('id', $id)->first();
+
+            $old->setup = $readNow;
+            $update = $old->save();
+
+            if ($update) {
+                alert()->success('Success', 'Success, Update success!');
+                return redirect(route('seller.setup.show'));
+            }
+
+            alert()->error('Error', 'Error, Update error!');
+            return back();
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error, Please try again!');
+            return back();
+        }
+    }
+
     private function getArrayIds(Request $request)
     {
         $listCategoryName[] = null;
         $arrayIds = null;
-        $reflector = new \ReflectionClass('App\Enums\UserInterestEnum');
+        $reflector = new \ReflectionClass('App\Enums\RankSetupSeller');
         $levels = $reflector->getConstants();
         foreach ($levels as $level) {
             $name = 'apply-' . $level;

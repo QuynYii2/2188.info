@@ -230,38 +230,94 @@
 
                             @php
                                 $user = User::find(Auth::user()->id);
-                                $rank = $user->level_account;
-                                $arrayShops = null;
-                                $rankUsers = RankUserSeller::all();
-                                foreach ($rankUsers as $rankUser){
-                                    $listRanks = $rankUser->apply;
-                                    $array = explode(',', $listRanks);
-                                    for ($i = 0; $i<count($array); $i++){
-                                        if ($rank == $array[$i]){
-                                            $arrayShops[] = $rankUser->user_id."-".$rankUser->percent;
+
+                                $order_items = DB::table('order_items')
+                                        ->join('orders', 'orders.id', '=', 'order_items.order_id')
+                                        ->join('products', 'products.id', '=', 'order_items.product_id')
+                                        ->where('orders.user_id', '=', Auth::user()->id)
+                                        ->select('order_items.*', 'products.user_id')
+                                        ->get();
+
+//                                dd($order_items);
+                                foreach ($order_items as $order_item){
+                                    $userOrderIDs[] = $order_item->user_id;
+                                }
+                                $userOrderIDs = array_unique($userOrderIDs);
+//                                dd($userOrderIDs);
+                                $arrayIDShops = null;
+                                for($i = 0; $i < count($userOrderIDs); $i++) {
+                                  $orderItems = DB::table('order_items')
+                                        ->join('orders', 'orders.id', '=', 'order_items.order_id')
+                                        ->join('products', 'products.id', '=', 'order_items.product_id')
+                                        ->where([['orders.user_id', '=', Auth::user()->id], ['products.user_id', $userOrderIDs[$i]]])
+                                        ->select('order_items.*', 'products.user_id')
+                                        ->get();
+//                                  dd($orderItems);
+                                  $total = $orderItems->sum('price');
+                                  $arrayIDShops[] = $userOrderIDs[$i] . '-' . $total;
+                                }
+//                                dd($arrayIDShops);
+                                $rank = null;
+                                for ($i = 0; $i<count($arrayIDShops); $i++){
+                                    $split = explode('-', $arrayIDShops[$i]);
+                                    $setup = \App\Models\RankSetUpSeller::where('user_id', $split[0])->first();
+                                    $numberTalk = (int)$split[1];
+                                    $rankSetup = $setup->setup;
+                                    $myArrayRankSetup = explode(',', $rankSetup);
+                                    for($i = 0; $i < count($myArrayRankSetup)-1; $i++) {
+                                        $listItem = $myArrayRankSetup[$i];
+                                        $arrayItem = explode(':', $listItem);
+                                        $value = (int)$arrayItem[1];
+                                        $string = str_replace(' ', '', $arrayItem[0]);
+                                        $upNUmber = explode(':', $myArrayRankSetup[$i+1])[1];
+                                        $upNUmber = (int)$upNUmber;
+//                                        dd($numberTalk);
+                                        if ($value < $numberTalk && $numberTalk < $upNUmber){
+                                            $rank[] = $split[0].'-'.$string;
+                                        } else{
+                                            $rank[] = $split[0] . '-' . \App\Enums\RankSetupSeller::COPPER;
                                         }
                                     }
                                 }
-                                $arrayProducts = null;
-                                if ($arrayShops != null){
-                                     for ($i = 0; $i<count($arrayShops); $i++){
-                                        $myArray = explode('-', $arrayShops[$i]);
-                                        foreach ($carts as $cart){
-                                            $product = Product::find($cart->product_id);
-                                            if ($product->user_id == $myArray[0]){
-                                                $arrayProducts[] = $product->id."-".$myArray[1];
-                                            }
-                                        }
-                                    }
-                                }
+//dd($rank);
+                                $rank = array_unique($rank);
+//                                dd($rank);
                                 $totalSaleByRank = 0;
-                                if ($arrayProducts!= null){
-                                    for ($i = 0; $i<count($arrayProducts); $i++){
-                                        $saleArray = explode('-', $arrayProducts[$i]);
-                                        $product = Product::find($saleArray[0]);
-                                        $totalPrice = $product->price*$saleArray[1]/100;
-                                        if ($totalSaleByRank < $totalPrice){
-                                            $totalSaleByRank = $totalPrice;
+                                for($i = 0; $i < count($rank); $i++) {
+                                    $arrayShops = null;
+                                    $rankUsers = RankUserSeller::all();
+                                    foreach ($rankUsers as $rankUser){
+                                        $listRanks = $rankUser->apply;
+                                        $array = explode(',', $listRanks);
+                                            for ($j = 0; $j<count($array); $j++){
+                                                $rankCurrent = explode('-', $rank[$i]);
+                                                if ($rankCurrent[1] == $array[$j]){
+                                                    $arrayShops[] = $rankUser->user_id."-".$rankUser->percent;
+                                                }
+                                            }
+                                    }
+//                                  dd($arrayShops);
+                                    $arrayProducts = null;
+                                    if ($arrayShops != null){
+                                        for ($j = 0; $j<count($arrayShops); $j++){
+                                            $myArray = explode('-', $arrayShops[$j]);
+                                            foreach ($carts as $cart){
+                                                $product = Product::find($cart->product_id);
+                                                    if ($product->user_id == $myArray[0]){
+                                                        $arrayProducts[] = $cart->price."-".$cart->quantity."-".$myArray[1];
+                                                    }
+                                            }
+                                       }
+                                    }
+
+
+                                    if ($arrayProducts!= null){
+                                        for ($j = 0; $j<count($arrayProducts); $j++){
+                                            $saleArray = explode('-', $arrayProducts[$j]);
+                                            $totalPrice = $saleArray[0]*$saleArray[1]*$saleArray[2]/100;
+                                            if ($totalSaleByRank < $totalPrice){
+                                                $totalSaleByRank = $totalPrice;
+                                            }
                                         }
                                     }
                                 }
