@@ -162,8 +162,11 @@ class CheckoutController extends Controller
                 $revenue->revenue = $revenue->revenue + $cart->quantity * $cart->product->price;
                 $revenue->save();
             } else {
+                (new HomeController())->getLocale($request);
+                $local = app()->getLocale();
                 $revenue = [
                     'seller_id' => $seller_id,
+                    'location' => $local,
                     'rank' => 'FREE',
                     'date' => Carbon::now()->addHours(7),
                     'revenue' => $cart->quantity * $cart->product->price,

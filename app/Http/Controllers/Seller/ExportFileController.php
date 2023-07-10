@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Revenue;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Spatie\SimpleExcel\SimpleExcelWriter;
 
 class ExportFileController extends Controller
@@ -17,7 +19,29 @@ class ExportFileController extends Controller
 
         $writer->addRows($users->toArray());
 
-        return response()->download(storage_path('app/public/users.xlsx'),'storage-'.Auth::user()->name.'-'.rand().'.xlsx')->deleteFileAfterSend();
+        return response()->download(storage_path('app/public/users.xlsx'), 'storage-' . Auth::user()->name . '-' . rand() . '.xlsx')->deleteFileAfterSend();
     }
 
+    public function exportExcelRevenue()
+    {
+        $writer = SimpleExcelWriter::streamDownload(storage_path('app/public/revenue.xlsx'));
+        $user = Auth::user()->id;
+        $role_id = DB::table('role_user')->where('user_id', $user)->get();
+        $isAdmin = false;
+        foreach ($role_id as $item) {
+            if ($item->role_id == 1) {
+                $isAdmin = true;
+            }
+        }
+        if ($isAdmin){
+            $revenue = Revenue::all();
+        } else {
+            $revenue = Revenue::where('seller_id', $user)->get();
+        }
+        $writer->addRows($revenue->toArray());
+//        $users = Revenue::all();
+//        $writer->addRows($users->toArray());
+
+        return  $writer->toBrowser();
+    }
 }

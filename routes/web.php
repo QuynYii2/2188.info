@@ -14,6 +14,7 @@ use App\Http\Controllers\PermissionRankController;
 use App\Http\Controllers\ProductInterestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\RevenusController;
 use App\Http\Controllers\Seller\AttributeController;
 use App\Http\Controllers\Seller\CategoryController;
 use App\Http\Controllers\Seller\ExportFileController;
@@ -181,14 +182,16 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('seller.categories.destroy');
 
     //Revenue
-    Route::get('/revenues', [\App\Http\Controllers\RevenusController::class, 'index'])->name('revenues.index');
-    Route::post('/revenues', [\App\Http\Controllers\RevenusController::class, 'index'])->name('revenues.filter');
+    Route::get('/revenues', [RevenusController::class, 'index'])->name('revenues.index');
+    Route::post('/revenues', [RevenusController::class, 'index'])->name('revenues.filter');
+    Route::get('/revenue/export-excel', [ExportFileController::class, 'exportExcelRevenue'])->name('revenues.excel');
 
     // Evaluate Product
     Route::get('/evaluates', [SellerEvaluateProductController::class, 'index'])->name('seller.evaluates.index');
     Route::get('/evaluates/{id}', [SellerEvaluateProductController::class, 'detail'])->name('seller.evaluates.detail');
     Route::put('/evaluates/{id}', [SellerEvaluateProductController::class, 'update'])->name('seller.evaluates.update');
     Route::delete('/evaluates/{id}', [SellerEvaluateProductController::class, 'delete'])->name('seller.evaluates.delete');
+
     // Voucher
     Route::get('/vouchers', [VoucherController::class, 'getListSeller'])->name('seller.vouchers.list');
     Route::get('/process-vouchers', [VoucherController::class, 'processCreate'])->name('seller.vouchers.create.process');
