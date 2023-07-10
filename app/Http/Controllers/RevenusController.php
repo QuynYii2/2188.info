@@ -23,7 +23,9 @@ class RevenusController extends Controller
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
         $sellerID = $request->input('seller');
+        $locationID = $request->input('location');
         $arraySeller = null;
+//        dd($startDate, $endDate, $sellerID, $locationID);
         if ($isAdmin) {
             $revenues = Revenue::all();
             foreach ($revenues as $revenue) {
@@ -32,59 +34,117 @@ class RevenusController extends Controller
             }
 
             if ($sellerID == null && $endDate == null) {
-                $endDate = Carbon::now()->addHours(7);
+                $endDate = Carbon::now()->addHours(7)->endOfDay();
                 if ($startDate == null) {
-                    $startDate = Carbon::now()->addHours(-137);
+                    $startDate = Carbon::now()->addDays(-30);
                 }
-                $revenues = Revenue::where([
-                    ['date', '>', $startDate],
-                    ['date', '<', $endDate]
-                ])->get();
+
+                if ($locationID == null) {
+                    $revenues = Revenue::where([
+                        ['date', '>', $startDate],
+                        ['date', '<', $endDate]
+                    ])->get();
+                } else {
+                    $revenues = Revenue::where([
+                        ['date', '>', $startDate],
+                        ['date', '<', $endDate],
+                        ['location', '=', $locationID],
+                    ])->get();
+                }
             } elseif ($sellerID == null && $endDate != null) {
                 if ($startDate == null) {
-                    $startDate = Carbon::now()->addHours(-137);
+                    $startDate = Carbon::now()->addDays(-30)->startOfDay();
                 }
+                $endDate = Carbon::parse($endDate);
+                $endDate->endOfDay();
                 $revenues = Revenue::where([['date', '>', $startDate], ['date', '<', $endDate]])->get();
             } elseif ($sellerID != null && $endDate == null) {
                 if ($startDate == null) {
-                    $startDate = Carbon::now()->addHours(-137);
+                    $startDate = Carbon::now()->addDays(-30)->startOfDay();
                 }
-                $endDate = Carbon::now()->addHours(7);
-                $revenues = Revenue::where([
-                    ['seller_id', $sellerID],
-                    ['date', '>', $startDate],
-                    ['date', '<', $endDate]])->get();
+                $endDate = Carbon::now()->addHours(7)->endOfDay();
+
+                if ($locationID == null || $locationID == 'all') {
+                    $revenues = Revenue::where([
+                        ['seller_id', $sellerID],
+                        ['date', '>', $startDate],
+                        ['date', '<', $endDate]
+                    ])->get();
+                } else {
+                    $revenues = Revenue::where([
+                        ['seller_id', $sellerID],
+                        ['date', '>', $startDate],
+                        ['date', '<', $endDate],
+                        ['location', '=', $locationID],
+                    ])->get();
+                }
             } else {
                 if ($startDate == null) {
-                    $startDate = Carbon::now()->addHours(-137);
+                    $startDate = Carbon::now()->addDays(-30)->startOfDay();
                 }
-                $revenues = Revenue::where([
-                    ['seller_id', $sellerID],
-                    ['date', '>', $startDate],
-                    ['date', '<', $endDate]])->get();
+                $endDate = Carbon::parse($endDate);
+                $endDate->endOfDay();
+
+                if ($locationID == null || $locationID == 'all') {
+                    $revenues = Revenue::where([
+                        ['seller_id', $sellerID],
+                        ['date', '>', $startDate],
+                        ['date', '<', $endDate]
+                    ])->get();
+                } else {
+                    $revenues = Revenue::where([
+                        ['seller_id', $sellerID],
+                        ['date', '>', $startDate],
+                        ['date', '<', $endDate],
+                        ['location', '=', $locationID],
+                    ])->get();
+                }
             }
         } else {
             if ($endDate == null) {
-                $endDate = Carbon::now()->addHours(7);
+                $endDate = Carbon::now()->addHours(7)->endOfDay();
                 if ($startDate == null) {
-                    $startDate = Carbon::now()->addHours(-137);
+                    $startDate = Carbon::now()->addDays(-30);
                 }
-                $revenues = Revenue::where([
-                    ['seller_id', $user],
-                    ['date', '>', $startDate],
-                    ['date', '<', $endDate]
-                ])->get();
+
+                if ($locationID == null) {
+                    $revenues = Revenue::where([
+                        ['seller_id', $user],
+                        ['date', '>', $startDate],
+                        ['date', '<', $endDate]
+                    ])->get();
+                } else {
+                    $revenues = Revenue::where([
+                        ['seller_id', $user],
+                        ['date', '>', $startDate],
+                        ['date', '<', $endDate],
+                        ['location', '=', $locationID],
+                    ])->get();
+                }
             } else {
                 if ($startDate == null) {
-                    $startDate = Carbon::now()->addHours(-137);
+                    $startDate = Carbon::now()->addDays(-30);
                 }
-                $revenues = Revenue::where([
-                    ['seller_id', $user],
-                    ['date', '>', $startDate],
-                    ['date', '<', $endDate]
-                ])->get();
+                $endDate = Carbon::parse($endDate);
+                $endDate->endOfDay();
+                if ($locationID == null) {
+                    $revenues = Revenue::where([
+                        ['seller_id', $user],
+                        ['date', '>', $startDate],
+                        ['date', '<', $endDate]
+                    ])->get();
+                } else {
+                    $revenues = Revenue::where([
+                        ['seller_id', $user],
+                        ['date', '>', $startDate],
+                        ['date', '<', $endDate],
+                        ['location', '=', $locationID],
+                    ])->get();
+                }
             }
         }
+
+
         return view('backend.revenue.show-revenue', compact('revenues', 'arraySeller', 'isAdmin'));
     }
 
