@@ -49,8 +49,8 @@
                                placeholder="Nhập giá bán">
                     </div>
                     <div class="col-4 d-inline-block">
-                        <div class="control-label small name" for="">Giá khuyến mãi</div>
-                        <input type="number" class="form-control" name="" id="" placeholder="Nhập giá khuyến mãi">
+                        <div class="control-label small name" for="qty">Giá khuyến mãi</div>
+                        <input type="number" class="form-control" name="qty" id="qty" placeholder="Nhập giá khuyến mãi">
                     </div>
                     <div class="col-4 d-inline-block">
                         <div class="control-label small name" for="qty">Số lương</div>
@@ -82,20 +82,13 @@
             </div>
             <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
                 <div class="form-group" id="cat-parameter">
-                    <div for="card-title" class="col-sm-12 control-label name">Chuyên mục:</div>
-                    <div class="col-sm-12 custom-scrollbar" style="height: 200px;overflow-y: auto">
-                        <ul id="category" class="list-unstyled">
-                            @foreach($categories as $category)
-                                <li>
-                                    <label>
-                                        <input type="radio" name="category_id" value="{{ $category->id }}" required>
-                                        {{ $category->name }}
-                                    </label>
-                                </li>
-                            @endforeach
-                        </ul>
+                    <label for="pet-select">Chuyên mục:</label>
 
-                    </div>
+                    <select class="form-control" name="category_id" id="category_id">
+                        @foreach($categories as $category)
+                        <option value="{{ $category->id }}" >{{ $category->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="form-group border p-3 " id="pr-parameter">
                     <label class="name">Thông số sản phẩm</label>

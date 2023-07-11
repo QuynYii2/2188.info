@@ -25,7 +25,7 @@
                 </div>
                 <div class="form-group">
                     <label for="qty">Giá khuyến mãi</label>
-                    <input type="number" class="form-control" id="qty" name="qty" value="">
+                    <input type="number" class="form-control" id="qty" name="qty" value="{{ $product->qty }}">
                 </div>
 
                 <div class="form-group">
