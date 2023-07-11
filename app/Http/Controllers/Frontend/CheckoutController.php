@@ -329,74 +329,75 @@ class CheckoutController extends Controller
             $product = Product::find($cart->product_id);
             $sellerID = $product->user_id;
             $setup = RankSetUpSeller::where('user_id', $sellerID)->first();
-
-            $orderItems = DB::table('order_items')
-                ->join('orders', 'orders.id', '=', 'order_items.order_id')
-                ->join('products', 'products.id', '=', 'order_items.product_id')
-                ->where([
-                    ['orders.user_id', '=', Auth::user()->id],
-                    ['products.user_id', $sellerID]
-                ])
-                ->select('order_items.*', 'products.user_id')
-                ->get();
-            $total = 0;
-            foreach ($orderItems as $orderItem) {
-                $total = $total + $orderItem->price * $orderItem->quantity;
-            }
-            $arrayRank = explode(',', $setup->setup);
-            for ($i = 0; $i < 3; $i++) {
-                $detailRank = $arrayRank[$i];
-                $arrayDetailRank = explode(':', $detailRank);
-                $value = (int)$arrayDetailRank[1];
-                if ($total > $value) {
-                    $ranks = $arrayDetailRank[0];
+            if ($setup){
+                $orderItems = DB::table('order_items')
+                    ->join('orders', 'orders.id', '=', 'order_items.order_id')
+                    ->join('products', 'products.id', '=', 'order_items.product_id')
+                    ->where([
+                        ['orders.user_id', '=', Auth::user()->id],
+                        ['products.user_id', $sellerID]
+                    ])
+                    ->select('order_items.*', 'products.user_id')
+                    ->get();
+                $total = 0;
+                foreach ($orderItems as $orderItem) {
+                    $total = $total + $orderItem->price * $orderItem->quantity;
                 }
-            }
-            $ranks = str_replace(' ', '', $ranks);
-            $arrayShops = [];
-            $rankUsers = RankUserSeller::all();
+                $arrayRank = explode(',', $setup->setup);
+                for ($i = 0; $i < 3; $i++) {
+                    $detailRank = $arrayRank[$i];
+                    $arrayDetailRank = explode(':', $detailRank);
+                    $value = (int)$arrayDetailRank[1];
+                    if ($total > $value) {
+                        $ranks = $arrayDetailRank[0];
+                    }
+                }
+                $ranks = str_replace(' ', '', $ranks);
+                $arrayShops = [];
+                $rankUsers = RankUserSeller::all();
 
-            foreach ($rankUsers as $rankUser) {
-                $listRanks = $rankUser->apply;
-                $array = explode(',', $listRanks);
-                foreach ($array as $item) {
-                    $rankCurrent = explode('-', $ranks);
-                    foreach ($rankCurrent as $str) {
-                        if ($str == $item) {
-                            $arrayShops[] = $rankUser->user_id . "-" . $rankUser->percent;
+                foreach ($rankUsers as $rankUser) {
+                    $listRanks = $rankUser->apply;
+                    $array = explode(',', $listRanks);
+                    foreach ($array as $item) {
+                        $rankCurrent = explode('-', $ranks);
+                        foreach ($rankCurrent as $str) {
+                            if ($str == $item) {
+                                $arrayShops[] = $rankUser->user_id . "-" . $rankUser->percent;
+                            }
                         }
                     }
                 }
-            }
 
-            $arrayProducts = [];
-            if (!empty($arrayShops)) {
-                foreach ($arrayShops as $shop) {
-                    $myArray = explode('-', $shop);
+                $arrayProducts = [];
+                if (!empty($arrayShops)) {
+                    foreach ($arrayShops as $shop) {
+                        $myArray = explode('-', $shop);
 
-                    foreach ($carts as $cart) {
-                        $product = Product::find($cart->product_id);
+                        foreach ($carts as $cart) {
+                            $product = Product::find($cart->product_id);
 
-                        if ($product->user_id == $myArray[0]) {
-                            $arrayProducts[] = $cart->price . "-" . $cart->quantity . "-" . $myArray[1] . "-" . $cart->product_id;
+                            if ($product->user_id == $myArray[0]) {
+                                $arrayProducts[] = $cart->price . "-" . $cart->quantity . "-" . $myArray[1] . "-" . $cart->product_id;
+                            }
                         }
                     }
                 }
-            }
 
-            $arrayTotal = [];
-            $totalSaleByRankNews = 0;
+                $arrayTotal = [];
+                $totalSaleByRankNews = 0;
 
-            if (!empty($arrayProducts)) {
-                foreach ($arrayProducts as $product) {
-                    $saleArray = explode('-', $product);
-                    $totalPrice = $saleArray[0] * $saleArray[1] * $saleArray[2] / 100;
-                    $totalSaleByRankNews += $totalPrice;
-                    $arrayTotal[] = $saleArray[3] . "-" . $totalPrice;
-                }
+                if (!empty($arrayProducts)) {
+                    foreach ($arrayProducts as $product) {
+                        $saleArray = explode('-', $product);
+                        $totalPrice = $saleArray[0] * $saleArray[1] * $saleArray[2] / 100;
+                        $totalSaleByRankNews += $totalPrice;
+                        $arrayTotal[] = $saleArray[3] . "-" . $totalPrice;
+                    }
 
-                if ($totalSaleByRankNews > $totalSaleByRank) {
-                    $totalSaleByRank = $totalSaleByRankNews;
+                    if ($totalSaleByRankNews > $totalSaleByRank) {
+                        $totalSaleByRank = $totalSaleByRankNews;
+                    }
                 }
             }
         }
