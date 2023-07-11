@@ -117,8 +117,6 @@ class StorageController extends Controller
 
         $storage = new StorageProduct();
 
-        $userLogin = $request->session()->get('login');
-        $userInfo = User::where('email', $userLogin)->first();
 
         $storage->name = $request->input('name');
         $storage->price = $request->input('price');
@@ -128,9 +126,40 @@ class StorageController extends Controller
         $storage->gallery = $galleryString;
         $storage->create_By = Auth::user()->id;
         $storage->updated_By = "";
-        $createProduct = $storage->save();
+
+        $isCheck = $this->isStorageExist($storage);
+
+        if (!$isCheck) {
+            alert()->error('Error', 'Đã tồn tại');
+            return back();
+        }
+        $storage->save();
+        alert()->success('Success', 'Thêm mới thành công');
 
         return $this->allStorage();
+    }
+
+    public function isStorageExist($storageCheck)
+    {
+        $name = $storageCheck->name;
+        $price = $storageCheck->price;
+        $quantity = $storageCheck->quantity;
+        $origin = $storageCheck->origin;
+
+        $storages = StorageProduct::where([
+            ['name', '=', $name],
+            ['origin', '=', $origin]
+        ])->get();
+
+        if (count($storages) != 0) {
+            foreach ($storages as $storage) {
+                if ($storage->price == $price) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     /**
