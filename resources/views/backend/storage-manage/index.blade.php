@@ -151,42 +151,36 @@
 
 @section('content')
     <div class="container-fluid">
-        <a href="{{ route('storage.manage.export.excel') }}">
-            <button>Excel</button>
-        </a>
+
         {{--        <a href="{{ route('storage.manage.export.pdf') }}"><button>Pdf</button></a>--}}
         <h2>Quản lý kho hàng</h2>
 
-{{--        <input type="search" class="light-table-filter form-control" data-table="order-table" placeholder="Filter"/>--}}
-        <form action="{{ route('storage.manage.search') }}">
+        <form action="{{ route('storage.manage.search') }}" class="row my-2">
             @csrf
-            <div class="row my-2">
-                <div class="col-sm-3">
-                    <h5>Tên sản phẩm</h5>
-                    <input type="text" class="form-control" id="name-search" name="name-search"
-                           data-date-split-input="true">
-                </div>
-                <div class="col-sm-2">
-                    <h5>Giá bán</h5>
-                    <input type="number" class="form-control" id="price-search" name="price-search"
-                           data-date-split-input="true">
-                </div>
-                <div class="col-sm-3">
-                    <h5>Xuất xứ </h5>
-                    <input type="text" class="form-control" id="origin-search" name="origin-search"
-                           data-date-split-input="true">
-                </div>
-{{--                <div class="col-sm-3">--}}
-{{--                    <h5>Người nhập kho</h5>--}}
-{{--                    <input type="text" class="form-control" id="importer-search" name="importer-search"--}}
-{{--                           data-date-split-input="true">--}}
-{{--                </div>--}}
-                <div class="col-sm-1">
-                    <button type="submit" class="btn btn-primary position-absolute" style="bottom: 0">Search</button>
-                </div>
+            <div class="col-sm-4">
+                <h5>Tên sản phẩm</h5>
+                <input type="text" class="form-control" id="name-search" name="name-search"
+                       data-date-split-input="true">
+            </div>
+            <div class="col-sm-3">
+                <h5>Giá bán</h5>
+                <input type="number" class="form-control" id="price-search" name="price-search"
+                       data-date-split-input="true">
+            </div>
+            <div class="col-sm-4">
+                <h5>Xuất xứ </h5>
+                <input type="text" class="form-control" id="origin-search" name="origin-search"
+                       data-date-split-input="true">
+            </div>
+            <div class="col-sm-1">
+                <button type="submit" class="btn btn-primary position-absolute" style="bottom: 0">Search</button>
             </div>
         </form>
-
+        <form action="{{ route('storage.manage.export.excel') }}" method="post">
+            @csrf
+            <input type="text" name="excel-value" value="{{ $storages }}" hidden>
+            <button type="submit" class="btn btn-primary">Export Excel</button>
+        </form>
         <table class="order-table table table-striped table-hover">
             <thead>
             <tr>
@@ -221,45 +215,4 @@
         </table>
     </div>
 
-    <script>
-        // (function (document) {
-        //     'use strict';
-        //
-        //     var LightTableFilter = (function (Arr) {
-        //
-        //         var _input;
-        //
-        //         function _onInputEvent(e) {
-        //             _input = e.target;
-        //             var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
-        //             Arr.forEach.call(tables, function (table) {
-        //                 Arr.forEach.call(table.tBodies, function (tbody) {
-        //                     Arr.forEach.call(tbody.rows, _filter);
-        //                 });
-        //             });
-        //         }
-        //
-        //         function _filter(row) {
-        //             var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
-        //             row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
-        //         }
-        //
-        //         return {
-        //             init: function () {
-        //                 var inputs = document.getElementsByClassName('light-table-filter');
-        //                 Arr.forEach.call(inputs, function (input) {
-        //                     input.oninput = _onInputEvent;
-        //                 });
-        //             }
-        //         };
-        //     })(Array.prototype);
-        //
-        //     document.addEventListener('readystatechange', function () {
-        //         if (document.readyState === 'complete') {
-        //             LightTableFilter.init();
-        //         }
-        //     });
-        //
-        // })(document);
-    </script>
 @endsection

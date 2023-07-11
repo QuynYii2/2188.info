@@ -5,21 +5,21 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Revenue;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Spatie\SimpleExcel\SimpleExcelWriter;
 
 class ExportFileController extends Controller
 {
-    public function exportExcel()
+    public function exportExcel(Request $request)
     {
-        $writer = SimpleExcelWriter::create(storage_path('app/public/users.xlsx'));
+        $jsonData = $request->input('excel-value');
+        $arrayData = json_decode($jsonData, true);
+        $writer = SimpleExcelWriter::create(storage_path('app/public/storage.xlsx'));
+        $writer->addRows($arrayData);
 
-        $users = Product::all();
-
-        $writer->addRows($users->toArray());
-
-        return response()->download(storage_path('app/public/users.xlsx'), 'storage-' . Auth::user()->name . '-' . rand() . '.xlsx')->deleteFileAfterSend();
+        return response()->download(storage_path('app/public/storage.xlsx'), 'storage-' . Auth::user()->name . '-' . rand() . '.xlsx')->deleteFileAfterSend();
     }
 
     public function exportExcelRevenue()

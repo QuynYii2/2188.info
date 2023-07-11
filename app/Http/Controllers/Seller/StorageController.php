@@ -43,7 +43,6 @@ class StorageController extends Controller
         $name = $request->input('name-search');
         $price = $request->input('price-search');
         $origin = $request->input('origin-search');
-        $importer = $request->input('importer-search');
 
         $checkRole = false;
         $id = Auth::user()->id;
@@ -66,13 +65,6 @@ class StorageController extends Controller
         if ($origin) {
             $str = ['origin', 'like', '%' . $origin . '%'];
             array_push($query, $str);
-        }
-        if ($importer) {
-            $idUser = User::where([['name', 'like', '%' . $importer . '%']])->get('id');
-            foreach ($idUser as $id) {
-                $str = ['create_by', '=', $id->id];
-                array_push($query, $str);
-            }
         }
         if (!$checkRole) {
             $str = ['create_by', '=', Auth::user()->id];

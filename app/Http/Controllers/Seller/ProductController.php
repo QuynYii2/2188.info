@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\StorageProduct;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -88,9 +89,19 @@ class ProductController extends Controller
         $categories = Category::all();
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', Auth::user()->id]])->get();
 
+        $id = Auth::user()->id;
+        $roles = DB::table('role_user')->where('user_id', $id)->get('role_id');
+        $storages = StorageProduct::where('create_by', Auth::user()->id)->orderByDesc('id')->get();
+        foreach ($roles as $role) {
+            if ($role->role_id == 1) {
+                $storages = StorageProduct::all();
+                break;
+            }
+        }
         return view('backend/products/create', [
             'categories' => $categories,
-            'attributes' => $attributes
+            'attributes' => $attributes,
+            'storages' => $storages
         ]);
     }
 
@@ -170,11 +181,13 @@ class ProductController extends Controller
 
         $userLogin = $request->session()->get('login');
         $userInfo = User::where('email', $userLogin)->first();
+        $qty_in_storage = DB::table('storage_products')->where([['id', '=', $request->input('storage-id')]])->first('quantity');
 
+        $product->storage_id = $request->input('storage-id');
         $product->name = $request->input('name');
         $product->description = $request->input('description');
         $product->product_code = $request->input('product_code');
-        $product->qty = $request->input('qty');
+        $product->qty = $qty_in_storage->quantity;
         $product->price = $request->input('price');
         $product->category_id = $request->input('category_id');
         $product->user_id = $userInfo->id;
