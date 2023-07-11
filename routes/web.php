@@ -213,6 +213,11 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     //Quản lý kho hàng
     Route::get('/storage-manage-user', [StorageController::class, 'index'])->name('storage.manage.show.user');
     Route::get('/storage-manage-all', [StorageController::class, 'allStorage'])->name('storage.manage.show.all');
+    Route::get('/storage-manage/create', [StorageController::class, 'create'])->name('storage.manage.create');
+    Route::get('/storage-manage/edit/{id}', [StorageController::class, 'edit'])->name('storage.manage.edit');
+    Route::post('/storage-manage/update/{id}', [StorageController::class, 'update'])->name('storage.manage.update');
+    Route::post('/storage-manage/store', [StorageController::class, 'store'])->name('storage.manage.store');
+    Route::get('/storage-manage/search', [StorageController::class, 'searchStorage'])->name('storage.manage.search');
     Route::get('/export-excel', [ExportFileController::class, 'exportExcel'])->name('storage.manage.export.excel');
     Route::get('/export-pdf', [ExportFileController::class, 'exportToPDF'])->name('storage.manage.export.pdf');
 

@@ -10,7 +10,7 @@
             <h5 class="card-title">Edit Product</h5>
         </div>
         <div class="card-body">
-            <form action="{{ route('seller.products.update', $product->id) }}" method="POST"
+            <form action="{{ route('storage.manage.update') }}" method="POST"
                   enctype="multipart/form-data">
                 @csrf
                 @method('PUT')

@@ -168,6 +168,9 @@
                         <li>
                             <a href='{{ route('storage.manage.show.user') }}'>Thông tin kho hàng</a>
                         </li>
+                        <li>
+                            <a href='{{ route('storage.manage.create') }}'>Thêm mới nhập kho</a>
+                        </li>
                         @if(sizeof($roleUsers) != 0)
                             <li>
                                 <a href='{{ route('storage.manage.show.all') }}'>Tất cả kho hàng</a>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\StorageProduct;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,8 +19,8 @@ class StorageController extends Controller
      */
     public function index()
     {
-        $products = Product::where('user_id', Auth::user()->id)->orderByDesc('id')->get();
-        return view('backend.storage-manage.index', compact('products'));
+        $storages = StorageProduct::where('create_by', Auth::user()->id)->orderByDesc('id')->get();
+        return view('backend.storage-manage.index', compact('storages'));
     }
 
     public function allStorage()
@@ -27,10 +29,58 @@ class StorageController extends Controller
         $roles = DB::table('role_user')->where('user_id', $id)->orderBy('role_id')->get('role_id');
         foreach ($roles as $role) {
             if ($role->role_id == 1) {
-                $products = Product::all();
-                return view('backend.storage-manage.index', compact('products'));
+                $storages = StorageProduct::all();
+                return view('backend.storage-manage.index', compact('storages'));
             }
         }
+        $storages = StorageProduct::where('create_by', Auth::user()->id)->orderByDesc('id')->get();
+        return view('backend.storage-manage.index', compact('storages'));
+    }
+
+    public function searchStorage(Request $request)
+    {
+        $query = [];
+        $name = $request->input('name-search');
+        $price = $request->input('price-search');
+        $origin = $request->input('origin-search');
+        $importer = $request->input('importer-search');
+
+        $checkRole = false;
+        $id = Auth::user()->id;
+        $roles = DB::table('role_user')->where('user_id', $id)->get('role_id');
+        foreach ($roles as $role) {
+            if ($role->role_id == 1) {
+                $checkRole = true;
+                break;
+            }
+        }
+
+        if ($name) {
+            $str = ['name', 'like', '%' . $name . '%'];
+            array_push($query, $str);
+        }
+        if ($price) {
+            $str = ['price', 'like', '%' . $price . '%'];
+            array_push($query, $str);
+        }
+        if ($origin) {
+            $str = ['origin', 'like', '%' . $origin . '%'];
+            array_push($query, $str);
+        }
+        if ($importer) {
+            $idUser = User::where([['name', 'like', '%' . $importer . '%']])->get('id');
+            foreach ($idUser as $id) {
+                $str = ['create_by', '=', $id->id];
+                array_push($query, $str);
+            }
+        }
+        if (!$checkRole) {
+            $str = ['create_by', '=', Auth::user()->id];
+            array_push($query, $str);
+        }
+        $storages = StorageProduct::where($query)->get();
+        return view('backend.storage-manage.index', compact('storages'));
+
     }
 
 
@@ -41,7 +91,7 @@ class StorageController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.storage-manage.create');
     }
 
     /**
@@ -52,7 +102,31 @@ class StorageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->hasFile('gallery')) {
+            $gallery = $request->file('gallery');
+            $galleryPaths = [];
+            foreach ($gallery as $image) {
+                $galleryPath = $image->store('gallery', 'public');
+                $galleryPaths[] = $galleryPath;
+            }
+        }
+
+        $storage = new StorageProduct();
+
+        $userLogin = $request->session()->get('login');
+        $userInfo = User::where('email', $userLogin)->first();
+
+        $storage->name = $request->input('name');
+        $storage->price = $request->input('price');
+        $storage->quantity = $request->input('quantity');
+        $storage->origin = $request->input('origin');
+        $galleryString = implode(',', $galleryPaths);
+        $storage->gallery = $galleryString;
+        $storage->create_By = Auth::user()->id;
+        $storage->updated_By = "";
+        $createProduct = $storage->save();
+
+        return $this->allStorage();
     }
 
     /**
@@ -74,7 +148,8 @@ class StorageController extends Controller
      */
     public function edit($id)
     {
-        //
+        $storage = StorageProduct::findOrFail($id);
+        return view('backend.storage-manage.edit', compact('storage'));
     }
 
     /**
@@ -86,7 +161,27 @@ class StorageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $storage = StorageProduct::findOrFail($id);
+
+        if ($request->hasFile('gallery')) {
+            $gallery = $request->file('gallery');
+            $galleryPaths = [];
+            foreach ($gallery as $image) {
+                $galleryPath = $image->store('gallery', 'public');
+                $galleryPaths[] = $galleryPath;
+            }
+            $galleryString = implode(',', $galleryPaths);
+            $storage->gallery = $galleryString;
+        }
+
+        $storage->name = $request->input('name');
+        $storage->price = $request->input('price');
+        $storage->quantity = $request->input('quantity');
+        $storage->origin = $request->input('origin');
+        $storage->updated_By = Auth::user()->id;
+        $storage->save();
+
+        return $this->allStorage();
     }
 
     /**

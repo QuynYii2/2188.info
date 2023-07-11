@@ -13,10 +13,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
     <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ mix('css/custom.css') }}">
-    <link rel="stylesheet" href="{{asset('css/style_backend.css')}}">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('css/style_backend.css') }}">
 </head>
+
 
 <body>
 @include('sweetalert::alert')
@@ -60,5 +59,12 @@
 <script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.0/dist/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+<script src="{{ asset('js/vendor/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ asset('js/vendor/bootstrap.min.js') }}"></script>
+<script src="{{ asset('mail/jqBootstrapValidation.min.js') }}"></script>
+
 </body>
 </html>

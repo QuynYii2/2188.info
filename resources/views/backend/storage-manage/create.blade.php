@@ -1,0 +1,91 @@
+@php
+    use Illuminate\Support\Facades\DB;
+    use App\Enums\PropertiStatus;
+@endphp
+
+@extends('backend.layouts.master')
+
+@section('content')
+
+    <div class="card-header d-flex justify-content-between align-items-center" style="padding: 15px;">
+        <h5 class="card-title">Thêm mới nhập kho</h5>
+        @if (session('success_update_product'))
+            <div class="alert alert-success">
+                {{ session('success_update_product') }}
+            </div>
+        @endif
+    </div>
+    <div class="container-fluid">
+        <form action="{{ route('storage.manage.store') }}" method="post" enctype="multipart/form-data"
+              class="form-horizontal row" role="form">
+            @csrf
+            @if (session('success_update_product'))
+                <div class="alert alert-success">
+                    {{ session('error_create_product') }}
+                </div>
+            @endif
+            <div class="col-12 col-sm-12 border-right mt-2 rm-pd-on-mobile">
+                <div class="form-group">
+                    <div class="name">Tên sản phẩm</div>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Nhập tên sản phẩm" required>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4 d-inline-block">
+                        <div class="control-label small name" for="price">Giá bán</div>
+                        <input type="number" class="form-control" required name="price" id="price"
+                               placeholder="Nhập giá bán">
+                    </div>
+                    <div class="col-4 d-inline-block">
+                        <div class="control-label small name" for="quantity">Số lượng</div>
+                        <input type="number" class="form-control" name="quantity" id="quantity" placeholder="Nhập số lượng">
+                    </div>
+                    <div class="col-4 d-inline-block">
+                        <div class="control-label small name" for="origin">Xuất xứ</div>
+                        <input type="text" class="form-control" name="origin" id="origin" placeholder="Nhập Xuất xứ">
+                    </div>
+                </div>
+                <div class="form-group col-12 col-sm-12 ">
+                    <label for="gallery">Ảnh sản phẩm</label>
+                    <label class='__lk-fileInput'>
+                        <span data-default='Choose file'>Choose file</span>
+                        <input type="file" id="gallery" class="img-cfg" name="gallery[]" accept="image/*" multiple>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group col-12 col-md-7 col-sm-8 ">
+                <div class="row justify-content-center">
+                    <button type="submit" class="btn btn-success">Gửi</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+
+        $(function () {
+            $('input.img-cfg').change(function () {
+                const label = $(this).parent().find('span');
+                let name = '';
+                if (typeof (this.files) != 'undefined') {
+                    let lengthListImg = this.files.length;
+                    if (lengthListImg === 0) {
+                        label.removeClass('withFile').text(label.data('default'));
+                    } else {
+                        name = lengthListImg === 1 ? lengthListImg + ' file' : lengthListImg + ' files';
+                        let size = 0;
+                        for (let i = 0; i < this.files.length; i++) {
+                            const file = this.files[i];
+                            let sizeImg = (file.size / 1048576).toFixed(3);
+                            size = size + Number(sizeImg);
+                        }
+                        label.addClass('withFile').text(name + ' (' + size + 'mb)');
+                    }
+                } else {
+                    name = this.value.split("\\");
+                    label.addClass('withFile').text(name[name.length - 1]);
+                }
+                return false;
+            });
+        });
+    </script>
+@endsection

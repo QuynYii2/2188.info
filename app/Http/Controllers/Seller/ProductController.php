@@ -150,10 +150,11 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        $product = new Product();
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
             $thumbnailPath = $thumbnail->store('thumbnails', 'public');
-
+            $product->thumbnail = $thumbnailPath;
         }
 
         if ($request->hasFile('gallery')) {
@@ -163,8 +164,9 @@ class ProductController extends Controller
                 $galleryPath = $image->store('gallery', 'public');
                 $galleryPaths[] = $galleryPath;
             }
+            $galleryString = implode(',', $galleryPaths);
+            $product->gallery = $galleryString;
         }
-        $product = new Product();
 
         $userLogin = $request->session()->get('login');
         $userInfo = User::where('email', $userLogin)->first();
@@ -175,9 +177,6 @@ class ProductController extends Controller
         $product->qty = $request->input('qty');
         $product->price = $request->input('price');
         $product->category_id = $request->input('category_id');
-        $product->thumbnail = $thumbnailPath;
-        $galleryString = implode(',', $galleryPaths);
-        $product->gallery = $galleryString;
         $product->user_id = $userInfo->id;
         $product->location = $userInfo->region;
         $createProduct = $product->save();
@@ -233,9 +232,10 @@ class ProductController extends Controller
                 $galleryPath = $image->store('gallery', 'public');
                 $galleryPaths[] = $galleryPath;
             }
+            $galleryString = implode(',', $galleryPaths);
+            $product->gallery = $galleryString;
         }
-        $galleryString = implode(',', $galleryPaths);
-        $product->gallery = $galleryString;
+
 
         $newArray = $this->getAttributeProperty($request);
 

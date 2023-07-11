@@ -151,87 +151,115 @@
 
 @section('content')
     <div class="container-fluid">
-        <a href="{{ route('storage.manage.export.excel') }}"><button>Excel</button></a>
-{{--        <a href="{{ route('storage.manage.export.pdf') }}"><button>Pdf</button></a>--}}
+        <a href="{{ route('storage.manage.export.excel') }}">
+            <button>Excel</button>
+        </a>
+        {{--        <a href="{{ route('storage.manage.export.pdf') }}"><button>Pdf</button></a>--}}
         <h2>Quản lý kho hàng</h2>
 
-        <input type="search" class="light-table-filter form-control" data-table="order-table" placeholder="Filter"/>
-        <table class="order-table table table-striped table-hover" >
+{{--        <input type="search" class="light-table-filter form-control" data-table="order-table" placeholder="Filter"/>--}}
+        <form action="{{ route('storage.manage.search') }}">
+            @csrf
+            <div class="row my-2">
+                <div class="col-sm-3">
+                    <h5>Tên sản phẩm</h5>
+                    <input type="text" class="form-control" id="name-search" name="name-search"
+                           data-date-split-input="true">
+                </div>
+                <div class="col-sm-2">
+                    <h5>Giá bán</h5>
+                    <input type="number" class="form-control" id="price-search" name="price-search"
+                           data-date-split-input="true">
+                </div>
+                <div class="col-sm-3">
+                    <h5>Xuất xứ </h5>
+                    <input type="text" class="form-control" id="origin-search" name="origin-search"
+                           data-date-split-input="true">
+                </div>
+{{--                <div class="col-sm-3">--}}
+{{--                    <h5>Người nhập kho</h5>--}}
+{{--                    <input type="text" class="form-control" id="importer-search" name="importer-search"--}}
+{{--                           data-date-split-input="true">--}}
+{{--                </div>--}}
+                <div class="col-sm-1">
+                    <button type="submit" class="btn btn-primary position-absolute" style="bottom: 0">Search</button>
+                </div>
+            </div>
+        </form>
+
+        <table class="order-table table table-striped table-hover">
             <thead>
             <tr>
                 <th>#</th>
                 <th>Tên sản phẩm</th>
-                <th>Mã sản phẩm</th>
-                <th>Giá nhập</th>
                 <th>Giá bán</th>
                 <th>Số lượng</th>
                 <th>Xuất xứ</th>
-                <th>Danh mục sản phẩm</th>
                 <th>Người nhập kho</th>
+                <th>Hành động</th>
             </tr>
             </thead>
             <tbody>
-            @foreach($products as $index => $product)
+            @foreach($storages as $index => $storage)
                 @php
-                    $username = Illuminate\Support\Facades\DB::table('users')->where('id', $product->importer)->first('name');
-                    $category_name = Illuminate\Support\Facades\DB::table('categories')->where('id', $product->category_id)->first('name');
+                    $username = Illuminate\Support\Facades\DB::table('users')->where('id', $storage->create_by)->first('name');
                 @endphp
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $product->name }}</td>
-                    <td>{{ $product->product_code }}</td>
-                    <td>{{ $product->import_price }}</td>
-                    <td>{{ $product->price }}</td>
-                    <td>{{ $product->qty }}</td>
-                    <td>{{ $product->origin }}</td>
-                    <td>{{ $category_name->name }}</td>
-                    <td>{{ $username === null ? "" : $product->importer. ' - ' . $username->name }}</td>
+                    <td>{{ $storage->name }}</td>
+                    <td>{{ $storage->price }}</td>
+                    <td>{{ $storage->quantity }}</td>
+                    <td>{{ $storage->origin }}</td>
+                    <td>{{ $username === null ? "" : $storage->create_by. ' - ' . $username->name }}</td>
+                    <td class="">
+                        <a href="{{ route('storage.manage.edit', $storage->id) }}"><i
+                                    style="color: black; margin-right: 15px" class="fa-solid fa-pen-to-square"></i></a>
+                    </td>
                 </tr>
             @endforeach
             </tbody>
         </table>
-
     </div>
 
     <script>
-        (function (document) {
-            'use strict';
-
-            var LightTableFilter = (function (Arr) {
-
-                var _input;
-
-                function _onInputEvent(e) {
-                    _input = e.target;
-                    var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
-                    Arr.forEach.call(tables, function (table) {
-                        Arr.forEach.call(table.tBodies, function (tbody) {
-                            Arr.forEach.call(tbody.rows, _filter);
-                        });
-                    });
-                }
-
-                function _filter(row) {
-                    var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
-                    row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
-                }
-
-                return {
-                    init: function () {
-                        var inputs = document.getElementsByClassName('light-table-filter');
-                        Arr.forEach.call(inputs, function (input) {
-                            input.oninput = _onInputEvent;
-                        });
-                    }
-                };
-            })(Array.prototype);
-
-            document.addEventListener('readystatechange', function () {
-                if (document.readyState === 'complete') {
-                    LightTableFilter.init();
-                }
-            });
-
-        })(document);
+        // (function (document) {
+        //     'use strict';
+        //
+        //     var LightTableFilter = (function (Arr) {
+        //
+        //         var _input;
+        //
+        //         function _onInputEvent(e) {
+        //             _input = e.target;
+        //             var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+        //             Arr.forEach.call(tables, function (table) {
+        //                 Arr.forEach.call(table.tBodies, function (tbody) {
+        //                     Arr.forEach.call(tbody.rows, _filter);
+        //                 });
+        //             });
+        //         }
+        //
+        //         function _filter(row) {
+        //             var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
+        //             row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+        //         }
+        //
+        //         return {
+        //             init: function () {
+        //                 var inputs = document.getElementsByClassName('light-table-filter');
+        //                 Arr.forEach.call(inputs, function (input) {
+        //                     input.oninput = _onInputEvent;
+        //                 });
+        //             }
+        //         };
+        //     })(Array.prototype);
+        //
+        //     document.addEventListener('readystatechange', function () {
+        //         if (document.readyState === 'complete') {
+        //             LightTableFilter.init();
+        //         }
+        //     });
+        //
+        // })(document);
     </script>
 @endsection
