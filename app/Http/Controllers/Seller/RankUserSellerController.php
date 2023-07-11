@@ -40,12 +40,28 @@ class RankUserSellerController extends Controller
                 return back();
             }
 
-            $rankSeller = RankUserSeller::where('apply', $listIDs)->first();
-            if ($rankSeller) {
-                alert()->error('Error', 'Error, The apply exited!');
-                return back();
-            }
+            $rankSellers = RankUserSeller::where('user_id', Auth::user()->id)->get();
+            foreach ($rankSellers as $rankSeller) {
+                $apply = $rankSeller->apply;
+                $arrayApply = explode(',', $apply);
+                for ($i = 0; $i < count($arrayApply); $i++) {
+                    if (in_array($arrayApply[$i], $arrayIds)) {
+                        alert()->error('Error', 'Error, The apply exited!');
+                        return back();
+                    }
+                }
 
+                for ($i = 0; $i < count($arrayIds); $i++) {
+                    if (in_array($arrayIds[$i], $arrayApply)) {
+                        alert()->error('Error', 'Error, The apply exited!');
+                        return back();
+                    }
+                }
+//            if ($rankSeller) {
+//                alert()->error('Error', 'Error, The apply exited!');
+//                return back();
+//            }
+            }
             $create = RankUserSeller::create([
                 'percent' => $percent,
                 'user_id' => Auth::user()->id,
@@ -78,16 +94,40 @@ class RankUserSellerController extends Controller
         try {
             $percent = $request->input('percent');
             $arrayIds = $this->getArrayIds($request);
-            $create = RankUserSeller::find($id);
+            $update = RankUserSeller::find($id);
             try {
                 $listIDs = implode(',', $arrayIds);
             } catch (\Exception $exception) {
                 alert()->error('Error', 'Error, Please choosing your apply!');
                 return back();
             }
-            $create->percent = $percent;
-            $create->apply = $listIDs;
-            $success = $create->save();
+            if ($listIDs != $update->apply){
+                $rankSellers = RankUserSeller::where('user_id', Auth::user()->id)->get();
+                foreach ($rankSellers as $rankSeller) {
+                    $apply = $rankSeller->apply;
+                    $arrayApply = explode(',', $apply);
+                    for ($i = 0; $i < count($arrayApply); $i++) {
+                        if (in_array($arrayApply[$i], $arrayIds)) {
+                            alert()->error('Error', 'Error, The apply exited!');
+                            return back();
+                        }
+                    }
+
+                    for ($i = 0; $i < count($arrayIds); $i++) {
+                        if (in_array($arrayIds[$i], $arrayApply)) {
+                            alert()->error('Error', 'Error, The apply exited!');
+                            return back();
+                        }
+                    }
+//            if ($rankSeller) {
+//                alert()->error('Error', 'Error, The apply exited!');
+//                return back();
+//            }
+                }
+            }
+            $update->percent = $percent;
+            $update->apply = $listIDs;
+            $success = $update->save();
             if ($success) {
                 alert()->success('Success', 'Update rank success!');
                 return redirect(route('seller.rank.setup.show'));
