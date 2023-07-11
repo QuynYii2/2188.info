@@ -11,6 +11,7 @@ class Revenue extends Model
 
     protected $fillable = [
         'id',
+        'location',
         'seller_id',
         'rank',
         'date',
