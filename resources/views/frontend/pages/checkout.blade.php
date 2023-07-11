@@ -312,13 +312,20 @@
                                        }
                                     }
 //                                    dd($arrayProducts);
+                                    $arrayTotal = null;
+                                    $totalSaleByRankNews = 0;
                                     if ($arrayProducts!= null){
                                         for ($j = 0; $j<count($arrayProducts); $j++){
                                             $saleArray = explode('-', $arrayProducts[$j]);
                                             $totalPrice = $saleArray[0]*$saleArray[1]*$saleArray[2]/100;
-                                            $totalSaleByRank = $totalSaleByRank + $totalPrice;
+                                            $totalSaleByRankNews = $totalSaleByRankNews + $totalPrice;
+                                            $arrayTotal[] = $saleArray[3]."-".$totalPrice;
+                                            if ($totalSaleByRankNews > $totalSaleByRank){
+                                                $totalSaleByRank = $totalSaleByRankNews;
+                                            }
                                         }
                                     }
+//                                    dd($arrayTotal);
                                 }
                                 }
                             @endphp
