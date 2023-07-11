@@ -38,8 +38,8 @@
                             <td></td>
                             <td>{{ $product->category->name}}</td>
                             <td>{{ $product->price }}</td>
-                            <td>
-                                <img src="{{ asset('storage/'.$product->thumbnail) }}" height="180" alt="Thumbnail">
+                            <td style="width: 100px; height: 100px">
+                                <img src="{{ asset('storage/'.$product->thumbnail) }}" style="width: 100%; height: auto" alt="Thumbnail">
                             </td>
                             <td></td>
                             <td class="d-flex justify-content-center">

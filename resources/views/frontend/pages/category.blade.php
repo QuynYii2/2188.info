@@ -604,7 +604,6 @@
                 </aside>
 
                 <main class="col-md-8">
-
                     <header class=" border-bottom mb-4 pb-3 ">
                         <div class="form-inline">
                             <span class="mr-md-auto">{{$listProduct->total()}} {{ __('home.items found') }}</span>

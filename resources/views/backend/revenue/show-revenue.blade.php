@@ -94,7 +94,7 @@
 {{--                    <option>Hàn Quốc</option>--}}
 {{--                </select>--}}
 {{--            </div>--}}
-            @if($isAdmin)
+            @if($isAdmin && $arraySeller!= null)
                 <div class="form-group col-md-3">
                     <label for="inputState">Seller name</label>
                     <select id="inputState" name="seller" class="form-control">
