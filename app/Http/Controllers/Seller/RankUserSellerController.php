@@ -40,24 +40,41 @@ class RankUserSellerController extends Controller
                 return back();
             }
 
-            $rankSeller = RankUserSeller::where('apply', $listIDs)->first();
-            if ($rankSeller) {
-                alert()->error('Error', 'Error, The apply exited!');
+            $rankSellers = RankUserSeller::where('user_id', Auth::user()->id)->get();
+            foreach ($rankSellers as $rankSeller) {
+                $apply = $rankSeller->apply;
+                $arrayApply = explode(',', $apply);
+                for ($i = 0; $i < count($arrayApply); $i++) {
+                    if (in_array($arrayApply[$i], $arrayIds)) {
+                        alert()->error('Error', 'Error, The apply exited!');
+                        return back();
+                    }
+                }
+
+                for ($i = 0; $i < count($arrayIds); $i++) {
+                    if (in_array($arrayIds[$i], $arrayApply)) {
+                        alert()->error('Error', 'Error, The apply exited!');
+                        return back();
+                    }
+                }
+//            if ($rankSeller) {
+//                alert()->error('Error', 'Error, The apply exited!');
+//                return back();
+//            }
+
+                $create = RankUserSeller::create([
+                    'percent' => $percent,
+                    'user_id' => Auth::user()->id,
+                    'code' => $code,
+                    'apply' => $listIDs,
+                ]);
+                if ($create) {
+                    alert()->success('Success', 'Create rank success!');
+                    return redirect(route('seller.rank.setup.show'));
+                }
+                alert()->error('Error', 'Error, Create error!');
                 return back();
             }
-
-            $create = RankUserSeller::create([
-                'percent' => $percent,
-                'user_id' => Auth::user()->id,
-                'code' => $code,
-                'apply' => $listIDs,
-            ]);
-            if ($create) {
-                alert()->success('Success', 'Create rank success!');
-                return redirect(route('seller.rank.setup.show'));
-            }
-            alert()->error('Error', 'Error, Create error!');
-            return back();
         } catch (\Exception $exception) {
             alert()->error('Error', 'Error, Please try again!');
             return back();

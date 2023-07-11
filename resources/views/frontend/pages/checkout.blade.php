@@ -239,7 +239,9 @@
                                         ->get();
 
 //                                dd($order_items);
-                                foreach ($order_items as $order_item){
+                                $totalSaleByRank = 0;
+                                if (!$order_items->isEmpty()){
+                                    foreach ($order_items as $order_item){
                                     $userOrderIDs[] = $order_item->user_id;
                                 }
                                 $userOrderIDs = array_unique($userOrderIDs);
@@ -258,6 +260,7 @@
                                 }
 //                                dd($arrayIDShops);
                                 $rank = null;
+                                $totalArray = null;
                                 for ($i = 0; $i<count($arrayIDShops); $i++){
                                     $split = explode('-', $arrayIDShops[$i]);
                                     $setup = \App\Models\RankSetUpSeller::where('user_id', $split[0])->first();
@@ -279,10 +282,8 @@
                                         }
                                     }
                                 }
-//dd($rank);
                                 $rank = array_unique($rank);
 //                                dd($rank);
-                                $totalSaleByRank = 0;
                                 for($i = 0; $i < count($rank); $i++) {
                                     $arrayShops = null;
                                     $rankUsers = RankUserSeller::all();
@@ -301,27 +302,25 @@
                                     if ($arrayShops != null){
                                         for ($j = 0; $j<count($arrayShops); $j++){
                                             $myArray = explode('-', $arrayShops[$j]);
+
                                             foreach ($carts as $cart){
                                                 $product = Product::find($cart->product_id);
                                                     if ($product->user_id == $myArray[0]){
-                                                        $arrayProducts[] = $cart->price."-".$cart->quantity."-".$myArray[1];
+                                                        $arrayProducts[] = $cart->price."-".$cart->quantity."-".$myArray[1]."-".$cart->product_id;
                                                     }
                                             }
                                        }
                                     }
-
-
+//                                    dd($arrayProducts);
                                     if ($arrayProducts!= null){
                                         for ($j = 0; $j<count($arrayProducts); $j++){
                                             $saleArray = explode('-', $arrayProducts[$j]);
                                             $totalPrice = $saleArray[0]*$saleArray[1]*$saleArray[2]/100;
-                                            if ($totalSaleByRank < $totalPrice){
-                                                $totalSaleByRank = $totalPrice;
-                                            }
+                                            $totalSaleByRank = $totalSaleByRank + $totalPrice;
                                         }
                                     }
                                 }
-
+                                }
                             @endphp
 
                             <input type="text" id="discount_price_by_rank" name="discount_price_by_rank"
