@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\StorageProduct;
 use App\Models\User;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -43,6 +44,8 @@ class StorageController extends Controller
         $name = $request->input('name-search');
         $price = $request->input('price-search');
         $origin = $request->input('origin-search');
+        $from_date = $request->input('from-date');
+        $to_date = $request->input('to-date');
 
         $checkRole = false;
         $id = Auth::user()->id;
@@ -70,6 +73,15 @@ class StorageController extends Controller
             $str = ['create_by', '=', Auth::user()->id];
             array_push($query, $str);
         }
+        if ($from_date) {
+            $str = ['created_at', '>=', $from_date . ' 00:00:00'];
+            array_push($query, $str);
+        }
+        if ($to_date) {
+            $str = ['created_at', '<=', $to_date . ' 23:59:59'];
+            array_push($query, $str);
+        }
+
         $storages = StorageProduct::where($query)->get();
         return view('backend.storage-manage.index', compact('storages'));
 

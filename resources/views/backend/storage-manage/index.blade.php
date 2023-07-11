@@ -157,22 +157,32 @@
 
         <form action="{{ route('storage.manage.search') }}" class="row my-2">
             @csrf
-            <div class="col-sm-4">
+            <div class="col-sm-2">
                 <h5>Tên sản phẩm</h5>
                 <input type="text" class="form-control" id="name-search" name="name-search"
                        data-date-split-input="true">
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <h5>Giá bán</h5>
                 <input type="number" class="form-control" id="price-search" name="price-search"
                        data-date-split-input="true">
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-2">
                 <h5>Xuất xứ </h5>
                 <input type="text" class="form-control" id="origin-search" name="origin-search"
                        data-date-split-input="true">
             </div>
-            <div class="col-sm-1">
+            <div class="col-sm-2">
+                <h5>Từ ngày</h5>
+                <input type="date" class="form-control" id="from-date" name="from-date"
+                       data-date-split-input="true">
+            </div>
+            <div class="col-sm-2">
+                <h5>Đến ngày</h5>
+                <input type="date" class="form-control" id="to-date" name="to-date"
+                       data-date-split-input="true">
+            </div>
+            <div class="col-sm-2">
                 <button type="submit" class="btn btn-primary position-absolute" style="bottom: 0">Search</button>
             </div>
         </form>
@@ -190,6 +200,7 @@
                 <th>Số lượng</th>
                 <th>Xuất xứ</th>
                 <th>Người nhập kho</th>
+                <th>Ngày nhập kho</th>
                 <th>Hành động</th>
             </tr>
             </thead>
@@ -205,6 +216,7 @@
                     <td>{{ $storage->quantity }}</td>
                     <td>{{ $storage->origin }}</td>
                     <td>{{ $username === null ? "" : $storage->create_by. ' - ' . $username->name }}</td>
+                    <td>{{ $storage->created_at }}</td>
                     <td class="">
                         <a href="{{ route('storage.manage.edit', $storage->id) }}"><i
                                     style="color: black; margin-right: 15px" class="fa-solid fa-pen-to-square"></i></a>
