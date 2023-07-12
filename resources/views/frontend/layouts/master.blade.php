@@ -15,6 +15,9 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="dns-prefetch preconnect" href="https://cdn11.bigcommerce.com/s-3uw22zu194" crossorigin><link rel="dns-prefetch preconnect" href="https://fonts.googleapis.com/" crossorigin><link rel="dns-prefetch preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link rel='canonical' href='https://superkart-demo-02.mybigcommerce.com/' /><meta name='platform' content='bigcommerce.stencil' />
+    <link href="https://cdn11.bigcommerce.com/r-0d0e7ebe415bc7b0d922632811abb75311658663/img/bc_favicon.ico" rel="shortcut icon">
 
     <!-- Styles -->
     {{--    <link rel="stylesheet" href="{{ mix('css/custom.css') }}">--}}

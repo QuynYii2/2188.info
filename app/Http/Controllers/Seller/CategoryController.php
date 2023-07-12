@@ -34,8 +34,8 @@ class CategoryController extends Controller
             'name' => 'required',
             'parent_id' => 'nullable|exists:categories,id',
         ]);
-
-        $name = DB::table('categories')->where('name', $validatedData['name'])->first();
+//
+        $name = DB::table('categories')->where([['name', $validatedData['name']],['parent_id', $validatedData['parent_id']]])->first();
         if ($name) {
             alert()->error('Error', 'Tên chuyên mục tồn tại');
             return back();
