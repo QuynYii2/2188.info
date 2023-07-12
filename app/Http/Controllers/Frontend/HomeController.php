@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Enums\CartStatus;
 use App\Enums\NotificationStatus;
+use App\Enums\ProductStatus;
 use App\Enums\PromotionStatus;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Controller;
-use App\Models\Cart;
+use App\Http\Controllers\PermissionRankController;
 use App\Models\Category;
 use App\Models\Notification;
+use App\Models\Permission;
 use App\Models\Promotion;
 use App\Models\Voucher;
 use Carbon\Carbon;
@@ -18,7 +19,6 @@ use App\Libraries\GeoIP;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 
 class HomeController extends Controller
@@ -68,7 +68,28 @@ class HomeController extends Controller
         $productByJp = Product::where('location', 'jp')->limit(10)->get();
         $productByCn = Product::where('location', 'cn')->limit(10)->get();
 
-        $productByLocal5 = Product::all()->take(5);
+        $permissionHot = Permission::where('name', 'Nâng cấp sản phẩm hot')->first();
+        $permissionSellerHots = DB::table('permission_user')->where('permission_id', $permissionHot->id)->get();
+        $productHots = [];
+        foreach ($permissionSellerHots as $permissionSellerHot) {
+            $products = Product::where([
+                ['status', ProductStatus::ACTIVE],
+                ['user_id', $permissionSellerHot->user_id]
+            ])->orderBy('hot', 'desc')->get();
+            $productHots[] = $products;
+        }
+//        dd($productHots);
+        $permissionFeature = Permission::where('name', 'Nâng cấp sản phẩm nổi bật')->first();
+        $permissionSellerFeatures = DB::table('permission_user')->where('permission_id', $permissionFeature->id)->get();
+        $productFeatures = [];
+        foreach ($permissionSellerFeatures as $permissionSellerFeature) {
+            $products = Product::where([
+                ['status', ProductStatus::ACTIVE],
+                ['user_id', $permissionSellerFeature->user_id]
+            ])->orderBy('feature', 'desc')->get();
+            $productFeatures[] = $products;
+        }
+//        $productFeatures = Product::where('feature', 1)->get();
 
         $vouchers = Voucher::where([
             ['status', '!=', VoucherStatus::DELETED],
@@ -102,7 +123,9 @@ class HomeController extends Controller
             'categories' => $categories,
             'productByKr' => $productByKr,
             'productByJp' => $productByJp,
-            'productByCn' => $productByCn
+            'productByCn' => $productByCn,
+            'productHots' => $productHots,
+            'productFeatures' => $productFeatures
         ]);
     }
 

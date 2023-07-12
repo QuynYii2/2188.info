@@ -440,6 +440,126 @@
                 </div>
             </div>
         </div>
+        <h3 class="text-center">Sản phẩm hot nhất</h3>
+        <div class="container-fluid mt-2">
+            <div class="row">
+                <div class="col-lg-2 p-left p-side-tablet">
+                    <div class="product-large set-bg m-large p-l-1"
+                         data-setbg="{{asset('images/img/products/women-large.jpg')}}">
+                        <h2>Women’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                    <div class="product-large set-bg m-large p-r-1"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                        <h2>Women’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="product-slider owl-carousel">
+                        @foreach($productHots as $products)
+                            @foreach($products as $product)
+                            <div class="row ">
+                                    @if($product->name)
+                                        <div class="col-12">
+                                            <div class="product-item">
+                                                <div class="pi-pic">
+                                                    <img class="img" src="{{ asset('storage/'.$product->thumbnail) }}" alt="">
+                                                    <div class="sale">Sale</div>
+                                                    <div class="icon">
+                                                        <i class="icon_heart_alt"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="pi-text">
+                                                    <div class="catagory-name">{{$product->category->name}}</div>
+                                                    <a href="{{route('detail_product.show', $product->id)}}">
+                                                        <h5>{{$product->name}}</h5>
+                                                    </a>
+                                                    <div class="product-price">
+                                                        ${{$product->price}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                            </div>
+                            @endforeach
+                        @endforeach
+                    </div>
+                </div>
+                <div class="col-lg-2 p-right p-side-tablet">
+                    <div class="product-large set-bg m-large p-l-1"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                        <h2>Women’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                    <div class="product-large set-bg m-large p-r-1"
+                         data-setbg="{{asset('images/img/products/women-large.jpg')}}">
+                        <h2>Women’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h3 class="text-center">Sản phẩm nổi bật nhất</h3>
+        <div class="container-fluid mt-2">
+            <div class="row">
+                <div class="col-lg-2 p-left p-side-tablet">
+                    <div class="product-large set-bg m-large p-l-1"
+                         data-setbg="{{asset('images/img/products/women-large.jpg')}}">
+                        <h2>Women’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                    <div class="product-large set-bg m-large p-r-1"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                        <h2>Women’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="product-slider owl-carousel">
+                        @foreach($productFeatures as $products)
+                            @foreach($products as $product)
+                            <div class="row ">
+                                    <div class="col-12">
+                                        <div class="product-item">
+                                            <div class="pi-pic">
+                                                <img class="img" src="{{ asset('storage/'.$product->thumbnail) }}" alt="">
+                                                <div class="sale">Sale</div>
+                                                <div class="icon">
+                                                    <i class="icon_heart_alt"></i>
+                                                </div>
+                                            </div>
+                                            <div class="pi-text">
+                                                <div class="catagory-name">{{$product->category->name}}</div>
+                                                <a href="{{route('detail_product.show', $product->id)}}">
+                                                    <h5>{{$product->name}}</h5>
+                                                </a>
+                                                <div class="product-price">
+                                                    ${{$product->price}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            @endforeach
+                        @endforeach
+                    </div>
+                </div>
+                <div class="col-lg-2 p-right p-side-tablet">
+                    <div class="product-large set-bg m-large p-l-1"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                        <h2>Women’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                    <div class="product-large set-bg m-large p-r-1"
+                         data-setbg="{{asset('images/img/products/women-large.jpg')}}">
+                        <h2>Women’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <section class="deal-of-week set-bg spad" data-setbg="{{asset('images/img/time-bg.jpg')}}">
             <div class="col-lg-6 text-center">
                 <div class="section-title">

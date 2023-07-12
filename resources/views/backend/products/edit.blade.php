@@ -5,6 +5,21 @@
 @extends('backend.layouts.master')
 
 @section('content')
+    @php
+        use Illuminate\Support\Facades\Auth;
+        use App\Enums\PermissionUserStatus;
+
+        if (auth()->check() != null){
+            $permissionUsers = DB::table('permissions')
+            ->join('permission_user', 'permission_user.permission_id', '=', 'permissions.id')
+            ->where([['permission_user.user_id', Auth::user()->id], ['permission_user.status', PermissionUserStatus::ACTIVE]])
+            ->select('permissions.*')
+            ->get();
+        } else {
+            $permissionUsers[]= null;
+        }
+
+    @endphp
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title">Edit Product</h5>
@@ -86,6 +101,35 @@
 
                 </div>
 
+                <input id="inputHotProduct" type="text" class="d-none" value="{{ $product->hot }}">
+                <input id="inputFeatureProduct" type="text" class="d-none" value="{{ $product->feature }}">
+
+                <div class="form-group row">
+                    @for($i = 0; $i< count($permissionUsers); $i++)
+                        @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm hot')
+                            <div class="col-4 d-flex">
+                                <label for="hot_product" class="col-8 col-sm-8">Sản phẩm hot</label>
+                                <div class="col-4 col-sm-4">
+                                    <input class="form-control" type="checkbox" id="hot_product" name="hot_product">
+                                </div>
+                            </div>
+                            @break
+                        @endif
+                    @endfor
+                    @for($i = 0; $i< count($permissionUsers); $i++)
+                        @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm nổi bật')
+                            <div class="col-4 d-flex">
+                                <label for="feature_product" class="col-8 col-sm-8">Sản phẩm nổi bật</label>
+                                <div class="col-4 col-sm-4">
+                                    <input class="form-control" type="checkbox" id="feature_product"
+                                           name="feature_product">
+                                </div>
+                            </div>
+                            @break
+                        @endif
+                    @endfor
+                </div>
+
                 <div class="form-group">
                     <label for="thumbnail">Thumbnail</label>
                     <input type="file" class="form-control-file" id="thumbnail" name="thumbnail" accept="image/*">
@@ -123,6 +167,20 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function checkHotAndFeature() {
+            var hot = document.getElementById('inputHotProduct');
+            var feature = document.getElementById('inputFeatureProduct');
+            console.log(hot, feature);
+            if (hot.value == 1){
+                document.getElementById("hot_product").checked = true;
+            }
+            if (feature.value == 1){
+                document.getElementById("feature_product").checked = true;
+            }
+        }
+        checkHotAndFeature();
+    </script>
     <script>
         var properties = document.getElementsByClassName('property-attribute')
         var number = properties.length

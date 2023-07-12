@@ -18,6 +18,8 @@ class Product extends Model
         'qty',
         'status',
         'category_id',
+        'hot',
+        'feature',
 
     ];
 

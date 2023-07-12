@@ -172,6 +172,10 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::get('/products/{product}', [ProductController::class, 'show'])->name('seller.products.show');
     Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('seller.products.edit');
     Route::put('/products/{product}', [ProductController::class, 'update'])->name('seller.products.update');
+    // Add, remove hot and feature product
+    Route::post('/toggle-products-hot/{id}', [ProductController::class, 'setHotProduct'])->name('seller.products.hot');
+    Route::post('/toggle-products-feature/{id}', [ProductController::class, 'setFeatureProduct'])->name('seller.products.feature');
+    // End
     Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('seller.products.destroy');
     // Categories
     Route::get('/categories', [CategoryController::class, 'index'])->name('seller.categories.index');

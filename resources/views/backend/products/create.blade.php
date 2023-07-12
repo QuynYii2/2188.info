@@ -190,6 +190,21 @@
 @extends('backend.layouts.master')
 
 @section('content')
+    @php
+        use Illuminate\Support\Facades\Auth;
+        use App\Enums\PermissionUserStatus;
+
+        if (auth()->check() != null){
+            $permissionUsers = DB::table('permissions')
+            ->join('permission_user', 'permission_user.permission_id', '=', 'permissions.id')
+            ->where([['permission_user.user_id', Auth::user()->id], ['permission_user.status', PermissionUserStatus::ACTIVE]])
+            ->select('permissions.*')
+            ->get();
+        } else {
+            $permissionUsers[]= null;
+        }
+
+    @endphp
 
     <div class="card-header d-flex justify-content-between align-items-center" style="padding: 15px;">
         <h5 class="card-title">Thêm mới sản phẩm</h5>
@@ -240,21 +255,40 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-4 d-inline-block">
-                        <div class="control-label small name" for="price">Giá bán</div>
+                        <label class="control-label small name" for="price">Giá bán</label>
                         <input type="number" class="form-control" required name="price" id="price"
                                placeholder="Nhập giá bán">
                     </div>
                     <div class="col-4 d-inline-block">
-                        <div class="control-label small name" for="qty">Giá khuyến mãi</div>
+                        <label class="control-label small name" for="qty">Giá khuyến mãi</label>
                         <input type="number" class="form-control" name="qty" id="qty" placeholder="Nhập giá khuyến mãi">
                     </div>
                 </div>
-                {{--                <div class="form-group d-flex">--}}
-                {{--                    <div for="tech" class="col-8 col-sm-8 control-label name">Mua trả góp</div>--}}
-                {{--                    <div class="col-4 col-sm-4">--}}
-                {{--                        <input type="checkbox">--}}
-                {{--                    </div>--}}
-                {{--                </div>--}}
+                <div class="form-group row">
+                    @for($i = 0; $i< count($permissionUsers); $i++)
+                        @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm hot')
+                            <div class="col-4 d-flex">
+                                <label for="hot_product" class="col-8 col-sm-8">Sản phẩm hot</label>
+                                <div class="col-4 col-sm-4">
+                                    <input class="form-control" type="checkbox" id="hot_product" name="hot_product">
+                                </div>
+                            </div>
+                            @break
+                        @endif
+                    @endfor
+                    @for($i = 0; $i< count($permissionUsers); $i++)
+                        @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm nổi bật')
+                            <div class="col-4 d-flex">
+                                <label for="feature_product" class="col-8 col-sm-8">Sản phẩm nổi bật</label>
+                                <div class="col-4 col-sm-4">
+                                    <input class="form-control" type="checkbox" id="feature_product"
+                                           name="feature_product">
+                                </div>
+                            </div>
+                            @break
+                        @endif
+                    @endfor
+                </div>
                 <div class="form-group col-12 col-sm-12 pt-3">
                     <label for="thumbnail">Ảnh đại diện:</label>
                     <label class='__lk-fileInput'>

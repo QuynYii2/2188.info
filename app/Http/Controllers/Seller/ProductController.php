@@ -192,6 +192,18 @@ class ProductController extends Controller
         $product->category_id = $request->input('category_id');
         $product->user_id = $userInfo->id;
         $product->location = $userInfo->region;
+
+        $hot = $request->input('hot_product');
+        $feature = $request->input('feature_product');
+
+        if ($hot) {
+            $product->hot = 1;
+        }
+
+        if ($feature) {
+            $product->feature = 1;
+        }
+
         $createProduct = $product->save();
 
         $newArray = $this->getAttributeProperty($request);
@@ -249,6 +261,20 @@ class ProductController extends Controller
             $product->gallery = $galleryString;
         }
 
+        $hot = $request->input('hot_product');
+        $feature = $request->input('feature_product');
+
+        if ($hot) {
+            $product->hot = 1;
+        } else {
+            $product->hot = 0;
+        }
+
+        if ($feature) {
+            $product->feature = 1;
+        } else {
+            $product->feature = 0;
+        }
 
         $newArray = $this->getAttributeProperty($request);
 
@@ -286,6 +312,38 @@ class ProductController extends Controller
         } catch (\Exception $exception) {
             alert()->error('Error', 'Error please try again!');
             return back();
+        }
+    }
+
+    public function setHotProduct($id)
+    {
+        try {
+            $product = Product::find($id);
+            if ($product->hot == 1) {
+                $product->hot = 0;
+            } else {
+                $product->hot = 1;
+            }
+            $product->save();
+            return $product;
+        } catch (\Exception $exception) {
+            return $exception;
+        }
+    }
+
+    public function setFeatureProduct($id)
+    {
+        try {
+            $product = Product::find($id);
+            if ($product->feature == 1) {
+                $product->feature = 0;
+            } else {
+                $product->feature = 1;
+            }
+            $product->save();
+            return $product;
+        } catch (\Exception $exception) {
+            return $exception;
         }
     }
 }
