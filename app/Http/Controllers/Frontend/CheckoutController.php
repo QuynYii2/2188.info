@@ -21,6 +21,7 @@ use App\Models\Product;
 use App\Models\RankSetUpSeller;
 use App\Models\RankUserSeller;
 use App\Models\Revenue;
+use App\Models\StorageProduct;
 use App\Models\User;
 use App\Models\VoucherItem;
 use Carbon\Carbon;
@@ -47,11 +48,25 @@ class CheckoutController extends Controller
             $voucherItems = VoucherItem::where('customer_id', Auth::user()->id)->get();
 
             $totalSaleByRank = $this->findDiscount($carts);
-
             return view('frontend/pages/checkout', compact('number', 'carts', 'user', 'voucherItems', 'totalSaleByRank'));
         } else {
             return view('frontend/pages/login');
         }
+    }
+
+    private function calcSoLuongSPTrongKho($carts)
+    {
+        $product_id = $carts->product_id;
+        $quantity = $carts->quantity;
+
+        $product = Product::where([['id', '=', $product_id]])->first();
+        $storage = StorageProduct::where([['id', '=', $product->storage_id]])->first();
+
+        $product->qty = $product->qty - $quantity;
+        $storage->quantity = $storage->quantity - $quantity;
+
+        $product->save();
+        $storage->save();
     }
 
     private function checkout(Request $request, $status, $orderMethod, $name, $email, $phone, $address, $idVoucher, $array)
@@ -168,6 +183,7 @@ class CheckoutController extends Controller
         $this->deleteVoucher($idVoucher);
 
         foreach ($carts as $cart) {
+            $this->calcSoLuongSPTrongKho($cart);
             $cart->status = CartStatus::ORDERED;
             $cart->save();
         }
