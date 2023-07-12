@@ -394,9 +394,13 @@
                             </div>
                             <div class="count__wrapper count__wrapper--ml mt-3">
                                 <label for="qty">{{ __('home.quantity') }}</label>
-                                <input class="product-qty input" type="number" name="quantity" min="1"
+                                <input class="product-qty input" type="number" name="quantity" min="1" max="{{$product->qty}}"
                                        style="width: 55px"
                                        value="1">
+                                <label for="qty">Còn lại: {{$product->qty}}</label>
+
+                            </div>
+                            <div class="count__wrapper count__wrapper--ml mt-3">
                             </div>
                             <div class="purchase-info d-flex mt-3">
                                 <button type="button" class="btn btn-warning">
