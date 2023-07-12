@@ -1,4 +1,4 @@
-@php use App\Enums\AddressOrderStatus;use App\Enums\OrderMethod;use App\Models\OrderAddress;use App\Models\Product;use App\Models\RankUserSeller;use App\Models\User;use App\Models\Voucher;use Illuminate\Support\Facades\Auth; @endphp
+@php use App\Enums\AddressOrderStatus;use App\Enums\OrderMethod;use App\Models\OrderAddress;use App\Models\Product;use App\Models\RankSale;use App\Models\User;use App\Models\Voucher;use Illuminate\Support\Facades\Auth; @endphp
 
 @extends('frontend.layouts.master')
 
@@ -230,6 +230,9 @@
 
                             <input type="text" id="discount_price_by_rank" name="discount_price_by_rank"
                                    value="{{$totalSaleByRank}}" hidden="">
+                            {{--                            create input tag re-save discount price by voucher--}}
+                            <input type="text" id="voucher_discount_price" value="0" hidden="">
+
                         </form>
                     </div>
                 </div>
@@ -262,8 +265,8 @@
                                 for (let i = 0; i < arrayPrice.length; i++) {
                                     totalPriceDiscount = parseFloat(totalPriceDiscount) + parseFloat(arrayPrice[i]);
                                 }
-                                let salePrice = document.getElementById('sale-price');
-                                salePrice.innerText = totalPriceDiscount;
+                                let salePrice = document.getElementById('voucher_discount_price');
+                                salePrice.value = totalPriceDiscount;
 
                                 let voucherID = document.getElementById('voucher_id');
                                 voucherID.value = myArray[2];
@@ -285,6 +288,7 @@
             let shippingPrice = document.getElementById('shipping-price').innerText;
             let salePrice = document.getElementById('sale-price');
             let salePriceByRank = document.getElementById('discount_price_by_rank');
+            let salePriceByVoucher = document.getElementById('voucher_discount_price');
             let checkOutPrice = document.getElementById('checkout-price');
             var firstCells = document.querySelectorAll('#table-checkout td:nth-child(4)');
             var cellValues = [];
@@ -297,7 +301,7 @@
             }
             totalMax.innerText = total;
             totalPrice.innerHTML = total;
-            salePrice.innerText = salePriceByRank.value;
+            salePrice.innerText = parseFloat(salePriceByRank.value) + parseFloat(salePriceByVoucher.value);
             let max = parseFloat(total) + parseFloat(shippingPrice) - parseFloat(salePrice.innerText)
 
             checkOutPrice.innerHTML = max.toFixed(1);

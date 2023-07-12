@@ -251,22 +251,30 @@
                         </ul>
                     </li>
                 @endif
-
+                @php
+                    $check = true;
+                    $rank = \App\Models\RankSetUpSeller::where('user_id', Auth::user()->id)->first();
+                    if ($rank){
+                        $check = false;
+                    }
+                @endphp
                 <li>
-                    <a href="#!"><span>Quản lý rank</span></a>
+                    <a href="#!"><span>Quản lý phân hạng thành viên</span></a>
                     <ul class='sub-items'>
                         <li>
-                            <a href="{{route('seller.rank.setup.show')}}">List Rank Setup</a>
+                            <a href="{{route('seller.rank.setup.show')}}">Danh sách giảm giá theo hạng</a>
                         </li>
                         <li>
-                            <a href="{{route('seller.rank.setup.processCreate')}}">Create Rank Setup</a>
+                            <a href="{{route('seller.rank.setup.processCreate')}}">Tạo mới mức giảm giá theo hạng</a>
                         </li>
                         <li>
-                            <a href="{{route('seller.setup.show')}}">List Rank</a>
+                            <a href="{{route('seller.setup.show')}}">Quản lí phân hạng</a>
                         </li>
-                        <li>
-                            <a href="{{route('seller.setup.processCreate')}}">Create Rank</a>
-                        </li>
+                       @if($check === true)
+                            <li>
+                                <a href="{{route('seller.setup.processCreate')}}">Tạo mới phân hạng</a>
+                            </li>
+                       @endif
                     </ul>
                 </li>
             </ul>

@@ -3,7 +3,16 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title">Danh sách setup</h5>
+            @php
+                $check = true;
+                $rank = \App\Models\RankSetUpSeller::where('user_id', Auth::user()->id)->first();
+                if ($rank){
+                    $check = false;
+                }
+            @endphp
+            @if($check == true){
             <a href="{{ route('seller.setup.processCreate') }}" class="btn btn-primary">Thêm mới</a>
+            @endif
         </div>
         @if($rankSetups->isEmpty())
             Không có rank nào được tạo

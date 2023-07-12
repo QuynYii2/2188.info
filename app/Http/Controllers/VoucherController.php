@@ -269,12 +269,12 @@ class VoucherController extends Controller
         foreach ($products as $product) {
             $myArray[] = $product->id;
         }
+        $arrayIDs = [];
         foreach ($vouchers as $voucher) {
             $listIDs = $voucher->apply;
             $arrayIDs = explode(',', $listIDs);
         }
-        $products = array_diff($myArray, $arrayIDs);
-        return $products;
+        return array_diff($myArray, $arrayIDs);
     }
 
     private function voucherItems($newVoucher, $status)
