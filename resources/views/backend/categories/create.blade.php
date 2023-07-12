@@ -2,7 +2,7 @@
 
 
 @section('content')
-    <form action="{{ route('seller.categories.store') }}" method="POST">
+    <form action="{{ route('seller.categories.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="form-group">
@@ -18,6 +18,11 @@
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
             </select>
+        </div>
+
+        <div class="form-group">
+            <label for="thumbnail">Thumbnail</label>
+            <input type="file" name="thumbnail" id="thumbnail" class="form-control" accept="image/*">
         </div>
 
         <button type="submit" class="btn btn-primary">Thêm mới</button>

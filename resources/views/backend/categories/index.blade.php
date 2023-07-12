@@ -17,7 +17,7 @@
         <div class="modal" id="flipFlop" tabindex="-1" role="dialog" aria-labelledby="modalLabel"
              aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
-                <form action="{{ route('seller.categories.store') }}" method="POST">
+                <form action="{{ route('seller.categories.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-content">
                         <div class="modal-header">
@@ -66,6 +66,11 @@
                                         it.</small>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="thumbnail">Thumbnail</label>
+                                <input type="file" name="thumbnail" id="thumbnail" class="form-control"
+                                       accept="image/*">
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-success">Tạo mới</button>
@@ -93,6 +98,7 @@
                     <th>Danh mục cha</th>
                     <th>Mô tả</th>
                     <th>Số bài viết</th>
+                    <th>Thumbnail</th>
                     <th class="text-center">Thao tác</th>
                 </tr>
                 </thead>
@@ -105,6 +111,9 @@
                         <td>{{ $category->parent ? $category->parent->name : '' }}</td>
                         <td>Mô tả</td>
                         <td>10</td>
+                        <td>
+                            <img class="img img-100" src="{{ asset('storage/'.$category->thumbnail) }}" alt="Thumbnail">
+                        </td>
                         <td class="d-flex justify-content-center">
                             <a href="{{ route('seller.categories.edit', $category->id) }}"><i
                                         style="color: black; margin-right: 15px" class="fa-solid fa-pen-to-square"></i></a>
@@ -112,7 +121,8 @@
                                   style="display: inline-block">
                                 @csrf
                                 @method('DELETE')
-                                <a href="#" onclick="clickBtn({{$category->id}})"><i style="color: #d52727" class="fa-solid fa-trash-can"></i></a>
+                                <a href="#" onclick="clickBtn({{$category->id}})"><i style="color: #d52727"
+                                                                                     class="fa-solid fa-trash-can"></i></a>
                                 <button id="btn-delete-category-{{$category->id}}" hidden type="submit"
                                         onclick="return confirm('Bạn có chắc chắn muốn xóa?')">
                                     Xoa
