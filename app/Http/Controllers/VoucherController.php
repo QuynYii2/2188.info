@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ProductStatus;
 use App\Enums\PromotionStatus;
 use App\Enums\UserInterestEnum;
 use App\Enums\UserStatus;
@@ -238,7 +239,7 @@ class VoucherController extends Controller
 
     private function getArrayIds(Request $request)
     {
-        $products = Product::where('user_id', Auth::user()->id)->get();
+        $products = Product::where([['user_id', Auth::user()->id], ['status', '!=', ProductStatus::DELETED]])->get();
         $listCategoryName[] = null;
         $arrayIds = null;
         foreach ($products as $category) {
@@ -263,7 +264,7 @@ class VoucherController extends Controller
 
     private function mergeDuplicate(Request $request)
     {
-        $products = Product::where('user_id', Auth::user()->id)->get();
+        $products = Product::where([['user_id', Auth::user()->id], ['status', '!=', ProductStatus::DELETED]])->get();
         $vouchers = Promotion::where([['user_id', Auth::user()->id], ['status', '!=', PromotionStatus::DELETED]])->get();
         $myArray = null;
         foreach ($products as $product) {

@@ -20,7 +20,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::where('user_id', Auth::user()->id)->orderByDesc('id')->get();
+        $products = Product::where([['user_id', Auth::user()->id], ['status', '!=', ProductStatus::DELETED]])->orderByDesc('id')->get();
         return view('backend/products/index', ['products' => $products]);
     }
 
@@ -274,8 +274,18 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        $product->delete();
-        alert()->success('Success', 'Product đã được xóa thành công!');
-        return redirect()->route('seller.products.index');
+        try {
+            $product->status = ProductStatus::DELETED;
+            $success = $product->save();
+            if ($success) {
+                alert()->success('Success', 'Product đã được xóa thành công!');
+                return redirect()->route('seller.products.index');
+            }
+            alert()->error('Error', 'Không thể xoá sản phẩm!');
+            return back();
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error please try again!');
+            return back();
+        }
     }
 }
