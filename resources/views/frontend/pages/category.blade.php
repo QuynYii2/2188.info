@@ -341,7 +341,7 @@
 </style>
 
 @section('content')
-    <div class="container pt-5">
+    <div class="container">
         <div id="header-carousel" class="carousel slide carousel-fade desktop-button" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#header-carousel" data-slide-to="0" class="active"></li>
@@ -364,193 +364,159 @@
             </div>
         </div>
 
-        <div class="bg-white mt-3 only-desktop">
-            <h3 class="ml-3">{{ __('home.brands') }}</h3>
-            <table class="table table-bordered ">
+{{--        <div class="bg-white mt-3 only-desktop">--}}
+{{--            <h3 class="ml-3">{{ __('home.brands') }}</h3>--}}
+{{--            <table class="table table-bordered ">--}}
 
-                <tr>
-                    <td class="col-2 align-middle">
-                        <a href="#!">
-                            <img
-                                    src="{{asset('images/vendor-8.jpg')}}"
-                                    class="w-100 img"
-                            />
-                        </a>
-                    </td>
-                    <td class="col-2 align-middle">
-                        <a href="#!">
-                            <img
-                                    src="{{asset('images/cat-2.jpg')}}"
-                                    class="w-100 img"
-                            />
-                        </a>
-                    </td>
-                    <td class="col-2 align-middle">
-                        <a href="#!">
-                            <img
-                                    src="{{asset('images/cat-3.jpg')}}"
-                                    class="w-100 img"
-                            />
-                        </a>
-                    </td>
-                    <td class="col-2 align-middle">
-                        <a href="#!">
-                            <img
-                                    src="{{asset('images/cat-4.jpg')}}"
-                                    class="w-100 img"
-                            />
-                        </a>
-                    </td>
-                    <td class="col-2 align-middle">
-                        <a href="#!">
-                            <img
-                                    src="{{asset('images/cat-1.jpg')}}"
-                                    class="w-100 img"
-                            />
-                        </a>
-                    </td>
-                    <td class="col-2 align-middle">
-                        <a href="#!">
-                            <img
-                                    src="{{asset('images/vendor-2.jpg')}}"
-                                    class="w-100 img"
-                            />
-                        </a>
-                    </td>
+{{--                <tr>--}}
+{{--                    <td class="col-2 align-middle">--}}
+{{--                        <a href="#!">--}}
+{{--                            <img--}}
+{{--                                    src="{{asset('images/vendor-8.jpg')}}"--}}
+{{--                                    class="w-100 img"--}}
+{{--                            />--}}
+{{--                        </a>--}}
+{{--                    </td>--}}
+{{--                    <td class="col-2 align-middle">--}}
+{{--                        <a href="#!">--}}
+{{--                            <img--}}
+{{--                                    src="{{asset('images/cat-2.jpg')}}"--}}
+{{--                                    class="w-100 img"--}}
+{{--                            />--}}
+{{--                        </a>--}}
+{{--                    </td>--}}
+{{--                    <td class="col-2 align-middle">--}}
+{{--                        <a href="#!">--}}
+{{--                            <img--}}
+{{--                                    src="{{asset('images/cat-3.jpg')}}"--}}
+{{--                                    class="w-100 img"--}}
+{{--                            />--}}
+{{--                        </a>--}}
+{{--                    </td>--}}
+{{--                    <td class="col-2 align-middle">--}}
+{{--                        <a href="#!">--}}
+{{--                            <img--}}
+{{--                                    src="{{asset('images/cat-4.jpg')}}"--}}
+{{--                                    class="w-100 img"--}}
+{{--                            />--}}
+{{--                        </a>--}}
+{{--                    </td>--}}
+{{--                    <td class="col-2 align-middle">--}}
+{{--                        <a href="#!">--}}
+{{--                            <img--}}
+{{--                                    src="{{asset('images/cat-1.jpg')}}"--}}
+{{--                                    class="w-100 img"--}}
+{{--                            />--}}
+{{--                        </a>--}}
+{{--                    </td>--}}
+{{--                    <td class="col-2 align-middle">--}}
+{{--                        <a href="#!">--}}
+{{--                            <img--}}
+{{--                                    src="{{asset('images/vendor-2.jpg')}}"--}}
+{{--                                    class="w-100 img"--}}
+{{--                            />--}}
+{{--                        </a>--}}
+{{--                    </td>--}}
 
-                </tr>
-                <tr>
-                    <td class="col-2 align-middle">
-                        <a href="#!">
-                            <img
-                                    src="{{asset('images/vendor-3.jpg')}}"
-                                    class="w-100 img"
-                            />
-                        </a>
-                    </td>
-                    <td class="col-2 align-middle">
-                        <a href="#!">
-                            <img
-                                    src="{{asset('images/vendor-4.jpg')}}"
-                                    class="w-100 img"
-                            />
-                        </a>
-                    </td>
-                    <td class="col-2 align-middle">
-                        <a href="#!">
-                            <img
-                                    src="{{asset('images/vendor-1.jpg')}}"
-                                    class="w-100 img"
-                            />
-                        </a>
-                    </td>
-                    <td class="col-2 align-middle">
-                        <a href="#!">
-                            <img
-                                    src="{{asset('images/vendor-5.jpg')}}"
-                                    class="w-100 img"
-                            />
-                        </a>
-                    </td>
-                    <td class="col-2 align-middle img">
-                        <a href="#!">
-                            <img
-                                    src="{{asset('images/vendor-6.jpg')}}"
-                                    class="w-100"
-                            />
-                        </a>
-                    </td>
-                    <td class="col-2 align-middle">
-                        <a href="#!">
-                            <img
-                                    src="{{asset('images/vendor-7.jpg')}}"
-                                    class="w-100 img"
-                            />
-                        </a>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-
-        <div class="container body-main px-0">
+{{--                </tr>--}}
+{{--                <tr>--}}
+{{--                    <td class="col-2 align-middle">--}}
+{{--                        <a href="#!">--}}
+{{--                            <img--}}
+{{--                                    src="{{asset('images/vendor-3.jpg')}}"--}}
+{{--                                    class="w-100 img"--}}
+{{--                            />--}}
+{{--                        </a>--}}
+{{--                    </td>--}}
+{{--                    <td class="col-2 align-middle">--}}
+{{--                        <a href="#!">--}}
+{{--                            <img--}}
+{{--                                    src="{{asset('images/vendor-4.jpg')}}"--}}
+{{--                                    class="w-100 img"--}}
+{{--                            />--}}
+{{--                        </a>--}}
+{{--                    </td>--}}
+{{--                    <td class="col-2 align-middle">--}}
+{{--                        <a href="#!">--}}
+{{--                            <img--}}
+{{--                                    src="{{asset('images/vendor-1.jpg')}}"--}}
+{{--                                    class="w-100 img"--}}
+{{--                            />--}}
+{{--                        </a>--}}
+{{--                    </td>--}}
+{{--                    <td class="col-2 align-middle">--}}
+{{--                        <a href="#!">--}}
+{{--                            <img--}}
+{{--                                    src="{{asset('images/vendor-5.jpg')}}"--}}
+{{--                                    class="w-100 img"--}}
+{{--                            />--}}
+{{--                        </a>--}}
+{{--                    </td>--}}
+{{--                    <td class="col-2 align-middle img">--}}
+{{--                        <a href="#!">--}}
+{{--                            <img--}}
+{{--                                    src="{{asset('images/vendor-6.jpg')}}"--}}
+{{--                                    class="w-100"--}}
+{{--                            />--}}
+{{--                        </a>--}}
+{{--                    </td>--}}
+{{--                    <td class="col-2 align-middle">--}}
+{{--                        <a href="#!">--}}
+{{--                            <img--}}
+{{--                                    src="{{asset('images/vendor-7.jpg')}}"--}}
+{{--                                    class="w-100 img"--}}
+{{--                            />--}}
+{{--                        </a>--}}
+{{--                    </td>--}}
+{{--                </tr>--}}
+{{--            </table>--}}
+{{--        </div>--}}
+    </div>
+        <div class="container mt-5">
             <div class="row">
-                <aside class="col-md-4">
+                <div class="col-md-3 col-4">
                     <div class="card mb-5">
                         <div class='wrapper'>
-                            <ul class='items'>
+                            <ul class='items p-2'>
                                 <li>
-                                    <a href='#'>{{ __('home.product type') }}</a>
-                                    <ul class='sub-items'>
-                                        <form class="p-2">
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="{{ __('home.search') }}">
-                                                <div class="input-group-append">
-                                                    <button style="border: 1px solid #ced4da" class="btn btn-light" type="button"><i class="fa fa-search"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
+                                    <h4>Màu sắc</h4>
                                         @php
-                                            $listAtt = DB::table('attributes')->get();
+                                            $listProperties = DB::table('properties')->get();
                                         @endphp
-                                        @foreach($listAtt as $att)
+                                        @foreach($listProperties as $propertie)
                                             <li>
-                                                <input id="check{{ $att->id }}" type="checkbox" />
-                                                <label style="text-indent: 0px" for="check{{ $att->id }}">{{ $att->name }}</label>
+                                                <input id="check{{ $propertie->id }}" type="checkbox" />
+                                                <label style="text-indent: 0px" for="check{{ $propertie->id }}">{{ $propertie->name }}</label>
                                             </li>
                                         @endforeach
-                                        <li>
-                                            <input id="box21" type="checkbox" />
-                                            <label style="text-indent: 0px" for="box21">{{ __('home.people') }}</label>
-                                        </li>
-                                        <li>
-                                            <input id="box22" type="checkbox" />
-                                            <label style="text-indent: 0px" for="box22">{{ __('home.watches') }}</label>
-                                        </li>
-                                        <li>
-                                            <input id="box23" type="checkbox" />
-                                            <label style="text-indent: 0px" for="box23">{{ __('home.cinema') }}</label>
-                                        </li>
-                                        <li>
-                                            <input id="box24" type="checkbox" />
-                                            <label style="text-indent: 0px" for="box24">{{ __('home.clothes') }}</label>
-                                        </li>
-                                        <li>
-                                            <input id="box25" type="checkbox" />
-                                            <label style="text-indent: 0px" for="box25">{{ __('home.home items') }}</label>
-                                        </li>
                                     </ul>
+                            <ul class='items p-2'>
+                            <h4>{{ __('home.brands') }}</h4>
+                                <li>
+                                    <input id="box1" type="checkbox" />
+                                    <label style="text-indent: 0px" for="box1">Mercedes</label>
                                 </li>
                                 <li>
-                                    <a href='#'>{{ __('home.brands') }}</a>
-                                    <ul class='sub-items'>
-                                        <li>
-                                            <input id="box1" type="checkbox" />
-                                            <label style="text-indent: 0px" for="box1">Mercedes</label>
-                                        </li>
-                                        <li>
-                                            <input id="box2" type="checkbox" />
-                                            <label style="text-indent: 0px" for="box2">Toyota</label>
-                                        </li>
-                                        <li>
-                                            <input id="box3" type="checkbox" />
-                                            <label style="text-indent: 0px" for="box3">Mitsubishi</label>
-                                        </li>
-                                        <li>
-                                            <input id="box4" type="checkbox" />
-                                            <label style="text-indent: 0px" for="box4">Honda</label>
-                                        </li>
-                                        <li>
-                                            <input id="box5" type="checkbox" />
-                                            <label style="text-indent: 0px" for="box5">Nissan</label>
-                                        </li>
-                                    </ul>
+                                    <input id="box2" type="checkbox" />
+                                    <label style="text-indent: 0px" for="box2">Toyota</label>
                                 </li>
                                 <li>
-                                    <a href='#'>{{ __('home.price range') }}</a>
-                                    <ul class='sub-items'>
-                                        <div class="d-flex">
+                                    <input id="box3" type="checkbox" />
+                                    <label style="text-indent: 0px" for="box3">Mitsubishi</label>
+                                </li>
+                                <li>
+                                    <input id="box4" type="checkbox" />
+                                    <label style="text-indent: 0px" for="box4">Honda</label>
+                                </li>
+                                <li>
+                                    <input id="box5" type="checkbox" />
+                                    <label style="text-indent: 0px" for="box5">Nissan</label>
+                                </li>
+                            </ul>
+                            <ul class='items p-2'>
+                                <li>
+                                    <h4>Khoảng giá</h4>
+                                    <div class="d-flex">
                                             <div class="wrapper">
                                                 <div class="price-input">
                                                     <div class="field">
@@ -572,28 +538,27 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </ul>
                                 </li>
+                            </ul>
+                            <ul class='items p-2'>
                                 <li>
-                                    <a href='#'>{{ __('home.size') }}</a>
-                                    <ul class='sub-items'>
-                                        <li>
-                                            <input id="box10" type="checkbox" />
-                                            <label style="text-indent: 0px" for="box10">XS</label>
-                                        </li>
-                                        <li>
-                                            <input id="box11" type="checkbox" />
-                                            <label style="text-indent: 0px" for="box11">SM</label>
-                                        </li>
-                                        <li>
-                                            <input id="box12" type="checkbox" />
-                                            <label style="text-indent: 0px" for="box12">LG</label>
-                                        </li>
-                                        <li>
-                                            <input id="box13" type="checkbox" />
-                                            <label style="text-indent: 0px" for="box13">XXL</label>
-                                        </li>
-                                    </ul>
+                                    <h4>Kích thước</h4>
+                                    <li>
+                                        <input id="box10" type="checkbox" />
+                                        <label style="text-indent: 0px" for="box10">XS</label>
+                                    </li>
+                                    <li>
+                                        <input id="box11" type="checkbox" />
+                                        <label style="text-indent: 0px" for="box11">SM</label>
+                                    </li>
+                                    <li>
+                                        <input id="box12" type="checkbox" />
+                                        <label style="text-indent: 0px" for="box12">LG</label>
+                                    </li>
+                                    <li>
+                                        <input id="box13" type="checkbox" />
+                                        <label style="text-indent: 0px" for="box13">XXL</label>
+                                    </li>
                                 </li>
                             </ul>
                         </div>
@@ -601,10 +566,10 @@
                     </div>
 
 
-                </aside>
+                </div>
 
-                <main class="col-md-8">
-                    <header class=" border-bottom mb-4 pb-3 ">
+                <div class="col-md-9 col-8">
+                    <header class="border-bottom mb-4 pb-3 ">
                         <div class="form-inline">
                             <span class="mr-md-auto">{{$listProduct->total()}} {{ __('home.items found') }}</span>
                             <select class="form-control">
@@ -641,11 +606,9 @@
                         </ul>
                     </nav>
 
-                </main>
+                </div>
             </div>
         </div>
-
-    </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function responsiveTable(y) {

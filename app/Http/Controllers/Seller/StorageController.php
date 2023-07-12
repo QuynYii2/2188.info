@@ -56,7 +56,6 @@ class StorageController extends Controller
                 break;
             }
         }
-
         if ($name) {
             $str = ['name', 'like', '%' . $name . '%'];
             array_push($query, $str);
