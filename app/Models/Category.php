@@ -11,7 +11,10 @@ class Category extends Model
     use HasFactory, NodeTrait;
 
     // Category.php
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'name',
+        'thumbnail',
+    ];
 
 
     // Category.php

@@ -11,7 +11,7 @@
             @endif
         </div>
         <div class="card-body">
-            <form action="{{ route('seller.categories.update', $category->id) }}" method="POST">
+            <form action="{{ route('seller.categories.update', $category->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -30,6 +30,11 @@
                             </option>
                         @endforeach
                     </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="thumbnail">Thumbnail</label>
+                    <input type="file" name="thumbnail" id="thumbnail" class="form-control" accept="image/*">
                 </div>
 
                 <button type="submit" class="btn btn-success mr-3">Lưu</button>

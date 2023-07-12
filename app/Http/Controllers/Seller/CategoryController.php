@@ -45,6 +45,12 @@ class CategoryController extends Controller
         $category->name = $validatedData['name'];
         $category->user_id = Auth::user()->id;
 
+        if ($request->hasFile('thumbnail')) {
+            $thumbnail = $request->file('thumbnail');
+            $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+            $category->thumbnail = $thumbnailPath;
+        }
+
         if ($validatedData['parent_id']) {
             $parentCategory = Category::find($validatedData['parent_id']);
             $category->appendToNode($parentCategory)->save();
@@ -74,6 +80,12 @@ class CategoryController extends Controller
     {
         $category->name = $request->input('name');
         $category->parent_id = $request->input('parent_id');
+        if ($request->hasFile('thumbnail')) {
+            $thumbnail = $request->file('thumbnail');
+            $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+            $category->thumbnail = $thumbnailPath;
+        }
+
         $updateCategory = $category->save();
         alert()->success('Success', 'Category đã được cập nhật thành công!');
 
