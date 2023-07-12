@@ -62,8 +62,9 @@ class CheckoutController extends Controller
         $product = Product::where([['id', '=', $product_id]])->first();
         $storage = StorageProduct::where([['id', '=', $product->storage_id]])->first();
 
-        $product->qty = $product->qty - $quantity;
-        $storage->quantity = $storage->quantity - $quantity;
+        $qtyCalc = $storage->quantity - $quantity;
+        $product->qty = $qtyCalc;
+        $storage->quantity = $qtyCalc;
 
         $product->save();
         $storage->save();
