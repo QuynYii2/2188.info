@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Enums\NotificationStatus;
 use App\Enums\ProductStatus;
 use App\Enums\PromotionStatus;
+use App\Enums\TopSellerConfigLocation;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PermissionRankController;
@@ -18,6 +19,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Libraries\GeoIP;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
@@ -91,7 +93,11 @@ class HomeController extends Controller
         }
 //        $productFeatures = Product::where('feature', 1)->get();
 
-        $configs = TopSellerConfig::orderBy('local', 'asc')->limit(3)->get();
+        $configsTop1 = TopSellerConfig::where('local', TopSellerConfigLocation::OptionOne)->orderBy('created_at', 'desc')->limit(3)->get();
+        $configsTop2 = TopSellerConfig::where('local', TopSellerConfigLocation::OptionTwo)->orderBy('created_at', 'desc')->limit(3)->get();
+        $configsTop3 = TopSellerConfig::where('local', TopSellerConfigLocation::OptionThree)->orderBy('created_at', 'desc')->limit(3)->get();
+        $configsTop4 = TopSellerConfig::where('local', TopSellerConfigLocation::OptionFour)->orderBy('created_at', 'desc')->limit(3)->get();
+        $configsTop5 = TopSellerConfig::where('local', TopSellerConfigLocation::OptionFive)->orderBy('created_at', 'desc')->limit(3)->get();
 
         $vouchers = Voucher::where([
             ['status', '!=', VoucherStatus::DELETED],
@@ -128,7 +134,11 @@ class HomeController extends Controller
             'productByCn' => $productByCn,
             'productHots' => $productHots,
             'productFeatures' => $productFeatures,
-            'configs' => $configs,
+            'configsTop1' => $configsTop1,
+            'configsTop2' => $configsTop2,
+            'configsTop3' => $configsTop3,
+            'configsTop4' => $configsTop4,
+            'configsTop5' => $configsTop5,
         ]);
     }
 
@@ -187,5 +197,18 @@ class HomeController extends Controller
             $randomString .= $characters[random_int(0, $charactersLength - 1)];
         }
         return $randomString;
+    }
+
+    public function checkAdmin()
+    {
+        $user = Auth::user()->id;
+        $role_id = DB::table('role_user')->where('user_id', $user)->get();
+        $isAdmin = false;
+        foreach ($role_id as $item) {
+            if ($item->role_id == 1) {
+                $isAdmin = true;
+            }
+        }
+        return $isAdmin;
     }
 }

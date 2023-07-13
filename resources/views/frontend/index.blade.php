@@ -444,6 +444,35 @@
                 </div>
             </div>
         </div>
+        <h3 class="text-center">Top seller</h3>
+        <div class="container-fluid mt-2">
+            <div class="row">
+                @foreach($configsTop1 as $config)
+                    <div class="col-md-4 img" style="background-image: url('{{asset('storage/'.$config->thumbnail)}}');">
+                        <h3 class="text-center">
+                            @php
+                                $url = $config->url;
+                                $value = null;
+                                $item = null;
+                                $checkShop = false;
+                                if ($url == 0){
+                                    $checkShop = true;
+                                    $value = $config->user_id;
+                                } else {
+                                    $item = $config->user_id;
+                                    $value = $url;
+                                }
+                            @endphp
+                            @if($checkShop == true)
+                                <a href="{{route('list.products.shop.show', $value)}}">Go now</a>
+                            @else
+                                <a href="{{route('list.products.shop.category.show', ['category' => $value, 'shop' => $item])}}">Go now</a>
+                            @endif
+                        </h3>
+                    </div>
+                @endforeach
+            </div>
+        </div>
         <h3 class="text-center">Sản phẩm hot nhất</h3>
         <div class="container-fluid mt-2">
             <div class="row">
@@ -504,6 +533,35 @@
                         <a href="#">Discover More</a>
                     </div>
                 </div>
+            </div>
+        </div>
+        <h3 class="text-center">Top seller</h3>
+        <div class="container-fluid mt-2">
+            <div class="row">
+                @foreach($configsTop2 as $config)
+                    <div class="col-md-4 img" style="background-image: url('{{asset('storage/'.$config->thumbnail)}}');">
+                        <h3 class="text-center">
+                            @php
+                                $url = $config->url;
+                                $value = null;
+                                $item = null;
+                                $checkShop = false;
+                                if ($url == 0){
+                                    $checkShop = true;
+                                    $value = $config->user_id;
+                                } else {
+                                    $item = $config->user_id;
+                                    $value = $url;
+                                }
+                            @endphp
+                            @if($checkShop == true)
+                                <a href="{{route('list.products.shop.show', $value)}}">Go now</a>
+                            @else
+                                <a href="{{route('list.products.shop.category.show', ['category' => $value, 'shop' => $item])}}">Go now</a>
+                            @endif
+                        </h3>
+                    </div>
+                @endforeach
             </div>
         </div>
         <h3 class="text-center">Sản phẩm nổi bật nhất</h3>
@@ -569,24 +627,26 @@
         <h3 class="text-center">Top seller</h3>
         <div class="container-fluid mt-2">
             <div class="row">
-                @foreach($configs as $config)
+                @foreach($configsTop3 as $config)
                     <div class="col-md-4 img" style="background-image: url('{{asset('storage/'.$config->thumbnail)}}');">
                         <h3 class="text-center">
                             @php
                                 $url = $config->url;
                                 $value = null;
+                                $item = null;
                                 $checkShop = false;
                                 if ($url == 0){
                                     $checkShop = true;
                                     $value = $config->user_id;
                                 } else {
+                                    $item = $config->user_id;
                                     $value = $url;
                                 }
                             @endphp
                             @if($checkShop == true)
-                                <a href="#shop{{$value}}">Go now</a>
+                                <a href="{{route('list.products.shop.show', $value)}}">Go now</a>
                             @else
-                                <a href="#category{{$value}}">Go now</a>
+                                <a href="{{route('list.products.shop.category.show', ['category' => $value, 'shop' => $item])}}">Go now</a>
                             @endif
                         </h3>
                     </div>
@@ -625,6 +685,35 @@
                 <a href="#" class="primary-btn">Shop Now</a>
             </div>
         </section>
+        <h3 class="text-center">Top seller</h3>
+        <div class="container-fluid mt-2">
+            <div class="row">
+                @foreach($configsTop4 as $config)
+                    <div class="col-md-4 img" style="background-image: url('{{asset('storage/'.$config->thumbnail)}}');">
+                        <h3 class="text-center">
+                            @php
+                                $url = $config->url;
+                                $value = null;
+                                $item = null;
+                                $checkShop = false;
+                                if ($url == 0){
+                                    $checkShop = true;
+                                    $value = $config->user_id;
+                                } else {
+                                    $item = $config->user_id;
+                                    $value = $url;
+                                }
+                            @endphp
+                            @if($checkShop == true)
+                                <a href="{{route('list.products.shop.show', $value)}}">Go now</a>
+                            @else
+                                <a href="{{route('list.products.shop.category.show', ['category' => $value, 'shop' => $item])}}">Go now</a>
+                            @endif
+                        </h3>
+                    </div>
+                @endforeach
+            </div>
+        </div>
         <div class="container-fluid mt-4">
             <div class="row">
                 <div class="col-lg-2 p-left p-side-tablet">
@@ -711,6 +800,35 @@
                         <a href="#">Discover More</a>
                     </div>
                 </div>
+            </div>
+        </div>
+        <h3 class="text-center">Top seller</h3>
+        <div class="container-fluid mt-2">
+            <div class="row">
+                @foreach($configsTop5 as $config)
+                    <div class="col-md-4 img" style="background-image: url('{{asset('storage/'.$config->thumbnail)}}');">
+                        <h3 class="text-center">
+                            @php
+                                $url = $config->url;
+                                $value = null;
+                                $item = null;
+                                $checkShop = false;
+                                if ($url == 0){
+                                    $checkShop = true;
+                                    $value = $config->user_id;
+                                } else {
+                                    $item = $config->user_id;
+                                    $value = $url;
+                                }
+                            @endphp
+                            @if($checkShop == true)
+                                <a href="{{route('list.products.shop.show', $value)}}">Go now</a>
+                            @else
+                                <a href="{{route('list.products.shop.category.show', ['category' => $value, 'shop' => $item])}}">Go now</a>
+                            @endif
+                        </h3>
+                    </div>
+                @endforeach
             </div>
         </div>
         <div class="container-fluid mt-4">
