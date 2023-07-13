@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\Admin\ConfigProjectController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CoinController;
 use App\Http\Controllers\EvaluateProductController;
@@ -143,6 +144,13 @@ Route::group(['middleware' => 'role.admin'], function () {
     // Các route dành cho super admin
     Route::get('/admin/dashboard', 'AdminController@dashboard');
 //    Route::post('down-permission', [\App\Http\Controllers\PermissionRankController::class, 'downRank'])->name('permission.down.rank');
+    //
+    Route::get('/admin/configs', [ConfigProjectController::class, 'index'])->name('admin.configs.show');
+    Route::get('/admin/configs/create', [ConfigProjectController::class, 'processCreate'])->name('admin.configs.processCreate');
+    Route::post('/admin/configs', [ConfigProjectController::class, 'create'])->name('admin.configs.create');
+    Route::get('/admin/configs/{id}', [ConfigProjectController::class, 'detail'])->name('admin.configs.detail');
+    Route::put('/admin/configs/{id}', [ConfigProjectController::class, 'update'])->name('admin.configs.update');
+    Route::delete('/admin/configs/{id}', [ConfigProjectController::class, 'delete'])->name('admin.configs.delete');
 
 });
 

@@ -307,6 +307,19 @@
                         @break
                     @endif
                 @endfor
+                @if(sizeof($roleUsers) != 0)
+                    <li>
+                        <a href="#!"><span>Cấu hình dự án</span></a>
+                        <ul class='sub-items'>
+                            <li>
+                                <a href="{{route('admin.configs.show')}}">Danh sách cấu hình</a>
+                            </li>
+                            <li>
+                                <a href="{{route('admin.configs.processCreate')}}">Thiết lập cấu hình</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
             </ul>
         </li>
     </ul>
