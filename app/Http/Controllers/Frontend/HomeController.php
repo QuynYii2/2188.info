@@ -12,12 +12,12 @@ use App\Models\Category;
 use App\Models\Notification;
 use App\Models\Permission;
 use App\Models\Promotion;
+use App\Models\TopSellerConfig;
 use App\Models\Voucher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Libraries\GeoIP;
 use App\Models\Product;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
@@ -91,6 +91,8 @@ class HomeController extends Controller
         }
 //        $productFeatures = Product::where('feature', 1)->get();
 
+        $configs = TopSellerConfig::orderBy('local', 'asc')->limit(3)->get();
+
         $vouchers = Voucher::where([
             ['status', '!=', VoucherStatus::DELETED],
             ['endDate', '<', Carbon::now()->addHours(7)]
@@ -125,7 +127,8 @@ class HomeController extends Controller
             'productByJp' => $productByJp,
             'productByCn' => $productByCn,
             'productHots' => $productHots,
-            'productFeatures' => $productFeatures
+            'productFeatures' => $productFeatures,
+            'configs' => $configs,
         ]);
     }
 

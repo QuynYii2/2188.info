@@ -23,10 +23,10 @@ use App\Http\Controllers\Seller\PropertiesController;
 use App\Http\Controllers\Seller\RankUserSellerController;
 use App\Http\Controllers\Seller\SellerEvaluateProductController;
 use App\Http\Controllers\Seller\StorageController;
+use App\Http\Controllers\Seller\TopSellerConfigController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
-use App\Models\RankUserSeller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -241,6 +241,11 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::post('/seller-setup', [RankUserSellerController::class, 'createSetup'])->name('seller.setup.create');
     Route::get('/seller-setup/{id}', [RankUserSellerController::class, 'detailSetup'])->name('seller.setup.detail');
     Route::post('/seller-setup/{id}', [RankUserSellerController::class, 'updateSetUp'])->name('seller.setup.update');
+    // Top seller config
+    Route::get('/seller-configs', [TopSellerConfigController::class, 'index'])->name('seller.config.show');
+    Route::get('/seller-config/create', [TopSellerConfigController::class, 'processCreate'])->name('seller.config.processCreate');
+    Route::post('/seller-config', [TopSellerConfigController::class, 'create'])->name('seller.config.create');
+    Route::delete('/seller-config/{id}', [TopSellerConfigController::class, 'delete'])->name('seller.config.delete');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {
