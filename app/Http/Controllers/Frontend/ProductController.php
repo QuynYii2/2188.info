@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-//    use CountryCodeTrait;
     public function index(Request $request)
     {
         $locale = '';
@@ -68,5 +67,22 @@ class ProductController extends Controller
         (new HomeController())->getLocale($request);
         $products = Product::where('status', ProductStatus::ACTIVE)->orderBy('views', 'DESC')->limit(9)->get();
         return view('frontend.pages.profile.my-review', compact('products'));
+    }
+
+    public function getListByShops(Request $request, $id)
+    {
+        (new HomeController())->getLocale($request);
+        $products = Product::where('user_id', $id)->get();
+        return view('frontend.pages.shopProducts.list-by-shop', compact('products'));
+    }
+
+    public function getListByCategoryAndShops(Request $request, $category, $shop)
+    {
+        (new HomeController())->getLocale($request);
+        $products = Product::where([
+            ['user_id', $shop],
+            ['category_id', $category]
+        ])->get();
+        return view('frontend.pages.shopProducts.list-by-category', compact('products'));
     }
 }
