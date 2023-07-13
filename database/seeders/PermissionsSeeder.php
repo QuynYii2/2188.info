@@ -29,7 +29,10 @@ class PermissionsSeeder extends Seeder
             ['name' => 'view_list_categories'],
             ['name' => 'order_product'],
             ['name' => 'view_product_language'],
-            ['name' => 'view_more_product'],
+            ['name' => 'Nâng cấp sản phẩm hot'],
+            ['name' => 'Nâng cấp sản phẩm nổi bật'],
+            ['name' => 'Nâng cấp thành top-seller'],
+            ['name' => 'Nâng cấp sản phẩm bán chạy'],
             ['name' => 'comment_product'],
             ['name' => 'view_all_blogs'],
         ];

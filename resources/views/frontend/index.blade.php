@@ -37,6 +37,7 @@
         .tablet-button {
             display: none;
         }
+
         /* CSS cho megamenu */
         .megamenu {
             display: none;
@@ -223,35 +224,38 @@
                                     $listCate = DB::table('categories')->where('parent_id', null)->get();
                                 @endphp
                                 <ul class="navbar-nav" id="side-cate" style="overflow-y: scroll; ">
-                                        @foreach($listCate as $cate)
+                                    @foreach($listCate as $cate)
                                         <li class="nav-item d-grid ">
-                                            <a class="nav-link text-nowrap text-limit position-relative " href="{{ route('category.show', $cate->id) }}">
+                                            <a class="nav-link text-nowrap text-limit position-relative "
+                                               href="{{ route('category.show', $cate->id) }}">
                                                 <i class="fa fa-laptop" aria-hidden="true"></i>
                                                 {{ $cate->name }}
                                             </a>
                                             @if(!$listCate->isEmpty())
-                                            <div class="megamenu">
-                                                <div class="row">
-                                                    @php
-                                                        $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
-                                                    @endphp
-                                                    @foreach($listChild as $child)
-                                                    <div class="col-sm-4 mt-1 mb-1">
-                                                        <h4><a href="{{ route('category.show', $child->id) }}">{{ $child->name }}</a></h4>
-                                                        <ul>
-                                                            @php
-                                                                $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
-                                                            @endphp
-                                                            @foreach($listChild2 as $child2)
-                                                                <li>
-                                                                    <a href="{{ route('category.show', $child2->id) }}">{{ $child2->name }}</a>
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
+                                                <div class="megamenu">
+                                                    <div class="row">
+                                                        @php
+                                                            $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
+                                                        @endphp
+                                                        @foreach($listChild as $child)
+                                                            <div class="col-sm-4 mt-1 mb-1">
+                                                                <h4>
+                                                                    <a href="{{ route('category.show', $child->id) }}">{{ $child->name }}</a>
+                                                                </h4>
+                                                                <ul>
+                                                                    @php
+                                                                        $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
+                                                                    @endphp
+                                                                    @foreach($listChild2 as $child2)
+                                                                        <li>
+                                                                            <a href="{{ route('category.show', $child2->id) }}">{{ $child2->name }}</a>
+                                                                        </li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            </div>
+                                                        @endforeach
                                                     </div>
-                                                    @endforeach
                                                 </div>
-                                            </div>
                                             @endif
                                         </li>
                                         <li class="border-bottom"></li>
@@ -438,6 +442,155 @@
                         <a href="#">Discover More</a>
                     </div>
                 </div>
+            </div>
+        </div>
+        <h3 class="text-center">Sản phẩm hot nhất</h3>
+        <div class="container-fluid mt-2">
+            <div class="row">
+                <div class="col-lg-2 p-left p-side-tablet">
+                    <div class="product-large set-bg m-large p-l-1"
+                         data-setbg="{{asset('images/img/products/women-large.jpg')}}">
+                        <h2>Women’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                    <div class="product-large set-bg m-large p-r-1"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                        <h2>Women’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="product-slider owl-carousel">
+                        @foreach($productHots as $products)
+                            @foreach($products as $product)
+                                <div class="row ">
+                                    @if($product->name)
+                                        <div class="col-12">
+                                            <div class="product-item">
+                                                <div class="pi-pic">
+                                                    <img class="img" src="{{ asset('storage/'.$product->thumbnail) }}"
+                                                         alt="">
+                                                    <div class="sale">Sale</div>
+                                                    <div class="icon">
+                                                        <i class="icon_heart_alt"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="pi-text">
+                                                    <div class="catagory-name">{{$product->category->name}}</div>
+                                                    <a href="{{route('detail_product.show', $product->id)}}">
+                                                        <h5>{{$product->name}}</h5>
+                                                    </a>
+                                                    <div class="product-price">
+                                                        ${{$product->price}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @endforeach
+                    </div>
+                </div>
+                <div class="col-lg-2 p-right p-side-tablet">
+                    <div class="product-large set-bg m-large p-l-1"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                        <h2>Women’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                    <div class="product-large set-bg m-large p-r-1"
+                         data-setbg="{{asset('images/img/products/women-large.jpg')}}">
+                        <h2>Women’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h3 class="text-center">Sản phẩm nổi bật nhất</h3>
+        <div class="container-fluid mt-2">
+            <div class="row">
+                <div class="col-lg-2 p-left p-side-tablet">
+                    <div class="product-large set-bg m-large p-l-1"
+                         data-setbg="{{asset('images/img/products/women-large.jpg')}}">
+                        <h2>Women’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                    <div class="product-large set-bg m-large p-r-1"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                        <h2>Women’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="product-slider owl-carousel">
+                        @foreach($productFeatures as $products)
+                            @foreach($products as $product)
+                                <div class="row ">
+                                    <div class="col-12">
+                                        <div class="product-item">
+                                            <div class="pi-pic">
+                                                <img class="img" src="{{ asset('storage/'.$product->thumbnail) }}"
+                                                     alt="">
+                                                <div class="sale">Sale</div>
+                                                <div class="icon">
+                                                    <i class="icon_heart_alt"></i>
+                                                </div>
+                                            </div>
+                                            <div class="pi-text">
+                                                <div class="catagory-name">{{$product->category->name}}</div>
+                                                <a href="{{route('detail_product.show', $product->id)}}">
+                                                    <h5>{{$product->name}}</h5>
+                                                </a>
+                                                <div class="product-price">
+                                                    ${{$product->price}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endforeach
+                    </div>
+                </div>
+                <div class="col-lg-2 p-right p-side-tablet">
+                    <div class="product-large set-bg m-large p-l-1"
+                         data-setbg="{{asset('images/img/products/man-large.jpg')}}">
+                        <h2>Women’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                    <div class="product-large set-bg m-large p-r-1"
+                         data-setbg="{{asset('images/img/products/women-large.jpg')}}">
+                        <h2>Women’s</h2>
+                        <a href="#">Discover More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h3 class="text-center">Top seller</h3>
+        <div class="container-fluid mt-2">
+            <div class="row">
+                @foreach($configs as $config)
+                    <div class="col-md-4 img" style="background-image: url('{{asset('storage/'.$config->thumbnail)}}');">
+                        <h3 class="text-center">
+                            @php
+                                $url = $config->url;
+                                $value = null;
+                                $checkShop = false;
+                                if ($url == 0){
+                                    $checkShop = true;
+                                    $value = $config->user_id;
+                                } else {
+                                    $value = $url;
+                                }
+                            @endphp
+                            @if($checkShop == true)
+                                <a href="#shop{{$value}}">Go now</a>
+                            @else
+                                <a href="#category{{$value}}">Go now</a>
+                            @endif
+                        </h3>
+                    </div>
+                @endforeach
             </div>
         </div>
         <section class="deal-of-week set-bg spad" data-setbg="{{asset('images/img/time-bg.jpg')}}">

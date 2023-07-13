@@ -119,6 +119,20 @@
     } else {
         $roleUsers = null;
     }
+
+    use Illuminate\Support\Facades\Auth;
+    use App\Enums\PermissionUserStatus;
+
+    if (auth()->check() != null){
+        $permissionUsers = DB::table('permissions')
+        ->join('permission_user', 'permission_user.permission_id', '=', 'permissions.id')
+        ->where([['permission_user.user_id', Auth::user()->id], ['permission_user.status', PermissionUserStatus::ACTIVE]])
+        ->select('permissions.*')
+        ->get();
+    } else {
+        $permissionUsers[]= null;
+    }
+
 @endphp
 <div class='wrapper text-nowrap'>
     <ul class='items'>
@@ -270,13 +284,34 @@
                         <li>
                             <a href="{{route('seller.setup.show')}}">Quản lí phân hạng</a>
                         </li>
-                       @if($check === true)
+                        @if($check === true)
                             <li>
                                 <a href="{{route('seller.setup.processCreate')}}">Tạo mới phân hạng</a>
                             </li>
-                       @endif
+                        @endif
                     </ul>
                 </li>
+                @php
+                    $configs = \App\Models\TopSellerConfig::where('user_id', Auth::user()->id)->first();
+                @endphp
+                @for($i = 0; $i< count($permissionUsers); $i++)
+                    @if($permissionUsers[$i]->name == 'Nâng cấp thành top-seller')
+                        <li>
+                            <a href="#!"><span>Config top seller</span></a>
+                            <ul class='sub-items'>
+                                <li>
+                                    <a href="{{route('seller.config.show')}}">Quản lí information</a>
+                                </li>
+                               @if(!$configs)
+                                    <li>
+                                        <a href="{{route('seller.config.processCreate')}}">Tạo mới information</a>
+                                    </li>
+                               @endif
+                            </ul>
+                        </li>
+                        @break
+                    @endif
+                @endfor
             </ul>
         </li>
     </ul>
