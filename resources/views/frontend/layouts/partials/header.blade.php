@@ -346,6 +346,9 @@
     }
 
 </style>
+@php
+    $config = \App\Models\ConfigProject::orderBy('created_at', 'desc')->limit(1)->get();
+@endphp
 <header>
     <div class="header-top align-items-center justify-content-between row"
          style="padding-left: 2vw; padding-right: 2vw">
@@ -355,11 +358,11 @@
                     <div class="desktop-button">
                         <div class="mail-service">
                             <i class=" fa fa-envelope"></i>
-                            hello.colorlib@gmail.com
+                            {{$config[0]->email}}
                         </div>
                         <div class="phone-service">
                             <i class=" fa fa-phone"></i>
-                            +65 11.188.888
+                            {{$config[0]->phone}}
                         </div>
                     </div>
                 </div>
@@ -492,7 +495,7 @@
             <div class="col-lg-2 col-md-2 col-12 col-sm-2">
                 <div class="logo">
                     <a href="{{route('home')}}">
-                        <img src="{{asset('images/img/logo.png')}}" alt="">
+                        <img src="{{ asset('storage/'.$config[0]->logo) }}" alt="">
                     </a>
                 </div>
             </div>

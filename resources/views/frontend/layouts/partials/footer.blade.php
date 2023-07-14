@@ -1,3 +1,6 @@
+@php
+    $config = \App\Models\ConfigProject::orderBy('created_at', 'desc')->limit(1)->get();
+@endphp
 <!-- Footer Section Begin -->
 <footer class="footer-section">
     <div class="container">
@@ -5,12 +8,12 @@
             <div class="col-lg-3 col-sm-6">
                 <div class="footer-left">
                     <div class="footer-logo">
-                        <a href="#"><img class="img" src="{{asset('images/img/footer-logo.png')}}" alt=""></a>
+                        <a href="#"><img class="img" src="{{ asset('storage/'.$config[0]->logo) }}" alt=""></a>
                     </div>
                     <ul>
-                        <li>Address: 60-49 Road 11378 New York</li>
-                        <li>Phone: +65 11.188.888</li>
-                        <li>Email: hello.colorlib@gmail.com</li>
+                        <li>Address: {{$config[0]->address}}.</li>
+                        <li>Phone: {{$config[0]->phone}}</li>
+                        <li>Email: {{$config[0]->email}}</li>
                     </ul>
                     <div class="footer-social">
                         <a href="#"><i class="fa fa-facebook"></i></a>
