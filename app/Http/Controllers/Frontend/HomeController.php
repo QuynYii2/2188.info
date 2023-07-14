@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Enums\BannerStatus;
 use App\Enums\NotificationStatus;
 use App\Enums\ProductStatus;
 use App\Enums\PromotionStatus;
@@ -9,6 +10,7 @@ use App\Enums\TopSellerConfigLocation;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PermissionRankController;
+use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Notification;
 use App\Models\Permission;
@@ -27,22 +29,8 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $locale = '';
-        $currency = '';
-        if ($request->session()->has('locale')) {
-            $locale = $request->session()->get('locale');
-            app()->setLocale($request->session()->get('locale'));
-        } else {
-            $ipAddress = $request->ip();
-            $geoIp = new GeoIP();
-            $locale = $geoIp->get_country_from_ip('183.80.130.4');
-            if ($locale !== null && is_array($locale)) {
-                $locale = $locale['countryCode'];
-            } else {
-                $locale = 'vi';
-            }
-        }
-        app()->setLocale($locale);
+        $this->getLocale($request);
+        $locale = app()->getLocale();
 
         $currencies = [
             'vi' => 'VND',
@@ -124,6 +112,8 @@ class HomeController extends Controller
             ['startDate', '<', Carbon::now()->addHours(7)]
         ])->update(['status' => PromotionStatus::ACTIVE]);
 
+        $banner = Banner::where('status', BannerStatus::ACTIVE)->orderBy('created_at', 'desc')->first();
+
         return view('frontend/index', [
             'productByLocal' => $productByLocal,
             'currency' => $currency,
@@ -139,6 +129,7 @@ class HomeController extends Controller
             'configsTop3' => $configsTop3,
             'configsTop4' => $configsTop4,
             'configsTop5' => $configsTop5,
+            'banner' => $banner,
         ]);
     }
 

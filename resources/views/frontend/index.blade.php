@@ -265,65 +265,79 @@
                         </nav>
                     </div>
                     <div class="col-lg-6 col-md-6 col-12 col-xl-7 mb-2 not-tablet-button">
-                        <!-- Hero Section Begin -->
+                        @php
+                            $listThumbnailsBanner = $banner->thumbnails;
+                            $arrayBannerThumbnails = explode(',', $listThumbnailsBanner);
+                        @endphp
                         <section class="slider-section">
                             <div class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner mt-1" id="carousel__1" role="listbox">
-                                    <div class="carousel-item active img-banner-1 img height-banner"
-                                         style="background-image: url('{{asset('images/img/banner1.jpeg')}}');">
-                                    </div> <!-- End of Carousel Item -->
-
-                                    <div class="carousel-item img-banner-1 img height-banner"
-                                         style="background-image: url('{{asset('images/img/banner2.png')}}');">
-                                    </div> <!-- End of Carousel Item -->
-                                </div> <!-- End of Carousel Content -->
-
-                                <!-- Previous & Next -->
-                                <a href="#carousel" class="carousel-control-prev" role="button" data-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="sr-only"></span>
-                                </a>
-                                <a href="#carousel" class="carousel-control-next" role="button" data-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="sr-only"></span>
-                                </a>
-                            </div> <!-- End of Carousel -->
+                                    @for($i = 0; $i<count($arrayBannerThumbnails); $i++)
+                                        <div class="carousel-item active img-banner-1 img height-banner"
+                                             id="bannerTest[{{$i}}]"
+                                             style="background-image: url('{{asset('storage/'.$arrayBannerThumbnails[$i])}}');">
+                                        </div>
+                                        <!-- Previous & Next -->
+                                        @if($i==0)
+                                            <a href="#bannerTest[{{count($arrayBannerThumbnails)-1}}]"
+                                               class="carousel-control-prev" role="button" data-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="sr-only"></span>
+                                            </a>
+                                        @else
+                                            <a href="#bannerTest[{{$i-1}}]" class="carousel-control-prev" role="button"
+                                               data-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="sr-only"></span>
+                                            </a>
+                                        @endif
+                                        @if($i==count($arrayBannerThumbnails)-1)
+                                            <a href="#bannerTest[0]" class="carousel-control-next" role="button"
+                                               data-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="sr-only"></span>
+                                            </a>
+                                        @else
+                                            <a href="#bannerTest[{{$i+1}}]" class="carousel-control-next" role="button"
+                                               data-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="sr-only"></span>
+                                            </a>
+                                        @endif
+                                    @endfor
+                                </div>
+                            </div>
                         </section>
-                        <!-- Hero Section End -->
                     </div>
                     <div class="col-lg-3 col-md-3 col-12 mt-2 menu-bottom not-tablet-button" id="mini-img">
-                        <div class="single-banner mb-3">
-                            <img class="img" src="{{asset('images/img/Screenshot 2023-05-26 at 2.14.36 AM.png')}}"
-                                 alt=""
-                                 height="100%">
-                        </div>
-
-                        <div class="single-banner mb-3">
-                            <img class="img" src="{{asset('images/img/banner_sidebar1.jpeg')}}" alt=""
-                                 height="100%">
-                        </div>
-
-                        <div class="single-banner">
-                            <img class="img" src="{{asset('images/img/banner_sidebar2.png')}}" alt="" height="100%">
-                        </div>
+                        @php
+                            $sub_thumbnails = $banner->sub_thumbnails;
+                            $sub_thumbnails = explode(',', $sub_thumbnails);
+                        @endphp
+                        @for($i = 0; $i<count($sub_thumbnails); $i++)
+                            <div class="single-banner mb-3">
+                                <img class="img" src="{{ asset('storage/'.$sub_thumbnails[$i]) }}"
+                                     alt=""
+                                     height="100%">
+                            </div>
+                        @endfor
                     </div>
                     <div class="col-lg-9 col-sm-9 col-md-9 col-12 col-xl-10 tablet-button">
                         <div class="row" id="carousel__2">
                             <div class="col-lg-8 col-sm-12 col-md-12 col-12 col-xl-7 ">
-                                <!-- Hero Section Begin -->
+                                @php
+                                    $listThumbnailsBanner = $banner->thumbnails;
+                                    $arrayBannerThumbnails = explode(',', $listThumbnailsBanner);
+                                @endphp
                                 <section class="slider-section">
                                     <div id="carousel2" class="carousel slide" data-ride="carousel">
                                         <div class="carousel-inner mt-1" role="listbox">
-                                            <div class="carousel-item active img-banner-1 img height-banner"
-                                                 style="background-image: url('{{asset('images/img/banner1.jpeg')}}');">
-                                            </div> <!-- End of Carousel Item -->
-
-                                            <div class="carousel-item img-banner-1 img height-banner"
-                                                 style="background-image: url('{{asset('images/img/banner2.png')}}');">
-                                            </div> <!-- End of Carousel Item -->
-                                        </div> <!-- End of Carousel Content -->
-
-                                        <!-- Previous & Next -->
+                                            @for($i = 0; $i<count($arrayBannerThumbnails); $i++)
+                                                <div class="carousel-item active img-banner-1 img height-banner"
+                                                     style="background-image: url('{{asset('storage/'.$arrayBannerThumbnails[$i])}}');">
+                                                </div>
+                                            @endfor
+                                        </div>
                                         <a href="#carousel2" class="carousel-control-prev" role="button"
                                            data-slide="prev">
                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -334,9 +348,8 @@
                                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                             <span class="sr-only"></span>
                                         </a>
-                                    </div> <!-- End of Carousel -->
+                                    </div>
                                 </section>
-                                <!-- Hero Section End -->
                             </div>
                             <div class="col-md-12 col-sm-12 mt-2">
                                 <div class="row">
@@ -448,7 +461,8 @@
         <div class="container-fluid mt-2">
             <div class="row">
                 @foreach($configsTop1 as $config)
-                    <div class="col-md-4 img" style="background-image: url('{{asset('storage/'.$config->thumbnail)}}');">
+                    <div class="col-md-4 img"
+                         style="background-image: url('{{asset('storage/'.$config->thumbnail)}}');">
                         <h3 class="text-center">
                             @php
                                 $url = $config->url;
@@ -466,7 +480,8 @@
                             @if($checkShop == true)
                                 <a href="{{route('list.products.shop.show', $value)}}">Go now</a>
                             @else
-                                <a href="{{route('list.products.shop.category.show', ['category' => $value, 'shop' => $item])}}">Go now</a>
+                                <a href="{{route('list.products.shop.category.show', ['category' => $value, 'shop' => $item])}}">Go
+                                    now</a>
                             @endif
                         </h3>
                     </div>
@@ -539,7 +554,8 @@
         <div class="container-fluid mt-2">
             <div class="row">
                 @foreach($configsTop2 as $config)
-                    <div class="col-md-4 img" style="background-image: url('{{asset('storage/'.$config->thumbnail)}}');">
+                    <div class="col-md-4 img"
+                         style="background-image: url('{{asset('storage/'.$config->thumbnail)}}');">
                         <h3 class="text-center">
                             @php
                                 $url = $config->url;
@@ -557,7 +573,8 @@
                             @if($checkShop == true)
                                 <a href="{{route('list.products.shop.show', $value)}}">Go now</a>
                             @else
-                                <a href="{{route('list.products.shop.category.show', ['category' => $value, 'shop' => $item])}}">Go now</a>
+                                <a href="{{route('list.products.shop.category.show', ['category' => $value, 'shop' => $item])}}">Go
+                                    now</a>
                             @endif
                         </h3>
                     </div>
@@ -628,7 +645,8 @@
         <div class="container-fluid mt-2">
             <div class="row">
                 @foreach($configsTop3 as $config)
-                    <div class="col-md-4 img" style="background-image: url('{{asset('storage/'.$config->thumbnail)}}');">
+                    <div class="col-md-4 img"
+                         style="background-image: url('{{asset('storage/'.$config->thumbnail)}}');">
                         <h3 class="text-center">
                             @php
                                 $url = $config->url;
@@ -646,7 +664,8 @@
                             @if($checkShop == true)
                                 <a href="{{route('list.products.shop.show', $value)}}">Go now</a>
                             @else
-                                <a href="{{route('list.products.shop.category.show', ['category' => $value, 'shop' => $item])}}">Go now</a>
+                                <a href="{{route('list.products.shop.category.show', ['category' => $value, 'shop' => $item])}}">Go
+                                    now</a>
                             @endif
                         </h3>
                     </div>
@@ -689,7 +708,8 @@
         <div class="container-fluid mt-2">
             <div class="row">
                 @foreach($configsTop4 as $config)
-                    <div class="col-md-4 img" style="background-image: url('{{asset('storage/'.$config->thumbnail)}}');">
+                    <div class="col-md-4 img"
+                         style="background-image: url('{{asset('storage/'.$config->thumbnail)}}');">
                         <h3 class="text-center">
                             @php
                                 $url = $config->url;
@@ -707,7 +727,8 @@
                             @if($checkShop == true)
                                 <a href="{{route('list.products.shop.show', $value)}}">Go now</a>
                             @else
-                                <a href="{{route('list.products.shop.category.show', ['category' => $value, 'shop' => $item])}}">Go now</a>
+                                <a href="{{route('list.products.shop.category.show', ['category' => $value, 'shop' => $item])}}">Go
+                                    now</a>
                             @endif
                         </h3>
                     </div>
@@ -806,7 +827,8 @@
         <div class="container-fluid mt-2">
             <div class="row">
                 @foreach($configsTop5 as $config)
-                    <div class="col-md-4 img" style="background-image: url('{{asset('storage/'.$config->thumbnail)}}');">
+                    <div class="col-md-4 img"
+                         style="background-image: url('{{asset('storage/'.$config->thumbnail)}}');">
                         <h3 class="text-center">
                             @php
                                 $url = $config->url;
@@ -824,7 +846,8 @@
                             @if($checkShop == true)
                                 <a href="{{route('list.products.shop.show', $value)}}">Go now</a>
                             @else
-                                <a href="{{route('list.products.shop.category.show', ['category' => $value, 'shop' => $item])}}">Go now</a>
+                                <a href="{{route('list.products.shop.category.show', ['category' => $value, 'shop' => $item])}}">Go
+                                    now</a>
                             @endif
                         </h3>
                     </div>
@@ -1126,7 +1149,6 @@
             </div>
         </div>
     </div>
-
     <script>
         let side_cate = document.getElementById('side-cate');
         let carousel_1 = document.getElementById('carousel__1');

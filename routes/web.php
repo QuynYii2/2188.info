@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\ConfigProjectController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CoinController;
@@ -144,13 +145,19 @@ Route::group(['middleware' => 'role.admin'], function () {
     // Các route dành cho super admin
     Route::get('/admin/dashboard', 'AdminController@dashboard');
 //    Route::post('down-permission', [\App\Http\Controllers\PermissionRankController::class, 'downRank'])->name('permission.down.rank');
-    //
+    // Admin Config
     Route::get('/admin/configs', [ConfigProjectController::class, 'index'])->name('admin.configs.show');
     Route::get('/admin/configs/create', [ConfigProjectController::class, 'processCreate'])->name('admin.configs.processCreate');
     Route::post('/admin/configs', [ConfigProjectController::class, 'create'])->name('admin.configs.create');
     Route::get('/admin/configs/{id}', [ConfigProjectController::class, 'detail'])->name('admin.configs.detail');
     Route::put('/admin/configs/{id}', [ConfigProjectController::class, 'update'])->name('admin.configs.update');
     Route::delete('/admin/configs/{id}', [ConfigProjectController::class, 'delete'])->name('admin.configs.delete');
+    // Admin banner
+    Route::get('/admin/banners', [BannerController::class, 'index'])->name('admin.banners.show');
+    Route::get('/admin/banners/create', [BannerController::class, 'processCreate'])->name('admin.banners.processCreate');
+    Route::post('/admin/banners', [BannerController::class, 'create'])->name('admin.banners.create');
+    Route::post('/admin/banners/{id}', [BannerController::class, 'update'])->name('admin.banners.update');
+    Route::delete('/admin/banners/{id}', [BannerController::class, 'delete'])->name('admin.banners.delete');
 
 });
 

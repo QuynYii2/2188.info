@@ -16,26 +16,29 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($configs as $config)
-                <tr>
-                    <th scope="row">{{$loop->index +1}}</th>
-                    <td>{{$config->email}}</td>
-                    <td>{{$config->phone}}</td>
-                    <td>{{$config->address}}</td>
-                    <td>
-                        <img class="img img-100" src="{{ asset('storage/'.$config->logo) }}" alt="Thumbnail">
-                    </td>
-                    <td>{{$config->status}}</td>
-                    <td>
-                        <a href="{{route('admin.configs.detail', $config->id)}}" class="btn btn-secondary">Detail</a>
-                        <form method="post" action="{{route('admin.configs.delete', $config->id)}}">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger" type="submit">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
+            @if(!$configs->isEmpty())
+                @foreach($configs as $config)
+                    <tr>
+                        <th scope="row">{{$loop->index +1}}</th>
+                        <td>{{$config->email}}</td>
+                        <td>{{$config->phone}}</td>
+                        <td>{{$config->address}}</td>
+                        <td>
+                            <img class="img img-100" src="{{ asset('storage/'.$config->logo) }}" alt="Thumbnail">
+                        </td>
+                        <td>{{$config->status}}</td>
+                        <td>
+                            <a href="{{route('admin.configs.detail', $config->id)}}"
+                               class="btn btn-secondary">Detail</a>
+                            <form method="post" action="{{route('admin.configs.delete', $config->id)}}">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            @endif
             </tbody>
         </table>
     </div>

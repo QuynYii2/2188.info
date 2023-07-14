@@ -319,6 +319,17 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="#!"><span>Cài đặt banner</span></a>
+                        <ul class='sub-items'>
+                            <li>
+                                <a href="{{route('admin.banners.show')}}">Danh sách banner</a>
+                            </li>
+                            <li>
+                                <a href="{{route('admin.banners.processCreate')}}">Thiết lập banner mới</a>
+                            </li>
+                        </ul>
+                    </li>
                 @endif
             </ul>
         </li>
