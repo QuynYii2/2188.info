@@ -215,168 +215,170 @@
         <section class="header_bottom">
             <div class="container-fluid" id="nav-header">
                 <div class="row">
-                    <div class="col-lg-3 col-sm-3 col-md-3 col-12 col-xl-2 menu-header not-mobile-button"
-                         id="left-cate">
-                        <nav class="navbar navbar-expand-lg mega-menu-header"
-                             style="padding: 0; width: 100%; align-items: start">
-                            <div class="vertical-menu">
-                                @php
-                                    $listCate = DB::table('categories')->where('parent_id', null)->get();
-                                @endphp
-                                <ul class="navbar-nav" id="side-cate" style="overflow-y: scroll; ">
-                                    @foreach($listCate as $cate)
-                                        <li class="nav-item d-grid ">
-                                            <a class="nav-link text-nowrap text-limit position-relative "
-                                               href="{{ route('category.show', $cate->id) }}">
-                                                <i class="fa fa-laptop" aria-hidden="true"></i>
-                                                {{ $cate->name }}
-                                            </a>
-                                            @if(!$listCate->isEmpty())
-                                                <div class="megamenu">
-                                                    <div class="row">
-                                                        @php
-                                                            $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
-                                                        @endphp
-                                                        @foreach($listChild as $child)
-                                                            <div class="col-sm-4 mt-1 mb-1">
-                                                                <h4>
-                                                                    <a href="{{ route('category.show', $child->id) }}">{{ $child->name }}</a>
-                                                                </h4>
-                                                                <ul>
-                                                                    @php
-                                                                        $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
-                                                                    @endphp
-                                                                    @foreach($listChild2 as $child2)
-                                                                        <li>
-                                                                            <a href="{{ route('category.show', $child2->id) }}">{{ $child2->name }}</a>
-                                                                        </li>
-                                                                    @endforeach
-                                                                </ul>
-                                                            </div>
-                                                        @endforeach
+                    @if($banner)
+                        <div class="col-lg-3 col-sm-3 col-md-3 col-12 col-xl-2 menu-header not-mobile-button"
+                             id="left-cate">
+                            <nav class="navbar navbar-expand-lg mega-menu-header"
+                                 style="padding: 0; width: 100%; align-items: start">
+                                <div class="vertical-menu">
+                                    @php
+                                        $listCate = DB::table('categories')->where('parent_id', null)->get();
+                                    @endphp
+                                    <ul class="navbar-nav" id="side-cate" style="overflow-y: scroll; ">
+                                        @foreach($listCate as $cate)
+                                            <li class="nav-item d-grid ">
+                                                <a class="nav-link text-nowrap text-limit position-relative "
+                                                   href="{{ route('category.show', $cate->id) }}">
+                                                    <i class="fa fa-laptop" aria-hidden="true"></i>
+                                                    {{ $cate->name }}
+                                                </a>
+                                                @if(!$listCate->isEmpty())
+                                                    <div class="megamenu">
+                                                        <div class="row">
+                                                            @php
+                                                                $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
+                                                            @endphp
+                                                            @foreach($listChild as $child)
+                                                                <div class="col-sm-4 mt-1 mb-1">
+                                                                    <h4>
+                                                                        <a href="{{ route('category.show', $child->id) }}">{{ $child->name }}</a>
+                                                                    </h4>
+                                                                    <ul>
+                                                                        @php
+                                                                            $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
+                                                                        @endphp
+                                                                        @foreach($listChild2 as $child2)
+                                                                            <li>
+                                                                                <a href="{{ route('category.show', $child2->id) }}">{{ $child2->name }}</a>
+                                                                            </li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                @endif
+                                            </li>
+                                            <li class="border-bottom"></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-12 col-xl-7 mb-2 not-tablet-button">
+                            @php
+                                $listThumbnailsBanner = $banner->thumbnails;
+                                $arrayBannerThumbnails = explode(',', $listThumbnailsBanner);
+                            @endphp
+                            <section class="slider-section">
+                                <div class="carousel slide" data-ride="carousel">
+                                    <div class="carousel-inner mt-1" id="carousel__1" role="listbox">
+                                        @for($i = 0; $i<count($arrayBannerThumbnails); $i++)
+                                            <div class="carousel-item active img-banner-1 img height-banner"
+                                                 id="bannerTest[{{$i}}]"
+                                                 style="background-image: url('{{asset('storage/'.$arrayBannerThumbnails[$i])}}');">
+                                            </div>
+                                            <!-- Previous & Next -->
+                                            @if($i==0)
+                                                <a href="#bannerTest[{{count($arrayBannerThumbnails)-1}}]"
+                                                   class="carousel-control-prev" role="button" data-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only"></span>
+                                                </a>
+                                            @else
+                                                <a href="#bannerTest[{{$i-1}}]" class="carousel-control-prev" role="button"
+                                                   data-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only"></span>
+                                                </a>
                                             @endif
-                                        </li>
-                                        <li class="border-bottom"></li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </nav>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-12 col-xl-7 mb-2 not-tablet-button">
-                        @php
-                            $listThumbnailsBanner = $banner->thumbnails;
-                            $arrayBannerThumbnails = explode(',', $listThumbnailsBanner);
-                        @endphp
-                        <section class="slider-section">
-                            <div class="carousel slide" data-ride="carousel">
-                                <div class="carousel-inner mt-1" id="carousel__1" role="listbox">
-                                    @for($i = 0; $i<count($arrayBannerThumbnails); $i++)
-                                        <div class="carousel-item active img-banner-1 img height-banner"
-                                             id="bannerTest[{{$i}}]"
-                                             style="background-image: url('{{asset('storage/'.$arrayBannerThumbnails[$i])}}');">
-                                        </div>
-                                        <!-- Previous & Next -->
-                                        @if($i==0)
-                                            <a href="#bannerTest[{{count($arrayBannerThumbnails)-1}}]"
-                                               class="carousel-control-prev" role="button" data-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="sr-only"></span>
-                                            </a>
-                                        @else
-                                            <a href="#bannerTest[{{$i-1}}]" class="carousel-control-prev" role="button"
+                                            @if($i==count($arrayBannerThumbnails)-1)
+                                                <a href="#bannerTest[0]" class="carousel-control-next" role="button"
+                                                   data-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only"></span>
+                                                </a>
+                                            @else
+                                                <a href="#bannerTest[{{$i+1}}]" class="carousel-control-next" role="button"
+                                                   data-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only"></span>
+                                                </a>
+                                            @endif
+                                        @endfor
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-12 mt-2 menu-bottom not-tablet-button" id="mini-img">
+                            @php
+                                $sub_thumbnails = $banner->sub_thumbnails;
+                                $sub_thumbnails = explode(',', $sub_thumbnails);
+                            @endphp
+                            @for($i = 0; $i<count($sub_thumbnails); $i++)
+                                <div class="single-banner mb-3">
+                                    <img class="img" src="{{ asset('storage/'.$sub_thumbnails[$i]) }}"
+                                         alt=""
+                                         height="100%">
+                                </div>
+                            @endfor
+                        </div>
+                        <div class="col-lg-9 col-sm-9 col-md-9 col-12 col-xl-10 tablet-button">
+                            <div class="row" id="carousel__2">
+                                <div class="col-lg-8 col-sm-12 col-md-12 col-12 col-xl-7 ">
+                                    @php
+                                        $listThumbnailsBanner = $banner->thumbnails;
+                                        $arrayBannerThumbnails = explode(',', $listThumbnailsBanner);
+                                    @endphp
+                                    <section class="slider-section">
+                                        <div id="carousel2" class="carousel slide" data-ride="carousel">
+                                            <div class="carousel-inner mt-1" role="listbox">
+                                                @for($i = 0; $i<count($arrayBannerThumbnails); $i++)
+                                                    <div class="carousel-item active img-banner-1 img height-banner"
+                                                         style="background-image: url('{{asset('storage/'.$arrayBannerThumbnails[$i])}}');">
+                                                    </div>
+                                                @endfor
+                                            </div>
+                                            <a href="#carousel2" class="carousel-control-prev" role="button"
                                                data-slide="prev">
                                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                                 <span class="sr-only"></span>
                                             </a>
-                                        @endif
-                                        @if($i==count($arrayBannerThumbnails)-1)
-                                            <a href="#bannerTest[0]" class="carousel-control-next" role="button"
+                                            <a href="#carousel2" class="carousel-control-next" role="button"
                                                data-slide="next">
                                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                                 <span class="sr-only"></span>
                                             </a>
-                                        @else
-                                            <a href="#bannerTest[{{$i+1}}]" class="carousel-control-next" role="button"
-                                               data-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="sr-only"></span>
-                                            </a>
-                                        @endif
-                                    @endfor
+                                        </div>
+                                    </section>
                                 </div>
-                            </div>
-                        </section>
-                    </div>
-                    <div class="col-lg-3 col-md-3 col-12 mt-2 menu-bottom not-tablet-button" id="mini-img">
-                        @php
-                            $sub_thumbnails = $banner->sub_thumbnails;
-                            $sub_thumbnails = explode(',', $sub_thumbnails);
-                        @endphp
-                        @for($i = 0; $i<count($sub_thumbnails); $i++)
-                            <div class="single-banner mb-3">
-                                <img class="img" src="{{ asset('storage/'.$sub_thumbnails[$i]) }}"
-                                     alt=""
-                                     height="100%">
-                            </div>
-                        @endfor
-                    </div>
-                    <div class="col-lg-9 col-sm-9 col-md-9 col-12 col-xl-10 tablet-button">
-                        <div class="row" id="carousel__2">
-                            <div class="col-lg-8 col-sm-12 col-md-12 col-12 col-xl-7 ">
-                                @php
-                                    $listThumbnailsBanner = $banner->thumbnails;
-                                    $arrayBannerThumbnails = explode(',', $listThumbnailsBanner);
-                                @endphp
-                                <section class="slider-section">
-                                    <div id="carousel2" class="carousel slide" data-ride="carousel">
-                                        <div class="carousel-inner mt-1" role="listbox">
-                                            @for($i = 0; $i<count($arrayBannerThumbnails); $i++)
-                                                <div class="carousel-item active img-banner-1 img height-banner"
-                                                     style="background-image: url('{{asset('storage/'.$arrayBannerThumbnails[$i])}}');">
-                                                </div>
-                                            @endfor
+                                <div class="col-md-12 col-sm-12 mt-2">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="">
+                                                <img class="img"
+                                                     src="{{asset('images/img/Screenshot 2023-05-26 at 2.14.36 AM.png')}}"
+                                                     alt=""
+                                                     height="100%">
+                                            </div>
                                         </div>
-                                        <a href="#carousel2" class="carousel-control-prev" role="button"
-                                           data-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="sr-only"></span>
-                                        </a>
-                                        <a href="#carousel2" class="carousel-control-next" role="button"
-                                           data-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="sr-only"></span>
-                                        </a>
-                                    </div>
-                                </section>
-                            </div>
-                            <div class="col-md-12 col-sm-12 mt-2">
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <div class="">
-                                            <img class="img"
-                                                 src="{{asset('images/img/Screenshot 2023-05-26 at 2.14.36 AM.png')}}"
-                                                 alt=""
-                                                 height="100%">
+                                        <div class="col-sm-4">
+                                            <div class="">
+                                                <img class="img" src="{{asset('images/img/banner_sidebar1.jpeg')}}" alt=""
+                                                     height="100%">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="">
-                                            <img class="img" src="{{asset('images/img/banner_sidebar1.jpeg')}}" alt=""
-                                                 height="100%">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="">
-                                            <img class="img" src="{{asset('images/img/banner_sidebar2.png')}}" alt=""
-                                                 height="100%">
+                                        <div class="col-sm-4">
+                                            <div class="">
+                                                <img class="img" src="{{asset('images/img/banner_sidebar2.png')}}" alt=""
+                                                     height="100%">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
         </section>
