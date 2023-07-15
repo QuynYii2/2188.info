@@ -1,27 +1,29 @@
 @php
-    $config = \App\Models\ConfigProject::orderBy('created_at', 'desc')->limit(1)->get();
+    $config = \App\Models\ConfigProject::where('status', \App\Enums\ConfigProjectStatus::ACTIVE)->orderBy('created_at', 'desc')->limit(1)->get();
 @endphp
 <!-- Footer Section Begin -->
 <footer class="footer-section">
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-sm-6">
-                <div class="footer-left">
-                    <div class="footer-logo">
-                        <a href="#"><img class="img" src="{{ asset('storage/'.$config[0]->logo) }}" alt=""></a>
+                @if(!$config->isEmpty())
+                    <div class="footer-left">
+                        <div class="footer-logo">
+                            <a href="#"><img class="img" src="{{ asset('storage/'.$config[0]->logo) }}" alt=""></a>
+                        </div>
+                        <ul>
+                            <li>Address: {{$config[0]->address}}.</li>
+                            <li>Phone: {{$config[0]->phone}}</li>
+                            <li>Email: {{$config[0]->email}}</li>
+                        </ul>
+                        <div class="footer-social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-share"></i></a>
+                        </div>
                     </div>
-                    <ul>
-                        <li>Address: {{$config[0]->address}}.</li>
-                        <li>Phone: {{$config[0]->phone}}</li>
-                        <li>Email: {{$config[0]->email}}</li>
-                    </ul>
-                    <div class="footer-social">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-instagram"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-share"></i></a>
-                    </div>
-                </div>
+                @endif
             </div>
             <div class="col-lg-2 offset-lg-1 col-sm-6">
                 <div class="footer-widget">

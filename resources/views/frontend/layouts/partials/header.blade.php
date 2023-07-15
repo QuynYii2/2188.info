@@ -347,7 +347,7 @@
 
 </style>
 @php
-    $config = \App\Models\ConfigProject::orderBy('created_at', 'desc')->limit(1)->get();
+    $config = \App\Models\ConfigProject::where('status', \App\Enums\ConfigProjectStatus::ACTIVE)->orderBy('created_at', 'desc')->limit(1)->get();
 @endphp
 <header>
     <div class="header-top align-items-center justify-content-between row"
@@ -355,16 +355,18 @@
         <div class="container">
             <div style="float: left">
                 <div class="ht-left">
-                    <div class="desktop-button">
-                        <div class="mail-service">
-                            <i class=" fa fa-envelope"></i>
-                            {{$config[0]->email}}
+                    @if(!$config->isEmpty())
+                        <div class="desktop-button">
+                            <div class="mail-service">
+                                <i class=" fa fa-envelope"></i>
+                                {{$config[0]->email}}
+                            </div>
+                            <div class="phone-service">
+                                <i class=" fa fa-phone"></i>
+                                {{$config[0]->phone}}
+                            </div>
                         </div>
-                        <div class="phone-service">
-                            <i class=" fa fa-phone"></i>
-                            {{$config[0]->phone}}
-                        </div>
-                    </div>
+                    @endif
                 </div>
             </div>
             <div class="mobile-button m-2">
@@ -482,22 +484,25 @@
             </div>
         </div>
     </div>
-    <div class="position-relative" id="popup-alert" >
+    <div class="position-relative" id="popup-alert">
         <div class="col-md-2 position-fixed" style="z-index: 100; top: 0">
             <div class="alert">
                 <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                <strong>Hello world!</strong> <a class="text-decoration-none text-white" href="{{route('promotions.index')}}">Review now</a>.
+                <strong>Hello world!</strong> <a class="text-decoration-none text-white"
+                                                 href="{{route('promotions.index')}}">Review now</a>.
             </div>
         </div>
     </div>
     <div class="inner-header container">
         <div class="row not-mobile-button my-2">
             <div class="col-lg-2 col-md-2 col-12 col-sm-2">
-                <div class="logo">
-                    <a href="{{route('home')}}">
-                        <img src="{{ asset('storage/'.$config[0]->logo) }}" alt="">
-                    </a>
-                </div>
+                @if(!$config->isEmpty())
+                    <div class="logo">
+                        <a href="{{route('home')}}">
+                            <img src="{{ asset('storage/'.$config[0]->logo) }}" alt="">
+                        </a>
+                    </div>
+                @endif
             </div>
             <div class="col-md-7 col-12" id="in-search">
                 <form class="search-wrapper cf">

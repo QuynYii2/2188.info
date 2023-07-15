@@ -18,11 +18,12 @@ class CheckAdminRole
      */
     public function handle(Request $request, Closure $next)
     {
-        $isAdmin = (new HomeController())->checkAdmin();
-        if ($isAdmin == true) {
-            return $next($request);
-        }
-
+       if (Auth::check()){
+           $isAdmin = (new HomeController())->checkAdmin();
+           if ($isAdmin == true) {
+               return $next($request);
+           }
+       }
         abort(403, 'Unauthorized');
     }
 }

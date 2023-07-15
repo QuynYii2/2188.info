@@ -117,7 +117,7 @@
         ->where([['user_id', Auth::user()->id], ['role_id', 1]])
         ->get();
     } else {
-        $roleUsers = null;
+        $roleUsers[] = null;
     }
 
     use Illuminate\Support\Facades\Auth;
@@ -130,7 +130,7 @@
         ->select('permissions.*')
         ->get();
     } else {
-        $permissionUsers[]= null;
+        $permissionUsers= null;
     }
 
 @endphp
@@ -267,9 +267,11 @@
                 @endif
                 @php
                     $check = true;
-                    $rank = \App\Models\RankSetUpSeller::where('user_id', Auth::user()->id)->first();
+                    if (Auth::check()){
+                        $rank = \App\Models\RankSetUpSeller::where('user_id', Auth::user()->id)->first();
                     if ($rank){
                         $check = false;
+                    }
                     }
                 @endphp
                 <li>
@@ -291,22 +293,24 @@
                         @endif
                     </ul>
                 </li>
-                @for($i = 0; $i< count($permissionUsers); $i++)
-                    @if($permissionUsers[$i]->name == 'Nâng cấp thành top-seller' || sizeof($roleUsers) != 0)
-                        <li>
-                            <a href="#!"><span>Marketing</span></a>
-                            <ul class='sub-items'>
-                                <li>
-                                    <a href="{{route('seller.config.show')}}">Quản lí marketing</a>
-                                </li>
+                @if($permissionUsers)
+                    @for($i = 0; $i< count($permissionUsers); $i++)
+                        @if($permissionUsers[$i]->name == 'Nâng cấp thành top-seller' || sizeof($roleUsers) != 0)
+                            <li>
+                                <a href="#!"><span>Marketing</span></a>
+                                <ul class='sub-items'>
+                                    <li>
+                                        <a href="{{route('seller.config.show')}}">Quản lí marketing</a>
+                                    </li>
                                     <li>
                                         <a href="{{route('seller.config.processCreate')}}">Tạo mới marketing</a>
                                     </li>
-                            </ul>
-                        </li>
-                        @break
-                    @endif
-                @endfor
+                                </ul>
+                            </li>
+                            @break
+                        @endif
+                    @endfor
+                @endif
                 @if(sizeof($roleUsers) != 0)
                     <li>
                         <a href="#!"><span>Cấu hình dự án</span></a>
