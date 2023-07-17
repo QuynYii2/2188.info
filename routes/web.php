@@ -24,6 +24,7 @@ use App\Http\Controllers\Seller\ProductController;
 use App\Http\Controllers\Seller\PropertiesController;
 use App\Http\Controllers\Seller\RankUserSellerController;
 use App\Http\Controllers\Seller\SellerEvaluateProductController;
+use App\Http\Controllers\Seller\StaffController;
 use App\Http\Controllers\Seller\StorageController;
 use App\Http\Controllers\Seller\TopSellerConfigController;
 use App\Http\Controllers\SocialController;
@@ -234,6 +235,13 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::get('/account-manage/delete/{id}', [AccountController::class, 'destroy'])->name('account.delete');
     Route::get('/account-manage/view/{id}', [AccountController::class, 'show'])->name('account.show.shop');
     Route::get('/account-manage/view-cart/{id}', [AccountController::class, 'viewCart'])->name('account.show.order');
+
+    //quản lý tài khoản cấp dưới
+    Route::get('/staff-manage', [StaffController::class, 'index'])->name('staff.manage.show');
+    Route::get('/staff-manage/create', [StaffController::class, 'create'])->name('staff.manage.create');
+    Route::get('/staff-manage/edit/{id}', [StaffController::class, 'edit'])->name('staff.manage.edit');
+    Route::post('/staff-manage/update/{id}', [StaffController::class, 'update'])->name('staff.manage.update');
+    Route::post('/staff-manage/store', [StaffController::class, 'store'])->name('staff.manage.store');
 
     //Quản lý kho hàng
     Route::get('/storage-manage-user', [StorageController::class, 'index'])->name('storage.manage.show.user');
