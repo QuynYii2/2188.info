@@ -58,6 +58,8 @@ class HomeController extends Controller
         $productByJp = Product::where('location', 'jp')->limit(10)->get();
         $productByCn = Product::where('location', 'cn')->limit(10)->get();
 
+        $newProducts = Product::orderBy('created_at','desc')->limit(10)->get();
+
         $permissionHot = Permission::where('name', 'Nâng cấp sản phẩm hot')->first();
         $permissionSellerHots = DB::table('permission_user')->where('permission_id', $permissionHot->id)->get();
         $productHots = [];
@@ -130,6 +132,7 @@ class HomeController extends Controller
             'configsTop4' => $configsTop4,
             'configsTop5' => $configsTop5,
             'banner' => $banner,
+            'newProducts' => $newProducts,
         ]);
     }
 
