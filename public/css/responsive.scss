@@ -1,0 +1,328 @@
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  //HEADER
+  .header{
+    .header-pc{
+      display: block;
+    }
+    .header-mobile{
+      display: none;
+    }
+
+  }
+  .body{
+    .section-First{
+      &-hd{
+        display: block;
+      }
+      &-mobile{
+        display: none;
+      }
+    }
+  }
+
+}
+
+
+@media (max-width: 992px) {
+  .header{
+    .header-pc{
+      display: none;
+      .header-top-left{
+        .header-logo{
+          padding-right: 10px;
+          img{
+            width: 100%;
+          }
+        }
+      }
+    }
+    .header-mobile{
+      display: block;
+    }
+
+  }
+  .body{
+
+    .section-First{
+      &-hd{
+        display: none;
+      }
+      &-mobile{
+        display: block;
+      }
+      &-left{
+        order: 3;
+        .content{
+          font-size: 15px;
+        }
+        hr{
+          height: 2.5px;
+        }
+        .list{
+          display: flex;
+          overflow-x: auto;
+          .item{
+            padding: 10px 25px;
+            border: none;
+          }
+        }
+      }
+      &-middle{
+        height: 100%;
+        order: 1;
+      }
+      &-right{
+        padding: 0;
+        order: 2;
+        .item{
+          margin: 0;
+          img{
+            width: 150px;
+            height: 150px;
+          }
+        }
+      }
+    }
+    .section-Second{
+      img{
+        width: 90%;
+      }
+    }
+  }
+}
+@media (max-width: 768px) {
+  //HEADER
+  .header{
+    .header-pc{
+      .header-top-left{
+        .header-logo{
+          img{
+            width: 120px;
+          }
+        }
+      }
+    }
+    .header-mobile{
+    }
+
+  }
+}
+@media (max-width: 576px) {
+  .container-fluid{
+    padding: 0 10px;
+  }
+  .body{
+    .section{
+      .content{
+      }
+      .item{
+        &-img{
+          img{
+            width: 100%;
+          }
+          .button-view{
+            a{
+              padding: 8px 15px;
+              border-radius: 50px;
+              background-color: #fff;
+              &:hover{
+                color: white;
+
+              }
+            }
+          }
+          .text{
+            &-sale{
+              font-size: 17px;
+              border-radius: 5px;
+              color: #e10600;
+              background: #ffd8d7;
+              padding: 0 10px;
+              margin-bottom: 5px;
+            }
+            &-new{
+              font-size: 17px;
+              border-radius: 5px;
+              color: #0a6cdc;
+              background: #d2e7ff;
+              padding: 0 10px;
+            }
+            &-bundle{
+              font-size: 17px;
+              border-radius: 5px;
+              color: #43b200;
+              background: #d7ffd2;
+              padding: 0 10px;
+            }
+          }
+          &:hover{
+            .button-view{
+              display: block;
+              a{
+                text-decoration: none;
+              }
+            }
+          }
+        }
+        &-body{
+          .card-rating{
+            span{
+              color: rgba(32,32,32,.6);
+            }
+          }
+          .card-brand{
+            color: gray;
+            font-size: 14px;
+            margin: 5px 0;
+          }
+          .card-title{
+            a{
+              font-size: 18px;
+            }
+            &:hover{
+              a{
+                text-decoration: underline;
+                color: #0a6cdc;
+              }
+
+            }
+
+          }
+          .card-price{
+            font-size: 18px;
+            margin: 10px 0;
+            .price-sale{
+              color: #e10600;
+            }
+            .price-cost{
+            }
+          }
+          .card-bottom{
+            &--left{
+              height: 40px;
+              border-radius: 20px 20px 20px 20px;
+              border: 1px solid black;
+              line-height: 34px;
+              a{
+                padding: 0 15px;
+                font-weight: 600;
+                font-size: 16px;
+              }
+              &:hover{
+                border: white;
+                a{
+                  text-decoration: none;
+                  color: white;
+                }
+              }
+            }
+            &--right{
+              i{
+                font-size: 21px;
+              }
+              &:hover{
+                border: white;
+                i{
+                  color: white;
+                }
+              }
+
+            }
+          }
+        }
+        &:hover{
+          .card-bottom--right{
+            display: block;
+          }
+        }
+      }
+      &-left{
+        img{
+          width: 100%;
+          height: 100%;
+          border-radius: 10px;
+        }
+      }
+      .brand-item{
+        &-text{
+          .name{
+          }
+          a{
+            &:hover{
+            }
+          }
+        }
+        &-img{
+          img{
+            width: 50px;
+          }
+        }
+        &:hover{
+          box-shadow: 0 3px 8px 0 rgba(0,0,0,.2);
+        }
+        &--all{
+          margin: auto;
+          a{
+            font-size: 17px;
+            &:hover{
+              color: #0a6cdc;
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+    .section-First{
+      .swiper-button-next{
+        display: none;
+      }
+      .swiper-button-prev{
+        display: none;
+      }
+      &-middle{
+        height: 100%;
+        margin-bottom: 10px;
+        padding: 0;
+      }
+    }
+    .section-Second{
+      img{
+        width: 100%;
+      }
+    }.section-Third{
+       .swiper-button-next{
+         display: none;
+       }
+       .swiper-button-prev{
+         display: none;
+       }
+       .swiper-pagination{
+         margin-top: 10px;
+       }
+       .swiper-slide{
+         .img{
+           img{
+             width: 130px;
+             height: 130px;
+           }
+         }
+         .text{
+           font-size: 16px;
+         }
+       }
+     }
+  }
+}
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+
+}
