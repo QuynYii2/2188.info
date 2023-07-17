@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\PermissionUserStatus;
+use App\Enums\RegisterMember;
 use App\Enums\StatisticStatus;
 use App\Enums\UserStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Libraries\GeoIP;
+use App\Models\Category;
+use App\Models\MemberRegisterInfo;
 use App\Models\Permission;
 use App\Models\StatisticAccess;
 use App\Models\User;
@@ -193,16 +197,95 @@ class AuthController extends Controller
     public function processRegisterMember(Request $request)
     {
         (new HomeController())->getLocale($request);
-        if (Auth::check()) {
-            return redirect()->route('home');
-        } else {
-            return view('frontend/pages/member-register');
+        return view('frontend/pages/registerMember/member-register');
+    }
+
+    public function showRegisterMember($registerMember, Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        return view('frontend/pages/registerMember/show-register-member', compact('registerMember'));
+    }
+
+    public function showRegisterMemberInfo($registerMember, Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $categories = Category::all();
+        return view('frontend/pages/registerMember/show-register-member-info', compact(
+            'registerMember',
+            'categories'
+        ));
+    }
+
+    public function showRegisterMemberPerson($member, $registerMember, Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        return view('frontend/pages/registerMember/show-register-member-person', compact(
+            'registerMember',
+            'member'
+        ));
+    }
+
+    public function registerMemberInfo(Request $request)
+    {
+        try {
+            $companyName = $request->input('companyName');
+            $numberBusiness = $request->input('numberBusiness');
+            $codeBusiness = $request->input('codeBusiness');
+            $phoneNumber = $request->input('phoneNumber');
+            $fax = $request->input('fax');
+            $type = $request->input('type');
+            $address = $request->input('address');
+            $registerMember = $request->input('member');
+
+            $arrayIds = $this->getArrayIds($request);
+            try {
+                $listIDs = implode(',', $arrayIds);
+            } catch (\Exception $exception) {
+                alert()->error('Error', 'Error, Please choosing your apply!');
+                return back();
+            }
+
+            $create = [
+                'user_id' => Auth::user()->id,
+                'name' => $companyName,
+                'phone' => $phoneNumber,
+                'fax' => $fax,
+                'code_fax' => $fax,
+                'category_id' => $listIDs,
+                'code_business' => $codeBusiness,
+                'number_business' => $numberBusiness,
+                'type_business' => $type,
+                'member' => $registerMember,
+                'address' => $address,
+                'status' => MemberRegisterInfoStatus::INACTIVE
+            ];
+
+            $success = MemberRegisterInfo::create($create);
+            $newUser = MemberRegisterInfo::where([
+                ['user_id', Auth::user()->id],
+                ['member', $registerMember],
+            ])->orderBy('created_at', 'desc')->first();
+            if ($success) {
+                alert()->success('Success', 'Success, Create success! Please continue next steps');
+                return redirect(route('show.register.member.person.source', [
+                    'member_id' => $newUser->id,
+                    'registerMember' => $registerMember
+                ]));
+            }
+            alert()->error('Error', 'Error, Create error!');
+            return back();
+        } catch (\Exception $exception) {
+
+            alert()->error('Error', 'Error, Please try again!');
+            return back();
         }
     }
+
     public function registerMember(Request $request)
     {
 
     }
+
     // End register member
     public function logout(Request $request)
     {
@@ -210,5 +293,34 @@ class AuthController extends Controller
         Session::forget('login');
 
         return redirect('/');
+    }
+
+    private function getArrayIds(Request $request)
+    {
+        $listCategoryName[] = null;
+        $arrayIds = null;
+        $categories = Category::all();
+        foreach ($categories as $category) {
+            $name = 'category-' . $category->id;
+            $listCategoryName[] = $name;
+        }
+        if ($listCategoryName != null) {
+            $listValues = null;
+            for ($i = 0; $i < count($listCategoryName); $i++) {
+                $listValues[] = $request->input($listCategoryName[$i]);
+            }
+            if ($listValues != null) {
+                for ($i = 1; $i < count($listValues); $i++) {
+                    if ($listValues[$i] != null) {
+                        $arrayIds[] = $listValues[$i];
+                    }
+                }
+            }
+        }
+        if ($arrayIds == null) {
+            alert()->error('Error', 'Error, Please choosing your apply!');
+            return back();
+        }
+        return $arrayIds;
     }
 }

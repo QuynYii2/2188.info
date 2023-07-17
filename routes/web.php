@@ -74,7 +74,11 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/register/', [HomeController::class, 'register'])->name('register.show');
 // Register member
 Route::get('/register-member', [AuthController::class, 'processRegisterMember'])->name('process.register.member');
-Route::post('/register-member', [AuthController::class, 'registerMember'])->name('register.member');
+Route::get('/register-member/{registerMember}', [AuthController::class, 'showRegisterMember'])->name('show.register.member');
+Route::get('/register-member-info/{registerMember}', [AuthController::class, 'showRegisterMemberInfo'])->name('show.register.member.info');
+Route::get('/register-member-person-source/{member_id}/{registerMember}', [AuthController::class, 'showRegisterMemberPerson'])->name('show.register.member.person.source');
+//Route::get('/register-member/{registerMember}', [AuthController::class, 'showRegisterMember'])->name('show.register.member');
+Route::post('/register-member-info', [AuthController::class, 'registerMemberInfo'])->name('register.member.info');
 
 Route::middleware('auth.product')->group(function () {
     // Các tuyến đường sản phẩm ở đây
