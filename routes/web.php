@@ -72,6 +72,9 @@ Route::get('/callback/kakaotalk', [SocialController::class, 'callbackKakaotalk']
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/register/', [HomeController::class, 'register'])->name('register.show');
+// Register member
+Route::get('/register-member', [AuthController::class, 'processRegisterMember'])->name('process.register.member');
+Route::post('/register-member', [AuthController::class, 'registerMember'])->name('register.member');
 
 Route::middleware('auth.product')->group(function () {
     // Các tuyến đường sản phẩm ở đây

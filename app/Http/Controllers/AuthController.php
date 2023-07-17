@@ -189,6 +189,21 @@ class AuthController extends Controller
         }
     }
 
+    //Register member
+    public function processRegisterMember(Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        if (Auth::check()) {
+            return redirect()->route('home');
+        } else {
+            return view('frontend/pages/member-register');
+        }
+    }
+    public function registerMember(Request $request)
+    {
+
+    }
+    // End register member
     public function logout(Request $request)
     {
         Auth::logout();
