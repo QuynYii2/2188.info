@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Enums\AttributeProductStatus;
 use App\Enums\EvaluateProductStatus;
+use App\Enums\ProductInterestedStatus;
 use App\Enums\PromotionStatus;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\EvaluateProduct;
 use App\Models\Product;
+use App\Models\ProductInterested;
 use App\Models\ProductViewed;
 use App\Models\Promotion;
 use App\Models\Voucher;
@@ -107,5 +109,42 @@ class ProductController extends Controller
         $product->views = $product->views + 1;
         $product->save();
         return $product;
+    }
+
+    // Products by language
+    public function listProductsByLanguage(Request $request, $locale)
+    {
+        (new HomeController())->getLocale($request);
+        $merge_products = null;
+        $productInterested = ProductInterested::where([['user_id', Auth::user()->id], ['status', ProductInterestedStatus::ACTIVE]])->first();
+        $arrayShopsIDs = null;
+        $arrayCategoryIDs = null;
+        if ($productInterested) {
+            $listCategoryIDs = $productInterested->categories_id;
+            $arrayCategoryIDs = explode(',', $listCategoryIDs);
+            if ($arrayCategoryIDs != null) {
+                foreach ($arrayCategoryIDs as $categoryID) {
+                    $products = null;
+                    $products = Product::where([
+                        ['location', $locale],
+                        ['category_id', $categoryID]
+                    ])->get();
+                    foreach ($products as $product) {
+                        $arrayShopsIDs[] = $product->user_id;
+                        $arrayShopsIDs = array_unique($arrayShopsIDs);
+                    }
+                    if (!$products->isEmpty()) {
+                        $merge_products[] = $products;
+                    }
+                }
+            }
+        }
+        $products = $merge_products;
+        return view('frontend.pages.productsLanguage.products', compact(
+            'products',
+            'locale',
+            'arrayCategoryIDs',
+            'arrayShopsIDs',
+        ));
     }
 }
