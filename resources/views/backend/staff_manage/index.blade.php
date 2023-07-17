@@ -161,6 +161,7 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Status</th>
+                    <th>Create By</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -169,6 +170,7 @@
 
                     @php
                     $user = \App\Models\User::where('id', $users->user_id)->first();
+                    $parentUser = \App\Models\User::where('id', $users->parent_user_id)->first('name');
                     @endphp
                     <tr>
                         <td>{{ $user->id }}</td>
@@ -182,11 +184,10 @@
                             @else
                                 <span class="status text-danger">&bull;</span>{{ $user->status }}
                             @endif</td>
+                        <td>{{ $users->parent_user_id . ' - ' . $parentUser->name }}</td>
                         <td>
-                            <a href="{{ route('account.delete', $user->id) }}" class="delete" onclick="return confirmDelete()" title="Delete" data-toggle="tooltip"><i
+                            <a href="{{ route('staff.manage.delete', $user->id) }}" class="delete" onclick="return confirmDelete()" title="Delete" data-toggle="tooltip"><i
                                         class="material-icons">&#xE5C9;</i></a>
-                            <a href="{{ route('account.lock', $user->id) }}" class="settings" title="Lock" data-toggle="tooltip"><i
-                                        class="material-icons">&#xe897;</i></a>
                         </td>
                     </tr>
                 @endforeach

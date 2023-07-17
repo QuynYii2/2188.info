@@ -244,6 +244,7 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::get('/staff-manage/edit/{id}', [StaffController::class, 'edit'])->name('staff.manage.edit');
     Route::post('/staff-manage/update/{id}', [StaffController::class, 'update'])->name('staff.manage.update');
     Route::post('/staff-manage/store', [StaffController::class, 'store'])->name('staff.manage.store');
+    Route::get('/staff-manage/delete/{id}', [StaffController::class, 'destroy'])->name('staff.manage.delete');
 
     //Quản lý kho hàng
     Route::get('/storage-manage-user', [StorageController::class, 'index'])->name('storage.manage.show.user');

@@ -254,6 +254,10 @@ class StaffController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $userS = StaffUsers::where([['user_id', '=', $id]])->first();
+        $userS->delete();
+        $user = User::where([['id', '=', $id]])->first();
+        $user->type_account = 'buyer';
+        return $this->index();
     }
 }
