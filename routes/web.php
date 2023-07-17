@@ -81,6 +81,8 @@ Route::middleware('auth.product')->group(function () {
 Route::get('/detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
 Route::get('/detail-product/{id}', [\App\Http\Controllers\ProductController::class, 'detailProduct'])->name('detail_product.api');
 Route::get('/category/{id}', [\App\Http\Controllers\CategoryController::class, 'category'])->name('category.show');
+// Products by location
+Route::get('/products/location/{locale}', [\App\Http\Controllers\ProductController::class, 'listProductsByLanguage'])->name('list.products.show.location');
 // Config
 Route::get('/products-shop/{id}', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByShops'])->name('list.products.shop.show');
 Route::get('/products-shop-category/{category}/{shop}', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByCategoryAndShops'])->name('list.products.shop.category.show');
