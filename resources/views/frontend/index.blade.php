@@ -1049,9 +1049,9 @@
             </p>
             <button onclick="myFunction()" id="myBtn">Show More</button>
         </section>
-        <section>
-            <div >
-                <img class="img" src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/bg-with-us2.jpg" alt="">
+        <section class="section-Eight">
+            <img class="img" src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/bg-with-us2.jpg" alt="">
+            <div class="">
                 <div class="content">
                     Why shop with us?
                 </div>
