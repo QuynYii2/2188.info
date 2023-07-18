@@ -2,13 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CoinStatus;
+use App\Enums\MemberRegisterInfoStatus;
+use App\Enums\MemberRegisterPersonSourceStatus;
+use App\Enums\MemberRegisterType;
 use App\Enums\PermissionUserStatus;
+use App\Enums\RegisterMember;
 use App\Enums\StatisticStatus;
 use App\Enums\UserStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Libraries\GeoIP;
+use App\Models\Category;
+use App\Models\Coin;
+use App\Models\MemberRegisterInfo;
+use App\Models\MemberRegisterPersonSource;
 use App\Models\Permission;
 use App\Models\StatisticAccess;
+use App\Models\TopSellerConfig;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -189,11 +199,399 @@ class AuthController extends Controller
         }
     }
 
+    //Register member
+
+    /*Show all hội viên*/
+    public function processRegisterMember(Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        return view('frontend/pages/registerMember/member-register');
+    }
+
+    /*Show form đồng ý điều khoản và điều kiện*/
+    public function showRegisterMember($registerMember, Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        return view('frontend/pages/registerMember/show-register-member', compact('registerMember'));
+    }
+
+    /*Show form đăng kí thông tin hội viên*/
+    public function showRegisterMemberInfo($registerMember, Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $categories = Category::all();
+        return view('frontend/pages/registerMember/show-register-member-info', compact(
+            'registerMember',
+            'categories'
+        ));
+    }
+
+    /*Show form đăng kí thông tin người đăng kí*/
+    public function showRegisterMemberPerson($member, $registerMember, Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        return view('frontend/pages/registerMember/show-register-member-person', compact(
+            'registerMember',
+            'member'
+        ));
+    }
+
+    /*Đăng kí thông tin hội viên*/
+    public function registerMemberInfo(Request $request)
+    {
+        try {
+            $companyName = $request->input('companyName');
+            $numberBusiness = $request->input('numberBusiness');
+            $codeBusiness = $request->input('codeBusiness');
+            $phoneNumber = $request->input('phoneNumber');
+            $fax = $request->input('fax');
+            $type = $request->input('type');
+            $address = $request->input('address');
+            $registerMember = $request->input('member');
+
+            $arrayIds = $this->getArrayIds($request);
+            try {
+                $listIDs = implode(',', $arrayIds);
+            } catch (\Exception $exception) {
+                alert()->error('Error', 'Error, Please choosing your apply!');
+                return back();
+            }
+
+            $create = [
+                'user_id' => Auth::user()->id,
+                'name' => $companyName,
+                'phone' => $phoneNumber,
+                'fax' => $fax,
+                'code_fax' => $fax,
+                'category_id' => $listIDs,
+                'code_business' => $codeBusiness,
+                'number_business' => $numberBusiness,
+                'type_business' => $type,
+                'member' => $registerMember,
+                'address' => $address,
+                'status' => MemberRegisterInfoStatus::INACTIVE
+            ];
+
+            $success = MemberRegisterInfo::create($create);
+            $newUser = MemberRegisterInfo::where([
+                ['user_id', Auth::user()->id],
+                ['member', $registerMember],
+            ])->orderBy('created_at', 'desc')->first();
+            if ($success) {
+                alert()->success('Success', 'Success, Create success! Please continue next steps');
+                return redirect(route('show.register.member.person.source', [
+                    'member_id' => $newUser->id,
+                    'registerMember' => $registerMember
+                ]));
+            }
+            alert()->error('Error', 'Error, Create error!');
+            return back();
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error, Please try again!');
+            return back();
+        }
+    }
+
+    /*Đăng kí thông tin người đăng kí*/
+    public function registerMemberPerson(Request $request)
+    {
+        try {
+            $fullName = $request->input('fullName');
+            $password = $request->input('password');
+            $passwordConfirm = $request->input('passwordConfirm');
+            $phoneNumber = $request->input('phoneNumber');
+            $email = $request->input('email');
+            $rank = $request->input('rank');
+            $sns_account = $request->input('sns_account');
+            $member = $request->input('member');
+
+            if ($password !== $passwordConfirm) {
+                alert()->error('Error', 'Error, Password or Password confirm incorrect!');
+                return back();
+            }
+
+            $password = Hash::make($password);
+
+            $code = (new  HomeController())->generateRandomString(6);
+
+            $data = array('mail' => $email, 'name' => $email, 'code' => $code);
+
+            $this->sendMail($data, $email);
+
+            $create = [
+                'user_id' => Auth::user()->id,
+                'name' => $fullName,
+                'password' => $password,
+                'phone' => $phoneNumber,
+                'email' => $email,
+                'rank' => $rank,
+                'member_id' => $member,
+                'sns_account' => $sns_account,
+                'type' => MemberRegisterType::SOURCE,
+                'verifyCode' => $code,
+                'isVerify' => 0,
+                'status' => MemberRegisterPersonSourceStatus::INACTIVE
+            ];
+
+            $userOld = User::where('email', $email)->first();
+            if (!$userOld) {
+                $this->createUser($fullName, $email, $phoneNumber, $password);
+            }
+
+            $success = MemberRegisterPersonSource::create($create);
+            if ($success) {
+                alert()->success('Success', 'Success, Create success! Please continue next steps');
+                return redirect(route('show.verify.register.member', $email));
+            }
+            alert()->error('Error', 'Error, Create error!');
+            return back();
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error, Please try again!');
+            return back();
+        }
+    }
+
+    /*Show form đăng kí thông tin người đại diện*/
+    public function showRegisterMemberPersonRepresent($person, $registerMember, Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        return view('frontend/pages/registerMember/show-register-member-person-repersent', compact(
+            'registerMember',
+            'person'
+        ));
+    }
+
+    /*Đăng kí thông tin người đại diện*/
+    public function registerMemberPersonRepresent(Request $request)
+    {
+        try {
+            $fullName = $request->input('fullName');
+            $password = $request->input('password');
+            $passwordConfirm = $request->input('passwordConfirm');
+            $phoneNumber = $request->input('phoneNumber');
+            $email = $request->input('email');
+            $staff = $request->input('staff');
+            $sns_account = $request->input('sns_account');
+            $personSource = $request->input('person');
+
+            if ($password !== $passwordConfirm) {
+                alert()->error('Error', 'Error, Password or Password confirm incorrect!');
+                return back();
+            }
+
+            $password = Hash::make($password);
+
+            $code = (new  HomeController())->generateRandomString(6);
+
+            $data = array('mail' => $email, 'name' => $email, 'code' => $code);
+
+            $this->sendMail($data, $email);
+
+            $create = [
+                'user_id' => Auth::user()->id,
+                'name' => $fullName,
+                'password' => $password,
+                'phone' => $phoneNumber,
+                'email' => $email,
+                'person' => $personSource,
+                'staff' => $staff,
+                'member_id' => '0',
+                'rank' => '0',
+                'sns_account' => $sns_account,
+                'type' => MemberRegisterType::REPRESENT,
+                'verifyCode' => $code,
+                'isVerify' => 0,
+                'status' => MemberRegisterPersonSourceStatus::INACTIVE
+            ];
+
+            $userOld = User::where('email', $email)->first();
+            if (!$userOld) {
+                $this->createUser($fullName, $email, $phoneNumber, $password);
+            }
+
+            $success = MemberRegisterPersonSource::create($create);
+            if ($success) {
+                alert()->success('Success', 'Success, Create success! Please continue next steps');
+                return redirect(route('show.verify.register.member', $email));
+            }
+            alert()->error('Error', 'Error, Create error!');
+            return back();
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error, Please try again!');
+            return back();
+        }
+    }
+
+    /*Show form thanh toán đăng ký hội viên*/
+    public function showPaymentMember($registerMember)
+    {
+        return view('frontend.pages.registerMember.payment-member', compact('registerMember'));
+    }
+
+    /*Thanh toán đăng ký hội viên*/
+    public function paymentMember(Request $request)
+    {
+        try {
+            $member = $request->input('member_id');
+            $member = MemberRegisterInfo::find($member);
+            if ($member->status == MemberRegisterInfoStatus::ACTIVE){
+                alert()->error('Error', 'Error, Member not payment!');
+                return back();
+            }
+            $role = $request->input('role');
+            $price = $request->input('price');
+            $coin = Coin::where([['user_id', Auth::user()->id], ['status', CoinStatus::ACTIVE]])->first();
+            $member->status = MemberRegisterInfoStatus::ACTIVE;
+            if ($coin != null) {
+                if ($coin->quantity >= $price * 10) {
+                    $coin->quantity = $coin->quantity - $price * 10;
+                    $coin->save();
+                    $success = $member->save();
+                    if ($success) {
+                        alert()->success('Success', 'Payment success!');
+                        return redirect(route('show.success.payment.member', $role));
+                    }
+                } else {
+                    alert()->error('Error', 'Not enough coin!');
+                    return back();
+                }
+            }
+            alert()->error('Error', 'Error, Payment error!');
+            return back();
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error, Please try again!');
+            return back();
+        }
+    }
+
+    /*Show form success hội viên*/
+    public function successRegisterMember($registerMember)
+    {
+        return view('frontend.pages.registerMember.success-member', compact('registerMember'));
+    }
+
+    /*Show form nhập verify code để send mail*/
+    public function processVerifyEmail($email, Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        return view('frontend/pages/registerMember/verify-email', compact(
+            'email',
+        ));
+    }
+
+    /*Verify code*/
+    public function verifyEmail(Request $request)
+    {
+        try {
+            $email = $request->input('processEmail');
+            $code = $request->input('code');
+            $member = MemberRegisterPersonSource::where([
+                ['email', $email],
+                ['isVerify', 0]
+            ])->first();
+            if (!$member) {
+                alert()->error('Error', 'Error, Member not found!');
+                return back();
+            }
+
+            if ($member->verifyCode != $code) {
+                alert()->error('Error', 'Error, Verify code incorrect!');
+                return back();
+            }
+            $member->verifyCode = '';
+            $member->isVerify = 1;
+            $member->status = MemberRegisterPersonSourceStatus::ACTIVE;
+
+            $register = MemberRegisterInfo::find($member->member_id);
+            $success = $member->save();
+
+            if ($success) {
+                if ($member->type == MemberRegisterType::SOURCE) {
+                    alert()->success('Success', 'Success, Verify success! Please continue next steps');
+                    return redirect(route('show.register.member.person.represent', [
+                        'person_id' => $member->id,
+                        'registerMember' => $register->member
+                    ]));
+                } else {
+                    alert()->success('Success', 'Success, Verify success!');
+                    return redirect(route('show.payment.member', $register->member));
+                }
+            }
+            alert()->error('Error', 'Error, Verify error!');
+            return back();
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error, Please try again!');
+            return back();
+        }
+    }
+
+    // End register member
     public function logout(Request $request)
     {
         Auth::logout();
         Session::forget('login');
 
         return redirect('/');
+    }
+
+    private function getArrayIds(Request $request)
+    {
+        $listCategoryName[] = null;
+        $arrayIds = null;
+        $categories = Category::all();
+        foreach ($categories as $category) {
+            $name = 'category-' . $category->id;
+            $listCategoryName[] = $name;
+        }
+        if ($listCategoryName != null) {
+            $listValues = null;
+            for ($i = 0; $i < count($listCategoryName); $i++) {
+                $listValues[] = $request->input($listCategoryName[$i]);
+            }
+            if ($listValues != null) {
+                for ($i = 1; $i < count($listValues); $i++) {
+                    if ($listValues[$i] != null) {
+                        $arrayIds[] = $listValues[$i];
+                    }
+                }
+            }
+        }
+        if ($arrayIds == null) {
+            alert()->error('Error', 'Error, Please choosing your apply!');
+            return back();
+        }
+        return $arrayIds;
+    }
+
+    private function sendMail($data, $email)
+    {
+        Mail::send('frontend/widgets/mailCode', $data, function ($message) use ($email) {
+            $message->to($email, 'Verify mail!')->subject
+            ('Verify mail');
+            $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
+        });
+    }
+
+    private function createUser($fullName, $email, $phoneNumber, $password)
+    {
+        $locale = app()->getLocale();
+        if (!$locale) {
+            $locale = 'vi';
+        }
+        $user = new User;
+        $user->name = $fullName;
+        $user->email = $email;
+        $user->phone = $phoneNumber;
+        $user->address = 'Default';
+        $user->rental_code = 'Default';
+        $user->social_media = 'Default';
+        $user->industry = 'Default';
+        $user->product_name = 'Default';
+        $user->product_code = 'Default';
+        $user->password = $password;
+        $user->type_account = 'seller';
+        $user->region = $locale;
+        $user->image = 'Default';
+        $user->save();
     }
 }
