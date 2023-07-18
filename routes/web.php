@@ -24,6 +24,7 @@ use App\Http\Controllers\Seller\ProductController;
 use App\Http\Controllers\Seller\PropertiesController;
 use App\Http\Controllers\Seller\RankUserSellerController;
 use App\Http\Controllers\Seller\SellerEvaluateProductController;
+use App\Http\Controllers\Seller\StaffController;
 use App\Http\Controllers\Seller\StorageController;
 use App\Http\Controllers\Seller\TopSellerConfigController;
 use App\Http\Controllers\SocialController;
@@ -73,6 +74,62 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/register/', [HomeController::class, 'register'])->name('register.show');
 
+// Start register member
+Route::get(
+    '/register-member',
+    [AuthController::class, 'processRegisterMember']
+)->name('process.register.member');
+Route::get(
+    '/register-member/{registerMember}',
+    [AuthController::class, 'showRegisterMember']
+)->name('show.register.member');
+Route::get(
+    '/register-member-info/{registerMember}',
+    [AuthController::class, 'showRegisterMemberInfo']
+)->name('show.register.member.info');
+Route::get(
+    '/register-member-person-source/{member_id}/{registerMember}',
+    [AuthController::class, 'showRegisterMemberPerson']
+)->name('show.register.member.person.source');
+Route::get(
+    '/verify-register-member-person-source/{email}',
+    [AuthController::class, 'processVerifyEmail']
+)->name('show.verify.register.member');
+Route::get(
+    '/register-member-person-source-represent/{person_id}/{registerMember}',
+    [AuthController::class, 'showRegisterMemberPersonRepresent']
+)->name('show.register.member.person.represent');
+Route::get(
+    '/payment-register-member/{registerMember}',
+    [AuthController::class, 'showPaymentMember']
+)->name('show.payment.member');
+Route::get(
+    '/payment-register-member-success/{registerMember}',
+    [AuthController::class, 'successRegisterMember']
+)->name('show.success.payment.member');
+//Route::get('/register-member/{registerMember}', [AuthController::class, 'showRegisterMember'])->name('show.register.member');
+Route::post(
+    '/register-member-info',
+    [AuthController::class, 'registerMemberInfo']
+)->name('register.member.info');
+Route::post(
+    '/register-member-source',
+    [AuthController::class, 'registerMemberPerson']
+)->name('register.member.source');
+Route::post(
+    '/verify-register-member-person-source',
+    [AuthController::class, 'verifyEmail']
+)->name('verify.register.member');
+Route::post(
+    '/register-member-person-source-represent',
+    [AuthController::class, 'registerMemberPersonRepresent']
+)->name('register.member.represent');
+Route::post(
+    '/payment-register-member',
+    [AuthController::class, 'paymentMember']
+)->name('payment.member');
+// End register member
+
 Route::middleware('auth.product')->group(function () {
     // Các tuyến đường sản phẩm ở đây
     Route::get('/product/{id}', 'ProductController@show')->name('product.show');
@@ -81,6 +138,8 @@ Route::middleware('auth.product')->group(function () {
 Route::get('/detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
 Route::get('/detail-product/{id}', [\App\Http\Controllers\ProductController::class, 'detailProduct'])->name('detail_product.api');
 Route::get('/category/{id}', [\App\Http\Controllers\CategoryController::class, 'category'])->name('category.show');
+// Products by location
+Route::get('/products/location/{locale}', [\App\Http\Controllers\ProductController::class, 'listProductsByLanguage'])->name('list.products.show.location');
 // Config
 Route::get('/products-shop/{id}', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByShops'])->name('list.products.shop.show');
 Route::get('/products-shop-category/{category}/{shop}', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByCategoryAndShops'])->name('list.products.shop.category.show');
@@ -234,6 +293,14 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::get('/account-manage/delete/{id}', [AccountController::class, 'destroy'])->name('account.delete');
     Route::get('/account-manage/view/{id}', [AccountController::class, 'show'])->name('account.show.shop');
     Route::get('/account-manage/view-cart/{id}', [AccountController::class, 'viewCart'])->name('account.show.order');
+
+    //quản lý tài khoản cấp dưới
+    Route::get('/staff-manage', [StaffController::class, 'index'])->name('staff.manage.show');
+    Route::get('/staff-manage/create', [StaffController::class, 'create'])->name('staff.manage.create');
+    Route::get('/staff-manage/edit/{id}', [StaffController::class, 'edit'])->name('staff.manage.edit');
+    Route::post('/staff-manage/update/{id}', [StaffController::class, 'update'])->name('staff.manage.update');
+    Route::post('/staff-manage/store', [StaffController::class, 'store'])->name('staff.manage.store');
+    Route::get('/staff-manage/delete/{id}', [StaffController::class, 'destroy'])->name('staff.manage.delete');
 
     //Quản lý kho hàng
     Route::get('/storage-manage-user', [StorageController::class, 'index'])->name('storage.manage.show.user');

@@ -60,7 +60,15 @@
                             <div class="item">
                                 <button class="button" onclick="">
                                     <i class="item-icon fa-regular fa-heart"></i>
-                                    <div class="item-text">Wish Lists</div>
+                                    @php
+                                        $local = session('locale');
+                                        if ($local == null){
+                                            $local = 'vi';
+                                        }
+                                    @endphp
+                                    <div class="item-text">
+                                        <a href="{{route('list.products.show.location', $local)}}" style="color: #fff; text-decoration: none">Wish Lists</a>
+                                    </div>
                                 </button>
                             </div>
                             <div class="item">
@@ -75,6 +83,7 @@
                                 </button>
                                 <div class="signMenu" id="signMenu">
                                     <div class="name"><a href="{{route('profile.show')}}">{{Auth::user()->name}}</a>
+                                        <a href="{{route('process.register.member')}}" class="">Đăng kí thành viên</a>
                                     </div>
                                     <hr>
                                     <button class="signOut" href="#" onclick="logout()">Sign Out</button>

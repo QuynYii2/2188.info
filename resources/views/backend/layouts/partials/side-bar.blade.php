@@ -132,6 +132,7 @@
     } else {
         $permissionUsers= null;
     }
+    $check_ctv_shop = DB::table('staff_users')->where('user_id', Auth::user()->id)->first();
 
 @endphp
 <div class='wrapper text-nowrap'>
@@ -144,9 +145,13 @@
                     <ul class='sub-items pl-3'>
                         <li><a href="/products">Danh sách sản phẩm</a>
                         </li>
+                        @if(!$check_ctv_shop)
+                            <li><a href="/products/create">Thêm mới sản phẩm</a>
+                            </li>
+                        @endif
                         <li><a href="/products/create">Thêm mới sản phẩm</a>
                         </li>
-                        <li><a href="{{route('seller.products.views')}}">Sort by views</a>
+                        <li><a href="{{route('seller.products.views')}}">Sắp xếp theo lượt xem</a>
                         </li>
                         <li><a href="/categories">Chuyên mục</a>
                         </li>
@@ -182,25 +187,30 @@
                         <li>
                             <a href='{{ route('storage.manage.show.user') }}'>Thông tin kho hàng</a>
                         </li>
-                        <li>
-                            <a href='{{ route('storage.manage.create') }}'>Thêm mới nhập kho</a>
-                        </li>
-                        @if(sizeof($roleUsers) != 0)
+                        @if(!$check_ctv_shop)
                             <li>
-                                <a href='{{ route('storage.manage.show.all') }}'>Tất cả kho hàng</a>
+                                <a href='{{ route('storage.manage.create') }}'>Thêm mới nhập kho</a>
                             </li>
+                            @if(sizeof($roleUsers) != 0)
+                                <li>
+                                    <a href='{{ route('storage.manage.show.all') }}'>Tất cả kho hàng</a>
+                                </li>
+                            @endif
                         @endif
                     </ul>
                 </li>
                 <li>
-                    <a href='#'>Quản lý user</a>
+                    <a href='#'>Quản lý tài khoản cấp dưới</a>
                     <ul class='sub-items pl-3'>
                         <li>
-                            <a href='#'>Lorem ipsum dolor sit amet.</a>
+                            <a href='{{ route('staff.manage.show') }}'>Danh sách tài khoản cấp dưới</a>
                         </li>
-                        <li>
-                            <a href='#'>Lorem ipsum dolor sit amet.</a>
-                        </li>
+                        @if(!$check_ctv_shop)
+                            <li>
+                                <a href='{{ route('staff.manage.create') }}'>Thêm mới cấp dưới</a>
+                            </li>
+                        @endif
+
                     </ul>
                 </li>
 
@@ -214,12 +224,14 @@
                         <li><a href="#!">C3 Charts</a></li>
                     </ul>
                 </li>
-                <li>
-                    <a href="#!"><span>Quản lý doanh thu</span></a>
-                    <ul class='sub-items pl-3'>
-                        <li><a href="{{route('revenues.index')}}">List Revenue</a></li>
-                    </ul>
-                </li>
+                @if(!$check_ctv_shop)
+                    <li>
+                        <a href="#!"><span>Quản lý doanh thu</span></a>
+                        <ul class='sub-items pl-3'>
+                            <li><a href="{{route('revenues.index')}}">List Revenue</a></li>
+                        </ul>
+                    </li>
+                @endif
                 <li>
                     <a href="{{route('seller.products.views')}}">Sản phẩm xem nhiều nhất</a>
                 </li>
@@ -274,25 +286,29 @@
                     }
                     }
                 @endphp
-                <li>
-                    <a href="#!"><span>Quản lý phân hạng thành viên</span></a>
-                    <ul class='sub-items'>
-                        <li>
-                            <a href="{{route('seller.rank.setup.show')}}">Danh sách giảm giá theo hạng</a>
-                        </li>
-                        <li>
-                            <a href="{{route('seller.rank.setup.processCreate')}}">Tạo mới mức giảm giá theo hạng</a>
-                        </li>
-                        <li>
-                            <a href="{{route('seller.setup.show')}}">Quản lí phân hạng</a>
-                        </li>
-                        @if($check === true)
+                @if(!$check_ctv_shop)
+                    <li>
+                        <a href="#!"><span>Quản lý phân hạng thành viên</span></a>
+                        <ul class='sub-items'>
                             <li>
-                                <a href="{{route('seller.setup.processCreate')}}">Tạo mới phân hạng</a>
+                                <a href="{{route('seller.rank.setup.show')}}">Danh sách giảm giá theo hạng</a>
                             </li>
-                        @endif
-                    </ul>
-                </li>
+                            <li>
+                                <a href="{{route('seller.rank.setup.processCreate')}}">Tạo mới mức giảm giá theo
+                                    hạng</a>
+                            </li>
+                            <li>
+                                <a href="{{route('seller.setup.show')}}">Quản lí phân hạng</a>
+                            </li>
+                            @if($check === true)
+                                <li>
+                                    <a href="{{route('seller.setup.processCreate')}}">Tạo mới phân hạng</a>
+                                </li>
+                            @endif
+                        </ul>
+                    </li>
+                @endif
+                @if(!$check_ctv_shop)
                 @if($permissionUsers)
                     @for($i = 0; $i< count($permissionUsers); $i++)
                         @if($permissionUsers[$i]->name == 'Nâng cấp thành top-seller' || sizeof($roleUsers) != 0)
@@ -334,6 +350,7 @@
                             </li>
                         </ul>
                     </li>
+                @endif
                 @endif
             </ul>
         </li>
