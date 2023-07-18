@@ -16,6 +16,7 @@ class MemberRegisterPersonSource extends Model
         'name',
         'rank',
         'password',
+        'staff',
         'passwordConfirm',
         'phone',
         'email',
