@@ -70,7 +70,7 @@
                                         <form>
                                             <input type="text" id="id-cart" value="{{ $cartItem->id }}" hidden/>
                                             <input type="text" id="id-link" value="{{ asset('/') }}" hidden/>
-                                            <input class="col-7" type="number" id="quantity-{{ $cartItem->id }}"
+                                            <input class="col-7 p-0" type="number" id="quantity-{{ $cartItem->id }}"
                                                    name="quantity"
                                                    value="{{ $cartItem->quantity }}"
                                                    onchange="myfunction({{ $cartItem->id }}); "
@@ -103,7 +103,6 @@
                             </form>
                         </div>
                     </div>
-
                     <div class="mt-3 mb-3 d-flex justify-content-center">
                         <a href="{{route('checkout.show')}}" class="btn btn-success mt-2">{{ __('home.Pay') }}</a>
                     </div>
