@@ -334,9 +334,18 @@ class AuthController extends Controller
             ];
 
             $userOld = User::where('email', $email)->first();
-            if (!$userOld) {
-                $this->createUser($fullName, $email, $phoneNumber, $password);
+            if ($userOld) {
+                alert()->error('Error', 'Error, Email is user used!');
+                return back();
             }
+
+            $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
+            if ($memberOld) {
+                alert()->error('Error', 'Error, Email in member used!');
+                return back();
+            }
+
+            $this->createUser($fullName, $email, $phoneNumber, $password);
 
             $success = MemberRegisterPersonSource::create($create);
             if ($success) {
@@ -405,9 +414,18 @@ class AuthController extends Controller
             ];
 
             $userOld = User::where('email', $email)->first();
-            if (!$userOld) {
-                $this->createUser($fullName, $email, $phoneNumber, $password);
+            if ($userOld) {
+                alert()->error('Error', 'Error, Email is user used!');
+                return back();
             }
+
+            $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
+            if ($memberOld) {
+                alert()->error('Error', 'Error, Email in member used!');
+                return back();
+            }
+
+            $this->createUser($fullName, $email, $phoneNumber, $password);
 
             $success = MemberRegisterPersonSource::create($create);
             if ($success) {
@@ -434,7 +452,7 @@ class AuthController extends Controller
         try {
             $member = $request->input('member_id');
             $member = MemberRegisterInfo::find($member);
-            if ($member->status == MemberRegisterInfoStatus::ACTIVE){
+            if ($member->status == MemberRegisterInfoStatus::ACTIVE) {
                 alert()->error('Error', 'Error, Member not payment!');
                 return back();
             }

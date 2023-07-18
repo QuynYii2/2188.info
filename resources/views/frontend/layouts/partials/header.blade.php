@@ -81,6 +81,7 @@
                                 </button>
                                 <div class="signMenu" id="signMenu">
                                     <div class="name">{{Auth::user()->name}}</div>
+                                    <a href="{{route('process.register.member')}}" class="">Đăng kí thành viên</a>
                                     <hr>
                                     <button class="signOut" href="#" onclick="logout()">Sign Out</button>
                                 </div>
