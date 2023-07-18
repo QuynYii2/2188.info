@@ -72,7 +72,8 @@ Route::get('/callback/kakaotalk', [SocialController::class, 'callbackKakaotalk']
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/register/', [HomeController::class, 'register'])->name('register.show');
-// Register member
+
+// Start register member
 Route::get(
     '/register-member',
     [AuthController::class, 'processRegisterMember']
@@ -97,7 +98,14 @@ Route::get(
     '/register-member-person-source-represent/{person_id}/{registerMember}',
     [AuthController::class, 'showRegisterMemberPersonRepresent']
 )->name('show.register.member.person.represent');
-
+Route::get(
+    '/payment-register-member/{registerMember}',
+    [AuthController::class, 'showPaymentMember']
+)->name('show.payment.member');
+Route::get(
+    '/payment-register-member-success/{registerMember}',
+    [AuthController::class, 'successRegisterMember']
+)->name('show.success.payment.member');
 //Route::get('/register-member/{registerMember}', [AuthController::class, 'showRegisterMember'])->name('show.register.member');
 Route::post(
     '/register-member-info',
@@ -115,6 +123,11 @@ Route::post(
     '/register-member-person-source-represent',
     [AuthController::class, 'registerMemberPersonRepresent']
 )->name('register.member.represent');
+Route::post(
+    '/payment-register-member',
+    [AuthController::class, 'paymentMember']
+)->name('payment.member');
+// End register member
 
 Route::middleware('auth.product')->group(function () {
     // Các tuyến đường sản phẩm ở đây

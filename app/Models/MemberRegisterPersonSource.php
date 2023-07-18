@@ -22,6 +22,7 @@ class MemberRegisterPersonSource extends Model
         'email',
         'sns_account',
         'verifyCode',
+        'person',
         'isVerify',
         'type',
         'status',

@@ -14,7 +14,7 @@ class InserColumnPersonFromMemberRegisterPersonSourcesTable extends Migration
     public function up()
     {
         Schema::table('member_register_person_sources', function (Blueprint $table) {
-            $table->string('person')->nullable();
+            $table->integer('person')->nullable();
         });
     }
 

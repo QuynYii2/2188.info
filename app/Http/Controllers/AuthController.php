@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CoinStatus;
 use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\MemberRegisterPersonSourceStatus;
 use App\Enums\MemberRegisterType;
@@ -12,10 +13,12 @@ use App\Enums\UserStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Libraries\GeoIP;
 use App\Models\Category;
+use App\Models\Coin;
 use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
 use App\Models\Permission;
 use App\Models\StatisticAccess;
+use App\Models\TopSellerConfig;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -204,12 +207,14 @@ class AuthController extends Controller
         (new HomeController())->getLocale($request);
         return view('frontend/pages/registerMember/member-register');
     }
+
     /*Show form đồng ý điều khoản và điều kiện*/
     public function showRegisterMember($registerMember, Request $request)
     {
         (new HomeController())->getLocale($request);
         return view('frontend/pages/registerMember/show-register-member', compact('registerMember'));
     }
+
     /*Show form đăng kí thông tin hội viên*/
     public function showRegisterMemberInfo($registerMember, Request $request)
     {
@@ -220,7 +225,8 @@ class AuthController extends Controller
             'categories'
         ));
     }
-   /*Show form đăng kí thông tin người đăng kí*/
+
+    /*Show form đăng kí thông tin người đăng kí*/
     public function showRegisterMemberPerson($member, $registerMember, Request $request)
     {
         (new HomeController())->getLocale($request);
@@ -229,6 +235,7 @@ class AuthController extends Controller
             'member'
         ));
     }
+
     /*Đăng kí thông tin hội viên*/
     public function registerMemberInfo(Request $request)
     {
@@ -284,6 +291,7 @@ class AuthController extends Controller
             return back();
         }
     }
+
     /*Đăng kí thông tin người đăng kí*/
     public function registerMemberPerson(Request $request)
     {
@@ -342,6 +350,7 @@ class AuthController extends Controller
             return back();
         }
     }
+
     /*Show form đăng kí thông tin người đại diện*/
     public function showRegisterMemberPersonRepresent($person, $registerMember, Request $request)
     {
@@ -351,6 +360,7 @@ class AuthController extends Controller
             'person'
         ));
     }
+
     /*Đăng kí thông tin người đại diện*/
     public function registerMemberPersonRepresent(Request $request)
     {
@@ -407,11 +417,59 @@ class AuthController extends Controller
             alert()->error('Error', 'Error, Create error!');
             return back();
         } catch (\Exception $exception) {
-            dd($exception);
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
     }
+
+    /*Show form thanh toán đăng ký hội viên*/
+    public function showPaymentMember($registerMember)
+    {
+        return view('frontend.pages.registerMember.payment-member', compact('registerMember'));
+    }
+
+    /*Thanh toán đăng ký hội viên*/
+    public function paymentMember(Request $request)
+    {
+        try {
+            $member = $request->input('member_id');
+            $member = MemberRegisterInfo::find($member);
+            if ($member->status == MemberRegisterInfoStatus::ACTIVE){
+                alert()->error('Error', 'Error, Member not payment!');
+                return back();
+            }
+            $role = $request->input('role');
+            $price = $request->input('price');
+            $coin = Coin::where([['user_id', Auth::user()->id], ['status', CoinStatus::ACTIVE]])->first();
+            $member->status = MemberRegisterInfoStatus::ACTIVE;
+            if ($coin != null) {
+                if ($coin->quantity >= $price * 10) {
+                    $coin->quantity = $coin->quantity - $price * 10;
+                    $coin->save();
+                    $success = $member->save();
+                    if ($success) {
+                        alert()->success('Success', 'Payment success!');
+                        return redirect(route('show.success.payment.member', $role));
+                    }
+                } else {
+                    alert()->error('Error', 'Not enough coin!');
+                    return back();
+                }
+            }
+            alert()->error('Error', 'Error, Payment error!');
+            return back();
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error, Please try again!');
+            return back();
+        }
+    }
+
+    /*Show form success hội viên*/
+    public function successRegisterMember($registerMember)
+    {
+        return view('frontend.pages.registerMember.success-member', compact('registerMember'));
+    }
+
     /*Show form nhập verify code để send mail*/
     public function processVerifyEmail($email, Request $request)
     {
@@ -420,6 +478,7 @@ class AuthController extends Controller
             'email',
         ));
     }
+
     /*Verify code*/
     public function verifyEmail(Request $request)
     {
@@ -455,7 +514,7 @@ class AuthController extends Controller
                     ]));
                 } else {
                     alert()->success('Success', 'Success, Verify success!');
-                    return redirect(route('home'));
+                    return redirect(route('show.payment.member', $register->member));
                 }
             }
             alert()->error('Error', 'Error, Verify error!');
@@ -504,7 +563,8 @@ class AuthController extends Controller
         return $arrayIds;
     }
 
-    private function sendMail($data, $email){
+    private function sendMail($data, $email)
+    {
         Mail::send('frontend/widgets/mailCode', $data, function ($message) use ($email) {
             $message->to($email, 'Verify mail!')->subject
             ('Verify mail');
@@ -512,7 +572,8 @@ class AuthController extends Controller
         });
     }
 
-    private function createUser($fullName, $email, $phoneNumber, $password){
+    private function createUser($fullName, $email, $phoneNumber, $password)
+    {
         $locale = app()->getLocale();
         if (!$locale) {
             $locale = 'vi';
