@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Revenue;
 use Illuminate\Http\Request;
@@ -33,7 +34,7 @@ class ExportFileController extends Controller
                 $isAdmin = true;
             }
         }
-        if ($isAdmin){
+        if ($isAdmin) {
             $revenue = Revenue::all();
         } else {
             $revenue = Revenue::where('seller_id', $user)->get();
@@ -42,6 +43,32 @@ class ExportFileController extends Controller
 //        $users = Revenue::all();
 //        $writer->addRows($users->toArray());
 
-        return  $writer->toBrowser();
+        return $writer->toBrowser();
+    }
+
+    public function exportExcelOrder(Request $request)
+    {
+        $jsonData = $request->input('excel-value');
+        $arrayData = json_decode($jsonData, true);
+        $writer = SimpleExcelWriter::create(storage_path('app/public/order.xlsx'));
+        dd($arrayData);
+        $writer->addRows($arrayData);
+
+        return response()->download(storage_path('app/public/order.xlsx'), 'storage-' . Auth::user()->name . '-' . rand() . '.xlsx')->deleteFileAfterSend();
+    }
+
+    public function exportExcelOrderDetail(Request $request)
+    {
+        $listIDs = $request->input('excel-id');
+        $arrayIDs = explode(',', $listIDs);
+        $arrayData = null;
+        for ($i = 0; $i < count($arrayIDs); $i++) {
+            $order = Order::find($arrayIDs[$i]);
+            $arrayData[] = $order->toArray();;
+        }
+        $writer = SimpleExcelWriter::create(storage_path('app/public/order.xlsx'));
+        $writer->addRows($arrayData);
+
+        return response()->download(storage_path('app/public/order.xlsx'), 'storage-' . Auth::user()->name . '-' . rand() . '.xlsx')->deleteFileAfterSend();
     }
 }

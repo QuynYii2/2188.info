@@ -174,10 +174,8 @@
                 <li>
                     <a href='#'>Đơn hàng</a>
                     <ul class='sub-items pl-3'>
-                        <li><a href="#!">Basic Tables</a>
-                        </li>
-
-                        <li><a href="#!">Data Tables</a>
+                        <li>
+                            <a href="{{route('seller.order.list')}}">Danh sách đơn hàng</a>
                         </li>
                     </ul>
                 </li>

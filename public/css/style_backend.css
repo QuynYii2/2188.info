@@ -2,6 +2,13 @@
     font-size: 17px;
 }
 
+.remove-a-tag{
+    color: #000000 !important;
+}
+.remove-a-tag:hover{
+    color: #1372e5 !important;
+}
+
 .category {
     text-align: center;
     font-weight: 700;
