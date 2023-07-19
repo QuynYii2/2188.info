@@ -889,7 +889,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="http://127.0.0.1:8000/attributes-index-v2">
+                    <a href="{{route('attributes.v2.show')}}">
                         Attributes
                     </a>
                 </li>

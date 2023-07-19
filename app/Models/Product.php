@@ -18,6 +18,7 @@ class Product extends Model
         'qty',
         'status',
         'old_price',
+        'slug',
         'category_id',
         'hot',
         'feature',
