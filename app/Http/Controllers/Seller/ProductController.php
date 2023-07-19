@@ -199,6 +199,11 @@ class ProductController extends Controller
         $product->category_id = $request->input('category_id');
         $product->user_id = $userInfo->id;
         $product->location = $userInfo->region;
+        $product->old_price = $request->input('old_price');
+
+        if (!$request->input('price') || $request->input('old_price') < $request->input('price')) {
+            $product->price = $request->input('old_price');
+        }
 
         $hot = $request->input('hot_product');
         $feature = $request->input('feature_product');
@@ -281,6 +286,12 @@ class ProductController extends Controller
             $product->feature = 1;
         } else {
             $product->feature = 0;
+        }
+
+        $product->old_price = $request->input('old_price');
+
+        if (!$request->input('price') || $request->input('old_price') < $request->input('price')) {
+            $product->price = $request->input('old_price');
         }
 
         $newArray = $this->getAttributeProperty($request);
