@@ -36,9 +36,16 @@
                 <button type="submit" class="btn btn-primary position-absolute" style="bottom: 0">Search</button>
             </div>
         </form>
-        <form action="{{ route('order.manage.export.excel') }}" method="post">
+        <form action="{{ route('order.manage.export.excel') }}" method="post" id="formExportAll">
             @csrf
             <input type="text" id="excel-value" name="excel-value" value="{{ $orders }}" hidden>
+            <button type="submit" class="btn btn-primary">Export Excel</button>
+        </form>
+
+        <form action="{{ route('order.manage.export.excel.detail') }}" method="post" id="formExportDetail"
+              class="d-none">
+            @csrf
+            <input type="text" id="excel-id" name="excel-id" value="0" hidden>
             <button type="submit" class="btn btn-primary">Export Excel</button>
         </form>
         <div class="card-body">
@@ -123,6 +130,16 @@
                 }
             }
             localStorage.setItem('listArray', array);
+            let listIDs = document.getElementById('excel-id');
+            listIDs.value = localStorage.getItem('listArray');
+
+            if (localStorage.getItem('listArray') != null && localStorage.getItem('listArray') != 0) {
+                $('#formExportDetail').removeClass("d-none");
+                $('#formExportAll').addClass("d-none");
+            } else {
+                $('#formExportDetail').addClass("d-none");
+                $('#formExportAll').removeClass("d-none");
+            }
         })
 
         $('#order-all').on('click', function () {
@@ -135,6 +152,16 @@
                 }
             }
             localStorage.setItem('listArray', array);
+            let listIDs = document.getElementById('excel-id');
+            listIDs.value = localStorage.getItem('listArray');
+
+            if (localStorage.getItem('listArray') != null && localStorage.getItem('listArray') != 0) {
+                $('#formExportDetail').removeClass("d-none");
+                $('#formExportAll').addClass("d-none");
+            } else {
+                $('#formExportDetail').addClass("d-none");
+                $('#formExportAll').removeClass("d-none");
+            }
         })
     </script>
 @endsection
