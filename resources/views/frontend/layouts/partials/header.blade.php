@@ -144,7 +144,7 @@
                                             <div class="subtotal"></div>
                                             <div class="grandtotal d-flex justify-content-between ">
                                                 <span>Grand Total:</span>
-                                                <span>$ {{ $cartItem->price*$cartItem->quantity }}</span>
+                                                <span>$1000</span>
                                             </div>
                                         </div>
                                         <div class="cart">
@@ -496,7 +496,7 @@
                                     <div class="subtotal"></div>
                                     <div class="grandtotal d-flex justify-content-between ">
                                         <span>Grand Total:</span>
-                                        <span>$ {{ $cartItem->price*$cartItem->quantity }}</span>
+                                        <span>$</span>
                                     </div>
                                 </div>
                                 <div class="cart">
