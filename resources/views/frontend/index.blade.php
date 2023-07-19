@@ -294,9 +294,9 @@
             <img src="https://cdn11.bigcommerce.com/s-cas40rmoh/product_images/uploaded_images/banner-custom-home-2.png"
                  alt="">
         </section>
-        <section class="section-Third section pt-3 pb-3 container-fluid">
+        <section class="section-Third section container-fluid">
             <div class="content">Shop by Categories</div>
-            <div class="swiper Categories">
+            <div class="swiper Categories category-item">
                 <div class="swiper-wrapper">
                     @php
                         $listCate = DB::table('categories')->where('parent_id', null)->get();
@@ -370,7 +370,7 @@
                                                                 <strong>$189.000</strong>
                                                             </div> -->
                                                 <div class="price-sale">
-                                                    <strong>${{$newProduct->price}}</strong>
+                                                    <strong>${{$newProduct->qty}}</strong>
                                                 </div>
                                                 <div class="price-cost">
                                                     <strike>${{$newProduct->price}}</strike>
@@ -440,7 +440,7 @@
                                                                     <strong>$189.000</strong>
                                                                 </div> -->
                                                     <div class="price-sale">
-                                                        <strong>${{$product->price}}</strong>
+                                                        <strong>${{$product->qty}}</strong>
                                                     </div>
                                                     <div class="price-cost">
                                                         <strike>${{$product->price}}</strike>
@@ -513,7 +513,7 @@
                                                             <strong>$189.000</strong>
                                                         </div> -->
                                             <div class="price-sale">
-                                                <strong>${{$hotProduct->price}}</strong>
+                                                <strong>${{$hotProduct->qty}}</strong>
                                             </div>
                                             <div class="price-cost">
                                                 <strike>${{$hotProduct->price}}</strike>
@@ -648,7 +648,7 @@
                                                                     <strong>$189.000</strong>
                                                                 </div> -->
                                                     <div class="price-sale">
-                                                        <strong>${{$product->price}}</strong>
+                                                        <strong>${{$product->qty}}</strong>
                                                     </div>
                                                     <div class="price-cost">
                                                         <strike>${{$product->price}}</strike>
