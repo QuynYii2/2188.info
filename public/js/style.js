@@ -37,6 +37,27 @@ function closeShop() {
     document.getElementById("closeShop").classList.remove('active');
     document.getElementsByClassName("closeShopMenu")[0].classList.remove('active');
 }
+
+function ShopM() {
+    document.getElementById("closeShopM").classList.add('active');
+    document.getElementsByClassName("closeShopMenuM")[0].classList.add('active');
+}
+
+function closeShopM() {
+    document.getElementById("closeShopM").classList.remove('active');
+    document.getElementsByClassName("closeShopMenuM")[0].classList.remove('active');
+}
+
+
+function signInM() {
+    document.getElementById("signMenuM").classList.add('active');
+    document.getElementsByClassName("close-signMenuM")[0].classList.add('active');
+}
+
+function closesignInM() {
+    document.getElementById("signMenuM").classList.remove('active');
+    document.getElementsByClassName("close-signMenuM")[0].classList.remove('active');
+}
 // function signIn() {
 //     document.getElementById("signMenu").classList.add('active');
 //     document.getElementsByClassName("close-signMenu")[0].classList.add('active');
@@ -79,12 +100,14 @@ new Swiper(".Categories", {
             spaceBetween: 40,
         },
         1024: {
-            slidesPerView: 6,
+            slidesPerView: 5,
             spaceBetween: 50,
         },
+        1500: {
+            slidesPerView: 6,
+            spaceBetween: 25,
+        },
     },
-    mousewheel: true,
-    keyboard: true,
 });
 
 
@@ -100,9 +123,13 @@ new Swiper(".NewProducts", {
             slidesPerView: 2,
             spaceBetween: 10,
         },
-        1024: {
-            slidesPerView: 3,
+        1280: {
+            slidesPerView: 2,
             spaceBetween: 40,
+        },
+        1500: {
+            slidesPerView: 3,
+            spaceBetween: 25,
         },
     },
     mousewheel: true,
@@ -120,9 +147,13 @@ new Swiper(".FeaturedProducts", {
             slidesPerView: 2,
             spaceBetween: 10,
         },
-        1024: {
-            slidesPerView: 3,
+        1280: {
+            slidesPerView: 2,
             spaceBetween: 40,
+        },
+        1500: {
+            slidesPerView: 3,
+            spaceBetween: 25,
         },
     },
     mousewheel: true,
@@ -140,9 +171,17 @@ new Swiper(".HotDeals", {
             slidesPerView: 2,
             spaceBetween: 10,
         },
-        1024: {
-            slidesPerView: 5,
+        900: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+        },
+        1280: {
+            slidesPerView: 4,
             spaceBetween: 40,
+        },
+        1500: {
+            slidesPerView: 5,
+            spaceBetween: 25,
         },
     },
     mousewheel: true,
@@ -163,8 +202,12 @@ new Swiper(".listProduct", {
             spaceBetween: 10,
         },
         1024: {
-            slidesPerView: 5,
-            spaceBetween: 40,
+            slidesPerView: 3,
+            spaceBetween: 30,
+        },
+        1500: {
+            slidesPerView: 4,
+            spaceBetween: 30,
         },
     },
     mousewheel: true,
@@ -184,8 +227,12 @@ new Swiper(".TopBrands", {
             slidesPerView: 2,
             spaceBetween: 40,
         },
-        1024: {
-            slidesPerView: 5,
+        800: {
+            slidesPerView: 3,
+            spaceBetween: 40,
+        },
+        1500: {
+            slidesPerView: 4,
             spaceBetween: 40,
         },
     },
@@ -208,3 +255,43 @@ function myFunction() {
         moreText.style.display = "inline";
     }
 }
+function ToggleOption(element){
+    if(element.parentElement.parentElement.parentElement.classList.contains("open")){
+        element.parentElement.parentElement.parentElement.classList.remove("open");
+
+    }
+    else{
+        element.parentElement.parentElement.parentElement.classList.add("open");
+    }
+}
+
+function setBackgroundColors(element){
+    let AllOptionContainer = document.getElementsByClassName("OptionContainer");
+    for (let index = 0; index < AllOptionContainer.length; index++) {
+        let OptionContainer = AllOptionContainer[index];
+        var elsParentClasses = [];
+        while (OptionContainer) {
+            if(OptionContainer.classList){
+                for (let index2 = 0; index2 < OptionContainer.classList.length; index2++) {
+                    const className = OptionContainer.classList[index2];
+                    elsParentClasses.unshift(className);
+                }
+                OptionContainer = OptionContainer.parentNode;
+            }
+            else{
+                break;
+            }
+        }
+
+        let r = 0;
+        let g = 21;
+        let b = 40;
+        let factor = elsParentClasses.filter(x => x == "OptionContainer").length;
+        r = r * factor;
+        g = g * factor;
+        b = b * factor;
+        AllOptionContainer[index].style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+    }
+}
+
+setBackgroundColors();

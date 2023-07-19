@@ -66,7 +66,7 @@ class CartController extends Controller
                     'quantity' => $quantity,
                     'status' => CartStatus::WAIT_ORDER,
                 ];
-                Cart::create($cart);
+                $success = Cart::create($cart);
             }
             return redirect()->route('cart.index')->with('success', 'Product added to cart successfully!');
         } else {

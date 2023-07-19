@@ -3,214 +3,214 @@
 @section('title', 'Home page')
 
 @section('content')
-    <style>
-        .vertical-menu {
-            width: 100%;
-        }
+{{--    <style>--}}
+{{--        .vertical-menu {--}}
+{{--            width: 100%;--}}
+{{--        }--}}
 
-        .vertical-menu .navbar-nav {
-            display: block;
-        }
+{{--        .vertical-menu .navbar-nav {--}}
+{{--            display: block;--}}
+{{--        }--}}
 
-        .vertical-menu .nav-item {
-            background: #ffffff;
-        }
+{{--        .vertical-menu .nav-item {--}}
+{{--            background: #ffffff;--}}
+{{--        }--}}
 
-        li {
-            list-style: none;
-        }
+{{--        li {--}}
+{{--            list-style: none;--}}
+{{--        }--}}
 
-        .vertical-menu .nav-link {
-            color: #757575;
-            padding: 10px;
-        }
+{{--        .vertical-menu .nav-link {--}}
+{{--            color: #757575;--}}
+{{--            padding: 10px;--}}
+{{--        }--}}
 
-        .img-banner-1 {
-            /*height: 30vw;*/
-            margin-top: -30px;
-            background-repeat: no-repeat;
-            background-size: cover;
-            position: relative;
-            overflow-x: hidden;
-        }
+{{--        .img-banner-1 {--}}
+{{--            /*height: 30vw;*/--}}
+{{--            margin-top: -30px;--}}
+{{--            background-repeat: no-repeat;--}}
+{{--            background-size: cover;--}}
+{{--            position: relative;--}}
+{{--            overflow-x: hidden;--}}
+{{--        }--}}
 
-        .tablet-button {
-            display: none;
-        }
+{{--        .tablet-button {--}}
+{{--            display: none;--}}
+{{--        }--}}
 
-        /* CSS cho megamenu */
-        .megamenu {
-            display: none;
-        }
+{{--        /* CSS cho megamenu */--}}
+{{--        .megamenu {--}}
+{{--            display: none;--}}
+{{--        }--}}
 
-        .vertical-menu .nav-item:hover .megamenu {
-            display: block;
-            position: absolute;
-            top: 8px;
-            left: 94%;
-            z-index: 999;
-            width: 700px;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .25);
-        }
-
-
-        .depart-hover li:hover .megamenu {
-            display: block;
-            position: absolute;
-            top: 8px;
-            left: 94%;
-            z-index: 999;
-            width: 700px;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .25);
-        }
-
-        .depart-hover .megamenu li a {
-            padding-left: 0 !important;
-        }
-
-        @media only screen and (min-width: 1200px) {
-
-        }
-
-        @media only screen and (min-width: 992px) {
-            .p-left {
-                padding-right: 0;
-            }
-
-            .p-right {
-                padding-left: 0;
-            }
-        }
-
-        @media only screen and (min-width: 992px) and (max-width: 1199px) {
-
-        }
-
-        @media only screen and (min-width: 768px) and (max-width: 991px) {
-            .menu-header {
-                margin-right: -8px;
-                margin-left: 0px;
-                max-width: 30% !important;
-            }
-
-            .mega-menu-header {
-                margin-right: -8px;
-                margin-left: 0;
-            }
-
-            .menu-bottom {
-                max-width: 20% !important;
-            }
-        }
-
-        @media (max-width: 767px) {
-            .height-banner {
-                height: 40vw;
-                width: 100%;
-            }
-
-        }
-
-        @media (min-width: 768px) {
-            .height-banner {
-                height: 30vw;
-            }
-        }
-
-        @media only screen and (max-width: 480px) {
-            .filter-control .mr-5 {
-                margin-right: 0 !important;
-            }
-
-            .filter-control .ml-5 {
-                margin-left: 0 !important;
-            }
-        }
-
-        .p-side-tablet {
-        }
-
-        @media only screen and (min-width: 576px ) and  (max-width: 991px) {
-            .tablet-button {
-                display: block;
-            }
-
-            .not-tablet-button {
-                display: none !important;
-            }
-
-            .p-side-tablet {
-                display: flex;
-            }
-
-            .product-large.m-large {
-                margin-top: 40px;
-                width: 50%;
-            }
-
-            .p-left .product-large.m-large.p-l-1 {
-                margin-right: 25px;
-            }
-
-            .p-right .product-large.m-large.p-r-1 {
-                margin-left: 25px;
-            }
-
-        }
-
-        @media not (min-width: 576px ) and  (max-width: 991px) {
-            .tablet-button {
-                display: none;
-            }
-
-            .not-tablet-button {
-                display: block !important;
-            }
+{{--        .vertical-menu .nav-item:hover .megamenu {--}}
+{{--            display: block;--}}
+{{--            position: absolute;--}}
+{{--            top: 8px;--}}
+{{--            left: 94%;--}}
+{{--            z-index: 999;--}}
+{{--            width: 700px;--}}
+{{--            background-color: #fff;--}}
+{{--            padding: 20px;--}}
+{{--            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .25);--}}
+{{--        }--}}
 
 
-        }
+{{--        .depart-hover li:hover .megamenu {--}}
+{{--            display: block;--}}
+{{--            position: absolute;--}}
+{{--            top: 8px;--}}
+{{--            left: 94%;--}}
+{{--            z-index: 999;--}}
+{{--            width: 700px;--}}
+{{--            background-color: #fff;--}}
+{{--            padding: 20px;--}}
+{{--            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .25);--}}
+{{--        }--}}
 
-        .text-limit {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+{{--        .depart-hover .megamenu li a {--}}
+{{--            padding-left: 0 !important;--}}
+{{--        }--}}
 
-        .not-mobile-button {
-            display: none;
-        }
+{{--        @media only screen and (min-width: 1200px) {--}}
 
-        .only-mobile-button {
-            display: flex;
-        }
+{{--        }--}}
 
-        @media only screen and (min-width: 576px) {
-            .not-mobile-button {
-                display: flex;
-            }
+{{--        @media only screen and (min-width: 992px) {--}}
+{{--            .p-left {--}}
+{{--                padding-right: 0;--}}
+{{--            }--}}
+
+{{--            .p-right {--}}
+{{--                padding-left: 0;--}}
+{{--            }--}}
+{{--        }--}}
+
+{{--        @media only screen and (min-width: 992px) and (max-width: 1199px) {--}}
+
+{{--        }--}}
+
+{{--        @media only screen and (min-width: 768px) and (max-width: 991px) {--}}
+{{--            .menu-header {--}}
+{{--                margin-right: -8px;--}}
+{{--                margin-left: 0px;--}}
+{{--                max-width: 30% !important;--}}
+{{--            }--}}
+
+{{--            .mega-menu-header {--}}
+{{--                margin-right: -8px;--}}
+{{--                margin-left: 0;--}}
+{{--            }--}}
+
+{{--            .menu-bottom {--}}
+{{--                max-width: 20% !important;--}}
+{{--            }--}}
+{{--        }--}}
+
+{{--        @media (max-width: 767px) {--}}
+{{--            .height-banner {--}}
+{{--                height: 40vw;--}}
+{{--                width: 100%;--}}
+{{--            }--}}
+
+{{--        }--}}
+
+{{--        @media (min-width: 768px) {--}}
+{{--            .height-banner {--}}
+{{--                height: 30vw;--}}
+{{--            }--}}
+{{--        }--}}
+
+{{--        @media only screen and (max-width: 480px) {--}}
+{{--            .filter-control .mr-5 {--}}
+{{--                margin-right: 0 !important;--}}
+{{--            }--}}
+
+{{--            .filter-control .ml-5 {--}}
+{{--                margin-left: 0 !important;--}}
+{{--            }--}}
+{{--        }--}}
+
+{{--        .p-side-tablet {--}}
+{{--        }--}}
+
+{{--        @media only screen and (min-width: 576px ) and  (max-width: 991px) {--}}
+{{--            .tablet-button {--}}
+{{--                display: block;--}}
+{{--            }--}}
+
+{{--            .not-tablet-button {--}}
+{{--                display: none !important;--}}
+{{--            }--}}
+
+{{--            .p-side-tablet {--}}
+{{--                display: flex;--}}
+{{--            }--}}
+
+{{--            .product-large.m-large {--}}
+{{--                margin-top: 40px;--}}
+{{--                width: 50%;--}}
+{{--            }--}}
+
+{{--            .p-left .product-large.m-large.p-l-1 {--}}
+{{--                margin-right: 25px;--}}
+{{--            }--}}
+
+{{--            .p-right .product-large.m-large.p-r-1 {--}}
+{{--                margin-left: 25px;--}}
+{{--            }--}}
+
+{{--        }--}}
+
+{{--        @media not (min-width: 576px ) and  (max-width: 991px) {--}}
+{{--            .tablet-button {--}}
+{{--                display: none;--}}
+{{--            }--}}
+
+{{--            .not-tablet-button {--}}
+{{--                display: block !important;--}}
+{{--            }--}}
 
 
-            .only-mobile-button {
-                display: none;
-            }
-        }
+{{--        }--}}
 
-        @media only screen and (max-width: 575px) {
-            .benefit-items .border-right {
-                border-right: none;
-                border-bottom: 1px solid #dee2e6 !important;
-            }
-        }
-    </style>
+{{--        .text-limit {--}}
+{{--            white-space: nowrap;--}}
+{{--            overflow: hidden;--}}
+{{--            text-overflow: ellipsis;--}}
+{{--        }--}}
+
+{{--        .not-mobile-button {--}}
+{{--            display: none;--}}
+{{--        }--}}
+
+{{--        .only-mobile-button {--}}
+{{--            display: flex;--}}
+{{--        }--}}
+
+{{--        @media only screen and (min-width: 576px) {--}}
+{{--            .not-mobile-button {--}}
+{{--                display: flex;--}}
+{{--            }--}}
+
+
+{{--            .only-mobile-button {--}}
+{{--                display: none;--}}
+{{--            }--}}
+{{--        }--}}
+
+{{--        @media only screen and (max-width: 575px) {--}}
+{{--            .benefit-items .border-right {--}}
+{{--                border-right: none;--}}
+{{--                border-bottom: 1px solid #dee2e6 !important;--}}
+{{--            }--}}
+{{--        }--}}
+{{--    </style>--}}
 
     <div class="body">
         <section class="section-First pt-3 pb-3 container-fluid">
-            <div class="row">
-                <div class="section-First-left section-First-hd col-lg-2 col-12">
+            <div class="row m-0">
+                <div class="section-First-left section-First-hd col-xl-2 col-12">
                     <span class="content">SHOP BY CATEGORIES</span>
                     <hr>
                     <div class="row list">
@@ -220,7 +220,7 @@
                         @foreach($listCate as $cate)
                             <div class="col-lg-6 item item-left text-center">
                                 <a href="{{ route('category.show', $cate->id) }}">
-                                    <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/original/w/sport-icon__06672.original.jpg"
+                                    <img src="{{ asset('storage/' . $cate->thumbnail) }}"
                                          alt="">
                                     <div class="text">{{ $cate->name }}</div>
                                 </a>
@@ -228,17 +228,17 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="section-First-left section-First-mobile mt-3 col-lg-2 col-12">
+                <div class="section-First-left section-First-mobile col-12">
                     <span class="content">SHOP BY CATEGORIES</span>
                     <hr>
-                    <div class="list">
+                    <div class="list d-flex">
                         @php
                             $listCate = DB::table('categories')->where('parent_id', null)->get();
                         @endphp
                         @foreach($listCate as $cate)
                             <div class="item item-left text-center">
                                 <a href="{{ route('category.show', $cate->id) }}">
-                                    <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/original/w/sport-icon__06672.original.jpg"
+                                    <img src="{{ asset('storage/' . $cate->thumbnail) }}"
                                          alt="">
                                     <div class="text">{{ $cate->name }}</div>
                                 </a>
@@ -246,52 +246,45 @@
                         @endforeach
                     </div>
                 </div>
-                <div class="section-First-middle col-lg-6 col-sm-7 col-12">
+                <div class="section-First-middle col-xl-6 col-md-8 col-12">
                     <!-- Swiper -->
                     <div class="swiper mySwiper">
+                        @php
+                            $listBanner = $banner->thumbnails;
+                            $arrayThumbnails = explode(',', $listBanner);
+                        @endphp
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide"><img
-                                        src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/742w/carousel/17/slideshow-home2-1.jpg?c=1"
-                                        alt=""></div>
-                            <div class="swiper-slide"><img
-                                        src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/740w/carousel/18/slideshow-home2-2.jpg?c=1"
-                                        alt=""></div>
-                            <div class="swiper-slide"><img
-                                        src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/740w/carousel/19/slideshow-home2-3.jpg?c=1"
-                                        alt=""></div>
-                            <div class="swiper-slide"><img
-                                        src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/742w/carousel/17/slideshow-home2-1.jpg?c=1"
-                                        alt=""></div>
-                            <div class="swiper-slide"><img
-                                        src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/740w/carousel/18/slideshow-home2-2.jpg?c=1"
-                                        alt=""></div>
-                            <div class="swiper-slide"><img
-                                        src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/740w/carousel/19/slideshow-home2-3.jpg?c=1"
-                                        alt=""></div>
+                            @foreach($arrayThumbnails as $bannerdemo)
+                                <div class="swiper-slide">
+                                    <img src="{{ asset('storage/' . $bannerdemo) }}" alt="">
+                                </div>
+                            @endforeach
                         </div>
                         <div class="swiper-button-next"></div>
                         <div class="swiper-button-prev"></div>
                         <div class="swiper-pagination"></div>
                     </div>
                 </div>
-                <div class="section-First-right col-lg-4 col-sm-5 col-12">
+                <div class="section-First-right col-xl-4 col-md-4">
+                    @php
+                        $sub_List = $banner->sub_thumbnails;
+                        $sub_thumbnail = explode(',', $sub_List);
+                    @endphp
                     <div class="row">
-                        <div class="col-6 item">
-                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-1.png"
-                                 alt="">
-                        </div>
-                        <div class="col-6 item">
-                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-1.png"
-                                 alt="">
-                        </div>
-                        <div class="col-6 item">
-                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-1.png"
-                                 alt="">
-                        </div>
-                        <div class="col-6 item">
-                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-1.png"
-                                 alt="">
-                        </div>
+                        @if(count($sub_thumbnail)>4)
+                            @for($i=0; $i<4; $i++)
+                                <div class="col-md-6 col-sm-5 item">
+                                    <img src="{{ asset('storage/' . $sub_thumbnail[$i]) }}"
+                                         alt="">
+                                </div>
+                            @endfor
+                        @else
+                        @foreach($sub_thumbnail as $bannerSub)
+                            <div class="col-6 item">
+                                <img src="{{ asset('storage/' . $bannerSub) }}" alt="">
+                            </div>
+                        @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
@@ -312,7 +305,7 @@
                         <div class="swiper-slide">
                             <a href="{{ route('category.show', $cate->id) }}">
                                 <div class="img">
-                                    <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/category-1.png"
+                                    <img src="{{ asset('storage/' . $cate->thumbnail) }}"
                                          alt="">
                                 </div>
                                 <div class="text">
@@ -337,9 +330,11 @@
                                 <div class="swiper-slide">
                                     <div class="item">
                                         <div class="item-img">
-                                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/320w/products/181/483/product-tivi-3__08102__62099.1623301230.jpg?c=1"
+                                            <img src="{{ asset('storage/' . $newProduct->thumbnail) }}"
                                                  alt="">
-                                            <div class="button-view"><a href="">Quick view</a></div>
+                                            <div class="button-view">
+                                                    <button>Quick view</button>
+                                            </div>
                                             <div class="text">
                                                 <div class="text-sale">
                                                     Sale
@@ -383,7 +378,7 @@
                                             </div>
                                             <div class="card-bottom d-flex justify-content-between">
                                                 <div class="card-bottom--left">
-                                                    <a href="">Choose Options</a>
+                                                    <a href="{{route('detail_product.show', $newProduct->id)}}">Choose Options</a>
                                                 </div>
                                                 <div class="card-bottom--right">
                                                     <i class="item-icon fa-regular fa-heart"></i>
@@ -407,9 +402,9 @@
                                     <div class="swiper-slide">
                                         <div class="item">
                                             <div class="item-img">
-                                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/320w/products/181/483/product-tivi-3__08102__62099.1623301230.jpg?c=1"
+                                                <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                                      alt="">
-                                                <div class="button-view"><a href="">Quick view</a></div>
+                                                <div class="button-view"><button href="">Quick view</button></div>
                                                 <div class="text">
                                                     <div class="text-sale">
                                                         Sale
@@ -453,7 +448,7 @@
                                                 </div>
                                                 <div class="card-bottom d-flex justify-content-between">
                                                     <div class="card-bottom--left">
-                                                        <a href="">Choose Options</a>
+                                                        <a href="{{route('detail_product.show', $product->id)}}">Choose Options</a>
                                                     </div>
                                                     <div class="card-bottom--right">
                                                         <i class="item-icon fa-regular fa-heart"></i>
@@ -475,380 +470,68 @@
             <div class="content"><i class="fa-solid fa-fire-flame-curved"></i> Hot Deals</div>
             <div class="swiper HotDeals">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="item">
-                            <div class="item-img">
-                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/320w/products/181/483/product-tivi-3__08102__62099.1623301230.jpg?c=1"
-                                     alt="">
-                                <div class="button-view"><a href="">Quick view</a></div>
-                                <div class="text">
-                                    <div class="text-sale">
-                                        Sale
+                    @foreach($productHots as $productHot)
+                        @foreach($productHot as $hotProduct)
+                            <div class="swiper-slide">
+                                <div class="item">
+                                    <div class="item-img">
+                                        <img src="{{ asset('storage/' . $hotProduct->thumbnail) }}"
+                                             alt="">
+                                        <div class="button-view"><button href="">Quick view</button></div>
+                                        <div class="text">
+                                            <div class="text-sale">
+                                                Sale
+                                            </div>
+                                            <div class="text-new">
+                                                New
+                                            </div>
+                                            <!-- <div class="text-bundle">
+                                                    Bundle
+                                                </div> -->
+                                        </div>
                                     </div>
-                                    <div class="text-new">
-                                        New
-                                    </div>
-                                    <!-- <div class="text-bundle">
-                                            Bundle
-                                        </div> -->
-                                </div>
-                            </div>
-                            <div class="item-body">
-                                <div class="card-rating">
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <span>(1)</span>
-                                </div>
-                                <div class="card-brand">
-                                    Benjamin Button
-                                </div>
-                                <div class="card-title">
-                                    <a href="">Delementum milancelos preteus tomuir</a>
-                                </div>
-                                <div class="card-price d-flex justify-content-between">
-                                    <!-- <div class="price">
-                                            <strong>$189.000</strong>
-                                        </div> -->
-                                    <div class="price-sale">
-                                        <strong>$89.000</strong>
-                                    </div>
-                                    <div class="price-cost">
-                                        <strike>$189.000</strike>
-                                    </div>
-                                </div>
-                                <div class="card-bottom d-flex justify-content-between">
-                                    <div class="card-bottom--left">
-                                        <a href="">Choose Options</a>
-                                    </div>
-                                    <div class="card-bottom--right">
-                                        <i class="item-icon fa-regular fa-heart"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="item">
-                            <div class="item-img">
-                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/320w/products/181/483/product-tivi-3__08102__62099.1623301230.jpg?c=1"
-                                     alt="">
-                                <div class="button-view"><a href="">Quick view</a></div>
-                                <div class="text">
-                                    <div class="text-sale">
-                                        Sale
-                                    </div>
-                                    <div class="text-new">
-                                        New
-                                    </div>
-                                    <!-- <div class="text-bundle">
-                                            Bundle
-                                        </div> -->
-                                </div>
-                            </div>
-                            <div class="item-body">
-                                <div class="card-rating">
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <span>(1)</span>
-                                </div>
-                                <div class="card-brand">
-                                    Benjamin Button
-                                </div>
-                                <div class="card-title">
-                                    <a href="">Delementum milancelos preteus tomuir</a>
-                                </div>
-                                <div class="card-price d-flex justify-content-between">
-                                    <!-- <div class="price">
-                                            <strong>$189.000</strong>
-                                        </div> -->
-                                    <div class="price-sale">
-                                        <strong>$89.000</strong>
-                                    </div>
-                                    <div class="price-cost">
-                                        <strike>$189.000</strike>
-                                    </div>
-                                </div>
-                                <div class="card-bottom d-flex justify-content-between">
-                                    <div class="card-bottom--left">
-                                        <a href="">Choose Options</a>
-                                    </div>
-                                    <div class="card-bottom--right">
-                                        <i class="item-icon fa-regular fa-heart"></i>
+                                    <div class="item-body">
+                                        <div class="card-rating">
+                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                            <span>(1)</span>
+                                        </div>
+                                        @php
+                                            $nameHot = DB::table('users')->where('id', $hotProduct->user_id)->first();
+                                        @endphp
+                                        <div class="card-brand">
+                                            {{$nameHot->name}}
+                                        </div>
+                                        <div class="card-title">
+                                            <a href="{{route('detail_product.show', $hotProduct->id)}}">{{$hotProduct->name}}</a>
+                                        </div>
+                                        <div class="card-price d-flex justify-content-between">
+                                            <!-- <div class="price">
+                                                            <strong>$189.000</strong>
+                                                        </div> -->
+                                            <div class="price-sale">
+                                                <strong>${{$hotProduct->price}}</strong>
+                                            </div>
+                                            <div class="price-cost">
+                                                <strike>${{$hotProduct->price}}</strike>
+                                            </div>
+                                        </div>
+                                        <div class="card-bottom d-flex justify-content-between">
+                                            <div class="card-bottom--left">
+                                                <a href="{{route('detail_product.show', $product->id)}}">Choose Options</a>
+                                            </div>
+                                            <div class="card-bottom--right">
+                                                <i class="item-icon fa-regular fa-heart"></i>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="item">
-                            <div class="item-img">
-                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/320w/products/181/483/product-tivi-3__08102__62099.1623301230.jpg?c=1"
-                                     alt="">
-                                <div class="button-view"><a href="">Quick view</a></div>
-                                <div class="text">
-                                    <div class="text-sale">
-                                        Sale
-                                    </div>
-                                    <div class="text-new">
-                                        New
-                                    </div>
-                                    <!-- <div class="text-bundle">
-                                            Bundle
-                                        </div> -->
-                                </div>
-                            </div>
-                            <div class="item-body">
-                                <div class="card-rating">
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <span>(1)</span>
-                                </div>
-                                <div class="card-brand">
-                                    Benjamin Button
-                                </div>
-                                <div class="card-title">
-                                    <a href="">Delementum milancelos preteus tomuir</a>
-                                </div>
-                                <div class="card-price d-flex justify-content-between">
-                                    <!-- <div class="price">
-                                            <strong>$189.000</strong>
-                                        </div> -->
-                                    <div class="price-sale">
-                                        <strong>$89.000</strong>
-                                    </div>
-                                    <div class="price-cost">
-                                        <strike>$189.000</strike>
-                                    </div>
-                                </div>
-                                <div class="card-bottom d-flex justify-content-between">
-                                    <div class="card-bottom--left">
-                                        <a href="">Choose Options</a>
-                                    </div>
-                                    <div class="card-bottom--right">
-                                        <i class="item-icon fa-regular fa-heart"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="item">
-                            <div class="item-img">
-                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/320w/products/181/483/product-tivi-3__08102__62099.1623301230.jpg?c=1"
-                                     alt="">
-                                <div class="button-view"><a href="">Quick view</a></div>
-                                <div class="text">
-                                    <div class="text-sale">
-                                        Sale
-                                    </div>
-                                    <div class="text-new">
-                                        New
-                                    </div>
-                                    <!-- <div class="text-bundle">
-                                            Bundle
-                                        </div> -->
-                                </div>
-                            </div>
-                            <div class="item-body">
-                                <div class="card-rating">
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <span>(1)</span>
-                                </div>
-                                <div class="card-brand">
-                                    Benjamin Button
-                                </div>
-                                <div class="card-title">
-                                    <a href="">Delementum milancelos preteus tomuir</a>
-                                </div>
-                                <div class="card-price d-flex justify-content-between">
-                                    <!-- <div class="price">
-                                            <strong>$189.000</strong>
-                                        </div> -->
-                                    <div class="price-sale">
-                                        <strong>$89.000</strong>
-                                    </div>
-                                    <div class="price-cost">
-                                        <strike>$189.000</strike>
-                                    </div>
-                                </div>
-                                <div class="card-bottom d-flex justify-content-between">
-                                    <div class="card-bottom--left">
-                                        <a href="">Choose Options</a>
-                                    </div>
-                                    <div class="card-bottom--right">
-                                        <i class="item-icon fa-regular fa-heart"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="item">
-                            <div class="item-img">
-                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/320w/products/181/483/product-tivi-3__08102__62099.1623301230.jpg?c=1"
-                                     alt="">
-                                <div class="button-view"><a href="">Quick view</a></div>
-                                <div class="text">
-                                    <div class="text-sale">
-                                        Sale
-                                    </div>
-                                    <div class="text-new">
-                                        New
-                                    </div>
-                                    <!-- <div class="text-bundle">
-                                            Bundle
-                                        </div> -->
-                                </div>
-                            </div>
-                            <div class="item-body">
-                                <div class="card-rating">
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <span>(1)</span>
-                                </div>
-                                <div class="card-brand">
-                                    Benjamin Button
-                                </div>
-                                <div class="card-title">
-                                    <a href="">Delementum milancelos preteus tomuir</a>
-                                </div>
-                                <div class="card-price d-flex justify-content-between">
-                                    <!-- <div class="price">
-                                            <strong>$189.000</strong>
-                                        </div> -->
-                                    <div class="price-sale">
-                                        <strong>$89.000</strong>
-                                    </div>
-                                    <div class="price-cost">
-                                        <strike>$189.000</strike>
-                                    </div>
-                                </div>
-                                <div class="card-bottom d-flex justify-content-between">
-                                    <div class="card-bottom--left">
-                                        <a href="">Choose Options</a>
-                                    </div>
-                                    <div class="card-bottom--right">
-                                        <i class="item-icon fa-regular fa-heart"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="item">
-                            <div class="item-img">
-                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/320w/products/180/481/product-loa-2__18151__57560.1623301405.jpg?c=1"
-                                     alt="">
-                                <div class="text"><a href="">Quick view</a></div>
-                            </div>
-                            <div class="item-body">
-                                <div class="card-rating">
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <span>(1)</span>
-                                </div>
-                                <div class="card-brand">
-                                    Benjamin Button
-                                </div>
-                                <div class="card-title">
-                                    <a href="">Delementum milancelos preteus tomuir</a>
-                                </div>
-                                <div class="card-price d-flex justify-content-between">
-                                    <!-- <div class="price">
-                                            <strong>$189.000</strong>
-                                        </div> -->
-                                    <div class="price-sale">
-                                        <strong>$89.000</strong>
-                                    </div>
-                                    <div class="price-cost">
-                                        <strike>$189.000</strike>
-                                    </div>
-                                </div>
-                                <div class="card-bottom d-flex justify-content-between">
-                                    <div class="card-bottom--left">
-                                        <a href="">Choose Options</a>
-                                    </div>
-                                    <div class="card-bottom--right">
-                                        <i class="item-icon fa-regular fa-heart"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="item">
-                            <div class="item-img">
-                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/320w/products/181/483/product-tivi-3__08102__62099.1623301230.jpg?c=1"
-                                     alt="">
-                                <div class="button-view"><a href="">Quick view</a></div>
-                                <div class="text">
-                                    <div class="text-sale">
-                                        Sale
-                                    </div>
-                                    <div class="text-new">
-                                        New
-                                    </div>
-                                    <!-- <div class="text-bundle">
-                                            Bundle
-                                        </div> -->
-                                </div>
-                            </div>
-                            <div class="item-body">
-                                <div class="card-rating">
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <span>(1)</span>
-                                </div>
-                                <div class="card-brand">
-                                    Benjamin Button
-                                </div>
-                                <div class="card-title">
-                                    <a href="">Delementum milancelos preteus tomuir</a>
-                                </div>
-                                <div class="card-price d-flex justify-content-between">
-                                    <!-- <div class="price">
-                                            <strong>$189.000</strong>
-                                        </div> -->
-                                    <div class="price-sale">
-                                        <strong>$89.000</strong>
-                                    </div>
-                                    <div class="price-cost">
-                                        <strike>$189.000</strike>
-                                    </div>
-                                </div>
-                                <div class="card-bottom d-flex justify-content-between">
-                                    <div class="card-bottom--left">
-                                        <a href="">Choose Options</a>
-                                    </div>
-                                    <div class="card-bottom--right">
-                                        <i class="item-icon fa-regular fa-heart"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        @endforeach
+                    @endforeach
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
@@ -912,10 +595,10 @@
             <section class="section pt-3 pb-3 container-fluid">
                 <div class="content">{{$cate->name}}</div>
                 <div class="row">
-                    <div class="col-md-2 section-left">
+                    <div class="col-md-3 col-xl-2 section-left">
                         <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/products-block-banner-left-2.jpg" alt="">
                     </div>
-                    <div class="col-12 col-md-8">
+                    <div class="col-12 col-md-9 col-xl-8">
                         <div class="swiper listProduct">
                             <div class="swiper-wrapper">
                                 @php
@@ -927,7 +610,9 @@
                                             <div class="item-img">
                                                 <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                                      alt="">
-                                                <div class="button-view"><a href="">Quick view</a></div>
+                                                <div class="button-view">
+                                                    <button href="">Quick view</button>
+                                                </div>
                                                 <div class="text">
                                                     <!-- <div class="text-sale">
                                                                     Sale
@@ -971,7 +656,7 @@
                                                 </div>
                                                 <div class="card-bottom d-flex justify-content-between">
                                                     <div class="card-bottom--left">
-                                                        <a href="">Choose Options</a>
+                                                        <a href="{{route('detail_product.show', $product->id)}}">Choose Options</a>
                                                     </div>
                                                     <div class="card-bottom--right">
                                                         <i class="item-icon fa-regular fa-heart"></i>
@@ -986,7 +671,7 @@
                             <div class="swiper-button-prev"></div>
                         </div>
                     </div>
-                    <div class="col-0 col-md-2">
+                    <div class="col-xl-2 category-right">
                         <div class="brand-item d-flex justify-content-between">
                             <div class="brand-item-text">
                                 <div class="name">FOR MEN</div>
@@ -1025,37 +710,87 @@
             <section class="section pt-3 pb-3 container-fluid">
                 <div class="product-banner">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-md-4 col-12">
                             <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/banner-two-images1.jpg"
                                  alt="">
                         </div>
-                        <div class="col-6">
+                        <div class="col-md-4 col-12">
                             <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/banner-two-images2.jpg"
+                                 alt="">
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/banner-two-images1.jpg"
                                  alt="">
                         </div>
                     </div>
                 </div>
             </section>
         @endforeach
-        <section class="section-Seven container-fluid">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas vitae scel
-                <span id="dots">...</span>
-                <span id="more">
+        <section class="section-Seven ">
+            <div class="container-fluid">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas vitae scel
+                    <span id="dots">...</span>
+                    <span id="more">
                     erisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor vitae massa.
                     Fusce luctus vestibulum augue ut aliquet. Nunc sagittis dictum nisi, sed ullamcorper ipsum dignissim ac.
                     In at libero sed nunc venenatis imperdiet sed ornare turpis. Donec vitae dui eget tellus gravida venenatis.
                     Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor porta.
                 </span>
-            </p>
-            <button onclick="myFunction()" id="myBtn">Show More</button>
+                </p>
+                <button onclick="myFunction()" id="myBtn">Show More</button>
+            </div>
         </section>
         <section class="section-Eight">
             <img class="img" src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/bg-with-us2.jpg" alt="">
-            <div class="">
+            <div class="section-content">
                 <div class="content">
                     Why shop with us?
                 </div>
-                <div class="list">
+                <div class="list d-flex">
+                    <div class="item">
+                        <div class="item-img">
+                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png" alt="">
+                        </div>
+                        <div class="item-content">
+                            QUALITY AND SAVING
+                        </div>
+                        <div class="item-text">
+                            Comprehensive quality control and affordable prices
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="item-img">
+                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png" alt="">
+                        </div>
+                        <div class="item-content">
+                            QUALITY AND SAVING
+                        </div>
+                        <div class="item-text">
+                            Comprehensive quality control and affordable prices
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="item-img">
+                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png" alt="">
+                        </div>
+                        <div class="item-content">
+                            QUALITY AND SAVING
+                        </div>
+                        <div class="item-text">
+                            Comprehensive quality control and affordable prices
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="item-img">
+                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png" alt="">
+                        </div>
+                        <div class="item-content">
+                            QUALITY AND SAVING
+                        </div>
+                        <div class="item-text">
+                            Comprehensive quality control and affordable prices
+                        </div>
+                    </div>
                     <div class="item">
                         <div class="item-img">
                             <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png" alt="">

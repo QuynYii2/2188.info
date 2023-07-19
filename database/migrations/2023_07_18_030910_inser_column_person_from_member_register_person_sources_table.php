@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPriceToCartsTable extends Migration
+class InserColumnPersonFromMemberRegisterPersonSourcesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddPriceToCartsTable extends Migration
      */
     public function up()
     {
-        Schema::table('carts', function (Blueprint $table) {
-            $table->float('price');
+        Schema::table('member_register_person_sources', function (Blueprint $table) {
+            $table->integer('person')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ class AddPriceToCartsTable extends Migration
      */
     public function down()
     {
-        Schema::table('carts', function (Blueprint $table) {
-            $table->dropColumn('price');
+        Schema::table('member_register_person_sources', function (Blueprint $table) {
+            $table->dropColumn('person');
         });
     }
 }
