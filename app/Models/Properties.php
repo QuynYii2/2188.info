@@ -9,7 +9,7 @@ class Properties extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','attribute_id', 'status'];
+    protected $fillable = ['name', 'attribute_id', 'slug', 'description', 'status'];
 
     public function attribute()
     {

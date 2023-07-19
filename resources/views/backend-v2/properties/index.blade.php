@@ -827,17 +827,17 @@
         width: 100%;
     }
 
-    .delete:hover{
+    .delete:hover {
         cursor: pointer;
     }
 
-    .text-black{
-        color: #000000!important;
+    .text-black {
+        color: #000000 !important;
     }
 
 </style>
 @section('title')
-    List Attributes
+    List Propertis
 @endsection
 @section('content')
     <div id="wpbody-content" class="snipcss-rFvJO">
@@ -1042,7 +1042,7 @@
         </div>
         <div class="wrap woocommerce">
             <h1>
-                Attributes
+                {{$attribute->name}}
             </h1>
             @if(session('error'))
                 <div id="message" class="updated woocommerce-message">
@@ -1071,47 +1071,130 @@
                                     Name
                                 </th>
                                 <th scope="col">
+                                    Description
+                                </th>
+                                <th scope="col">
                                     Slug
                                 </th>
                                 <th scope="col">
-                                    Order by
-                                </th>
-                                <th scope="col">
-                                    Terms
+                                    Counts
                                 </th>
                             </tr>
                             </thead>
                             <tbody>
-                            @if(!$attributes->isEmpty())
-                                @foreach($attributes as $attribute)
+                            @if(!$properties->isEmpty())
+                                @foreach($properties as $property)
                                     <tr class="alternate">
                                         <td>
                                             <strong>
-                                                <a href="{{route('properties.v2.show', $attribute->id)}}">
-                                                    {{$attribute->name}}
+                                                <a href="#">
+                                                    {{$property->name}}
                                                 </a>
                                             </strong>
                                             <div class="row-actions">
                                                 <span class="edit">
-                                                    <a href="{{route('attributes.v2.edit', $attribute->id)}}">
+                                                    <a href="{{route('properties.v2.edit', $property->id)}}">
                                                         Edit
                                                     </a>
                                                     |
                                                 </span>
-                                                <span class="delete">
-                                                    <a class="delete" data-toggle="modal" data-target="#modalDeleteAttribute{{$attribute->id}}">
-                                                        Delete
+                                                <span class="quick-edit">
+                                                    <a href="#" data-toggle="modal"
+                                                       data-target="#modalEditAttribute{{$property->id}}">
+                                                        Quick Edit
                                                     </a>
+                                                    |
                                                     <!-- Modal -->
-                                                    <div class="modal fade text-black" id="modalDeleteAttribute{{$attribute->id}}" tabindex="-1"
+                                                    <div class="modal fade text-black"
+                                                         id="modalEditAttribute{{$property->id}}" tabindex="-1"
                                                          role="dialog" aria-labelledby="exampleModalLabel"
                                                          aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
-                                                            <form action="{{route('attributes.v2.delete', $attribute->id)}}" method="post">
+                                                            <form action="{{route('properties.v2.update', $property->id)}}"
+                                                                  method="post">
                                                                 @csrf
                                                                 <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+                                                                    <h5 class="modal-title" id="exampleModalLabel">Update {{$property->name}}</h5>
+                                                                    <button type="button" class="close"
+                                                                            data-dismiss="modal" aria-label="Close">
+                                                                      <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <table class="form-table" role="presentation">
+                                                                            <tbody>
+                                                                            <tr class="form-field form-required term-name-wrap">
+                                                                                <th scope="row"><label
+                                                                                            for="property_name">Tên</label></th>
+                                                                                <td><input name="property_name"
+                                                                                           id="property_name"
+                                                                                           type="text"
+                                                                                           value="{{$property->name}}"
+                                                                                           aria-required="true"
+                                                                                           aria-describedby="name-description"
+                                                                                           required>
+                                                                                    <p class="description"
+                                                                                       id="name-description">The name is how it appears on your site.</p>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr class="form-field term-slug-wrap">
+                                                                                <th scope="row"><label
+                                                                                            for="property_slug">Đường dẫn</label></th>
+                                                                                <td><input name="property_slug"
+                                                                                           id="property_slug"
+                                                                                           type="text"
+                                                                                           value="{{$property->slug}}"
+                                                                                           aria-describedby="slug-description">
+                                                                                    <p class="description"
+                                                                                       id="slug-description">“slug” là đường dẫn thân thiện của tên. Nó
+                                                                                        thường chỉ bao gồm kí tự viết thường, số và dấu gạch ngang, không dùng tiếng Việt.</p>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr class="form-field term-description-wrap">
+                                                                                <th scope="row"><label
+                                                                                            for="property_description">Mô tả</label></th>
+                                                                                <td><textarea
+                                                                                            name="property_description"
+                                                                                            id="property_description"
+                                                                                            rows="5" cols="50"
+                                                                                            class="large-text"
+                                                                                            aria-describedby="description-description">{{$property->description}}</textarea>
+                                                                                    <p class="description"
+                                                                                       id="description-description">The description is not prominent by
+                                                                                        default; however, some themes may show it.</p></td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                            data-dismiss="modal">Close</button>
+                                                                    <button type="submit"
+                                                                            class="btn btn-success">Submit</button>
+                                                                  </div>
+                                                            </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                                <span class="delete">
+                                                    <a class="delete" data-toggle="modal"
+                                                       data-target="#modalDeleteAttribute{{$property->id}}">
+                                                        Delete
+                                                    </a>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade text-black"
+                                                         id="modalDeleteAttribute{{$property->id}}" tabindex="-1"
+                                                         role="dialog" aria-labelledby="exampleModalLabel"
+                                                         aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <form action="{{route('properties.v2.delete', $property->id)}}"
+                                                                  method="post">
+                                                                @csrf
+                                                                <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">Delete Property</h5>
                                                                     <button type="button" class="close"
                                                                             data-dismiss="modal" aria-label="Close">
                                                                       <span aria-hidden="true">&times;</span>
@@ -1119,7 +1202,7 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <h5 class="text-center">
-                                                                        Bạn có chắc chắn muốn xoá thuộc tính: {{$attribute->name}}
+                                                                        Bạn có chắc chắn muốn xoá thuộc tính: {{$property->name}}
                                                                     </h5>
                                                                     <p class="text-danger">
                                                                         Nếu xoá bạn sẽ không thể không thể tìm thấy nó!
@@ -1129,7 +1212,8 @@
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                             data-dismiss="modal">Close</button>
-                                                                    <button type="submit" class="btn btn-danger">Yes</button>
+                                                                    <button type="submit"
+                                                                            class="btn btn-danger">Yes</button>
                                                                   </div>
                                                             </div>
                                                             </form>
@@ -1139,32 +1223,13 @@
                                             </div>
                                         </td>
                                         <td>
-                                            {{$attribute->slug}}
+                                            {{$property->description}}
                                         </td>
                                         <td>
-                                            Custom ordering
+                                            {{$property->slug}}
                                         </td>
                                         <td class="attribute-terms">
-                                            @php
-                                                $properties = \App\Models\Properties::where('attribute_id', $attribute->id)->get();
-                                            @endphp
-                                            @if($properties->isEmpty())
-                                                <span class="na">
-                                                    –
-                                                </span>
-                                            @else
-                                                @foreach($properties as $property)
-                                                    <span class="text-success">
-                                                        {{$property->name}}
-                                                    </span>
-                                                    |
-                                                @endforeach
-                                            @endif
-                                            <br>
-                                            <a href="{{route('properties.v2.show', $attribute->id)}}"
-                                               class="configure-terms">
-                                                Configure terms
-                                            </a>
+                                            {{count($properties)}}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -1175,72 +1240,43 @@
                 </div>
                 <div id="col-left">
                     <div class="col-wrap">
+
+                        <p>Attribute terms can be assigned to products and variations.</p>
+                        <p>Note: Deleting a term will remove it from all products and variations to which it has been
+                            assigned. Recreating a term will not automatically assign it back to products.</p>
+
                         <div class="form-wrap">
-                            <h2>
-                                Add new attribute
-                            </h2>
-                            <p>
-                                Attributes let you define extra product data, such as size or color. You can use these
-                                attributes in the shop sidebar using the "layered nav" widgets.
-                            </p>
-                            <form action="{{route('attributes.v2.create')}}" method="post">
+                            <h2>Add new {{$attribute->name}}</h2>
+                            <form id="addtag" method="post" action="{{route('properties.v2.create')}}" class="validate">
                                 @csrf
-                                <div class="form-field">
-                                    <label for="attribute_name">
-                                        Name
-                                    </label>
-                                    <input name="attribute_name" id="attribute_name" type="text" value="">
-                                    <p class="description">
-                                        Name for the attribute (shown on the front-end).
-                                    </p>
+                                <input class="form-control" hidden="" name="attribute_id" type="text"
+                                       value="{{$attribute->id}}">
+                                <div class="form-field form-required term-name-wrap">
+                                    <label for="property_name">Tên</label>
+                                    <input class="form-control" name="property_name" id="property_name" type="text"
+                                           required
+                                           aria-required="true" aria-describedby="name-description">
+                                    <p id="name-description">The name is how it appears on your site.</p>
                                 </div>
-                                <div class="form-field">
-                                    <label for="attribute_slug">
-                                        Slug
-                                    </label>
-                                    <input name="attribute_slug" id="attribute_slug" type="text" value=""
-                                           maxlength="28">
-                                    <p class="description">
-                                        Unique slug/reference for the attribute; must be no more than 28 characters.
-                                    </p>
+                                <div class="form-field term-slug-wrap">
+                                    <label for="property_slug">Đường dẫn</label>
+                                    <input class="form-control" name="property_slug" id="property_slug" type="text"
+                                           value=""
+                                           aria-required="true" aria-describedby="slug-description">
+                                    <p id="slug-description">“slug” là đường dẫn thân thiện của tên. Nó thường chỉ bao
+                                        gồm kí tự viết thường, số và dấu gạch ngang, không dùng tiếng Việt.</p>
                                 </div>
-                                <div class="form-field">
-                                    <label for="attribute_public">
-                                        <input name="attribute_public" id="attribute_public" type="checkbox" value="1">
-                                        Enable Archives?
-                                    </label>
-                                    <p class="description">
-                                        Enable this if you want this attribute to have product archives in your store.
-                                    </p>
+                                <div class="form-field term-description-wrap">
+                                    <label for="property_description">Mô tả</label>
+                                    <textarea class="form-control" name="property_description" id="property_description"
+                                              aria-describedby="description-description"></textarea>
+                                    <p id="description-description">The description is not prominent by default;
+                                        however, some themes may show it.</p>
                                 </div>
-                                <div class="form-field">
-                                    <label for="attribute_orderby">
-                                        Default sort order
-                                    </label>
-                                    <select name="attribute_orderby" id="attribute_orderby">
-                                        <option value="menu_order">
-                                            Custom ordering
-                                        </option>
-                                        <option value="name">
-                                            Name
-                                        </option>
-                                        <option value="name_num">
-                                            Name (numeric)
-                                        </option>
-                                        <option value="id">
-                                            Term ID
-                                        </option>
-                                    </select>
-                                    <p class="description">
-                                        Determines the sort order of the terms on the frontend shop product pages. If
-                                        using custom ordering, you can drag and drop the terms in this attribute.
-                                    </p>
-                                </div>
+
                                 <p class="submit">
-                                    <button type="submit" name="add_new_attribute" id="submit"
-                                            class="button button-primary" value="Add attribute">
-                                        Add attribute
-                                    </button>
+                                    <input type="submit" name="submit" id="submit" class="button button-primary"
+                                           value="Add new {{$attribute->name}}"> <span class="spinner"></span>
                                 </p>
                             </form>
                         </div>
