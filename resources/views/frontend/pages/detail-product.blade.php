@@ -364,9 +364,26 @@
                             </div>
                             <div class="product-price d-flex" style="gap: 3rem">
                                 <p class="last-price">{{ __('home.old price') }}:
-                                    <span>${{$product->price + ($product->price*5/100)}}</span></p>
+                                    <span>
+                                        $
+                                        <span id="priceDefault">
+                                            {{$product->old_price}}
+                                        </span>
+                                    </span>
+                                </p>
                                 <p class="new-price">{{ __('home.new price') }}:
-                                    <span>${{$product->price}} (<span>5%</span>)</span></p>
+                                    <span>
+                                        $
+                                        <span id="priceDiscount">
+                                            {{$product->price}}
+                                        </span>
+                                        (
+                                        <span id="percentDiscount">
+                                            5%
+                                        </span>
+                                        )
+                                    </span>
+                                </p>
                             </div>
                             <div class="row">
                                 @foreach($attributes as $attribute)
@@ -394,7 +411,8 @@
                             </div>
                             <div class="count__wrapper count__wrapper--ml mt-3">
                                 <label for="qty">{{ __('home.quantity') }}</label>
-                                <input class="product-qty input" type="number" name="quantity" min="1" max="{{$product->qty}}"
+                                <input class="product-qty input" type="number" name="quantity" min="1"
+                                       max="{{$product->qty}}"
                                        style="width: 55px"
                                        value="1">
                                 <label for="qty">Còn lại: {{$product->qty}}</label>
@@ -772,72 +790,72 @@
                                 {{ __('home.promotion information') }}
                             </div>
 
-{{--                            <div class="p-3 text-center text-uppercase text-white text-bold fw-bold"--}}
-{{--                                 style="border-radius: 5px 5px 0 0; background-color: #00bf90"--}}
-{{--                                 data-toggle="modal" data-target="#exampleModalPromotion">--}}
-{{--                                {{ __('home.promotion information') }}--}}
-{{--                                <br>--}}
-{{--                                <span style="font-size: 1.25rem">Tham gia ngay</span>--}}
-{{--                            </div>--}}
-{{--                            <div class="modal fade" id="exampleModalPromotion"--}}
-{{--                                 tabindex="-1" role="dialog"--}}
-{{--                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">--}}
-{{--                                <div class="modal-dialog modal-dialog-centered" role="document">--}}
-{{--                                    <div class="modal-content">--}}
-{{--                                        <div class="modal-header">--}}
-{{--                                            <h5 class="modal-title" id="exampleModalLongTitle"> Chương trình khuyến--}}
-{{--                                                mãi dành cho bạn</h5>--}}
-{{--                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-{{--                                                <span aria-hidden="true">&times;</span>--}}
-{{--                                            </button>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="modal-body">--}}
-{{--                                            <table class="table table-bordered">--}}
-{{--                                                <thead>--}}
-{{--                                                <tr>--}}
-{{--                                                    <th scope="col">Name</th>--}}
-{{--                                                    <th scope="col">Code</th>--}}
-{{--                                                    <th scope="col">Percent</th>--}}
-{{--                                                    <th scope="col">Action</th>--}}
-{{--                                                </tr>--}}
-{{--                                                </thead>--}}
-{{--                                                <tbody>--}}
-{{--                                                @foreach($arrayPromotions as $itemPromotion)--}}
-{{--                                                    <tr>--}}
-{{--                                                        <td>{{$itemPromotion->name}}</td>--}}
-{{--                                                        <td>{{$itemPromotion->code}}</td>--}}
-{{--                                                        <td>{{$itemPromotion->percent}}</td>--}}
-{{--                                                        <td>--}}
-{{--                                                            @php--}}
-{{--                                                                $promotionItemsOld = \App\Models\PromotionItems::where([--}}
-{{--                                                                ['promotion_id', $itemPromotion->id],--}}
-{{--                                                                ['customer_id', Auth::user()->id]])->first();--}}
-{{--                                                            @endphp--}}
-{{--                                                            @if($promotionItemsOld)--}}
-{{--                                                                <a href="{{route('cart.index')}}"--}}
-{{--                                                                   class="btn btn-success">--}}
-{{--                                                                    Sử dụng ngay--}}
-{{--                                                                </a>--}}
-{{--                                                            @else--}}
-{{--                                                                <button class="btn btn-success" id="btn-join-now"--}}
-{{--                                                                        onclick="createPromotionItems({{$itemPromotion->id}})"--}}
-{{--                                                                >Tham gia ngay--}}
-{{--                                                                </button>--}}
-{{--                                                            @endif--}}
-{{--                                                        </td>--}}
-{{--                                                    </tr>--}}
-{{--                                                @endforeach--}}
-{{--                                                </tbody>--}}
-{{--                                            </table>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="modal-footer">--}}
-{{--                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">--}}
-{{--                                                Close--}}
-{{--                                            </button>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
+                            {{--                            <div class="p-3 text-center text-uppercase text-white text-bold fw-bold"--}}
+                            {{--                                 style="border-radius: 5px 5px 0 0; background-color: #00bf90"--}}
+                            {{--                                 data-toggle="modal" data-target="#exampleModalPromotion">--}}
+                            {{--                                {{ __('home.promotion information') }}--}}
+                            {{--                                <br>--}}
+                            {{--                                <span style="font-size: 1.25rem">Tham gia ngay</span>--}}
+                            {{--                            </div>--}}
+                            {{--                            <div class="modal fade" id="exampleModalPromotion"--}}
+                            {{--                                 tabindex="-1" role="dialog"--}}
+                            {{--                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">--}}
+                            {{--                                <div class="modal-dialog modal-dialog-centered" role="document">--}}
+                            {{--                                    <div class="modal-content">--}}
+                            {{--                                        <div class="modal-header">--}}
+                            {{--                                            <h5 class="modal-title" id="exampleModalLongTitle"> Chương trình khuyến--}}
+                            {{--                                                mãi dành cho bạn</h5>--}}
+                            {{--                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+                            {{--                                                <span aria-hidden="true">&times;</span>--}}
+                            {{--                                            </button>--}}
+                            {{--                                        </div>--}}
+                            {{--                                        <div class="modal-body">--}}
+                            {{--                                            <table class="table table-bordered">--}}
+                            {{--                                                <thead>--}}
+                            {{--                                                <tr>--}}
+                            {{--                                                    <th scope="col">Name</th>--}}
+                            {{--                                                    <th scope="col">Code</th>--}}
+                            {{--                                                    <th scope="col">Percent</th>--}}
+                            {{--                                                    <th scope="col">Action</th>--}}
+                            {{--                                                </tr>--}}
+                            {{--                                                </thead>--}}
+                            {{--                                                <tbody>--}}
+                            {{--                                                @foreach($arrayPromotions as $itemPromotion)--}}
+                            {{--                                                    <tr>--}}
+                            {{--                                                        <td>{{$itemPromotion->name}}</td>--}}
+                            {{--                                                        <td>{{$itemPromotion->code}}</td>--}}
+                            {{--                                                        <td>{{$itemPromotion->percent}}</td>--}}
+                            {{--                                                        <td>--}}
+                            {{--                                                            @php--}}
+                            {{--                                                                $promotionItemsOld = \App\Models\PromotionItems::where([--}}
+                            {{--                                                                ['promotion_id', $itemPromotion->id],--}}
+                            {{--                                                                ['customer_id', Auth::user()->id]])->first();--}}
+                            {{--                                                            @endphp--}}
+                            {{--                                                            @if($promotionItemsOld)--}}
+                            {{--                                                                <a href="{{route('cart.index')}}"--}}
+                            {{--                                                                   class="btn btn-success">--}}
+                            {{--                                                                    Sử dụng ngay--}}
+                            {{--                                                                </a>--}}
+                            {{--                                                            @else--}}
+                            {{--                                                                <button class="btn btn-success" id="btn-join-now"--}}
+                            {{--                                                                        onclick="createPromotionItems({{$itemPromotion->id}})"--}}
+                            {{--                                                                >Tham gia ngay--}}
+                            {{--                                                                </button>--}}
+                            {{--                                                            @endif--}}
+                            {{--                                                        </td>--}}
+                            {{--                                                    </tr>--}}
+                            {{--                                                @endforeach--}}
+                            {{--                                                </tbody>--}}
+                            {{--                                            </table>--}}
+                            {{--                                        </div>--}}
+                            {{--                                        <div class="modal-footer">--}}
+                            {{--                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">--}}
+                            {{--                                                Close--}}
+                            {{--                                            </button>--}}
+                            {{--                                        </div>--}}
+                            {{--                                    </div>--}}
+                            {{--                                </div>--}}
+                            {{--                            </div>--}}
                         </div>
                     @endif
                 </div>
@@ -1399,6 +1417,18 @@
             var brightness = (red * 299 + green * 587 + blue * 114) / 1000;
             return brightness;
         }
+    </script>
+    <script>
+        function getPercent() {
+            let defaultPrice = document.getElementById('priceDefault');
+            let discountPrice = document.getElementById('priceDiscount');
+            let percentPrice = document.getElementById('percentDiscount');
+            let percent = 100 - (parseFloat(discountPrice.innerText) / parseFloat(defaultPrice.innerText)) * 100;
+            percent = parseFloat(percent).toFixed(1);
+            percentPrice.innerText = percent + '%'
+        }
+
+        getPercent();
     </script>
 @endsection
 

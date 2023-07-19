@@ -256,12 +256,12 @@
                 <div class="form-group row">
                     <div class="col-4 d-inline-block">
                         <label class="control-label small name" for="price">Giá bán</label>
-                        <input type="number" class="form-control" required name="price" id="price"
+                        <input type="number" class="form-control" required name="old_price" id="price"
                                placeholder="Nhập giá bán">
                     </div>
                     <div class="col-4 d-inline-block">
                         <label class="control-label small name" for="qty">Giá khuyến mãi</label>
-                        <input type="number" class="form-control" name="qty" id="qty" placeholder="Nhập giá khuyến mãi">
+                        <input type="number" class="form-control" name="price" id="qty" placeholder="Nhập giá khuyến mãi">
                     </div>
                 </div>
                 <div class="form-group row">

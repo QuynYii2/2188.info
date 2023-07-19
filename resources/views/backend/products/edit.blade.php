@@ -36,11 +36,11 @@
                 </div>
                 <div class="form-group">
                     <label for="price">Giá bán</label>
-                    <input type="number" class="form-control" id="price" name="price" value="{{ $product->price }}">
+                    <input type="number" class="form-control" id="price" name="old_price" value="{{ $product->old_price }}">
                 </div>
                 <div class="form-group">
                     <label for="qty">Giá khuyến mãi</label>
-                    <input type="number" class="form-control" id="qty" name="qty" value="{{ $product->qty }}">
+                    <input type="number" class="form-control" id="qty" name="price" value="{{ $product->price }}">
                 </div>
 
                 <div class="form-group">

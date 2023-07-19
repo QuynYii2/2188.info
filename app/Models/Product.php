@@ -17,6 +17,7 @@ class Product extends Model
         'location',
         'qty',
         'status',
+        'old_price',
         'category_id',
         'hot',
         'feature',
