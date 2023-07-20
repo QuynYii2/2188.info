@@ -314,7 +314,7 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::post('/storage-manage/update/{id}', [StorageController::class, 'update'])->name('storage.manage.update');
     Route::post('/storage-manage/store', [StorageController::class, 'store'])->name('storage.manage.store');
     Route::get('/storage-manage/search', [StorageController::class, 'searchStorage'])->name('storage.manage.search');
-    Route::post('/export-excel', [ExportFileController::class, 'exportExcel'])->name('storage.manage.export.excel');
+    Route::post('/warehouse-export-excel', [ExportFileController::class, 'exportExcel'])->name('storage.manage.export.excel');
     Route::get('/export-pdf', [ExportFileController::class, 'exportToPDF'])->name('storage.manage.export.pdf');
 
     // Rank setup
