@@ -9,9 +9,11 @@ use App\Http\Controllers\Backend_v2\PropertyController_v2;
 // Product
 Route::prefix('products')->group(function () {
     Route::get('/index-v2', [ProductController_v2::class, 'index'])->name('product.v2.show');
-    Route::get('/edit-v2', [ProductController_v2::class, 'edit'])->name('product.v2.edit');
-    Route::get('/create-v2', [ProductController_v2::class, 'create'])->name('product.v2.create');
-    Route::get('/index-v2', [ProductController_v2::class, 'index'])->name('product.v2.show');
+    Route::get('/edit-v2/{id}', [ProductController_v2::class, 'edit'])->name('product.v2.edit');
+    Route::get('/create-v2', [ProductController_v2::class, 'create'])->name('product.v2.processCreate');
+    Route::post('/update-v2/{id}', [ProductController_v2::class, 'update'])->name('product.v2.update');
+    Route::post('/create-v2', [ProductController_v2::class, 'create'])->name('product.v2.create');
+    Route::post('/delete-v2/{id}', [ProductController_v2::class, 'destroy'])->name('product.v2.delete');
 });
 
 // Categories

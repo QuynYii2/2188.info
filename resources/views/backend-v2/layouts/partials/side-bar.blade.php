@@ -868,13 +868,13 @@
                     Products
                 </li>
                 <li class="wp-first-item current">
-                    <a href="edit.php?post_type=product" class="wp-first-item current" aria-current="page">
+                    <a href="{{route('product.v2.show')}}" class="wp-first-item current" aria-current="page">
                         All
                         Products
                     </a>
                 </li>
                 <li>
-                    <a href="http://127.0.0.1:8000/product-create-v2">
+                    <a href="{{route('product.v2.processCreate')}}">
                         Add New
                     </a>
                 </li>
