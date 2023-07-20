@@ -879,7 +879,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="http://127.0.0.1:8000/categories-index-v2">
+                    <a href="{{route('categories.v2.show')}}">
                         Categories
                     </a>
                 </li>

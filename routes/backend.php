@@ -17,8 +17,10 @@ Route::prefix('products')->group(function () {
 // Categories
 Route::prefix('categories')->group(function () {
     Route::get('/index-v2', [CategoriesController_v2::class, 'index'])->name('categories.v2.show');
-    Route::get('/edit-v2', [CategoriesController_v2::class, 'edit'])->name('categories.v2.edit');
-    Route::get('/create-v2', [CategoriesController_v2::class, 'create'])->name('categories.v2.create');
+    Route::get('/edit-v2/{id}', [CategoriesController_v2::class, 'show'])->name('categories.v2.edit');
+    Route::post('/create-v2', [CategoriesController_v2::class, 'store'])->name('categories.v2.create');
+    Route::post('/update-v2/{id}', [CategoriesController_v2::class, 'update'])->name('categories.v2.update');
+    Route::post('/delete-v2/{id}', [CategoriesController_v2::class, 'destroy'])->name('categories.v2.delete');
 });
 
 // Attributes
