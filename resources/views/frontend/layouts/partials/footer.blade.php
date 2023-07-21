@@ -16,86 +16,79 @@
                 <div class="item-content">
                     CATEGORIES
                 </div>
+                @php
+                    $listCate = DB::table('categories')->where('parent_id', null)->get();
+                @endphp
+                @foreach($listCate as $cate)
                 <div class="item-small">
-                    <a href="#">Electronics</a>
+                    <a href="{{ route('category.show', $cate->id) }}">{{ $cate->name }}</a>
+                </div>
+                @endforeach
+            </div>
+            <div class="footer-item col-xl-2 col-md-4">
+                <div class="item-content">
+                    BRANDS
                 </div>
                 <div class="item-small">
-                    <a href="#">Electronics</a>
+                    <a href="#">Benjamin Button</a>
                 </div>
                 <div class="item-small">
-                    <a href="#">Electronics</a>
+                    <a href="#">Arm & Hammer</a>
                 </div>
                 <div class="item-small">
-                    <a href="#">Electronics</a>
+                    <a href="#">BisTech</a>
                 </div>
                 <div class="item-small">
-                    <a href="#">Electronics</a>
+                    <a href="#">Sagaform</a>
+                </div>
+                <div class="item-small">
+                    <a href="#">OFS</a>
                 </div>
             </div>
             <div class="footer-item col-xl-2 col-md-4">
                 <div class="item-content">
-                    CATEGORIES
+                    FURTHER INFO.
                 </div>
                 <div class="item-small">
-                    <a href="#">Electronics</a>
+                    <a href="#">About us</a>
                 </div>
                 <div class="item-small">
-                    <a href="#">Electronics</a>
+                    <a href="#">Theme Styles</a>
                 </div>
                 <div class="item-small">
-                    <a href="#">Electronics</a>
+                    <a href="#">Contact us</a>
                 </div>
                 <div class="item-small">
-                    <a href="#">Electronics</a>
+                    <a href="#">Gift Certificates</a>
                 </div>
                 <div class="item-small">
-                    <a href="#">Electronics</a>
+                    <a href="#">Blog</a>
                 </div>
             </div>
             <div class="footer-item col-xl-2 col-md-4">
                 <div class="item-content">
-                    CATEGORIES
+                    CUSTOMER SERVICE
                 </div>
                 <div class="item-small">
-                    <a href="#">Electronics</a>
+                    <a href="#">Help & FAQs</a>
                 </div>
                 <div class="item-small">
-                    <a href="#">Electronics</a>
+                    <a href="#">Terms of Conditions</a>
                 </div>
                 <div class="item-small">
-                    <a href="#">Electronics</a>
+                    <a href="#">Privacy Policy</a>
                 </div>
                 <div class="item-small">
-                    <a href="#">Electronics</a>
+                    <a href="#">Online Returns Policy</a>
                 </div>
                 <div class="item-small">
-                    <a href="#">Electronics</a>
-                </div>
-            </div>
-            <div class="footer-item col-xl-2 col-md-4">
-                <div class="item-content">
-                    CATEGORIES
-                </div>
-                <div class="item-small">
-                    <a href="#">Electronics</a>
-                </div>
-                <div class="item-small">
-                    <a href="#">Electronics</a>
-                </div>
-                <div class="item-small">
-                    <a href="#">Electronics</a>
-                </div>
-                <div class="item-small">
-                    <a href="#">Electronics</a>
-                </div>
-                <div class="item-small">
-                    <a href="#">Electronics</a>
+                    <a href="#">Rewards Program</a>
                 </div>
             </div>
             @if(!$config->isEmpty())
             <div class="footer-item col-xl-3 col-md-4">
                 <div class="item-content">
-                    CATEGORIES
+                    STORE INFO
                 </div>
                 <div class="item-small">
                     <a href="#"><i class="fa-solid fa-location-dot"></i> {{$config[0]->address}}</a>

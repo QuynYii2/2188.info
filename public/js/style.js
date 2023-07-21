@@ -3,7 +3,7 @@ function menuMobile() {
     document.getElementsByClassName("opacity_menu")[0].classList.add('active');
 }
 
-function closemenuMobile() {
+function closeMobile() {
     document.getElementById("demo").classList.remove('active');
     document.getElementsByClassName("opacity_menu")[0].classList.remove('active');
 }
@@ -81,7 +81,7 @@ new Swiper(".Categories", {
     },
     breakpoints: {
         300: {
-            slidesPerView: 2,
+            slidesPerView: 3,
             spaceBetween: 20,
         },
         768: {
@@ -229,6 +229,23 @@ new Swiper(".listProduct", {
     mousewheel: true,
     keyboard: true,
 });
+new Swiper(".Category_listProduct", {
+    slidesPerView: 3,
+    spaceBetween: 40,
+    cssMode: true,
+    navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+    },
+    breakpoints: {
+        300: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+        },
+    },
+    mousewheel: true,
+    keyboard: true,
+});
 
 new Swiper(".TopBrands", {
     slidesPerView: 6,
@@ -255,6 +272,8 @@ new Swiper(".TopBrands", {
     mousewheel: true,
     keyboard: true,
 });
+
+
 
 function myFunction() {
     var dots = document.getElementById("dots");

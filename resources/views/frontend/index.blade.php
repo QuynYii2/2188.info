@@ -3,209 +3,209 @@
 @section('title', 'Home page')
 
 @section('content')
-{{--    <style>--}}
-{{--        .vertical-menu {--}}
-{{--            width: 100%;--}}
-{{--        }--}}
+    {{--    <style>--}}
+    {{--        .vertical-menu {--}}
+    {{--            width: 100%;--}}
+    {{--        }--}}
 
-{{--        .vertical-menu .navbar-nav {--}}
-{{--            display: block;--}}
-{{--        }--}}
+    {{--        .vertical-menu .navbar-nav {--}}
+    {{--            display: block;--}}
+    {{--        }--}}
 
-{{--        .vertical-menu .nav-item {--}}
-{{--            background: #ffffff;--}}
-{{--        }--}}
+    {{--        .vertical-menu .nav-item {--}}
+    {{--            background: #ffffff;--}}
+    {{--        }--}}
 
-{{--        li {--}}
-{{--            list-style: none;--}}
-{{--        }--}}
+    {{--        li {--}}
+    {{--            list-style: none;--}}
+    {{--        }--}}
 
-{{--        .vertical-menu .nav-link {--}}
-{{--            color: #757575;--}}
-{{--            padding: 10px;--}}
-{{--        }--}}
+    {{--        .vertical-menu .nav-link {--}}
+    {{--            color: #757575;--}}
+    {{--            padding: 10px;--}}
+    {{--        }--}}
 
-{{--        .img-banner-1 {--}}
-{{--            /*height: 30vw;*/--}}
-{{--            margin-top: -30px;--}}
-{{--            background-repeat: no-repeat;--}}
-{{--            background-size: cover;--}}
-{{--            position: relative;--}}
-{{--            overflow-x: hidden;--}}
-{{--        }--}}
+    {{--        .img-banner-1 {--}}
+    {{--            /*height: 30vw;*/--}}
+    {{--            margin-top: -30px;--}}
+    {{--            background-repeat: no-repeat;--}}
+    {{--            background-size: cover;--}}
+    {{--            position: relative;--}}
+    {{--            overflow-x: hidden;--}}
+    {{--        }--}}
 
-{{--        .tablet-button {--}}
-{{--            display: none;--}}
-{{--        }--}}
+    {{--        .tablet-button {--}}
+    {{--            display: none;--}}
+    {{--        }--}}
 
-{{--        /* CSS cho megamenu */--}}
-{{--        .megamenu {--}}
-{{--            display: none;--}}
-{{--        }--}}
+    {{--        /* CSS cho megamenu */--}}
+    {{--        .megamenu {--}}
+    {{--            display: none;--}}
+    {{--        }--}}
 
-{{--        .vertical-menu .nav-item:hover .megamenu {--}}
-{{--            display: block;--}}
-{{--            position: absolute;--}}
-{{--            top: 8px;--}}
-{{--            left: 94%;--}}
-{{--            z-index: 999;--}}
-{{--            width: 700px;--}}
-{{--            background-color: #fff;--}}
-{{--            padding: 20px;--}}
-{{--            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .25);--}}
-{{--        }--}}
-
-
-{{--        .depart-hover li:hover .megamenu {--}}
-{{--            display: block;--}}
-{{--            position: absolute;--}}
-{{--            top: 8px;--}}
-{{--            left: 94%;--}}
-{{--            z-index: 999;--}}
-{{--            width: 700px;--}}
-{{--            background-color: #fff;--}}
-{{--            padding: 20px;--}}
-{{--            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .25);--}}
-{{--        }--}}
-
-{{--        .depart-hover .megamenu li a {--}}
-{{--            padding-left: 0 !important;--}}
-{{--        }--}}
-
-{{--        @media only screen and (min-width: 1200px) {--}}
-
-{{--        }--}}
-
-{{--        @media only screen and (min-width: 992px) {--}}
-{{--            .p-left {--}}
-{{--                padding-right: 0;--}}
-{{--            }--}}
-
-{{--            .p-right {--}}
-{{--                padding-left: 0;--}}
-{{--            }--}}
-{{--        }--}}
-
-{{--        @media only screen and (min-width: 992px) and (max-width: 1199px) {--}}
-
-{{--        }--}}
-
-{{--        @media only screen and (min-width: 768px) and (max-width: 991px) {--}}
-{{--            .menu-header {--}}
-{{--                margin-right: -8px;--}}
-{{--                margin-left: 0px;--}}
-{{--                max-width: 30% !important;--}}
-{{--            }--}}
-
-{{--            .mega-menu-header {--}}
-{{--                margin-right: -8px;--}}
-{{--                margin-left: 0;--}}
-{{--            }--}}
-
-{{--            .menu-bottom {--}}
-{{--                max-width: 20% !important;--}}
-{{--            }--}}
-{{--        }--}}
-
-{{--        @media (max-width: 767px) {--}}
-{{--            .height-banner {--}}
-{{--                height: 40vw;--}}
-{{--                width: 100%;--}}
-{{--            }--}}
-
-{{--        }--}}
-
-{{--        @media (min-width: 768px) {--}}
-{{--            .height-banner {--}}
-{{--                height: 30vw;--}}
-{{--            }--}}
-{{--        }--}}
-
-{{--        @media only screen and (max-width: 480px) {--}}
-{{--            .filter-control .mr-5 {--}}
-{{--                margin-right: 0 !important;--}}
-{{--            }--}}
-
-{{--            .filter-control .ml-5 {--}}
-{{--                margin-left: 0 !important;--}}
-{{--            }--}}
-{{--        }--}}
-
-{{--        .p-side-tablet {--}}
-{{--        }--}}
-
-{{--        @media only screen and (min-width: 576px ) and  (max-width: 991px) {--}}
-{{--            .tablet-button {--}}
-{{--                display: block;--}}
-{{--            }--}}
-
-{{--            .not-tablet-button {--}}
-{{--                display: none !important;--}}
-{{--            }--}}
-
-{{--            .p-side-tablet {--}}
-{{--                display: flex;--}}
-{{--            }--}}
-
-{{--            .product-large.m-large {--}}
-{{--                margin-top: 40px;--}}
-{{--                width: 50%;--}}
-{{--            }--}}
-
-{{--            .p-left .product-large.m-large.p-l-1 {--}}
-{{--                margin-right: 25px;--}}
-{{--            }--}}
-
-{{--            .p-right .product-large.m-large.p-r-1 {--}}
-{{--                margin-left: 25px;--}}
-{{--            }--}}
-
-{{--        }--}}
-
-{{--        @media not (min-width: 576px ) and  (max-width: 991px) {--}}
-{{--            .tablet-button {--}}
-{{--                display: none;--}}
-{{--            }--}}
-
-{{--            .not-tablet-button {--}}
-{{--                display: block !important;--}}
-{{--            }--}}
+    {{--        .vertical-menu .nav-item:hover .megamenu {--}}
+    {{--            display: block;--}}
+    {{--            position: absolute;--}}
+    {{--            top: 8px;--}}
+    {{--            left: 94%;--}}
+    {{--            z-index: 999;--}}
+    {{--            width: 700px;--}}
+    {{--            background-color: #fff;--}}
+    {{--            padding: 20px;--}}
+    {{--            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .25);--}}
+    {{--        }--}}
 
 
-{{--        }--}}
+    {{--        .depart-hover li:hover .megamenu {--}}
+    {{--            display: block;--}}
+    {{--            position: absolute;--}}
+    {{--            top: 8px;--}}
+    {{--            left: 94%;--}}
+    {{--            z-index: 999;--}}
+    {{--            width: 700px;--}}
+    {{--            background-color: #fff;--}}
+    {{--            padding: 20px;--}}
+    {{--            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .25);--}}
+    {{--        }--}}
 
-{{--        .text-limit {--}}
-{{--            white-space: nowrap;--}}
-{{--            overflow: hidden;--}}
-{{--            text-overflow: ellipsis;--}}
-{{--        }--}}
+    {{--        .depart-hover .megamenu li a {--}}
+    {{--            padding-left: 0 !important;--}}
+    {{--        }--}}
 
-{{--        .not-mobile-button {--}}
-{{--            display: none;--}}
-{{--        }--}}
+    {{--        @media only screen and (min-width: 1200px) {--}}
 
-{{--        .only-mobile-button {--}}
-{{--            display: flex;--}}
-{{--        }--}}
+    {{--        }--}}
 
-{{--        @media only screen and (min-width: 576px) {--}}
-{{--            .not-mobile-button {--}}
-{{--                display: flex;--}}
-{{--            }--}}
+    {{--        @media only screen and (min-width: 992px) {--}}
+    {{--            .p-left {--}}
+    {{--                padding-right: 0;--}}
+    {{--            }--}}
+
+    {{--            .p-right {--}}
+    {{--                padding-left: 0;--}}
+    {{--            }--}}
+    {{--        }--}}
+
+    {{--        @media only screen and (min-width: 992px) and (max-width: 1199px) {--}}
+
+    {{--        }--}}
+
+    {{--        @media only screen and (min-width: 768px) and (max-width: 991px) {--}}
+    {{--            .menu-header {--}}
+    {{--                margin-right: -8px;--}}
+    {{--                margin-left: 0px;--}}
+    {{--                max-width: 30% !important;--}}
+    {{--            }--}}
+
+    {{--            .mega-menu-header {--}}
+    {{--                margin-right: -8px;--}}
+    {{--                margin-left: 0;--}}
+    {{--            }--}}
+
+    {{--            .menu-bottom {--}}
+    {{--                max-width: 20% !important;--}}
+    {{--            }--}}
+    {{--        }--}}
+
+    {{--        @media (max-width: 767px) {--}}
+    {{--            .height-banner {--}}
+    {{--                height: 40vw;--}}
+    {{--                width: 100%;--}}
+    {{--            }--}}
+
+    {{--        }--}}
+
+    {{--        @media (min-width: 768px) {--}}
+    {{--            .height-banner {--}}
+    {{--                height: 30vw;--}}
+    {{--            }--}}
+    {{--        }--}}
+
+    {{--        @media only screen and (max-width: 480px) {--}}
+    {{--            .filter-control .mr-5 {--}}
+    {{--                margin-right: 0 !important;--}}
+    {{--            }--}}
+
+    {{--            .filter-control .ml-5 {--}}
+    {{--                margin-left: 0 !important;--}}
+    {{--            }--}}
+    {{--        }--}}
+
+    {{--        .p-side-tablet {--}}
+    {{--        }--}}
+
+    {{--        @media only screen and (min-width: 576px ) and  (max-width: 991px) {--}}
+    {{--            .tablet-button {--}}
+    {{--                display: block;--}}
+    {{--            }--}}
+
+    {{--            .not-tablet-button {--}}
+    {{--                display: none !important;--}}
+    {{--            }--}}
+
+    {{--            .p-side-tablet {--}}
+    {{--                display: flex;--}}
+    {{--            }--}}
+
+    {{--            .product-large.m-large {--}}
+    {{--                margin-top: 40px;--}}
+    {{--                width: 50%;--}}
+    {{--            }--}}
+
+    {{--            .p-left .product-large.m-large.p-l-1 {--}}
+    {{--                margin-right: 25px;--}}
+    {{--            }--}}
+
+    {{--            .p-right .product-large.m-large.p-r-1 {--}}
+    {{--                margin-left: 25px;--}}
+    {{--            }--}}
+
+    {{--        }--}}
+
+    {{--        @media not (min-width: 576px ) and  (max-width: 991px) {--}}
+    {{--            .tablet-button {--}}
+    {{--                display: none;--}}
+    {{--            }--}}
+
+    {{--            .not-tablet-button {--}}
+    {{--                display: block !important;--}}
+    {{--            }--}}
 
 
-{{--            .only-mobile-button {--}}
-{{--                display: none;--}}
-{{--            }--}}
-{{--        }--}}
+    {{--        }--}}
 
-{{--        @media only screen and (max-width: 575px) {--}}
-{{--            .benefit-items .border-right {--}}
-{{--                border-right: none;--}}
-{{--                border-bottom: 1px solid #dee2e6 !important;--}}
-{{--            }--}}
-{{--        }--}}
-{{--    </style>--}}
+    {{--        .text-limit {--}}
+    {{--            white-space: nowrap;--}}
+    {{--            overflow: hidden;--}}
+    {{--            text-overflow: ellipsis;--}}
+    {{--        }--}}
+
+    {{--        .not-mobile-button {--}}
+    {{--            display: none;--}}
+    {{--        }--}}
+
+    {{--        .only-mobile-button {--}}
+    {{--            display: flex;--}}
+    {{--        }--}}
+
+    {{--        @media only screen and (min-width: 576px) {--}}
+    {{--            .not-mobile-button {--}}
+    {{--                display: flex;--}}
+    {{--            }--}}
+
+
+    {{--            .only-mobile-button {--}}
+    {{--                display: none;--}}
+    {{--            }--}}
+    {{--        }--}}
+
+    {{--        @media only screen and (max-width: 575px) {--}}
+    {{--            .benefit-items .border-right {--}}
+    {{--                border-right: none;--}}
+    {{--                border-bottom: 1px solid #dee2e6 !important;--}}
+    {{--            }--}}
+    {{--        }--}}
+    {{--    </style>--}}
 
     <div class="body">
         <section class="section-First pt-3 pb-3 container-fluid">
@@ -249,16 +249,29 @@
                 <div class="section-First-middle col-xl-6 col-md-8 col-12">
                     <!-- Swiper -->
                     <div class="swiper mySwiper">
-                        @php
-                            $listBanner = $banner->thumbnails;
-                            $arrayThumbnails = explode(',', $listBanner);
-                        @endphp
+
                         <div class="swiper-wrapper">
+                            @if(!$banner)
+                                <div class="swiper-slide">
+                                    <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/742w/carousel/17/slideshow-home2-1.jpg?c=1" alt="">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/740w/carousel/18/slideshow-home2-2.jpg?c=1" alt="">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/740w/carousel/19/slideshow-home2-3.jpg?c=1" alt="">
+                                </div>
+                            @else
+                                @php
+                                    $listBanner = $banner->thumbnails;
+                                    $arrayThumbnails = explode(',', $listBanner);
+                                @endphp
                             @foreach($arrayThumbnails as $bannerdemo)
                                 <div class="swiper-slide">
                                     <img src="{{ asset('storage/' . $bannerdemo) }}" alt="">
                                 </div>
                             @endforeach
+                            @endif
                         </div>
                         <div class="swiper-button-next"></div>
                         <div class="swiper-button-prev"></div>
@@ -266,24 +279,39 @@
                     </div>
                 </div>
                 <div class="section-First-right col-xl-4 col-md-4">
-                    @php
-                        $sub_List = $banner->sub_thumbnails;
-                        $sub_thumbnail = explode(',', $sub_List);
-                    @endphp
                     <div class="row">
-                        @if(count($sub_thumbnail)>4)
-                            @for($i=0; $i<4; $i++)
-                                <div class="col-md-6 col-sm-5 item">
-                                    <img src="{{ asset('storage/' . $sub_thumbnail[$i]) }}"
-                                         alt="">
-                                </div>
-                            @endfor
-                        @else
-                        @foreach($sub_thumbnail as $bannerSub)
-                            <div class="col-6 item">
-                                <img src="{{ asset('storage/' . $bannerSub) }}" alt="">
+                        @if(!$banner)
+                            <div class="col-md-6 col-sm-5 item">
+                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-1.png" alt="">
                             </div>
-                        @endforeach
+                            <div class="col-md-6 col-sm-5 item">
+                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-2.png" alt="">
+                            </div>
+                            <div class="col-md-6 col-sm-5 item">
+                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-3.png" alt="">
+                            </div>
+                            <div class="col-md-6 col-sm-5 item">
+                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-4.png" alt="">
+                            </div>
+                        @else
+                            @php
+                                $sub_List = $banner->sub_thumbnails;
+                                $sub_thumbnail = explode(',', $sub_List);
+                            @endphp
+                            @if(count($sub_thumbnail)>4)
+                                @for($i=0; $i<4; $i++)
+                                    <div class="col-md-6 col-sm-5 item">
+                                        <img src="{{ asset('storage/' . $sub_thumbnail[$i]) }}"
+                                             alt="">
+                                    </div>
+                                @endfor
+                            @else
+                                @foreach($sub_thumbnail as $bannerSub)
+                                    <div class="col-6 item">
+                                        <img src="{{ asset('storage/' . $bannerSub) }}" alt="">
+                                    </div>
+                                @endforeach
+                            @endif
                         @endif
                     </div>
                 </div>
@@ -301,6 +329,7 @@
                     @php
                         $listCate = DB::table('categories')->where('parent_id', null)->get();
                     @endphp
+
                     @foreach($listCate as $cate)
                         <div class="swiper-slide">
                             <a href="{{ route('category.show', $cate->id) }}">
@@ -333,12 +362,12 @@
                                             <img src="{{ asset('storage/' . $newProduct->thumbnail) }}"
                                                  alt="">
                                             <div class="button-view">
-                                                    <button>Quick view</button>
+                                                <button>Quick view</button>
                                             </div>
                                             <div class="text">
-                                                <div class="text-sale">
-                                                    Sale
-                                                </div>
+                                                {{--                                                <div class="text-sale">--}}
+                                                {{--                                                    Sale--}}
+                                                {{--                                                </div>--}}
                                                 <div class="text-new">
                                                     New
                                                 </div>
@@ -378,7 +407,8 @@
                                             </div>
                                             <div class="card-bottom d-flex justify-content-between">
                                                 <div class="card-bottom--left">
-                                                    <a href="{{route('detail_product.show', $newProduct->id)}}">Choose Options</a>
+                                                    <a href="{{route('detail_product.show', $newProduct->id)}}">Choose
+                                                        Options</a>
                                                 </div>
                                                 <div class="card-bottom--right">
                                                     <i class="item-icon fa-regular fa-heart"></i>
@@ -404,14 +434,16 @@
                                             <div class="item-img">
                                                 <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                                      alt="">
-                                                <div class="button-view"><button href="">Quick view</button></div>
+                                                <div class="button-view">
+                                                    <button href="">Quick view</button>
+                                                </div>
                                                 <div class="text">
                                                     <div class="text-sale">
                                                         Sale
                                                     </div>
-                                                    <div class="text-new">
-                                                        New
-                                                    </div>
+                                                    {{--                                                    <div class="text-new">--}}
+                                                    {{--                                                        New--}}
+                                                    {{--                                                    </div>--}}
                                                     <!-- <div class="text-bundle">
                                                             Bundle
                                                         </div> -->
@@ -448,7 +480,8 @@
                                                 </div>
                                                 <div class="card-bottom d-flex justify-content-between">
                                                     <div class="card-bottom--left">
-                                                        <a href="{{route('detail_product.show', $product->id)}}">Choose Options</a>
+                                                        <a href="{{route('detail_product.show', $product->id)}}">Choose
+                                                            Options</a>
                                                     </div>
                                                     <div class="card-bottom--right">
                                                         <i class="item-icon fa-regular fa-heart"></i>
@@ -477,14 +510,16 @@
                                     <div class="item-img">
                                         <img src="{{ asset('storage/' . $hotProduct->thumbnail) }}"
                                              alt="">
-                                        <div class="button-view"><button href="">Quick view</button></div>
+                                        <div class="button-view">
+                                            <button href="">Quick view</button>
+                                        </div>
                                         <div class="text">
                                             <div class="text-sale">
-                                                Sale
+                                                Hot
                                             </div>
-                                            <div class="text-new">
-                                                New
-                                            </div>
+                                            {{--                                            <div class="text-new">--}}
+                                            {{--                                                New--}}
+                                            {{--                                            </div>--}}
                                             <!-- <div class="text-bundle">
                                                     Bundle
                                                 </div> -->
@@ -521,7 +556,8 @@
                                         </div>
                                         <div class="card-bottom d-flex justify-content-between">
                                             <div class="card-bottom--left">
-                                                <a href="{{route('detail_product.show', $product->id)}}">Choose Options</a>
+                                                <a href="{{route('detail_product.show', $product->id)}}">Choose
+                                                    Options</a>
                                             </div>
                                             <div class="card-bottom--right">
                                                 <i class="item-icon fa-regular fa-heart"></i>
@@ -596,7 +632,8 @@
                 <div class="content">{{$cate->name}}</div>
                 <div class="row">
                     <div class="col-md-3 col-xl-2 section-left">
-                        <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/products-block-banner-left-2.jpg" alt="">
+                        <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/products-block-banner-left-2.jpg"
+                             alt="">
                     </div>
                     <div class="col-12 col-md-9 col-xl-8">
                         <div class="swiper listProduct">
@@ -656,7 +693,8 @@
                                                 </div>
                                                 <div class="card-bottom d-flex justify-content-between">
                                                     <div class="card-bottom--left">
-                                                        <a href="{{route('detail_product.show', $product->id)}}">Choose Options</a>
+                                                        <a href="{{route('detail_product.show', $product->id)}}">Choose
+                                                            Options</a>
                                                     </div>
                                                     <div class="card-bottom--right">
                                                         <i class="item-icon fa-regular fa-heart"></i>
@@ -671,40 +709,77 @@
                             <div class="swiper-button-prev"></div>
                         </div>
                     </div>
-                    <div class="col-xl-2 category-right">
-                        <div class="brand-item d-flex justify-content-between">
-                            <div class="brand-item-text">
-                                <div class="name">FOR MEN</div>
-                                <div><a href="#">Shop now</a></div>
-                            </div>
-                            <div class="brand-item-img">
-                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/70x70/q/for-men__79756.original.jpg" alt="">
-                            </div>
+                    @if(!$listCate->isEmpty())
+                        @php
+                            $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
+                        @endphp
+                        <div class="col-xl-2 category-right">
+                            @if(count($listChild) == null)
+                                <div class="brand-item d-flex justify-content-between">
+                                    <div class="brand-item--all">
+                                        <a href="{{ route('category.show', $cate->id) }}">View all categories</a>
+                                    </div>
+                                </div>
+                            @elseif(count($listChild) < 2)
+                                @for($i=0; $i<1; $i++)
+                                    <div class="brand-item d-flex justify-content-between">
+                                        <div class="brand-item-text">
+                                            <div class="name">{{ $listChild[$i]->name }}</div>
+                                            <div><a href="{{ route('category.show', $listChild[$i]->id) }}">Shop now</a>
+                                            </div>
+                                        </div>
+                                        <div class="brand-item-img">
+                                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/70x70/q/for-men__79756.original.jpg"
+                                                 alt="">
+                                        </div>
+                                    </div>
+                                @endfor
+                                <div class="brand-item d-flex justify-content-between">
+                                    <div class="brand-item--all">
+                                        <a href="{{ route('category.show', $cate->id) }}">View all categories</a>
+                                    </div>
+                                </div>
+                            @elseif(count($listChild) < 3)
+                                @for($i=0; $i<2; $i++)
+                                    <div class="brand-item d-flex justify-content-between">
+                                        <div class="brand-item-text">
+                                            <div class="name">{{ $listChild[$i]->name }}</div>
+                                            <div><a href="{{ route('category.show', $listChild[$i]->id) }}">Shop now</a>
+                                            </div>
+                                        </div>
+                                        <div class="brand-item-img">
+                                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/70x70/q/for-men__79756.original.jpg"
+                                                 alt="">
+                                        </div>
+                                    </div>
+                                @endfor
+                                <div class="brand-item d-flex justify-content-between">
+                                    <div class="brand-item--all">
+                                        <a href="{{ route('category.show', $cate->id) }}">View all categories</a>
+                                    </div>
+                                </div>
+                            @else
+                                @for($i=0; $i<3; $i++)
+                                    <div class="brand-item d-flex justify-content-between">
+                                        <div class="brand-item-text">
+                                            <div class="name">{{ $listChild[$i]->name }}</div>
+                                            <div><a href="{{ route('category.show', $listChild[$i]->id) }}">Shop now</a>
+                                            </div>
+                                        </div>
+                                        <div class="brand-item-img">
+                                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/70x70/q/for-men__79756.original.jpg"
+                                                 alt="">
+                                        </div>
+                                    </div>
+                                @endfor
+                                <div class="brand-item d-flex justify-content-between">
+                                    <div class="brand-item--all">
+                                        <a href="{{ route('category.show', $cate->id) }}">View all categories</a>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
-                        <div class="brand-item d-flex justify-content-between">
-                            <div class="brand-item-text">
-                                <div class="name">FOR MEN</div>
-                                <div><a href="#">Shop now</a></div>
-                            </div>
-                            <div class="brand-item-img">
-                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/70x70/q/for-men__79756.original.jpg" alt="">
-                            </div>
-                        </div>
-                        <div class="brand-item d-flex justify-content-between">
-                            <div class="brand-item-text">
-                                <div class="name">FOR MEN</div>
-                                <div><a href="#">Shop now</a></div>
-                            </div>
-                            <div class="brand-item-img">
-                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/70x70/q/for-men__79756.original.jpg" alt="">
-                            </div>
-                        </div>
-                        <div class="brand-item d-flex justify-content-between">
-                            <div class="brand-item--all">
-                                <a href="#">View all categories</a>
-                            </div>
-                        </div>
-                    </div>
+                    @endif
                 </div>
             </section>
             <section class="section pt-3 pb-3 container-fluid">
@@ -728,7 +803,8 @@
         @endforeach
         <section class="section-Seven ">
             <div class="container-fluid">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum, nisi lorem egestas vitae scel
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum
+                    interdum, nisi lorem egestas vitae scel
                     <span id="dots">...</span>
                     <span id="more">
                     erisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor vitae massa.
@@ -741,7 +817,8 @@
             </div>
         </section>
         <section class="section-Eight">
-            <img class="img" src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/bg-with-us2.jpg" alt="">
+            <img class="img"
+                 src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/bg-with-us2.jpg" alt="">
             <div class="section-content">
                 <div class="content">
                     Why shop with us?
@@ -749,7 +826,8 @@
                 <div class="list d-flex">
                     <div class="item">
                         <div class="item-img">
-                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png" alt="">
+                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png"
+                                 alt="">
                         </div>
                         <div class="item-content">
                             QUALITY AND SAVING
@@ -760,7 +838,8 @@
                     </div>
                     <div class="item">
                         <div class="item-img">
-                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png" alt="">
+                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png"
+                                 alt="">
                         </div>
                         <div class="item-content">
                             QUALITY AND SAVING
@@ -771,7 +850,8 @@
                     </div>
                     <div class="item">
                         <div class="item-img">
-                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png" alt="">
+                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png"
+                                 alt="">
                         </div>
                         <div class="item-content">
                             QUALITY AND SAVING
@@ -782,7 +862,8 @@
                     </div>
                     <div class="item">
                         <div class="item-img">
-                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png" alt="">
+                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png"
+                                 alt="">
                         </div>
                         <div class="item-content">
                             QUALITY AND SAVING
@@ -793,7 +874,8 @@
                     </div>
                     <div class="item">
                         <div class="item-img">
-                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png" alt="">
+                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png"
+                                 alt="">
                         </div>
                         <div class="item-content">
                             QUALITY AND SAVING
