@@ -77,7 +77,7 @@
                                     <div class="item-text">Gift Cards</div>
                                 </button>
                             </div>
-                            <div class="item">
+                            <div class="item user">
                                 <button class="button" onclick="signIn()"><i class="item-icon fa-regular fa-user"></i>
                                     <div class="item-text">{{Auth::user()->name}}</div>
                                 </button>
@@ -87,6 +87,38 @@
                                     </div>
                                     <hr>
                                     <button class="signOut" href="#" onclick="logout()">Sign Out</button>
+                                </div>
+                                <div class="hover-list">
+                                    <div class="drop-item">
+                                        <a href="{{route('profile.show')}}">{{ __('home.profile') }}</a>
+                                    </div>
+                                    <div class="drop-item">
+                                        <a href="">Coins: </a>
+                                    </div>
+                                    <div class="drop-item">
+                                        <a href="{{route('buy.coin.show')}}">{{ __('home.buy coin') }}</a>
+                                    </div>
+                                    @php
+                                        $user = Auth::user()->id;
+                                        $role_id = DB::table('role_user')->where('user_id', $user)->get();
+                                        $isAdmin = false;
+                                        foreach ($role_id as $item) {
+                                            if ($item->role_id == 1) {
+                                                $isAdmin = true;
+                                            }
+                                        }
+                                    @endphp
+                                    @if($isAdmin == true)
+                                        <div class="drop-item">
+                                            <a href="{{ route('seller.products.index') }}">Dashboard</a>
+                                        </div>
+                                    @endif
+                                    <div class="drop-item">
+                                        <a href="{{route('product.index')}}">Shop</a>
+                                    </div>
+                                    <div class="drop-item">
+                                        <button onclick="logout()" href="">Đăng xuất</button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="close-signMenu" onclick="closesignIn()"></div>
@@ -228,27 +260,108 @@
                                                 <i class="fa-solid fa-angle-right"></i>
                                             </a>
                                             @if(!$listCate->isEmpty())
-                                                <ul class="hd_dropdown--right row">
-                                                    @php
-                                                        $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
-                                                    @endphp
-                                                    @foreach($listChild as $child)
-                                                        <div class="colum col-4 col-lg-4">
-                                                            <li>
-                                                                <a class="colum-hd"
-                                                                   href="{{ route('category.show', $child->id) }}">{{ $child->name }}</a>
-                                                            </li>
-                                                            @php
-                                                                $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
-                                                            @endphp
-                                                            @foreach($listChild2 as $child2)
+                                                <ul class="hd_dropdown--right">
+                                                    <div class="list-category">
+                                                        @php
+                                                            $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
+                                                        @endphp
+                                                        @foreach($listChild as $child)
+                                                            <div class="colum d-block">
                                                                 <li>
-                                                                    <a class="colum-item"
-                                                                       href="{{ route('category.show', $child2->id) }}">{{ $child2->name }}</a>
+                                                                    <a class="colum-hd"
+                                                                       href="{{ route('category.show', $child->id) }}">{{ $child->name }}</a>
                                                                 </li>
-                                                            @endforeach
+                                                                @php
+                                                                    $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
+                                                                @endphp
+                                                                @foreach($listChild2 as $child2)
+                                                                    <li>
+                                                                        <a class="colum-item"
+                                                                           href="{{ route('category.show', $child2->id) }}">{{ $child2->name }}</a>
+                                                                    </li>
+                                                                @endforeach
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                    <div class="list-product row m-2">
+                                                        <div class="col-md-2">
+                                                            <b>Featured Products</b>
+                                                            <span>Quis ipsum suspendisse ultrices gravida. Risus an commodo viverra delta maecenas cumsan lacus de facilisis.</span>
                                                         </div>
-                                                    @endforeach
+                                                        <div class="col-md-6 list-product--swiper">
+                                                            <div class="swiper Category_listProduct">
+                                                                <div class="swiper-wrapper">
+                                                                    @php
+                                                                        $products = DB::table('products')->get();
+                                                                    @endphp
+                                                                    @foreach($products as $product)
+                                                                        <div class="swiper-slide">
+                                                                            <div class="item">
+                                                                                <div class="item-img">
+                                                                                    <img src="{{ asset('storage/' . $product->thumbnail) }}"
+                                                                                         alt="">
+                                                                                    <div class="button-view">
+                                                                                        <button href="">Quick view</button>
+                                                                                    </div>
+                                                                                    <div class="text">
+                                                                                        <!-- <div class="text-sale">
+                                                                                                        Sale
+                                                                                                    </div>
+                                                                                                    <div class="text-new">
+                                                                                                        New
+                                                                                                    </div> -->
+                                                                                        <!-- <div class="text-bundle">
+                                                                                                        Bundle
+                                                                                                    </div> -->
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="item-body">
+                                                                                    <div class="card-rating">
+                                                                                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                                                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                                                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                                                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                                                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                                                        <span>(1)</span>
+                                                                                    </div>
+                                                                                    @php
+                                                                                        $nameUser = DB::table('users')->where('id', $product->user_id)->first();
+                                                                                    @endphp
+                                                                                    <div class="card-brand">
+                                                                                        {{$nameUser->name}}
+                                                                                    </div>
+                                                                                    <div class="card-title">
+                                                                                        <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>
+                                                                                    </div>
+                                                                                    <div class="card-price d-flex justify-content-between">
+                                                                                        <!-- <div class="price">
+                                                                                                        <strong>$189.000</strong>
+                                                                                                    </div> -->
+                                                                                        <div class="price-sale">
+                                                                                            <strong>${{$product->qty}}</strong>
+                                                                                        </div>
+                                                                                        <div class="price-cost">
+                                                                                            <strike>${{$product->price}}</strike>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="card-bottom d-flex justify-content-between">
+                                                                                        <div class="card-bottom--left">
+                                                                                            <a href="{{route('detail_product.show', $product->id)}}">Choose Options</a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    @endforeach
+                                                                </div>
+                                                                <div class="swiper-button-next"></div>
+                                                                <div class="swiper-button-prev"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 img">
+                                                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/mega-menu-style-1.jpg" alt="">
+                                                        </div>
+                                                    </div>
                                                 </ul>
                                             @endif
                                         </div>
@@ -408,10 +521,10 @@
     <div class="header-mobile halo-header">
         <div class="hd-mobile flex-row p-0">
             <div class="col-3 d-flex">
-                <div class="hd-mobile--left">
+                <div class="hd-mobile--leftOne">
                     <button onclick="menuMobile()"><i class="fa-solid fa-bars"></i></button>
                 </div>
-                <div class="hd-mobile--right--one">
+                <div class="hd-mobile--leftTwo">
                     <button onclick="Search_mobile()"><i class="fa-solid fa-magnifying-glass"></i></button>
                     <div class="form-search" id="search_mobile">
                         <form class="form-inline">
@@ -421,7 +534,60 @@
                     </div>
                 </div>
             </div>
-            <div onclick="closeSearch_mobile()" class="close_search_mobile"></div>
+            <div class="hd-mobile_menu" id="demo">
+                <div class="MenuContainer">
+                        @foreach($listCate as $cate)
+                            <div class="OptionContainer">
+                                <div class="OptionHead">
+                                    <a class="item d-flex" href="{{ route('category.show', $cate->id) }}">{{ $cate->name }}</a>
+                                    <div>
+                                        <svg onclick="ToggleOption(this)" style="cursor: pointer;"
+                                             xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
+                                             viewBox="0 0 30 30">
+                                            <path d="M 24.990234 8.9863281 A 1.0001 1.0001 0 0 0 24.292969 9.2929688 L 15 18.585938 L 5.7070312 9.2929688 A 1.0001 1.0001 0 0 0 4.9902344 8.9902344 A 1.0001 1.0001 0 0 0 4.2929688 10.707031 L 14.292969 20.707031 A 1.0001 1.0001 0 0 0 15.707031 20.707031 L 25.707031 10.707031 A 1.0001 1.0001 0 0 0 24.990234 8.9863281 z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                @if(!$listCate->isEmpty())
+                                    <div class="OptionBody">
+                                        @php
+                                            $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
+                                        @endphp
+                                        @foreach($listChild as $child)
+                                            <div class="OptionContainer">
+                                                <div class="OptionHead">
+                                                    <a class="item d-flex"
+                                                       href="{{ route('category.show', $child->id) }}">{{ $child->name }}</a>
+                                                    <div>
+                                                        <svg onclick="ToggleOption(this)" style="cursor: pointer;"
+                                                             xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20"
+                                                             height="20" viewBox="0 0 30 30">
+                                                            <path d="M 24.990234 8.9863281 A 1.0001 1.0001 0 0 0 24.292969 9.2929688 L 15 18.585938 L 5.7070312 9.2929688 A 1.0001 1.0001 0 0 0 4.9902344 8.9902344 A 1.0001 1.0001 0 0 0 4.2929688 10.707031 L 14.292969 20.707031 A 1.0001 1.0001 0 0 0 15.707031 20.707031 L 25.707031 10.707031 A 1.0001 1.0001 0 0 0 24.990234 8.9863281 z"></path>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                                <div class="OptionBody">
+                                                    @php
+                                                        $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
+                                                    @endphp
+                                                    @foreach($listChild2 as $child2)
+                                                        <div class="OptionContainer">
+                                                            <div class="OptionHead">
+                                                                <a class="item d-flex"
+                                                                   href="{{ route('category.show', $child2->id) }}">{{ $child2->name }}</a>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+            </div>
+            <div onclick="closeMobile()" class="opacity_menu"></div>
             @if(!$config->isEmpty())
                 <div class="hd-mobile--center col-5 text-center">
                     <a href="{{route('home')}}">
@@ -429,186 +595,131 @@
                     </a>
                 </div>
             @endif
-            <div class="hd-mobile--right col-3">
+            <div class="d-flex justify-content-end col-3">
                 @if(Auth::check())
-                    <div class="hd-mobile--one">
+                    <div class="hd-mobile--rightOne">
                         <button class="button" onclick="signInM()"><i class="item-icon fa-regular fa-user"></i>
                             <div class="item-text"></div>
                         </button>
-                        <div class="signMenuM" id="signMenuM">
-                            <div class="name"><a href="{{route('profile.show')}}">{{Auth::user()->name}}</a></div>
-                            <hr>
-                            <button class="signOut" href="#" onclick="logout()">Log Out</button>
-                        </div>
+                    </div>
+                    <div class="signMenuM" id="signMenuM">
+                        <div class="name"><a href="{{route('profile.show')}}">{{Auth::user()->name}}</a></div>
+                        <hr>
+                        <button class="signOut" href="#" onclick="logout()">Log Out</button>
                     </div>
                     <div class="close-signMenuM" onclick="closesignInM()"></div>
-                    <div class="hd-mobile--right--two">
+                    <div class="hd-mobile--rightTwo">
                         <button class="button" onclick="ShopM()">
                             <i class="item-shop--icon fa-solid fa-cart-shopping"></i>
                         </button>
-                        <div class="shop-menuM" id="closeShopM">
-                            <div class="d-flex pb-4">
-                                <span class="cart mr-4">REVIEW YOUR CART</span>
-                                <span>0 item</span>
-                            </div>
-                            <div class="shop-list">
-                                @php
-                                    $cartItems = \App\Models\Cart::where([
-                                        ['user_id', Auth::user()->id],
-                                        ['status', \App\Enums\CartStatus::WAIT_ORDER]])->get();
-                                @endphp
-                                @if ($cartItems->isEmpty())
-                                    <p>Chưa có sản phẩm trong giỏ hàng.</p>
-                                @else
-                                    @foreach ($cartItems as $cartItem)
-                                        <div class="shop-item row">
-                                            <div class="col-3 shop-item--img">
-                                                <img src="{{ asset('storage/'.$cartItem->product->thumbnail) }}" alt="">
-                                            </div>
-                                            <div class="col-8 shop-item--text">
-                                                <div class="text-seller">
-                                                    {{$cartItem->product->user->name}}
-                                                </div>
-                                                <div class="text-name">
-                                                    <a href="{{route('detail_product.show', $cartItem->product->id)}}">{{ $cartItem->product->name }} x1</a>
-                                                </div>
-                                                <div class="text-properties">
-                                                    <span>Black/ 55 inch</span>
-                                                    <span><i class="fa-regular fa-pen-to-square"></i></span>
-                                                </div>
-                                                <div class="text-price">$ {{ $cartItem->price }} </div>
-                                            </div>
-                                            <div class="col-1">
-                                                <form action="{{ route('cart.delete', $cartItem->id) }}"
-                                                      method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"> X</button>
-                                                </form>
-                                            </div>
+                    </div>
+                    <div class="shop-menuM" id="closeShopM">
+                        <div class="d-flex pb-4">
+                            <span class="cart mr-4">REVIEW YOUR CART</span>
+                            <span>0 item</span>
+                        </div>
+                        <div class="shop-list">
+                            @php
+                                $cartItems = \App\Models\Cart::where([
+                                    ['user_id', Auth::user()->id],
+                                    ['status', \App\Enums\CartStatus::WAIT_ORDER]])->get();
+                            @endphp
+                            @if ($cartItems->isEmpty())
+                                <p>Chưa có sản phẩm trong giỏ hàng.</p>
+                            @else
+                                @foreach ($cartItems as $cartItem)
+                                    <div class="shop-item row">
+                                        <div class="col-3 shop-item--img">
+                                            <img src="{{ asset('storage/'.$cartItem->product->thumbnail) }}" alt="">
                                         </div>
-                                    @endforeach
-                                @endif
-                            </div>
-                            <hr class="mt-5 mb-5">
-                            <div class="pay">
-                                <div class="total mb-4">
-                                    <div class="subtotal"></div>
-                                    <div class="grandtotal d-flex justify-content-between ">
-                                        <span>Grand Total:</span>
-                                        <span>$</span>
+                                        <div class="col-8 shop-item--text">
+                                            <div class="text-seller">
+                                                {{$cartItem->product->user->name}}
+                                            </div>
+                                            <div class="text-name">
+                                                <a href="{{route('detail_product.show', $cartItem->product->id)}}">{{ $cartItem->product->name }} x1</a>
+                                            </div>
+                                            <div class="text-properties">
+                                                <span>Black/ 55 inch</span>
+                                                <span><i class="fa-regular fa-pen-to-square"></i></span>
+                                            </div>
+                                            <div class="text-price">$ {{ $cartItem->price }} </div>
+                                        </div>
+                                        <div class="col-1">
+                                            <form action="{{ route('cart.delete', $cartItem->id) }}"
+                                                  method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"> X</button>
+                                            </form>
+                                        </div>
                                     </div>
+                                @endforeach
+                            @endif
+                        </div>
+                        <hr class="mt-5 mb-5">
+                        <div class="pay">
+                            <div class="total mb-4">
+                                <div class="subtotal"></div>
+                                <div class="grandtotal d-flex justify-content-between ">
+                                    <span>Grand Total:</span>
+                                    <span>$</span>
                                 </div>
-                                <div class="cart">
-                                    <div class="check_now">
-                                        <a href="#">
-                                            Check out now
-                                        </a>
-                                    </div>
-                                    <div class="view-card">
-                                        <a href="{{ route('cart.index') }}">
-                                            View Cart
-                                        </a>
-                                    </div>
+                            </div>
+                            <div class="cart">
+                                <div class="check_now">
+                                    <a href="#">
+                                        Check out now
+                                    </a>
+                                </div>
+                                <div class="view-card">
+                                    <a href="{{ route('cart.index') }}">
+                                        View Cart
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="closeShopMenuM" onclick="closeShopM()"></div>
                 @else
-                    <div class="hd-mobile--one ">
+                    <div class="hd-mobile--rightOne">
                         <button class="button" onclick="signInM()"><i class="item-icon fa-regular fa-user"></i>
                             <div class="item-text"></div>
                         </button>
-                        <div class="signMenuM" id="signMenuM">
-                            <div class="login">LOGIN</div>
-                            <div class="content">
-                                If you are already registered, please log in.
-                            </div>
-                            <form action="{{route('login.submit')}}" method="post">
-                                @csrf
-                                <div class="email">
-                                    Email Address:<span class="text-danger">*</span> <br>
-                                    <input class="mt-2" name="login_field" type="email"
-                                           placeholder="{{ __('home.input email') }}" style="box-shadow: none">
-                                </div>
-                                <div class="password">
-                                    Password: <span class="text-danger">*</span> <br>
-                                    <input class="mt-2" name="password" type="password"
-                                           placeholder="{{ __('home.input password') }}" style="box-shadow: none">
-                                </div>
-                                <div class="card-bottom--left">
-                                    <button type="submit">Sign In</button>
-                                </div>
-                            </form>
-                            <hr>
-                            <div class="content">
-                                Create your account and enjoy a new shopping experience.
-                            </div>
-                            <a href="{{route('register.show')}}" class="register">
-                                <button type="submit">Create A New Account</button>
-                            </a>
+                    </div>
+                    <div class="signMenuM" id="signMenuM">
+                        <div class="login">LOGIN</div>
+                        <div class="content">
+                            If you are already registered, please log in.
                         </div>
+                        <form action="{{route('login.submit')}}" method="post">
+                            @csrf
+                            <div class="email">
+                                Email Address:<span class="text-danger">*</span> <br>
+                                <input class="mt-2" name="login_field" type="email"
+                                       placeholder="{{ __('home.input email') }}" style="box-shadow: none">
+                            </div>
+                            <div class="password">
+                                Password: <span class="text-danger">*</span> <br>
+                                <input class="mt-2" name="password" type="password"
+                                       placeholder="{{ __('home.input password') }}" style="box-shadow: none">
+                            </div>
+                            <div class="card-bottom--left">
+                                <button type="submit">Sign In</button>
+                            </div>
+                        </form>
+                        <hr>
+                        <div class="content">
+                            Create your account and enjoy a new shopping experience.
+                        </div>
+                        <a href="{{route('register.show')}}" class="register">
+                            <button type="submit">Create A New Account</button>
+                        </a>
                     </div>
                     <div class="close-signMenuM" onclick="closesignInM()"></div>
                 @endif
             </div>
         </div>
-        <div class="hd-mobile_menu" id="demo">
-            <div class="close-menu d-lg-none d-block "></div>
-            <div class="MenuContainer">
-                @foreach($listCate as $cate)
-                    <div class="OptionContainer">
-                        <div class="OptionHead">
-                            <a class="item d-flex" href="{{ route('category.show', $cate->id) }}">{{ $cate->name }}</a>
-                            <div>
-                                <svg onclick="ToggleOption(this)" style="cursor: pointer;"
-                                     xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
-                                     viewBox="0 0 30 30">
-                                    <path d="M 24.990234 8.9863281 A 1.0001 1.0001 0 0 0 24.292969 9.2929688 L 15 18.585938 L 5.7070312 9.2929688 A 1.0001 1.0001 0 0 0 4.9902344 8.9902344 A 1.0001 1.0001 0 0 0 4.2929688 10.707031 L 14.292969 20.707031 A 1.0001 1.0001 0 0 0 15.707031 20.707031 L 25.707031 10.707031 A 1.0001 1.0001 0 0 0 24.990234 8.9863281 z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                        @if(!$listCate->isEmpty())
-                            <div class="OptionBody">
-                                @php
-                                    $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
-                                @endphp
-                                @foreach($listChild as $child)
-                                    <div class="OptionContainer">
-                                        <div class="OptionHead">
-                                            <a class="item d-flex"
-                                               href="{{ route('category.show', $child->id) }}">{{ $child->name }}</a>
-                                            <div>
-                                                <svg onclick="ToggleOption(this)" style="cursor: pointer;"
-                                                     xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20"
-                                                     height="20" viewBox="0 0 30 30">
-                                                    <path d="M 24.990234 8.9863281 A 1.0001 1.0001 0 0 0 24.292969 9.2929688 L 15 18.585938 L 5.7070312 9.2929688 A 1.0001 1.0001 0 0 0 4.9902344 8.9902344 A 1.0001 1.0001 0 0 0 4.2929688 10.707031 L 14.292969 20.707031 A 1.0001 1.0001 0 0 0 15.707031 20.707031 L 25.707031 10.707031 A 1.0001 1.0001 0 0 0 24.990234 8.9863281 z"></path>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                        <div class="OptionBody">
-                                            @php
-                                                $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
-                                            @endphp
-                                            @foreach($listChild2 as $child2)
-                                                <div class="OptionContainer">
-                                                    <div class="OptionHead">
-                                                        <a class="item d-flex"
-                                                           href="{{ route('category.show', $child2->id) }}">{{ $child2->name }}</a>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        @endif
-                    </div>
-                @endforeach
-            </div>
-        </div>
-        <div onclick="closemenuMobile()" class="opacity_menu"></div>
     </div>
     {{--    <div class="position-relative" id="popup-alert">--}}
     {{--        <div class="col-md-2 position-fixed" style="z-index: 100; top: 0">--}}

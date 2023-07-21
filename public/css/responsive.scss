@@ -71,7 +71,7 @@
           &--item{
             margin: 0 7px;
             a{
-              font-size: 17px;
+              font-size: 15px;
               .text{
                 font-weight: 500;
               }
@@ -299,7 +299,7 @@
           &--item{
             margin: 0 7px;
             a{
-              font-size: 17px;
+              font-size: 15px;
               .text{
                 font-weight: 500;
                 font-size: 15px;
@@ -575,6 +575,11 @@
     }
 
   }
+
+  .body {
+    .section-First {
+    }
+  }
   .category-item {
     .swiper-pagination {
       display: block;
@@ -605,7 +610,7 @@
       padding: 10px;
 
       &-img {
-        width: 150px;
+        width: 100%;
         height: 150px;
 
         .button-view {
@@ -844,6 +849,53 @@
       }
     }
   }
+  .category-header{
+    display: block!important;
+    &--left{
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    &--right{
+      .show-item{
+        display: none;
+      }
+      .SortBy{
+        font-size: 16px;
+        button{
+          padding: 7px 10px!important;
+          font-size: 15px;
+        }
+      }
+    }
+  }
+  .col-6{
+    padding: 0 5px;
+  }
+  .category-list {
+    .item-body{
+      .card-title-list {
+      a {
+        font-size: 15px;
+        line-height: 14px;
+      }
+    }
+  }
+  }
+  .section{
+    margin: 10px 0;
+  }
+  .category-banner {
+    position: relative;
+
+    img {
+      min-height: 300px;
+      object-fit: cover;
+      width: 100%;
+    }
+    .category-name{
+      font-size: 35px;
+    }
+  }
 }
 @media (max-width: 576px) {
   .container-fluid{
@@ -852,7 +904,7 @@
   .section{
     .content{
       margin-bottom: 20px;
-      font-size: 20px;
+      font-size: 18px;
     }
     .item{
       &-img{
@@ -904,8 +956,8 @@
     .product-banner{
       img{
         border-radius: 20px;
-        min-height: 150px;
-        padding: 5px 20px;
+       height: 120px;
+        padding: 5px;
       }
     }
   }
@@ -921,8 +973,8 @@
       a{
         .img{
           img{
-            width: 130px;
-            height: 130px;
+            width: 100px;
+            height: 100px;
           }
         }
       }
@@ -944,6 +996,7 @@
         height: 100%;
         margin-bottom: 10px;
         padding: 0;
+        margin-top: 23px;
       }
       &-right{
         display: flex;
@@ -955,6 +1008,7 @@
             margin: 10px 0;
             width: 100%;
             height: 90%;
+            object-fit: cover;
           }
         }
       }
@@ -962,6 +1016,7 @@
     .section-Second{
       img{
         width: 100%;
+        object-fit: cover;
       }
     }
     .section-Third{

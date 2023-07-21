@@ -27,7 +27,7 @@
     margin: 0 7px;
   }
   .header .header-pc .header-bottom-left--item a {
-    font-size: 17px;
+    font-size: 15px;
   }
   .header .header-pc .header-bottom-left--item a .text {
     font-weight: 500;
@@ -198,7 +198,7 @@
     margin: 0 7px;
   }
   .header .header-pc .header-bottom-left--item a {
-    font-size: 17px;
+    font-size: 15px;
   }
   .header .header-pc .header-bottom-left--item a .text {
     font-weight: 500;
@@ -441,7 +441,7 @@
     padding: 10px;
   }
   .section .item-img {
-    width: 150px;
+    width: 100%;
     height: 150px;
   }
   .section .item-img .button-view button {
@@ -583,6 +583,44 @@
   .body .section-left {
     display: none;
   }
+  .category-header {
+    display: block !important;
+  }
+  .category-header--left {
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  .category-header--right .show-item {
+    display: none;
+  }
+  .category-header--right .SortBy {
+    font-size: 16px;
+  }
+  .category-header--right .SortBy button {
+    padding: 7px 10px !important;
+    font-size: 15px;
+  }
+  .col-6 {
+    padding: 0 5px;
+  }
+  .category-list .item-body .card-title-list a {
+    font-size: 15px;
+    line-height: 14px;
+  }
+  .section {
+    margin: 10px 0;
+  }
+  .category-banner {
+    position: relative;
+  }
+  .category-banner img {
+    min-height: 300px;
+    object-fit: cover;
+    width: 100%;
+  }
+  .category-banner .category-name {
+    font-size: 35px;
+  }
 }
 @media (max-width: 576px) {
   .container-fluid {
@@ -590,7 +628,7 @@
   }
   .section .content {
     margin-bottom: 20px;
-    font-size: 20px;
+    font-size: 18px;
   }
   .section .item-img img {
     width: 100%;
@@ -624,8 +662,8 @@
   }
   .section .product-banner img {
     border-radius: 20px;
-    min-height: 150px;
-    padding: 5px 20px;
+    height: 120px;
+    padding: 5px;
   }
   .swiper-button-next {
     display: none;
@@ -634,8 +672,8 @@
     display: none;
   }
   .category-item .swiper-slide a .img img {
-    width: 130px;
-    height: 130px;
+    width: 100px;
+    height: 100px;
   }
   .category-item .swiper-slide .text {
     font-size: 16px;
@@ -650,6 +688,7 @@
     height: 100%;
     margin-bottom: 10px;
     padding: 0;
+    margin-top: 23px;
   }
   .body .section-First-right {
     display: flex;
@@ -661,9 +700,11 @@
     margin: 10px 0;
     width: 100%;
     height: 90%;
+    object-fit: cover;
   }
   .body .section-Second img {
     width: 100%;
+    object-fit: cover;
   }
   .body .section-Third .swiper-pagination {
     margin-top: 10px;

@@ -11,9 +11,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>@yield('title')</title>
-    <script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>
+{{--    <script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>--}}
 {{--    <!-- Fonts -->--}}
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+{{--    <link rel="preconnect" href="https://fonts.gstatic.com">--}}
 {{--    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">--}}
 {{--    <link rel="dns-prefetch preconnect" href="https://cdn11.bigcommerce.com/s-3uw22zu194" crossorigin><link rel="dns-prefetch preconnect" href="https://fonts.googleapis.com/" crossorigin><link rel="dns-prefetch preconnect" href="https://fonts.gstatic.com/" crossorigin>--}}
 {{--    <link rel='canonical' href='https://superkart-demo-02.mybigcommerce.com/' /><meta name='platform' content='bigcommerce.stencil' />--}}

@@ -3,7 +3,7 @@
 @section('title', 'Category')
 
 @section('content')
-    <div class="category-banner container-fluid">
+    <div class="category-banner">
         <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/category-banner-top-layout-2.jpg"
              alt="">
         <div class="category-name">
@@ -41,7 +41,7 @@
             <a href="{{route('home')}}">Home</a> / <a href="#">Electronics</a>
         </div>
         <div class="category-header--right">
-            <div class="show mr-4 align-items-center">
+            <div class="show-item mr-4 align-items-center">
                 <span class="mr-3">Show</span>
                 <div class="dropdown">
                     <button class="drop btn dropdown-toggle" type="button" id="dropdownMenu2"
@@ -176,7 +176,7 @@
             <div id="home" class="tab-pane active "><br>
                 <div class="row">
                     @foreach($listProduct as $product)
-                        <div class="col-md-3 col-6 section">
+                        <div class="col-xl-3 col-md-4 col-6 section">
                             <div class="item">
                                 <div class="item-img">
                                     <img src="{{ asset('storage/' . $product->thumbnail) }}"
@@ -243,7 +243,7 @@
                 @foreach($listProduct as $product)
                     <div class="mt-3 category-list section">
                     <div class="item row">
-                        <div class="item-img col-3">
+                        <div class="item-img col-md-3 col-5">
                             <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                  alt="">
                             <div class="button-view">
@@ -261,7 +261,7 @@
                                     </div> -->
                             </div>
                         </div>
-                        <div class="item-body col-9">
+                        <div class="item-body col-md-9 col-7">
                             <div class="card-rating">
                                 <i class="fa-solid fa-star" style="color: #fac325;"></i>
                                 <i class="fa-solid fa-star" style="color: #fac325;"></i>
