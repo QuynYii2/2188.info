@@ -88,6 +88,8 @@ class ProductController_v2 extends Controller
             $product->location = Auth::user()->region;
             $product->old_price = $request->input('old_price');
 
+            $product->slug = \Str::slug($request->input('name'));
+
             if (!$request->input('price') || $request->input('old_price') < $request->input('price')) {
                 $product->price = $request->input('old_price');
             }
@@ -113,7 +115,7 @@ class ProductController_v2 extends Controller
 
             if ($createProduct) {
                 alert()->success('Success', 'Tạo mới sản phẩm thành công.');
-                return redirect()->route('seller.products.index');
+                return redirect()->route('product.v2.show');
             } else {
                 alert()->error('Error', 'Tạo mới sản phẩm không thành công.');
                 return back();
@@ -160,6 +162,7 @@ class ProductController_v2 extends Controller
             $product->name = $request->input('name');
             $product->price = $request->input('price');
             $product->category_id = $request->input('category_id');
+            $product->slug = \Str::slug($request->input('name'));
 
             if ($request->hasFile('thumbnail')) {
                 $thumbnail = $request->file('thumbnail');

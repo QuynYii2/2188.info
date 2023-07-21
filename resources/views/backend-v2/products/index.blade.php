@@ -552,7 +552,7 @@
                             <td class="name column-name has-row-actions column-primary" data-colname="Name">
                                 <strong>
                                     <a class="row-title"
-                                       href="#">
+                                       href="{{route('product.v2.edit', $product->id)}}">
                                         {{$product->name}}
                                     </a>
                                 </strong>
@@ -561,7 +561,7 @@
                                       ID: {{$product->id}} |
                                     </span>
                                     <span class="edit">
-                                          <a href="#"
+                                          <a href="{{route('product.v2.edit', $product->id)}}"
                                              aria-label="Sửa “{{$product->name}}”">
                                             Chỉnh sửa
                                           </a>
