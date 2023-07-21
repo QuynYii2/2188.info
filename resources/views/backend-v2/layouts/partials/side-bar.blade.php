@@ -868,18 +868,18 @@
                     Products
                 </li>
                 <li class="wp-first-item current">
-                    <a href="edit.php?post_type=product" class="wp-first-item current" aria-current="page">
+                    <a href="{{route('product.v2.show')}}" class="wp-first-item current" aria-current="page">
                         All
                         Products
                     </a>
                 </li>
                 <li>
-                    <a href="http://127.0.0.1:8000/product-create-v2">
+                    <a href="{{route('product.v2.processCreate')}}">
                         Add New
                     </a>
                 </li>
                 <li>
-                    <a href="http://127.0.0.1:8000/categories-index-v2">
+                    <a href="{{route('categories.v2.show')}}">
                         Categories
                     </a>
                 </li>
@@ -889,7 +889,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="http://127.0.0.1:8000/attributes-index-v2">
+                    <a href="{{route('attributes.v2.show')}}">
                         Attributes
                     </a>
                 </li>

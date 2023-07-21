@@ -21,7 +21,6 @@ class ProductController extends Controller
 {
     public function index()
     {
-
         $check_ctv_shop = StaffUsers::where('user_id', Auth::user()->id)->first();
         if ($check_ctv_shop) {
             $products = Product::where([['user_id', $check_ctv_shop->parent_user_id], ['status', '!=', ProductStatus::DELETED]])->orderByDesc('id')->get();

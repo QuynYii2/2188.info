@@ -335,29 +335,6 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::get('/seller-config/create', [TopSellerConfigController::class, 'processCreate'])->name('seller.config.processCreate');
     Route::post('/seller-config', [TopSellerConfigController::class, 'create'])->name('seller.config.create');
     Route::delete('/seller-config/{id}', [TopSellerConfigController::class, 'delete'])->name('seller.config.delete');
-
-
-
-    //  Backend v2
-
-    // Product
-    Route::get('/product-index-v2', [ProductController_v2::class, 'index'])->name('product.v2.show');
-    Route::get('/product-edit-v2', [ProductController_v2::class, 'edit'])->name('product.v2.edit');
-    Route::get('/product-create-v2', [ProductController_v2::class, 'create'])->name('product.v2.create');
-    Route::get('/product-index-v2', [ProductController_v2::class, 'index'])->name('product.v2.show');
-
-    // Categories
-    Route::get('/categories-index-v2', [CategoriesController_v2::class, 'index'])->name('categories.v2.show');
-    Route::get('/categories-edit-v2', [CategoriesController_v2::class, 'edit'])->name('categories.v2.edit');
-    Route::get('/categories-create-v2', [CategoriesController_v2::class, 'create'])->name('categories.v2.create');
-
-    // Attributes
-    Route::get('/attributes-index-v2', [AttributesController_v2::class, 'index'])->name('attributes.v2.show');
-    Route::get('/attributes-edit-v2', [AttributesController_v2::class, 'edit'])->name('attributes.v2.edit');
-    Route::get('/attributes-create-v2', [AttributesController_v2::class, 'create'])->name('attributes.v2.create');
-
-    // Comments
-    Route::get('/comments-index-v2', [CommentsController_v2::class, 'index'])->name('comments.v2.show');
     // Order
     Route::get('/order-managers', [\App\Http\Controllers\Seller\OrderController::class, 'index'])->name('seller.order.list');
     Route::get('/order-managers-search', [\App\Http\Controllers\Seller\OrderController::class, 'search'])->name('seller.search.order.list');
@@ -403,4 +380,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add-cart/{product}/{percent}', [CartController::class, 'addToCartPromotion'])->name('cart.add.promotion');
     //
     Route::get('/product-views', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByViews'])->name('product.views');
+});
+
+// Backend v2
+Route::group(['prefix' => 'seller', 'middleware' => 'role.seller-or-admin'], function () {
+    require_once __DIR__ . '/backend.php';
 });
