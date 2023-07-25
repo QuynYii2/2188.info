@@ -15,6 +15,8 @@ class Product extends Model
         'price',
         'thumbnail',
         'location',
+        'description',
+        'storage_id',
         'qty',
         'status',
         'old_price',
