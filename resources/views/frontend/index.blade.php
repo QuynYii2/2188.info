@@ -3,211 +3,8 @@
 @section('title', 'Home page')
 
 @section('content')
-    {{--    <style>--}}
-    {{--        .vertical-menu {--}}
-    {{--            width: 100%;--}}
-    {{--        }--}}
 
-    {{--        .vertical-menu .navbar-nav {--}}
-    {{--            display: block;--}}
-    {{--        }--}}
-
-    {{--        .vertical-menu .nav-item {--}}
-    {{--            background: #ffffff;--}}
-    {{--        }--}}
-
-    {{--        li {--}}
-    {{--            list-style: none;--}}
-    {{--        }--}}
-
-    {{--        .vertical-menu .nav-link {--}}
-    {{--            color: #757575;--}}
-    {{--            padding: 10px;--}}
-    {{--        }--}}
-
-    {{--        .img-banner-1 {--}}
-    {{--            /*height: 30vw;*/--}}
-    {{--            margin-top: -30px;--}}
-    {{--            background-repeat: no-repeat;--}}
-    {{--            background-size: cover;--}}
-    {{--            position: relative;--}}
-    {{--            overflow-x: hidden;--}}
-    {{--        }--}}
-
-    {{--        .tablet-button {--}}
-    {{--            display: none;--}}
-    {{--        }--}}
-
-    {{--        /* CSS cho megamenu */--}}
-    {{--        .megamenu {--}}
-    {{--            display: none;--}}
-    {{--        }--}}
-
-    {{--        .vertical-menu .nav-item:hover .megamenu {--}}
-    {{--            display: block;--}}
-    {{--            position: absolute;--}}
-    {{--            top: 8px;--}}
-    {{--            left: 94%;--}}
-    {{--            z-index: 999;--}}
-    {{--            width: 700px;--}}
-    {{--            background-color: #fff;--}}
-    {{--            padding: 20px;--}}
-    {{--            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .25);--}}
-    {{--        }--}}
-
-
-    {{--        .depart-hover li:hover .megamenu {--}}
-    {{--            display: block;--}}
-    {{--            position: absolute;--}}
-    {{--            top: 8px;--}}
-    {{--            left: 94%;--}}
-    {{--            z-index: 999;--}}
-    {{--            width: 700px;--}}
-    {{--            background-color: #fff;--}}
-    {{--            padding: 20px;--}}
-    {{--            box-shadow: 0 0 4px 0 rgba(0, 0, 0, .25);--}}
-    {{--        }--}}
-
-    {{--        .depart-hover .megamenu li a {--}}
-    {{--            padding-left: 0 !important;--}}
-    {{--        }--}}
-
-    {{--        @media only screen and (min-width: 1200px) {--}}
-
-    {{--        }--}}
-
-    {{--        @media only screen and (min-width: 992px) {--}}
-    {{--            .p-left {--}}
-    {{--                padding-right: 0;--}}
-    {{--            }--}}
-
-    {{--            .p-right {--}}
-    {{--                padding-left: 0;--}}
-    {{--            }--}}
-    {{--        }--}}
-
-    {{--        @media only screen and (min-width: 992px) and (max-width: 1199px) {--}}
-
-    {{--        }--}}
-
-    {{--        @media only screen and (min-width: 768px) and (max-width: 991px) {--}}
-    {{--            .menu-header {--}}
-    {{--                margin-right: -8px;--}}
-    {{--                margin-left: 0px;--}}
-    {{--                max-width: 30% !important;--}}
-    {{--            }--}}
-
-    {{--            .mega-menu-header {--}}
-    {{--                margin-right: -8px;--}}
-    {{--                margin-left: 0;--}}
-    {{--            }--}}
-
-    {{--            .menu-bottom {--}}
-    {{--                max-width: 20% !important;--}}
-    {{--            }--}}
-    {{--        }--}}
-
-    {{--        @media (max-width: 767px) {--}}
-    {{--            .height-banner {--}}
-    {{--                height: 40vw;--}}
-    {{--                width: 100%;--}}
-    {{--            }--}}
-
-    {{--        }--}}
-
-    {{--        @media (min-width: 768px) {--}}
-    {{--            .height-banner {--}}
-    {{--                height: 30vw;--}}
-    {{--            }--}}
-    {{--        }--}}
-
-    {{--        @media only screen and (max-width: 480px) {--}}
-    {{--            .filter-control .mr-5 {--}}
-    {{--                margin-right: 0 !important;--}}
-    {{--            }--}}
-
-    {{--            .filter-control .ml-5 {--}}
-    {{--                margin-left: 0 !important;--}}
-    {{--            }--}}
-    {{--        }--}}
-
-    {{--        .p-side-tablet {--}}
-    {{--        }--}}
-
-    {{--        @media only screen and (min-width: 576px ) and  (max-width: 991px) {--}}
-    {{--            .tablet-button {--}}
-    {{--                display: block;--}}
-    {{--            }--}}
-
-    {{--            .not-tablet-button {--}}
-    {{--                display: none !important;--}}
-    {{--            }--}}
-
-    {{--            .p-side-tablet {--}}
-    {{--                display: flex;--}}
-    {{--            }--}}
-
-    {{--            .product-large.m-large {--}}
-    {{--                margin-top: 40px;--}}
-    {{--                width: 50%;--}}
-    {{--            }--}}
-
-    {{--            .p-left .product-large.m-large.p-l-1 {--}}
-    {{--                margin-right: 25px;--}}
-    {{--            }--}}
-
-    {{--            .p-right .product-large.m-large.p-r-1 {--}}
-    {{--                margin-left: 25px;--}}
-    {{--            }--}}
-
-    {{--        }--}}
-
-    {{--        @media not (min-width: 576px ) and  (max-width: 991px) {--}}
-    {{--            .tablet-button {--}}
-    {{--                display: none;--}}
-    {{--            }--}}
-
-    {{--            .not-tablet-button {--}}
-    {{--                display: block !important;--}}
-    {{--            }--}}
-
-
-    {{--        }--}}
-
-    {{--        .text-limit {--}}
-    {{--            white-space: nowrap;--}}
-    {{--            overflow: hidden;--}}
-    {{--            text-overflow: ellipsis;--}}
-    {{--        }--}}
-
-    {{--        .not-mobile-button {--}}
-    {{--            display: none;--}}
-    {{--        }--}}
-
-    {{--        .only-mobile-button {--}}
-    {{--            display: flex;--}}
-    {{--        }--}}
-
-    {{--        @media only screen and (min-width: 576px) {--}}
-    {{--            .not-mobile-button {--}}
-    {{--                display: flex;--}}
-    {{--            }--}}
-
-
-    {{--            .only-mobile-button {--}}
-    {{--                display: none;--}}
-    {{--            }--}}
-    {{--        }--}}
-
-    {{--        @media only screen and (max-width: 575px) {--}}
-    {{--            .benefit-items .border-right {--}}
-    {{--                border-right: none;--}}
-    {{--                border-bottom: 1px solid #dee2e6 !important;--}}
-    {{--            }--}}
-    {{--        }--}}
-    {{--    </style>--}}
-
-    <div class="body">
+    <div class="body" id="body-content">
         <section class="section-First pt-3 pb-3 container-fluid">
             <div class="row m-0">
                 <div class="section-First-left section-First-hd col-xl-2 col-12">
@@ -217,15 +14,43 @@
                         @php
                             $listCate = DB::table('categories')->where('parent_id', null)->get();
                         @endphp
-                        @foreach($listCate as $cate)
-                            <div class="col-lg-6 item item-left text-center">
-                                <a href="{{ route('category.show', $cate->id) }}">
-                                    <img src="{{ asset('storage/' . $cate->thumbnail) }}"
-                                         alt="">
-                                    <div class="text">{{ $cate->name }}</div>
-                                </a>
-                            </div>
-                        @endforeach
+                        @if(count($listCate)>10)
+                            @for($i =0; $i <10; $i ++)
+                                <div class="col-lg-6 item item-left text-center">
+                                    @if(Auth::check())
+                                        <a href="{{ route('category.show', $listCate[$i]->id) }}">
+                                            <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
+                                                 alt="">
+                                            <div class="text">{{ $listCate[$i]->name }}</div>
+                                        </a>
+                                    @else
+                                        <a class="check_url">
+                                            <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
+                                                 alt="">
+                                            <div class="text">{{ $listCate[$i]->name }}</div>
+                                        </a>
+                                    @endif
+                                </div>
+                            @endfor
+                        @else
+                            @foreach($listCate as $cate)
+                                <div class="col-lg-6 item item-left text-center">
+                                    @if(Auth::check())
+                                        <a href="{{ route('category.show', $cate->id) }}">
+                                            <img src="{{ asset('storage/' . $cate->thumbnail) }}"
+                                                 alt="">
+                                            <div class="text">{{ $cate->name }}</div>
+                                        </a>
+                                    @else
+                                        <a class="check_url">
+                                            <img src="{{ asset('storage/' . $cate->thumbnail) }}"
+                                                 alt="">
+                                            <div class="text">{{ $cate->name }}</div>
+                                        </a>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
                 <div class="section-First-left section-First-mobile col-12">
@@ -237,11 +62,19 @@
                         @endphp
                         @foreach($listCate as $cate)
                             <div class="item item-left text-center">
-                                <a href="{{ route('category.show', $cate->id) }}">
-                                    <img src="{{ asset('storage/' . $cate->thumbnail) }}"
-                                         alt="">
-                                    <div class="text">{{ $cate->name }}</div>
-                                </a>
+                                @if(Auth::check())
+                                    <a href="{{ route('category.show', $cate->id) }}">
+                                        <img src="{{ asset('storage/' . $cate->thumbnail) }}"
+                                             alt="">
+                                        <div class="text">{{ $cate->name }}</div>
+                                    </a>
+                                @else
+                                    <a class="check_url">
+                                        <img src="{{ asset('storage/' . $cate->thumbnail) }}"
+                                             alt="">
+                                        <div class="text">{{ $cate->name }}</div>
+                                    </a>
+                                @endif
                             </div>
                         @endforeach
                     </div>
@@ -281,16 +114,16 @@
                 <div class="section-First-right col-xl-4 col-md-4">
                     <div class="row">
                         @if(!$banner)
-                            <div class="col-md-6 col-sm-5 item">
+                            <div class="col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-1.png" alt="">
                             </div>
-                            <div class="col-md-6 col-sm-5 item">
+                            <div class="col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-2.png" alt="">
                             </div>
-                            <div class="col-md-6 col-sm-5 item">
+                            <div class="col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-3.png" alt="">
                             </div>
-                            <div class="col-md-6 col-sm-5 item">
+                            <div class="col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-4.png" alt="">
                             </div>
                         @else
@@ -300,7 +133,7 @@
                             @endphp
                             @if(count($sub_thumbnail)>4)
                                 @for($i=0; $i<4; $i++)
-                                    <div class="col-md-6 col-sm-5 item">
+                                    <div class="col-6 item">
                                         <img src="{{ asset('storage/' . $sub_thumbnail[$i]) }}"
                                              alt="">
                                     </div>
@@ -317,7 +150,6 @@
                 </div>
             </div>
         </section>
-
         <section class="section-Second pt-3 pb-3 container-fluid text-center">
             <img src="https://cdn11.bigcommerce.com/s-cas40rmoh/product_images/uploaded_images/banner-custom-home-2.png"
                  alt="">
@@ -332,15 +164,27 @@
 
                     @foreach($listCate as $cate)
                         <div class="swiper-slide">
-                            <a href="{{ route('category.show', $cate->id) }}">
-                                <div class="img">
-                                    <img src="{{ asset('storage/' . $cate->thumbnail) }}"
-                                         alt="">
-                                </div>
-                                <div class="text">
-                                    {{$cate->name}}
-                                </div>
-                            </a>
+                            @if(Auth::check())
+                                <a href="{{ route('category.show', $cate->id) }}">
+                                    <div class="img">
+                                        <img src="{{ asset('storage/' . $cate->thumbnail) }}"
+                                             alt="">
+                                    </div>
+                                    <div class="text">
+                                        {{$cate->name}}
+                                    </div>
+                                </a>
+                            @else
+                                <a class="check_url">
+                                    <div class="img">
+                                        <img src="{{ asset('storage/' . $cate->thumbnail) }}"
+                                             alt="">
+                                    </div>
+                                    <div class="text">
+                                        {{$cate->name}}
+                                    </div>
+                                </a>
+                            @endif
                         </div>
                     @endforeach
                 </div>
@@ -392,7 +236,12 @@
                                                 {{$namenewProduct->name}}
                                             </div>
                                             <div class="card-title">
-                                                <a href="{{route('detail_product.show', $newProduct->id)}}">{{$newProduct->name}}</a>
+                                                @if(Auth::check())
+                                                    <a href="{{route('detail_product.show', $newProduct->id)}}">{{$newProduct->name}}</a>
+                                                @else
+                                                    <a class="check_url">{{$newProduct->name}}</a>
+                                                @endif
+
                                             </div>
                                             <div class="card-price d-flex justify-content-between">
                                                 <!-- <div class="price">
@@ -407,8 +256,13 @@
                                             </div>
                                             <div class="card-bottom d-flex justify-content-between">
                                                 <div class="card-bottom--left">
+                                                    @if(Auth::check())
                                                     <a href="{{route('detail_product.show', $newProduct->id)}}">Choose
                                                         Options</a>
+                                                    @else
+                                                        <a class="check_url">Choose
+                                                            Options</a>
+                                                    @endif
                                                 </div>
                                                 <div class="card-bottom--right">
                                                     <i class="item-icon fa-regular fa-heart"></i>
@@ -435,7 +289,7 @@
                                                 <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                                      alt="">
                                                 <div class="button-view">
-                                                    <button href="">Quick view</button>
+                                                    <button>Quick view</button>
                                                 </div>
                                                 <div class="text">
                                                     <div class="text-sale">
@@ -465,7 +319,11 @@
                                                     {{$nameFeature->name}}
                                                 </div>
                                                 <div class="card-title">
-                                                    <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>
+                                                    @if(Auth::check())
+                                                        <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>
+                                                    @else
+                                                        <a class="check_url">{{$product->name}}</a>
+                                                    @endif
                                                 </div>
                                                 <div class="card-price d-flex justify-content-between">
                                                     <!-- <div class="price">
@@ -480,8 +338,12 @@
                                                 </div>
                                                 <div class="card-bottom d-flex justify-content-between">
                                                     <div class="card-bottom--left">
-                                                        <a href="{{route('detail_product.show', $product->id)}}">Choose
-                                                            Options</a>
+                                                        @if(Auth::check())
+                                                            <a href="{{route('detail_product.show', $product->id)}}">Choose
+                                                                Options</a>
+                                                        @else
+                                                            <a class="check_url">Choose Options</a>
+                                                        @endif
                                                     </div>
                                                     <div class="card-bottom--right">
                                                         <i class="item-icon fa-regular fa-heart"></i>
@@ -511,7 +373,7 @@
                                         <img src="{{ asset('storage/' . $hotProduct->thumbnail) }}"
                                              alt="">
                                         <div class="button-view">
-                                            <button href="">Quick view</button>
+                                            <button>Quick view</button>
                                         </div>
                                         <div class="text">
                                             <div class="text-sale">
@@ -541,7 +403,11 @@
                                             {{$nameHot->name}}
                                         </div>
                                         <div class="card-title">
-                                            <a href="{{route('detail_product.show', $hotProduct->id)}}">{{$hotProduct->name}}</a>
+                                            @if(Auth::check())
+                                                <a href="{{route('detail_product.show', $hotProduct->id)}}">{{$hotProduct->name}}</a>
+                                            @else
+                                                <a class="check_url">{{$hotProduct->name}}</a>
+                                            @endif
                                         </div>
                                         <div class="card-price d-flex justify-content-between">
                                             <!-- <div class="price">
@@ -556,8 +422,11 @@
                                         </div>
                                         <div class="card-bottom d-flex justify-content-between">
                                             <div class="card-bottom--left">
-                                                <a href="{{route('detail_product.show', $product->id)}}">Choose
-                                                    Options</a>
+                                                @if(Auth::check())
+                                                    <a href="{{route('detail_product.show', $product->id)}}">Choose Options</a>
+                                                @else
+                                                    <a class="check_url">Choose Options</a>
+                                                @endif
                                             </div>
                                             <div class="card-bottom--right">
                                                 <i class="item-icon fa-regular fa-heart"></i>
@@ -648,7 +517,7 @@
                                                 <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                                      alt="">
                                                 <div class="button-view">
-                                                    <button href="">Quick view</button>
+                                                    <button>Quick view</button>
                                                 </div>
                                                 <div class="text">
                                                     <!-- <div class="text-sale">
@@ -678,7 +547,11 @@
                                                     {{$nameUser->name}}
                                                 </div>
                                                 <div class="card-title">
-                                                    <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>
+                                                    @if(Auth::check())
+                                                        <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>
+                                                    @else
+                                                        <a class="check_url">{{$product->name}}</a>
+                                                    @endif
                                                 </div>
                                                 <div class="card-price d-flex justify-content-between">
                                                     <!-- <div class="price">
@@ -693,8 +566,11 @@
                                                 </div>
                                                 <div class="card-bottom d-flex justify-content-between">
                                                     <div class="card-bottom--left">
-                                                        <a href="{{route('detail_product.show', $product->id)}}">Choose
-                                                            Options</a>
+                                                        @if(Auth::check())
+                                                            <a href="{{route('detail_product.show', $product->id)}}">Choose Options</a>
+                                                        @else
+                                                            <a class="check_url">Choose Options</a>
+                                                        @endif
                                                     </div>
                                                     <div class="card-bottom--right">
                                                         <i class="item-icon fa-regular fa-heart"></i>
@@ -717,7 +593,11 @@
                             @if(count($listChild) == null)
                                 <div class="brand-item d-flex justify-content-between">
                                     <div class="brand-item--all">
-                                        <a href="{{ route('category.show', $cate->id) }}">View all categories</a>
+                                        @if(Auth::check())
+                                            <a href="{{ route('category.show', $cate->id) }}">View all categories</a>
+                                        @else
+                                            <a class="check_url">View all categories</a>
+                                        @endif
                                     </div>
                                 </div>
                             @elseif(count($listChild) < 2)
@@ -725,8 +605,13 @@
                                     <div class="brand-item d-flex justify-content-between">
                                         <div class="brand-item-text">
                                             <div class="name">{{ $listChild[$i]->name }}</div>
-                                            <div><a href="{{ route('category.show', $listChild[$i]->id) }}">Shop now</a>
-                                            </div>
+                                            <div
+                                            @if(Auth::check())
+                                                <a href="{{ route('category.show', $listChild[$i]->id) }}">Shop now</a>
+                                            @else
+                                                <a class="check_url">Shop now</a>
+                                            @endif
+                                        </div>
                                         </div>
                                         <div class="brand-item-img">
                                             <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/70x70/q/for-men__79756.original.jpg"
@@ -736,7 +621,11 @@
                                 @endfor
                                 <div class="brand-item d-flex justify-content-between">
                                     <div class="brand-item--all">
-                                        <a href="{{ route('category.show', $cate->id) }}">View all categories</a>
+                                        @if(Auth::check())
+                                            <a href="{{ route('category.show', $cate->id) }}">View all categories</a>
+                                        @else
+                                            <a class="check_url">View all categories</a>
+                                        @endif
                                     </div>
                                 </div>
                             @elseif(count($listChild) < 3)
@@ -744,7 +633,11 @@
                                     <div class="brand-item d-flex justify-content-between">
                                         <div class="brand-item-text">
                                             <div class="name">{{ $listChild[$i]->name }}</div>
-                                            <div><a href="{{ route('category.show', $listChild[$i]->id) }}">Shop now</a>
+                                            @if(Auth::check())
+                                                <a href="{{ route('category.show', $listChild[$i]->id) }}">Shop now</a>
+                                            @else
+                                                <a class="check_url">Shop now</a>
+                                            @endif
                                             </div>
                                         </div>
                                         <div class="brand-item-img">
@@ -755,7 +648,11 @@
                                 @endfor
                                 <div class="brand-item d-flex justify-content-between">
                                     <div class="brand-item--all">
-                                        <a href="{{ route('category.show', $cate->id) }}">View all categories</a>
+                                        @if(Auth::check())
+                                            <a href="{{ route('category.show', $cate->id) }}">View all categories</a>
+                                        @else
+                                            <a class="check_url">View all categories</a>
+                                        @endif
                                     </div>
                                 </div>
                             @else
@@ -763,8 +660,11 @@
                                     <div class="brand-item d-flex justify-content-between">
                                         <div class="brand-item-text">
                                             <div class="name">{{ $listChild[$i]->name }}</div>
-                                            <div><a href="{{ route('category.show', $listChild[$i]->id) }}">Shop now</a>
-                                            </div>
+                                            @if(Auth::check())
+                                                <a href="{{ route('category.show', $listChild[$i]->id) }}">Shop now</a>
+                                            @else
+                                                <a class="check_url">Shop now</a>
+                                            @endif
                                         </div>
                                         <div class="brand-item-img">
                                             <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/70x70/q/for-men__79756.original.jpg"
@@ -774,7 +674,11 @@
                                 @endfor
                                 <div class="brand-item d-flex justify-content-between">
                                     <div class="brand-item--all">
-                                        <a href="{{ route('category.show', $cate->id) }}">View all categories</a>
+                                        @if(Auth::check())
+                                            <a href="{{ route('category.show', $cate->id) }}">View all categories</a>
+                                        @else
+                                            <a class="check_url">View all categories</a>
+                                        @endif
                                     </div>
                                 </div>
                             @endif
@@ -888,8 +792,9 @@
             </div>
         </section>
     </div>
-    {{--    <div id="body-content">--}}
 
+
+    {{--    <div id="body-content">--}}
     {{--        <section class="header_bottom">--}}
     {{--            <div class="container-fluid" id="nav-header">--}}
     {{--                <div class="row">--}}
