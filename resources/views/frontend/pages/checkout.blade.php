@@ -5,87 +5,170 @@
 @section('title', 'View Cart')
 
 @section('content')
-    <style>
-        @media (max-width: 800px) {
-            #space-price .row {
-                flex-direction: row;
-            }
-        }
+{{--    <style>--}}
+{{--        @media (max-width: 800px) {--}}
+{{--            #space-price .row {--}}
+{{--                flex-direction: row;--}}
+{{--            }--}}
+{{--        }--}}
 
-        @media (min-width: 1200px) {
-            #payment-info {
-                border: 1px solid #dee2e6 !important;
-            }
-        }
+{{--        @media (min-width: 1200px) {--}}
+{{--            #payment-info {--}}
+{{--                border: 1px solid #dee2e6 !important;--}}
+{{--            }--}}
+{{--        }--}}
 
-        #table-checkout th,
-        #table-checkout tr,
-        #table-checkout td {
-            white-space: nowrap;
-            width: 100%;
-        }
+{{--        #table-checkout th,--}}
+{{--        #table-checkout tr,--}}
+{{--        #table-checkout td {--}}
+{{--            white-space: nowrap;--}}
+{{--            width: 100%;--}}
+{{--        }--}}
 
-        #space-price th,
-        #space-price tr,
-        #space-price td {
-            white-space: nowrap;
-        }
-    </style>
+{{--        #space-price th,--}}
+{{--        #space-price tr,--}}
+{{--        #space-price td {--}}
+{{--            white-space: nowrap;--}}
+{{--        }--}}
+{{--    </style>--}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('css/checkout.css') }}">
-    <div class="container mt-5">
-        <div class="card" id="check-out" style="border: none">
-            <h2 class="mt-3 mb-3 text-center">{{ __('home.order') }}</h2>
-            @if($carts->isEmpty())
-                <div>
-                    <img src="{{asset('images/empty.jpg')}}" alt="">
-                    <p>{{ __('home.you have no order') }}</p>
-                </div>
-            @else
-                <div class="row">
-                    <div class="col-12">
-                        <form id="checkout-form" method="post">
-                            @csrf
-                            <div class="col-12">
-                                <h4>
-                                    {{ __('home.Cart') }}
-                                    <span class="price" style="color:black">
-                                            <i class="fa fa-shopping-cart"></i>
-                                            <b>{{$number}}</b>
-                                        </span>
-                                </h4>
-                                <div class="table-responsive-sm">
-                                    <table id="table-checkout" class="table">
-                                        <thead>
-                                        <tr>
-                                            <th>{{ __('home.Product Name') }}</th>
-                                            <th>{{ __('home.quantity') }}</th>
-                                            <th>{{ __('home.Price') }}</th>
-                                            <th class="float-end">{{ __('home.Total Amount') }}</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach ($carts as $cartItem)
-                                            <tr>
-                                                <td>{{ $cartItem->product->name }}</td>
-                                                <td class="text-center">{{ $cartItem->quantity }}</td>
-                                                <td class="text-center"
-                                                    id="price-{{ $cartItem->id }}">{{ $cartItem->price }}</td>
-                                                <td class="float-end text-center"
-                                                    id="total-quantity-{{ $cartItem->id }}">{{ $cartItem->price*$cartItem->quantity }}</td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <hr>
-                                <p>{{ __('home.Total Payment') }}: <span class="price" style="color:black"><b>$ <span
-                                                    id="max-total">{{ $cartItem->price*$cartItem->quantity }}</span></b></span>
-                                </p>
-                            </div>
-                            <div class="col-12">
-                                <div class="row mt-5">
-                                    <div class="col-12 col-md-12 col-xl-8">
+
+    <div class="checkout-bg">
+{{--        <div class="container ">--}}
+{{--            <div class="row">--}}
+{{--                <div class="col-md-8 col-12">--}}
+{{--                    <div class="checkout-item">--}}
+{{--                        <h3>{{ __('home.Billing Address') }}</h3>--}}
+{{--                        <label for="fname">--}}
+{{--                            <i class="fa fa-user"></i>{{ __('home.full name') }}--}}
+{{--                        </label>--}}
+{{--                        <input type="text" id="fname" name="fullname" placeholder="John M. Doe"--}}
+{{--                               value="{{$user->name}}" required>--}}
+{{--                        <label for="email"><i class="fa fa-envelope"></i>{{ __('home.email') }}</label>--}}
+{{--                        <input type="text" id="email" name="email" placeholder="john@example.com"--}}
+{{--                               value="{{$user->email}}" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" required>--}}
+{{--                        <label for="phone"><i--}}
+{{--                                    class="fa fa-address-card-o"></i>{{ __('home.phone number') }}--}}
+{{--                        </label>--}}
+{{--                        <input type="number" id="phone" name="phone" placeholder="035985935"--}}
+{{--                               value="{{$user->phone}}" required>--}}
+{{--                        <label for="address">--}}
+{{--                            <i class="fa fa-institution"></i>{{ __('home.address') }}</br>--}}
+{{--                        </label>--}}
+{{--                        <input type="text" id="address" name="address" placeholder="542 W. 15th Street"--}}
+{{--                               value="{{$user->address}}" required>--}}
+{{--                        <br>--}}
+{{--                        <input onclick="check();" class="input-m0" type="radio" id="address-order2" name="address-order">--}}
+{{--                        <span>{{ __('home.Use Different Address') }}</span><br>--}}
+{{--                        <select id="address2" name="address2" disabled class="form-control"--}}
+{{--                                onchange="check();">--}}
+{{--                            @php--}}
+{{--                                $addresses = OrderAddress::where([['user_id', Auth::user()->id], ['status', AddressOrderStatus::ACTIVE]])->get();--}}
+{{--                            @endphp--}}
+{{--                            @foreach($addresses as $address)--}}
+{{--                                <option value="{{$address}}">{{$address->address_detail}}--}}
+{{--                                    -{{$address->location}}-{{$address->province}}--}}
+{{--                                    -{{$address->city}}</option>--}}
+{{--                            @endforeach--}}
+{{--                        </select>--}}
+{{--                        <label for="voucher">--}}
+{{--                            <i class="fa fa-user"></i>Mã giảm giá có sẵn--}}
+{{--                        </label>--}}
+{{--                        <select name="voucher" id="voucher" class="form-control mb-3"--}}
+{{--                                onchange="getvoucher()">--}}
+{{--                            @foreach($voucherItems as $item)--}}
+{{--                                @php--}}
+{{--                                    $voucher = Voucher::find($item->voucher_id);--}}
+{{--                                    $listCategory = $voucher->apply;--}}
+{{--                                    $arrayCategory = explode(',', $listCategory);--}}
+{{--                                    $productIDs = null;--}}
+{{--                                    foreach ($carts as $cart){--}}
+{{--                                        $productIDs[] = $cart->product_id;--}}
+{{--                                    }--}}
+{{--                                    $allArr = array_intersect($arrayCategory, $productIDs);--}}
+{{--                                    $voucherConvert = implode(',', $allArr);--}}
+{{--                                @endphp--}}
+{{--                                @if($allArr!=null)--}}
+{{--                                    <option class="choose"--}}
+{{--                                            value="{{$voucherConvert}}-{{$voucher->percent}}-{{$voucher->id}}">--}}
+{{--                                        {{$voucher->name}} - {{$voucher->code}}--}}
+{{--                                    </option>--}}
+{{--                                @else--}}
+{{--                                    <option disabled>{{$voucher->name}} - Không thể sử dụng</option>--}}
+{{--                                @endif--}}
+{{--                            @endforeach--}}
+{{--                        </select>--}}
+{{--                        <button type="submit" class=" mt-3 mb-3 btn">{{ __('home.Pay Now') }}</button>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="col-md-4 col-12 orderSummary">--}}
+{{--                    <div class="d-flex justify-content-between orderSummary-header">--}}
+{{--                        <span class="summary">Order Summary</span>--}}
+{{--                        <span><a href="{{route ('cart.index') }}">Edit Cart</a></span>--}}
+{{--                    </div>--}}
+{{--                    @if($carts->isEmpty())--}}
+{{--                        <div>--}}
+{{--                            <img src="{{asset('images/empty.jpg')}}" alt="">--}}
+{{--                            <p>{{ __('home.you have no order') }}</p>--}}
+{{--                        </div>--}}
+{{--                    @else--}}
+{{--                        <form id="checkout-form" method="post">--}}
+{{--                            @csrf--}}
+{{--                            <div class="orderSummary-body ">--}}
+{{--                                @foreach ($carts as $cartItem)--}}
+{{--                                    <div class="mb-3 row">--}}
+{{--                                        <div class="col-3 img">--}}
+{{--                                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/attribute_rule_images/815_thumb_1623309309.jpg" alt="">--}}
+{{--                                        </div>--}}
+{{--                                        <div class="col-5 name d-flex">--}}
+{{--                                            {{ $cartItem->quantity }} x {{ $cartItem->product->name }}--}}
+{{--                                        </div>--}}
+{{--                                        <div class="col-4 price d-flex" style="color:black">--}}
+{{--                                            <span>$ <span id="max-total">{{ $cartItem->price*$cartItem->quantity }}</span></span>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                @endforeach--}}
+{{--                            </div>--}}
+{{--                        </form>--}}
+{{--                    <div class="orderSummary-footer">--}}
+{{--                        <div class="grandtotal d-flex justify-content-between">--}}
+{{--                            <span class="total">Tổng Tiền Hàng: </span>--}}
+{{--                            <span class="price">$ <span id="max-total"> {{ $cartItem->price*$cartItem->quantity }}</span></span>--}}
+{{--                        </div>--}}
+{{--                        <div class="grandtotal d-flex justify-content-between">--}}
+{{--                            <span class="total">Phí Vận Chuyển: </span>--}}
+{{--                            <span class="price"><span id="max-total">--</span></span>--}}
+{{--                        </div>--}}
+{{--                        <div class="grandtotal d-flex justify-content-between">--}}
+{{--                            <span class="total">Giảm Giá: </span>--}}
+{{--                            <span class="price">$ <span id="max-total">--</span></span>--}}
+{{--                        </div>--}}
+{{--                        <div class="grandtotal d-flex justify-content-between">--}}
+{{--                            <span class="total">Tổng Thanh Toán: </span>--}}
+{{--                            <span class="price">$ <span id="max-total">9024000</span></span>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    @endif--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+
+
+        <div class="container checkout">
+            <div class="card" id="check-out" style="border: none">
+                @if($carts->isEmpty())
+                    <div>
+                        <img src="{{asset('images/empty.jpg')}}" alt="">
+                        <p>{{ __('home.you have no order') }}</p>
+                    </div>
+                @else
+                    <form id="checkout-form" method="post">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-8 col-12 checkout-item">
+                                <div class="row">
+                                    <div class="col-12">
                                         <h3>{{ __('home.Billing Address') }}</h3>
                                         <label for="fname">
                                             <i class="fa fa-user"></i>{{ __('home.full name') }}
@@ -105,9 +188,9 @@
                                         </label>
                                         <input type="text" id="address" name="address" placeholder="542 W. 15th Street"
                                                value="{{$user->address}}" required>
-                                        <input onclick="check();" type="radio" id="address-order2" name="address-order">
+                                        <input onclick="check();" class="input-m0" type="radio" id="address-order2" name="address-order">
                                         <span>{{ __('home.Use Different Address') }}</span><br>
-                                        <select id="address2" name="address2" disabled class="form-control"
+                                        <select id="address2" name="address2" disabled class="form-control mt-2 mb-2"
                                                 onchange="check();">
                                             @php
                                                 $addresses = OrderAddress::where([['user_id', Auth::user()->id], ['status', AddressOrderStatus::ACTIVE]])->get();
@@ -146,8 +229,22 @@
                                             @endforeach
                                         </select>
                                     </div>
-
-                                    <div class="col-12 col-md-12 col-xl-4" id="payment-info">
+                                    <div class="col-12" id="choose-method-payment">
+                                        <h4>{{ __('home.Payment Methods') }}</h4>
+                                        <input type="radio" class="input-m0" name="order_method" id="order-by-immediate" checked
+                                               value="{{OrderMethod::IMMEDIATE}}"/><span
+                                                class="ml-1">{{ __(OrderMethod::IMMEDIATE) }}</span><br>
+                                        <input type="radio" class="input-m0" name="order_method" id="order-by-card"
+                                               value="{{OrderMethod::CardCredit}}"/><span
+                                                class="ml-1">{{ __(OrderMethod::CardCredit) }}</span><br>
+                                        <input type="radio" class="input-m0" name="order_method" id="order-by-e-wallet"
+                                                {{OrderMethod::ElectronicWallet}}/>
+                                        <span class="ml-1">{{ __(OrderMethod::ElectronicWallet) }}</span><br>
+                                        <input type="radio" class="input-m0" name="order_method" id="order-by-coin"
+                                                {{OrderMethod::SHOPPING_MALL_COIN}}/>
+                                        <span class="ml-1">{{ __(OrderMethod::SHOPPING_MALL_COIN) }}</span>
+                                    </div>
+                                    <div class="col-12" id="payment-info">
                                         <h3>{{ __('home.Payment') }}</h3>
                                         <label for="fname">{{ __('home.Accepted Cards') }}</label>
                                         <div class="icon-container">
@@ -175,51 +272,49 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 col-md-6 col-xl-7" id="choose-method-payment">
-                                        <h4>{{ __('home.Payment Methods') }}</h4>
-                                        <input type="radio" name="order_method" id="order-by-immediate" checked
-                                               value="{{OrderMethod::IMMEDIATE}}"/><span
-                                                class="ml-1">{{ __(OrderMethod::IMMEDIATE) }}</span><br>
-                                        <input type="radio" name="order_method" id="order-by-card"
-                                               value="{{OrderMethod::CardCredit}}"/><span
-                                                class="ml-1">{{ __(OrderMethod::CardCredit) }}</span><br>
-                                        <input type="radio" name="order_method" id="order-by-e-wallet"
-                                                {{OrderMethod::ElectronicWallet}}/>
-                                        <span class="ml-1">{{ __(OrderMethod::ElectronicWallet) }}</span><br>
-                                        <input type="radio" name="order_method" id="order-by-coin"
-                                                {{OrderMethod::SHOPPING_MALL_COIN}}/>
-                                        <span class="ml-1">{{ __(OrderMethod::SHOPPING_MALL_COIN) }}</span>
-                                    </div>
-
-                                    <div class="mt-4 col-12 col-md-6 col-xl-5" style="" id="space-price">
-                                        <table>
-                                            <tr>
-                                                <td>{{ __('home.Total Product Cost') }}:</td>
-                                                <td><span class="text-warning bg-white">$</span>
-                                                    <span class="text-warning bg-white" id="total-price">0</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>{{ __('home.Shipping Fee') }}:</td>
-                                                <td><span class="text-warning bg-white">$</span>
-                                                    <span class="text-warning bg-white" id="shipping-price">0</span>
-                                            </tr>
-                                            <tr>
-                                                <td>{{ __('home.Discount') }}:</td>
-                                                <td><span class="text-warning bg-white">$</span>
-                                                    <span class="text-warning bg-white" id="sale-price">0</span>
-                                            </tr>
-                                            <tr>
-                                                <td>{{ __('home.Total Payment') }}:</td>
-                                                <td><span class="text-danger bg-white">$</span>
-                                                    <span class="text-danger bg-white" id="checkout-price">0</span>
-                                            </tr>
-                                        </table>
-                                    </div>
-
                                 </div>
                                 <button type="submit"
                                         class=" mt-3 mb-3 btn btn-danger">{{ __('home.Pay Now') }}</button>
+
+                            </div>
+                            <div class="col-md-4 col-12 orderSummary">
+                                <div class="d-flex justify-content-between orderSummary-header">
+                                    <span class="summary">Order Summary</span>
+                                    <span><a href="{{route ('cart.index') }}">Edit Cart</a></span>
+                                </div>
+                                <div class="orderSummary-body ">
+                                    @foreach ($carts as $cartItem)
+                                        <div class="mb-3 row">
+                                            <div class="col-3 img">
+                                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/attribute_rule_images/815_thumb_1623309309.jpg" alt="">
+                                            </div>
+                                            <div class="col-5 name d-flex">
+                                                {{ $cartItem->quantity }} x {{ $cartItem->product->name }}
+                                            </div>
+                                            <div class="col-4 price d-flex" style="color:black">
+                                                <span>$ <span class="price-quantity" id="total-quantity-{{ $cartItem->id }}">{{ $cartItem->price*$cartItem->quantity }}</span></span>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="orderSummary-footer" id="space-price">
+                                    <div class="grandtotal d-flex justify-content-between">
+                                        <span class="total">{{ __('home.Total Product Cost') }}: </span>
+                                        <span class="price">$ <span id="max-total"> {{ $cartItem->price*$cartItem->quantity }}</span></span>
+                                    </div>
+                                    <div class="grandtotal d-flex justify-content-between">
+                                        <span class="total">{{ __('home.Shipping Fee') }}: </span>
+                                        <span class="price" id="shipping-price"><span>--</span></span>
+                                    </div>
+                                    <div class="grandtotal d-flex justify-content-between">
+                                        <span class="total">{{ __('home.Discount') }}: </span>
+                                        <span class="price" id="sale-price">$ <span>--</span></span>
+                                    </div>
+                                    <div class="grandtotal d-flex justify-content-between">
+                                        <span class="total">{{ __('home.Total Payment') }}:</span>
+                                        <span class="price" id="checkout-price">$ <span>9024000</span></span>
+                                    </div>
+                                </div>
 
                             </div>
                             <input type="text" id="total_price" name="total_price" value="0" hidden="">
@@ -230,15 +325,15 @@
 
                             <input type="text" id="discount_price_by_rank" name="discount_price_by_rank"
                                    value="{{$totalSaleByRank}}" hidden="">
-                            {{--                            create input tag re-save discount price by voucher--}}
                             <input type="text" id="voucher_discount_price" value="0" hidden="">
-
-                        </form>
-                    </div>
-                </div>
-            @endif
+                        </div>
+                    </form>
+                @endif
+            </div>
         </div>
     </div>
+
+
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
         function getvoucher() {
@@ -290,19 +385,20 @@
             let salePriceByRank = document.getElementById('discount_price_by_rank');
             let salePriceByVoucher = document.getElementById('voucher_discount_price');
             let checkOutPrice = document.getElementById('checkout-price');
-            var firstCells = document.querySelectorAll('#table-checkout td:nth-child(4)');
-            var cellValues = [];
-            firstCells.forEach(function (singleCell) {
-                cellValues.push(singleCell.innerText);
-            });
+            let valuePrice = document.getElementsByClassName('price-quantity');
+            // var firstCells = document.querySelectorAll('#table-checkout td:nth-child(4)');
+            // var cellValues = [];
+            // firstCells.forEach(function (singleCell) {
+            //     cellValues.push(singleCell.innerText);
+            // });
             let i, total = 0;
-            for (i = 0; i < cellValues.length; i++) {
-                total = parseFloat(total) + parseFloat(cellValues[i]);
+            for (i = 0; i < valuePrice.length; i++) {
+                total = parseFloat(total) + parseFloat(valuePrice[i].innerText);
             }
+
             totalMax.innerText = total;
-            totalPrice.innerHTML = total;
             salePrice.innerText = parseFloat(salePriceByRank.value) + parseFloat(salePriceByVoucher.value);
-            let max = parseFloat(total) + parseFloat(shippingPrice) - parseFloat(salePrice.innerText)
+            let max = parseFloat(total) - parseFloat(salePrice.innerText)
 
             checkOutPrice.innerHTML = max.toFixed(1);
             let price = document.getElementById('price_id');

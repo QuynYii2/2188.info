@@ -24,6 +24,7 @@ class Product extends Model
         'category_id',
         'hot',
         'feature',
+        'gallery',
 
     ];
 
