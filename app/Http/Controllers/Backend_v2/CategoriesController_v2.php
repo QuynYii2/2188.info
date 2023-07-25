@@ -102,14 +102,16 @@ class CategoriesController_v2 extends Controller
                 $slug = \Str::slug($name);
             }
 
-            $categoryOld = DB::table('categories')->where([
-                ['name', $validatedData['category_name']],
-                ['parent_id', $validatedData['category_parentID']]
-            ])->first();
+            if ( $category->name != $name){
+                $categoryOld = DB::table('categories')->where([
+                    ['name', $validatedData['category_name']],
+                    ['parent_id', $validatedData['category_parentID']]
+                ])->first();
 
-            if ($categoryOld) {
-                alert()->error('Error', 'Tên chuyên mục tồn tại');
-                return back();
+                if ($categoryOld) {
+                    alert()->error('Error', 'Tên chuyên mục tồn tại');
+                    return back();
+                }
             }
 
             $category->name = $name;
@@ -135,7 +137,6 @@ class CategoriesController_v2 extends Controller
             alert()->error('Error', 'Cập nhật không thành công.');
             return redirect()->route('categories.v2.show');
         } catch (\Exception $exception) {
-            dd($exception);
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }

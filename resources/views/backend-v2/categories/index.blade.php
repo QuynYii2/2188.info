@@ -377,7 +377,10 @@
                                         @endif
                                     </td>
                                     <td>
-                                        {{count($categories)}}
+                                        @php
+                                            $products = \App\Models\Product::where('category_id', $category->id)->get();
+                                        @endphp
+                                        {{count($products)}}
                                     </td>
                                 </tr>
                             @endforeach
