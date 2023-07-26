@@ -18,7 +18,7 @@ return [
     'input email' => '이메일을 입력하십시오 ...',
     'input address' => '주소를 입력하십시오 ...',
     'input taxCode' => '세금 코드를 입력하십시오 ...',
-    'input category' => '제품 카테고리 선택 ...',
+    'input category' => 'input category',
     'input nameProduct' => '제품 이름을 입력하십시오 ...',
     'input socialNetwork' => '소셜 네트워크 ID를 입력하십시오 ...',
     'input username' => '사용자 이름을 입력하십시오 ...',
@@ -245,14 +245,6 @@ return [
     'upgrade permission' => '권한 업그레이드',
     'payment management' => '결제 관리',
     'account manage' => '계정 관리',
-    'shop by categories' => '카테고리별로 쇼핑하기',
-    'Lookbook'=>'책을 보면',
-    'Shipping & Returns'=>'배송 및 반품',
-    'Contact Us'=>'문의하기',
-    'Blog'=>'블로그',
-    'Gift Cards'=>'기프트 카드',
-    'Wish Lists'=>'위시리스트',
-    'Help'=>'돕다',
 
 
 ];
