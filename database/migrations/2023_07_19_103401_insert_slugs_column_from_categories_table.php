@@ -14,7 +14,7 @@ class InsertSlugsColumnFromCategoriesTable extends Migration
     public function up()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->string('slug');
+            $table->string('slug')->nullable();
             $table->string('description')->nullable();
         });
     }

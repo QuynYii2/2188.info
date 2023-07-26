@@ -250,4 +250,13 @@ return [
     'upgrade permission' => 'Nâng cấp quyền',
     'payment management' => 'Quản lý thanh toán',
     'account manage' => 'Quản lý tài khoản',
+    'shop by categories' => 'Danh sách danh mục',
+    'Lookbook'=>'Sách hướng dẫn',
+    'Shipping & Returns'=>'Vận chuyển & Trả hàng',
+    'Contact Us'=>'Liên hệ chúng tôi',
+    'Blog'=>'Bài viết',
+    'Gift Cards'=>'Thẻ quà tặng',
+    'Wish Lists'=>'Danh sách yêu thích',
+    'Help'=>'Hỗ trợ',
+
 ];

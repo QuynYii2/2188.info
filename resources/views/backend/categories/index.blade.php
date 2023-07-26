@@ -109,7 +109,7 @@
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->name }}</td>
                         <td>{{ $category->parent ? $category->parent->name : '' }}</td>
-                        <td>Mô tả</td>
+                        <td>{{ $category->description }}</td>
                         <td>10</td>
                         <td>
                             <img class="img img-100" src="{{ asset('storage/'.$category->thumbnail) }}" alt="Thumbnail">
