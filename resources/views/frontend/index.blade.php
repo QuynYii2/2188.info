@@ -264,7 +264,7 @@
                                                             Options</a>
                                                     @endif
                                                 </div>
-                                                <div class="card-bottom--right">
+                                                <div class="card-bottom--right" id-product="{{$newProduct->id}}">
                                                     <i class="item-icon fa-regular fa-heart"></i>
                                                 </div>
                                             </div>

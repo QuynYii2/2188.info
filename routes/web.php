@@ -198,6 +198,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('update-info', [UserController::class, 'updateInfo'])->name('user.updateInfo');
     //
     Route::get('/my-vouchers', [UserController::class, 'myVoucher'])->name('my.voucher.show');
+    //
 
 
 
@@ -341,6 +342,9 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::get('/order-managers/{id}', [\App\Http\Controllers\Seller\OrderController::class, 'detail'])->name('seller.order.detail');
     Route::post('/export-excel', [ExportFileController::class, 'exportExcelOrder'])->name('order.manage.export.excel');
     Route::post('/export-excel-detail', [ExportFileController::class, 'exportExcelOrderDetail'])->name('order.manage.export.excel.detail');
+    // Wish lists
+//    Route::get('/wish-lists',[UserController::class,'wishLists'])->name('user.wish.lists');
+    Route::post('/wish-lists',[UserController::class,'wishLists'])->name('user.wish.lists');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {
