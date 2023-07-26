@@ -348,7 +348,6 @@ class UserController extends Controller
         $listVouchers = Voucher::all();
         $sellerIds = DB::table('role_user')->where('role_id','=','2')->get(); // Lấy tất cả ca user_id là seller trong bảng role_user
         $adminIds =  DB::table('role_user')->where('role_id','=','1')->get(); // Lấy tất cả ca user_id là admin  trong bảng role_user
-
         $sellers=[];
         $admins=[];
         foreach ($sellerIds as $sellerId){
