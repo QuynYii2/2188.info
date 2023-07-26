@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ConfigProjectController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CoinController;
 use App\Http\Controllers\EvaluateProductController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\Frontend\AddressController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
@@ -73,6 +74,8 @@ Route::get('/callback/kakaotalk', [SocialController::class, 'callbackKakaotalk']
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/register/', [HomeController::class, 'register'])->name('register.show');
+Route::post('/file/img/store', [FileController::class, 'saveImgByUser'])->name('file.img.save');
+Route::get('/file/img/get', [FileController::class, 'getListImgByUser'])->name('file.img.get');
 
 // Start register member
 Route::get(
@@ -194,7 +197,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('update-info', [UserController::class, 'updateInfo'])->name('user.updateInfo');
     //
     Route::get('/my-vouchers', [UserController::class, 'myVoucher'])->name('my.voucher.show');
-
 
 
 });
