@@ -44,6 +44,7 @@
                         </div>
                     @endif
 
+                    <input type="text" hidden="" name="gallery" value="{{$product->gallery}}">
                     <input type="text" hidden="" name="storage_id" value="{{$product->storage_id}}">
                     <input type="text" hidden="" name="qty" value="{{$product->qty}}">
                     <input type="text" hidden="" name="user_id" value="{{$product->user_id}}">
@@ -152,16 +153,6 @@
                                                    name="thumbnail{{$loop->index+1}}"
                                                    accept="image/*"
                                                    required>
-                                        </label>
-                                    </div>
-                                    <div class="form-group col-12 col-sm-12 ">
-                                        <label for="gallery">Thư viện ảnh:</label>
-                                        <label class='__lk-fileInput'>
-                                            <span data-default='Choose file'>Choose file</span>
-                                            <input type="file" id="gallery" class="img-cfg"
-                                                   name="gallery{{$loop->index+1}}[]"
-                                                   accept="image/*"
-                                                   multiple>
                                         </label>
                                     </div>
                                 </div>

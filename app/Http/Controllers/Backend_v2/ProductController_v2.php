@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Backend_v2;
 use App\Enums\AttributeProductStatus;
 use App\Enums\AttributeStatus;
 use App\Enums\ProductStatus;
+use App\Enums\VariationStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\StaffUsers;
 use App\Models\StorageProduct;
+use App\Models\Variation;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -71,7 +73,16 @@ class ProductController_v2 extends Controller
     {
         try {
             $product = new Product();
-
+            if ($request->hasFile('gallery')) {
+                $gallery = $request->file('gallery');
+                $galleryPaths = [];
+                foreach ($gallery as $image) {
+                    $galleryPath = $image->store('gallery', 'public');
+                    $galleryPaths[] = $galleryPath;
+                }
+                $galleryString = implode(',', $galleryPaths);
+                $product->gallery = $galleryString;
+            }
             $qty_in_storage = DB::table('storage_products')->where([['id', '=', $request->input('storage-id')]])->first('quantity');
 
             $product->storage_id = $request->input('storage-id');
@@ -84,21 +95,6 @@ class ProductController_v2 extends Controller
             $product->location = Auth::user()->region;
 
             $product->slug = \Str::slug($request->input('name'));
-
-            $hot = $request->input('hot_product');
-            $feature = $request->input('feature_product');
-
-            if ($hot) {
-                $product->hot = 1;
-            } else{
-                $product->hot = 0;
-            }
-
-            if ($feature) {
-                $product->feature = 1;
-            } else {
-                $product->feature = 0;
-            }
 
             $newArray = $this->getAttributeProperty($request);
 
@@ -115,9 +111,9 @@ class ProductController_v2 extends Controller
             $testArray = $this->getArray($testArray);
             session()->remove('product');
             session()->remove('testArray');
-//            session()->push('product', []);
+            session()->remove('sourceArray');
             session()->push('product', $product);
-//            session()->push('testArray', []);
+            session()->push('sourceArray', $newArray);
             session()->push('testArray', $testArray);
             return redirect(route('product.v2.select'));
         } catch (\Exception $exception) {
@@ -133,6 +129,7 @@ class ProductController_v2 extends Controller
 
             $qty_in_storage = DB::table('storage_products')->where([['id', '=', $request->input('storage_id')]])->first('quantity');
 
+            $product->gallery = $request->input('gallery');
             $product->storage_id = $request->input('storage_id');
             $product->name = $request->input('name');
             $product->description = $request->input('description');
@@ -149,11 +146,16 @@ class ProductController_v2 extends Controller
 
             if ($hot) {
                 $product->hot = 1;
+            } else {
+                $product->hot = 0;
             }
 
             if ($feature) {
                 $product->feature = 1;
+            } else {
+                $product->feature = 0;
             }
+
             $count = $request->input('count');
 
             $createProduct = $this->createProduct($product, $request, $count);
@@ -357,44 +359,45 @@ class ProductController_v2 extends Controller
         $newProduct['hot'] = $product->hot;
         $newProduct['slug'] = $product->slug;
 
-        $arrayProduct= null;
+        $newProduct['price'] = 0;
+        $newProduct['old_price'] = 0;
 
+        $success = Product::create($newProduct);
+        $product = Product::where('user_id', Auth::user()->id)->orderByDesc('id')->first();
+
+        $arrayProduct = null;
+        $newVariation = null;
         for ($i = 1; $i < $number + 1; $i++) {
             if ($request->hasFile('thumbnail' . $i)) {
                 $thumbnail = $request->file('thumbnail' . $i);
                 $thumbnailPath = $thumbnail->store('thumbnails', 'public');
-                $newProduct['thumbnail'] = $thumbnailPath;
+                $newVariation['thumbnail'] = $thumbnailPath;
             }
 
-            if ($request->hasFile('gallery' . $i)) {
-                $gallery = $request->file('gallery' . $i);
-                $galleryPaths = [];
-                foreach ($gallery as $image) {
-                    $galleryPath = $image->store('gallery', 'public');
-                    $galleryPaths[] = $galleryPath;
-                }
-                $galleryString = implode(',', $galleryPaths);
-                $newProduct['gallery'] = $galleryString;
-            }
-
-            $newProduct['price'] = $request->input('price' . $i);
-            $newProduct['old_price'] = $request->input('old_price' . $i);
+            $newVariation['price'] = $request->input('price' . $i);
+            $newVariation['old_price'] = $request->input('old_price' . $i);
             $attPro = $request->input('attribute_property' . $i);
-            $newProduct['attribute'] = $attPro;
+            $newVariation['variation'] = $attPro;
+
+            $newVariation['product_id'] = $product->id;
+            $newVariation['user_id'] = Auth::user()->id;
+            $newVariation['status'] = VariationStatus::ACTIVE;
+            $newVariation['description'] = $request->input('description' . $i);
+            $newVariation['quantity'] = $product->qty;
+//            $newVariation['quantity'] = $request->input('quantity' . $i);
 
             if (!$request->input('price' . $i) || $request->input('old_price' . $i) < $request->input('price' . $i)) {
-                $newProduct['price'] = $request->input('old_price' . $i);
+                $newVariation['price'] = $request->input('old_price' . $i);
             }
 
-            $arrayProduct[] = $newProduct;
+            $arrayProduct[] = $newVariation;
         }
 
         for ($j = 0; $j < count($arrayProduct); $j++) {
-            $success = Product::create($arrayProduct[$j]);
-            $newProduct = Product::where('user_id', Auth::user()->id)->orderByDesc('id')->first();
-            $attProArray = explode(',', $arrayProduct[$j]['attribute']);
-            $this->createAttributeProduct($newProduct, $attProArray);
+            Variation::create($arrayProduct[$j]);
         }
+        $sourceArray = session()->get('sourceArray');
+        $this->createAttributeProduct($product, $sourceArray[0]);
 
         return $success;
     }
