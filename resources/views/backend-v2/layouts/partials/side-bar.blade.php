@@ -624,6 +624,15 @@
 
 </style>
 
+@php
+    if (auth()->check() != null){
+           $roleUsers = DB::table('role_user')
+           ->where([['user_id', Auth::user()->id], ['role_id', 1]])
+           ->get();
+       } else {
+           $roleUsers[] = null;
+       }
+@endphp
 <div id="adminmenuwrap" class="snipcss-eYcQv">
     <ul id="adminmenu">
         <li class="wp-first-item wp-has-submenu wp-not-current-submenu menu-top menu-top-first menu-icon-dashboard menu-top-first menu-top-last" id="menu-dashboard">
@@ -878,11 +887,13 @@
                         Add New
                     </a>
                 </li>
-                <li>
-                    <a href="{{route('categories.v2.show')}}">
-                        Categories
-                    </a>
-                </li>
+                @if(sizeof($roleUsers) != 0)
+                    <li>
+                        <a href="{{route('categories.v2.show')}}">
+                            Categories
+                        </a>
+                    </li>
+                @endif
                 <li>
                     <a href="edit-tags.php?taxonomy=product_tag&amp;post_type=product">
                         Tags
