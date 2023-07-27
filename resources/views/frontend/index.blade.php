@@ -264,7 +264,7 @@
                                                             Options</a>
                                                     @endif
                                                 </div>
-                                                <div class="card-bottom--right">
+                                                   <div class="card-bottom--right" id-product="{{$newProduct->id}}">
                                                     <i class="item-icon fa-regular fa-heart"></i>
                                                 </div>
                                             </div>
@@ -1747,5 +1747,30 @@
         let heightB = h_car_1 !== 0 ? h_car_1 : h_car_2;
         side_cate.style.height = heightB + 'px';
 
+    </script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+        $(document).ready(function ($) {
+            $(".card-bottom--right").click(function () {
+                var idProduct = jQuery(this).attr('id-product');
+                console.log(idProduct)
+
+                $.ajax({
+                    url: '/wish-list-store/',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        idProduct : idProduct,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function (response) {
+                        console.log('Thêm vào danh sách thành công.')
+                    },
+                    error: function (exception) {
+                        console.log(exception)
+                    }
+                });
+            });
+        });
     </script>
 @endsection

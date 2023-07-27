@@ -14,6 +14,7 @@ use App\Models\TimeLevelTable;
 use App\Models\User;
 use App\Models\Voucher;
 use App\Models\VoucherItem;
+use App\Models\wishlists;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -369,6 +370,18 @@ class UserController extends Controller
         ]);
     }
 
-
+//    public function wishLists()
+//    {
+//        $idProduct = $_POST['idProduct'];
+//        $userId = Auth::id();
+//        if (isset($idProduct)) {
+//            $idProduct = $_POST['product_id'];
+//            $userId = $_POST['user_id'];
+//
+//            return view('frontend.pages.profile.wish-lists');
+//
+//        }
+//
+//    }
 
 }
