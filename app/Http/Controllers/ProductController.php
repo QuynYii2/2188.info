@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\AttributeProductStatus;
 use App\Enums\EvaluateProductStatus;
 use App\Enums\ProductInterestedStatus;
+use App\Enums\ProductStatus;
 use App\Enums\PromotionStatus;
 use App\Enums\VariationStatus;
 use App\Enums\VoucherStatus;
@@ -124,6 +125,10 @@ class ProductController extends Controller
             $product = Product::find($text);
         } else {
             $product = Product::where('slug', $text)->first();
+        }
+
+        if ($product->status != ProductStatus::ACTIVE){
+            return 404;
         }
 
         $product->views = $product->views + 1;

@@ -241,32 +241,34 @@
                     <div class="description-text">
                         {{ $product->description }}
                     </div>
-                    <div class="row">
-                        @foreach($attributes as $attribute)
-                            @php
-                                $att = Attribute::find($attribute->attribute_id);
-                                $properties_id = $attribute->value;
-                                $arrayAtt = array();
-                                $arrayAtt = explode(',', $properties_id);
-                            @endphp
-                            <div class="col-sm-6 col-6">
-                                <label>{{$att->name}}</label>
-                                <div class="radio-toolbar mt-3">
-                                    @foreach($arrayAtt as $data)
-                                        @php
-                                            $property = Properties::find($data);
-                                        @endphp
-                                        <input class="inputRadioButton"
-                                               id="input-{{$attribute->attribute_id}}-{{$loop->index+1}}"
-                                               name="inputProperty-{{$attribute->attribute_id}}" type="radio"
-                                               value="{{$attribute->attribute_id}}-{{$property->id}}">
-                                        <label for="input-{{$attribute->attribute_id}}-{{$loop->index+1}}">{{$property->name}}</label>
-                                    @endforeach
+                    @if(!$attributes->isEmpty())
+                        <div class="row">
+                            @foreach($attributes as $attribute)
+                                @php
+                                    $att = Attribute::find($attribute->attribute_id);
+                                    $properties_id = $attribute->value;
+                                    $arrayAtt = array();
+                                    $arrayAtt = explode(',', $properties_id);
+                                @endphp
+                                <div class="col-sm-6 col-6">
+                                    <label>{{$att->name}}</label>
+                                    <div class="radio-toolbar mt-3">
+                                        @foreach($arrayAtt as $data)
+                                            @php
+                                                $property = Properties::find($data);
+                                            @endphp
+                                            <input class="inputRadioButton"
+                                                   id="input-{{$attribute->attribute_id}}-{{$loop->index+1}}"
+                                                   name="inputProperty-{{$attribute->attribute_id}}" type="radio"
+                                                   value="{{$attribute->attribute_id}}-{{$property->id}}">
+                                            <label for="input-{{$attribute->attribute_id}}-{{$loop->index+1}}">{{$property->name}}</label>
+                                        @endforeach
+                                    </div>
                                 </div>
-                            </div>
-                        @endforeach
-                    </div>
-                    <a id="resetSelect" class="btn btn-warning mt-3">Reset select</a>
+                            @endforeach
+                        </div>
+                        <a id="resetSelect" class="btn btn-warning mt-3">Reset select</a>
+                    @endif
                     <div class="">
                         <input id="product_id" hidden value="{{$product->id}}">
                         <input name="variable" id="variable" hidden value="{{$variables[0]->variation}}">
@@ -277,13 +279,17 @@
                     </div>
                     <div class="d-flex buy justify-content-around">
                         <div>
-                            <input type="number" class="input" name="quantity">
+                            <input min="1" value="1" type="number" class="input" name="quantity">
                             <div class="spinner">
                                 <button type="button" class="up button">&rsaquo;</button>
                                 <button type="button" class="down button">&lsaquo;</button>
                             </div>
                         </div>
-                        <button type="submit" id="btnAddCard" class="add-to-cart">Add To Cart</button>
+                        @if(!$attributes->isEmpty())
+                            <button type="submit" id="btnAddCard" class="add-to-cart">Add To Cart</button>
+                        @else
+                            <button type="submit" class="add-to-cart">Add To Cart</button>
+                        @endif
                         <button class="share"><i class="fa-regular fa-heart"></i></button>
                         <button class="share"><i class="fa-solid fa-share-nodes"></i></button>
                     </div>

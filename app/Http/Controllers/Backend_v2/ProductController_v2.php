@@ -99,13 +99,15 @@ class ProductController_v2 extends Controller
             $newArray = $this->getAttributeProperty($request);
 
             $testArray = null;
-            foreach ($newArray as $myItem) {
-                $key = explode("-", $myItem);
-                $demoArray = null;
-                for ($j = 1; $j < count($key); $j++) {
-                    $demoArray[] = $key[0] . '-' . $key[$j];
+            if ($newArray) {
+                foreach ($newArray as $myItem) {
+                    $key = explode("-", $myItem);
+                    $demoArray = null;
+                    for ($j = 1; $j < count($key); $j++) {
+                        $demoArray[] = $key[0] . '-' . $key[$j];
+                    }
+                    $testArray[] = $demoArray;
                 }
-                $testArray[] = $demoArray;
             }
 
             $testArray = $this->getArray($testArray);
@@ -117,6 +119,7 @@ class ProductController_v2 extends Controller
             session()->push('testArray', $testArray);
             return redirect(route('product.v2.select'));
         } catch (\Exception $exception) {
+            dd($exception);
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
@@ -415,13 +418,17 @@ class ProductController_v2 extends Controller
 
     private function getArray($array)
     {
-        if (count($array) == 1) {
-            return $array;
+        if ($array) {
+            if (count($array) == 1) {
+                return $array;
+            }
+            $newArray = $array[0];
+            for ($i = 1; $i < count($array); $i++) {
+                $newArray = $this->mergeArray($newArray, $array[$i]);
+            }
+            return $newArray;
+        } else {
+            return null;
         }
-        $newArray = $array[0];
-        for ($i = 1; $i < count($array); $i++) {
-            $newArray = $this->mergeArray($newArray, $array[$i]);
-        }
-        return $newArray;
     }
 }

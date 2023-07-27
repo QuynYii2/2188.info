@@ -48,95 +48,97 @@
                                     <div class="col-md-10 float-left">
                                         <div class="text-secondary">{{$cartItem->product->category->name}}</div>
                                         <a href="{{route('detail_product.show', $cartItem->product->id)}}">{{$cartItem->product->name}}</a>
-                                        @php
-                                            $list = $cartItem->values;
-                                            $array = explode(',', $list);
-                                        @endphp
-                                        @foreach($array as $variable)
+                                        @if($cartItem->values != 0)
                                             @php
-                                                $arrayAttPro = explode('-', $variable);
-                                                $att = \App\Models\Attribute::find($arrayAttPro[0]);
-                                                $pro = \App\Models\Properties::find($arrayAttPro[1]);
+                                                $list = $cartItem->values;
+                                                $array = explode(',', $list);
                                             @endphp
-                                            <div class="font-italic"><span class="text-secondary">
+                                            @foreach($array as $variable)
+                                                @php
+                                                    $arrayAttPro = explode('-', $variable);
+                                                    $att = \App\Models\Attribute::find($arrayAttPro[0]);
+                                                    $pro = \App\Models\Properties::find($arrayAttPro[1]);
+                                                @endphp
+                                                <div class="font-italic"><span class="text-secondary">
                                                 {{$att->name}}
                                             </span>: <span>{{$pro->name}}</span></div>
-                                        @endforeach
-                                        <a class="text-edit" href="#" data-toggle="modal"
-                                           data-target="#exampleModal">
-                                            <i class='fas fa-edit'></i>
-                                            Change
-                                        </a>
-                                        <div class="modal fade" id="exampleModal" tabindex="-1"
-                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">
-                                                            Edit {{$cartItem->product->name}}</h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                                aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="form-field" data-product-attribute="set-rectangle"
-                                                             role="radiogroup" aria-labelledby="rectangle-group-label">
-                                                            <label class="form-label form-label--alternate form-label--inlineSmall"
-                                                                   id="rectangle-group-label">
-                                                                Size:
-                                                                <small>
-                                                                    *
-                                                                </small>
-                                                                <span data-option-value=""></span>
-                                                            </label>
+                                            @endforeach
+                                            <a class="text-edit" href="#" data-toggle="modal"
+                                               data-target="#exampleModal">
+                                                <i class='fas fa-edit'></i>
+                                                Change
+                                            </a>
+                                            <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">
+                                                                Edit {{$cartItem->product->name}}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="form-field" data-product-attribute="set-rectangle"
+                                                                 role="radiogroup" aria-labelledby="rectangle-group-label">
+                                                                <label class="form-label form-label--alternate form-label--inlineSmall"
+                                                                       id="rectangle-group-label">
+                                                                    Size:
+                                                                    <small>
+                                                                        *
+                                                                    </small>
+                                                                    <span data-option-value=""></span>
+                                                                </label>
 
-                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                <div class="form-option-wrapper">
-                                                                    <input class="form-radio" type="radio"
-                                                                           id="attribute_rectangle__189_374"
-                                                                           name="attribute[189]" value="374" required=""
-                                                                           data-state="false">
-                                                                    <label class="form-option unavailable"
-                                                                           for="attribute_rectangle__189_374"
-                                                                           data-product-attribute-value="374">
-                                                                        <span class="form-option-variant">32 inch</span>
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-option-wrapper">
-                                                                    <input class="form-radio" type="radio"
-                                                                           id="attribute_rectangle__189_375"
-                                                                           name="attribute[189]" value="375" required=""
-                                                                           data-state="false">
-                                                                    <label class="form-option unavailable"
-                                                                           for="attribute_rectangle__189_375"
-                                                                           data-product-attribute-value="375">
-                                                                        <span class="form-option-variant">42 inch</span>
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-option-wrapper">
-                                                                    <input class="form-radio" type="radio"
-                                                                           id="attribute_rectangle__189_376"
-                                                                           name="attribute[189]" value="376" checked=""
-                                                                           data-default="" required=""
-                                                                           data-state="true">
-                                                                    <label class="form-option"
-                                                                           for="attribute_rectangle__189_376"
-                                                                           data-product-attribute-value="376">
-                                                                        <span class="form-option-variant">55 inch</span>
-                                                                    </label>
+                                                                <div class="d-flex justify-content-between align-items-center">
+                                                                    <div class="form-option-wrapper">
+                                                                        <input class="form-radio" type="radio"
+                                                                               id="attribute_rectangle__189_374"
+                                                                               name="attribute[189]" value="374" required=""
+                                                                               data-state="false">
+                                                                        <label class="form-option unavailable"
+                                                                               for="attribute_rectangle__189_374"
+                                                                               data-product-attribute-value="374">
+                                                                            <span class="form-option-variant">32 inch</span>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-option-wrapper">
+                                                                        <input class="form-radio" type="radio"
+                                                                               id="attribute_rectangle__189_375"
+                                                                               name="attribute[189]" value="375" required=""
+                                                                               data-state="false">
+                                                                        <label class="form-option unavailable"
+                                                                               for="attribute_rectangle__189_375"
+                                                                               data-product-attribute-value="375">
+                                                                            <span class="form-option-variant">42 inch</span>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="form-option-wrapper">
+                                                                        <input class="form-radio" type="radio"
+                                                                               id="attribute_rectangle__189_376"
+                                                                               name="attribute[189]" value="376" checked=""
+                                                                               data-default="" required=""
+                                                                               data-state="true">
+                                                                        <label class="form-option"
+                                                                               for="attribute_rectangle__189_376"
+                                                                               data-product-attribute-value="376">
+                                                                            <span class="form-option-variant">55 inch</span>
+                                                                        </label>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="modal-footer justify-content-center align-items-center">
-                                                        <button type="button" class=" text-center btn btn-primary">
-                                                            Save
-                                                        </button>
+                                                        <div class="modal-footer justify-content-center align-items-center">
+                                                            <button type="button" class=" text-center btn btn-primary">
+                                                                Save
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        @endif
                                         <p class="mt-2">Gift Wrapping: <span>Add</span></p>
                                     </div>
                                 </div>
