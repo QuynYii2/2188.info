@@ -138,13 +138,7 @@
                         <div class="form-group">
                             <div class="form-group col-12 col-sm-12 ">
                                 <label for="gallery">Thư viện ảnh:</label>
-                                <label class='__lk-fileInput'>
-                                    <span data-default='Choose file'>Choose file</span>
-                                    <input type="file" id="gallery" class="img-cfg"
-                                           name="gallery[]"
-                                           accept="image/*"
-                                           multiple>
-                                </label>
+                                @include('backend-v2.products.modal-media')
                             </div>
                         </div>
 
