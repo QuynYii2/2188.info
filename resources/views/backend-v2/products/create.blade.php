@@ -65,7 +65,7 @@
                         <div class="form-group">
                             <label for="description">Mô tả ngắn</label>
                             <textarea id="description" class="form-control description" name="description"
-                                      rows="5">{{$product->description}}</textarea>
+                                      rows="5">{{$product->short_description}}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="description-detail">Mô tả chi tiết</label>

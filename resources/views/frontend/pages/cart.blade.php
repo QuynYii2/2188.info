@@ -44,7 +44,7 @@
                                         <a href="{{route('detail_product.show', $cartItem->product->id)}}">{{$cartItem->product->name}}</a>
                                         <div class="font-italic"><span class="text-secondary">
                                                 Color
-                                            </span>: <span>Black</span></div>
+                                            </span>: <span>{{$cartItem->product->category->name}}</span></div>
                                         <div class="font-italic"><span class="text-secondary">
                                                 Size
                                             </span>: <span>55 inch</span></div>
