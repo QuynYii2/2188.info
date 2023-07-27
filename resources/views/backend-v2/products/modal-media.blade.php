@@ -328,6 +328,7 @@
 
 </style>
 
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <button type="button" class="btn btn-primary" data-toggle="modal"
         data-target="#exampleModal">
@@ -404,6 +405,7 @@
                     formData.append('gallery[]', this.files[i]);
                 }
                 formData.append('_token', csrfToken);
+
 
                 $.ajax({
                     url: '{{ route('file.img.save') }}',
