@@ -181,27 +181,4 @@
 {{--    </div>--}}
 {{--</footer>--}}
 <!-- Footer Section End -->
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<script>
-    $(document).ready(function ($) {
-        $(".card-bottom--right").click(function () {
-            var idProduct = jQuery(this).attr('id-product');
 
-            $.ajax({
-                url: '/wish-lists/',
-                method: 'POST',
-                dataType: 'json',
-                data: {
-                    idProduct : idProduct,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function (response) {
-                    console.log('Thêm vào danh sách thành công.')
-                },
-                error: function (exception) {
-                    console.log(exception)
-                }
-            });
-        });
-    });
-</script>

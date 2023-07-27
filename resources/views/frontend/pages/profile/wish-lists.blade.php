@@ -1,36 +1,25 @@
 @extends('frontend.layouts.profile')
 
-@section('title', 'My Wishlist')
-        <!DOCTYPE html>
-<html>
-<head>
-    <title>My Wishlist</title>
-</head>
-<body>
-<h1>My Wishlist</h1>
+@section('content')
+    <div class="container">
+        <h2>Wishlist</h2>
+        <div class="row">
+            @if(count($listWishlists) > 0)
+                @foreach($listWishlists as $wishlist)
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Product ID: {{ $wishlist->product_id }}</h5>
 
-@auth
-    @if ($userWishlists->isEmpty())
-        <p>No wishlist items found.</p>
-    @else
-        <ul>
-            @foreach ($userWishlists as $wishlist)
-                <li>
-                    <strong>Item Name:</strong> {{ $wishlist->item_name }}<br>
-                    <strong>Price:</strong> {{ $wishlist->price }}<br>
-                    <strong>Link:</strong> {{ $wishlist->link }}<br>
-                    <strong>Added Date:</strong> {{ $wishlist->added_date }}<br>
-                </li>
-            @endforeach
-        </ul>
-    @endif
-@else
-    <p>Please login to view your wishlist.</p>
-@endauth
-
-</body>
-</html>
-
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <div class="col-md-12">
+                    <p>There are no products in your wishlist.</p>
+                </div>
+            @endif
+        </div>
+    </div>
 @endsection
-
-

@@ -370,20 +370,18 @@ class UserController extends Controller
         ]);
     }
 
-    public function wishLists()
-    {
-        $idProduct = $_POST['idProduct'];
-        $userId = Auth::id();
-
-        if (Auth::check()) {
-            $user = Auth::user();
-            $userWishlists = $user->id = 2;
-            $listWishlists = DB::table('wishlists')->where('user_id','=',$userWishlists)->get();
-
-            return view('frontend.pages.profile.wish-lists');
-
-        }
-
-    }
+//    public function wishLists()
+//    {
+//        $idProduct = $_POST['idProduct'];
+//        $userId = Auth::id();
+//        if (isset($idProduct)) {
+//            $idProduct = $_POST['product_id'];
+//            $userId = $_POST['user_id'];
+//
+//            return view('frontend.pages.profile.wish-lists');
+//
+//        }
+//
+//    }
 
 }

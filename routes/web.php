@@ -199,6 +199,11 @@ Route::middleware(['auth'])->group(function () {
     //
     Route::get('/my-vouchers', [UserController::class, 'myVoucher'])->name('my.voucher.show');
     //
+    Route::get('wish-list', [App\Http\Controllers\WishListController::class, 'wishListIndex'])->name('wish.list.index');
+    Route::post('/wish-list-store', [App\Http\Controllers\WishListController::class, 'wishListStore'])->name('user.wish.lists');
+//    Route::delete('wish-list-s', [App\Http\Controllers\WishListController::class, 'wishlist.index'])->name('wish.list.stores');
+
+
 
 
 
@@ -342,9 +347,6 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::get('/order-managers/{id}', [\App\Http\Controllers\Seller\OrderController::class, 'detail'])->name('seller.order.detail');
     Route::post('/export-excel', [ExportFileController::class, 'exportExcelOrder'])->name('order.manage.export.excel');
     Route::post('/export-excel-detail', [ExportFileController::class, 'exportExcelOrderDetail'])->name('order.manage.export.excel.detail');
-    // Wish lists
-//    Route::get('/wish-lists',[UserController::class,'wishLists'])->name('user.wish.lists');
-    Route::post('/wish-lists',[UserController::class,'wishLists'])->name('user.wish.lists');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {
