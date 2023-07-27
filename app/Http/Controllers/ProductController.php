@@ -172,11 +172,14 @@ class ProductController extends Controller
 
         $attributes = DB::table('product_attribute')->where([['product_id', $product->id], ['status', AttributeProductStatus::ACTIVE]])->get();
 
+        $variables = Variation::where([['product_id', $product->id], ['status', VariationStatus::ACTIVE]])->get();
+
         return ['result' => $result,
             'product' => $product,
             'otherProduct' => $otherProduct,
             'attributes' => $attributes,
             'arrayVouchers' => $arrayVouchers,
-            'arrayPromotions' => $arrayPromotions];
+            'arrayPromotions' => $arrayPromotions,
+            'variables' => $variables];
     }
 }

@@ -383,8 +383,8 @@ class ProductController_v2 extends Controller
             $newVariation['user_id'] = Auth::user()->id;
             $newVariation['status'] = VariationStatus::ACTIVE;
             $newVariation['description'] = $request->input('description' . $i);
-            $newVariation['quantity'] = $product->qty;
-//            $newVariation['quantity'] = $request->input('quantity' . $i);
+//            $newVariation['quantity'] = $product->qty;
+            $newVariation['quantity'] = $request->input('quantity' . $i);
 
             if (!$request->input('price' . $i) || $request->input('old_price' . $i) < $request->input('price' . $i)) {
                 $newVariation['price'] = $request->input('old_price' . $i);

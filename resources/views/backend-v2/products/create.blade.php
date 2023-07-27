@@ -144,6 +144,23 @@
                                                placeholder="Nhập giá khuyến mãi">
                                     </div>
                                 </div>
+                                <div class="form-row">
+                                    <div class="col-4 d-inline-block">
+                                        <label class="control-label small name" for="quantity{{$loop->index+1}}">Quantity</label>
+                                        <input type="number"
+                                               class="value-check form-control" required
+                                               name="quantity{{$loop->index+1}}"
+                                               id="quantity{{$loop->index+1}}"
+                                               placeholder="Nhập quantity">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label for="description-detail">Mô tả</label>
+                                        <textarea class="form-control description" name="description{{$loop->index+1}}"
+                                                  rows="5"></textarea>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <div class="form-group col-12 col-sm-12 pt-3">
                                         <label for="thumbnail">Ảnh đại diện:</label>
@@ -206,15 +223,13 @@
         }
     </script>
     <script>
-        ClassicEditor
-            .create(document.querySelector('#description'))
-            .catch(error => {
-                console.error(error);
-            });
-        ClassicEditor
-            .create(document.querySelector('#description-detail'))
-            .catch(error => {
-                console.error(error);
-            });
+        let aaaa = document.querySelectorAll('.description');
+        for (let i = 0; i < aaaa.length; i++) {
+            ClassicEditor
+                .create(aaaa[i])
+                .catch(error => {
+                    console.error(error);
+                });
+        }
     </script>
 @endsection

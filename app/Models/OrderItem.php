@@ -15,6 +15,7 @@ class OrderItem extends Model
         'product_id',
         'price',
         'status',
+        'variable'
     ];
 
     protected $hidden = [

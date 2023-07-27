@@ -269,20 +269,21 @@
                     <a id="resetSelect" class="btn btn-warning mt-3">Reset select</a>
                     <div class="">
                         <input id="product_id" hidden value="{{$product->id}}">
+                        <input name="variable" id="variable" hidden value="{{$variables[0]->variation}}">
                     </div>
                     <div class="count__wrapper count__wrapper--ml mt-3">
-                        <label for="qty">Còn lại: {{$product->qty}}</label>
+                        <label for="qty">Còn lại: <span id="productQuantity">{{$product->qty}}</span></label>
 
                     </div>
                     <div class="d-flex buy justify-content-around">
                         <div>
-                            <input type="number" class="input">
+                            <input type="number" class="input" name="quantity">
                             <div class="spinner">
                                 <button type="button" class="up button">&rsaquo;</button>
                                 <button type="button" class="down button">&lsaquo;</button>
                             </div>
                         </div>
-                        <button class="add-to-cart">Add To Cart</button>
+                        <button type="submit" id="btnAddCard" class="add-to-cart">Add To Cart</button>
                         <button class="share"><i class="fa-regular fa-heart"></i></button>
                         <button class="share"><i class="fa-solid fa-share-nodes"></i></button>
                     </div>
@@ -675,12 +676,13 @@
             <div class="swiper-button-prev"></div>
         </div>
     </section>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>j
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
         var result = '';
         var product_id = document.getElementById('product_id')
+        var radio = document.getElementsByClassName('inputRadioButton');
+        let isCheck = false
         $('#resetSelect').on('click', function () {
-            var radio = document.getElementsByClassName('inputRadioButton');
             for (let i = 0; i < radio.length; i++) {
                 radio[i].checked = false;
             }
@@ -690,6 +692,8 @@
         var productThumbnail = document.getElementById('productThumbnail')
         var productPrice = document.getElementById('productPrice')
         var productOldPrice = document.getElementById('productOldPrice')
+        var productQuantity = document.getElementById('productQuantity')
+        var variable = document.getElementById('variable')
         $('.inputRadioButton').on('change', function () {
             let text = $(this).val();
             if (result == '') {
@@ -710,17 +714,39 @@
                         }
                     })
                     .then((response) => {
-                        console.log(response)
                         productThumbnail.src = urlImg + '/' + response['thumbnail'];
                         productPrice.innerText = response['price'];
                         productOldPrice.innerText = response['old_price'];
-
+                        productQuantity.innerText = response['quantity'];
+                        variable.value = response['variation'];
                     })
                     .catch(error => console.log(error));
             }
 
             myfunction(product_id.value, result);
+
+            checkBtn();
         });
+
+        function checkBtn() {
+            for (let i = 0; i < radio.length; i++) {
+                if (radio[i].checked == true) {
+                    isCheck = true;
+                }
+            }
+            if (!isCheck) {
+                $('#resetSelect').attr("disabled", true);
+                $('#btnAddCard').attr("disabled", true);
+                $('#btnAddCard').removeClass('add-to-cart');
+                $('#btnAddCard').addClass('btn btn-secondary');
+            } else {
+                $('#resetSelect').attr("disabled", false);
+                $('#btnAddCard').attr("disabled", false);
+                $('#btnAddCard').addClass('add-to-cart');
+            }
+        }
+
+        checkBtn();
     </script>
     <script>
         document.body.className += "js";

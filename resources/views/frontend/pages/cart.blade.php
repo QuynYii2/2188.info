@@ -32,22 +32,36 @@
                     </thead>
                     <tbody>
                     @foreach($cartItems as $cartItem)
+                        @php
+                            $productDetail = \App\Models\Variation::where([
+                                ['product_id', $cartItem->product->id],
+                                ['variation', $cartItem->values]
+                                ])->first();
+                        @endphp
                         <tr>
                             <td>
                                 <div class="row mt-3">
                                     <div class="col-md-2 img-product">
-                                        <img class="img" src="{{ asset('storage/'.$cartItem->product->thumbnail) }}"
+                                        <img class="img" src="{{ asset('storage/'.$productDetail->thumbnail) }}"
                                              alt="" width="60px" height="60px">
                                     </div>
                                     <div class="col-md-10 float-left">
                                         <div class="text-secondary">{{$cartItem->product->category->name}}</div>
                                         <a href="{{route('detail_product.show', $cartItem->product->id)}}">{{$cartItem->product->name}}</a>
-                                        <div class="font-italic"><span class="text-secondary">
-                                                Color
-                                            </span>: <span>Black</span></div>
-                                        <div class="font-italic"><span class="text-secondary">
-                                                Size
-                                            </span>: <span>55 inch</span></div>
+                                        @php
+                                            $list = $cartItem->values;
+                                            $array = explode(',', $list);
+                                        @endphp
+                                        @foreach($array as $variable)
+                                            @php
+                                                $arrayAttPro = explode('-', $variable);
+                                                $att = \App\Models\Attribute::find($arrayAttPro[0]);
+                                                $pro = \App\Models\Properties::find($arrayAttPro[1]);
+                                            @endphp
+                                            <div class="font-italic"><span class="text-secondary">
+                                                {{$att->name}}
+                                            </span>: <span>{{$pro->name}}</span></div>
+                                        @endforeach
                                         <a class="text-edit" href="#" data-toggle="modal"
                                            data-target="#exampleModal">
                                             <i class='fas fa-edit'></i>
@@ -123,7 +137,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <p class="mt-2">Gift Wrapping: <span >Add</span></p>
+                                        <p class="mt-2">Gift Wrapping: <span>Add</span></p>
                                     </div>
                                 </div>
                             </td>
@@ -141,7 +155,8 @@
                             </td>
                             <td id="total-quantity-{{ $cartItem->id }}">{{ $cartItem->price*$cartItem->quantity }}</td>
                             <td>
-                                <form class="text-center" action="{{ route('cart.delete', $cartItem->id) }}" method="POST">
+                                <form class="text-center" action="{{ route('cart.delete', $cartItem->id) }}"
+                                      method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <input class="submit" type="submit" value="&times;"/>
@@ -159,7 +174,8 @@
                         <label for="inputPassword2">Enter your coupon code if you have one.</label>
                         <form class="d-flex align-items-center justify-content-between">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="inputPassword2" placeholder="Enter your coupon code">
+                                <input type="text" class="form-control" id="inputPassword2"
+                                       placeholder="Enter your coupon code">
                             </div>
                             <button type="submit" class="btn mb-2 submit">Apply</button>
                         </form>
@@ -169,7 +185,8 @@
                         <label for="inputPassword2">Enter your coupon code if you have one.</label>
                         <form class="d-flex align-items-center justify-content-between">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="inputPassword2" placeholder="Enter your coupon code">
+                                <input type="text" class="form-control" id="inputPassword2"
+                                       placeholder="Enter your coupon code">
                             </div>
                             <button type="submit" class="btn mb-2 submit">Apply</button>
                         </form>
@@ -183,7 +200,7 @@
                             <div class="d-flex justify-content-between align-items-baseline">
                                 <span class="mr-3">Country</span>
                                 <div class="form-group">
-                                    <select  name="" id="">
+                                    <select name="" id="">
                                         <option value="">VietNam</option>
                                         <option value="">TrungQuoc</option>
                                         <option value="">Han Quoc</option>
@@ -193,22 +210,26 @@
                             <div class="d-flex justify-content-between align-items-baseline">
                                 <span class="mr-3">State/Province</span>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="inputPassword2" placeholder="State/province">
+                                    <input type="text" class="form-control" id="inputPassword2"
+                                           placeholder="State/province">
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between align-items-baseline">
                                 <span class="mr-3">Suburb/City</span>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="inputPassword2" placeholder="Suburb/City">
+                                    <input type="text" class="form-control" id="inputPassword2"
+                                           placeholder="Suburb/City">
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between align-items-baseline">
                                 <span class="mr-3">Zip/Postcode</span>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="inputPassword2" placeholder="Zip/Postcode">
+                                    <input type="text" class="form-control" id="inputPassword2"
+                                           placeholder="Zip/Postcode">
                                 </div>
                             </div>
-                            <button type="submit" class="btn mb-2 submit float-right submit-60">Estimate Shipping</button>
+                            <button type="submit" class="btn mb-2 submit float-right submit-60">Estimate Shipping
+                            </button>
                         </form>
                     </div>
 
@@ -221,9 +242,10 @@
                     </div>
                     <div class="grandtotal d-flex justify-content-between">
                         <span>Grand total: </span>
-                        <span >$ <span id="max-total"> {{ $cartItem->price*$cartItem->quantity }}</span></span>
+                        <span>$ <span id="max-total"> {{ $cartItem->price*$cartItem->quantity }}</span></span>
                     </div>
-                    <button type="submit" class="btn mb-2 submit float-right submit-100"><a href="{{route('checkout.show')}}">Check out</a></button>
+                    <button type="submit" class="btn mb-2 submit float-right submit-100"><a
+                                href="{{route('checkout.show')}}">Check out</a></button>
                 </div>
             </div>
         @endif
