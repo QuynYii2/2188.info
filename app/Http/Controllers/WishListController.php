@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Wishlist;
-
+use App\Models\Product;
 
 
 class WishListController extends Controller
@@ -19,10 +19,16 @@ class WishListController extends Controller
      */
     public function wishListIndex()
     {
+        $listWishlists = DB::table('Wish_Lists')->where('user_id', '=', Auth::user()->id)->get();
+        $productIds = [];
 
-        $listWishlists = DB::table('wishlists')->where('user_id', '=', Auth::user()->id)->get('product_id');
+        foreach ($listWishlists as $productId) {
+            array_push($productIds, $productId->product_id);
+        }
 
-        return view('frontend/pages/profile/wish-lists', compact('listWishlists'));
+        $productLists = Product::where('id', $productIds)->get();
+
+        return view('frontend/pages/profile/wish-lists', compact('productLists'));
     }
 
     /**
@@ -46,7 +52,7 @@ class WishListController extends Controller
 
         $productId = $request->input('idProduct');
         $userId = Auth::user()->id;
-        $existingWishList = DB::table('wishlists')
+        $existingWishList = DB::table('Wish_Lists')
             ->where('user_id', $userId)
             ->where('product_id', $productId)
             ->first();
