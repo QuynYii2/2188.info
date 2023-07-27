@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ mix('css/custom.css') }}">
     <link rel="stylesheet" href="{{asset('css/style_backend.css')}}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/classic/ckeditor.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap4.min.css">

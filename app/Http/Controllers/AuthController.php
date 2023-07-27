@@ -94,7 +94,7 @@ class AuthController extends Controller
 
         if ($user && $user->status !== UserStatus::ACTIVE) {
             toast('Tài khoản của bạn đã bị khóa.', 'error', 'top-right');
-            return redirect()->route('login');
+            return back();
         }
 
         if (Auth::attempt($credentials)) {
@@ -105,7 +105,7 @@ class AuthController extends Controller
             toast('Tên đăng nhập hoặc mật khẩu không chính xác', 'error', 'top-right');
         }
 
-        return redirect()->route('login');
+        return back();
     }
 
     public function getGoogleSignInUrl()

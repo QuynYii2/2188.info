@@ -9,6 +9,7 @@ use App\Enums\VariationStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\Category;
+use App\Models\ImageUser;
 use App\Models\Product;
 use App\Models\StaffUsers;
 use App\Models\StorageProduct;
@@ -16,7 +17,6 @@ use App\Models\Variation;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use stdClass;
 
 class ProductController_v2 extends Controller
 {
@@ -66,7 +66,17 @@ class ProductController_v2 extends Controller
         }
         $product = $product[0];
         $testArray = $testArray[0];
-        return view('backend-v2.products.create', compact('product', 'testArray'));
+        $listImg = ImageUser::where('user_id', '=', Auth::user()->id)->get('url_image');
+        $arrImg = [];
+
+        foreach ($listImg as $item) {
+            $arr = explode(',', $item->url_image);
+            foreach ($arr as $item) {
+                array_push($arrImg, $item);
+            }
+        }
+
+        return view('backend-v2.products.create', compact('product', 'testArray', 'arrImg'));
     }
 
     public function generateProduct(Request $request)
@@ -95,6 +105,21 @@ class ProductController_v2 extends Controller
             $product->location = Auth::user()->region;
 
             $product->slug = \Str::slug($request->input('name'));
+
+            $hot = $request->input('hot_product');
+            $feature = $request->input('feature_product');
+
+            if ($hot) {
+                $product->hot = 1;
+            } else {
+                $product->hot = 0;
+            }
+
+            if ($feature) {
+                $product->feature = 1;
+            } else {
+                $product->feature = 0;
+            }
 
             $newArray = $this->getAttributeProperty($request);
 
@@ -141,8 +166,9 @@ class ProductController_v2 extends Controller
             $product->category_id = $request->input('category_id');
             $product->user_id = Auth::user()->id;
             $product->location = Auth::user()->region;
-
             $product->slug = \Str::slug($request->input('name'));
+
+            $product->gallery = $this->handleGallery($request->input('imgGallery'));
 
             $hot = $request->input('hot_product');
             $feature = $request->input('feature_product');
@@ -152,7 +178,6 @@ class ProductController_v2 extends Controller
             } else {
                 $product->hot = 0;
             }
-
             if ($feature) {
                 $product->feature = 1;
             } else {
@@ -173,6 +198,19 @@ class ProductController_v2 extends Controller
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
+    }
+
+    public function handleGallery($input)
+    {
+        $arrGallery = json_decode($input);
+        $pattern = '/\/storage\/([^,]+),?/';
+        $matches = array();
+        $arrResult = array();
+        foreach ($arrGallery as $item) {
+            preg_match_all($pattern, $item, $matches);
+            array_push($arrResult, $matches[1][0]);
+        }
+        return implode(',', $arrResult);
     }
 
     public function show($id)
@@ -218,16 +256,7 @@ class ProductController_v2 extends Controller
                 $thumbnailPath = $thumbnail->store('thumbnails', 'public');
                 $product->thumbnail = $thumbnailPath;
             }
-            if ($request->hasFile('gallery')) {
-                $gallery = $request->file('gallery');
-                $galleryPaths = [];
-                foreach ($gallery as $image) {
-                    $galleryPath = $image->store('gallery', 'public');
-                    $galleryPaths[] = $galleryPath;
-                }
-                $galleryString = implode(',', $galleryPaths);
-                $product->gallery = $galleryString;
-            }
+            $product->gallery = $this->handleGallery($request->input('imgGallery'));
 
             $hot = $request->input('hot_product');
             $feature = $request->input('feature_product');
@@ -361,6 +390,7 @@ class ProductController_v2 extends Controller
         $newProduct['feature'] = $product->feature;
         $newProduct['hot'] = $product->hot;
         $newProduct['slug'] = $product->slug;
+        $newProduct['gallery'] = $product->gallery;
 
         $newProduct['price'] = 0;
         $newProduct['old_price'] = 0;
@@ -379,6 +409,7 @@ class ProductController_v2 extends Controller
 
             $newVariation['price'] = $request->input('price' . $i);
             $newVariation['old_price'] = $request->input('old_price' . $i);
+          
             $attPro = $request->input('attribute_property' . $i);
             $newVariation['variation'] = $attPro;
 

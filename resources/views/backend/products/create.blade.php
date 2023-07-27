@@ -247,11 +247,11 @@
                 </div>
                 <div class="form-group">
                     <div class="name">Mô tả ngắn</div>
-                    <textarea class="form-control tiny" name="description-ffff"></textarea>
+                    <textarea class="form-control" id="description" name="description-ffff" ></textarea>
                 </div>
                 <div class="form-group">
                     <div class="name">Mô tả chi tiết</div>
-                    <textarea class="form-control tiny" name="description" required></textarea>
+                    <textarea class="form-control" id="description-detail" name="description" required></textarea>
                 </div>
                 <div class="form-group row">
                     <div class="col-4 d-inline-block">
@@ -596,5 +596,17 @@
         $(document).ready(function () {
             create_custom_dropdowns();
         });
+
+        ClassicEditor
+            .create(document.querySelector('#description'))
+            .catch(error => {
+                console.error(error);
+            });
+
+        ClassicEditor
+            .create(document.querySelector('#description-detail'))
+            .catch(error => {
+                console.error(error);
+            });
     </script>
 @endsection
