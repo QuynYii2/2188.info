@@ -237,7 +237,7 @@
                                             </div>
                                             <div class="card-title">
                                                 @if(Auth::check())
-                                                    <a href="{{route('detail_product.show', $newProduct->id)}}">{{$newProduct->name}}</a>
+                                                    <a href="{{route('find.by.slug.product', $newProduct->slug)}}">{{$newProduct->name}}</a>
                                                 @else
                                                     <a class="check_url">{{$newProduct->name}}</a>
                                                 @endif

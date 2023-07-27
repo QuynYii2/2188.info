@@ -139,6 +139,7 @@ Route::middleware('auth.product')->group(function () {
 });
 
 Route::get('/detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
+Route::get('/product/detail/{slug}', [\App\Http\Controllers\ProductController::class, 'findBySlug'])->name('find.by.slug.product');
 Route::get('/detail-product/{id}', [\App\Http\Controllers\ProductController::class, 'detailProduct'])->name('detail_product.api');
 Route::get('/category/{id}', [\App\Http\Controllers\CategoryController::class, 'category'])->name('category.show');
 // Products by location
@@ -350,6 +351,7 @@ Route::group(['middleware' => 'role.buyer'], function () {
 
 // Product
 Route::get('/product', [\App\Http\Controllers\Frontend\ProductController::class, 'index'])->name('product.index');
+Route::get('/product-variable/{id}/{value}', [\App\Http\Controllers\ProductController::class, 'getVariable']);
 // Cart
 Route::middleware(['auth'])->group(function () {
     // Cart

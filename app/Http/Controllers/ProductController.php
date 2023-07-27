@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Enums\AttributeProductStatus;
 use App\Enums\EvaluateProductStatus;
 use App\Enums\ProductInterestedStatus;
+use App\Enums\ProductStatus;
 use App\Enums\PromotionStatus;
+use App\Enums\VariationStatus;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\EvaluateProduct;
@@ -13,6 +15,7 @@ use App\Models\Product;
 use App\Models\ProductInterested;
 use App\Models\ProductViewed;
 use App\Models\Promotion;
+use App\Models\Variation;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,60 +26,8 @@ class ProductController extends Controller
     public function detail_product(Request $request, $id)
     {
         (new HomeController())->getLocale($request);
-        $product = Product::find($id);
-        $product->views = $product->views + 1;
-        $product->save();
-        if (Auth::check()) {
-            $result = EvaluateProduct::where([
-                ['product_id', '=', $product->id],
-                ['status', '=', EvaluateProductStatus::APPROVED]
-            ])->orWhere([
-                ['user_id', '=', Auth::user()->id],
-                ['product_id', '=', $product->id]
-            ])->get();
-        } else {
-            $result = EvaluateProduct::where([
-                ['product_id', '=', $product->id],
-                ['status', '=', EvaluateProductStatus::APPROVED]
-            ])->get();
-        }
-
-        $otherProduct = Product::where('id', '!=', $id)->limit(4)->get();
-
-        $vouchers = Voucher::where([['status', VoucherStatus::ACTIVE], ['user_id', $product->user_id]])->get();
-        $arrayVouchers = null;
-        foreach ($vouchers as $voucher) {
-            $listIds = $voucher->apply;
-            $arrayID = explode(",", $listIds);
-            for ($i = 0; $i < count($arrayID); $i++) {
-                if ($arrayID[$i] == $product->id) {
-                    $arrayVouchers[] = $voucher;
-                }
-            }
-        }
-
-        $promotions = Promotion::where([['status', PromotionStatus::ACTIVE], ['user_id', $product->user_id]])->get();
-        $arrayPromotions = null;
-        foreach ($promotions as $promotion) {
-            $listIds = $promotion->apply;
-            $arrayID = explode(",", $listIds);
-            for ($i = 0; $i < count($arrayID); $i++) {
-                if ($arrayID[$i] == $product->id) {
-                    $arrayPromotions[] = $promotion;
-                }
-            }
-        }
-
-        $attributes = DB::table('product_attribute')->where([['product_id', $product->id], ['status', AttributeProductStatus::ACTIVE]])->get();
-
-        return view('frontend/pages/detail-product', [
-            'result' => $result,
-            'product' => $product,
-            'otherProduct' => $otherProduct,
-            'attributes' => $attributes,
-            'arrayVouchers' => $arrayVouchers,
-            'arrayPromotions' => $arrayPromotions
-        ]);
+        $value = $this->findProduct(1, $id);
+        return view('frontend/pages/detail-product', $value);
     }
 
     public function productViewed(Request $request)
@@ -146,5 +97,94 @@ class ProductController extends Controller
             'arrayCategoryIDs',
             'arrayShopsIDs',
         ));
+    }
+
+    public function findBySlug(Request $request, $slug)
+    {
+        (new HomeController())->getLocale($request);
+        $value = $this->findProduct('123', $slug);
+        return view('frontend/pages/detail-product', $value);
+    }
+
+    public function getVariable(Request $request, $id, $value)
+    {
+        $variable = Variation::where([
+            ['product_id', $id],
+            ['variation', $value],
+            ['status', VariationStatus::ACTIVE]
+        ])->first();
+        if (!$variable) {
+            return response('not found', 404);
+        }
+        return response($variable, 200);
+    }
+
+    private function findProduct($key, $text)
+    {
+        if ($key === 1) {
+            $product = Product::find($text);
+        } else {
+            $product = Product::where('slug', $text)->first();
+        }
+
+        if ($product->status != ProductStatus::ACTIVE){
+            return 404;
+        }
+
+        $product->views = $product->views + 1;
+        $product->save();
+        if (Auth::check()) {
+            $result = EvaluateProduct::where([
+                ['product_id', '=', $product->id],
+                ['status', '=', EvaluateProductStatus::APPROVED]
+            ])->orWhere([
+                ['user_id', '=', Auth::user()->id],
+                ['product_id', '=', $product->id]
+            ])->get();
+        } else {
+            $result = EvaluateProduct::where([
+                ['product_id', '=', $product->id],
+                ['status', '=', EvaluateProductStatus::APPROVED]
+            ])->get();
+        }
+
+        $otherProduct = Product::where('id', '!=', $product->id)->limit(4)->get();
+
+        $vouchers = Voucher::where([['status', VoucherStatus::ACTIVE], ['user_id', $product->user_id]])->get();
+        $arrayVouchers = null;
+        foreach ($vouchers as $voucher) {
+            $listIds = $voucher->apply;
+            $arrayID = explode(",", $listIds);
+            for ($i = 0; $i < count($arrayID); $i++) {
+                if ($arrayID[$i] == $product->id) {
+                    $arrayVouchers[] = $voucher;
+                }
+            }
+        }
+
+
+        $promotions = Promotion::where([['status', PromotionStatus::ACTIVE], ['user_id', $product->user_id]])->get();
+        $arrayPromotions = null;
+        foreach ($promotions as $promotion) {
+            $listIds = $promotion->apply;
+            $arrayID = explode(",", $listIds);
+            for ($i = 0; $i < count($arrayID); $i++) {
+                if ($arrayID[$i] == $product->id) {
+                    $arrayPromotions[] = $promotion;
+                }
+            }
+        }
+
+        $attributes = DB::table('product_attribute')->where([['product_id', $product->id], ['status', AttributeProductStatus::ACTIVE]])->get();
+
+        $variables = Variation::where([['product_id', $product->id], ['status', VariationStatus::ACTIVE]])->get();
+
+        return ['result' => $result,
+            'product' => $product,
+            'otherProduct' => $otherProduct,
+            'attributes' => $attributes,
+            'arrayVouchers' => $arrayVouchers,
+            'arrayPromotions' => $arrayPromotions,
+            'variables' => $variables];
     }
 }
