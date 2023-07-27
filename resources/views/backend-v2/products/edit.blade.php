@@ -122,9 +122,7 @@
                         <div class="form-group col-12 col-sm-12 ">
                             <label for="gallery">Thư viện ảnh:</label>
                             <label class='__lk-fileInput'>
-                                <span data-default='Choose file'>Choose file</span>
-                                <input type="file" id="gallery" class="img-cfg" name="gallery[]" accept="image/*"
-                                       multiple>
+                                @include('backend-v2.products.modal-media')
                                 @php
                                     $input = $product->gallery;
                                     $array = json_decode($input, true);
@@ -222,6 +220,7 @@
                             <button type="submit" class="btn btn-success">Gửi</button>
                         </div>
                     </div>
+                    <input type="text" hidden name="imgGallery" id="imgGallery" value="">
                 </form>
             </div>
         </div><!-- wpbody -->
@@ -229,18 +228,18 @@
     </div><!-- wpcontent -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        function checkHotAndFeature() {
-            var hot = document.getElementById('inputHotProduct');
-            var feature = document.getElementById('inputFeatureProduct');
-            console.log(hot, feature);
-            if (hot.value == 1){
-                document.getElementById("hot_product").checked = true;
-            }
-            if (feature.value == 1){
-                document.getElementById("feature_product").checked = true;
-            }
-        }
-        checkHotAndFeature();
+        // function checkHotAndFeature() {
+        //     var hot = document.getElementById('inputHotProduct');
+        //     var feature = document.getElementById('inputFeatureProduct');
+        //     console.log(hot, feature);
+        //     if (hot.value == 1){
+        //         document.getElementById("hot_product").checked = true;
+        //     }
+        //     if (feature.value == 1){
+        //         document.getElementById("feature_product").checked = true;
+        //     }
+        // }
+        // checkHotAndFeature();
     </script>
     <script>
         var properties = document.getElementsByClassName('property-attribute')
@@ -282,7 +281,6 @@
             }
             var attPro = document.getElementById('input-form-create-attribute')
             attPro.value = myArray;
-            console.log(attPro.value)
         }
 
         checkInput();
