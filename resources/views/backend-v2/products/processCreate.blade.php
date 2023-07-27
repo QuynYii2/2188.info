@@ -34,7 +34,7 @@
                 @endif
             </div>
             <div class="container-fluid">
-                <form action="{{ route('product.v2.selectCreate') }}" method="post" enctype="multipart/form-data"
+                <form action="{{ route('product.v2.create.test') }}" method="post" enctype="multipart/form-data"
                       class="form-horizontal row" role="form">
                     @csrf
                     @if (session('success_update_product'))
@@ -135,6 +135,8 @@
                             @endforeach
                         </div>
 
+                        <a id="btnSaveAttribute" class="btn btn-success mt-2 mb-5">SaveAttribute</a>
+
                         <div class="form-group">
                             <div class="form-group col-12 col-sm-12 ">
                                 <label for="gallery">Thư viện ảnh:</label>
@@ -191,6 +193,12 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div id="renderInputAttribute" class="">
+                            <input type="text" hidden="" name="attribute_property1"
+                                   value="0">
+                            <input type="text" hidden="" name="count" value="1">
+                        </div>
                     </div>
                     <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
                     <div class="form-group col-12 col-md-7 col-sm-8 ">
@@ -204,6 +212,53 @@
         <div class="clear"></div>
     </div><!-- wpcontent -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('#btnSaveAttribute').on('click', function () {
+            let attribute = document.getElementById('input-form-create-attribute').value;
+            callSaveAttribute(attribute);
+        })
+
+        function callSaveAttribute(value) {
+            $.ajax({
+                url: '{{ route('product.v2.create.attribute') }}',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    'attribute_property': value
+                },
+                dataType: 'json',
+                success: function (response) {
+                    var renderInputAttribute = $('#renderInputAttribute');
+
+                    $.each(response, function () {
+                        var item = ' <div class="form-row">' +
+                            '<div class="col-4 d-inline-block"><label class="control-label small name" for="price">' +
+                            'Giá bán' +
+                            '</label><input type="number" class="value-check form-control" required name="old_price1" id="price1" placeholder="Nhập giá bán">' +
+                            '</div> <div class="col-4 d-inline-block"> <label class="control-label small name" for="qty">' +
+                            'Giá khuyến mãi' +
+                            '</label>' +
+                            '<input type="number" class="value-check form-control" name="price1" id="qty1" placeholder="Nhập giá khuyến mãi"> </div></div>' +
+                            '<div class="form-row"> <div class="col-4 d-inline-block"><label class="control-label small name" for="quantity1">' +
+                            'Quantity' +
+                            '</label> <input type="number" class="value-check form-control" required name="quantity1" id="quantity1" placeholder="Nhập quantity"></div></div>' +
+                            '<div class = "form-group" ><div class = "form-group">< label for= "description-detail" >' +
+                            'Mô tả' + '< /label> <textarea class="form-control description" name="description1" rows="5"></textarea></div></div>' +
+                            ' <div class="form-group"><div class="form-group col-12 col-sm-12 pt-3"> <label for="thumbnail">' +
+                            'Ảnh đại diện:' +
+                            '</label><label class="__lk-fileInput"><span data-default="Choose file">' +
+                            'Choose file' +
+                            '</span> <input type="file" id="thumbnail" class="img-cfg" name="thumbnail1"accept="image/*" required></label></div></div>';
+
+                        renderInputAttribute.append(item);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            })
+        }
+    </script>
     <script>
         var properties = document.getElementsByClassName('property-attribute')
         var number = properties.length
@@ -587,15 +642,13 @@
         });
     </script>
     <script>
-        ClassicEditor
-            .create(document.querySelector('#description'))
-            .catch(error => {
-                console.error(error);
-            });
-        ClassicEditor
-            .create(document.querySelector('#description-detail'))
-            .catch(error => {
-                console.error(error);
-            });
+        let aaaa = document.querySelectorAll('.description');
+        for (let i = 0; i < aaaa.length; i++) {
+            ClassicEditor
+                .create(aaaa[i])
+                .catch(error => {
+                    console.error(error);
+                });
+        }
     </script>
 @endsection

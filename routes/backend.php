@@ -16,6 +16,9 @@ Route::prefix('products')->group(function () {
     Route::post('/update-v2/{id}', [ProductController_v2::class, 'update'])->name('product.v2.update');
     Route::post('/create-v2', [ProductController_v2::class, 'store'])->name('product.v2.create');
     Route::post('/delete-v2/{id}', [ProductController_v2::class, 'destroy'])->name('product.v2.delete');
+
+    Route::post('/create-attribute', [ProductController_v2::class, 'saveAttribute'])->name('product.v2.create.attribute');
+    Route::post('/create-product', [ProductController_v2::class, 'createNewProduct'])->name('product.v2.create.test');
 });
 
 // Categories
