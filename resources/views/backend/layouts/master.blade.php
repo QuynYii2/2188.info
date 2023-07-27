@@ -24,24 +24,21 @@
 <body>
 @include('sweetalert::alert')
 <!-- Header -->
-<header class="header_back">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Admin Dashboard</a>
-        <!-- Add navigation links here -->
-    </nav>
+<header class="container-fluid header_back d-flex">
+   <div class="name">Kênh người bán</div>
 </header>
 
 <!-- Main Content -->
-<div class="container-fluid bg-white card-header">
-    <div class="row">
+<div class="container-fluid ">
+    <div class="header-card row">
         <!-- Sidebar -->
-        <div class="col-sm-3 col-12 col-md-3 col-lg-2" style="padding: 0">
+        <div class="col-sm-3 col-12 col-md-3 col-lg-2 header-card--left">
             @include('backend.layouts.partials.side-bar')
         </div>
 
         <!-- Page Content -->
-        <div class="col-sm-9 col-12 col-md-9 col-lg-10" style="padding: 0">
-            <div class="content">
+        <div class="col-sm-9 col-12 col-md-9 col-lg-10 header-card--right">
+            <div class="content mr-5">
                 @yield('content')
             </div>
         </div>

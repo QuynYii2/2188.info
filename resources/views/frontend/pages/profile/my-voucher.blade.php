@@ -43,16 +43,16 @@
                     <div class="col-xl-6 col-12 mt-3">
                         <div class="item d-flex">
                             <img src="{{asset('images/img.png')}}" alt="">
-                            <div class="d-flex content justify-content-between align-self-center">
-                                <div class="content-left">
-                                    <div class="voucher-details">
+                            <div class="content align-self-center">
+                                <div class="voucher-details">
                                         <span class="voucher-percent">Voucher giảm {{ $voucher->percent }}%</span>
                                         <div class="voucher-apply-products">Áp dụng cho {{ $voucher->description }}</div>
                                         <div class="voucher-end-date">Ngày kết thúc {{ $voucher->endDate }}</div>
-                                        <span class="voucher-code" id="voucher-code-{{ $voucher->id }}">{{ $voucher->code }}</span>
-                                        <button onclick="copyCode({{ $voucher->id }})">Copy</button>
+                                        <div class="d-flex justify-content-between">
+                                            <span class="voucher-code" id="voucher-code-{{ $voucher->id }}">{{ $voucher->code }}</span>
+                                            <button onclick="copyCode({{ $voucher->id }})">Copy</button>
+                                        </div>
                                     </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -65,12 +65,12 @@
                         <div class="col-xl-6 col-12 mt-3">
                             <div class="item d-flex">
                                 <img src="{{asset('images/img.png')}}" alt="">
-                                <div class="d-flex content justify-content-between align-self-center">
-                                    <div class="content-left">
-                                        <div class="voucher-details">
-                                            <span class="voucher-percent">Voucher giảm {{ $voucher->percent }}%</span>
-                                            <div class="voucher-apply-products">Áp dụng cho {{ $voucher->description }}</div>
-                                            <div class="voucher-end-date">Ngày kết thúc {{ $voucher->endDate }}</div>
+                                <div class="content align-self-center">
+                                    <div class="voucher-details">
+                                        <span class="voucher-percent">Voucher giảm {{ $voucher->percent }}%</span>
+                                        <div class="voucher-apply-products">Áp dụng cho {{ $voucher->description }}</div>
+                                        <div class="voucher-end-date">Ngày kết thúc {{ $voucher->endDate }}</div>
+                                        <div class="d-flex justify-content-between">
                                             <span class="voucher-code" id="voucher-code-{{ $voucher->id }}">{{ $voucher->code }}</span>
                                             <button onclick="copyCode({{ $voucher->id }})">Copy</button>
                                         </div>
@@ -87,12 +87,12 @@
                         <div class="col-xl-6 col-12 mt-3">
                             <div class="item d-flex">
                                 <img src="{{asset('images/img.png')}}" alt="">
-                                <div class="d-flex content justify-content-between align-self-center">
-                                    <div class="content-left">
-                                        <div class="voucher-details">
-                                            <span class="voucher-percent">Voucher giảm {{ $voucher->percent }}%</span>
-                                            <div class="voucher-apply-products">Áp dụng cho {{ $voucher->description }}</div>
-                                            <div class="voucher-end-date">Ngày kết thúc {{ $voucher->endDate }}</div>
+                                <div class="content align-self-center">
+                                    <div class="voucher-details">
+                                        <span class="voucher-percent">Voucher giảm {{ $voucher->percent }}%</span>
+                                        <div class="voucher-apply-products">Áp dụng cho {{ $voucher->description }}</div>
+                                        <div class="voucher-end-date">Ngày kết thúc {{ $voucher->endDate }}</div>
+                                        <div class="d-flex justify-content-between">
                                             <span class="voucher-code" id="voucher-code-{{ $voucher->id }}">{{ $voucher->code }}</span>
                                             <button onclick="copyCode({{ $voucher->id }})">Copy</button>
                                         </div>

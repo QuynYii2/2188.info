@@ -112,7 +112,7 @@
                                     @endphp
                                     @if($isAdmin == true)
                                         <div class="drop-item">
-                                            <a href="{{ route('seller.products.index') }}">Dashboard</a>
+                                            <a href="{{ route('seller.products.index') }}">Kênh người bán</a>
                                         </div>
                                     @endif
                                     <div class="drop-item">

@@ -1,57 +1,61 @@
-@charset "UTF-8";
-.header_back {
+$color-main: #fd6506;
+.header_back{
   background-color: #fff;
   max-height: 56px;
   min-height: 56px;
-  box-shadow: 0 1px 4px 0 rgba(74, 74, 78, 0.12);
+  box-shadow: 0 1px 4px 0 rgba(74,74,78,.12);
   align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
-}
-.header_back .name {
-  font-size: 20px;
-  font-weight: 500;
+  .name{
+    font-size: 20px;
+    font-weight: 500;
+  }
 }
 
-.header-card {
+.header-card{
   margin-top: 56px;
+  &--left{
+    .wrapper {
+      width: 17%;
+      height: 100%;
+      overflow-y: auto;
+      font-size: 0.875em;
+      position: fixed;
+      top: 55px;
+      left: 0;
+      bottom: 0;
+      .items {
+        padding: 18px 0;
+        font-size: 18px;
+        li{
+          list-style: none;
+          .item{
+            margin-top: 5px;
+            font-size: 16px;
+            color: #999;
+            font-weight: 600;
+            &:hover{
+              color: #999;
+            }
+          }
+          a{
+            color: black;
+            font-size: 16px;
+            &:hover{
+              color: $color-main;
+            }
+          }
+        }
+      }
+    }
+
+  }
 }
-.header-card--left .wrapper {
-  width: 17%;
-  height: 100%;
-  overflow-y: auto;
-  font-size: 0.875em;
-  position: fixed;
-  top: 55px;
-  left: 0;
-  bottom: 0;
-}
-.header-card--left .wrapper .items {
-  padding: 18px 0;
-  font-size: 18px;
-}
-.header-card--left .wrapper .items li {
-  list-style: none;
-}
-.header-card--left .wrapper .items li .item {
-  margin-top: 5px;
-  font-size: 16px;
-  color: #999;
-  font-weight: 600;
-}
-.header-card--left .wrapper .items li .item:hover {
-  color: #999;
-}
-.header-card--left .wrapper .items li a {
-  color: black;
-  font-size: 16px;
-}
-.header-card--left .wrapper .items li a:hover {
-  color: #fd6506;
-}
+
 
 .items > li > a {
   display: block;
@@ -67,7 +71,7 @@
 
 .items > li > a::after {
   right: 30px;
-  content: "→";
+  content: "\2192";
 }
 
 .itemHover {
@@ -81,7 +85,7 @@
 }
 
 .items > li > a.expanded::after {
-  content: "↓";
+  content: "\2193";
 }
 
 .items > li:not(:has(ul)) > a::after,
@@ -108,10 +112,12 @@
   color: #64D7E2;
   transition: color 0.4s ease-in-out;
   text-decoration: none;
+
 }
 
 .sub-items {
   display: none;
 }
 
-/*# sourceMappingURL=style_backend.css.map */
+
+
