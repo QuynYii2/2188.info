@@ -265,7 +265,7 @@ class ProductController_v2 extends Controller
             return response($exception, 400);
         }
     }
-      
+
     public function handleGallery($input)
     {
         $arrGallery = json_decode($input);
@@ -279,18 +279,24 @@ class ProductController_v2 extends Controller
         return implode(',', $arrResult);
     }
 
-    public function show($id)
+    public function quickUpdateProduct($id, Request $request)
     {
-        $product = Product::findOrFail($id);
-        $categories = Category::all();
-        $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', \Illuminate\Support\Facades\Auth::user()->id]])->get();
-        $att_of_product = DB::table('product_attribute')->where('product_id', $product->id)->get();
-
-        return view('backend-v2.products.edit', compact(
-            'categories',
-            'att_of_product',
-            'attributes',
-            'product'));
+        try {
+            $product = Product::findOrFail($id);
+            $number = $request->input('countBegin');
+            $success = $this->updateProduct($product, $request, $number);
+            if ($success) {
+                alert()->success('Success', 'Cập nhật thành công.');
+                return redirect()->route('product.v2.show');
+            } else {
+                alert()->error('Error', 'Cập nhật không thành công.');
+                return back();
+            }
+        } catch (\Exception $exception) {
+            dd($exception);
+            alert()->error('Error', 'Error, please try again');
+            return back();
+        }
     }
 
     public function edit($id)
@@ -387,6 +393,71 @@ class ProductController_v2 extends Controller
             alert()->error('Error', 'Error please try again!');
             return back();
         }
+    }
+
+    private function updateProduct($product, $request, $number)
+    {
+        $product->name = $request->input('name');
+        $product->slug = \Str::slug($request->input('name'));
+
+        $hot = $request->input('hot_product');
+        $feature = $request->input('feature_product');
+
+        if ($hot) {
+            $product->hot = 1;
+        } else {
+            $product->hot = 0;
+        }
+
+        if ($feature) {
+            $product->feature = 1;
+        } else {
+            $product->feature = 0;
+        }
+
+        if ($number > 1) {
+            for ($i = 1; $i < $number + 1; $i++) {
+                $id = $request->input('id' . $i);
+
+                $newVariationData = Variation::find($id);
+
+                if ($request->hasFile('thumbnail' . $id)) {
+                    $thumbnail = $request->file('thumbnail' . $id);
+                    $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+                    $newVariationData->thumbnail = $thumbnailPath;
+                }
+
+                $newVariationData->price = $request->input('price' . $id);
+                $newVariationData->old_price = $request->input('old_price' . $id);
+
+                if (!$request->input('price' . $id) || $request->input('old_price' . $id) < $request->input('price' . $id)) {
+                    $newVariationData->price = $request->input('old_price' . $id);
+                }
+
+                $newVariationData->save();
+            }
+        } else {
+            $newVariationData = Variation::where('product_id', $product->id)->first();
+
+            if ($request->hasFile('thumbnail1')) {
+                $thumbnail = $request->file('thumbnail1');
+                $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+                $newVariationData->thumbnail = $thumbnailPath;
+            }
+
+            $newVariationData->price = $request->input('price1');
+            $newVariationData->old_price = $request->input('old_price1');
+
+            if (!$request->input('price1') || $request->input('old_price1') < $request->input('price')) {
+                $newVariationData->price = $request->input('old_price1');
+            }
+
+            $newVariationData->save();
+        }
+
+        $success = $product->save();
+
+        return $success;
     }
 
     private function getAttributeProperty(Request $request)

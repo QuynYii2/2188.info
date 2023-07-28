@@ -14,7 +14,7 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-zzz
+
         $data =  array(
             array('id' => 1, 'name' => 'store', '_lft' => 1, '_rgt' => 20, 'parent_id' => null, 'category_type' => 1),
             array('id' => 2, 'name' => 'notebooks', '_lft' => 2, '_rgt' => 7, 'parent_id' => 1, 'category_type' => 1),

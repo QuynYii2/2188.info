@@ -19,6 +19,8 @@ Route::prefix('products')->group(function () {
 
     Route::post('/create-attribute', [ProductController_v2::class, 'saveAttribute'])->name('product.v2.create.attribute');
     Route::post('/create-product', [ProductController_v2::class, 'createNewProduct'])->name('product.v2.create.test');
+
+    Route::post('/quick-update-v2/{id}', [ProductController_v2::class, 'quickUpdateProduct'])->name('product.v2.update.quick');
 });
 
 // Categories
