@@ -27,7 +27,7 @@
 <div class='wrapper text-nowrap'>
     <ul class='items'>
         <li>
-            <a class="item" href='#'>Vận chuyển</a>
+            <a class="item" href='#'><i class="fa-solid fa-truck"></i> Vận chuyển</a>
             <ul class='sub-items pl-3'>
                 <li><a href="#">Quản Lý Vận Chuyển</a>
                 </li>
@@ -38,7 +38,7 @@
             </ul>
         </li>
         <li>
-            <a class="item" href='#'>Quản Lý Đơn Hàng</a>
+            <a class="item" href='#'><i class="fa-solid fa-list-check"></i> Quản Lý Đơn Hàng</a>
             <ul class='sub-items pl-3'>
                 <li><a href="{{route('seller.order.list')}}">Tất cả</a>
                 </li>
@@ -49,7 +49,7 @@
             </ul>
         </li>
         <li>
-            <a class="item" href='#'>Quản Lý Sản Phẩm</a>
+            <a class="item" href='#'><i class="fa-solid fa-bars-progress"></i> Quản Lý Sản Phẩm</a>
             <ul class='sub-items pl-3'>
                 <li><a href="/products">Tất Cả Sản Phẩm</a>
                 </li>
@@ -64,36 +64,40 @@
             </ul>
         </li>
         <li>
-            <a class="item" href="#">Thuộc tính sản phẩm</a>
+            <a class="item" href="#"><i class="fa-regular fa-clipboard"></i> Quản lí thuộc tính</a>
             <ul class='sub-items pl-3'>
 
                 <li><a href="{{route('attributes.index')}}">Danh sách thuộc tính</a>
                 </li>
-                <li><a href="{{route('attributes.create')}}">Thêm mới thuộc tính</a>
-                </li>
                 <li><a href="{{route('properties.index')}}">Quản lí thuộc tính con</a>
                 </li>
-                <li><a href="{{route('properties.create')}}">Thêm mới thuộc tính con</a>
-                </li>
             </ul>
         </li>
+        @if(!$check_ctv_shop)
+            @if($permissionUsers)
+                @for($i = 0; $i< count($permissionUsers); $i++)
+                    @if($permissionUsers[$i]->name == 'Nâng cấp thành top-seller' || sizeof($roleUsers) != 0)
+                        <li>
+                            <a class="item" href='#'><i class="fa-solid fa-tag"></i> Kênh Marketing</a>
+                            <ul class='sub-items pl-3'>
+                                <li><a href="{{route('seller.config.show')}}">Quản Lí Marketing</a>
+                                </li>
+                                <li><a href="#">Quảng Cáo Shopee</a>
+                                </li>
+                                <li><a href="#">Mã Giảm Giá Của Tôi</a>
+                                </li>
+                                <li><a href="#">Tăng Đơn Cùng KOL</a>
+                                </li>
+                                <li><a href="#">Hiệu Quả Shopee Live</a>
+                                </li>
+                            </ul>
+                        </li>
+                        @break
+                    @endif
+                @endfor
+            @endif
         <li>
-            <a class="item" href='#'>Kênh Marketing</a>
-            <ul class='sub-items pl-3'>
-                <li><a href="#">Kênh Marketing</a>
-                </li>
-                <li><a href="#">Quảng Cáo Shopee</a>
-                </li>
-                <li><a href="#">Mã Giảm Giá Của Tôi</a>
-                </li>
-                <li><a href="#">Tăng Đơn Cùng KOL</a>
-                </li>
-                <li><a href="#">Hiệu Quả Shopee Live</a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a class="item" href='#'>Tài Chính</a>
+            <a class="item" href='#'><i class="fa-solid fa-book"></i> Tài Chính</a>
             <ul class='sub-items pl-3'>
                 <li><a href="#">Doanh Thu</a>
                 </li>
@@ -105,17 +109,20 @@
                 </li>
             </ul>
         </li>
+
+        @if(!$check_ctv_shop)
+            <li>
+                <a class="item" href='#'><i class="fa-solid fa-chart-line"></i> Dữ Liệu</a>
+                <ul class='sub-items pl-3'>
+                    <li><a href="#">Phân Tích Bán Hàng</a>
+                    </li>
+                    <li><a href="{{route('revenues.index')}}">Quản lý doanh thu</a>
+                    </li>
+                </ul>
+            </li>
+        @endif
         <li>
-            <a class="item" href='#'>Dữ Liệu</a>
-            <ul class='sub-items pl-3'>
-                <li><a href="#">Phân Tích Bán Hàng</a>
-                </li>
-                <li><a href="#">Hiệu Quả Hoạt Động</a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a class="item" href='#'>Phát Triển</a>
+            <a class="item" href='#'><i class="fa-solid fa-layer-group"></i> Phát Triển</a>
             <ul class='sub-items pl-3'>
                 <li><a href="#">Nhiệm Vụ Người Bán</a>
                 </li>
@@ -124,7 +131,7 @@
             </ul>
         </li>
         <li>
-            <a class="item" href='#'>Chăm sóc khách hàng</a>
+            <a class="item" href='#'><i class="fa-solid fa-headset"></i> Chăm sóc khách hàng</a>
             <ul class='sub-items pl-3'>
                 <li><a href="#">Trợ Lý Chat</a>
                 </li>
@@ -133,7 +140,7 @@
             </ul>
         </li>
         <li>
-            <a class="item" href='#'>Quản Lý Shop</a>
+            <a class="item" href='#'><i class="fa-solid fa-shop"></i> Quản Lý Shop</a>
             <ul class='sub-items pl-3'>
                 <li><a href="#">Đánh Giá Shop</a>
                 </li>
@@ -150,7 +157,7 @@
             </ul>
         </li>
         <li>
-            <a class="item" href='#'>Thiết Lập Shop</a>
+            <a class="item" href='#'><i class="fa-solid fa-gear"></i> Thiết Lập Shop</a>
             <ul class='sub-items pl-3'>
                 <li><a href="#">Địa Chỉ</a>
                 </li>
@@ -163,7 +170,7 @@
             </ul>
         </li>
         <li>
-            <a class="item" href='#'>Trợ giúp</a>
+            <a class="item" href='#'><i class="fa-solid fa-circle-question"></i> Trợ giúp</a>
             <ul class='sub-items pl-3'>
                 <li><a href="#">Cổng Thông Tin Hỗ Trợ Người Bán </a>
                 </li>
@@ -218,14 +225,6 @@
                 <li><a href="#!">C3 Charts</a></li>
             </ul>
         </li>
-        @if(!$check_ctv_shop)
-            <li>
-                <a class="item" href="#!"><span>Quản lý doanh thu</span></a>
-                <ul class='sub-items pl-3'>
-                    <li><a href="{{route('revenues.index')}}">List Revenue</a></li>
-                </ul>
-            </li>
-        @endif
         <li>
             <a class="item" href="{{route('seller.products.views')}}">Sản phẩm xem nhiều nhất</a>
         </li>
@@ -302,25 +301,7 @@
                 </ul>
             </li>
         @endif
-        @if(!$check_ctv_shop)
-            @if($permissionUsers)
-                @for($i = 0; $i< count($permissionUsers); $i++)
-                    @if($permissionUsers[$i]->name == 'Nâng cấp thành top-seller' || sizeof($roleUsers) != 0)
-                        <li>
-                            <a href="#!" class="item"><span>Marketing</span></a>
-                            <ul class='sub-items'>
-                                <li>
-                                    <a href="{{route('seller.config.show')}}">Quản lí marketing</a>
-                                </li>
-                                <li>
-                                    <a href="{{route('seller.config.processCreate')}}">Tạo mới marketing</a>
-                                </li>
-                            </ul>
-                        </li>
-                        @break
-                    @endif
-                @endfor
-            @endif
+
             @if(sizeof($roleUsers) != 0)
                 <li>
                     <a href="#!" class="item"><span>Cấu hình dự án</span></a>

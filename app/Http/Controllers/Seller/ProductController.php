@@ -30,6 +30,12 @@ class ProductController extends Controller
         return view('backend/products/index', ['products' => $products]);
     }
 
+    public function home()
+    {
+        return view('backend/products/home');
+    }
+
+
     public function getProductsViews(Request $request)
     {
         $user = Auth::user()->id;

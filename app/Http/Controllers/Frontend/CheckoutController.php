@@ -145,11 +145,17 @@ class CheckoutController extends Controller
         $number = count($orders);
 
         foreach ($carts as $cart) {
+            $productDetail = \App\Models\Variation::where([
+                ['product_id', $cart->product->id],
+                ['variation', $cart->values]
+            ])->first();
+
             $item = [
                 'order_id' => $orders[$number - 1]->id,
                 'product_id' => $cart->product->id,
                 'quantity' => $cart->quantity,
-                'price' => $cart->product->price,
+                'price' => $productDetail->price,
+                'variable' => $productDetail->id,
                 'status' => OrderItemStatus::ACTIVE
             ];
             OrderItem::create($item);

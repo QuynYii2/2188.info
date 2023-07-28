@@ -31,10 +31,17 @@ class CartController extends Controller
     {
         if (Auth::check()) {
             $productID = $product->id;
+            $variable = $request->input('variable');
             $valid = false;
+
+            $productDetail = \App\Models\Variation::where([
+                ['product_id', $productID],
+                ['variation', $variable]
+            ])->first();
 
             $oldCarts = Cart::where([
                 ['user_id', '=', Auth::user()->id],
+                ['values', '=', $variable],
                 ['status', '=', CartStatus::WAIT_ORDER]
             ])->get();
 
@@ -49,11 +56,12 @@ class CartController extends Controller
                 $quantity = $request->input('quantity');
                 $oldCart = Cart::where([
                     ['product_id', '=', $productID],
+                    ['values', '=', $variable],
                     ['status', '=', CartStatus::WAIT_ORDER]
-                ])->get();
-                $cart = $oldCart[0];
+                ])->first();
+                $cart = $oldCart;
                 $cart->quantity = $cart->quantity + $quantity;
-                $cart->save();
+                $success = $cart->save();
             } else {
                 $quantity = $request->input('quantity', 1);// Số lượng mặc định là 1, có thể điều chỉnh tùy ý
                 if ($quantity < 1) {
@@ -62,13 +70,18 @@ class CartController extends Controller
                 $cart = [
                     'user_id' => Auth::user()->id,
                     'product_id' => $product->id,
-                    'price' => $product->price,
+                    'price' => $productDetail->price,
                     'quantity' => $quantity,
+                    'values' => $variable,
                     'status' => CartStatus::WAIT_ORDER,
                 ];
                 $success = Cart::create($cart);
             }
-            return redirect()->route('cart.index')->with('success', 'Product added to cart successfully!');
+            if ($success) {
+                return redirect()->route('cart.index')->with('success', 'Product added to cart successfully!');
+            } else {
+                return back();
+            }
         } else {
             (new HomeController())->getLocale($request);
             return view('frontend/pages/login');

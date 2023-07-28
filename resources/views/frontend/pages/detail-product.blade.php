@@ -8,6 +8,180 @@
 @extends('frontend.layouts.master')
 @section('title', 'Detail')
 @section('content')
+
+    <style>
+
+        .product-content p {
+            margin-bottom: 0;
+        }
+
+        .btn-16 {
+            margin: 0 16px;
+        }
+
+
+        @media only screen and (min-width: 1200px) {
+            .tabs-product {
+
+
+            }
+
+
+            .img-focus {
+                width: 80px;
+                height: 80px;
+                cursor: pointer;
+            }
+        }
+
+
+        @media only screen and (min-width: 992px) and (max-width: 1199px) {
+            .tabs-product {
+
+            }
+
+            .img-focus {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+
+        @media only screen and (min-width: 769px) and (max-width: 991px) {
+            .tabs-item a {
+                font-size: 15px;
+            }
+
+
+            .tabs-product {
+                display: flex !important;
+            }
+        }
+
+
+        @media only screen and (max-width: 767px) {
+
+
+            .tabs-item a {
+                font-size: 15px;
+            }
+        }
+
+
+        @media only screen and (max-width: 767px) {
+
+
+            .tabs-item a {
+                font-size: 15px;
+            }
+
+
+            .img-focus {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+
+        @media only screen and (max-width: 365px) {
+
+
+            .tabs-item a {
+                font-size: 12px;
+            }
+
+
+            .btn-block {
+                display: block;
+            }
+
+
+            .img-focus {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+
+        .col-2_5 {
+            width: 20%;
+            position: relative;
+            padding-right: 10px;
+            padding-left: 10px;
+        }
+
+
+        .col-2_5 .card {
+            height: 100%;
+        }
+
+
+        .col-2_5 .card .d-flex {
+            height: 100%;
+            flex-wrap: wrap;
+            align-content: center;
+        }
+
+
+        .tablet-button {
+            display: none;
+        }
+
+
+        @media only screen and (min-width: 576px ) and (max-width: 991px) {
+            .tablet-button {
+                display: block;
+            }
+
+
+            .not-tablet-button {
+                display: none !important;
+            }
+        }
+
+
+        @media not (min-width: 576px ) and (max-width: 991px) {
+            .tablet-button {
+                display: none;
+            }
+
+
+            .not-tablet-button {
+                display: block !important;
+            }
+        }
+
+        .radio-toolbar input[type="radio"] {
+            opacity: 0;
+            position: fixed;
+            width: 0;
+        }
+
+        .radio-toolbar label {
+            display: inline-block;
+            background-color: #f9f9f9;
+            padding: 10px 20px;
+            font-family: sans-serif, Arial;
+            font-size: 16px;
+            border: 2px solid #f7f7f7;
+            border-radius: 4px;
+        }
+
+        .radio-toolbar label:hover {
+            cursor: pointer;
+            background-color: #cccccc;
+        }
+
+        .radio-toolbar input[type="radio"]:focus + label {
+            border: 2px solid #444;
+        }
+
+        .radio-toolbar input[type="radio"]:checked + label {
+            background-color: #f7f7f7;
+            border-color: #ccc;
+        }
+
+    </style>
     <div class="container-fluid detail">
         <div class="grid second-nav">
             <div class="column-xs-12">
@@ -20,18 +194,25 @@
                 </nav>
             </div>
         </div>
+        @php
+            $name = DB::table('users')->where('id', $product->user_id)->first();
+            $productDetails = \App\Models\Variation::where('product_id', $product->id)->get();
+            $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
+        @endphp
         <div class="grid product">
             <div class="column-xs-12 column-md-7">
                 <div class="product-gallery">
                     <div class="product-image">
-                        <img class="active" src="{{ asset('storage/' . $product->thumbnail) }}">
+                        <img id="productThumbnail" class="active"
+                             src="{{ asset('storage/' . $productDetail->thumbnail) }}">
+                        <input type="text" id="urlImage" value="{{asset('storage/')}}" hidden="">
                     </div>
-                    <ul class="image-list ">
+                    <ul class="image-list">
                         @php
                             $gallery = $product->gallery;
                             $arrayGallery = explode(',', $gallery);
                         @endphp
-                        <li class="image-item"><img src="{{ asset('storage/' . $product->thumbnail) }}"></li>
+                        <li class="image-item"><img src="{{ asset('storage/' . $productDetail->thumbnail) }}"></li>
                         @if(count($arrayGallery)>1)
                             @foreach($arrayGallery as $gallerys)
                                 <li class="image-item"><img src="{{ asset('storage/' . $gallerys) }}"></li>
@@ -43,9 +224,6 @@
             <div class="column-xs-12 column-md-5">
                 <form action="{{ route('cart.add', $product) }}" method="POST">
                     @csrf
-                    @php
-                        $name = DB::table('users')->where('id', $product->user_id)->first();
-                    @endphp
                     <div class="product-name">{{$name->name}}</div>
                     <div class="product-title">{{$product->name}}</div>
                     <div class="product-rating">
@@ -57,54 +235,64 @@
                         <span>4.7(21)</span>
                     </div>
                     <div class="product-price d-flex" style="gap: 3rem">
-                        <div class="price">${{$product->price}}</div>
-                        @if($product->old_price != null)
-                            <strike>${{$product->old_price}}</strike>
-                        @endif
+                        <div id="productPrice" class="price">${{$productDetail->price}}</div>
+                        <strike id="productOldPrice">${{$productDetail->old_price}}</strike>
                     </div>
                     <div class="description-text">
                         {{ $product->short_description }}
                     </div>
-                    <div class="row">
-                        @foreach($attributes as $attribute)
-                            @php
-                                $att = Attribute::find($attribute->attribute_id);
-                                $properties_id = $attribute->value;
-                                $arrayAtt = array();
-                                $arrayAtt = explode(',', $properties_id);
-                            @endphp
-                            <div class="col-sm-6 col-6">
-                                <label for="{{$att->name}}">{{$att->name}}</label>
-                                <select id="{{$att->name}}" name="{{$att->name}}" class="form-control">
-                                    @foreach($arrayAtt as $data)
-                                        @php
-                                            $property = Properties::find($data);
-                                        @endphp
-                                        <option value="{{$data}}">{{$property->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        @endforeach
-                    </div>
+                    @if(!$attributes->isEmpty())
+                        <div class="row">
+                            @foreach($attributes as $attribute)
+                                @php
+                                    $att = Attribute::find($attribute->attribute_id);
+                                    $properties_id = $attribute->value;
+                                    $arrayAtt = array();
+                                    $arrayAtt = explode(',', $properties_id);
+                                @endphp
+                                <div class="col-sm-6 col-6">
+                                    <label>{{$att->name}}</label>
+                                    <div class="radio-toolbar mt-3">
+                                        @foreach($arrayAtt as $data)
+                                            @php
+                                                $property = Properties::find($data);
+                                            @endphp
+                                            <input class="inputRadioButton"
+                                                   id="input-{{$attribute->attribute_id}}-{{$loop->index+1}}"
+                                                   name="inputProperty-{{$attribute->attribute_id}}" type="radio"
+                                                   value="{{$attribute->attribute_id}}-{{$property->id}}">
+                                            <label for="input-{{$attribute->attribute_id}}-{{$loop->index+1}}">{{$property->name}}</label>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <a id="resetSelect" class="btn btn-warning mt-3">Reset select</a>
+                    @endif
                     <div class="">
                         <input id="product_id" hidden value="{{$product->id}}">
+                        <input name="variable" id="variable" hidden value="{{$variables[0]->variation}}">
                     </div>
                     <div class="count__wrapper count__wrapper--ml mt-3">
-                        <label for="qty">Còn lại: {{$product->qty}}</label>
+                        <label for="qty">Còn lại: <span id="productQuantity">{{$product->qty}}</span></label>
 
                     </div>
                     <div class="d-flex buy justify-content-around">
                         <div>
-                            <input type="number" class="input" value="1" min="1">
+                            <input min="1" value="1" type="number" class="input" name="quantity">
                             <div class="spinner">
                                 <button type="button" class="up button">&rsaquo;</button>
                                 <button type="button" class="down button">&lsaquo;</button>
                             </div>
                         </div>
-                        <button class="add-to-cart">Add To Cart</button>
+                        @if(!$attributes->isEmpty())
+                            <button type="submit" id="btnAddCard" class="add-to-cart">Add To Cart</button>
+                        @else
+                            <button type="submit" class="add-to-cart">Add To Cart</button>
+                        @endif
                         <button class="share"><i class="fa-regular fa-heart"></i></button>
                         <button class="share"><i class="fa-solid fa-share-nodes"></i></button>
-                    </div>0354586290
+                    </div>
                     <div class="eyes"><i class="fa-regular fa-eye"></i> 19 customers are viewing this product</div>
                 </form>
             </div>
@@ -113,13 +301,15 @@
     <div class="productView-description">
         <ul class="nav nav-tabs container-fluid pt-4" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">{{ __('home.description') }}</a>
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                   aria-selected="true">{{ __('home.description') }}</a>
             </li>
 {{--            <li class="nav-item">--}}
 {{--                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">{{ __('home.specification') }}</a>--}}
 {{--            </li>--}}
             <li class="nav-item">
-                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">{{ __('home.review') }}</a>
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                   aria-controls="contact" aria-selected="false">{{ __('home.review') }}</a>
             </li>
         </ul>
         <div class="tab-content container-fluid" id="myTabContent">
@@ -283,196 +473,14 @@
                 </div>
             </div>
         </div>
-{{--        <div class="row mb-5 mt-5 container-fluid" id="mainDetailProduct">--}}
-{{--            <div class="col-md-12 tablet-button">--}}
-{{--                <div class="bg-white rounded mt-5">--}}
-{{--                    <div style="border: 1px solid black; border-radius: 5px ">--}}
-{{--                        <div class="card-text">--}}
-{{--                            <div class="card-header text-center"--}}
-{{--                                 style="font-weight: 400; font-size: 1.25rem">{{ __('home.why choose IL') }}--}}
-{{--                            </div>--}}
-{{--                            <div class="card-body row">--}}
-{{--                                <div class="col-2_5 mb-3 mb-md-0">--}}
-{{--                                    <div class="card">--}}
-{{--                                        <div class="d-flex px-2 py-3 random-color text-center">--}}
-{{--                                            <h5 class="">{{ __('home.reputable brand') }}<br>--}}
-{{--                                            </h5>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="col-2_5 mb-3 mb-md-0">--}}
-{{--                                    <div class="card">--}}
-{{--                                        <div class="d-flex px-2 py-3 random-color text-center">--}}
-{{--                                            <h5 class="">{{ __('home.best price') }}<br>--}}
-{{--                                            </h5>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="col-2_5 mb-3 mb-md-0">--}}
-{{--                                    <div class="card">--}}
-{{--                                        <div class="d-flex px-2 py-3 random-color text-center">--}}
-{{--                                            <h5 class="">{{ __('home.genuine products') }}<br>--}}
-{{--                                            </h5>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="col-2_5 mb-3 mb-md-0">--}}
-{{--                                    <div class="card">--}}
-{{--                                        <div class="d-flex px-2 py-3 random-color text-center">--}}
-{{--                                            <h5 class="">{{ __('home.support installment') }}<br>--}}
-{{--                                            </h5>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="col-2_5 mb-3 mb-md-0">--}}
-{{--                                    <div class="card">--}}
-{{--                                        <div class="d-flex px-2 py-3 random-color text-center">--}}
-{{--                                            <div class="">--}}
-{{--                                                <div class="d-flex">--}}
-{{--                                                    <h5 class="">{{ __('home.super fast delivery') }}<br>--}}
-{{--                                                    </h5>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--            <div class="col-md-12">--}}
-{{--                <div class="row" id="product-other">--}}
-{{--                    @foreach($otherProduct as $product)--}}
-{{--                        <div class="product-other mt-4 col-xl-3 col-md-4 col-sm-6 col-12 mb-3 mb-md-0">--}}
-{{--                            <div class="card h-100">--}}
-{{--                                <img class="img" src="{{$product->thumbnail}}" alt="">--}}
-{{--                                <div class="card-body position-relative d-flex flex-column">--}}
-{{--                                    <h3 class="text-success">${{$product->price}}</h3>--}}
-{{--                                    <div class="rating text-warning">--}}
-{{--                                        <i class="fa fa-star"></i>--}}
-{{--                                        <i class="fa fa-star"></i>--}}
-{{--                                        <i class="fa fa-star"></i>--}}
-{{--                                        <i class="fa fa-star"></i>--}}
-{{--                                        <i class="fa fa-star-half-o"></i>--}}
-{{--                                    </div>--}}
-{{--                                    <h4>{{$product->name}}</h4>--}}
-{{--                                    <p>{{$product->description}}</p>--}}
-{{--                                    <a href="{{route('detail_product.show', $product->id)}}"--}}
-{{--                                       class="btn btn-success btn-block mt-auto">--}}
-{{--                                        <i class="fa fa-eye"></i>--}}
-{{--                                        {{ __('home.see now') }}--}}
-{{--                                    </a>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    @endforeach--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--            <div class="col-md-12">--}}
-{{--                <div class="row">--}}
-{{--                    <div class="mt-4 col-xl-3 col-md-4 col-sm-6 col-12 mb-3 mb-md-0">--}}
-{{--                        <div class="card">--}}
-{{--                            <div class="d-flex px-3 py-4 align-items-center">--}}
-{{--                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">--}}
-{{--                                    <path d="M80 0C44.7 0 16 28.7 16 64V448c0 35.3 28.7 64 64 64H304c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H80zm80 432h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H160c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/>--}}
-{{--                                </svg>--}}
-{{--                                <h5 class="ml-3 text-center">{{ __('home.phone case') }}--}}
-{{--                                </h5>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="mt-4 col-xl-3 col-md-4 col-sm-6 col-12 mb-3 mb-md-0">--}}
-{{--                        <div class="card">--}}
-{{--                            <div class="d-flex px-3 py-4 align-items-center">--}}
-{{--                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">--}}
-{{--                                    <path d="M80 0C44.7 0 16 28.7 16 64V448c0 35.3 28.7 64 64 64H304c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H80zm80 432h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H160c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/>--}}
-{{--                                </svg>--}}
-{{--                                <h5 class="ml-3 text-center">{{ __('home.phone case') }}--}}
-{{--                                </h5>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="mt-4 col-xl-3 col-md-4 col-sm-6 col-12 mb-3 mb-md-0">--}}
-{{--                        <div class="card">--}}
-{{--                            <div class="d-flex px-3 py-4 align-items-center">--}}
-{{--                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="40">--}}
-{{--                                    <path d="M4.1 38.2C1.4 34.2 0 29.4 0 24.6C0 11 11 0 24.6 0H133.9c11.2 0 21.7 5.9 27.4 15.5l68.5 114.1c-48.2 6.1-91.3 28.6-123.4 61.9L4.1 38.2zm503.7 0L405.6 191.5c-32.1-33.3-75.2-55.8-123.4-61.9L350.7 15.5C356.5 5.9 366.9 0 378.1 0H487.4C501 0 512 11 512 24.6c0 4.8-1.4 9.6-4.1 13.6zM80 336a176 176 0 1 1 352 0A176 176 0 1 1 80 336zm184.4-94.9c-3.4-7-13.3-7-16.8 0l-22.4 45.4c-1.4 2.8-4 4.7-7 5.1L168 298.9c-7.7 1.1-10.7 10.5-5.2 16l36.3 35.4c2.2 2.2 3.2 5.2 2.7 8.3l-8.6 49.9c-1.3 7.6 6.7 13.5 13.6 9.9l44.8-23.6c2.7-1.4 6-1.4 8.7 0l44.8 23.6c6.9 3.6 14.9-2.2 13.6-9.9l-8.6-49.9c-.5-3 .5-6.1 2.7-8.3l36.3-35.4c5.6-5.4 2.5-14.8-5.2-16l-50.1-7.3c-3-.4-5.7-2.4-7-5.1l-22.4-45.4z"/>--}}
-{{--                                </svg>--}}
-{{--                                <h5 class="ml-3 text-center">{{ __('home.screen protector') }}--}}
-{{--                                </h5>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="mt-4 col-xl-3 col-md-4 col-sm-6 col-12 mb-3 mb-md-0">--}}
-{{--                        <div class="card">--}}
-{{--                            <div class="d-flex px-3 py-4 align-items-center">--}}
-{{--                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">--}}
-{{--                                    <path d="M464 160c8.8 0 16 7.2 16 16V336c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16H464zM80 96C35.8 96 0 131.8 0 176V336c0 44.2 35.8 80 80 80H464c44.2 0 80-35.8 80-80V320c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32V176c0-44.2-35.8-80-80-80H80zm368 96H96V320H448V192z"/>--}}
-{{--                                </svg>--}}
-{{--                                <h5 class="ml-3 text-center">{{ __('home.power bank') }}--}}
-{{--                                </h5>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="mt-4 col-xl-3 col-md-4 col-sm-6 col-12 mb-3 mb-md-0">--}}
-{{--                        <div class="card">--}}
-{{--                            <div class="d-flex px-3 py-4 align-items-center">--}}
-{{--                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">--}}
-{{--                                    <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->--}}
-{{--                                    <path d="M256 80C149.9 80 62.4 159.4 49.6 262c9.4-3.8 19.6-6 30.4-6c26.5 0 48 21.5 48 48V432c0 26.5-21.5 48-48 48c-44.2 0-80-35.8-80-80V384 336 288C0 146.6 114.6 32 256 32s256 114.6 256 256v48 48 16c0 44.2-35.8 80-80 80c-26.5 0-48-21.5-48-48V304c0-26.5 21.5-48 48-48c10.8 0 21 2.1 30.4 6C449.6 159.4 362.1 80 256 80z"/>--}}
-{{--                                </svg>--}}
-{{--                                <h5 class="ml-3 text-center">{{ __('home.headphone') }}--}}
-{{--                                </h5>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="mt-4 col-xl-3 col-md-4 col-sm-6 col-12 mb-3 mb-md-0">--}}
-{{--                        <div class="card">--}}
-{{--                            <div class="d-flex px-3 py-4 align-items-center">--}}
-{{--                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">--}}
-{{--                                    <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->--}}
-{{--                                    <path d="M128 64c0-17.7-14.3-32-32-32S64 46.3 64 64V213.6L23.2 225.2c-17 4.9-26.8 22.6-22 39.6s22.6 26.8 39.6 22L64 280.1V448c0 17.7 14.3 32 32 32H352c17.7 0 32-14.3 32-32s-14.3-32-32-32H128V261.9l136.8-39.1c17-4.9 26.8-22.6 22-39.6s-22.6-26.8-39.6-22L128 195.3V64z"/>--}}
-{{--                                </svg>--}}
-{{--                                <h5 class="ml-3 text-center">{{ __('home.accessories') }}--}}
-{{--                                </h5>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="mt-4 col-xl-3 col-md-4 col-sm-6 col-12 mb-3 mb-md-0">--}}
-{{--                        <div class="card">--}}
-{{--                            <div class="d-flex px-3 py-4 align-items-center">--}}
-{{--                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">--}}
-{{--                                    <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->--}}
-{{--                                    <path d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z"/>--}}
-{{--                                </svg>--}}
-{{--                                <h5 class="ml-3 text-center">{{ __('home.phone charger') }}--}}
-{{--                                </h5>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="mt-4 col-xl-3 col-md-4 col-sm-6 col-12 mb-3 mb-md-0">--}}
-{{--                        <div class="card">--}}
-{{--                            <div class="d-flex px-3 py-4 align-items-center">--}}
-{{--                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">--}}
-{{--                                    <!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->--}}
-{{--                                    <path d="M256 80C141.1 80 48 173.1 48 288V392c0 13.3-10.7 24-24 24s-24-10.7-24-24V288C0 146.6 114.6 32 256 32s256 114.6 256 256V392c0 13.3-10.7 24-24 24s-24-10.7-24-24V288c0-114.9-93.1-208-208-208zM80 352c0-35.3 28.7-64 64-64h16c17.7 0 32 14.3 32 32V448c0 17.7-14.3 32-32 32H144c-35.3 0-64-28.7-64-64V352zm288-64c35.3 0 64 28.7 64 64v64c0 35.3-28.7 64-64 64H352c-17.7 0-32-14.3-32-32V320c0-17.7 14.3-32 32-32h16z"/>--}}
-{{--                                </svg>--}}
-{{--                                <h5 class="ml-3 text-center">{{ __('home.bluetooth speaker') }}--}}
-{{--                                </h5>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
     </div>
     <section class="section-Fifth section pt-3 pb-3 container-fluid">
         <div class="content">Related Products</div>
         <div class="swiper HotDeals">
             <div class="swiper-wrapper">
                 @php
-                    $products = DB::table('products')->get();
+                    $products = DB::table('products')->where('category_id', $product->category_id)->get();
+                    $products = $products->unique('slug');
                 @endphp
                 @foreach($products as $product)
                     <div class="swiper-slide">
@@ -551,6 +559,7 @@
             <div class="swiper-wrapper">
                 @php
                     $products = DB::table('products')->get();
+                    $products = $products->unique('slug');
                 @endphp
                 @foreach($products as $product)
                     <div class="swiper-slide">
@@ -623,10 +632,78 @@
             <div class="swiper-button-prev"></div>
         </div>
     </section>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+        var result = '';
+        var product_id = document.getElementById('product_id')
+        var radio = document.getElementsByClassName('inputRadioButton');
+        let isCheck = false
+        $('#resetSelect').on('click', function () {
+            for (let i = 0; i < radio.length; i++) {
+                radio[i].checked = false;
+            }
+            result = '';
+        })
+        var urlImg = document.getElementById('urlImage').value;
+        var productThumbnail = document.getElementById('productThumbnail')
+        var productPrice = document.getElementById('productPrice')
+        var productOldPrice = document.getElementById('productOldPrice')
+        var productQuantity = document.getElementById('productQuantity')
+        var variable = document.getElementById('variable')
+        $('.inputRadioButton').on('change', function () {
+            let text = $(this).val();
+            if (result == '') {
+                result = text
+            } else {
+                result = result.concat(",", text);
+            }
 
+            let url = '/product-variable'
 
+            function myfunction(id, value) {
+                fetch(url + '/' + id + '/' + value, {
+                    method: 'GET',
+                })
+                    .then(response => {
+                        if (response.status == 200) {
+                            return response.json();
+                        }
+                    })
+                    .then((response) => {
+                        productThumbnail.src = urlImg + '/' + response['thumbnail'];
+                        productPrice.innerText = response['price'];
+                        productOldPrice.innerText = response['old_price'];
+                        productQuantity.innerText = response['quantity'];
+                        variable.value = response['variation'];
+                    })
+                    .catch(error => console.log(error));
+            }
 
+            myfunction(product_id.value, result);
 
+            checkBtn();
+        });
+
+        function checkBtn() {
+            for (let i = 0; i < radio.length; i++) {
+                if (radio[i].checked == true) {
+                    isCheck = true;
+                }
+            }
+            if (!isCheck) {
+                $('#resetSelect').attr("disabled", true);
+                $('#btnAddCard').attr("disabled", true);
+                $('#btnAddCard').removeClass('add-to-cart');
+                $('#btnAddCard').addClass('btn btn-secondary');
+            } else {
+                $('#resetSelect').attr("disabled", false);
+                $('#btnAddCard').attr("disabled", false);
+                $('#btnAddCard').addClass('add-to-cart');
+            }
+        }
+
+        checkBtn();
+    </script>
     <script>
         document.body.className += "js";
 
@@ -634,14 +711,14 @@
         var buttonUp = document.querySelector('.up');
         var buttonDown = document.querySelector('.down');
 
-        buttonUp.onclick = function() {
+        buttonUp.onclick = function () {
             var value = parseInt(spinner.value, 10);
             value = isNaN(value) ? 0 : value;
             value++;
             spinner.value = value;
         };
 
-        buttonDown.onclick = function() {
+        buttonDown.onclick = function () {
             var value = parseInt(spinner.value, 10);
             value = isNaN(value) ? 0 : value;
             value--;
@@ -704,38 +781,6 @@
                 }
             });
         }
-
-        {{--function createPromotionItems(id) {--}}
-        {{--    $.ajax({--}}
-        {{--        url: '/promotions-item',--}}
-        {{--        method: 'POST',--}}
-        {{--        data: {--}}
-        {{--            'promotion_id': id,--}}
-        {{--            _token: '{{ csrf_token() }}'--}}
-        {{--        },--}}
-        {{--        success: function (response) {--}}
-        {{--            console.log(response)--}}
-        {{--            if (response == "Error") {--}}
-        {{--                alert('Bạn đã tham gia chương trình rồi!')--}}
-        {{--            } else {--}}
-        {{--                alert("Tham gia chương trình thành công!")--}}
-        {{--                let btn = document.getElementById('btn-join-now');--}}
-        {{--                btn.innerText = "Sử dụng ngay";--}}
-        {{--            }--}}
-        {{--        },--}}
-        {{--        error: function (exception) {--}}
-        {{--            console.log(exception)--}}
-        {{--            if (exception['status'] == 403) {--}}
-        {{--                alert('Error, please try again!')--}}
-        {{--            } else if (exception['status'] == 401) {--}}
-        {{--                alert('Please login to continue!')--}}
-        {{--                window.location.href = '/login';--}}
-        {{--            } else {--}}
-        {{--                alert('Error, please try again!')--}}
-        {{--            }--}}
-        {{--        }--}}
-        {{--    });--}}
-        {{--}--}}
     </script>
     <script>
         function checkProductReviews() {

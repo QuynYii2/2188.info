@@ -5,16 +5,18 @@ namespace App\Http\Controllers\Backend_v2;
 use App\Enums\AttributeProductStatus;
 use App\Enums\AttributeStatus;
 use App\Enums\ProductStatus;
+use App\Enums\VariationStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\Category;
-use App\Models\ImageUser;
 use App\Models\Product;
 use App\Models\StaffUsers;
 use App\Models\StorageProduct;
+use App\Models\Variation;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use stdClass;
 
 class ProductController_v2 extends Controller
 {
@@ -64,27 +66,68 @@ class ProductController_v2 extends Controller
         }
         $product = $product[0];
         $testArray = $testArray[0];
-        $listImg = ImageUser::where('user_id', '=', Auth::user()->id)->get('url_image');
-        $arrImg = [];
-
-        foreach ($listImg as $item) {
-            $arr = explode(',', $item->url_image);
-            foreach ($arr as $item) {
-                array_push($arrImg, $item);
-            }
-        }
-
-        return view('backend-v2.products.create', compact('product', 'testArray', 'arrImg'));
+        return view('backend-v2.products.create', compact('product', 'testArray'));
     }
 
     public function generateProduct(Request $request)
     {
         try {
             $product = new Product();
+            if ($request->hasFile('gallery')) {
+                $galleryPaths = array_map(function ($image) {
+                    return $image->store('gallery', 'public');
+                }, $request->file('gallery'));
+                $product->gallery = implode(',', $galleryPaths);
+            }
 
-            $qty_in_storage = DB::table('storage_products')->where([['id', '=', $request->input('storage-id')]])->first('quantity');
+            $qty_in_storage = DB::table('storage_products')->where('id', $request->input('storage-id'))->value('quantity');
 
             $product->storage_id = $request->input('storage-id');
+            $product->name = $request->input('name');
+            $product->description = $request->input('description');
+            $product->product_code = $request->input('product_code');
+            $product->qty = $qty_in_storage;
+            $product->category_id = $request->input('category_id');
+            $product->user_id = Auth::user()->id;
+            $product->location = Auth::user()->region;
+
+            $product->slug = \Str::slug($request->input('name'));
+
+            $newArray = $this->getAttributeProperty($request);
+
+            $testArray = null;
+            if ($newArray) {
+                foreach ($newArray as $myItem) {
+                    $key = explode("-", $myItem);
+                    $demoArray = null;
+                    for ($j = 1; $j < count($key); $j++) {
+                        $demoArray[] = $key[0] . '-' . $key[$j];
+                    }
+                    $testArray[] = $demoArray;
+                }
+            }
+
+            $testArray = $this->getArray($testArray);
+            session()->forget(['product', 'testArray', 'sourceArray']);
+            session()->push('product', $product);
+            session()->push('sourceArray', $newArray);
+            session()->push('testArray', $testArray);
+            return redirect(route('product.v2.select'));
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error, Please try again!');
+            return back();
+        }
+    }
+
+    public function store(Request $request)
+    {
+        try {
+            $product = new Product();
+
+            $qty_in_storage = DB::table('storage_products')->where([['id', '=', $request->input('storage_id')]])->first('quantity');
+
+            $product->gallery = $request->input('gallery');
+            $product->storage_id = $request->input('storage_id');
             $product->name = $request->input('name');
             $product->description = $request->input('description');
             $product->product_code = $request->input('product_code');
@@ -110,60 +153,6 @@ class ProductController_v2 extends Controller
                 $product->feature = 0;
             }
 
-            $newArray = $this->getAttributeProperty($request);
-
-            $testArray = null;
-            foreach ($newArray as $myItem) {
-                $key = explode("-", $myItem);
-                $demoArray = null;
-                for ($j = 1; $j < count($key); $j++) {
-                    $demoArray[] = $key[0] . '-' . $key[$j];
-                }
-                $testArray[] = $demoArray;
-            }
-
-            $testArray = $this->getArray($testArray);
-            session()->remove('product');
-            session()->remove('testArray');
-//            session()->push('product', []);
-            session()->push('product', $product);
-//            session()->push('testArray', []);
-            session()->push('testArray', $testArray);
-            return redirect(route('product.v2.select'));
-        } catch (\Exception $exception) {
-            alert()->error('Error', 'Error, Please try again!');
-            return back();
-        }
-    }
-
-    public function store(Request $request)
-    {
-        try {
-            $product = new Product();
-
-            $qty_in_storage = DB::table('storage_products')->where([['id', '=', $request->input('storage_id')]])->first('quantity');
-
-            $product->storage_id = $request->input('storage_id');
-            $product->name = $request->input('name');
-            $product->description = $request->input('description');
-            $product->product_code = $request->input('product_code');
-            $product->qty = $qty_in_storage->quantity;
-            $product->category_id = $request->input('category_id');
-            $product->user_id = Auth::user()->id;
-            $product->location = Auth::user()->region;
-            $product->slug = \Str::slug($request->input('name'));
-
-            $product->gallery = $this->handleGallery($request->input('imgGallery'));
-
-            $hot = $request->input('hot_product');
-            $feature = $request->input('feature_product');
-
-            if ($hot) {
-                $product->hot = 1;
-            }
-            if ($feature) {
-                $product->feature = 1;
-            }
             $count = $request->input('count');
 
             $createProduct = $this->createProduct($product, $request, $count);
@@ -178,19 +167,6 @@ class ProductController_v2 extends Controller
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
-    }
-
-    public function handleGallery($input)
-    {
-        $arrGallery = json_decode($input);
-        $pattern = '/\/storage\/([^,]+),?/';
-        $matches = array();
-        $arrResult = array();
-        foreach ($arrGallery as $item) {
-            preg_match_all($pattern, $item, $matches);
-            array_push($arrResult, $matches[1][0]);
-        }
-        return implode(',', $arrResult);
     }
 
     public function show($id)
@@ -236,7 +212,16 @@ class ProductController_v2 extends Controller
                 $thumbnailPath = $thumbnail->store('thumbnails', 'public');
                 $product->thumbnail = $thumbnailPath;
             }
-            $product->gallery = $this->handleGallery($request->input('imgGallery'));
+            if ($request->hasFile('gallery')) {
+                $gallery = $request->file('gallery');
+                $galleryPaths = [];
+                foreach ($gallery as $image) {
+                    $galleryPath = $image->store('gallery', 'public');
+                    $galleryPaths[] = $galleryPath;
+                }
+                $galleryString = implode(',', $galleryPaths);
+                $product->gallery = $galleryString;
+            }
 
             $hot = $request->input('hot_product');
             $feature = $request->input('feature_product');
@@ -305,32 +290,29 @@ class ProductController_v2 extends Controller
     private function getAttributeProperty(Request $request)
     {
         $proAtt = $request->input('attribute_property');
-        if ($proAtt != null) {
-            $newArray = collect(explode(",", $proAtt))
-                ->reduce(function ($carry, $item) {
-                    $parts = explode('-', $item);
-                    $firstValue = $parts[0];
-                    $secondValue = $parts[1];
-                    if ($carry->isEmpty()) {
-                        $carry->push($item);
-                    } else {
-                        $lastItem = $carry->last();
-                        $lastParts = explode('-', $lastItem);
-                        $lastFirstValue = $lastParts[0];
-                        if ($lastFirstValue == $firstValue) {
-                            $newLastItem = $lastFirstValue . '-' . $lastParts[1] . '-' . $secondValue;
-                            $carry->pop();
-                            $carry->push($newLastItem);
-                        } else {
-                            $carry->push($item);
-                        }
-                    }
-                    return $carry;
-                }, collect())
-                ->toArray();
-        } else {
-            $newArray = null;
+
+        if ($proAtt === null) {
+            return null;
         }
+
+        $newArray = [];
+
+        $elements = explode(',', $proAtt);
+
+        foreach ($elements as $element) {
+            $parts = explode('-', $element);
+            $prefix = $parts[0];
+            $value = $parts[1];
+
+            if (!isset($newArray[$prefix])) {
+                $newArray[$prefix] = $prefix . '-' . $value;
+            } else {
+
+                $newArray[$prefix] .= '-' . $value;
+            }
+        }
+
+        $newArray = array_values($newArray);
 
         return $newArray;
     }
@@ -358,47 +340,56 @@ class ProductController_v2 extends Controller
 
     private function createProduct($product, $request, $number)
     {
-        $newProduct = null;
-        $newProduct['storage_id'] = $product->storage_id;
-        $newProduct['name'] = $product->name;
-        $newProduct['description'] = $product->description;
-        $newProduct['product_code'] = $product->product_code;
-        $newProduct['qty'] = $product->qty;
-        $newProduct['category_id'] = $product->category_id;
-        $newProduct['user_id'] = Auth::user()->id;
-        $newProduct['location'] = Auth::user()->region;
-        $newProduct['feature'] = $product->feature;
-        $newProduct['hot'] = $product->hot;
-        $newProduct['slug'] = $product->slug;
-        $newProduct['gallery'] = $product->gallery;
+        $newProductData = [
+            'storage_id' => $product->storage_id,
+            'name' => $product->name,
+            'description' => $product->description,
+            'product_code' => $product->product_code,
+            'qty' => $product->qty,
+            'category_id' => $product->category_id,
+            'user_id' => Auth::user()->id,
+            'location' => Auth::user()->region,
+            'feature' => $product->feature,
+            'hot' => $product->hot,
+            'slug' => $product->slug,
+            'price' => 0,
+            'old_price' => 0,
+        ];
 
-        $arrayProduct = null;
+        $success = Product::create($newProductData);
+        $product = Product::where('user_id', Auth::user()->id)->orderByDesc('id')->first();
 
+        $arrayProduct = [];
         for ($i = 1; $i < $number + 1; $i++) {
+            $newVariationData = [];
+
             if ($request->hasFile('thumbnail' . $i)) {
                 $thumbnail = $request->file('thumbnail' . $i);
                 $thumbnailPath = $thumbnail->store('thumbnails', 'public');
-                $newProduct['thumbnail'] = $thumbnailPath;
+                $newVariationData['thumbnail'] = $thumbnailPath;
             }
 
-            $newProduct['price'] = $request->input('price' . $i);
-            $newProduct['old_price'] = $request->input('old_price' . $i);
+            $newVariationData['price'] = $request->input('price' . $i);
+            $newVariationData['old_price'] = $request->input('old_price' . $i);
             $attPro = $request->input('attribute_property' . $i);
-            $newProduct['attribute'] = $attPro;
+            $newVariationData['variation'] = $attPro;
+
+            $newVariationData['product_id'] = $product->id;
+            $newVariationData['user_id'] = Auth::user()->id;
+            $newVariationData['status'] = VariationStatus::ACTIVE;
+            $newVariationData['description'] = $request->input('description' . $i);
+            $newVariationData['quantity'] = $request->input('quantity' . $i);
 
             if (!$request->input('price' . $i) || $request->input('old_price' . $i) < $request->input('price' . $i)) {
-                $newProduct['price'] = $request->input('old_price' . $i);
+                $newVariationData['price'] = $request->input('old_price' . $i);
             }
 
-            $arrayProduct[] = $newProduct;
+            $arrayProduct[] = $newVariationData;
         }
 
-        for ($j = 0; $j < count($arrayProduct); $j++) {
-            $success = Product::create($arrayProduct[$j]);
-            $newProduct = Product::where('user_id', Auth::user()->id)->orderByDesc('id')->first();
-            $attProArray = explode(',', $arrayProduct[$j]['attribute']);
-            $this->createAttributeProduct($newProduct, $attProArray);
-        }
+        Variation::insert($arrayProduct);
+        $sourceArray = session()->get('sourceArray');
+        $this->createAttributeProduct($product, $sourceArray[0]);
 
         return $success;
     }
@@ -416,13 +407,17 @@ class ProductController_v2 extends Controller
 
     private function getArray($array)
     {
-        if (count($array) == 1) {
-            return $array;
+        if ($array) {
+            if (count($array) == 1) {
+                return $array;
+            }
+            $newArray = $array[0];
+            for ($i = 1; $i < count($array); $i++) {
+                $newArray = $this->mergeArray($newArray, $array[$i]);
+            }
+            return $newArray;
+        } else {
+            return null;
         }
-        $newArray = $array[0];
-        for ($i = 1; $i < count($array); $i++) {
-            $newArray = $this->mergeArray($newArray, $array[$i]);
-        }
-        return $newArray;
     }
 }

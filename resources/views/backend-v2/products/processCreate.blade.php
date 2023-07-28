@@ -135,6 +135,19 @@
                             @endforeach
                         </div>
 
+                        <div class="form-group">
+                            <div class="form-group col-12 col-sm-12 ">
+                                <label for="gallery">Thư viện ảnh:</label>
+                                <label class='__lk-fileInput'>
+                                    <span data-default='Choose file'>Choose file</span>
+                                    <input type="file" id="gallery" class="img-cfg"
+                                           name="gallery[]"
+                                           accept="image/*"
+                                           multiple>
+                                </label>
+                            </div>
+                        </div>
+
                         <div class="border">
                             <div class="col-sm-12 d-inline-block ">
                                 <label class="name" for="date_start">Hình thức thanh toán</label>

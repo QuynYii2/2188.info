@@ -15,12 +15,16 @@
   font-size: 20px;
   font-weight: 500;
 }
+.header_back .name a {
+  text-decoration: none;
+  color: black;
+}
 
 .header-card {
   margin-top: 56px;
 }
 .header-card--left .wrapper {
-  width: 17%;
+  width: 16.7%;
   height: 100%;
   overflow-y: auto;
   font-size: 0.875em;
@@ -37,7 +41,6 @@
   list-style: none;
 }
 .header-card--left .wrapper .items li .item {
-  margin-top: 5px;
   font-size: 16px;
   color: #999;
   font-weight: 600;
@@ -47,15 +50,88 @@
 }
 .header-card--left .wrapper .items li a {
   color: black;
-  font-size: 16px;
+  font-size: 14px;
 }
 .header-card--left .wrapper .items li a:hover {
   color: #fd6506;
 }
+.header-card--right {
+  background-color: #f6f6f6;
+}
+.header-card--right .todo_list {
+  margin-top: 40px;
+  padding: 30px;
+  background-color: #fff;
+  box-shadow: 0 1px 4px 0 rgba(74, 74, 78, 0.12);
+}
+.header-card--right .todo_list .title {
+  font-weight: 700;
+  font-size: 20px;
+}
+.header-card--right .todo_list .title-small {
+  color: rgb(153, 153, 153);
+  font-size: 13px;
+}
+.header-card--right .todo_list--bottom {
+  overflow-x: auto;
+}
+.header-card--right .todo_list--bottom a {
+  color: black;
+}
+.header-card--right .todo_list--bottom a:hover {
+  text-decoration: none;
+}
+.header-card--right .todo_list--bottom .list_item {
+  margin: 10px 0;
+  text-align: center;
+  cursor: pointer;
+  border-right: 1px solid rgb(229, 229, 229);
+}
+.header-card--right .todo_list--bottom .list_item .number {
+  font-size: 16px;
+  color: rgb(38, 115, 221);
+  font-weight: bold;
+}
+.header-card--right .todo_list--bottom .list_item p {
+  font-size: 14px;
+}
+.header-card--right .todo_list--bottom .list_item:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+.header-card--right .todo_list--bottom .list_item--top p {
+  font-size: 16px;
+  margin-top: 20px;
+  font-weight: 500;
+}
+.header-card--right .todo_list--bottom .list_item--bottom {
+  color: #999;
+}
+.header-card--right .todo_list--bottom .marketing {
+  padding: 30px;
+}
+.header-card--right .todo_list .nav {
+  margin: 10px 0;
+  padding: 12px 0;
+  border-bottom: 1px solid rgb(229, 229, 229);
+}
+.header-card--right .todo_list .nav .nav-item a {
+  color: black;
+}
+.header-card--right .todo_list .nav .nav-item a:hover {
+  color: #fd6506;
+}
+.header-card--right .todo_list .nav .nav-item a.active {
+  font-weight: 600;
+  color: #fd6506;
+  border-bottom: 3px solid #fd6506;
+}
+
+.items > li {
+  margin-top: 10px;
+}
 
 .items > li > a {
-  display: block;
-  text-indent: 18px;
+  text-indent: 15px;
   line-height: 39px;
 }
 
@@ -89,15 +165,16 @@
   content: none;
 }
 
+.sub-items {
+  display: none;
+}
 .sub-items a {
   position: relative;
   display: block;
   margin: 0 1rem;
   width: 212px;
-  text-indent: 24px;
-  line-height: 27px;
+  line-height: 25px;
 }
-
 .sub-items .current {
   position: relative;
   color: #64D7E2;
@@ -108,10 +185,6 @@
   color: #64D7E2;
   transition: color 0.4s ease-in-out;
   text-decoration: none;
-}
-
-.sub-items {
-  display: none;
 }
 
 /*# sourceMappingURL=style_backend.css.map */
