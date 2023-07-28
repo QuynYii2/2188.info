@@ -16,6 +16,8 @@ use App\Models\Variation;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
+use Mockery\Exception;
 use stdClass;
 
 class ProductController_v2 extends Controller
@@ -171,6 +173,99 @@ class ProductController_v2 extends Controller
         }
     }
 
+    public function createNewProduct(Request $request)
+    {
+        try {
+            $product = new Product();
+            if ($request->hasFile('gallery')) {
+                $galleryPaths = array_map(function ($image) {
+                    return $image->store('gallery', 'public');
+                }, $request->file('gallery'));
+                $product->gallery = implode(',', $galleryPaths);
+            }
+
+            $qty_in_storage = DB::table('storage_products')->where('id', $request->input('storage-id'))->value('quantity');
+
+            $product->storage_id = $request->input('storage-id');
+            $product->name = $request->input('name');
+            $product->description = $request->input('description');
+            $product->product_code = $request->input('product_code');
+            $product->qty = $qty_in_storage;
+            $product->category_id = $request->input('category_id');
+            $product->user_id = Auth::user()->id;
+            $product->location = Auth::user()->region;
+
+            $product->slug = \Str::slug($request->input('name'));
+
+            $hot = $request->input('hot_product');
+            $feature = $request->input('feature_product');
+
+            if ($hot) {
+                $product->hot = 1;
+            } else {
+                $product->hot = 0;
+            }
+
+            if ($feature) {
+                $product->feature = 1;
+            } else {
+                $product->feature = 0;
+            }
+
+            $count = $request->input('count');
+
+            $createProduct = $this->createProduct($product, $request, $count);
+            if ($createProduct) {
+                alert()->success('Success', 'Tạo mới sản phẩm thành công.');
+                return redirect()->route('product.v2.show');
+            } else {
+                alert()->error('Error', 'Tạo mới sản phẩm không thành công.');
+                return back();
+            }
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error, Please try again!');
+            return back();
+        }
+    }
+
+    public function saveAttribute(Request $request)
+    {
+        try {
+            $newArray = $this->getAttributeProperty($request);
+
+            $testArray = null;
+            if ($newArray) {
+                foreach ($newArray as $myItem) {
+                    $key = explode("-", $myItem);
+                    $demoArray = null;
+                    for ($j = 1; $j < count($key); $j++) {
+                        $demoArray[] = $key[0] . '-' . $key[$j];
+                    }
+                    $testArray[] = $demoArray;
+                }
+            }
+            $testArray = $this->getArray($testArray);
+            session()->forget(['testArray', 'sourceArray']);
+            session()->push('sourceArray', $newArray);
+            session()->push('testArray', $testArray);
+            if (!$testArray || !$newArray) {
+                return view('backend-v2.products.none-attribute');
+            }
+            return view('backend-v2.products.attribute');
+        } catch (Exception $exception) {
+            return response($exception, 400);
+        }
+    }
+
+    public function none()
+    {
+        try {
+            return view('backend-v2.products.none-attribute');
+        } catch (Exception $exception) {
+            return response($exception, 400);
+        }
+    }
+      
     public function handleGallery($input)
     {
         $arrGallery = json_decode($input);
