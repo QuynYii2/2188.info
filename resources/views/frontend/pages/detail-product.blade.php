@@ -22,10 +22,7 @@
 
         @media only screen and (min-width: 1200px) {
             .tabs-product {
-
-
             }
-
 
             .img-focus {
                 width: 80px;
@@ -634,7 +631,7 @@
     </section>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
-        var result = '';
+        var result = [];
         var product_id = document.getElementById('product_id')
         var radio = document.getElementsByClassName('inputRadioButton');
         let isCheck = false
@@ -642,7 +639,7 @@
             for (let i = 0; i < radio.length; i++) {
                 radio[i].checked = false;
             }
-            result = '';
+            result = [];
         })
         var urlImg = document.getElementById('urlImage').value;
         var productThumbnail = document.getElementById('productThumbnail')
@@ -652,33 +649,24 @@
         var variable = document.getElementById('variable')
         $('.inputRadioButton').on('change', function () {
             let text = $(this).val();
-            if (result == '') {
-                result = text
-            } else {
-                result = result.concat(",", text);
+
+            let [prefix, value] = text.split('-');
+
+            let prefixExists = false;
+            for (let i = 0; i < result.length; i++) {
+                let [existingPrefix, existingValue] = result[i].split('-');
+                if (existingPrefix === prefix) {
+                    result[i] = text;
+                    prefixExists = true;
+                    break;
+                }
             }
 
-            let url = '/product-variable'
-
-            function myfunction(id, value) {
-                fetch(url + '/' + id + '/' + value, {
-                    method: 'GET',
-                })
-                    .then(response => {
-                        if (response.status == 200) {
-                            return response.json();
-                        }
-                    })
-                    .then((response) => {
-                        productThumbnail.src = urlImg + '/' + response['thumbnail'];
-                        productPrice.innerText = response['price'];
-                        productOldPrice.innerText = response['old_price'];
-                        productQuantity.innerText = response['quantity'];
-                        variable.value = response['variation'];
-                    })
-                    .catch(error => console.log(error));
+            if (!prefixExists) {
+                result.push(text);
             }
-
+            result.sort();
+            console.log(result.join(','));
             myfunction(product_id.value, result);
 
             checkBtn();
@@ -700,6 +688,26 @@
                 $('#btnAddCard').attr("disabled", false);
                 $('#btnAddCard').addClass('add-to-cart');
             }
+        }
+
+        function myfunction(id, value) {
+            let url = '/product-variable'
+            fetch(url + '/' + id + '/' + value, {
+                method: 'GET',
+            })
+                .then(response => {
+                    if (response.status == 200) {
+                        return response.json();
+                    }
+                })
+                .then((response) => {
+                    productThumbnail.src = urlImg + '/' + response['thumbnail'];
+                    productPrice.innerText = response['price'];
+                    productOldPrice.innerText = response['old_price'];
+                    productQuantity.innerText = response['quantity'];
+                    variable.value = response['variation'];
+                })
+                .catch(error => console.log(error));
         }
 
         checkBtn();

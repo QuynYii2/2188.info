@@ -356,12 +356,12 @@
                         </button>
                     </li>
                 </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="upload-media" role="tabpanel"
+                <div class="tab-content" id="myTabContent" style="height: 95%">
+                    <div class="tab-pane fade show active h-100" id="upload-media" role="tabpanel"
                          aria-labelledby="home-tab">
                         <div class="file-upload h-100">
                             <label class="file-upload__label">Select or drop files here</label><input
-                                    class="file-upload__input" multiple type="file" accept="image/*"/>
+                                    class="file-upload__input" multiple type="file" accept="image/*">
                         </div>
                     </div>
                     <div class="tab-pane fade" id="list-media" role="tabpanel" aria-labelledby="profile-tab">
