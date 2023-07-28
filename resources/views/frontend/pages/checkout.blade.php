@@ -5,156 +5,9 @@
 @section('title', 'View Cart')
 
 @section('content')
-{{--    <style>--}}
-{{--        @media (max-width: 800px) {--}}
-{{--            #space-price .row {--}}
-{{--                flex-direction: row;--}}
-{{--            }--}}
-{{--        }--}}
-
-{{--        @media (min-width: 1200px) {--}}
-{{--            #payment-info {--}}
-{{--                border: 1px solid #dee2e6 !important;--}}
-{{--            }--}}
-{{--        }--}}
-
-{{--        #table-checkout th,--}}
-{{--        #table-checkout tr,--}}
-{{--        #table-checkout td {--}}
-{{--            white-space: nowrap;--}}
-{{--            width: 100%;--}}
-{{--        }--}}
-
-{{--        #space-price th,--}}
-{{--        #space-price tr,--}}
-{{--        #space-price td {--}}
-{{--            white-space: nowrap;--}}
-{{--        }--}}
-{{--    </style>--}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('css/checkout.css') }}">
-
     <div class="checkout-bg">
-{{--        <div class="container ">--}}
-{{--            <div class="row">--}}
-{{--                <div class="col-md-8 col-12">--}}
-{{--                    <div class="checkout-item">--}}
-{{--                        <h3>{{ __('home.Billing Address') }}</h3>--}}
-{{--                        <label for="fname">--}}
-{{--                            <i class="fa fa-user"></i>{{ __('home.full name') }}--}}
-{{--                        </label>--}}
-{{--                        <input type="text" id="fname" name="fullname" placeholder="John M. Doe"--}}
-{{--                               value="{{$user->name}}" required>--}}
-{{--                        <label for="email"><i class="fa fa-envelope"></i>{{ __('home.email') }}</label>--}}
-{{--                        <input type="text" id="email" name="email" placeholder="john@example.com"--}}
-{{--                               value="{{$user->email}}" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" required>--}}
-{{--                        <label for="phone"><i--}}
-{{--                                    class="fa fa-address-card-o"></i>{{ __('home.phone number') }}--}}
-{{--                        </label>--}}
-{{--                        <input type="number" id="phone" name="phone" placeholder="035985935"--}}
-{{--                               value="{{$user->phone}}" required>--}}
-{{--                        <label for="address">--}}
-{{--                            <i class="fa fa-institution"></i>{{ __('home.address') }}</br>--}}
-{{--                        </label>--}}
-{{--                        <input type="text" id="address" name="address" placeholder="542 W. 15th Street"--}}
-{{--                               value="{{$user->address}}" required>--}}
-{{--                        <br>--}}
-{{--                        <input onclick="check();" class="input-m0" type="radio" id="address-order2" name="address-order">--}}
-{{--                        <span>{{ __('home.Use Different Address') }}</span><br>--}}
-{{--                        <select id="address2" name="address2" disabled class="form-control"--}}
-{{--                                onchange="check();">--}}
-{{--                            @php--}}
-{{--                                $addresses = OrderAddress::where([['user_id', Auth::user()->id], ['status', AddressOrderStatus::ACTIVE]])->get();--}}
-{{--                            @endphp--}}
-{{--                            @foreach($addresses as $address)--}}
-{{--                                <option value="{{$address}}">{{$address->address_detail}}--}}
-{{--                                    -{{$address->location}}-{{$address->province}}--}}
-{{--                                    -{{$address->city}}</option>--}}
-{{--                            @endforeach--}}
-{{--                        </select>--}}
-{{--                        <label for="voucher">--}}
-{{--                            <i class="fa fa-user"></i>Mã giảm giá có sẵn--}}
-{{--                        </label>--}}
-{{--                        <select name="voucher" id="voucher" class="form-control mb-3"--}}
-{{--                                onchange="getvoucher()">--}}
-{{--                            @foreach($voucherItems as $item)--}}
-{{--                                @php--}}
-{{--                                    $voucher = Voucher::find($item->voucher_id);--}}
-{{--                                    $listCategory = $voucher->apply;--}}
-{{--                                    $arrayCategory = explode(',', $listCategory);--}}
-{{--                                    $productIDs = null;--}}
-{{--                                    foreach ($carts as $cart){--}}
-{{--                                        $productIDs[] = $cart->product_id;--}}
-{{--                                    }--}}
-{{--                                    $allArr = array_intersect($arrayCategory, $productIDs);--}}
-{{--                                    $voucherConvert = implode(',', $allArr);--}}
-{{--                                @endphp--}}
-{{--                                @if($allArr!=null)--}}
-{{--                                    <option class="choose"--}}
-{{--                                            value="{{$voucherConvert}}-{{$voucher->percent}}-{{$voucher->id}}">--}}
-{{--                                        {{$voucher->name}} - {{$voucher->code}}--}}
-{{--                                    </option>--}}
-{{--                                @else--}}
-{{--                                    <option disabled>{{$voucher->name}} - Không thể sử dụng</option>--}}
-{{--                                @endif--}}
-{{--                            @endforeach--}}
-{{--                        </select>--}}
-{{--                        <button type="submit" class=" mt-3 mb-3 btn">{{ __('home.Pay Now') }}</button>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col-md-4 col-12 orderSummary">--}}
-{{--                    <div class="d-flex justify-content-between orderSummary-header">--}}
-{{--                        <span class="summary">Order Summary</span>--}}
-{{--                        <span><a href="{{route ('cart.index') }}">Edit Cart</a></span>--}}
-{{--                    </div>--}}
-{{--                    @if($carts->isEmpty())--}}
-{{--                        <div>--}}
-{{--                            <img src="{{asset('images/empty.jpg')}}" alt="">--}}
-{{--                            <p>{{ __('home.you have no order') }}</p>--}}
-{{--                        </div>--}}
-{{--                    @else--}}
-{{--                        <form id="checkout-form" method="post">--}}
-{{--                            @csrf--}}
-{{--                            <div class="orderSummary-body ">--}}
-{{--                                @foreach ($carts as $cartItem)--}}
-{{--                                    <div class="mb-3 row">--}}
-{{--                                        <div class="col-3 img">--}}
-{{--                                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/attribute_rule_images/815_thumb_1623309309.jpg" alt="">--}}
-{{--                                        </div>--}}
-{{--                                        <div class="col-5 name d-flex">--}}
-{{--                                            {{ $cartItem->quantity }} x {{ $cartItem->product->name }}--}}
-{{--                                        </div>--}}
-{{--                                        <div class="col-4 price d-flex" style="color:black">--}}
-{{--                                            <span>$ <span id="max-total">{{ $cartItem->price*$cartItem->quantity }}</span></span>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                @endforeach--}}
-{{--                            </div>--}}
-{{--                        </form>--}}
-{{--                    <div class="orderSummary-footer">--}}
-{{--                        <div class="grandtotal d-flex justify-content-between">--}}
-{{--                            <span class="total">Tổng Tiền Hàng: </span>--}}
-{{--                            <span class="price">$ <span id="max-total"> {{ $cartItem->price*$cartItem->quantity }}</span></span>--}}
-{{--                        </div>--}}
-{{--                        <div class="grandtotal d-flex justify-content-between">--}}
-{{--                            <span class="total">Phí Vận Chuyển: </span>--}}
-{{--                            <span class="price"><span id="max-total">--</span></span>--}}
-{{--                        </div>--}}
-{{--                        <div class="grandtotal d-flex justify-content-between">--}}
-{{--                            <span class="total">Giảm Giá: </span>--}}
-{{--                            <span class="price">$ <span id="max-total">--</span></span>--}}
-{{--                        </div>--}}
-{{--                        <div class="grandtotal d-flex justify-content-between">--}}
-{{--                            <span class="total">Tổng Thanh Toán: </span>--}}
-{{--                            <span class="price">$ <span id="max-total">9024000</span></span>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    @endif--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-
-
         <div class="container checkout">
             <div class="card" id="check-out" style="border: none">
                 @if($carts->isEmpty())
@@ -286,7 +139,7 @@
                                     @foreach ($carts as $cartItem)
                                         <div class="mb-3 row">
                                             <div class="col-3 img">
-                                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/attribute_rule_images/815_thumb_1623309309.jpg" alt="">
+                                                <img src="{{ asset('storage/' . $cartItem->product->thumbnail) }}" >
                                             </div>
                                             <div class="col-5 name d-flex">
                                                 {{ $cartItem->quantity }} x {{ $cartItem->product->name }}
@@ -326,6 +179,7 @@
                             <input type="text" id="discount_price_by_rank" name="discount_price_by_rank"
                                    value="{{$totalSaleByRank}}" hidden="">
                             <input type="text" id="voucher_discount_price" value="0" hidden="">
+                            <input value="{{asset('/detail-product')}}" id="url">
                         </div>
                     </form>
                 @endif
@@ -339,39 +193,43 @@
         function getvoucher() {
             $('#voucher option').each(function () {
                 if ($(this).is(':selected')) {
-                    // this.value.split("-")
-                    let array = this.value.split("-");
-                    // let arrayProducts = getDiscount(array);
                     let myArray = this.value.split("-");
                     let arrayProducts = myArray[0].split(",");
                     let arrayPrice = [];
                     for (let i = 0; i < arrayProducts.length; i++) {
-                        $.ajax({
-                            url: '/detail-product/' + arrayProducts[i],
-                            method: 'GET',
-                            data: {
-                                _token: '{{ csrf_token() }}'
-                            },
-                            success: function (response) {
-                                let price = response['price'];
-                                let pricePercent = price * myArray[1] / 100;
-                                arrayPrice.push(pricePercent)
-                                let totalPriceDiscount = 0;
-                                for (let i = 0; i < arrayPrice.length; i++) {
-                                    totalPriceDiscount = parseFloat(totalPriceDiscount) + parseFloat(arrayPrice[i]);
-                                }
-                                let salePrice = document.getElementById('voucher_discount_price');
-                                salePrice.value = totalPriceDiscount;
+                        var url = document.getElementById('url').value;
+                        function myfunction(id) {
+                            fetch(url + '/' + id, {
+                                method: 'GET'
+                            })
+                                .then(response => {
+                                    if (response.status == 200) {
+                                        console.log(response);
+                                        return response.json();
+                                    }
+                                })
+                                .then((response) => {
+                                    console.log(response)
+                                    let price = response['price'];
+                                    let pricePercent = price * myArray[1] / 100;
+                                    arrayPrice.push(pricePercent)
+                                    let totalPriceDiscount = 0;
+                                    for (let i = 0; i < arrayPrice.length; i++) {
+                                        totalPriceDiscount = parseFloat(totalPriceDiscount) + parseFloat(arrayPrice[i]);
+                                    }
+                                    let salePrice = document.getElementById('voucher_discount_price');
+                                    salePrice.value = totalPriceDiscount;
 
-                                let voucherID = document.getElementById('voucher_id');
-                                voucherID.value = myArray[2];
+                                    let voucherID = document.getElementById('voucher_id');
+                                    voucherID.value = myArray[2];
 
-                                getAllTotal();
-                            },
-                            error: function (exception) {
-                                console.log(exception)
-                            }
-                        })
+                                    getAllTotal();
+
+                                })
+                                .catch(error => console.log(error));
+                        }
+
+                        myfunction(arrayProducts[i]);
                     }
                 }
             })

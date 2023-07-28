@@ -418,6 +418,12 @@
   .header .header-mobile {
     display: block;
   }
+  .list-voucher .search .form-search {
+    margin: 0px 20px;
+  }
+  .list-voucher .search .form-search .item-voucher .item img {
+    width: 34%;
+  }
   .category-item .swiper-pagination {
     display: block;
   }
@@ -700,6 +706,39 @@
     border-radius: 20px;
     height: 120px;
     padding: 5px;
+  }
+  .item-voucher .item img {
+    width: 30%;
+  }
+  .item-voucher .item .content {
+    width: 70%;
+    padding: 5px;
+  }
+  .item-voucher .item .content .voucher-percent {
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .item-voucher .item .content .voucher-apply-products {
+    font-size: 12px;
+  }
+  .item-voucher .item .content .voucher-end-date {
+    font-size: 11px;
+  }
+  .item-voucher .item .content .voucher-details {
+    margin: 0;
+    font-size: 13px;
+  }
+  .item-voucher .item .content .voucher-code {
+    font-size: 12px;
+  }
+  .list-voucher .search .form-search {
+    margin: 0px 20px;
+  }
+  .list-voucher .search .form-search .voucher {
+    display: none;
+  }
+  .list-voucher .nav-item a {
+    padding: 7px;
   }
   .swiper-button-next {
     display: none;

@@ -140,6 +140,8 @@ class ProductController_v2 extends Controller
 
             $product->slug = \Str::slug($request->input('name'));
 
+            $product->gallery = $this->handleGallery($request->input('imgGallery'));
+
             $hot = $request->input('hot_product');
             $feature = $request->input('feature_product');
 
@@ -263,6 +265,19 @@ class ProductController_v2 extends Controller
             return response($exception, 400);
         }
     }
+      
+    public function handleGallery($input)
+    {
+        $arrGallery = json_decode($input);
+        $pattern = '/\/storage\/([^,]+),?/';
+        $matches = array();
+        $arrResult = array();
+        foreach ($arrGallery as $item) {
+            preg_match_all($pattern, $item, $matches);
+            array_push($arrResult, $matches[1][0]);
+        }
+        return implode(',', $arrResult);
+    }
 
     public function show($id)
     {
@@ -307,16 +322,8 @@ class ProductController_v2 extends Controller
                 $thumbnailPath = $thumbnail->store('thumbnails', 'public');
                 $product->thumbnail = $thumbnailPath;
             }
-            if ($request->hasFile('gallery')) {
-                $gallery = $request->file('gallery');
-                $galleryPaths = [];
-                foreach ($gallery as $image) {
-                    $galleryPath = $image->store('gallery', 'public');
-                    $galleryPaths[] = $galleryPath;
-                }
-                $galleryString = implode(',', $galleryPaths);
-                $product->gallery = $galleryString;
-            }
+
+            $product->gallery = $this->handleGallery($request->input('imgGallery'));
 
             $hot = $request->input('hot_product');
             $feature = $request->input('feature_product');
@@ -449,6 +456,7 @@ class ProductController_v2 extends Controller
             'slug' => $product->slug,
             'price' => 0,
             'old_price' => 0,
+            'gallery' => $product->gallery,
         ];
 
         $success = Product::create($newProductData);

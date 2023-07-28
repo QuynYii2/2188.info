@@ -5,6 +5,89 @@ $color-main: #fd6506;
 .body{
   background-color: #f5f5f5;
 }
+
+.list-voucher{
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+  .category{
+    font-size: 20px;
+  }
+  .nav-pills .nav-link.active,
+  .nav-pills .show > .nav-link {
+    color: $color-main!important;
+    background-color: white;
+    border-bottom: 2px solid $color-main;
+    border-radius: 0!important;
+  }
+  .nav-pills{
+    text-align: center;
+    border-bottom: 1px solid #f5f5f5;
+    display: flex;
+    justify-content: center;
+  }
+  .search{
+    background: rgba(0,0,0,.03);
+    padding: 40px 0;
+    button{
+      background: rgba(0,0,0,.1);
+    }
+    .form-search{
+      margin: 0 200px;
+    }
+  }
+}
+
+.item-voucher{
+  .item{
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+    img{
+      width: 25%;
+    }
+    .content{
+      width: 75%;
+      padding: 0px 10px;
+
+      .voucher-details {
+        margin: 5px 0;
+        font-size: 13px;
+        color: #777;
+      }
+
+      .voucher-percent {
+        font-size: 18px;
+        font-weight: 700;
+        color: #ee4d2d;
+      }
+
+      .voucher-code {
+        font-size: 16px;
+        color: #555;
+      }
+
+      .voucher-apply-products {
+        font-size: 14px;
+        color: #666;
+      }
+
+      .voucher-end-date {
+        font-size: 14px;
+        color: #777;
+      }
+    }
+  }
+  button{
+    border: none;
+    background-color: white;
+  }
+}
+
+#search{
+  .dropdown-menu{
+    transform: none!important;
+  }
+}
+.modal-dialog{
+  min-width: 1000px!important;
+}
 .cart{
   .pagetitle{
     .breadcrumb{
@@ -279,8 +362,9 @@ $color-main: #fd6506;
       input {
         width: 100px;
         border: 1px solid lightgray;
-        padding: 17px 25px;
+        padding: 14px 25px;
         border-radius: 30px;
+        font-size: 20px;
       }
       input:hover {
         border-color: green;
@@ -1483,6 +1567,22 @@ a {
           position: fixed;
         }
       }
+      .search {
+        position: absolute;
+        top: 0 !important;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: -10 ;
+        background: rgba(0, 0, 0, 0.6);
+        opacity: 0;
+        transition: 0.5s;
+        &.active {
+          opacity: 9999;
+          z-index: 2;
+          position: fixed;
+        }
+      }
       &--leftTwo {
         margin-right: 20px;
         font-size: 16px;
@@ -2612,7 +2712,7 @@ hr{
 figure.zoom {
   background-position: 50% 50%;
   position: relative;
-  width: 500px;
+  width: 600px;
   overflow: hidden;
   cursor: zoom-in;
 }
@@ -3338,6 +3438,13 @@ img {
 }
 .grid.product {
   padding: 0 0 1.5rem 0;
+  .product-image {
+    img {
+      width: 100%;
+      object-fit: cover;
+      height: 100%;
+    }
+  }
 }
 .grid.second-nav > [class*=column-] {
   padding: 0.5rem 1rem;
@@ -3356,10 +3463,29 @@ footer {
   margin: 0;
 }
 
-@media (min-width: 62rem) {
-  .product-image img,
-  .image-list img {
+.product-image {
+  img {
     width: 100%;
+    object-fit: cover;
+    height: 100%;
+  }
+}
+@media (min-width: 62rem) {
+  .product-image{
+    width: 100%;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    img{
+      width: 100%;
+      object-fit: cover;
+      height: 100%;
+    }
+  }
+  .image-list{
+    img {
+      width: 100%;
+    }
   }
 
   .product-image {
@@ -3370,7 +3496,6 @@ footer {
   }
   .product-image img.active {
     display: block;
-    margin: 0 0 0.75rem 0;
   }
 
   .image-list {
@@ -3434,3 +3559,4 @@ footer {
     opacity: 1;
   }
 }
+
