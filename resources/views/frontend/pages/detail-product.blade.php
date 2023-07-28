@@ -179,7 +179,7 @@
         }
 
     </style>
-    <div class="container-fluid detail">
+    <div class="container-fluid detail" >
         <div class="grid second-nav">
             <div class="column-xs-12">
                 <nav>
@@ -311,7 +311,7 @@
         </ul>
         <div class="tab-content container-fluid" id="myTabContent">
             <div class="tab-pane fade show active"  id="home" role="tabpanel" aria-labelledby="home-tab">
-                {{$product->short_description}}
+                {{$product->description}}
             </div>
 {{--            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">--}}
 {{--                <div class="tab-title">--}}

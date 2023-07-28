@@ -321,7 +321,11 @@
         }
     }
 </style>
-<button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModal">
+
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+<button type="button" class="btn btn-primary" data-toggle="modal"
+        data-target="#exampleModal">
     Launch demo modal
 </button>
 <div class="modal fade" id="exampleModal" style="z-index: 99999; display: none" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

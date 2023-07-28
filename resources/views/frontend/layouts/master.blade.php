@@ -63,7 +63,9 @@
 @include('frontend.layouts.partials.header', ['infoUser' => $infoUser ?? ''])
 @include('sweetalert::alert')
 
+<div id="mt-body">
     @yield('content')
+</div>
 
 <!-- Footer -->
 @include('frontend.layouts.partials.footer')

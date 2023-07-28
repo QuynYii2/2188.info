@@ -58,7 +58,7 @@ class HomeController extends Controller
         $productByJp = Product::where('location', 'jp')->limit(10)->get();
         $productByCn = Product::where('location', 'cn')->limit(10)->get();
 
-        $newProducts = Product::orderBy('created_at','desc')->limit(10)->get();
+        $newProducts = Product::where('status',ProductStatus::ACTIVE)->orderBy('created_at','desc')->limit(10)->get();
         $newProducts = $newProducts->unique('slug');
 
         $permissionHot = Permission::where('name', 'Nâng cấp sản phẩm hot')->first();

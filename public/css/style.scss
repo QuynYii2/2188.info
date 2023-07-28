@@ -5,6 +5,9 @@ $color-main: #fd6506;
 .body{
   background-color: #f5f5f5;
 }
+#mt-body{
+  margin-top: 170px;
+}
 
 .list-voucher{
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
@@ -602,6 +605,11 @@ a {
 .header{
   font-family: "DM Sans";
   .header-pc {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 10;
     .header-top {
       padding: 20px 0;
       background-color: $color-main;
@@ -935,19 +943,19 @@ a {
           }
         }
         .close-signMenu {
-          position: fixed;
           top: 0 !important;
           left: 0;
-          height: 100%;
-          width: 100%;
           z-index: -1;
           background: rgba(0, 0, 0, 0.6);
           opacity: 0;
           transition: 0.5s;
 
           &.active {
+            position: fixed;
             opacity: 9999;
             z-index: 2;
+            height: 100%;
+            width: 100%;
           }
         }
         .item-shop {
@@ -1100,25 +1108,26 @@ a {
           }
         }
         .closeShopMenu {
-          position: fixed;
           top: 0 !important;
           left: 0;
-          height: 100%;
-          width: 100%;
           z-index: -1;
           background: rgba(0, 0, 0, 0.6);
           opacity: 0;
           transition: 0.5s;
 
           &.active {
+            position: fixed;
             opacity: 9999;
             z-index: 2;
+            height: 100%;
+            width: 100%;
           }
 
         }
       }
     }
     .header-bottom {
+      background-color: white;
       box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .15);
 
       &-left {
