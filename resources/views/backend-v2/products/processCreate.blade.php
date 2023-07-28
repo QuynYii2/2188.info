@@ -195,9 +195,7 @@
                         </div>
 
                         <div id="renderInputAttribute" class="">
-                            <input type="text" hidden="" name="attribute_property1"
-                                   value="0">
-                            <input type="text" hidden="" name="count" value="1">
+
                         </div>
                     </div>
                     <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
@@ -215,49 +213,133 @@
     <script>
         $('#btnSaveAttribute').on('click', function () {
             let attribute = document.getElementById('input-form-create-attribute').value;
-            callSaveAttribute(attribute);
-        })
-
-        function callSaveAttribute(value) {
+            var renderInputAttribute = $('#renderInputAttribute');
             $.ajax({
                 url: '{{ route('product.v2.create.attribute') }}',
                 type: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',
-                    'attribute_property': value
+                    'attribute_property': attribute
                 },
-                dataType: 'json',
+                // dataType: 'json',
                 success: function (response) {
-                    var renderInputAttribute = $('#renderInputAttribute');
-
-                    $.each(response, function () {
-                        var item = ' <div class="form-row">' +
-                            '<div class="col-4 d-inline-block"><label class="control-label small name" for="price">' +
-                            'Giá bán' +
-                            '</label><input type="number" class="value-check form-control" required name="old_price1" id="price1" placeholder="Nhập giá bán">' +
-                            '</div> <div class="col-4 d-inline-block"> <label class="control-label small name" for="qty">' +
-                            'Giá khuyến mãi' +
-                            '</label>' +
-                            '<input type="number" class="value-check form-control" name="price1" id="qty1" placeholder="Nhập giá khuyến mãi"> </div></div>' +
-                            '<div class="form-row"> <div class="col-4 d-inline-block"><label class="control-label small name" for="quantity1">' +
-                            'Quantity' +
-                            '</label> <input type="number" class="value-check form-control" required name="quantity1" id="quantity1" placeholder="Nhập quantity"></div></div>' +
-                            '<div class = "form-group" ><div class = "form-group">< label for= "description-detail" >' +
-                            'Mô tả' + '< /label> <textarea class="form-control description" name="description1" rows="5"></textarea></div></div>' +
-                            ' <div class="form-group"><div class="form-group col-12 col-sm-12 pt-3"> <label for="thumbnail">' +
-                            'Ảnh đại diện:' +
-                            '</label><label class="__lk-fileInput"><span data-default="Choose file">' +
-                            'Choose file' +
-                            '</span> <input type="file" id="thumbnail" class="img-cfg" name="thumbnail1"accept="image/*" required></label></div></div>';
-
-                        renderInputAttribute.append(item);
-                    });
+                    console.log(response)
+                    // var item = response;
+                    renderInputAttribute.append(response);
                 },
                 error: function (xhr, status, error) {
-                    console.error(error);
+                    renderInputAttribute.append('<h3>Alooo</h3>');
                 }
             })
-        }
+        })
+
+        {{--function callSaveAttribute(value) {--}}
+        {{--    $.ajax({--}}
+        {{--        url: '{{ route('product.v2.create.attribute') }}',--}}
+        {{--        type: 'POST',--}}
+        {{--        data: {--}}
+        {{--            _token: '{{ csrf_token() }}',--}}
+        {{--            'attribute_property': value--}}
+        {{--        },--}}
+        {{--        dataType: 'json',--}}
+        {{--        success: function (response) {--}}
+        {{--            console.log(response[1])--}}
+        {{--            renderAttributeViewSession();--}}
+        {{--        },--}}
+        {{--        error: function (xhr, status, error) {--}}
+        {{--            console.error(error);--}}
+        {{--        }--}}
+        {{--    })--}}
+        {{--}--}}
+
+        {{--function setCookie(name, value, days) {--}}
+        {{--    var expires = "";--}}
+        {{--    if (days) {--}}
+        {{--        var date = new Date();--}}
+        {{--        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));--}}
+        {{--        expires = "; expires=" + date.toUTCString();--}}
+        {{--    }--}}
+        {{--    document.cookie = name + "=" + (value || "") + expires + "; path=/";--}}
+        {{--}--}}
+
+        {{--function renderAttributeView(response) {--}}
+        {{--    @php--}}
+        {{--        Cookie::forget('testArray');--}}
+        {{--    @endphp--}}
+
+        {{--    var renderInputAttribute = $('#renderInputAttribute');--}}
+        {{--    setCookie('testArray', response[1], 1);--}}
+        {{--    @php--}}
+        {{--        $array= null;--}}
+        {{--        $att = null;--}}
+        {{--        if(isset($_COOKIE['testArray'])) {--}}
+        {{--            $att = $_COOKIE['testArray'];--}}
+        {{--        }--}}
+        {{--        if (!$att){--}}
+        {{--            $att = null;--}}
+        {{--        }--}}
+        {{--          $mainArray = null;--}}
+        {{--    if ($att){--}}
+        {{--      $newArray = [];--}}
+        {{--                    $elements = explode(',', $att);--}}
+        {{--                    foreach ($elements as $element) {--}}
+        {{--                            $parts = explode('-', $element);--}}
+        {{--                            $prefix = $parts[0];--}}
+        {{--                            $value = $parts[1];--}}
+        {{--                            if (!isset($newArray[$prefix])) {--}}
+        {{--                                $newArray[$prefix] = $prefix . '-' . $value;--}}
+        {{--                            } else {--}}
+        {{--                                $newArray[$prefix] .= '-' . $value;--}}
+        {{--                            }--}}
+        {{--                    }--}}
+        {{--                    $newArray = array_values($newArray);--}}
+
+        {{--                    if ($newArray) {--}}
+        {{--                            foreach ($newArray as $myItem) {--}}
+        {{--                                $key = explode("-", $myItem);--}}
+        {{--                                $demoArray = null;--}}
+        {{--                                for ($j = 1; $j < count($key); $j++) {--}}
+        {{--                                    $demoArray[] = $key[0] . '-' . $key[$j];--}}
+        {{--                                }--}}
+        {{--                                $testArray[] = $demoArray;--}}
+        {{--                            }--}}
+        {{--                    }--}}
+
+        {{--                    $array = $testArray;--}}
+
+        {{--                    if ($array) {--}}
+        {{--                        if (count($array) == 1) {--}}
+        {{--                            $mainArray = $array;--}}
+        {{--                        }--}}
+        {{--                        $newArray1 = $array[0];--}}
+        {{--                        for ($i = 1; $i < count($array); $i++) {--}}
+        {{--                            $arrayList = [];--}}
+        {{--                            for ($j = 0; $j < count($array1); $j++) {--}}
+        {{--                                for ($z = 0; $z < count($array2); $z++) {--}}
+        {{--                                    $arrayList[] = $array1[$j] . "," . $array2[$z];--}}
+        {{--                                }--}}
+        {{--                            }--}}
+        {{--                            $newArray1 = $arrayList;--}}
+        {{--                        }--}}
+        {{--                        $mainArray =  $newArray1;--}}
+        {{--                    }--}}
+        {{--    }--}}
+        {{--    @endphp--}}
+        {{--    var item = `@include('backend-v2/products/attribute', ['testArray' => $mainArray])`;--}}
+        {{--    renderInputAttribute.append(item);--}}
+        {{--}--}}
+
+        {{--function renderAttributeViewSession() {--}}
+        {{--    var renderInputAttribute = $('#renderInputAttribute');--}}
+        {{--    @php--}}
+        {{--        $mainArray = session()->get('testArray');--}}
+        {{--        $mainArray = $mainArray[0];--}}
+        {{--    @endphp--}}
+        {{--    var item = `@include('backend-v2/products/attribute', ['testArray' => $mainArray])`;--}}
+        {{--    renderInputAttribute.append(item);--}}
+        {{--}--}}
+
+        {{--renderAttributeViewSession();--}}
     </script>
     <script>
         var properties = document.getElementsByClassName('property-attribute')
@@ -642,13 +724,49 @@
         });
     </script>
     <script>
-        let aaaa = document.querySelectorAll('.description');
-        for (let i = 0; i < aaaa.length; i++) {
+        let desc = document.querySelectorAll('.description');
+        for (let i = 0; i < desc.length; i++) {
             ClassicEditor
-                .create(aaaa[i])
+                .create(desc[i])
                 .catch(error => {
                     console.error(error);
                 });
+        }
+    </script>
+
+    <script>
+        function showFormEdit(id) {
+            var formEdit = document.getElementById('formCreate' + id);
+            formEdit.classList.remove('d-none');
+        }
+
+        $('#btnSubmit').on('click', function () {
+            checkValue();
+        })
+
+        function checkValue() {
+            var inputValue = document.getElementsByClassName('value-check');
+            for (let i = 0; i < inputValue.length; i++) {
+                if (inputValue[i].value == '') {
+                    alert('Vui lòng nhập đầy đủ thông tin sản phẩm')
+                    break;
+                }
+            }
+        }
+
+        function validInput(id) {
+            var priceInput = document.getElementById('price' + id);
+            var qtyInput = document.getElementById('qty' + id);
+
+            function checkPrice() {
+                var price = parseFloat(priceInput.value);
+                var qty = parseFloat(qtyInput.value);
+
+                if (qty > price) {
+                    alert('Giá khuyến mãi không được lớn hơn giá bán.');
+                    qtyInput.value = '';
+                }
+            }
         }
     </script>
 @endsection

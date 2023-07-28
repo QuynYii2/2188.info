@@ -16,6 +16,7 @@ use App\Models\Variation;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 use Mockery\Exception;
 use stdClass;
 
@@ -170,7 +171,8 @@ class ProductController_v2 extends Controller
         }
     }
 
-    public function createNewProduct(Request $request){
+    public function createNewProduct(Request $request)
+    {
         try {
             $product = new Product();
             if ($request->hasFile('gallery')) {
@@ -240,10 +242,23 @@ class ProductController_v2 extends Controller
                     $testArray[] = $demoArray;
                 }
             }
+            $testArray = $this->getArray($testArray);
             session()->forget(['testArray', 'sourceArray']);
             session()->push('sourceArray', $newArray);
             session()->push('testArray', $testArray);
-            return response([$newArray, $testArray], 200);
+            if (!$testArray || !$newArray) {
+                return view('backend-v2.products.none-attribute');
+            }
+            return view('backend-v2.products.attribute');
+        } catch (Exception $exception) {
+            return response($exception, 400);
+        }
+    }
+
+    public function none()
+    {
+        try {
+            return view('backend-v2.products.none-attribute');
         } catch (Exception $exception) {
             return response($exception, 400);
         }
