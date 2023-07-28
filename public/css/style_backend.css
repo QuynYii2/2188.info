@@ -1,99 +1,190 @@
-.name {
-    font-size: 17px;
-}
-
-.remove-a-tag{
-    color: #000000 !important;
-}
-.remove-a-tag:hover{
-    color: #1372e5 !important;
-}
-
-.category {
-    text-align: center;
-    font-weight: 700;
-    font-size: 25px;
-}
-
-li {
-    list-style: none;
-}
-
-.content {
-    margin-top: 45px;
-    margin-left: 10px;
-}
-
+@charset "UTF-8";
 .header_back {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 55px;
-    z-index: 1;
+  background-color: #fff;
+  max-height: 56px;
+  min-height: 56px;
+  box-shadow: 0 1px 4px 0 rgba(74, 74, 78, 0.12);
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+.header_back .name {
+  font-size: 20px;
+  font-weight: 500;
+}
+.header_back .name a {
+  text-decoration: none;
+  color: black;
 }
 
-.img-100 {
-    width: 100px !important;
-    height: 100px !important;
+.header-card {
+  margin-top: 56px;
 }
-/*This is css for toggle*/
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
+.header-card--left .wrapper {
+  width: 16.7%;
+  height: 100%;
+  overflow-y: auto;
+  font-size: 0.875em;
+  position: fixed;
+  top: 55px;
+  left: 0;
+  bottom: 0;
+}
+.header-card--left .wrapper .items {
+  padding: 18px 0;
+  font-size: 18px;
+}
+.header-card--left .wrapper .items li {
+  list-style: none;
+}
+.header-card--left .wrapper .items li .item {
+  font-size: 16px;
+  color: #999;
+  font-weight: 600;
+}
+.header-card--left .wrapper .items li .item:hover {
+  color: #999;
+}
+.header-card--left .wrapper .items li a {
+  color: black;
+  font-size: 14px;
+}
+.header-card--left .wrapper .items li a:hover {
+  color: #fd6506;
+}
+.header-card--right {
+  background-color: #f6f6f6;
+}
+.header-card--right .todo_list {
+  margin-top: 40px;
+  padding: 30px;
+  background-color: #fff;
+  box-shadow: 0 1px 4px 0 rgba(74, 74, 78, 0.12);
+}
+.header-card--right .todo_list .title {
+  font-weight: 700;
+  font-size: 20px;
+}
+.header-card--right .todo_list .title-small {
+  color: rgb(153, 153, 153);
+  font-size: 13px;
+}
+.header-card--right .todo_list--bottom {
+  overflow-x: auto;
+}
+.header-card--right .todo_list--bottom a {
+  color: black;
+}
+.header-card--right .todo_list--bottom a:hover {
+  text-decoration: none;
+}
+.header-card--right .todo_list--bottom .list_item {
+  margin: 10px 0;
+  text-align: center;
+  cursor: pointer;
+  border-right: 1px solid rgb(229, 229, 229);
+}
+.header-card--right .todo_list--bottom .list_item .number {
+  font-size: 16px;
+  color: rgb(38, 115, 221);
+  font-weight: bold;
+}
+.header-card--right .todo_list--bottom .list_item p {
+  font-size: 14px;
+}
+.header-card--right .todo_list--bottom .list_item:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+.header-card--right .todo_list--bottom .list_item--top p {
+  font-size: 16px;
+  margin-top: 20px;
+  font-weight: 500;
+}
+.header-card--right .todo_list--bottom .list_item--bottom {
+  color: #999;
+}
+.header-card--right .todo_list--bottom .marketing {
+  padding: 30px;
+}
+.header-card--right .todo_list .nav {
+  margin: 10px 0;
+  padding: 12px 0;
+  border-bottom: 1px solid rgb(229, 229, 229);
+}
+.header-card--right .todo_list .nav .nav-item a {
+  color: black;
+}
+.header-card--right .todo_list .nav .nav-item a:hover {
+  color: #fd6506;
+}
+.header-card--right .todo_list .nav .nav-item a.active {
+  font-weight: 600;
+  color: #fd6506;
+  border-bottom: 3px solid #fd6506;
 }
 
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
+.items > li {
+  margin-top: 10px;
 }
 
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
+.items > li > a {
+  text-indent: 15px;
+  line-height: 39px;
 }
 
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
+.items > li > a::after {
+  position: absolute;
+  right: 30px;
+  font-family: "FontAwesome";
 }
 
-input:checked + .slider {
-    background-color: #2196F3;
+.items > li > a::after {
+  right: 30px;
+  content: "→";
 }
 
-input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
+.itemHover {
+  color: #fff;
+  font-weight: 600;
+  transition: background-color 0.4s ease-in-out;
 }
 
-input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
+.items > li > a:hover {
+  text-decoration: none !important;
 }
 
-.slider.round {
-    border-radius: 34px;
+.items > li > a.expanded::after {
+  content: "↓";
 }
 
-.slider.round:before {
-    border-radius: 50%;
+.items > li:not(:has(ul)) > a::after,
+.items > li:not(:has(ul)) > a.expanded::after {
+  content: none;
 }
-/*End css for toggle*/
+
+.sub-items {
+  display: none;
+}
+.sub-items a {
+  position: relative;
+  display: block;
+  margin: 0 1rem;
+  width: 212px;
+  line-height: 25px;
+}
+.sub-items .current {
+  position: relative;
+  color: #64D7E2;
+  border-color: white;
+}
+
+.sub-items > li:hover > a {
+  color: #64D7E2;
+  transition: color 0.4s ease-in-out;
+  text-decoration: none;
+}
+
+/*# sourceMappingURL=style_backend.css.map */

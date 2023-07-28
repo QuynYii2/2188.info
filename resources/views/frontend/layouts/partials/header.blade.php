@@ -67,7 +67,7 @@
                                         }
                                     @endphp
                                     <div class="item-text">
-                                        <a href="{{route('list.products.show.location', $local)}}" style="color: #fff; text-decoration: none">Wish Lists</a>
+{{--                                        <a href="{{route('wish.list.index')}}" style="color: #fff; text-decoration: none">Wish Lists</a>--}}
                                     </div>
                                 </button>
                             </div>
@@ -112,7 +112,7 @@
                                     @endphp
                                     @if($isAdmin == true)
                                         <div class="drop-item">
-                                            <a href="{{ route('seller.products.index') }}">Dashboard</a>
+                                            <a href="{{ route('seller.products.home') }}">Kênh người bán</a>
                                         </div>
                                     @endif
                                     <div class="drop-item">
@@ -279,8 +279,8 @@
         <div class="header-bottom">
             <div class="container-fluid">
                 <div class="row align-items-center">
-                    <div class="col-xl-9 col-md-10 header-bottom-left d-flex align-items-center">
-                        <div class="header-bottom-left--item header_bottom--one col-2">
+                    <div class="col-xl-9 col-md-10 header-bottom-left d-flex align-items-center pl-0">
+                        <div class="header-bottom-left--item header_bottom--one col-2 pl-0">
                             <div class="header_bottom--one--hd">
                                 <i class="fa-solid fa-bars"></i>
                                 Category
@@ -565,68 +565,87 @@
                 </div>
                 <div class="hd-mobile--leftTwo">
                     <button onclick="Search_mobile()"><i class="fa-solid fa-magnifying-glass"></i></button>
-                    <div class="form-search" id="search_mobile">
-                        <form class="form-inline">
-                            {{--                            <input class="form-control" placeholder="Tìm khóa học..." aria-label="Search">--}}
-                            {{--                            <button class="btn my-sm-0" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>--}}
-                        </form>
-                    </div>
                 </div>
             </div>
             <div class="hd-mobile_menu" id="demo">
                 <div class="MenuContainer">
-                        @foreach($listCate as $cate)
-                            <div class="OptionContainer">
-                                <div class="OptionHead">
-                                    <a class="item d-flex" href="{{ route('category.show', $cate->id) }}">{{ $cate->name }}</a>
-                                    <div>
-                                        <svg onclick="ToggleOption(this)" style="cursor: pointer;"
-                                             xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
-                                             viewBox="0 0 30 30">
-                                            <path d="M 24.990234 8.9863281 A 1.0001 1.0001 0 0 0 24.292969 9.2929688 L 15 18.585938 L 5.7070312 9.2929688 A 1.0001 1.0001 0 0 0 4.9902344 8.9902344 A 1.0001 1.0001 0 0 0 4.2929688 10.707031 L 14.292969 20.707031 A 1.0001 1.0001 0 0 0 15.707031 20.707031 L 25.707031 10.707031 A 1.0001 1.0001 0 0 0 24.990234 8.9863281 z"></path>
-                                        </svg>
-                                    </div>
+                    @foreach($listCate as $cate)
+                        <div class="OptionContainer">
+                            <div class="OptionHead">
+                                <a class="item d-flex" href="{{ route('category.show', $cate->id) }}">{{ $cate->name }}</a>
+                                <div>
+                                    <svg onclick="ToggleOption(this)" style="cursor: pointer;"
+                                         xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
+                                         viewBox="0 0 30 30">
+                                        <path d="M 24.990234 8.9863281 A 1.0001 1.0001 0 0 0 24.292969 9.2929688 L 15 18.585938 L 5.7070312 9.2929688 A 1.0001 1.0001 0 0 0 4.9902344 8.9902344 A 1.0001 1.0001 0 0 0 4.2929688 10.707031 L 14.292969 20.707031 A 1.0001 1.0001 0 0 0 15.707031 20.707031 L 25.707031 10.707031 A 1.0001 1.0001 0 0 0 24.990234 8.9863281 z"></path>
+                                    </svg>
                                 </div>
-                                @if(!$listCate->isEmpty())
-                                    <div class="OptionBody">
-                                        @php
-                                            $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
-                                        @endphp
-                                        @foreach($listChild as $child)
-                                            <div class="OptionContainer">
-                                                <div class="OptionHead">
-                                                    <a class="item d-flex"
-                                                       href="{{ route('category.show', $child->id) }}">{{ $child->name }}</a>
-                                                    <div>
-                                                        <svg onclick="ToggleOption(this)" style="cursor: pointer;"
-                                                             xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20"
-                                                             height="20" viewBox="0 0 30 30">
-                                                            <path d="M 24.990234 8.9863281 A 1.0001 1.0001 0 0 0 24.292969 9.2929688 L 15 18.585938 L 5.7070312 9.2929688 A 1.0001 1.0001 0 0 0 4.9902344 8.9902344 A 1.0001 1.0001 0 0 0 4.2929688 10.707031 L 14.292969 20.707031 A 1.0001 1.0001 0 0 0 15.707031 20.707031 L 25.707031 10.707031 A 1.0001 1.0001 0 0 0 24.990234 8.9863281 z"></path>
-                                                        </svg>
-                                                    </div>
-                                                </div>
-                                                <div class="OptionBody">
-                                                    @php
-                                                        $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
-                                                    @endphp
-                                                    @foreach($listChild2 as $child2)
-                                                        <div class="OptionContainer">
-                                                            <div class="OptionHead">
-                                                                <a class="item d-flex"
-                                                                   href="{{ route('category.show', $child2->id) }}">{{ $child2->name }}</a>
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
+                            </div>
+                            @if(!$listCate->isEmpty())
+                                <div class="OptionBody">
+                                    @php
+                                        $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
+                                    @endphp
+                                    @foreach($listChild as $child)
+                                        <div class="OptionContainer">
+                                            <div class="OptionHead">
+                                                <a class="item d-flex"
+                                                   href="{{ route('category.show', $child->id) }}">{{ $child->name }}</a>
+                                                <div>
+                                                    <svg onclick="ToggleOption(this)" style="cursor: pointer;"
+                                                         xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20"
+                                                         height="20" viewBox="0 0 30 30">
+                                                        <path d="M 24.990234 8.9863281 A 1.0001 1.0001 0 0 0 24.292969 9.2929688 L 15 18.585938 L 5.7070312 9.2929688 A 1.0001 1.0001 0 0 0 4.9902344 8.9902344 A 1.0001 1.0001 0 0 0 4.2929688 10.707031 L 14.292969 20.707031 A 1.0001 1.0001 0 0 0 15.707031 20.707031 L 25.707031 10.707031 A 1.0001 1.0001 0 0 0 24.990234 8.9863281 z"></path>
+                                                    </svg>
                                                 </div>
                                             </div>
-                                        @endforeach
-                                    </div>
-                                @endif
-                            </div>
-                        @endforeach
-                    </div>
+                                            <div class="OptionBody">
+                                                @php
+                                                    $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
+                                                @endphp
+                                                @foreach($listChild2 as $child2)
+                                                    <div class="OptionContainer">
+                                                        <div class="OptionHead">
+                                                            <a class="item d-flex"
+                                                               href="{{ route('category.show', $child2->id) }}">{{ $child2->name }}</a>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
             </div>
             <div onclick="closeMobile()" class="opacity_menu"></div>
+            <div class="hd-mobile_menu" id="search">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">All</a>
+                    @php
+                        $listCate = DB::table('categories')->where('parent_id', null)->get();
+                    @endphp
+                    @foreach($listCate as $cate)
+                        <a class="item-hd dropdown-item " href="">-- {{ $cate->name }}</a>
+                        @if(!$listCate->isEmpty())
+                            <ul class="hd_dropdown--right row">
+                                @php
+                                    $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
+                                @endphp
+                                @foreach($listChild as $child)
+                                    <a class="dropdown-item" href="">––– {{ $child->name }}</a>
+                                @endforeach
+                            </ul>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+            <div onclick="closeSearch()" class="search"></div>
             @if(!$config->isEmpty())
                 <div class="hd-mobile--center col-5 text-center">
                     <a href="{{route('home')}}">

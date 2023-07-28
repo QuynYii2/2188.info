@@ -236,7 +236,7 @@
                         <strike id="productOldPrice">${{$productDetail->old_price}}</strike>
                     </div>
                     <div class="description-text">
-                        {{ $product->description }}
+                        {{ $product->short_description }}
                     </div>
                     @if(!$attributes->isEmpty())
                         <div class="row">
@@ -301,73 +301,23 @@
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
                    aria-selected="true">{{ __('home.description') }}</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                   aria-controls="profile" aria-selected="false">{{ __('home.specification') }}</a>
-            </li>
+{{--            <li class="nav-item">--}}
+{{--                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">{{ __('home.specification') }}</a>--}}
+{{--            </li>--}}
             <li class="nav-item">
                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
                    aria-controls="contact" aria-selected="false">{{ __('home.review') }}</a>
             </li>
         </ul>
         <div class="tab-content container-fluid" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <div class="row">
-                    <div class="col-xl-12 mb-5">
-                        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
-                        deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati del cupiditate
-                        non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et
-                        dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum
-                        soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere
-                        possimus.
-                    </div>
-                    <div class="col-xl-8 mb-5">
-                        <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/product-description-1.jpg"
-                             alt="">
-                    </div>
-                    <div class="col-xl-4 m-auto text-center">
-                        <p>Lorem ipsum dolor sit amet, consectetur delos adipiscing elit. Duis risus leo milance
-                            elementum in malesuada an darius ut augue. Cras sit amet lectus et justo feugiat
-                            euismod...</p>
-                    </div>
-                </div>
+            <div class="tab-pane fade show active"  id="home" role="tabpanel" aria-labelledby="home-tab">
+                {{$product->short_description}}
             </div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                <div class="tab-title">
-                    profile-tabTo edit this page, log in to your control panel and go to Storefront › Web Pages. Click
-                    Edit next to the Shipping & Returns page and you can change this text. A sample returns policy is
-                    shown below which you can edit as needed.
-
-                    Returns Policy
-
-                    You may return most new, unopened items within 30 days of delivery for a full refund. We'll also pay
-                    the return shipping costs if the return is a result of our error (you received an incorrect or
-                    defective item, etc.).
-
-                    You should expect to receive your refund within four weeks of giving your package to the return
-                    shipper, however, in many cases you will receive a refund more quickly. This time period includes
-                    the transit time for us to receive your return from the shipper (5 to 10 business days), the time it
-                    takes us to process your return once we receive it (3 to 5 business days), and the time it takes
-                    your bank to process our refund request (5 to 10 business days).
-
-                    If you need to return an item, please Contact Us with your order number and details about the
-                    product you would like to return. We will respond quickly with instructions for how to return items
-                    from your order.
-
-                    Shipping
-
-                    We can ship to virtually any address in the world. Note that there are restrictions on some
-                    products, and some products cannot be shipped to international destinations.
-
-                    When you place an order, we will estimate shipping and delivery dates for you based on the
-                    availability of your items and the shipping options you choose. Depending on the shipping provider
-                    you choose, shipping date estimates may appear on the shipping quotes page.
-
-                    Please also note that the shipping rates for many items we sell are weight-based. The weight of any
-                    such item can be found on its detail page. To reflect the policies of the shipping companies we use,
-                    all weights will be rounded up to the next full pound.
-                </div>
-            </div>
+{{--            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">--}}
+{{--                <div class="tab-title">--}}
+{{--                    --}}
+{{--                </div>--}}
+{{--            </div>--}}
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                 <div class="card mb-4">
                     <div class="card-body">

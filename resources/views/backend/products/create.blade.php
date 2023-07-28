@@ -247,7 +247,7 @@
                 </div>
                 <div class="form-group">
                     <div class="name">Mô tả ngắn</div>
-                    <textarea class="form-control" id="description" name="description-ffff" ></textarea>
+                    <textarea class="form-control tiny" name="short_description"></textarea>
                 </div>
                 <div class="form-group">
                     <div class="name">Mô tả chi tiết</div>
