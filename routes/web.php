@@ -250,6 +250,7 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::post('/delete-properties/{id}', [PropertiesController::class, 'destroy'])->name('properties.delete');
     Route::post('/toggle-properties/{id}', [PropertiesController::class, 'toggle'])->name('properties.toggle');
     //
+    Route::get('/products_home', [ProductController::class, 'home'])->name('seller.products.home');
     Route::get('/products', [ProductController::class, 'index'])->name('seller.products.index');
     Route::get('/list/products-views', [ProductController::class, 'getProductsViews'])->name('seller.products.views');
     Route::post('/filter/products-views', [ProductController::class, 'getProductsViews'])->name('seller.products.views.filter');

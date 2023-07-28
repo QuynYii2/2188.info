@@ -8,6 +8,16 @@ function closeMobile() {
     document.getElementsByClassName("opacity_menu")[0].classList.remove('active');
 }
 
+function Search_mobile() {
+    document.getElementById("search").classList.add('active');
+    document.getElementsByClassName("search")[0].classList.add('active');
+}
+
+function closeSearch() {
+    document.getElementById("search").classList.remove('active');
+    document.getElementsByClassName("search")[0].classList.remove('active');
+}
+
 function signIn() {
     document.getElementById("signMenu").classList.add('active');
     document.getElementsByClassName("close-signMenu")[0].classList.add('active');
@@ -230,7 +240,7 @@ new Swiper(".listProduct", {
     keyboard: true,
 });
 new Swiper(".Category_listProduct", {
-    slidesPerView: 3,
+    slidesPerView: 2,
     spaceBetween: 40,
     cssMode: true,
     navigation: {
@@ -239,7 +249,7 @@ new Swiper(".Category_listProduct", {
     },
     breakpoints: {
         300: {
-            slidesPerView: 3,
+            slidesPerView: 2,
             spaceBetween: 10,
         },
     },

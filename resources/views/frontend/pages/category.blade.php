@@ -220,10 +220,12 @@
                                                             <strong>$189.000</strong>
                                                         </div> -->
                                             <div class="price-sale">
-                                                <strong>${{ $product->qty }}</strong>
+                                                <strong>${{ $product->price }}</strong>
                                             </div>
                                             <div class="price-cost">
-                                                <strike>${{ $product->price }}</strike>
+                                                @if($product->old_price !=  null)
+                                                    <strike>${{ $product->old_price }}</strike>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="card-bottom d-flex justify-content-between">
@@ -285,10 +287,12 @@
                                                     <strong>$189.000</strong>
                                                 </div> -->
                                     <div class="price-sale mr-4">
-                                        <strong>${{ $product->qty }}</strong>
+                                        <strong>${{ $product->price }}</strong>
                                     </div>
                                     <div class="price-cost">
-                                        <strike>${{ $product->price }}</strike>
+                                        @if($product->old_price != null)
+                                            <strike>${{ $product->old_price }}</strike>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="card-desc">

@@ -25,6 +25,7 @@ class Product extends Model
         'hot',
         'feature',
         'gallery',
+        'short_description',
 
     ];
 

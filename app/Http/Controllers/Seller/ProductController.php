@@ -30,6 +30,12 @@ class ProductController extends Controller
         return view('backend/products/index', ['products' => $products]);
     }
 
+    public function home()
+    {
+        return view('backend/products/home');
+    }
+
+
     public function getProductsViews(Request $request)
     {
         $user = Auth::user()->id;
@@ -189,6 +195,7 @@ class ProductController extends Controller
         $userInfo = User::where('email', $userLogin)->first();
         $qty_in_storage = DB::table('storage_products')->where([['id', '=', $request->input('storage-id')]])->first('quantity');
 
+        $product->short_description = $request->input('short_description');
         $product->storage_id = $request->input('storage-id');
         $product->name = $request->input('name');
         $product->description = $request->input('description');
