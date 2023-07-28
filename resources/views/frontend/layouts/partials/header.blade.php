@@ -67,7 +67,7 @@
                                         }
                                     @endphp
                                     <div class="item-text">
-{{--                                        <a href="{{route('wish.list.index')}}" style="color: #fff; text-decoration: none">Wish Lists</a>--}}
+                                        <a href="{{route('wish.list.index')}}" style="color: #fff; text-decoration: none">Wish Lists</a>
                                     </div>
                                 </button>
                             </div>

@@ -201,7 +201,7 @@ Route::middleware(['auth'])->group(function () {
     //
     Route::get('/wish-list', [App\Http\Controllers\WishListController::class, 'wishListIndex'])->name('wish.list.index');
     Route::post('/wish-list-store', [App\Http\Controllers\WishListController::class, 'wishListStore'])->name('user.wish.lists');
-//    Route::delete('wish-list-s', [App\Http\Controllers\WishListController::class, 'wishlist.index'])->name('wish.list.stores');
+    Route::delete('wish-list-delete', [App\Http\Controllers\WishListController::class, 'wishListSotfDelete'])->name('wish.list.delete');
 
 
 

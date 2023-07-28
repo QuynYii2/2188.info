@@ -19,16 +19,18 @@ class WishListController extends Controller
      */
     public function wishListIndex()
     {
-        $listWishlists = DB::table('Wish_Lists')->where('user_id', '=', Auth::user()->id)->get();
-        $productIds = [];
-
-        foreach ($listWishlists as $productId) {
-            array_push($productIds, $productId->product_id);
-        }
-
-        $productLists = Product::where('id', $productIds)->get();
-
-        return view('frontend/pages/profile/wish-lists', compact('productLists'));
+//        $listWishlists = DB::table('wish_lists')->where('user_id', '=', Auth::user()->id)->get();
+//        $productIds = [];
+//        foreach ($listWishlists as $productId) {
+//            array_push($productIds, $productId->product_id);
+//        }
+//        $productLists = Product::where('id', $productIds)->get();
+//        return view('frontend/pages/profile/wish-lists', compact('productLists'));
+        $userId = Auth::id();
+        $wishListItems = WishList::where('user_id', $userId)->get();
+        $productIds = $wishListItems->pluck('product_id')->toArray();
+        $productLists = Product::whereIn('id', $productIds)->get();
+        return view('frontend.pages.profile.wish-lists', compact('productLists'));
     }
 
     /**
@@ -59,7 +61,7 @@ class WishListController extends Controller
         if ($existingWishList) {
             return response()->json(['message' => 'Sản phẩm này đã có trong danh sách yêu thích của bạn'], 200);
         }
-        $newWishList = new WishLists();
+        $newWishList = new WishList();
         $newWishList->user_id = $userId;
         $newWishList->product_id = $productId;
         $newWishList->save();
@@ -107,20 +109,11 @@ class WishListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function wishListSotfDelete()
     {
-        $userId = Auth::id();
+        $user = Auth::id();
 
-        $wishlist = DB::table('wishlists')->where('user_id', $userId)
-            ->where('id', $id)
-            ->first();
-
-        if (!$wishlist) {
-            return redirect()->route('wishlist.index')->with('error', 'Wishlist không tồn tại.');
-        }
-
-        DB::table('wishlists')->where('id', $id)->delete();
-
-        return redirect()->route('wishlist.index')->with('success', 'Wishlist đã được xóa thành công.');
+        $user->delete();
+            echo "Sản phẩm của bạn đã được xóa khỏi danh sách.";
     }
 }
