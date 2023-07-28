@@ -25,6 +25,7 @@ use App\Http\Controllers\Seller\ProductController;
 use App\Http\Controllers\Seller\PropertiesController;
 use App\Http\Controllers\Seller\RankUserSellerController;
 use App\Http\Controllers\Seller\SellerEvaluateProductController;
+use App\Http\Controllers\Seller\SettingShopController;
 use App\Http\Controllers\Seller\StaffController;
 use App\Http\Controllers\Seller\StorageController;
 use App\Http\Controllers\Seller\TopSellerConfigController;
@@ -204,8 +205,6 @@ Route::middleware(['auth'])->group(function () {
 //    Route::delete('wish-list-s', [App\Http\Controllers\WishListController::class, 'wishlist.index'])->name('wish.list.stores');
 
 
-
-
 });
 
 
@@ -230,6 +229,11 @@ Route::group(['middleware' => 'role.admin'], function () {
 });
 
 Route::group(['middleware' => 'role.seller-or-admin'], function () {
+//Setting shop
+    Route::get('/setting-shop', [SettingShopController::class, 'index'])->name('setting.shop.index');
+    Route::post('/setting-shop/pm', [SettingShopController::class, 'savePaymentMethod'])->name('setting.shop.payment.save');
+    Route::post('/setting-shop/tm', [SettingShopController::class, 'saveTransportMethod'])->name('setting.shop.transport.save');
+
 
     Route::get('/attributes', [AttributeController::class, 'index'])->name('attributes.index');
     //

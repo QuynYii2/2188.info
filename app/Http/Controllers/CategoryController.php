@@ -6,7 +6,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Category;
+use App\Models\PaymentMethod;
 use App\Models\Product;
+use App\Models\TransportMethod;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -23,6 +25,8 @@ class CategoryController extends Controller
         (new HomeController())->getLocale($request);
         $categories = Category::get()->toTree();
         $listProduct = Product::where('category_id', '=', $id)->paginate(9);
-        return view('frontend/pages/category', compact('categories', 'listProduct'));
+        $listPayment = PaymentMethod::all();
+        $listTransport = TransportMethod::all();
+        return view('frontend/pages/category', compact('categories', 'listProduct', 'listPayment', 'listTransport'));
     }
 }

@@ -159,6 +159,8 @@
         <li>
             <a class="item" href='#'><i class="fa-solid fa-gear"></i> Thiết Lập Shop</a>
             <ul class='sub-items pl-3'>
+                <li><a href="{{ route('setting.shop.index') }}">Cấu hình chung</a>
+                </li>
                 <li><a href="#">Địa Chỉ</a>
                 </li>
                 <li><a href="#">Thiết Lập Shop</a>
