@@ -37,12 +37,6 @@
                 <form action="{{ route('product.v2.selectCreate') }}" method="post" enctype="multipart/form-data"
                       class="form-horizontal row" role="form">
                     @csrf
-                    @if (session('success_update_product'))
-                        <div class="alert alert-success">
-                            {{ session('error_create_product') }}
-                        </div>
-                    @endif
-
                     <div class="col-12 col-md-7 border-right mt-2 rm-pd-on-mobile">
                         <div class="form-group">
                             <div class="name">Chọn sản phẩm từ kho</div>
@@ -85,7 +79,6 @@
                                 @endforeach
                             </select>
                         </div>
-
                         <div class="form-group  p-3 mt-3">
                             <label class="name">Thông số sản phẩm</label>
                             <select class="form-control" name="attribute_id" id="selectAttribute">
@@ -94,7 +87,6 @@
                                 @endforeach
                             </select>
                         </div>
-
                         <div class="border mt-5 mb-3 full-width">
                             @foreach($attributes as $attribute)
                                 @php
@@ -134,12 +126,9 @@
                                 @endif
                             @endforeach
                         </div>
-
-                        <div class="form-group">
-                            <div class="form-group col-12 col-sm-12 ">
-                                <label for="gallery">Thư viện ảnh:</label>
-                                @include('backend-v2.products.modal-media')
-                            </div>
+                        <div class="form-group col-12 col-sm-12 ">
+                            <label for="gallery">Thư viện ảnh:</label>
+                            @include('backend-v2.products.modal-media')
                         </div>
 
                         <div class="border">

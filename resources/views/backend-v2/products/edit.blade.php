@@ -121,23 +121,21 @@
                         </div>
                         <div class="form-group col-12 col-sm-12 ">
                             <label for="gallery">Thư viện ảnh:</label>
-                            <label class='__lk-fileInput'>
-                                @include('backend-v2.products.modal-media')
-                                @php
-                                    $input = $product->gallery;
-                                    $array = json_decode($input, true);
-                                    $modifiedArray = explode(",", $input);
-                                @endphp
-                                @if ($product->gallery )
-                                    @foreach ($modifiedArray as $image)
-                                        <a href="{{ asset('storage/' . $image) }}" data-fancybox="group"
-                                           data-caption="This image has a caption 1">
-                                            <img class="mt-2" style="height: 100px; width: 100px "
-                                                 src="{{ asset('storage/' . $image) }}" alt="Gallery Image" width="100">
-                                        </a>
-                                    @endforeach
-                                @endif
-                            </label>
+                            @include('backend-v2.products.modal-media')
+                            @php
+                                $input = $product->gallery;
+                                $array = json_decode($input, true);
+                                $modifiedArray = explode(",", $input);
+                            @endphp
+                            @if ($product->gallery )
+                                @foreach ($modifiedArray as $image)
+                                    <a href="{{ asset('storage/' . $image) }}" data-fancybox="group"
+                                       data-caption="This image has a caption 1">
+                                        <img class="mt-2" style="height: 100px; width: 100px "
+                                             src="{{ asset('storage/' . $image) }}" alt="Gallery Image" width="100">
+                                    </a>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                     <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">

@@ -688,7 +688,7 @@ a {
   color: white;
   cursor: pointer;
 }
-.header .header-pc .header-top-right .item .total {
+.header .header-pc .header-top-right .item .total_shop {
   position: absolute;
   top: -5px;
   right: 15px;

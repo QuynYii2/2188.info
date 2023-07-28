@@ -173,70 +173,53 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $product = new Product();
-        if ($request->hasFile('thumbnail')) {
-            $thumbnail = $request->file('thumbnail');
-            $thumbnailPath = $thumbnail->store('thumbnails', 'public');
-            $product->thumbnail = $thumbnailPath;
-        }
+        try {
+            $product = new Product();
 
-        if ($request->hasFile('gallery')) {
-            $gallery = $request->file('gallery');
-            $galleryPaths = [];
-            foreach ($gallery as $image) {
-                $galleryPath = $image->store('gallery', 'public');
-                $galleryPaths[] = $galleryPath;
+            $qty_in_storage = DB::table('storage_products')->where([['id', '=', $request->input('storage_id')]])->first('quantity');
+
+            $product->gallery = $request->input('gallery');
+            $product->storage_id = $request->input('storage_id');
+            $product->name = $request->input('name');
+            $product->description = $request->input('description');
+            $product->product_code = $request->input('product_code');
+            $product->qty = $qty_in_storage->quantity;
+            $product->category_id = $request->input('category_id');
+            $product->user_id = Auth::user()->id;
+            $product->location = Auth::user()->region;
+
+            $product->slug = \Str::slug($request->input('name'));
+
+//            $product->gallery = $this->handleGallery($request->input('imgGallery'));
+
+            $hot = $request->input('hot_product');
+            $feature = $request->input('feature_product');
+
+            if ($hot) {
+                $product->hot = 1;
+            } else {
+                $product->hot = 0;
             }
-            $galleryString = implode(',', $galleryPaths);
-            $product->gallery = $galleryString;
-        }
 
-        $userLogin = $request->session()->get('login');
-        $userInfo = User::where('email', $userLogin)->first();
-        $qty_in_storage = DB::table('storage_products')->where([['id', '=', $request->input('storage-id')]])->first('quantity');
+            if ($feature) {
+                $product->feature = 1;
+            } else {
+                $product->feature = 0;
+            }
 
-        $product->short_description = $request->input('short_description');
-        $product->storage_id = $request->input('storage-id');
-        $product->name = $request->input('name');
-        $product->description = $request->input('description');
-        $product->product_code = $request->input('product_code');
-        $product->qty = $qty_in_storage->quantity;
-        $product->price = $request->input('price');
-        $product->category_id = $request->input('category_id');
-        $product->user_id = $userInfo->id;
-        $product->location = $userInfo->region;
-        $product->old_price = $request->input('old_price');
+            $count = $request->input('count');
 
-        if (!$request->input('price') || $request->input('old_price') < $request->input('price')) {
-            $product->price = $request->input('old_price');
-        }
-
-        $hot = $request->input('hot_product');
-        $feature = $request->input('feature_product');
-
-        if ($hot) {
-            $product->hot = 1;
-        }
-
-        if ($feature) {
-            $product->feature = 1;
-        }
-
-        $createProduct = $product->save();
-
-        $newArray = $this->getAttributeProperty($request);
-
-        $product = Product::where('user_id', $userInfo->id)->orderByDesc('id')->first();
-
-        $this->createAttributeProduct($product, $newArray);
-
-        if ($createProduct) {
-            alert()->success('Success', 'Tạo mới sản phẩm thành công.');
-            return redirect()->route('seller.products.index');
-        } else {
-            alert()->error('Success', 'Tạo mới sản phẩm không thành công.');
-
-            return redirect()->route('seller.products.edit');
+            $createProduct = $this->createProduct($product, $request, $count);
+            if ($createProduct) {
+                alert()->success('Success', 'Tạo mới sản phẩm thành công.');
+                return redirect()->route('seller.products.index');
+            } else {
+                alert()->error('Error', 'Tạo mới sản phẩm không thành công.');
+                return back();
+            }
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error, Please try again!');
+            return back();
         }
     }
 
@@ -254,72 +237,68 @@ class ProductController extends Controller
 
         return view('backend.products.edit', compact('product', 'categories', 'attributes', 'att_of_product'));
     }
-
     public function update(Request $request, $id)
     {
-        $product = Product::findOrFail($id);
+        try {
+            $product = Product::findOrFail($id);
 
-        $product->name = $request->input('name');
-        $product->price = $request->input('price');
-        $product->category_id = $request->input('category_id');
+            $product->name = $request->input('name');
+            $product->price = $request->input('price');
+            $product->category_id = $request->input('category_id');
+            $product->slug = \Str::slug($request->input('name'));
 
-        if ($request->hasFile('thumbnail')) {
-            $thumbnail = $request->file('thumbnail');
-            $thumbnailPath = $thumbnail->store('thumbnails', 'public');
-            $product->thumbnail = $thumbnailPath;
-        }
-        if ($request->hasFile('gallery')) {
-            $gallery = $request->file('gallery');
-            $galleryPaths = [];
-            foreach ($gallery as $image) {
-                $galleryPath = $image->store('gallery', 'public');
-                $galleryPaths[] = $galleryPath;
+            if ($request->hasFile('thumbnail')) {
+                $thumbnail = $request->file('thumbnail');
+                $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+                $product->thumbnail = $thumbnailPath;
             }
-            $galleryString = implode(',', $galleryPaths);
-            $product->gallery = $galleryString;
+
+            $product->gallery = $this->handleGallery($request->input('imgGallery'));
+
+            $hot = $request->input('hot_product');
+            $feature = $request->input('feature_product');
+
+            if ($hot) {
+                $product->hot = 1;
+            } else {
+                $product->hot = 0;
+            }
+
+            if ($feature) {
+                $product->feature = 1;
+            } else {
+                $product->feature = 0;
+            }
+
+            $product->old_price = $request->input('old_price');
+
+            if (!$request->input('price') || $request->input('old_price') < $request->input('price')) {
+                $product->price = $request->input('old_price');
+            }
+
+            $newArray = $this->getAttributeProperty($request);
+
+            $product_attributes = DB::table('product_attribute')->where('product_id', $product->id)->get();
+
+            foreach ($product_attributes as $item) {
+                DB::table('product_attribute')->where('product_id', $product->id)->delete($item->id);
+            }
+
+            $this->createAttributeProduct($product, $newArray);
+
+            $updateProduct = $product->save();
+
+            if ($updateProduct) {
+                alert()->success('Success', 'Cập nhật thành công.');
+                return redirect()->route('seller.products.index');
+            } else {
+                alert()->error('Error', 'Cập nhật không thành công.');
+                return back();
+            }
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error, please try again');
+            return back();
         }
-
-        $hot = $request->input('hot_product');
-        $feature = $request->input('feature_product');
-
-        if ($hot) {
-            $product->hot = 1;
-        } else {
-            $product->hot = 0;
-        }
-
-        if ($feature) {
-            $product->feature = 1;
-        } else {
-            $product->feature = 0;
-        }
-
-        $product->old_price = $request->input('old_price');
-
-        if (!$request->input('price') || $request->input('old_price') < $request->input('price')) {
-            $product->price = $request->input('old_price');
-        }
-
-        $newArray = $this->getAttributeProperty($request);
-
-        $product_attributes = DB::table('product_attribute')->where('product_id', $product->id)->get();
-
-        foreach ($product_attributes as $item) {
-            DB::table('product_attribute')->where('product_id', $product->id)->delete($item->id);
-        }
-
-        $this->createAttributeProduct($product, $newArray);
-
-        $updateProduct = $product->save();
-
-        if ($updateProduct) {
-            alert()->success('Success', 'Cập nhật thành công.');
-            return redirect()->route('seller.products.index');
-        } else {
-            alert()->error('Success', 'Cập nhật không thành công.');
-            return redirect()->route('seller.products.edit');
-        }
-
     }
 
     public function destroy(Product $product)

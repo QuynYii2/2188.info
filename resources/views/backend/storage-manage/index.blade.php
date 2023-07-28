@@ -155,7 +155,7 @@
         {{--        <a href="{{ route('storage.manage.export.pdf') }}"><button>Pdf</button></a>--}}
         <h2>Quản lý kho hàng</h2>
 
-        <form action="{{ route('storage.manage.search') }}" class="row my-2">
+        <form action="{{ route('storage.manage.search') }}" class="row my-2 ">
             @csrf
             <div class="col-sm-2">
                 <h5>Tên sản phẩm</h5>
@@ -183,7 +183,7 @@
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <button type="submit" class="btn btn-primary position-absolute" style="bottom: 0">Search</button>
+                <button type="submit" class="btn btn-success position-absolute" style="bottom: 0">Search</button>
             </div>
         </form>
         <form action="{{ route('storage.manage.export.excel') }}" method="post">

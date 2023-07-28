@@ -166,6 +166,7 @@ class ProductController_v2 extends Controller
                 return back();
             }
         } catch (\Exception $exception) {
+            dd($exception);
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }

@@ -1,5 +1,4 @@
 <style>
-
     .file-upload__label {
         background-color: rgba(255, 255, 255, 0.9);
         border-radius: 30px;
@@ -21,7 +20,6 @@
         white-space: nowrap;
         width: 200px;
     }
-
     .file-upload__input {
         bottom: 0;
         color: transparent;
@@ -37,9 +35,7 @@
     .selected-image {
         border: 2px solid blue;
     }
-
     @media all {
-
         .media-frame-router {
             position: absolute;
             top: 50px;
@@ -324,17 +320,11 @@
             max-height: 100%;
         }
     }
-
-
 </style>
-
-
-<button type="button" class="btn btn-primary" data-toggle="modal"
-        data-target="#exampleModal">
+<button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModal">
     Launch demo modal
 </button>
-
-<div class="modal fade" id="exampleModal" style="z-index: 999999" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" style="z-index: 99999; display: none" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog h-100" style="max-width: 60%; max-height: 80%">
         <div class="modal-content h-100">
             <div class="modal-header">
