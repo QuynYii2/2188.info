@@ -29,4 +29,15 @@ class CategoryController extends Controller
         $listTransport = TransportMethod::all();
         return view('frontend/pages/category', compact('categories', 'listProduct', 'listPayment', 'listTransport'));
     }
+
+    public function filterInCategory(Request $request, $id) {
+        $lastParam = $request->route('id');
+        dd($lastParam)
+        (new HomeController())->getLocale($request);
+        $categories = Category::get()->toTree();
+        $listProduct = Product::where('category_id', '=', $id)->paginate(9);
+        $listPayment = PaymentMethod::all();
+        $listTransport = TransportMethod::all();
+        return view('frontend/pages/category', compact('categories', 'listProduct', 'listPayment', 'listTransport'));
+    }
 }

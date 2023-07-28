@@ -143,6 +143,7 @@ Route::get('/detail/{id}', [\App\Http\Controllers\ProductController::class, 'det
 Route::get('/product/detail/{slug}', [\App\Http\Controllers\ProductController::class, 'findBySlug'])->name('find.by.slug.product');
 Route::get('/detail-product/{id}', [\App\Http\Controllers\ProductController::class, 'detailProduct'])->name('detail_product.api');
 Route::get('/category/{id}', [\App\Http\Controllers\CategoryController::class, 'category'])->name('category.show');
+Route::post('/category/filter/{id}', [\App\Http\Controllers\CategoryController::class, 'filterInCategory'])->name('category.filter');
 // Products by location
 Route::get('/products/location/{locale}', [\App\Http\Controllers\ProductController::class, 'listProductsByLanguage'])->name('list.products.show.location');
 // Config
