@@ -444,7 +444,6 @@
                     });
                 }
             });
-
             $('.dropdown-select-category ul').before('<div class="dd-search"><input id="txtSearchCategory" autocomplete="off" onkeyup="filter()" class="dd-searchbox" type="text"></div>');
 
             $('#selectAttribute').each(function (i, select) {

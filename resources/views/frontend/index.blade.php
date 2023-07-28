@@ -207,10 +207,13 @@
                     <div class="swiper NewProducts">
                         <div class="swiper-wrapper">
                             @foreach($newProducts as $newProduct)
+                                @php
+                                    $productDetail = \App\Models\Variation::where('product_id', $newProduct->id)->first();
+                                @endphp
                                 <div class="swiper-slide">
                                     <div class="item">
                                         <div class="item-img">
-                                            <img src="{{ asset('storage/' . $newProduct->thumbnail) }}"
+                                            <img src="{{ asset('storage/' . $productDetail->thumbnail) }}"
                                                  alt="">
                                             <div class="button-view">
                                                 <button type="button" class="btn view_modal" data-toggle="modal"
@@ -295,10 +298,13 @@
                         <div class="swiper-wrapper">
                             @foreach($productFeatures as $productFeature)
                                 @foreach($productFeature as $product)
+                                    @php
+                                        $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
+                                    @endphp
                                     <div class="swiper-slide">
                                         <div class="item">
                                             <div class="item-img">
-                                                <img src="{{ asset('storage/' . $product->thumbnail) }}"
+                                                <img src="{{ asset('storage/' . $productDetail->thumbnail) }}"
                                                      alt="">
                                                 <div class="button-view">
                                                     <button class="btn view_modal" data-toggle="modal"
@@ -453,10 +459,13 @@
                 <div class="swiper-wrapper">
                     @foreach($productHots as $productHot)
                         @foreach($productHot as $hotProduct)
+                            @php
+                                $productDetail = \App\Models\Variation::where('product_id', $hotProduct->id)->first();
+                            @endphp
                             <div class="swiper-slide">
                                 <div class="item">
                                     <div class="item-img">
-                                        <img src="{{ asset('storage/' . $hotProduct->thumbnail) }}"
+                                        <img src="{{ asset('storage/' . $productDetail->thumbnail) }}"
                                              alt="">
                                         <div class="button-view">
                                             <button type="button" class="btn view_modal" data-toggle="modal"
@@ -600,13 +609,16 @@
                         <div class="swiper listProduct">
                             <div class="swiper-wrapper">
                                 @php
-                                    $products = \App\Models\Product::where('category_id','=', $cate->id)->get();
+                                    $products = \App\Models\Product::where([['category_id','=', $cate->id],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
                                 @endphp
                                 @foreach($products as $product)
+                                    @php
+                                        $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
+                                    @endphp
                                     <div class="swiper-slide">
                                         <div class="item">
                                             <div class="item-img">
-                                                <img src="{{ asset('storage/' . $product->thumbnail) }}"
+                                                <img src="{{ asset('storage/' . $productDetail->thumbnail) }}"
                                                      alt="">
                                                 <div class="button-view">
                                                     <button type="button" class="btn view_modal" data-toggle="modal"

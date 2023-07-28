@@ -405,7 +405,7 @@
                 <div id="col-left">
                     <div class="col-wrap">
 
-                        <p>Attribute terms can be assigned to products and variations.</p>
+                        <p>Attribute terms can be assigned to products and variations11111.</p>
                         <p>Note: Deleting a term will remove it from all products and variations to which it has been
                             assigned. Recreating a term will not automatically assign it back to products.</p>
 
