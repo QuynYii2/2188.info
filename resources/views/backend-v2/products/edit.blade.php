@@ -34,7 +34,8 @@
                 @endif
             </div>
             <div class="container-fluid">
-                <form action="{{ route('product.v2.update', $product->id) }}" method="post" enctype="multipart/form-data"
+                <form action="{{ route('product.v2.update', $product->id) }}" method="post"
+                      enctype="multipart/form-data"
                       class="form-horizontal row" role="form">
                     @csrf
                     @if (session('success_update_product'))
@@ -51,11 +52,6 @@
                                    required>
                         </div>
                         <div class="form-group">
-                            <div class="name">Mã sản phẩm</div>
-                            <input type="text" class="form-control" name="product_code" id="product_code" value="{{$product->product_code}}"
-                                   placeholder="Nhập mã sản phẩm" required>
-                        </div>
-                        <div class="form-group">
                             <label for="description">Mô tả ngắn</label>
                             <textarea id="description" class="form-control description" name="description"
                                       rows="5">{{$product->description}}</textarea>
@@ -64,18 +60,6 @@
                             <label for="description-detail">Mô tả chi tiết</label>
                             <textarea id="description-detail" class="form-control description" name="description-detail"
                                       rows="5">{{$product->description}}</textarea>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-4 d-inline-block">
-                                <label class="control-label small name" for="price">Giá bán</label>
-                                <input type="number" class="form-control" required name="old_price" id="price"
-                                       placeholder="Nhập giá bán" value="{{$product->old_price}}">
-                            </div>
-                            <div class="col-4 d-inline-block">
-                                <label class="control-label small name" for="qty">Giá khuyến mãi</label>
-                                <input type="number" class="form-control" name="price" id="qty" value="{{$product->price}}"
-                                       placeholder="Nhập giá khuyến mãi">
-                            </div>
                         </div>
                         <input id="inputHotProduct" type="text" class="d-none" value="{{ $product->hot }}">
                         <input id="inputFeatureProduct" type="text" class="d-none" value="{{ $product->feature }}">
@@ -105,20 +89,7 @@
                                 @endif
                             @endfor
                         </div>
-                        <div class="form-group col-12 col-sm-12 pt-3">
-                            <label for="thumbnail">Ảnh đại diện:</label>
-                            <label class='__lk-fileInput'>
-                                <span data-default='Choose file'>Choose file</span>
-                                <input type="file" id="thumbnail" class="img-cfg" name="thumbnail" accept="image/*">
-                            </label>
-                            @if ($product->thumbnail)
-                                <a href="{{ asset('storage/' . $product->thumbnail) }}" data-fancybox="group"
-                                   data-caption="This image has a caption 1">
-                                    <img class="mt-2" style="height: 100px" src="{{ asset('storage/' . $product->thumbnail) }}"
-                                         alt="Thumbnail">
-                                </a>
-                            @endif
-                        </div>
+
                         <div class="form-group col-12 col-sm-12 ">
                             <label for="gallery">Thư viện ảnh:</label>
                             <label class='__lk-fileInput'>
@@ -140,6 +111,7 @@
                             </label>
                         </div>
                     </div>
+
                     <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
                         <div class="form-group" id="cat-parameter">
                             <label for="selectCategory">Chuyên mục:</label>
@@ -190,8 +162,10 @@
                                                         @endif
 
                                                     @endforeach
-                                                    <input class="property-attribute checkbox{{$attribute->id}}" type="checkbox"
-                                                           value="{{$attribute->id}}-{{$property->id}}" {{ $isChecked ? 'checked' : '' }}
+                                                    <input class="property-attribute checkbox{{$attribute->id}}"
+                                                           type="checkbox"
+                                                           value="{{$attribute->id}}-{{$property->id}}"
+                                                           {{ $isChecked ? 'checked' : '' }}
                                                            name="property-{{$attribute->id}}"
                                                            onchange="updateSelectedOptions(this, 'attribute_property{{$attribute->id}}', 'attribute_property-dropdownList{{$attribute->id}}')">
                                                     {{$property->name}}
@@ -213,14 +187,126 @@
                                 @endif
                             @endforeach
                         </div>
+
+                        <div class="form-group">
+                            @if(!$productDetails->isEmpty())
+                                @if(count($productDetails)>1)
+                                    @foreach($productDetails as $productDetail)
+                                        @if($productDetail->variation && $productDetail->variation != 0)
+                                            <div class="form-group">
+                                                <label class="control-label text-warning">Thông số sản phẩm</label>
+                                                @php
+                                                    $variable = $productDetail->variation;
+                                                    $arrayVariation = explode(',', $variable);
+                                                @endphp
+                                                @foreach($arrayVariation as $itemVariation)
+                                                    @php
+                                                        $arrayItemVariation = explode('-', $itemVariation);
+                                                        $attributeVariation = \App\Models\Attribute::find($arrayItemVariation[0]);
+                                                        $propertyVariation = \App\Models\Properties::find($arrayItemVariation[1]);
+                                                    @endphp
+                                                    <div class="">
+                                                        <label class="control-label"
+                                                               for="color">{{$attributeVariation->name}}</label>
+                                                        <div class="col-md-12 overflow-scroll custom-scrollbar">
+                                                            <input class="form-control" type="text"
+                                                                   value="{{$propertyVariation->name}}" disabled>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="price">Giá bán</label>
+                                                <input type="number"
+                                                       class="form-control"
+                                                       id="price{{$productDetail->id}}"
+                                                       name="old_price{{$productDetail->id}}"
+                                                       value="{{ $productDetail->old_price }}">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="qty">Giá khuyến mãi</label>
+                                                <input type="number"
+                                                       class="form-control"
+                                                       id="qty{{$productDetail->id}}"
+                                                       name="price{{$productDetail->id}}"
+                                                       value="{{$productDetail->price }}">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="thumbnail">Thumbnail</label>
+                                                <input type="file"
+                                                       class="form-control-file"
+                                                       id="thumbnail"
+                                                       name="thumbnail{{$productDetail->id}}"
+                                                       accept="image/*">
+                                                @if ($productDetail->thumbnail)
+                                                    <img class="mt-2"
+                                                         style="height: 100px"
+                                                         src="{{ asset('storage/' . $productDetail->thumbnail) }}"
+                                                         alt="Thumbnail">
+                                                    </a>
+                                                @endif
+                                            </div>
+                                        @endif
+                                        <input hidden="" name="id{{$loop->index+1}}"
+                                               value="{{$productDetail->id}}">
+                                        <a href="#" class="btnRemove btn btn-danger mb-3" data-value="{{$productDetail->id}}">Remove</a>
+                                    @endforeach
+                                    <input hidden="" name="countBegin"
+                                           value="{{count($productDetails)}}">
+                                @else
+                                    @php
+                                        $productDetail = $productDetails[0];
+                                    @endphp
+                                    <div class="form-group">
+                                        <label for="price">Giá bán</label>
+                                        <input type="number"
+                                               class="form-control"
+                                               id="price{{$productDetail->id}}"
+                                               name="old_price1"
+                                               value="{{ $productDetail->old_price }}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="qty">Giá khuyến mãi</label>
+                                        <input type="number"
+                                               class="form-control"
+                                               id="qty{{$productDetail->id}}"
+                                               name="price1"
+                                               value="{{$productDetail->price }}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="thumbnail">Thumbnail</label>
+                                        <input type="file"
+                                               class="form-control-file"
+                                               id="thumbnail"
+                                               name="thumbnail{{$loop->index+1}}"
+                                               accept="image/*">
+                                        @if ($productDetail->thumbnail)
+                                            <img class="mt-2"
+                                                 style="height: 100px"
+                                                 src="{{ asset('storage/' . $productDetail->thumbnail) }}"
+                                                 alt="Thumbnail">
+                                            </a>
+                                        @endif
+                                    </div>
+                                    <input hidden="" name="countBegin"
+                                           value="{{count($arrayVariation)}}">
+                                @endif
+                            @endif
+                        </div>
                     </div>
+
+
                     <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
                     <div class="form-group col-12 col-md-7 col-sm-8 ">
                         <div class="row justify-content-center">
                             <button type="submit" class="btn btn-success">Gửi</button>
                         </div>
                     </div>
-                    <input type="text" hidden name="imgGallery" id="imgGallery" value="">
                 </form>
             </div>
         </div><!-- wpbody -->
@@ -228,42 +314,23 @@
     </div><!-- wpcontent -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // function checkHotAndFeature() {
-        //     var hot = document.getElementById('inputHotProduct');
-        //     var feature = document.getElementById('inputFeatureProduct');
-        //     console.log(hot, feature);
-        //     if (hot.value == 1){
-        //         document.getElementById("hot_product").checked = true;
-        //     }
-        //     if (feature.value == 1){
-        //         document.getElementById("feature_product").checked = true;
-        //     }
-        // }
-        // checkHotAndFeature();
+        function checkHotAndFeature() {
+            var hot = document.getElementById('inputHotProduct');
+            var feature = document.getElementById('inputFeatureProduct');
+            console.log(hot, feature);
+            if (hot.value == 1) {
+                document.getElementById("hot_product").checked = true;
+            }
+            if (feature.value == 1) {
+                document.getElementById("feature_product").checked = true;
+            }
+        }
+
+        checkHotAndFeature();
     </script>
     <script>
         var properties = document.getElementsByClassName('property-attribute')
         var number = properties.length
-
-        var priceInput = document.getElementById('price');
-        var qtyInput = document.getElementById('qty');
-
-        qtyInput.addEventListener('input', function () {
-            checkPrice();
-        });
-        priceInput.addEventListener('input', function () {
-            checkPrice();
-        });
-
-        function checkPrice() {
-            var price = parseFloat(priceInput.value);
-            var qty = parseFloat(qtyInput.value);
-
-            if (qty > price) {
-                alert('Giá khuyến mãi không được lớn hơn giá bán.');
-                qtyInput.value = '';
-            }
-        }
 
         function checkInput() {
             var propertyArray = [];

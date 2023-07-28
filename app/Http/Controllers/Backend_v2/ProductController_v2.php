@@ -293,7 +293,6 @@ class ProductController_v2 extends Controller
                 return back();
             }
         } catch (\Exception $exception) {
-            dd($exception);
             alert()->error('Error', 'Error, please try again');
             return back();
         }
@@ -305,12 +304,14 @@ class ProductController_v2 extends Controller
         $categories = Category::all();
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', \Illuminate\Support\Facades\Auth::user()->id]])->get();
         $att_of_product = DB::table('product_attribute')->where('product_id', $product->id)->get();
+        $productDetails = Variation::where('product_id', $id)->get();
 
         return view('backend-v2.products.edit', compact(
             'categories',
             'att_of_product',
             'attributes',
-            'product'));
+            'product',
+            'productDetails'));
     }
 
     public function update(Request $request, $id)
@@ -318,51 +319,29 @@ class ProductController_v2 extends Controller
         try {
             $product = Product::findOrFail($id);
 
-            $product->name = $request->input('name');
-            $product->price = $request->input('price');
-            $product->category_id = $request->input('category_id');
-            $product->slug = \Str::slug($request->input('name'));
-
-            if ($request->hasFile('thumbnail')) {
-                $thumbnail = $request->file('thumbnail');
-                $thumbnailPath = $thumbnail->store('thumbnails', 'public');
-                $product->thumbnail = $thumbnailPath;
-            }
-
-            $product->gallery = $this->handleGallery($request->input('imgGallery'));
-
-            $hot = $request->input('hot_product');
-            $feature = $request->input('feature_product');
-
-            if ($hot) {
-                $product->hot = 1;
-            } else {
-                $product->hot = 0;
-            }
-
-            if ($feature) {
-                $product->feature = 1;
-            } else {
-                $product->feature = 0;
-            }
-
-            $product->old_price = $request->input('old_price');
-
-            if (!$request->input('price') || $request->input('old_price') < $request->input('price')) {
-                $product->price = $request->input('old_price');
-            }
+//            $product->gallery = $this->handleGallery($request->input('imgGallery'));
 
             $newArray = $this->getAttributeProperty($request);
 
-            $product_attributes = DB::table('product_attribute')->where('product_id', $product->id)->get();
-
-            foreach ($product_attributes as $item) {
-                DB::table('product_attribute')->where('product_id', $product->id)->delete($item->id);
+            $testArray = null;
+            if ($newArray) {
+                foreach ($newArray as $myItem) {
+                    $key = explode("-", $myItem);
+                    $demoArray = null;
+                    for ($j = 1; $j < count($key); $j++) {
+                        $demoArray[] = $key[0] . '-' . $key[$j];
+                    }
+                    $testArray[] = $demoArray;
+                }
             }
 
+            $testArray = $this->getArray($testArray);
+
+            DB::table('product_attribute')->where('product_id', $product->id)->delete();
             $this->createAttributeProduct($product, $newArray);
 
-            $updateProduct = $product->save();
+            $number = $request->input('countBegin');
+            $updateProduct = $this->updateProduct($product, $request, $number);
 
             if ($updateProduct) {
                 alert()->success('Success', 'Cập nhật thành công.');
