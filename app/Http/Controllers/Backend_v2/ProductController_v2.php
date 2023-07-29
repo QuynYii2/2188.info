@@ -320,28 +320,66 @@ class ProductController_v2 extends Controller
             $product = Product::findOrFail($id);
 
 //            $product->gallery = $this->handleGallery($request->input('imgGallery'));
+            $number = $request->input('count');
+            $isNew = $request->input('isNew');
 
-            $newArray = $this->getAttributeProperty($request);
+            if ($isNew > 10) {
+                $newArray = $this->getAttributeProperty($request);
+                $product->name = $request->input('name');
+                $product->slug = \Str::slug($request->input('name'));
 
-            $testArray = null;
-            if ($newArray) {
-                foreach ($newArray as $myItem) {
-                    $key = explode("-", $myItem);
-                    $demoArray = null;
-                    for ($j = 1; $j < count($key); $j++) {
-                        $demoArray[] = $key[0] . '-' . $key[$j];
-                    }
-                    $testArray[] = $demoArray;
+                $hot = $request->input('hot_product');
+                $feature = $request->input('feature_product');
+
+                if ($hot) {
+                    $product->hot = 1;
+                } else {
+                    $product->hot = 0;
                 }
+
+                if ($feature) {
+                    $product->feature = 1;
+                } else {
+                    $product->feature = 0;
+                }
+
+                $arrayProduct = [];
+                for ($i = 1; $i < $number + 1; $i++) {
+                    $newVariationData = [];
+
+                    if ($request->hasFile('thumbnail' . $i)) {
+                        $thumbnail = $request->file('thumbnail' . $i);
+                        $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+                        $newVariationData['thumbnail'] = $thumbnailPath;
+                    }
+
+                    $newVariationData['price'] = $request->input('price' . $i);
+                    $newVariationData['old_price'] = $request->input('old_price' . $i);
+                    $attPro = $request->input('attribute_property' . $i);
+                    $newVariationData['variation'] = $attPro;
+
+                    $newVariationData['product_id'] = $product->id;
+                    $newVariationData['user_id'] = Auth::user()->id;
+                    $newVariationData['status'] = VariationStatus::ACTIVE;
+                    $newVariationData['description'] = $request->input('description' . $i);
+                    $newVariationData['quantity'] = $request->input('quantity' . $i);
+
+                    if (!$request->input('price' . $i) || $request->input('old_price' . $i) < $request->input('price' . $i)) {
+                        $newVariationData['price'] = $request->input('old_price' . $i);
+                    }
+
+                    $arrayProduct[] = $newVariationData;
+                }
+
+                Variation::where('product_id', $product->id)->delete();
+                Variation::insert($arrayProduct);
+                DB::table('product_attribute')->where('product_id', $product->id)->delete();
+                $this->createAttributeProduct($product, $newArray);
+
+                $updateProduct = $product->save();
+            } else {
+                $updateProduct = $this->updateProduct($product, $request, $number);
             }
-
-            $testArray = $this->getArray($testArray);
-
-            DB::table('product_attribute')->where('product_id', $product->id)->delete();
-            $this->createAttributeProduct($product, $newArray);
-
-            $number = $request->input('countBegin');
-            $updateProduct = $this->updateProduct($product, $request, $number);
 
             if ($updateProduct) {
                 alert()->success('Success', 'Cập nhật thành công.');
@@ -367,6 +405,24 @@ class ProductController_v2 extends Controller
                 return redirect()->route('product.v2.show');
             }
             alert()->error('Error', 'Không thể xoá sản phẩm!');
+            return back();
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error please try again!');
+            return back();
+        }
+    }
+
+    public function removeVariation($id)
+    {
+        try {
+            $variable = Variation::where('id', $id)->first();
+            $variable->status = VariationStatus::DELETED;
+            $success = $variable->save();
+            if ($success) {
+                alert()->success('Success', 'Variable đã được xóa thành công!');
+                return back();
+            }
+            alert()->error('Error', 'Không thể xoá variable!');
             return back();
         } catch (\Exception $exception) {
             alert()->error('Error', 'Error please try again!');

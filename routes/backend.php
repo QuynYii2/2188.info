@@ -23,6 +23,8 @@ Route::prefix('products')->group(function () {
     Route::post('/quick-update-v2/{id}', [ProductController_v2::class, 'quickUpdateProduct'])->name('product.v2.update.quick');
 });
 
+Route::delete('/delete-variable-v2/{id}', [ProductController_v2::class, 'removeVariation'])->name('product.v2.delete.variable');
+
 // Categories
 Route::prefix('categories')->group(function () {
     Route::get('/index-v2', [CategoriesController_v2::class, 'index'])->name('categories.v2.show');

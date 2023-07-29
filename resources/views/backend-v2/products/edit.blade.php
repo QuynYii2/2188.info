@@ -188,7 +188,15 @@
                             @endforeach
                         </div>
 
-                        <div class="form-group">
+                        <a id="btnSaveAttribute" class="btn btn-success mt-2 mb-5">SaveAttribute</a>
+
+                        <div id="renderInputAttribute">
+
+                        </div>
+
+                        <input type="text" hidden="" name="isNew" id="isNew" value="0">
+
+                        <div id="removeInputAttribute" class="form-group">
                             @if(!$productDetails->isEmpty())
                                 @if(count($productDetails)>1)
                                     @foreach($productDetails as $productDetail)
@@ -252,9 +260,10 @@
                                         @endif
                                         <input hidden="" name="id{{$loop->index+1}}"
                                                value="{{$productDetail->id}}">
-                                        <a href="#" class="btnRemove btn btn-danger mb-3" data-value="{{$productDetail->id}}">Remove</a>
+                                        <a class="btnRemove btn btn-danger mb-3"
+                                           data-value="{{$productDetail->id}}">Remove</a>
                                     @endforeach
-                                    <input hidden="" name="countBegin"
+                                    <input hidden="" name="count"
                                            value="{{count($productDetails)}}">
                                 @else
                                     @php
@@ -293,7 +302,7 @@
                                             </a>
                                         @endif
                                     </div>
-                                    <input hidden="" name="countBegin"
+                                    <input hidden="" name="count"
                                            value="{{count($arrayVariation)}}">
                                 @endif
                             @endif
@@ -311,8 +320,85 @@
             </div>
         </div><!-- wpbody -->
         <div class="clear"></div>
+        <form action="#" id="formDeleteVariable" class="d-none" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" id="btnDeleteVariable">Delete</button>
+        </form>
     </div><!-- wpcontent -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('#btnSaveAttribute').on('click', function () {
+            let attribute = document.getElementById('input-form-create-attribute').value;
+            let isNew = document.getElementById('isNew');
+            isNew.value = 100;
+            var renderInputAttribute = $('#renderInputAttribute');
+            $.ajax({
+                url: '{{ route('product.v2.create.attribute') }}',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    'attribute_property': attribute
+                },
+                // dataType: 'json',
+                success: function (response) {
+                    console.log(response)
+                    $('#removeInputAttribute').remove();
+                    // var item = response;
+                    renderInputAttribute.append(response);
+                },
+                error: function (xhr, status, error) {
+                    renderInputAttribute.append('<h3>Alooo</h3>');
+                }
+            })
+        })
+
+        $('.btnRemove').on('click', function () {
+            let attribute = $(this).data('value');
+            removeVariable(attribute);
+        })
+
+        function removeVariable(value) {
+            let url = '{{asset('/seller/delete-variable-v2')}}' + '/' + value;
+            $('#formDeleteVariable').attr('action', url);
+            $('#btnDeleteVariable').click();
+        }
+    </script>
+    <script>
+        function showFormEdit(id) {
+            var formEdit = document.getElementById('formCreate' + id);
+            formEdit.classList.remove('d-none');
+        }
+
+        $('#btnSubmit').on('click', function () {
+            checkValue();
+        })
+
+        function checkValue() {
+            var inputValue = document.getElementsByClassName('value-check');
+            for (let i = 0; i < inputValue.length; i++) {
+                if (inputValue[i].value == '') {
+                    alert('Vui lòng nhập đầy đủ thông tin sản phẩm')
+                    break;
+                }
+            }
+        }
+
+        function validInput(id) {
+            var priceInput = document.getElementById('price' + id);
+            var qtyInput = document.getElementById('qty' + id);
+
+            function checkPrice() {
+                var price = parseFloat(priceInput.value);
+                var qty = parseFloat(qtyInput.value);
+
+                if (qty > price) {
+                    alert('Giá khuyến mãi không được lớn hơn giá bán.');
+                    qtyInput.value = '';
+                }
+            }
+        }
+    </script>
     <script>
         function checkHotAndFeature() {
             var hot = document.getElementById('inputHotProduct');
