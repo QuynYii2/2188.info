@@ -345,7 +345,7 @@
                                                             <a class="check_url">Choose Options</a>
                                                         @endif
                                                     </div>
-                                                    <div class="card-bottom--right">
+                                                    <div class="card-bottom--right"  >
                                                         <i class="item-icon fa-regular fa-heart"></i>
                                                     </div>
                                                 </div>
@@ -428,7 +428,7 @@
                                                     <a class="check_url">Choose Options</a>
                                                 @endif
                                             </div>
-                                            <div class="card-bottom--right">
+                                            <div class="card-bottom--right" >
                                                 <i class="item-icon fa-regular fa-heart"></i>
                                             </div>
                                         </div>
@@ -572,7 +572,7 @@
                                                             <a class="check_url">Choose Options</a>
                                                         @endif
                                                     </div>
-                                                    <div class="card-bottom--right">
+                                                    <div class="card-bottom--right" >
                                                         <i class="item-icon fa-regular fa-heart"></i>
                                                     </div>
                                                 </div>
