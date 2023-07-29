@@ -735,7 +735,7 @@
                                                                                 @endif
                                                                             </div>
                                                                             <input hidden="" name="countBegin"
-                                                                                   value="{{count($arrayVariation)}}">
+                                                                                   value="1">
                                                                         @endif
                                                                     @endif
                                                                 </div>
