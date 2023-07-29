@@ -296,7 +296,7 @@
             <h1 class="wp-heading-inline">
                 Products
             </h1>
-            <a href="{{route('product.v2.processCreate')}}" class="page-title-action">
+            <a href="{{route('seller.products.create')}}" class="page-title-action">
                 Add New
             </a>
             <a href="#" class="page-title-action">
@@ -543,10 +543,13 @@
                                     <span class="screen-reader-text">“{{$product->name}}” đã bị khóa</span>
                                 </div>
                             </th>
+                            @php
+                                $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
+                            @endphp
                             <td class="thumb column-thumb" data-colname="Image">
                                 <a href="#">
                                     <img width="150" height="150"
-                                         src="{{ asset('storage/'.$product->thumbnail) }}"
+                                         src="{{ asset('storage/'.$productDetail->thumbnail) }}"
                                          class="woocommerce-placeholder wp-post-image" alt="Placeholder"
                                          decoding="async"
                                          loading="lazy">
