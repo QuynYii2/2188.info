@@ -141,7 +141,7 @@
                         <div class="form-group">
                             <div class="form-group col-12 col-sm-12 ">
                                 <label for="gallery">Thư viện ảnh:</label>
-                                @include('backend-v2.products.modal-media')
+                                @include('backend.products.modal-media')
                             </div>
                         </div>
 

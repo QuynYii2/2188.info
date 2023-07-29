@@ -19,11 +19,19 @@
                 @php
                     $listCate = DB::table('categories')->where('parent_id', null)->get();
                 @endphp
-                @foreach($listCate as $cate)
-                <div class="item-small">
-                    <a href="{{ route('category.show', $cate->id) }}">{{ $cate->name }}</a>
-                </div>
-                @endforeach
+                @if(count($listCate)<6)
+                    @foreach($listCate as $cate)
+                        <div class="item-small">
+                            <a href="{{ route('category.show', $cate->id) }}">{{ $cate->name }}</a>
+                        </div>
+                    @endforeach
+                @else
+                    @for($i=0; $i<6; $i++)
+                        <div class="item-small">
+                            <a href="{{ route('category.show', $listCate[$i]->id) }}">{{ $listCate[$i]->name }}</a>
+                        </div>
+                    @endfor
+                @endif
             </div>
             <div class="footer-item col-xl-2 col-md-4">
                 <div class="item-content">
