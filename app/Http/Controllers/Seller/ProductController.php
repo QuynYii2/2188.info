@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductInterested;
 use App\Models\StaffUsers;
 use App\Models\StorageProduct;
 use App\Models\User;
@@ -182,7 +183,7 @@ class ProductController extends Controller
         $categories = Category::all();
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', \Illuminate\Support\Facades\Auth::user()->id]])->get();
         $att_of_product = DB::table('product_attribute')->where('product_id', $product->id)->get();
-        $productDetails = Variation::where('product_id', $id)->get();
+        $productDetails = Variation::where([['product_id', $id], ['status', VariationStatus::ACTIVE]])->get();
 
         return view('backend.products.edit', compact(
             'categories',
@@ -199,7 +200,7 @@ class ProductController extends Controller
         try {
             $product = Product::findOrFail($id);
 
-            $product->gallery = $this->handleGallery($request->input('imgGallery'));
+//            $product->gallery = $this->handleGallery($request->input('imgGallery'));
             $number = $request->input('count');
             $isNew = $request->input('isNew');
 
@@ -334,6 +335,17 @@ class ProductController extends Controller
         $product->name = $request->input('name');
         $product->slug = \Str::slug($request->input('name'));
 
+        $arrayIDs = $this->getCategory($request);
+        if (!$arrayIDs || count($arrayIDs) == 0) {
+            $categories = Category::all();
+            $category = $categories[0];
+            $arrayIDs[] = $category->id;
+        }
+        $listIDs = implode(',', $arrayIDs);
+        $product->category_id = $arrayIDs[0];
+
+        $product->list_category = $listIDs;
+
         $hot = $request->input('hot_product');
         $feature = $request->input('feature_product');
 
@@ -371,7 +383,14 @@ class ProductController extends Controller
                 $newVariationData->save();
             }
         } else {
-            $newVariationData = Variation::where('product_id', $product->id)->first();
+            $newVariationData = Variation::where([['product_id', $product->id], ['status', VariationStatus::ACTIVE]])->first();
+            if (!$newVariationData) {
+                $newVariationData = new Variation();
+                $newVariationData->product_id = $product->id;
+                $newVariationData->user_id = Auth::user()->id;
+                $newVariationData->variation = 0;
+                $newVariationData->quantity = 100;
+            }
 
             if ($request->hasFile('thumbnail1')) {
                 $thumbnail = $request->file('thumbnail1');
@@ -447,11 +466,14 @@ class ProductController extends Controller
 
     private function createProduct($product, $request, $number)
     {
-        if (!$product->category_id){
+        $arrayIDs = $this->getCategory($request);
+        if (!$arrayIDs || count($arrayIDs) == 0) {
             $categories = Category::all();
             $category = $categories[0];
-            $product->category_id = $category->id;
+            $arrayIDs[] = $category->id;
         }
+        $listIDs = implode(',', $arrayIDs);
+        $product->category_id = $arrayIDs[0];
         $newProductData = [
             'storage_id' => $product->storage_id,
             'name' => $product->name,
@@ -468,6 +490,7 @@ class ProductController extends Controller
             'old_price' => 0,
             'gallery' => $product->gallery,
             'thumbnail' => $product->thumbnail,
+            'list_category' => $listIDs,
         ];
 
         $success = Product::create($newProductData);
@@ -503,7 +526,7 @@ class ProductController extends Controller
 
         Variation::insert($arrayProduct);
         $sourceArray = session()->get('sourceArray');
-        //  $this->createAttributeProduct($product, $sourceArray[0]);
+        $this->createAttributeProduct($product, $sourceArray[0]);
 
         return $success;
     }
@@ -535,5 +558,32 @@ class ProductController extends Controller
         }
     }
 
-
+    private function getCategory($request)
+    {
+        $listIDs = null;
+        $categories = Category::all();
+        $listCategoryName[] = null;
+        foreach ($categories as $category) {
+            $name = 'category-' . $category->id;
+            $listCategoryName[] = $name;
+        }
+        if ($listCategoryName != null) {
+            $listValues = null;
+            for ($i = 0; $i < count($listCategoryName); $i++) {
+                $listValues[] = $request->input($listCategoryName[$i]);
+            }
+            if ($listValues != null) {
+                $arrayIds = null;
+                for ($i = 1; $i < count($listValues); $i++) {
+                    if ($listValues[$i] != null) {
+                        $arrayIds[] = $listValues[$i];
+                    }
+                }
+                if ($arrayIds != null) {
+                    $listIDs = $arrayIds;
+                }
+            }
+        }
+        return $listIDs;
+    }
 }
