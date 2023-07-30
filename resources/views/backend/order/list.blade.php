@@ -5,38 +5,33 @@
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title">Đơn hàng</h5>
         </div>
-        <form action="{{ route('seller.search.order.list') }}" class="row my-2">
+        <form action="{{ route('seller.search.order.list') }}" class="row my-2 pl-3">
             @csrf
             <div class="col-sm-2">
-                <h5>Full Name</h5>
-                <input type="text" class="form-control" id="fullName" name="fullName"
+                <input placeholder="Full Name" type="text" class="form-control" id="fullName" name="fullName"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <h5>Phone Number</h5>
-                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                <input placeholder="Phone Number" type="text" class="form-control" id="phoneNumber" name="phoneNumber"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <h5>Email</h5>
-                <input type="text" class="form-control" id="email" name="email"
+                <input placeholder="Email" type="text" class="form-control" id="email" name="email"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <h5>Từ ngày</h5>
-                <input type="date" class="form-control" id="from-date" name="from-date"
+                <input placeholder="Từ ngày" type="date" class="form-control" id="from-date" name="from-date"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <h5>Đến ngày</h5>
-                <input type="date" class="form-control" id="to-date" name="to-date"
+                <input placeholder="Đến ngày" type="date" class="form-control" id="to-date" name="to-date"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
                 <button type="submit" class="btn btn-success position-absolute" style="bottom: 0">Search</button>
             </div>
         </form>
-        <form action="{{ route('order.manage.export.excel') }}" method="post" id="formExportAll">
+        <form action="{{ route('order.manage.export.excel') }}" class="pl-3" method="post" id="formExportAll">
             @csrf
             <input type="text" id="excel-value" name="excel-value" value="{{ $orders }}" hidden>
             <button type="submit" class="btn btn-success">Export Excel</button>

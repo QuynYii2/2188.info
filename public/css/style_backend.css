@@ -493,13 +493,6 @@
     margin: 12px 0;
     font-size: 1.1em;
   }
-  .tablenav {
-    clear: both;
-    height: 30px;
-    margin: 6px 0 4px;
-    padding-top: 5px;
-    vertical-align: middle;
-  }
   .widefat {
     border-spacing: 0;
     width: 100%;
@@ -1160,10 +1153,6 @@
   color: #000000 !important;
 }
 
-/**/
-select {
-  display: none !important;
-}
 
 .dropdown-select-attribute,
 .dropdown-select-category,

@@ -6,10 +6,10 @@
         $testArray = null;
     }
 @endphp
-<div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
+<div class="col-12 mt-2 rm-pd-on-mobile">
     @if($testArray)
         @if(count($testArray) == 1)
-            <div class="form-group">
+            <div class="form-group col-12">
                 @php
                     $item = $testArray[0];
                 @endphp
@@ -27,7 +27,7 @@
                         </div>
                         <a id="btnEdit1"
                            onclick="showFormEdit(1);"
-                           class="btn btn-primary">Editor</a>
+                           class="btn btn-success">Editor</a>
                         <div id="formCreate1" class="d-none">
                             <div class="form-row">
                                 <div class="col-4 d-inline-block">
@@ -95,7 +95,7 @@
                             <input disabled class="form-control" value="{{$property->name}}">
                             <a id="btnEdit{{$loop->index+1}}"
                                onclick="showFormEdit({{$loop->index+1}});"
-                               class="btn btn-primary">Editor</a>
+                               class="btn btn-success">Editor</a>
                             <div id="formCreate{{$loop->index+1}}" class="d-none">
                                 <div class="form-row">
                                     <div class="col-4 d-inline-block">
@@ -177,10 +177,10 @@
                     </div>
                     <a id="btnEdit1"
                        onclick="showFormEdit(1);"
-                       class="btn btn-primary">Editor</a>
+                       class="btn btn-success">Editor</a>
                     <div id="formCreate1" class="d-none">
                         <div class="form-row">
-                            <div class="col-4 d-inline-block">
+                            <div class="col-6 d-inline-block">
                                 <label class="control-label small name" for="price">Giá
                                     bán</label>
                                 <input onchange="validInput(1);" type="number"
@@ -189,7 +189,7 @@
                                        id="price1"
                                        placeholder="Nhập giá bán">
                             </div>
-                            <div class="col-4 d-inline-block">
+                            <div class="col-6 d-inline-block">
                                 <label class="control-label small name" for="qty">Giá khuyến
                                     mãi</label>
                                 <input onchange="validInput(1);" type="number"
@@ -199,7 +199,7 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col-4 d-inline-block">
+                            <div class="col-6 d-inline-block">
                                 <label class="control-label small name"
                                        for="quantity1">Quantity</label>
                                 <input type="number"
@@ -254,7 +254,7 @@
                     @endforeach
                 </div>
                 <a id="btnEdit{{$loop->index+1}}" onclick="showFormEdit({{$loop->index+1}});"
-                   class="btn btn-primary">Editor</a>
+                   class="btn btn-success">Editor</a>
                 <div id="formCreate{{$loop->index+1}}" class="d-none">
                     <div class="form-row">
                         <div class="col-4 d-inline-block">

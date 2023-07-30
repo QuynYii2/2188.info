@@ -232,8 +232,6 @@
                                                                                            aria-required="true"
                                                                                            aria-describedby="name-description"
                                                                                            required>
-                                                                                    <p class="description"
-                                                                                       id="name-description">The name is how it appears on your site.</p>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr class="form-field term-slug-wrap">
