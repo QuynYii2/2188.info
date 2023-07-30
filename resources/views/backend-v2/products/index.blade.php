@@ -527,6 +527,9 @@
                 <tbody id="the-list">
                 @if(!$products->isEmpty())
                     @foreach($products as $product)
+                        @php
+                            $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
+                        @endphp
                         <tr id="product-{{$product->id}}"
                             class="iedit author-self level-0 post-42 type-product status-publish hentry product_cat-uncategorized entry">
                             <th scope="row" class="check-column">
@@ -542,11 +545,19 @@
                             </th>
                             <td class="thumb column-thumb" data-colname="Image">
                                 <a href="#">
-                                    <img width="150" height="150"
-                                         src="{{ asset('storage/'.$product->thumbnail) }}"
-                                         class="woocommerce-placeholder wp-post-image" alt="Placeholder"
-                                         decoding="async"
-                                         loading="lazy">
+                                    @if($productDetail && $productDetail->thumbnail)
+                                        <img width="150" height="150"
+                                             src="{{ asset('storage/'.$productDetail->thumbnail) }}"
+                                             class="woocommerce-placeholder wp-post-image" alt="Placeholder"
+                                             decoding="async"
+                                             loading="lazy">
+                                    @else
+                                        <img width="150" height="150"
+                                             src="{{ asset('storage/'.$product->thumbnail) }}"
+                                             class="woocommerce-placeholder wp-post-image" alt="Placeholder"
+                                             decoding="async"
+                                             loading="lazy">
+                                    @endif
                                 </a>
                             </td>
                             <td class="name column-name has-row-actions column-primary" data-colname="Name">

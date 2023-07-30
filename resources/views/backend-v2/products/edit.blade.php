@@ -290,7 +290,7 @@
                                         <input type="file"
                                                class="form-control-file"
                                                id="thumbnail"
-                                               name="thumbnail{{$loop->index+1}}"
+                                               name="thumbnail1"
                                                accept="image/*">
                                         @if ($productDetail->thumbnail)
                                             <img class="mt-2"
@@ -301,7 +301,7 @@
                                         @endif
                                     </div>
                                     <input hidden="" name="count"
-                                           value="{{count($arrayVariation)}}">
+                                           value="1">
                                 @endif
                             @endif
                         </div>
