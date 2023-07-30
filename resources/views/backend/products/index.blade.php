@@ -1,6 +1,5 @@
 @extends('backend.layouts.master')
 
-
 @section('title')
     List Products
 @endsection
@@ -266,20 +265,6 @@
                 </form>
             </div>
         </div>
-        <div id="screen-meta-links">
-            <div id="screen-options-link-wrap" class="hide-if-no-js screen-meta-toggle">
-                <button type="button" id="show-settings-link" class="button show-settings"
-                        aria-controls="screen-options-wrap" aria-expanded="false">
-                    Tùy chọn hiển thị
-                </button>
-            </div>
-            <div id="contextual-help-link-wrap" class="hide-if-no-js screen-meta-toggle">
-                <button type="button" id="contextual-help-link" class="button show-settings"
-                        aria-controls="contextual-help-wrap" aria-expanded="false">
-                    Trợ giúp
-                </button>
-            </div>
-        </div>
         <div class="woocommerce-layout__jitm" id="jp-admin-notices">
         </div>
         <div class="woocommerce-layout__notice-list-hide" id="wp__notice-list">
@@ -293,48 +278,9 @@
             </div>
         </div>
         <div class="wrap">
-            <h1 class="wp-heading-inline">
-                Products
-            </h1>
-            <a href="{{route('seller.products.create')}}" class="page-title-action">
-                Add New
-            </a>
-            <a href="#" class="page-title-action">
-                Import
-            </a>
-            <a href="#" class="page-title-action">
-                Export
-            </a>
-            <hr class="wp-header-end">
-
             <h2 class="screen-reader-text">
                 Filter products
             </h2>
-            <ul class="subsubsub">
-                <li class="all">
-                    <a href="#" class="current" aria-current="page">
-                        Tất cả
-                        <span class="count">
-            (1)
-          </span>
-                    </a>
-                    |
-                </li>
-                <li class="publish">
-                    <a href="#">
-                        Đã xuất bản
-                        <span class="count">
-            (1)
-          </span>
-                    </a>
-                    |
-                </li>
-                <li class="byorder">
-                    <a href="#">
-                        Sorting
-                    </a>
-                </li>
-            </ul>
             <form id="posts-filter" method="get">
                 <p class="search-box">
                     <label class="screen-reader-text" for="post-search-input">
@@ -367,9 +313,6 @@
                         <option value="" selected="selected">
                             Select a category
                         </option>
-                        @php
-                            $categories = DB::table('categories')->get();
-                        @endphp
                         @foreach($categories as $category)
                             <option value="{{$category->id}}">
                                 {{$category->name}}
@@ -543,13 +486,10 @@
                                     <span class="screen-reader-text">“{{$product->name}}” đã bị khóa</span>
                                 </div>
                             </th>
-                            @php
-                                $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
-                            @endphp
                             <td class="thumb column-thumb" data-colname="Image">
                                 <a href="#">
                                     <img width="150" height="150"
-                                         src="{{ asset('storage/'.$productDetail->thumbnail) }}"
+                                         src="{{ asset('storage/'.$product->thumbnail) }}"
                                          class="woocommerce-placeholder wp-post-image" alt="Placeholder"
                                          decoding="async"
                                          loading="lazy">
@@ -602,6 +542,7 @@
                                                           </div>
                                                                 @php
                                                                     $att_of_product = DB::table('product_attribute')->where('product_id', $product->id)->get();
+                                                                    $productDetails = \App\Models\Variation::where('product_id', $product->id)->get();
                                                                 @endphp
                                                           <div class="modal-body">
                                                               <div class="form-group">
@@ -609,22 +550,9 @@
                                                                 <input type="text" class="form-control" id="name"
                                                                        name="name"
                                                                        value="{{ $product->name }}">
-                                                            </div>
-                                                                <div class="form-group">
-                                                                    <label for="price">Giá bán</label>
-                                                                    <input type="number" class="form-control"
-                                                                           id="price{{$product->id}}"
-                                                                           name="old_price"
-                                                                           value="{{ $product->old_price }}">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="qty">Giá khuyến mãi</label>
-                                                                    <input type="number" class="form-control"
-                                                                           id="qty{{$product->id}}"
-                                                                           name="price" value="{{ $product->price }}">
-                                                                </div>
+                                                              </div>
 
-                                                                <div class="form-group">
+                                                               <div class="form-group">
                                                                     <label for="category">Category</label>
                                                                     <select class="form-control" id="category"
                                                                             name="category_id">
@@ -638,56 +566,124 @@
                                                                 </div>
 
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Thông số sản phẩm</label>
-                                                                        @php
-                                                                            $attributes = DB::table('attributes')->get();
-                                                                        @endphp
-                                                                    @foreach($attributes as $attribute)
-                                                                        @php
-                                                                            $properties = DB::table('properties')->where([['status', \App\Enums\PropertiStatus::ACTIVE], ['attribute_id', $attribute->id]])->get();
-                                                                        @endphp
-                                                                        @if(!$properties->isEmpty())
-                                                                            <div id="{{$attribute->name}}-{{$attribute->id}}"
-                                                                                 class="">
-                                                                                <label class="control-label"
-                                                                                       for="color">{{$attribute->name}}</label>
-                                                                                <div class="col-md-12 overflow-scroll custom-scrollbar">
-                                                                                    <ul class="list-unstyled">
-                                                                                        @foreach($properties as $property)
+                                                                    @if(!$productDetails->isEmpty())
+                                                                        @if(count($productDetails)>1)
+                                                                            @foreach($productDetails as $productDetail)
+                                                                                @if($productDetail->variation && $productDetail->variation != 0)
+                                                                                    <div class="form-group">
+                                                                                <label class="control-label">Thông số sản phẩm</label>
+                                                                                @php
+                                                                                    $variable = $productDetail->variation;
+                                                                                    $arrayVariation = explode(',', $variable);
+                                                                                @endphp
+                                                                                        @foreach($arrayVariation as $itemVariation)
                                                                                             @php
-                                                                                                $isChecked = false
+                                                                                                $arrayItemVariation = explode('-', $itemVariation);
+                                                                                                $attributeVariation = \App\Models\Attribute::find($arrayItemVariation[0]);
+                                                                                                $propertyVariation = \App\Models\Properties::find($arrayItemVariation[1]);
                                                                                             @endphp
-                                                                                            <li>
-                                                                                                <label>
-                                                                                                    @foreach($att_of_product as $att)
-                                                                                                        @if($att->attribute_id == $attribute->id )
-                                                                                                            @php
-                                                                                                                $value = explode(',', $att->value);
-                                                                                                            foreach($value as $item){
-                                                                                                                if($item == $property->id ){
-                                                                                                                    $isChecked = true;
-                                                                                                                    }
-                                                                                                                }
-                                                                                                            @endphp
-                                                                                                        @endif
-
-                                                                                                    @endforeach
-                                                                                                    <input onchange="checkInput();"
-                                                                                                           class="property-attribute"
-                                                                                                           id="property-{{$property->id}}"
-                                                                                                           type="checkbox"
-                                                                                                           name="property-{{$attribute->name}}"
-                                                                                                           value="{{$attribute->id}}-{{$property->id}}" {{ $isChecked ? 'checked' : '' }}>
-                                                                                                    {{$property->name}}
-                                                                                                </label>
-                                                                                            </li>
+                                                                                            <div class="">
+                                                                                            <label class="control-label"
+                                                                                                   for="color">{{$attributeVariation->name}}</label>
+                                                                                        <div class="col-md-12 overflow-scroll custom-scrollbar">
+                                                                                                <ul class="list-unstyled">
+                                                                                                        <li>
+                                                                                                            <input onchange="checkInput();"
+                                                                                                                   class="property-attribute"
+                                                                                                                   id="property-{{$propertyVariation->id}}"
+                                                                                                                   type="checkbox"
+                                                                                                                   name="attribute-property-{{$loop->index+1}}"
+                                                                                                                   value="{{$attributeVariation->id}}-{{$propertyVariation->id}}"
+                                                                                                                   checked
+                                                                                                                   disabled>
+                                                                                                            {{$propertyVariation->name}}
+                                                                                                        </li>
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </div>
                                                                                         @endforeach
-                                                                                    </ul>
-                                                                                </div>
                                                                             </div>
-                                                                        @endif
-                                                                    @endforeach
 
+                                                                                    <div class="form-group">
+                                                                                    <label for="price">Giá bán</label>
+                                                                                    <input type="number"
+                                                                                           class="form-control"
+                                                                                           id="price{{$productDetail->id}}"
+                                                                                           name="old_price{{$productDetail->id}}"
+                                                                                           value="{{ $productDetail->old_price }}">
+                                                                            </div>
+
+                                                                                    <div class="form-group">
+                                                                                    <label for="qty">Giá khuyến mãi</label>
+                                                                                    <input type="number"
+                                                                                           class="form-control"
+                                                                                           id="qty{{$productDetail->id}}"
+                                                                                           name="price{{$productDetail->id}}"
+                                                                                           value="{{$productDetail->price }}">
+                                                                            </div>
+
+                                                                                    <div class="form-group">
+                                                                                <label for="thumbnail">Thumbnail</label>
+                                                                                <input type="file"
+                                                                                       class="form-control-file"
+                                                                                       id="thumbnail"
+                                                                                       name="thumbnail{{$productDetail->id}}"
+                                                                                       accept="image/*">
+                                                                                @if ($productDetail->thumbnail)
+                                                                                            <img class="mt-2"
+                                                                                                 style="height: 100px"
+                                                                                                 src="{{ asset('storage/' . $productDetail->thumbnail) }}"
+                                                                                                 alt="Thumbnail">
+                                                                                            </a>
+                                                                                        @endif
+                                                                            </div>
+                                                                                @endif
+                                                                                <input hidden="" name="id{{$loop->index+1}}"
+                                                                                       value="{{$productDetail->id}}">
+                                                                            @endforeach
+                                                                            <input hidden="" name="countBegin"
+                                                                                   value="{{count($productDetails)}}">
+                                                                        @else
+                                                                            @php
+                                                                                $productDetail = $productDetails[0];
+                                                                            @endphp
+                                                                            <div class="form-group">
+                                                                                    <label for="price">Giá bán</label>
+                                                                                    <input type="number"
+                                                                                           class="form-control"
+                                                                                           id="price{{$productDetail->id}}"
+                                                                                           name="old_price1"
+                                                                                           value="{{ $productDetail->old_price }}">
+                                                                            </div>
+
+                                                                            <div class="form-group">
+                                                                                    <label for="qty">Giá khuyến mãi</label>
+                                                                                    <input type="number"
+                                                                                           class="form-control"
+                                                                                           id="qty{{$productDetail->id}}"
+                                                                                           name="price1"
+                                                                                           value="{{$productDetail->price }}">
+                                                                            </div>
+
+                                                                            <div class="form-group">
+                                                                                <label for="thumbnail">Thumbnail</label>
+                                                                                <input type="file"
+                                                                                       class="form-control-file"
+                                                                                       id="thumbnail"
+                                                                                       name="thumbnail{{$loop->index+1}}"
+                                                                                       accept="image/*">
+                                                                                @if ($productDetail->thumbnail)
+                                                                                    <img class="mt-2"
+                                                                                         style="height: 100px"
+                                                                                         src="{{ asset('storage/' . $productDetail->thumbnail) }}"
+                                                                                         alt="Thumbnail">
+                                                                                    </a>
+                                                                                @endif
+                                                                            </div>
+                                                                            <input hidden="" name="countBegin"
+                                                                                   value="1">
+                                                                        @endif
+                                                                    @endif
                                                                 </div>
 
                                                                 <input id="inputHotProduct{{$product->id}}" type="text"
@@ -729,22 +725,6 @@
                                                                             @break
                                                                         @endif
                                                                     @endfor
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label for="thumbnail">Thumbnail</label>
-                                                                    <input type="file" class="form-control-file"
-                                                                           id="thumbnail"
-                                                                           name="thumbnail" accept="image/*">
-                                                                    @if ($product->thumbnail)
-                                                                        <a href="{{ asset('storage/' . $product->thumbnail) }}"
-                                                                           data-fancybox="group"
-                                                                           data-caption="This image has a caption 1">
-                                                                            <img class="mt-2" style="height: 100px"
-                                                                                 src="{{ asset('storage/' . $product->thumbnail) }}"
-                                                                                 alt="Thumbnail">
-                                                                        </a>
-                                                                    @endif
                                                                 </div>
 
                                                                 <div class="form-group">
@@ -801,7 +781,6 @@
                                                             <form action="{{route('seller.products.destroy', $product->id)}}"
                                                                   method="post">
                                                                 @csrf
-                                                                @method('DELETE')
                                                                 <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title" id="exampleModalLabel">Delete</h5>

@@ -2,6 +2,23 @@
     use App\Enums\PropertiStatus;use Illuminate\Support\Facades\DB;
 @endphp
 
+
+<style>
+
+    #checkboxes {
+        height: 40vh;
+        overflow-y: auto!important;
+        display: none;
+        border: 1px #dadada solid;
+    }
+    .dropdown-content{
+        margin-top: 10px;
+    }
+
+    #checkboxes label {
+        display: block;
+    }
+</style>
 @extends('backend.layouts.master')
 @section('title')
     Update Product
@@ -109,14 +126,99 @@
                         </div>
                     </div>
 
-                    <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
-                        <div class="form-group" id="cat-parameter">
-                            <label for="selectCategory">Chuyên mục:</label>
-                            <select class="form-control" name="category_id" id="selectCategory">
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                @endforeach
-                            </select>
+                    <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">  <div class="form-group">
+                            <ul class="nav nav-pills mb-1" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Tất cả danh mục</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Dùng nhiều nhất</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="pills-tabContent" style="background-color: #fff">
+                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                    @php
+                                        $categories = DB::table('categories')->where('parent_id', null)->get();
+                                    @endphp
+                                    <div id="checkboxes" style=" display: block">
+                                        @foreach($categories as $category)
+                                            <label class="ml-2" for="category-{{$category->id}}">
+                                                <input type="checkbox" id="category-{{$category->id}}"
+                                                       name="category-{{$category->id}}"
+                                                       value="{{$category->id}}"
+                                                       class="inputCheckboxCategory mr-2 p-3"/>
+                                                <span class="labelCheckboxCategory">{{$category->name}}</span>
+                                            </label>
+                                            @if(!$categories->isEmpty())
+                                                @php
+                                                    $categories = DB::table('categories')->where('parent_id', $category->id)->get();
+                                                @endphp
+                                                @foreach($categories as $child)
+                                                    <label class="ml-4" for="category-{{$child->id}}">
+                                                        <input type="checkbox" id="category-{{$child->id}}"
+                                                               name="category-{{$child->id}}"
+                                                               value="{{$child->id}}"
+                                                               class="inputCheckboxCategory mr-2 p-3"/>
+                                                        <span class="labelCheckboxCategory">{{$child->name}}</span>
+                                                    </label>
+                                                    @php
+                                                        $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
+                                                    @endphp
+                                                    @foreach($listChild2 as $child2)
+                                                        <label class="ml-5" for="category-{{$child2->id}}">
+                                                            <input type="checkbox" id="category-{{$child2->id}}"
+                                                                   name="category-{{$child2->id}}"
+                                                                   value="{{$child2->id}}"
+                                                                   class="inputCheckboxCategory mr-2 p-3"/>
+                                                            <span class="labelCheckboxCategory">{{$child2->name}}</span>
+                                                        </label>
+                                                    @endforeach
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                    </div></div>
+                                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                    @php
+                                        $categories = DB::table('categories')->where('parent_id', null)->get();
+                                    @endphp
+                                    <div id="checkboxes" style=" display: block">
+                                        @foreach($categories as $category)
+                                            <label class="ml-2" for="category-{{$category->id}}">
+                                                <input type="checkbox" id="category-{{$category->id}}"
+                                                       name="category-{{$category->id}}"
+                                                       value="{{$category->id}}"
+                                                       class="inputCheckboxCategory mr-2 p-3"/>
+                                                <span class="labelCheckboxCategory">{{$category->name}}</span>
+                                            </label>
+                                            @if(!$categories->isEmpty())
+                                                @php
+                                                    $categories = DB::table('categories')->where('parent_id', $category->id)->get();
+                                                @endphp
+                                                @foreach($categories as $child)
+                                                    <label class="ml-4" for="category-{{$child->id}}">
+                                                        <input type="checkbox" id="category-{{$child->id}}"
+                                                               name="category-{{$child->id}}"
+                                                               value="{{$child->id}}"
+                                                               class="inputCheckboxCategory mr-2 p-3"/>
+                                                        <span class="labelCheckboxCategory">{{$child->name}}</span>
+                                                    </label>
+                                                    @php
+                                                        $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
+                                                    @endphp
+                                                    @foreach($listChild2 as $child2)
+                                                        <label class="ml-5" for="category-{{$child2->id}}">
+                                                            <input type="checkbox" id="category-{{$child2->id}}"
+                                                                   name="category-{{$child2->id}}"
+                                                                   value="{{$child2->id}}"
+                                                                   class="inputCheckboxCategory mr-2 p-3"/>
+                                                            <span class="labelCheckboxCategory">{{$child2->name}}</span>
+                                                        </label>
+                                                    @endforeach
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                    </div></div>
+                            </div>
                         </div>
 
                         <div class="form-group  p-3 mt-3">
@@ -290,7 +392,7 @@
                                         <input type="file"
                                                class="form-control-file"
                                                id="thumbnail"
-                                               name="thumbnail{{$loop->index+1}}"
+                                               name="thumbnail1"
                                                accept="image/*">
                                         @if ($productDetail->thumbnail)
                                             <img class="mt-2"
@@ -301,7 +403,7 @@
                                         @endif
                                     </div>
                                     <input hidden="" name="count"
-                                           value="{{count($arrayVariation)}}">
+                                           value="1">
                                 @endif
                             @endif
                         </div>

@@ -23,13 +23,14 @@ class ProductController extends Controller
 {
     public function index()
     {
+        $categories = Category::all();
         $check_ctv_shop = StaffUsers::where('user_id', Auth::user()->id)->first();
         if ($check_ctv_shop) {
             $products = Product::where([['user_id', $check_ctv_shop->parent_user_id], ['status', '!=', ProductStatus::DELETED]])->orderByDesc('id')->get();
         } else {
             $products = Product::where([['user_id', Auth::user()->id], ['status', '!=', ProductStatus::DELETED]])->orderByDesc('id')->get();
         }
-        return view('backend/products/index', ['products' => $products]);
+        return view('backend/products/index', ['products' => $products, 'categories' => $categories]);
     }
 
     public function home()
@@ -446,6 +447,11 @@ class ProductController extends Controller
 
     private function createProduct($product, $request, $number)
     {
+        if (!$product->category_id){
+            $categories = Category::all();
+            $category = $categories[0];
+            $product->category_id = $category->id;
+        }
         $newProductData = [
             'storage_id' => $product->storage_id,
             'name' => $product->name,
