@@ -207,6 +207,7 @@
                     <div class="swiper NewProducts">
                         <div class="swiper-wrapper">
                             @foreach($newProducts as $newProduct)
+                                @dd($newProduct)
                                 @php
                                     $productDetail = \App\Models\Variation::where('product_id', $newProduct->id)->first();
                                     dd($productDetail);
