@@ -139,6 +139,8 @@ class ProductController extends Controller
             $product->gallery = $this->handleGallery($request->input('imgGallery'));
             $product->thumbnail = $this->handleGallery($request->input('imgThumbnail'));
             $product->slug = \Str::slug($request->input('name'));
+            $product->price = $request->input('giaban');
+            $product->old_price = $request->input('giakhuyenmai') ?? 0;
 
             $hot = $request->input('hot_product');
             $feature = $request->input('feature_product');
@@ -486,8 +488,8 @@ class ProductController extends Controller
             'feature' => $product->feature,
             'hot' => $product->hot,
             'slug' => $product->slug,
-            'price' => 0,
-            'old_price' => 0,
+            'price' => $product->price,
+            'old_price' => $product->old_price,
             'gallery' => $product->gallery,
             'thumbnail' => $product->thumbnail,
             'list_category' => $listIDs,

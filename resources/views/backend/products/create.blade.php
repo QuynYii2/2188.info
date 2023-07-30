@@ -100,16 +100,16 @@
                     @endif
 
                     <div class="col-12 col-md-7 border-right mt-2 rm-pd-on-mobile">
-                        <div class="form-group">
-                            <div class="name">Chọn sản phẩm từ kho</div>
-                            <div class="main">
-                                <select id="selectStorage" name="storage-id" class="form-control">
-                                    @foreach($storages as $storage)
-                                        <option value="{{ $storage->id }}">{{ $storage->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+{{--                        <div class="form-group">--}}
+{{--                            <div class="name">Chọn sản phẩm từ kho</div>--}}
+{{--                            <div class="main">--}}
+{{--                                <select id="selectStorage" name="storage-id" class="form-control">--}}
+{{--                                    @foreach($storages as $storage)--}}
+{{--                                        <option value="{{ $storage->id }}">{{ $storage->name }}</option>--}}
+{{--                                    @endforeach--}}
+{{--                                </select>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <div class="form-group">
                             <div class="name">Tên sản phẩm</div>
                             <input type="text" class="form-control" name="name" id="name"
@@ -182,6 +182,17 @@
                         <a id="btnSaveAttribute" class="btn btn-success mt-4" style="color: white">SaveAttribute</a>
                     </div>
                     <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
+                        <div class="form-group">
+                            <div class="name">Giá bán</div>
+                            <input type="number" class="form-control" name="giaban" id="name"
+                                   placeholder="Nhập giá bán"
+                                   required min="1">
+                        </div>
+                        <div class="form-group">
+                            <div class="name">Nhập giá khuyến mãi(nếu có)</div>
+                            <input type="number" class="form-control" name="giakhuyenmai" id="name"
+                                   placeholder="Nhập giá khuyến mãi" min="1">
+                        </div>
                         <div class="form-group">
                             <div class="name">Tất cả danh mục</div>
                             @php

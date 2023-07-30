@@ -116,11 +116,12 @@
                             <td class="thumb column-thumb" data-colname="Image">
                                 <a href="#">
                                     @php
-                                        $thum = \App\Models\Variation::where('product_id', $product->id)->first();
+                                        // tại sao phải query thêm cái này, trong khi có thể dùng $product->thumbnail
+                                        $thum = \App\Models\Variation::where('product_id', $product->id)->get();
                                     @endphp
-                                    @if($thum)
+                                    @if($product->thumbnail)
                                         <img width="150" height="150"
-                                             src="{{ asset('storage/'.$thum->thumbnail) }}"
+                                             src="{{ asset('storage/'.$product->thumbnail) }}"
                                              class="woocommerce-placeholder wp-post-image" alt="Placeholder"
                                              decoding="async"
                                              loading="lazy">

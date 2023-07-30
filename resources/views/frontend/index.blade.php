@@ -212,9 +212,9 @@
                                 @endphp
                                 <div class="swiper-slide">
                                     <div class="item">
-                                        @if($productDetail)
+                                        @if($newProduct->thumbnail)
                                             <div class="item-img">
-                                                <img src="{{ asset('storage/' . $productDetail->thumbnail) }}"
+                                                <img src="{{ asset('storage/' . $newProduct->thumbnail) }}"
                                                      alt="">
                                                 <div class="button-view">
                                                     <button type="button" class="btn view_modal" data-toggle="modal"
@@ -223,15 +223,10 @@
                                                     </button>
                                                 </div>
                                                 <div class="text">
-                                                    {{--                                                <div class="text-sale">--}}
-                                                    {{--                                                    Sale--}}
-                                                    {{--                                                </div>--}}
                                                     <div class="text-new">
                                                         New
                                                     </div>
-                                                    <!-- <div class="text-bundle">
-                                                            Bundle
-                                                        </div> -->
+
                                                 </div>
                                             </div>
                                         @endif
@@ -259,21 +254,16 @@
 
                                             </div>
 
-                                            @if($productDetail)
                                                 <div class="card-price d-flex justify-content-between">
-                                                    <!-- <div class="price">
-                                                                    <strong>$189.000</strong>
-                                                                </div> -->
                                                     <div class="price-sale">
-                                                        <strong>${{$productDetail->price}}</strong>
+                                                        <strong>${{$newProduct->price}}</strong>
                                                     </div>
                                                     <div class="price-cost">
-                                                        @if($productDetail->old_price != null)
+                                                        @if($newProduct->old_price != null)
                                                             <strike>${{$productDetail->old_price}}</strike>
                                                         @endif
                                                     </div>
                                                 </div>
-                                            @endif
 
                                             <div class="card-bottom d-flex justify-content-between">
                                                 <div class="card-bottom--left">
