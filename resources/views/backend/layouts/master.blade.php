@@ -24,7 +24,6 @@
     <link rel="stylesheet" href="{{asset('css/style_backend.css')}}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 </head>
-
 <body>
 @include('sweetalert::alert')
 <!-- Header -->
@@ -36,7 +35,7 @@
 <div class="container-fluid ">
     <div class="header-card row">
         <!-- Sidebar -->
-        <div class="col-sm-3 col-12 col-md-3 col-lg-2 header-card--left p-0">
+        <div class="col-sm-3 col-12 col-md-3 col-lg-2 header-card--left">
             @include('backend.layouts.partials.side-bar')
         </div>
 

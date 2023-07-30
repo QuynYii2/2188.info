@@ -3681,8 +3681,9 @@ input[type=button].btn-block {
 
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: #FFD333;
+    color: black;
+    background: #fff;
+    border: 1px solid #cccccc;
 }
 
 .nav-fill > .nav-link,
