@@ -209,12 +209,15 @@
                             @foreach($newProducts as $newProduct)
                                 @php
                                     $productDetail = \App\Models\Variation::where('product_id', $newProduct->id)->first();
+                                    dd($productDetail);
                                 @endphp
                                 <div class="swiper-slide">
                                     <div class="item">
                                         <div class="item-img">
-                                            <img src="{{ asset('storage/' . $productDetail->thumbnail) }}"
-                                                 alt="">
+                                            @if($productDetail->thumbnail)
+                                                <img src="{{ asset('storage/' . $productDetail->thumbnail) }}"
+                                                     alt="">
+                                            @endif
                                             <div class="button-view">
                                                 <button type="button" class="btn view_modal" data-toggle="modal"
                                                         data-value="{{$newProduct}}" data-id="{{$productDetail}}" data-target="#exampleModal">Quick
