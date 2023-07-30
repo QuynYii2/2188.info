@@ -32,7 +32,6 @@
                                 <div class="">
                                     <input type="text" class="form-control" name="name" id="name"
                                            placeholder="Nhập tên sản phẩm">
-                                    <small>The name is how it appears on your site.</small>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -40,9 +39,6 @@
                                 <div class="">
                                     <input type="text" class="form-control" name="slug" id="slug"
                                            placeholder="Nhập tên sản phẩm">
-                                    <small>"slug" là đường dẫn thân thiện của tên. Nó thường chỉ bao gồm kí tự viết
-                                        thường, số
-                                        và dấu gạch ngangm không dùng tiếng Việt</small>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -54,7 +50,6 @@
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                     </select>
-                                    <small>Chuyên mục khác với thẻ, bạn có thể sử dụng nhiều cấp chuyên mục.</small>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -62,8 +57,6 @@
                                 <div class="">
                             <textarea type="text" class="form-control" name="description" id="description"
                                       placeholder="Nhập tên sản phẩm"></textarea>
-                                    <small>The description is not prominent by default; however, some themes may show
-                                        it.</small>
                                 </div>
                             </div>
                             <div class="form-group">

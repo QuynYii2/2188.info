@@ -3,7 +3,15 @@
     use App\Enums\PropertiStatus;
 @endphp
 <style>
+    .btn-success{
+        color: white!important;
+    }
 
+    .name{
+        margin-top: 20px;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
     @media all {
 
         .attachment .portrait img {
@@ -31,7 +39,8 @@
     }
 
     #checkboxes {
-        height: 40vh;
+        background-color: white;
+        height: 60vh;
         overflow-y: auto!important;
         display: none;
         border: 1px #dadada solid;
@@ -42,6 +51,11 @@
 
     #checkboxes label {
         display: block;
+    }
+
+    /**/
+    select {
+        display: none !important;
     }
 </style>
 @extends('backend.layouts.master')
@@ -117,104 +131,7 @@
                             <textarea id="description-detail" class="form-control description" name="description-detail"
                                       rows="5"></textarea>
                         </div>
-                    </div>
-                    <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
-                        <div class="form-group">
-                            <ul class="nav nav-pills mb-1" id="pills-tab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Tất cả danh mục</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Dùng nhiều nhất</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content" id="pills-tabContent" style="background-color: #fff">
-                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                                    @php
-                                        $categories = DB::table('categories')->where('parent_id', null)->get();
-                                    @endphp
-                                    <div id="checkboxes" style=" display: block">
-                                        @foreach($categories as $category)
-                                            <label class="ml-2" for="category-{{$category->id}}">
-                                                <input type="checkbox" id="category-{{$category->id}}"
-                                                       name="category-{{$category->id}}"
-                                                       value="{{$category->id}}"
-                                                       class="inputCheckboxCategory mr-2 p-3"/>
-                                                <span class="labelCheckboxCategory">{{$category->name}}</span>
-                                            </label>
-                                            @if(!$categories->isEmpty())
-                                                @php
-                                                    $categories = DB::table('categories')->where('parent_id', $category->id)->get();
-                                                @endphp
-                                                @foreach($categories as $child)
-                                                    <label class="ml-4" for="category-{{$child->id}}">
-                                                        <input type="checkbox" id="category-{{$child->id}}"
-                                                               name="category-{{$child->id}}"
-                                                               value="{{$child->id}}"
-                                                               class="inputCheckboxCategory mr-2 p-3"/>
-                                                        <span class="labelCheckboxCategory">{{$child->name}}</span>
-                                                    </label>
-                                                    @php
-                                                        $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
-                                                    @endphp
-                                                    @foreach($listChild2 as $child2)
-                                                        <label class="ml-5" for="category-{{$child2->id}}">
-                                                            <input type="checkbox" id="category-{{$child2->id}}"
-                                                                   name="category-{{$child2->id}}"
-                                                                   value="{{$child2->id}}"
-                                                                   class="inputCheckboxCategory mr-2 p-3"/>
-                                                            <span class="labelCheckboxCategory">{{$child2->name}}</span>
-                                                        </label>
-                                                    @endforeach
-                                                @endforeach
-                                            @endif
-                                        @endforeach
-                                    </div></div>
-                                <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                                    @php
-                                        $categories = DB::table('categories')->where('parent_id', null)->get();
-                                    @endphp
-                                    <div id="checkboxes" style=" display: block">
-                                        @foreach($categories as $category)
-                                            <label class="ml-2" for="category-{{$category->id}}">
-                                                <input type="checkbox" id="category-{{$category->id}}"
-                                                       name="category-{{$category->id}}"
-                                                       value="{{$category->id}}"
-                                                       class="inputCheckboxCategory mr-2 p-3"/>
-                                                <span class="labelCheckboxCategory">{{$category->name}}</span>
-                                            </label>
-                                            @if(!$categories->isEmpty())
-                                                @php
-                                                    $categories = DB::table('categories')->where('parent_id', $category->id)->get();
-                                                @endphp
-                                                @foreach($categories as $child)
-                                                    <label class="ml-4" for="category-{{$child->id}}">
-                                                        <input type="checkbox" id="category-{{$child->id}}"
-                                                               name="category-{{$child->id}}"
-                                                               value="{{$child->id}}"
-                                                               class="inputCheckboxCategory mr-2 p-3"/>
-                                                        <span class="labelCheckboxCategory">{{$child->name}}</span>
-                                                    </label>
-                                                    @php
-                                                        $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
-                                                    @endphp
-                                                    @foreach($listChild2 as $child2)
-                                                        <label class="ml-5" for="category-{{$child2->id}}">
-                                                            <input type="checkbox" id="category-{{$child2->id}}"
-                                                                   name="category-{{$child2->id}}"
-                                                                   value="{{$child2->id}}"
-                                                                   class="inputCheckboxCategory mr-2 p-3"/>
-                                                            <span class="labelCheckboxCategory">{{$child2->name}}</span>
-                                                        </label>
-                                                    @endforeach
-                                                @endforeach
-                                            @endif
-                                        @endforeach
-                                    </div></div>
-                            </div>
-                        </div>
-
-                        <div class="form-group  p-3 mt-3">
+                        <div class="form-group mb-3">
                             <label class="name">Thông số sản phẩm</label>
                             <select class="form-control" name="attribute_id" id="selectAttribute">
                                 @foreach($attributes as $attribute)
@@ -222,8 +139,7 @@
                                 @endforeach
                             </select>
                         </div>
-
-                        <div class="border mt-5 mb-3 full-width">
+                        <div class="mb-3 full-width">
                             @foreach($attributes as $attribute)
                                 @php
                                     $properties = DB::table('properties')->where([['status', PropertiStatus::ACTIVE], ['attribute_id', $attribute->id]])->get();
@@ -262,19 +178,58 @@
                                 @endif
                             @endforeach
                         </div>
-
-                        <a id="btnSaveAttribute" class="btn btn-success mt-2 mb-5">SaveAttribute</a>
-
+                        <div id="renderInputAttribute" class="row"></div>
+                        <a id="btnSaveAttribute" class="btn btn-success mt-4" style="color: white">SaveAttribute</a>
+                    </div>
+                    <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
+                        <div class="form-group">
+                            <div class="name">Tất cả danh mục</div>
+                            @php
+                                $categories = DB::table('categories')->where('parent_id', null)->get();
+                            @endphp
+                            <div id="checkboxes" style=" display: block">
+                                @foreach($categories as $category)
+                                    <label class="ml-2" for="category-{{$category->id}}">
+                                        <input type="checkbox" id="category-{{$category->id}}"
+                                               name="category-{{$category->id}}"
+                                               value="{{$category->id}}"
+                                               class="inputCheckboxCategory mr-2 p-3"/>
+                                        <span class="labelCheckboxCategory">{{$category->name}}</span>
+                                    </label>
+                                    @if(!$categories->isEmpty())
+                                        @php
+                                            $categories = DB::table('categories')->where('parent_id', $category->id)->get();
+                                        @endphp
+                                        @foreach($categories as $child)
+                                            <label class="ml-4" for="category-{{$child->id}}">
+                                                <input type="checkbox" id="category-{{$child->id}}"
+                                                       name="category-{{$child->id}}"
+                                                       value="{{$child->id}}"
+                                                       class="inputCheckboxCategory mr-2 p-3"/>
+                                                <span class="labelCheckboxCategory">{{$child->name}}</span>
+                                            </label>
+                                            @php
+                                                $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
+                                            @endphp
+                                            @foreach($listChild2 as $child2)
+                                                <label class="ml-5" for="category-{{$child2->id}}">
+                                                    <input type="checkbox" id="category-{{$child2->id}}"
+                                                           name="category-{{$child2->id}}"
+                                                           value="{{$child2->id}}"
+                                                           class="inputCheckboxCategory mr-2 p-3"/>
+                                                    <span class="labelCheckboxCategory">{{$child2->name}}</span>
+                                                </label>
+                                            @endforeach
+                                        @endforeach
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="form-group col-12 col-sm-12 ">
                                 <label for="gallery">Thư viện ảnh:</label>
                                 @include('backend.products.modal-media')
                             </div>
-                        </div>
-
-
-                        <div id="renderInputAttribute" class="">
-
                         </div>
                     </div>
                     <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
@@ -288,7 +243,6 @@
                 </form>
             </div>
         </div><!-- wpbody -->
-        <div class="clear"></div>
     </div><!-- wpcontent -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>

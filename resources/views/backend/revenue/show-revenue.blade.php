@@ -119,7 +119,7 @@
             </div>
         </div>
         <a href="{{ route('revenues.excel') }}" class="btn btn-success">Excel</a>
-        <button type="submit" class="btn btn-success">Sign in</button>
+        <button type="submit" class="btn btn-success">Search</button>
         <a href="{{route('revenues.index')}}" class="btn btn-secondary">Back</a>
     </form>
 

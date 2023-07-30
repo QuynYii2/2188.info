@@ -22,6 +22,12 @@
     }
 
 @endphp
+<style>
+    /**/
+    select {
+        display: none !important;
+    }
+</style>
 @section('content')
     <div id="wpcontent">
         <div id="wpbody" role="main">

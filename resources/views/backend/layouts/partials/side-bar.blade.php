@@ -116,7 +116,7 @@
             <li>
                 <a class="sidebar item" href='#'><i class="fa-solid fa-book"></i> Tài Chính</a>
                 <ul class='sub-items pl-3'>
-                    <li><a class="sidebarUrl" href="#">Doanh Thu</a>
+                    <li><a class="sidebarUrl" href="{{route('revenues.index')}}">Doanh thu</a>
                     </li>
                     <li><a class="sidebarUrl" href="#">Số dư TK Shopee</a>
                     </li>
@@ -131,8 +131,6 @@
                 <li>
                     <a class="sidebar item" href='#'><i class="fa-solid fa-chart-line"></i> Dữ Liệu</a>
                     <ul class='sub-items pl-3'>
-                        <li><a class="sidebarUrl" href="{{route('revenues.index')}}">Quản lý doanh thu</a>
-                        </li>
                         <li><a class="sidebarUrl" href="#">Phân Tích Bán Hàng</a>
                         </li>
                         <li><a class="sidebarUrl" href="#!">Thống kê</a>
