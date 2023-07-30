@@ -213,10 +213,8 @@
                                 <div class="swiper-slide">
                                     <div class="item">
                                         <div class="item-img">
-                                            @if($newProduct->thumbnail)
-                                                <img src="{{ asset('storage/' . $newProduct->thumbnail) }}"
-                                                     alt="">
-                                            @endif
+                                            <img src="{{ asset('storage/' . $productDetail->thumbnail) }}"
+                                                 alt="">
                                             <div class="button-view">
                                                 <button type="button" class="btn view_modal" data-toggle="modal"
                                                         data-value="{{$newProduct}}" data-id="{{$productDetail}}" data-target="#exampleModal">Quick
@@ -263,11 +261,11 @@
                                                                 <strong>$189.000</strong>
                                                             </div> -->
                                                 <div class="price-sale">
-                                                    <strong>${{$newProduct->price}}</strong>
+                                                    <strong>${{$productDetail->price}}</strong>
                                                 </div>
                                                 <div class="price-cost">
-                                                    @if($newProduct->old_price != null)
-                                                        <strike>${{$newProduct->old_price}}</strike>
+                                                    @if($productDetail->old_price != null)
+                                                        <strike>${{$productDetail->old_price}}</strike>
                                                     @endif
                                                 </div>
                                             </div>
