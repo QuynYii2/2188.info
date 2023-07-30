@@ -4,9 +4,44 @@
 
 
 <style>
+    .btn-success{
+        color: white!important;
+    }
+
+    .name{
+        margin-top: 20px;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+    @media all {
+
+        .attachment .portrait img {
+            max-width: 100%;
+        }
+
+        .attachment .thumbnail img {
+            top: 0;
+            left: 0;
+            position: absolute;
+        }
+
+        .attachment .thumbnail .centered img {
+            transform: translate(-50%, -50%);
+        }
+
+        .attachment .landscape img {
+            max-height: 100%;
+        }
+    }
+
+    .attribute-form{
+        background: white;
+        padding: 20px;
+    }
 
     #checkboxes {
-        height: 40vh;
+        background-color: white;
+        height: 60vh;
         overflow-y: auto!important;
         display: none;
         border: 1px #dadada solid;
@@ -15,12 +50,13 @@
         margin-top: 10px;
     }
 
+    #checkboxes label {
+        display: block;
+    }
+
     /**/
     select {
         display: none !important;
-    }
-    #checkboxes label {
-        display: block;
     }
 </style>
 @extends('backend.layouts.master')
@@ -129,6 +165,7 @@
                             @endif
                         </div>
                     </div>
+
                     <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
                         <div class="form-group">
                             <div class="name">Tất cả danh mục</div>
@@ -171,12 +208,6 @@
                                         @endforeach
                                     @endif
                                 @endforeach
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-group col-12 col-sm-12 ">
-                                <label for="gallery">Thư viện ảnh:</label>
-                                @include('backend.products.modal-media')
                             </div>
                         </div>
                     </div>

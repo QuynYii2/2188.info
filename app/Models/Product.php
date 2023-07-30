@@ -26,6 +26,7 @@ class Product extends Model
         'feature',
         'gallery',
         'short_description',
+        'list_category',
 
     ];
 
