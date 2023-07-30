@@ -179,7 +179,7 @@
         }
 
     </style>
-    <div class="container-fluid detail" >
+    <div class="container-fluid detail">
         <div class="grid second-nav">
             <div class="column-xs-12">
                 <nav>
@@ -198,25 +198,27 @@
         @endphp
         <div class="grid product">
             <div class="column-xs-12 column-md-7">
-                <div class="product-gallery">
-                    <div class="product-image">
-                        <img id="productThumbnail" class="active"
-                             src="{{ asset('storage/' . $productDetail->thumbnail) }}">
-                        <input type="text" id="urlImage" value="{{asset('storage/')}}" hidden="">
+                @if($productDetail)
+                    <div class="product-gallery">
+                        <div class="product-image">
+                            <img id="productThumbnail" class="active"
+                                 src="{{ asset('storage/' . $productDetail->thumbnail) }}">
+                            <input type="text" id="urlImage" value="{{asset('storage/')}}" hidden="">
+                        </div>
+                        <ul class="image-list">
+                            @php
+                                $gallery = $product->gallery;
+                                $arrayGallery = explode(',', $gallery);
+                            @endphp
+                            <li class="image-item"><img src="{{ asset('storage/' . $productDetail->thumbnail) }}"></li>
+                            @if(count($arrayGallery)>1)
+                                @foreach($arrayGallery as $gallerys)
+                                    <li class="image-item"><img src="{{ asset('storage/' . $gallerys) }}"></li>
+                                @endforeach
+                            @endif
+                        </ul>
                     </div>
-                    <ul class="image-list">
-                        @php
-                            $gallery = $product->gallery;
-                            $arrayGallery = explode(',', $gallery);
-                        @endphp
-                        <li class="image-item"><img src="{{ asset('storage/' . $productDetail->thumbnail) }}"></li>
-                        @if(count($arrayGallery)>1)
-                            @foreach($arrayGallery as $gallerys)
-                                <li class="image-item"><img src="{{ asset('storage/' . $gallerys) }}"></li>
-                            @endforeach
-                        @endif
-                    </ul>
-                </div>
+                @endif
             </div>
             <div class="column-xs-12 column-md-5">
                 <form action="{{ route('cart.add', $product) }}" method="POST">
@@ -231,10 +233,12 @@
                         <i class="fa fa-star-half-o"></i>
                         <span>4.7(21)</span>
                     </div>
-                    <div class="product-price d-flex" style="gap: 3rem">
-                        <div id="productPrice" class="price">${{$productDetail->price}}</div>
-                        <strike id="productOldPrice">${{$productDetail->old_price}}</strike>
-                    </div>
+                    @if($productDetail)
+                        <div class="product-price d-flex" style="gap: 3rem">
+                            <div id="productPrice" class="price">${{$productDetail->price}}</div>
+                            <strike id="productOldPrice">${{$productDetail->old_price}}</strike>
+                        </div>
+                    @endif
                     <div class="description-text">
                         {{ $product->short_description }}
                     </div>
@@ -268,7 +272,10 @@
                     @endif
                     <div class="">
                         <input id="product_id" hidden value="{{$product->id}}">
-                        <input name="variable" id="variable" hidden value="{{$variables[0]->variation}}">
+                        @if(count($variables)>0)
+                            <input name="variable" id="variable" hidden value="{{$variables[0]->variation}}">
+                        @endif
+
                     </div>
                     <div class="count__wrapper count__wrapper--ml mt-3">
                         <label for="qty">Còn lại: <span id="productQuantity">{{$product->qty}}</span></label>
@@ -301,23 +308,23 @@
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
                    aria-selected="true">{{ __('home.description') }}</a>
             </li>
-{{--            <li class="nav-item">--}}
-{{--                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">{{ __('home.specification') }}</a>--}}
-{{--            </li>--}}
+            {{--            <li class="nav-item">--}}
+            {{--                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">{{ __('home.specification') }}</a>--}}
+            {{--            </li>--}}
             <li class="nav-item">
                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
                    aria-controls="contact" aria-selected="false">{{ __('home.review') }}</a>
             </li>
         </ul>
         <div class="tab-content container-fluid" id="myTabContent">
-            <div class="tab-pane fade show active"  id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 {{$product->description}}
             </div>
-{{--            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">--}}
-{{--                <div class="tab-title">--}}
-{{--                    --}}
-{{--                </div>--}}
-{{--            </div>--}}
+            {{--            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">--}}
+            {{--                <div class="tab-title">--}}
+            {{--                    --}}
+            {{--                </div>--}}
+            {{--            </div>--}}
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                 <div class="card mb-4">
                     <div class="card-body">

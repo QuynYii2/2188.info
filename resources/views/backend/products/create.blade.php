@@ -278,6 +278,8 @@
                         </div>
                     </div>
                     <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
+                    <input type="text" hidden id="imgGallery" value="" name="imgGallery[]">
+                    <input type="text" hidden id="imgThumbnail" value="" name="imgThumbnail[]">
                     <div class="form-group col-12 col-md-7 col-sm-8 ">
                         <div class="row justify-content-center">
                             <button type="submit" class="btn btn-success">Gửi</button>
@@ -873,5 +875,6 @@
             }
         }
     </script>
+
 @endsection
 
