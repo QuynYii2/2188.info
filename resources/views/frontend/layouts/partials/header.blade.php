@@ -138,7 +138,7 @@
                                         $totalHeader = $totalHeader + ($cart1->price*$cart1->quantity);
                                     }
                                 @endphp
-                                <div class="total">{{count($cartViews)}}</div>
+                                <div class="total_shop">{{count($cartViews)}}</div>
                                 <div class="shop-menu" id="closeShop">
                                     <div class="d-flex pb-4">
                                         <span class="cart mr-4">REVIEW YOUR CART</span>

@@ -69,7 +69,7 @@
 
                 <li><a href="{{route('attributes.index')}}">Danh sách thuộc tính</a>
                 </li>
-                <li><a href="{{route('properties.index')}}">Quản lí thuộc tính con</a>
+                <li><a href="#">Quản lí thuộc tính con</a>
                 </li>
             </ul>
         </li>

@@ -33,20 +33,20 @@
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <button type="submit" class="btn btn-primary position-absolute" style="bottom: 0">Search</button>
+                <button type="submit" class="btn btn-success position-absolute" style="bottom: 0">Search</button>
             </div>
         </form>
         <form action="{{ route('order.manage.export.excel') }}" method="post" id="formExportAll">
             @csrf
             <input type="text" id="excel-value" name="excel-value" value="{{ $orders }}" hidden>
-            <button type="submit" class="btn btn-primary">Export Excel</button>
+            <button type="submit" class="btn btn-success">Export Excel</button>
         </form>
 
         <form action="{{ route('order.manage.export.excel.detail') }}" method="post" id="formExportDetail"
               class="d-none">
             @csrf
             <input type="text" id="excel-id" name="excel-id" value="0" hidden>
-            <button type="submit" class="btn btn-primary">Export Excel</button>
+            <button type="submit" class="btn btn-success">Export Excel</button>
         </form>
         <div class="card-body">
             <table class="table table-bordered sortable" id="tableOrders">

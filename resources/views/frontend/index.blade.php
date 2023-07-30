@@ -207,14 +207,17 @@
                     <div class="swiper NewProducts">
                         <div class="swiper-wrapper">
                             @foreach($newProducts as $newProduct)
+                                @php
+                                    $productDetail = \App\Models\Variation::where('product_id', $newProduct->id)->first();
+                                @endphp
                                 <div class="swiper-slide">
                                     <div class="item">
                                         <div class="item-img">
-                                            <img src="{{ asset('storage/' . $newProduct->thumbnail) }}"
+                                            <img src="{{ asset('storage/' . $productDetail->thumbnail) }}"
                                                  alt="">
                                             <div class="button-view">
                                                 <button type="button" class="btn view_modal" data-toggle="modal"
-                                                        data-value="{{$newProduct}}" data-target="#exampleModal">Quick
+                                                        data-value="{{$newProduct}}" data-id="{{$productDetail}}" data-target="#exampleModal">Quick
                                                     view
                                                 </button>
                                             </div>
@@ -258,11 +261,11 @@
                                                                 <strong>$189.000</strong>
                                                             </div> -->
                                                 <div class="price-sale">
-                                                    <strong>${{$newProduct->price}}</strong>
+                                                    <strong>${{$productDetail->price}}</strong>
                                                 </div>
                                                 <div class="price-cost">
-                                                    @if($newProduct->old_price != null)
-                                                        <strike>${{$newProduct->old_price}}</strike>
+                                                    @if($productDetail->old_price != null)
+                                                        <strike>${{$productDetail->old_price}}</strike>
                                                     @endif
                                                 </div>
                                             </div>
@@ -295,14 +298,17 @@
                         <div class="swiper-wrapper">
                             @foreach($productFeatures as $productFeature)
                                 @foreach($productFeature as $product)
+                                    @php
+                                        $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
+                                    @endphp
                                     <div class="swiper-slide">
                                         <div class="item">
                                             <div class="item-img">
-                                                <img src="{{ asset('storage/' . $product->thumbnail) }}"
+                                                <img src="{{ asset('storage/' . $productDetail->thumbnail) }}"
                                                      alt="">
                                                 <div class="button-view">
                                                     <button class="btn view_modal" data-toggle="modal"
-                                                            data-value="{{$product}}" data-target="#exampleModal">Quick view</button>
+                                                            data-value="{{$product}}" data-id="{{$productDetail}}" data-target="#exampleModal">Quick view</button>
                                                 </div>
                                                 <div class="text">
                                                     <div class="text-sale">
@@ -343,11 +349,11 @@
                                                                     <strong>$189.000</strong>
                                                                 </div> -->
                                                     <div class="price-sale">
-                                                        <strong>${{$product->price}}</strong>
+                                                        <strong>${{$productDetail->price}}</strong>
                                                     </div>
                                                     <div class="price-cost">
-                                                        @if($product->old_price != null)
-                                                            <strike>${{$product->old_price}}</strike>
+                                                        @if($productDetail->old_price != null)
+                                                            <strike>${{$productDetail->old_price}}</strike>
                                                         @endif
                                                     </div>
                                                 </div>
@@ -418,6 +424,7 @@
                                     </div>
                                     <div class="row">
                                     </div>
+                                    <input id="variable_id" name="variable" hidden>
                                     <div class="">
                                         <input id="product_id" hidden value="">
                                     </div>
@@ -453,14 +460,17 @@
                 <div class="swiper-wrapper">
                     @foreach($productHots as $productHot)
                         @foreach($productHot as $hotProduct)
+                            @php
+                                $productDetail = \App\Models\Variation::where('product_id', $hotProduct->id)->first();
+                            @endphp
                             <div class="swiper-slide">
                                 <div class="item">
                                     <div class="item-img">
-                                        <img src="{{ asset('storage/' . $hotProduct->thumbnail) }}"
+                                        <img src="{{ asset('storage/' . $productDetail->thumbnail) }}"
                                              alt="">
                                         <div class="button-view">
                                             <button type="button" class="btn view_modal" data-toggle="modal"
-                                                    data-value="{{$hotProduct}}" data-target="#exampleModal">Quick
+                                                    data-value="{{$hotProduct}}" data-id="{{$productDetail}}" data-target="#exampleModal">Quick
                                                 view
                                             </button>
                                         </div>
@@ -503,11 +513,11 @@
                                                             <strong>$189.000</strong>
                                                         </div> -->
                                             <div class="price-sale">
-                                                <strong>${{$hotProduct->price}}</strong>
+                                                <strong>${{$productDetail->price}}</strong>
                                             </div>
                                             <div class="price-cost">
-                                                @if($hotProduct->old_price != null)
-                                                    <strike>${{$hotProduct->old_price}}</strike>
+                                                @if($productDetail->old_price != null)
+                                                    <strike>${{$productDetail->old_price}}</strike>
                                                 @endif
                                             </div>
                                         </div>
@@ -600,17 +610,20 @@
                         <div class="swiper listProduct">
                             <div class="swiper-wrapper">
                                 @php
-                                    $products = \App\Models\Product::where('category_id','=', $cate->id)->get();
+                                    $products = \App\Models\Product::where([['category_id','=', $cate->id],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
                                 @endphp
                                 @foreach($products as $product)
+                                    @php
+                                        $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
+                                    @endphp
                                     <div class="swiper-slide">
                                         <div class="item">
                                             <div class="item-img">
-                                                <img src="{{ asset('storage/' . $product->thumbnail) }}"
+                                                <img src="{{ asset('storage/' . $productDetail->thumbnail) }}"
                                                      alt="">
                                                 <div class="button-view">
                                                     <button type="button" class="btn view_modal" data-toggle="modal"
-                                                            data-value="{{$product}}" data-target="#exampleModal">Quick
+                                                            data-value="{{$product}}" data-id="{{$productDetail}}" data-target="#exampleModal">Quick
                                                         view
                                                     </button>
                                                 </div>
@@ -653,11 +666,11 @@
                                                                     <strong>$189.000</strong>
                                                                 </div> -->
                                                     <div class="price-sale">
-                                                        <strong>${{$product->price}}</strong>
+                                                        <strong>${{$productDetail->price}}</strong>
                                                     </div>
                                                     <div class="price-cost">
-                                                        @if($product->old_price != null)
-                                                            <strike>${{$product->old_price}}</strike>
+                                                        @if($productDetail->old_price != null)
+                                                            <strike>${{$productDetail->old_price}}</strike>
                                                         @endif
                                                     </div>
                                                 </div>
@@ -895,20 +908,24 @@
         var url = document.getElementById('inputUrl');
         $('.view_modal').on('click', function () {
             var product = $(this).data('value');
+            var productDetail = $(this).data('id');
             let urggg = document.getElementById('url').value;
             $('#form_cart').attr('action', urggg + '/' + product['id']);
             var modal_img = document.getElementById('img-modal')
-            modal_img.src = url.value + '/' + product['thumbnail'];
+            modal_img.src = url.value + '/' + productDetail['thumbnail'];
             var modal_name = document.getElementById('productName-modal')
             modal_name.innerText = product['name'];
             var price_sale = document.getElementById('price-sale')
-            price_sale.innerText = product['price'];
+            price_sale.innerText = productDetail['price'];
             var price_old = document.getElementById('price-old')
-            price_old.innerText = product['old_price'];
+            price_old.innerText = productDetail['old_price'];
             var description_text = document.getElementById('description-text')
-            description_text.innerText = product['description'];
+            description_text.innerText = productDetail['description'];
             var qty = document.getElementById('qty')
             qty.innerText = product['qty'];
+            var variable = document.getElementById('variable_id')
+            console.log(variable)
+            variable.value = productDetail['variation'];
         })
 
     </script>

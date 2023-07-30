@@ -239,6 +239,7 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::get('/attributes', [AttributeController::class, 'index'])->name('attributes.index');
     //
     Route::get('/attributes/create', [AttributeController::class, 'create'])->name('attributes.create');
+    Route::get('/attributes/edit', [AttributeController::class, 'edit'])->name('attributes.edit');
     Route::post('/attributes', [AttributeController::class, 'store'])->name('attributes.store');
     //
     Route::get('/attributes/{id}', [AttributeController::class, 'show'])->name('attributes.detail');
@@ -246,8 +247,9 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::post('/delete-attributes/{id}', [AttributeController::class, 'destroy'])->name('attributes.delete');
     Route::post('/toggle-attributes/{id}', [AttributeController::class, 'toggle'])->name('attributes.toggle');
     //
-    Route::get('/properties', [PropertiesController::class, 'index'])->name('properties.index');
-    Route::get('/properties/create', [PropertiesController::class, 'create'])->name('properties.create');
+    //
+    Route::get('/attributes/properties/{attributeID}', [PropertiesController::class, 'index'])->name('properties.index');
+    Route::get('/properties/create', [Propertientroller::class, 'create'])->name('properties.create');
     Route::post('/properties', [PropertiesController::class, 'store'])->name('properties.store');
     //
     Route::get('/properties/{id}', [PropertiesController::class, 'show'])->name('properties.detail');
@@ -255,15 +257,15 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::post('/delete-properties/{id}', [PropertiesController::class, 'destroy'])->name('properties.delete');
     Route::post('/toggle-properties/{id}', [PropertiesController::class, 'toggle'])->name('properties.toggle');
     //
-    Route::get('/products_home', [ProductController::class, 'home'])->name('seller.products.home');
     Route::get('/products', [ProductController::class, 'index'])->name('seller.products.index');
+    Route::get('/products_home', [ProductController::class, 'home'])->name('seller.products.home');
     Route::get('/list/products-views', [ProductController::class, 'getProductsViews'])->name('seller.products.views');
     Route::post('/filter/products-views', [ProductController::class, 'getProductsViews'])->name('seller.products.views.filter');
     Route::get('/products/create', [ProductController::class, 'create'])->name('seller.products.create');
     Route::post('/products', [ProductController::class, 'store'])->name('seller.products.store');
     Route::get('/products/{product}', [ProductController::class, 'show'])->name('seller.products.show');
     Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('seller.products.edit');
-    Route::put('/products/{product}', [ProductController::class, 'update'])->name('seller.products.update');
+    Route::post('/products/{product}', [ProductController::class, 'update'])->name('seller.products.update');
     // Add, remove hot and feature product
     Route::post('/toggle-products-hot/{id}', [ProductController::class, 'setHotProduct'])->name('seller.products.hot');
     Route::post('/toggle-products-feature/{id}', [ProductController::class, 'setFeatureProduct'])->name('seller.products.feature');

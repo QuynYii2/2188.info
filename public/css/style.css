@@ -7,6 +7,10 @@ body {
   background-color: #f5f5f5;
 }
 
+#mt-body {
+  margin-top: 170px;
+}
+
 .list-voucher {
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
 }
@@ -555,6 +559,13 @@ a {
 .header {
   font-family: "DM Sans";
 }
+.header .header-pc {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 10;
+}
 .header .header-pc .header-top {
   padding: 20px 0;
   background-color: #fd6506;
@@ -688,7 +699,7 @@ a {
   color: white;
   cursor: pointer;
 }
-.header .header-pc .header-top-right .item .total {
+.header .header-pc .header-top-right .item .total_shop {
   position: absolute;
   top: -5px;
   right: 15px;
@@ -838,19 +849,19 @@ a {
   right: 0;
 }
 .header .header-pc .header-top-right .close-signMenu {
-  position: fixed;
   top: 0 !important;
   left: 0;
-  height: 100%;
-  width: 100%;
   z-index: -1;
   background: rgba(0, 0, 0, 0.6);
   opacity: 0;
   transition: 0.5s;
 }
 .header .header-pc .header-top-right .close-signMenu.active {
+  position: fixed;
   opacity: 9999;
   z-index: 2;
+  height: 100%;
+  width: 100%;
 }
 .header .header-pc .header-top-right .item-shop .shop-menu {
   text-align: start;
@@ -964,21 +975,22 @@ a {
   font-weight: bold;
 }
 .header .header-pc .header-top-right .closeShopMenu {
-  position: fixed;
   top: 0 !important;
   left: 0;
-  height: 100%;
-  width: 100%;
   z-index: -1;
   background: rgba(0, 0, 0, 0.6);
   opacity: 0;
   transition: 0.5s;
 }
 .header .header-pc .header-top-right .closeShopMenu.active {
+  position: fixed;
   opacity: 9999;
   z-index: 2;
+  height: 100%;
+  width: 100%;
 }
 .header .header-pc .header-bottom {
+  background-color: white;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.15);
 }
 .header .header-pc .header-bottom-left--item {

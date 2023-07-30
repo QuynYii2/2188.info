@@ -34,6 +34,7 @@ class CartController extends Controller
             $variable = $request->input('variable');
             $valid = false;
 
+
             $productDetail = \App\Models\Variation::where([
                 ['product_id', $productID],
                 ['variation', $variable]

@@ -168,6 +168,7 @@ class ProductController_v2 extends Controller
                 return back();
             }
         } catch (\Exception $exception) {
+            dd($exception);
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
@@ -265,7 +266,7 @@ class ProductController_v2 extends Controller
             return response($exception, 400);
         }
     }
-      
+
     public function handleGallery($input)
     {
         $arrGallery = json_decode($input);
@@ -279,18 +280,23 @@ class ProductController_v2 extends Controller
         return implode(',', $arrResult);
     }
 
-    public function show($id)
+    public function quickUpdateProduct($id, Request $request)
     {
-        $product = Product::findOrFail($id);
-        $categories = Category::all();
-        $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', \Illuminate\Support\Facades\Auth::user()->id]])->get();
-        $att_of_product = DB::table('product_attribute')->where('product_id', $product->id)->get();
-
-        return view('backend-v2.products.edit', compact(
-            'categories',
-            'att_of_product',
-            'attributes',
-            'product'));
+        try {
+            $product = Product::findOrFail($id);
+            $number = $request->input('countBegin');
+            $success = $this->updateProduct($product, $request, $number);
+            if ($success) {
+                alert()->success('Success', 'Cập nhật thành công.');
+                return redirect()->route('product.v2.show');
+            } else {
+                alert()->error('Error', 'Cập nhật không thành công.');
+                return back();
+            }
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error, please try again');
+            return back();
+        }
     }
 
     public function edit($id)
@@ -299,12 +305,14 @@ class ProductController_v2 extends Controller
         $categories = Category::all();
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', \Illuminate\Support\Facades\Auth::user()->id]])->get();
         $att_of_product = DB::table('product_attribute')->where('product_id', $product->id)->get();
+        $productDetails = Variation::where('product_id', $id)->get();
 
         return view('backend-v2.products.edit', compact(
             'categories',
             'att_of_product',
             'attributes',
-            'product'));
+            'product',
+            'productDetails'));
     }
 
     public function update(Request $request, $id)
@@ -312,51 +320,67 @@ class ProductController_v2 extends Controller
         try {
             $product = Product::findOrFail($id);
 
-            $product->name = $request->input('name');
-            $product->price = $request->input('price');
-            $product->category_id = $request->input('category_id');
-            $product->slug = \Str::slug($request->input('name'));
+//            $product->gallery = $this->handleGallery($request->input('imgGallery'));
+            $number = $request->input('count');
+            $isNew = $request->input('isNew');
 
-            if ($request->hasFile('thumbnail')) {
-                $thumbnail = $request->file('thumbnail');
-                $thumbnailPath = $thumbnail->store('thumbnails', 'public');
-                $product->thumbnail = $thumbnailPath;
-            }
+            if ($isNew > 10) {
+                $newArray = $this->getAttributeProperty($request);
+                $product->name = $request->input('name');
+                $product->slug = \Str::slug($request->input('name'));
 
-            $product->gallery = $this->handleGallery($request->input('imgGallery'));
+                $hot = $request->input('hot_product');
+                $feature = $request->input('feature_product');
 
-            $hot = $request->input('hot_product');
-            $feature = $request->input('feature_product');
+                if ($hot) {
+                    $product->hot = 1;
+                } else {
+                    $product->hot = 0;
+                }
 
-            if ($hot) {
-                $product->hot = 1;
+                if ($feature) {
+                    $product->feature = 1;
+                } else {
+                    $product->feature = 0;
+                }
+
+                $arrayProduct = [];
+                for ($i = 1; $i < $number + 1; $i++) {
+                    $newVariationData = [];
+
+                    if ($request->hasFile('thumbnail' . $i)) {
+                        $thumbnail = $request->file('thumbnail' . $i);
+                        $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+                        $newVariationData['thumbnail'] = $thumbnailPath;
+                    }
+
+                    $newVariationData['price'] = $request->input('price' . $i);
+                    $newVariationData['old_price'] = $request->input('old_price' . $i);
+                    $attPro = $request->input('attribute_property' . $i);
+                    $newVariationData['variation'] = $attPro;
+
+                    $newVariationData['product_id'] = $product->id;
+                    $newVariationData['user_id'] = Auth::user()->id;
+                    $newVariationData['status'] = VariationStatus::ACTIVE;
+                    $newVariationData['description'] = $request->input('description' . $i);
+                    $newVariationData['quantity'] = $request->input('quantity' . $i);
+
+                    if (!$request->input('price' . $i) || $request->input('old_price' . $i) < $request->input('price' . $i)) {
+                        $newVariationData['price'] = $request->input('old_price' . $i);
+                    }
+
+                    $arrayProduct[] = $newVariationData;
+                }
+
+                Variation::where('product_id', $product->id)->delete();
+                Variation::insert($arrayProduct);
+                DB::table('product_attribute')->where('product_id', $product->id)->delete();
+                $this->createAttributeProduct($product, $newArray);
+
+                $updateProduct = $product->save();
             } else {
-                $product->hot = 0;
+                $updateProduct = $this->updateProduct($product, $request, $number);
             }
-
-            if ($feature) {
-                $product->feature = 1;
-            } else {
-                $product->feature = 0;
-            }
-
-            $product->old_price = $request->input('old_price');
-
-            if (!$request->input('price') || $request->input('old_price') < $request->input('price')) {
-                $product->price = $request->input('old_price');
-            }
-
-            $newArray = $this->getAttributeProperty($request);
-
-            $product_attributes = DB::table('product_attribute')->where('product_id', $product->id)->get();
-
-            foreach ($product_attributes as $item) {
-                DB::table('product_attribute')->where('product_id', $product->id)->delete($item->id);
-            }
-
-            $this->createAttributeProduct($product, $newArray);
-
-            $updateProduct = $product->save();
 
             if ($updateProduct) {
                 alert()->success('Success', 'Cập nhật thành công.');
@@ -387,6 +411,89 @@ class ProductController_v2 extends Controller
             alert()->error('Error', 'Error please try again!');
             return back();
         }
+    }
+
+    public function removeVariation($id)
+    {
+        try {
+            $variable = Variation::where('id', $id)->first();
+            $variable->status = VariationStatus::DELETED;
+            $success = $variable->save();
+            if ($success) {
+                alert()->success('Success', 'Variable đã được xóa thành công!');
+                return back();
+            }
+            alert()->error('Error', 'Không thể xoá variable!');
+            return back();
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error please try again!');
+            return back();
+        }
+    }
+
+    private function updateProduct($product, $request, $number)
+    {
+        $product->name = $request->input('name');
+        $product->slug = \Str::slug($request->input('name'));
+
+        $hot = $request->input('hot_product');
+        $feature = $request->input('feature_product');
+
+        if ($hot) {
+            $product->hot = 1;
+        } else {
+            $product->hot = 0;
+        }
+
+        if ($feature) {
+            $product->feature = 1;
+        } else {
+            $product->feature = 0;
+        }
+
+        if ($number > 1) {
+            for ($i = 1; $i < $number + 1; $i++) {
+                $id = $request->input('id' . $i);
+
+                $newVariationData = Variation::find($id);
+
+                if ($request->hasFile('thumbnail' . $id)) {
+                    $thumbnail = $request->file('thumbnail' . $id);
+                    $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+                    $newVariationData->thumbnail = $thumbnailPath;
+                }
+
+                $newVariationData->price = $request->input('price' . $id);
+                $newVariationData->old_price = $request->input('old_price' . $id);
+
+                if (!$request->input('price' . $id) || $request->input('old_price' . $id) < $request->input('price' . $id)) {
+                    $newVariationData->price = $request->input('old_price' . $id);
+                }
+
+                $newVariationData->save();
+            }
+        } else {
+            $newVariationData = Variation::where('product_id', $product->id)->first();
+
+            if ($request->hasFile('thumbnail1')) {
+                $thumbnail = $request->file('thumbnail1');
+                $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+                $newVariationData->thumbnail = $thumbnailPath;
+            }
+
+            $newVariationData->price = $request->input('price1');
+            $newVariationData->old_price = $request->input('old_price1');
+
+            if (!$request->input('price1') || $request->input('old_price1') < $request->input('price')) {
+                $newVariationData->price = $request->input('old_price1');
+            }
+
+            $newVariationData->save();
+        }
+
+        $success = $product->save();
+
+        return $success;
     }
 
     private function getAttributeProperty(Request $request)
