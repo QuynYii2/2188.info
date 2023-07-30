@@ -1,4 +1,4 @@
-<div id="formCreate1" class="">
+<div id="formCreate1" class=" col-12">
     <div class="form-row">
         <div class="col-4 d-inline-block">
             <label class="control-label small name" for="price">Giá

@@ -331,6 +331,10 @@
         }
     }
 
+    /**/
+    select {
+        display: none !important;
+    }
 
 </style>
 

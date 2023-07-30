@@ -3,313 +3,16 @@
     use App\Enums\PropertiStatus;
 @endphp
 <style>
-
-    .file-upload__label {
-        background-color: rgba(255, 255, 255, 0.9);
-        border-radius: 30px;
-        color: #000;
-        font-size: 16px;
-        left: 50%;
-        padding: 5px 10px;
-        cursor: pointer;
-        outline: none;
-        padding: 15px;
-        pointer-events: none;
-        position: absolute;
-        text-align: center;
-        top: 50%;
-        -moz-transform: translate(-50%, -50%);
-        -webkit-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-        -webkit-user-select: none;
-        white-space: nowrap;
-        width: 200px;
+    .btn-success{
+        color: white!important;
     }
 
-    .file-upload__input {
-        bottom: 0;
-        color: transparent;
-        cursor: pointer;
-        left: 0;
-        opacity: 0;
-        position: relative;
-        right: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
+    .name{
+        margin-top: 20px;
+        font-size: 14px;
+        margin-bottom: 5px;
     }
-
-    .selected-image {
-        border: 2px solid blue;
-    }
-
     @media all {
-
-        .media-frame-router {
-            position: absolute;
-            top: 50px;
-            left: 200px;
-            right: 0;
-            height: 36px;
-            z-index: 200;
-        }
-
-        .media-frame {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-            font-size: 12px;
-            -webkit-overflow-scrolling: touch;
-            overflow: hidden;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-        }
-
-        .media-modal-content {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            overflow: auto;
-            min-height: 300px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, .7);
-            background: #fff;
-            -webkit-font-smoothing: subpixel-antialiased;
-        }
-
-        .media-modal {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-            font-size: 12px;
-            -webkit-overflow-scrolling: touch;
-            position: fixed;
-            top: 30px;
-            left: 30px;
-            right: 30px;
-            bottom: 30px;
-            z-index: 160000;
-        }
-
-        .media-router .media-menu-item {
-            position: relative;
-            float: left;
-            border: 0;
-            margin: 0;
-            padding: 8px 10px 9px;
-            height: 18px;
-            line-height: 1.28571428;
-            font-size: 14px;
-            text-decoration: none;
-            background: 0 0;
-            cursor: pointer;
-            transition: none;
-        }
-
-        .media-menu-item:active, .media-menu-item:hover {
-            color: #2271b1;
-        }
-
-        .attachments-wrapper {
-            position: absolute;
-            top: 72px;
-            left: 0;
-            right: 300px;
-            bottom: 0;
-            overflow: auto;
-            outline: 0;
-        }
-
-        .media-frame .attachments-browser {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .media-frame-content {
-            position: absolute;
-            top: 84px;
-            left: 200px;
-            right: 0;
-            bottom: 61px;
-            height: auto;
-            width: auto;
-            margin: 0;
-            overflow: auto;
-            background: #fff;
-            border-top: 1px solid #dcdcde;
-        }
-
-        .attachments {
-            margin: 0;
-            -webkit-overflow-scrolling: touch;
-            padding: 2px 8px 8px;
-        }
-
-        .load-more-wrapper {
-            clear: both;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            padding: 1em 0;
-        }
-
-        .load-more-wrapper:after {
-            content: "";
-            min-width: 100%;
-            order: 1;
-        }
-
-        .attachment {
-            position: relative;
-            float: left;
-            padding: 8px;
-            margin: 0;
-            color: #3c434a;
-            list-style: none;
-            text-align: center;
-            -webkit-user-select: none;
-            user-select: none;
-            width: 25%;
-            box-sizing: border-box;
-        }
-
-        .media-frame-content[data-columns="9"] .attachment {
-            width: 11.11%;
-        }
-
-        .spinner {
-            background: url(http://localhost/wordpress/wp-admin/images/spinner.gif) no-repeat;
-            background-size: 20px 20px;
-            display: inline-block;
-            visibility: hidden;
-            float: right;
-            vertical-align: middle;
-            opacity: .7;
-            width: 20px;
-            height: 20px;
-            margin: 4px 10px 0;
-            background-image: url("http://localhost/wordpress/wp-admin/images/spinner.gif");
-            background-position-x: initial;
-            background-position-y: initial;
-            background-repeat-x: no-repeat;
-            background-repeat-y: no-repeat;
-            background-attachment: initial;
-            background-origin: initial;
-            background-clip: initial;
-            background-color: initial;
-        }
-
-        .spinner {
-            background: url(http://localhost/wordpress/wp-includes/images/spinner.gif) no-repeat;
-            background-size: 20px 20px;
-            float: right;
-            display: inline-block;
-            visibility: hidden;
-            opacity: .7;
-            width: 20px;
-            height: 20px;
-            margin: 0;
-            vertical-align: middle;
-            background-image: url("http://localhost/wordpress/wp-includes/images/spinner.gif");
-            background-position-x: initial;
-            background-position-y: initial;
-            background-repeat-x: no-repeat;
-            background-repeat-y: no-repeat;
-            background-attachment: initial;
-            background-origin: initial;
-            background-clip: initial;
-            background-color: initial;
-        }
-
-        .load-more-wrapper .load-more-count {
-            min-width: 100%;
-            margin: 0 0 1em;
-            text-align: center;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .load-more-wrapper .load-more {
-            margin: 0;
-        }
-
-        .button.hidden {
-            display: none;
-        }
-
-        .button:hover {
-            background: #f0f0f1;
-            border-color: #0a4b78;
-            color: #0a4b78;
-        }
-
-        .load-more-wrapper .load-more-jump {
-            margin: 0 0 0 12px;
-        }
-
-        .button:disabled, .button[disabled] {
-            color: #a7aaad !important;
-            border-color: #dcdcde !important;
-            background: #f6f7f7 !important;
-            box-shadow: none !important;
-            cursor: default;
-            transform: none !important;
-        }
-
-        .attachment-preview {
-            position: relative;
-            box-shadow: inset 0 0 15px rgba(0, 0, 0, .1), inset 0 0 0 1px rgba(0, 0, 0, .05);
-            background: #f0f0f1;
-            cursor: pointer;
-        }
-
-        .attachment-preview:before {
-            content: "";
-            display: block;
-            padding-top: 100%;
-        }
-
-        .attachment .thumbnail {
-            overflow: hidden;
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            opacity: 1;
-            transition: opacity .1s;
-        }
-
-        .attachment .thumbnail:after {
-            content: "";
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .1);
-            overflow: hidden;
-        }
-
-        .attachment .thumbnail .centered {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            transform: translate(50%, 50%);
-        }
-
 
         .attachment .portrait img {
             max-width: 100%;
@@ -330,7 +33,30 @@
         }
     }
 
+    .attribute-form{
+        background: white;
+        padding: 20px;
+    }
 
+    #checkboxes {
+        background-color: white;
+        height: 60vh;
+        overflow-y: auto!important;
+        display: none;
+        border: 1px #dadada solid;
+    }
+    .dropdown-content{
+        margin-top: 10px;
+    }
+
+    #checkboxes label {
+        display: block;
+    }
+
+    /**/
+    select {
+        display: none !important;
+    }
 </style>
 @extends('backend.layouts.master')
 
@@ -405,18 +131,7 @@
                             <textarea id="description-detail" class="form-control description" name="description-detail"
                                       rows="5"></textarea>
                         </div>
-                    </div>
-                    <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
-                        <div class="form-group" id="cat-parameter">
-                            <label for="selectCategory">Chuyên mục:</label>
-                            <select class="form-control" name="category_id" id="selectCategory">
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="form-group  p-3 mt-3">
+                        <div class="form-group mb-3">
                             <label class="name">Thông số sản phẩm</label>
                             <select class="form-control" name="attribute_id" id="selectAttribute">
                                 @foreach($attributes as $attribute)
@@ -424,14 +139,13 @@
                                 @endforeach
                             </select>
                         </div>
-
-                        <div class="border mt-5 mb-3 full-width">
+                        <div class="mb-3 full-width">
                             @foreach($attributes as $attribute)
                                 @php
                                     $properties = DB::table('properties')->where([['status', PropertiStatus::ACTIVE], ['attribute_id', $attribute->id]])->get();
                                 @endphp
                                 @if(!$properties->isEmpty())
-                                    <div id="attributeID_{{$attribute->id}}" class="d-none">
+                                    <div id="attributeID_{{$attribute->id}}" class="d-none attribute-form">
                                         <label class="name" for="date_start">{{$attribute->name}}</label>
                                         <input type="text" class="form-control"
                                                onclick="showDropdown('attribute_property{{$attribute->id}}', 'attribute_property-dropdownList{{$attribute->id}}')"
@@ -450,10 +164,10 @@
                                             </label>
                                         </div>
                                         <div class="">
-                                            <a class="btn btn-primary addALlNavberBtn">
+                                            <a class="btn btn-success  addALlNavberBtn">
                                                 SelectAll
                                             </a>
-                                            <a class="btn btn-warning removeAllNavberBtn">
+                                            <a class="btn btn-success removeAllNavberBtn">
                                                 Remove All
                                             </a>
                                             <a class="btn btn-secondary hiddenNavberBtn">
@@ -464,68 +178,58 @@
                                 @endif
                             @endforeach
                         </div>
-
-                        <a id="btnSaveAttribute" class="btn btn-success mt-2 mb-5">SaveAttribute</a>
-
+                        <div id="renderInputAttribute" class="row"></div>
+                        <a id="btnSaveAttribute" class="btn btn-success mt-4" style="color: white">SaveAttribute</a>
+                    </div>
+                    <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
+                        <div class="form-group">
+                            <div class="name">Tất cả danh mục</div>
+                            @php
+                                $categories = DB::table('categories')->where('parent_id', null)->get();
+                            @endphp
+                            <div id="checkboxes" style=" display: block">
+                                @foreach($categories as $category)
+                                    <label class="ml-2" for="category-{{$category->id}}">
+                                        <input type="checkbox" id="category-{{$category->id}}"
+                                               name="category-{{$category->id}}"
+                                               value="{{$category->id}}"
+                                               class="inputCheckboxCategory mr-2 p-3"/>
+                                        <span class="labelCheckboxCategory">{{$category->name}}</span>
+                                    </label>
+                                    @if(!$categories->isEmpty())
+                                        @php
+                                            $categories = DB::table('categories')->where('parent_id', $category->id)->get();
+                                        @endphp
+                                        @foreach($categories as $child)
+                                            <label class="ml-4" for="category-{{$child->id}}">
+                                                <input type="checkbox" id="category-{{$child->id}}"
+                                                       name="category-{{$child->id}}"
+                                                       value="{{$child->id}}"
+                                                       class="inputCheckboxCategory mr-2 p-3"/>
+                                                <span class="labelCheckboxCategory">{{$child->name}}</span>
+                                            </label>
+                                            @php
+                                                $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
+                                            @endphp
+                                            @foreach($listChild2 as $child2)
+                                                <label class="ml-5" for="category-{{$child2->id}}">
+                                                    <input type="checkbox" id="category-{{$child2->id}}"
+                                                           name="category-{{$child2->id}}"
+                                                           value="{{$child2->id}}"
+                                                           class="inputCheckboxCategory mr-2 p-3"/>
+                                                    <span class="labelCheckboxCategory">{{$child2->name}}</span>
+                                                </label>
+                                            @endforeach
+                                        @endforeach
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="form-group col-12 col-sm-12 ">
                                 <label for="gallery">Thư viện ảnh:</label>
                                 @include('backend.products.modal-media')
                             </div>
-                        </div>
-
-                        <div class="border">
-                            <div class="col-sm-12 d-inline-block ">
-                                <label class="name" for="date_start">Hình thức thanh toán</label>
-                                <input type="text" class="form-control"
-                                       onclick="showDropdown('payment-method', 'payment-dropdownList')"
-                                       placeholder="Chọn hình thức thanh toán" id="payment-method" required>
-                                <div class="dropdown-content" id="payment-dropdownList">
-                                    <label>
-                                        <input type="checkbox" value="option1"
-                                               onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
-                                        Nhận hàng thanh toán
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" value="option2"
-                                               onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
-                                        Thanh toán thẻ nội địa
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" value="option3"
-                                               onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
-                                        Thanh toán qua paypal
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="form-group col-sm-12 d-inline-block">
-                                <label class="control-label small" for="date_start">Hình thức vận chuyển</label>
-                                <input type="text" class="form-control"
-                                       onclick="showDropdown('transport-method', 'transport-dropdownList')"
-                                       placeholder="Chọn hình thức vận chuyển" id="transport-method" required>
-                                <div class="dropdown-content" id="transport-dropdownList">
-                                    <label>
-                                        <input type="checkbox" value="option1"
-                                               onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
-                                        Đường bộ
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" value="option2"
-                                               onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
-                                        Đường thủy
-                                    </label>
-                                    <label>
-                                        <input type="checkbox" value="option3"
-                                               onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
-                                        Đường hàng không
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="renderInputAttribute" class="">
-
                         </div>
                     </div>
                     <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
@@ -539,7 +243,6 @@
                 </form>
             </div>
         </div><!-- wpbody -->
-        <div class="clear"></div>
     </div><!-- wpcontent -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -564,114 +267,6 @@
                 }
             })
         })
-
-        {{--function callSaveAttribute(value) {--}}
-        {{--    $.ajax({--}}
-        {{--        url: '{{ route('product.v2.create.attribute') }}',--}}
-        {{--        type: 'POST',--}}
-        {{--        data: {--}}
-        {{--            _token: '{{ csrf_token() }}',--}}
-        {{--            'attribute_property': value--}}
-        {{--        },--}}
-        {{--        dataType: 'json',--}}
-        {{--        success: function (response) {--}}
-        {{--            console.log(response[1])--}}
-        {{--            renderAttributeViewSession();--}}
-        {{--        },--}}
-        {{--        error: function (xhr, status, error) {--}}
-        {{--            console.error(error);--}}
-        {{--        }--}}
-        {{--    })--}}
-        {{--}--}}
-
-        {{--function setCookie(name, value, days) {--}}
-        {{--    var expires = "";--}}
-        {{--    if (days) {--}}
-        {{--        var date = new Date();--}}
-        {{--        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));--}}
-        {{--        expires = "; expires=" + date.toUTCString();--}}
-        {{--    }--}}
-        {{--    document.cookie = name + "=" + (value || "") + expires + "; path=/";--}}
-        {{--}--}}
-
-        {{--function renderAttributeView(response) {--}}
-        {{--    @php--}}
-        {{--        Cookie::forget('testArray');--}}
-        {{--    @endphp--}}
-
-        {{--    var renderInputAttribute = $('#renderInputAttribute');--}}
-        {{--    setCookie('testArray', response[1], 1);--}}
-        {{--    @php--}}
-        {{--        $array= null;--}}
-        {{--        $att = null;--}}
-        {{--        if(isset($_COOKIE['testArray'])) {--}}
-        {{--            $att = $_COOKIE['testArray'];--}}
-        {{--        }--}}
-        {{--        if (!$att){--}}
-        {{--            $att = null;--}}
-        {{--        }--}}
-        {{--          $mainArray = null;--}}
-        {{--    if ($att){--}}
-        {{--      $newArray = [];--}}
-        {{--                    $elements = explode(',', $att);--}}
-        {{--                    foreach ($elements as $element) {--}}
-        {{--                            $parts = explode('-', $element);--}}
-        {{--                            $prefix = $parts[0];--}}
-        {{--                            $value = $parts[1];--}}
-        {{--                            if (!isset($newArray[$prefix])) {--}}
-        {{--                                $newArray[$prefix] = $prefix . '-' . $value;--}}
-        {{--                            } else {--}}
-        {{--                                $newArray[$prefix] .= '-' . $value;--}}
-        {{--                            }--}}
-        {{--                    }--}}
-        {{--                    $newArray = array_values($newArray);--}}
-
-        {{--                    if ($newArray) {--}}
-        {{--                            foreach ($newArray as $myItem) {--}}
-        {{--                                $key = explode("-", $myItem);--}}
-        {{--                                $demoArray = null;--}}
-        {{--                                for ($j = 1; $j < count($key); $j++) {--}}
-        {{--                                    $demoArray[] = $key[0] . '-' . $key[$j];--}}
-        {{--                                }--}}
-        {{--                                $testArray[] = $demoArray;--}}
-        {{--                            }--}}
-        {{--                    }--}}
-
-        {{--                    $array = $testArray;--}}
-
-        {{--                    if ($array) {--}}
-        {{--                        if (count($array) == 1) {--}}
-        {{--                            $mainArray = $array;--}}
-        {{--                        }--}}
-        {{--                        $newArray1 = $array[0];--}}
-        {{--                        for ($i = 1; $i < count($array); $i++) {--}}
-        {{--                            $arrayList = [];--}}
-        {{--                            for ($j = 0; $j < count($array1); $j++) {--}}
-        {{--                                for ($z = 0; $z < count($array2); $z++) {--}}
-        {{--                                    $arrayList[] = $array1[$j] . "," . $array2[$z];--}}
-        {{--                                }--}}
-        {{--                            }--}}
-        {{--                            $newArray1 = $arrayList;--}}
-        {{--                        }--}}
-        {{--                        $mainArray =  $newArray1;--}}
-        {{--                    }--}}
-        {{--    }--}}
-        {{--    @endphp--}}
-        {{--    var item = `@include('backend-v2/products/attribute', ['testArray' => $mainArray])`;--}}
-        {{--    renderInputAttribute.append(item);--}}
-        {{--}--}}
-
-        {{--function renderAttributeViewSession() {--}}
-        {{--    var renderInputAttribute = $('#renderInputAttribute');--}}
-        {{--    @php--}}
-        {{--        $mainArray = session()->get('testArray');--}}
-        {{--        $mainArray = $mainArray[0];--}}
-        {{--    @endphp--}}
-        {{--    var item = `@include('backend-v2/products/attribute', ['testArray' => $mainArray])`;--}}
-        {{--    renderInputAttribute.append(item);--}}
-        {{--}--}}
-
-        {{--renderAttributeViewSession();--}}
     </script>
     <script>
         var properties = document.getElementsByClassName('property-attribute')
@@ -763,20 +358,20 @@
 
             $('.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValue" autocomplete="off" onkeyup="filter()" class="dd-searchbox" type="text"></div>');
 
-            $('#selectCategory').each(function (i, select) {
-                if (!$(this).next().hasClass('dropdown-select-category')) {
-                    $(this).after('<div class="dropdown-select-category wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
-                    var dropdown = $(this).next();
-                    var options = $(select).find('option');
-                    var selected = $(this).find('option:selected');
-                    dropdown.find('.current').html(selected.data('display-text') || selected.text());
-                    options.each(function (j, o) {
-                        var display = $(o).data('display-text') || '';
-                        dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
-                    });
-                }
-            });
-            $('.dropdown-select-category ul').before('<div class="dd-search"><input id="txtSearchCategory" autocomplete="off" onkeyup="filter()" class="dd-searchbox" type="text"></div>');
+            // $('#selectCategory').each(function (i, select) {
+            //     if (!$(this).next().hasClass('dropdown-select-category')) {
+            //         $(this).after('<div class="dropdown-select-category wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            //         var dropdown = $(this).next();
+            //         var options = $(select).find('option');
+            //         var selected = $(this).find('option:selected');
+            //         dropdown.find('.current').html(selected.data('display-text') || selected.text());
+            //         options.each(function (j, o) {
+            //             var display = $(o).data('display-text') || '';
+            //             dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+            //         });
+            //     }
+            // });
+            // $('.dropdown-select-category ul').before('<div class="dd-search"><input id="txtSearchCategory" autocomplete="off" onkeyup="filter()" class="dd-searchbox" type="text"></div>');
 
             $('#selectAttribute').each(function (i, select) {
                 if (!$(this).next().hasClass('dropdown-select-attribute')) {
@@ -899,20 +494,20 @@
             $(this).closest('.dropdown-select').prev('#selectStorage').val($(this).data('value')).trigger('change');
         });
 
-        $(document).on('click', '.dropdown-select-category .option', function (event) {
-            $(this).closest('.list').find('.selected').removeClass('selected');
-            $(this).addClass('selected');
-            var text = $(this).data('display-text') || $(this).text();
-            $(this).closest('.dropdown-select-category').find('.current').text(text);
-            $(this).closest('.dropdown-select-category').prev('#selectCategory').val($(this).data('value')).trigger('change');
-        });
+        // $(document).on('click', '.dropdown-select-category .option', function (event) {
+        //     $(this).closest('.list').find('.selected').removeClass('selected');
+        //     $(this).addClass('selected');
+        //     var text = $(this).data('display-text') || $(this).text();
+        //     $(this).closest('.dropdown-select-category').find('.current').text(text);
+        //     $(this).closest('.dropdown-select-category').prev('#selectCategory').val($(this).data('value')).trigger('change');
+        // });
 
         $(document).on('click', '.dropdown-select-attribute .option', function (event) {
             $(this).closest('.list').find('.selected').removeClass('selected');
             $(this).addClass('selected');
             var text = $(this).data('display-text') || $(this).text();
             $(this).closest('.dropdown-select-attribute').find('.current').text(text);
-            $(this).closest('.dropdown-select-attribute').prev('#selectCategory').val($(this).data('value')).trigger('change');
+            // $(this).closest('.dropdown-select-attribute').prev('#selectCategory').val($(this).data('value')).trigger('change');
 
             let attributeID = $(this).attr('data-value');
             var attribute = document.getElementById("attributeID_" + attributeID);
@@ -1064,7 +659,33 @@
                 });
         }
     </script>
+    <script>
+        var expanded = false;
 
+        function showCheckboxes() {
+            var checkboxes = document.getElementById("checkboxes");
+            var div = document.getElementById('div-click');
+            if (!expanded) {
+                checkboxes.style.display = "block";
+                expanded = true;
+                window.addEventListener('click', function (e) {
+                    if (checkboxes.contains(e.target) || div.contains(e.target)) {
+                        div.on('click', function () {
+                            checkboxes.style.display = "block";
+                            expanded = true;
+                        });
+                    } else {
+                        checkboxes.style.display = "none";
+                        expanded = false;
+                    }
+                })
+            } else {
+                checkboxes.style.display = "none";
+                expanded = false;
+            }
+        }
+
+    </script>
     <script>
         function showFormEdit(id) {
             var formEdit = document.getElementById('formCreate' + id);

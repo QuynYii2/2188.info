@@ -1,6 +1,5 @@
 @extends('backend.layouts.master')
 
-
 @section('title')
     List Products
 @endsection
@@ -22,436 +21,7 @@
 @endphp
 @section('content')
     <div id="wpbody-content" class="snipcss-PfbzX">
-        <div id="screen-meta" class="metabox-prefs">
-            <div id="contextual-help-wrap" class="hidden" tabindex="-1" aria-label="Khung Trợ Giúp Ngữ Cảnh">
-                <div id="contextual-help-back">
-                </div>
-                <div id="contextual-help-columns">
-                    <div class="contextual-help-tabs">
-                        <ul>
-                            <li id="tab-link-woocommerce_support_tab" class="active">
-                                <a href="#tab-panel-woocommerce_support_tab"
-                                   aria-controls="tab-panel-woocommerce_support_tab">
-                                    Help &amp; Support
-                                </a>
-                            </li>
-                            <li id="tab-link-woocommerce_bugs_tab">
-                                <a href="#tab-panel-woocommerce_bugs_tab"
-                                   aria-controls="tab-panel-woocommerce_bugs_tab">
-                                    Found a bug?
-                                </a>
-                            </li>
-                            <li id="tab-link-woocommerce_onboard_tab">
-                                <a href="#tab-panel-woocommerce_onboard_tab"
-                                   aria-controls="tab-panel-woocommerce_onboard_tab">
-                                    Setup wizard
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="contextual-help-sidebar">
-                        <p>
-                            <strong>
-                                For more information:
-                            </strong>
-                        </p>
-                        <p>
-                            <a href="https://woocommerce.com/?utm_source=helptab&amp;utm_medium=product&amp;utm_content=about&amp;utm_campaign=woocommerceplugin"
-                               target="_blank">
-                                About WooCommerce
-                            </a>
-                        </p>
-                        <p>
-                            <a href="https://wordpress.org/plugins/woocommerce/" target="_blank">
-                                WordPress.org project
-                            </a>
-                        </p>
-                        <p>
-                            <a href="https://github.com/woocommerce/woocommerce/" target="_blank">
-                                GitHub project
-                            </a>
-                        </p>
-                        <p>
-                            <a href="https://woocommerce.com/storefront/?utm_source=helptab&amp;utm_medium=product&amp;utm_content=wcthemes&amp;utm_campaign=woocommerceplugin"
-                               target="_blank">
-                                Official theme
-                            </a>
-                        </p>
-                        <p>
-                            <a href="https://woocommerce.com/product-category/woocommerce-extensions/?utm_source=helptab&amp;utm_medium=product&amp;utm_content=wcextensions&amp;utm_campaign=woocommerceplugin"
-                               target="_blank">
-                                Official extensions
-                            </a>
-                        </p>
-                    </div>
-                    <div class="contextual-help-tabs-wrap">
-                        <div id="tab-panel-woocommerce_support_tab" class="help-tab-content active">
-                            <h2>
-                                Help &amp; Support
-                            </h2>
-                            <p>
-                                Should you need help understanding, using, or extending WooCommerce,
-                                <a href="https://docs.woocommerce.com/documentation/plugins/woocommerce/?utm_source=helptab&amp;utm_medium=product&amp;utm_content=docs&amp;utm_campaign=woocommerceplugin">
-                                    please read our documentation
-                                </a>
-                                . You will find all kinds of resources including snippets, tutorials and much more.
-                            </p>
-                            <p>
-                                For further assistance with WooCommerce core, use the
-                                <a href="https://wordpress.org/support/plugin/woocommerce">
-                                    community forum
-                                </a>
-                                . For help with premium extensions sold on WooCommerce.com,
-                                <a href="https://woocommerce.com/my-account/create-a-ticket/?utm_source=helptab&amp;utm_medium=product&amp;utm_content=tickets&amp;utm_campaign=woocommerceplugin">
-                                    open a support request at WooCommerce.com
-                                </a>
-                                .
-                            </p>
-                            <p>
-                                Before asking for help, we recommend checking the system status page to identify any
-                                problems with your configuration.
-                            </p>
-                            <p>
-                                <a href="http://localhost/wordpress/wp-admin/admin.php?page=wc-status"
-                                   class="button button-primary">
-                                    System status
-                                </a>
-                                <a href="https://wordpress.org/support/plugin/woocommerce" class="button">
-                                    Community forum
-                                </a>
-                                <a href="https://woocommerce.com/my-account/create-a-ticket/?utm_source=helptab&amp;utm_medium=product&amp;utm_content=tickets&amp;utm_campaign=woocommerceplugin"
-                                   class="button">
-                                    WooCommerce.com support
-                                </a>
-                            </p>
-                        </div>
-                        <div id="tab-panel-woocommerce_bugs_tab" class="help-tab-content">
-                            <h2>
-                                Found a bug?
-                            </h2>
-                            <p>
-                                If you find a bug within WooCommerce core you can create a ticket via
-                                <a href="https://github.com/woocommerce/woocommerce/issues?state=open">
-                                    GitHub issues
-                                </a>
-                                . Ensure you read the
-                                <a href="https://github.com/woocommerce/woocommerce/blob/trunk/.github/CONTRIBUTING.md">
-                                    contribution guide
-                                </a>
-                                prior to submitting your report. To help us solve your issue, please be as descriptive
-                                as possible and include your
-                                <a href="http://localhost/wordpress/wp-admin/admin.php?page=wc-status">
-                                    system status report
-                                </a>
-                                .
-                            </p>
-                            <p>
-                                <a href="https://github.com/woocommerce/woocommerce/issues/new?assignees=&amp;labels=&amp;template=1-bug-report.yml"
-                                   class="button button-primary">
-                                    Report a bug
-                                </a>
-                                <a href="http://localhost/wordpress/wp-admin/admin.php?page=wc-status" class="button">
-                                    System status
-                                </a>
-                            </p>
-                        </div>
-                        <div id="tab-panel-woocommerce_onboard_tab" class="help-tab-content">
-                            <h2>
-                                WooCommerce Onboarding
-                            </h2>
-                            <h3>
-                                Profile Setup Wizard
-                            </h3>
-                            <p>
-                                If you need to access the setup wizard again, please click on the button below.
-                            </p>
-                            <p>
-                                <a href="http://localhost/wordpress/wp-admin/admin.php?page=wc-admin&amp;path=/setup-wizard"
-                                   class="button button-primary">
-                                    Setup wizard
-                                </a>
-                            </p>
-                            <h3>
-                                Task List
-                            </h3>
-                            <p>
-                                If you need to enable or disable the task lists, please click on the button below.
-                            </p>
-                            <p>
-                                <a href="http://localhost/wordpress/wp-admin/admin.php?page=wc-admin&amp;reset_task_list=0"
-                                   class="button button-primary">
-                                    Disable
-                                </a>
-                            </p>
-                            <h3>
-                                Extended task List
-                            </h3>
-                            <p>
-                                If you need to enable or disable the extended task lists, please click on the button
-                                below.
-                            </p>
-                            <p>
-                                <a href="http://localhost/wordpress/wp-admin/admin.php?page=wc-admin&amp;reset_extended_task_list=0"
-                                   class="button button-primary">
-                                    Disable
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="screen-options-wrap" class="hidden" tabindex="-1" aria-label="Khung Tùy Biến Màn Hình">
-                <form id="adv-settings" method="post">
-                    <fieldset class="metabox-prefs">
-                        <legend>
-                            Cột
-                        </legend>
-                        <label>
-                            <input class="hide-column-tog" name="thumb-hide" type="checkbox" id="thumb-hide"
-                                   value="thumb" checked="checked">
-                            Image
-                        </label>
-                        <label>
-                            <input class="hide-column-tog" name="sku-hide" type="checkbox" id="sku-hide" value="sku"
-                                   checked="checked">
-                            SKU
-                        </label>
-                        <label>
-                            <input class="hide-column-tog" name="is_in_stock-hide" type="checkbox" id="is_in_stock-hide"
-                                   value="is_in_stock" checked="checked">
-                            Stock
-                        </label>
-                        <label>
-                            <input class="hide-column-tog" name="price-hide" type="checkbox" id="price-hide"
-                                   value="price" checked="checked">
-                            Price
-                        </label>
-                        <label>
-                            <input class="hide-column-tog" name="product_cat-hide" type="checkbox" id="product_cat-hide"
-                                   value="product_cat" checked="checked">
-                            Categories
-                        </label>
-                        <label>
-                            <input class="hide-column-tog" name="product_tag-hide" type="checkbox" id="product_tag-hide"
-                                   value="product_tag" checked="checked">
-                            Tags
-                        </label>
-                        <label>
-                            <input class="hide-column-tog" name="featured-hide" type="checkbox" id="featured-hide"
-                                   value="featured" checked="checked">
-                            Featured
-                        </label>
-                        <label>
-                            <input class="hide-column-tog" name="date-hide" type="checkbox" id="date-hide" value="date"
-                                   checked="checked">
-                            Date
-                        </label>
-                    </fieldset>
-                    <fieldset class="screen-options">
-                        <legend>
-                            Phân trang
-                        </legend>
-                        <label for="edit_product_per_page">
-                            Số đối tượng trên một trang.
-                        </label>
-                        <input type="number" step="1" min="1" max="999" class="screen-per-page"
-                               name="wp_screen_options[value]" id="edit_product_per_page" maxlength="3" value="20">
-                        <input type="hidden" name="wp_screen_options[option]" value="edit_product_per_page">
-                    </fieldset>
-                    <p class="submit">
-                        <input type="submit" name="screen-options-apply" id="screen-options-apply"
-                               class="button button-primary" value="Áp dụng">
-                    </p>
-                    <input type="hidden" id="screenoptionnonce" name="screenoptionnonce" value="b34a0365e8">
-                </form>
-            </div>
-        </div>
-        <div id="screen-meta-links">
-            <div id="screen-options-link-wrap" class="hide-if-no-js screen-meta-toggle">
-                <button type="button" id="show-settings-link" class="button show-settings"
-                        aria-controls="screen-options-wrap" aria-expanded="false">
-                    Tùy chọn hiển thị
-                </button>
-            </div>
-            <div id="contextual-help-link-wrap" class="hide-if-no-js screen-meta-toggle">
-                <button type="button" id="contextual-help-link" class="button show-settings"
-                        aria-controls="contextual-help-wrap" aria-expanded="false">
-                    Trợ giúp
-                </button>
-            </div>
-        </div>
-        <div class="woocommerce-layout__jitm" id="jp-admin-notices">
-        </div>
-        <div class="woocommerce-layout__notice-list-hide" id="wp__notice-list">
-        </div>
-        <div>
-            <div class="woocommerce-layout">
-                <div class="woocommerce-layout__primary" id="woocommerce-layout__primary">
-                    <div id="woocommerce-layout__notice-list" class="woocommerce-layout__notice-list">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="wrap">
-            <h1 class="wp-heading-inline">
-                Products
-            </h1>
-            <a href="{{route('seller.products.create')}}" class="page-title-action">
-                Add New
-            </a>
-            <a href="#" class="page-title-action">
-                Import
-            </a>
-            <a href="#" class="page-title-action">
-                Export
-            </a>
-            <hr class="wp-header-end">
-
-            <h2 class="screen-reader-text">
-                Filter products
-            </h2>
-            <ul class="subsubsub">
-                <li class="all">
-                    <a href="#" class="current" aria-current="page">
-                        Tất cả
-                        <span class="count">
-            (1)
-          </span>
-                    </a>
-                    |
-                </li>
-                <li class="publish">
-                    <a href="#">
-                        Đã xuất bản
-                        <span class="count">
-            (1)
-          </span>
-                    </a>
-                    |
-                </li>
-                <li class="byorder">
-                    <a href="#">
-                        Sorting
-                    </a>
-                </li>
-            </ul>
-            <form id="posts-filter" method="get">
-                <p class="search-box">
-                    <label class="screen-reader-text" for="post-search-input">
-                        Search products:
-                    </label>
-                    <input type="search" id="post-search-input" name="s" value="">
-                    <input type="submit" id="search-submit" class="button" value="Search products">
-                </p>
-            </form>
-            <div class="tablenav top">
-                <div class="alignleft actions bulkactions">
-                    <label for="bulk-action-selector-top" class="screen-reader-text">
-                        Lựa chọn thao tác hàng loạt
-                    </label>
-                    <select name="action" id="bulk-action-selector-top">
-                        <option value="-1">
-                            Hành động
-                        </option>
-                        <option value="edit" class="hide-if-no-js">
-                            Chỉnh sửa
-                        </option>
-                        <option value="trash">
-                            Bỏ vào thùng rác
-                        </option>
-                    </select>
-                    <input type="submit" id="doaction" class="button action" value="Áp dụng">
-                </div>
-                <div class="alignleft actions">
-                    <select name="product_cat" id="product_cat" class="dropdown_product_cat">
-                        <option value="" selected="selected">
-                            Select a category
-                        </option>
-                        @php
-                            $categories = DB::table('categories')->get();
-                        @endphp
-                        @foreach($categories as $category)
-                            <option value="{{$category->id}}">
-                                {{$category->name}}
-                            </option>
-                        @endforeach
-                    </select>
-                    <select name="product_type" id="dropdown_product_type">
-                        <option value="">
-                            Filter by product type
-                        </option>
-                        <option value="simple">
-                            Simple product
-                        </option>
-                        <option value="downloadable">
-                            → Downloadable
-                        </option>
-                        <option value="virtual">
-                            → Virtual
-                        </option>
-                        <option value="grouped">
-                            Grouped product
-                        </option>
-                        <option value="external">
-                            External/Affiliate product
-                        </option>
-                        <option value="variable">
-                            Variable product
-                        </option>
-                    </select>
-                    <select name="stock_status">
-                        <option value="">
-                            Filter by stock status
-                        </option>
-                        <option value="instock">
-                            In stock
-                        </option>
-                        <option value="outofstock">
-                            Out of stock
-                        </option>
-                        <option value="onbackorder">
-                            On backorder
-                        </option>
-                    </select>
-                    <input type="submit" name="filter_action" id="post-query-submit" class="button" value="Lọc">
-                </div>
-                <div class="tablenav-pages one-page">
-          <span class="displaying-num">
-            0 mục
-          </span>
-                    <span class="pagination-links">
-            <span class="tablenav-pages-navspan button disabled" aria-hidden="true">
-              «
-            </span>
-            <span class="tablenav-pages-navspan button disabled" aria-hidden="true">
-              ‹
-            </span>
-            <span class="paging-input">
-              <label for="current-page-selector" class="screen-reader-text">
-                Trang hiện tại
-              </label>
-              <input class="current-page" id="current-page-selector" type="text" name="paged" value="1" size="1"
-                     aria-describedby="table-paging">
-              <span class="tablenav-paging-text">
-                trên
-                <span class="total-pages">
-                  1
-                </span>
-              </span>
-            </span>
-            <span class="tablenav-pages-navspan button disabled" aria-hidden="true">
-              ›
-            </span>
-            <span class="tablenav-pages-navspan button disabled" aria-hidden="true">
-              »
-            </span>
-          </span>
-                </div>
-                <br class="clear">
-            </div>
-            <h2 class="screen-reader-text">
-                Products list
-            </h2>
+        <div class="">
 
             {{--START TABLE--}}
             <table class="wp-list-table widefat fixed striped table-view-list posts">
@@ -543,16 +113,25 @@
                                     <span class="screen-reader-text">“{{$product->name}}” đã bị khóa</span>
                                 </div>
                             </th>
-                            @php
-                                $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
-                            @endphp
                             <td class="thumb column-thumb" data-colname="Image">
                                 <a href="#">
-                                    <img width="150" height="150"
-                                         src="{{ asset('storage/'.$product->thumbnail) }}"
-                                         class="woocommerce-placeholder wp-post-image" alt="Placeholder"
-                                         decoding="async"
-                                         loading="lazy">
+                                    @php
+                                        $thum = \App\Models\Variation::where('product_id', $product->id)->first();
+                                    @endphp
+                                    @if($thum)
+                                        <img width="150" height="150"
+                                             src="{{ asset('storage/'.$thum->thumbnail) }}"
+                                             class="woocommerce-placeholder wp-post-image" alt="Placeholder"
+                                             decoding="async"
+                                             loading="lazy">
+                                    @else
+                                        <img width="150" height="150"
+                                             src="data:image/png;base64,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"
+                                             class="woocommerce-placeholder wp-post-image" alt="Placeholder"
+                                             decoding="async"
+                                             loading="lazy">
+                                    @endif
+
                                 </a>
                             </td>
                             <td class="name column-name has-row-actions column-primary" data-colname="Name">
@@ -602,6 +181,7 @@
                                                           </div>
                                                                 @php
                                                                     $att_of_product = DB::table('product_attribute')->where('product_id', $product->id)->get();
+                                                                    $productDetails = \App\Models\Variation::where('product_id', $product->id)->get();
                                                                 @endphp
                                                           <div class="modal-body">
                                                               <div class="form-group">
@@ -609,22 +189,9 @@
                                                                 <input type="text" class="form-control" id="name"
                                                                        name="name"
                                                                        value="{{ $product->name }}">
-                                                            </div>
-                                                                <div class="form-group">
-                                                                    <label for="price">Giá bán</label>
-                                                                    <input type="number" class="form-control"
-                                                                           id="price{{$product->id}}"
-                                                                           name="old_price"
-                                                                           value="{{ $product->old_price }}">
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="qty">Giá khuyến mãi</label>
-                                                                    <input type="number" class="form-control"
-                                                                           id="qty{{$product->id}}"
-                                                                           name="price" value="{{ $product->price }}">
-                                                                </div>
+                                                              </div>
 
-                                                                <div class="form-group">
+                                                               <div class="form-group">
                                                                     <label for="category">Category</label>
                                                                     <select class="form-control" id="category"
                                                                             name="category_id">
@@ -638,56 +205,124 @@
                                                                 </div>
 
                                                                 <div class="form-group">
-                                                                    <label class="control-label">Thông số sản phẩm</label>
-                                                                        @php
-                                                                            $attributes = DB::table('attributes')->get();
-                                                                        @endphp
-                                                                    @foreach($attributes as $attribute)
-                                                                        @php
-                                                                            $properties = DB::table('properties')->where([['status', \App\Enums\PropertiStatus::ACTIVE], ['attribute_id', $attribute->id]])->get();
-                                                                        @endphp
-                                                                        @if(!$properties->isEmpty())
-                                                                            <div id="{{$attribute->name}}-{{$attribute->id}}"
-                                                                                 class="">
-                                                                                <label class="control-label"
-                                                                                       for="color">{{$attribute->name}}</label>
-                                                                                <div class="col-md-12 overflow-scroll custom-scrollbar">
-                                                                                    <ul class="list-unstyled">
-                                                                                        @foreach($properties as $property)
+                                                                    @if(!$productDetails->isEmpty())
+                                                                        @if(count($productDetails)>1)
+                                                                            @foreach($productDetails as $productDetail)
+                                                                                @if($productDetail->variation && $productDetail->variation != 0)
+                                                                                    <div class="form-group">
+                                                                                <label class="control-label">Thông số sản phẩm</label>
+                                                                                @php
+                                                                                    $variable = $productDetail->variation;
+                                                                                    $arrayVariation = explode(',', $variable);
+                                                                                @endphp
+                                                                                        @foreach($arrayVariation as $itemVariation)
                                                                                             @php
-                                                                                                $isChecked = false
+                                                                                                $arrayItemVariation = explode('-', $itemVariation);
+                                                                                                $attributeVariation = \App\Models\Attribute::find($arrayItemVariation[0]);
+                                                                                                $propertyVariation = \App\Models\Properties::find($arrayItemVariation[1]);
                                                                                             @endphp
-                                                                                            <li>
-                                                                                                <label>
-                                                                                                    @foreach($att_of_product as $att)
-                                                                                                        @if($att->attribute_id == $attribute->id )
-                                                                                                            @php
-                                                                                                                $value = explode(',', $att->value);
-                                                                                                            foreach($value as $item){
-                                                                                                                if($item == $property->id ){
-                                                                                                                    $isChecked = true;
-                                                                                                                    }
-                                                                                                                }
-                                                                                                            @endphp
-                                                                                                        @endif
-
-                                                                                                    @endforeach
-                                                                                                    <input onchange="checkInput();"
-                                                                                                           class="property-attribute"
-                                                                                                           id="property-{{$property->id}}"
-                                                                                                           type="checkbox"
-                                                                                                           name="property-{{$attribute->name}}"
-                                                                                                           value="{{$attribute->id}}-{{$property->id}}" {{ $isChecked ? 'checked' : '' }}>
-                                                                                                    {{$property->name}}
-                                                                                                </label>
-                                                                                            </li>
+                                                                                            <div class="">
+                                                                                            <label class="control-label"
+                                                                                                   for="color">{{$attributeVariation->name}}</label>
+                                                                                        <div class="col-md-12 overflow-scroll custom-scrollbar">
+                                                                                                <ul class="list-unstyled">
+                                                                                                        <li>
+                                                                                                            <input onchange="checkInput();"
+                                                                                                                   class="property-attribute"
+                                                                                                                   id="property-{{$propertyVariation->id}}"
+                                                                                                                   type="checkbox"
+                                                                                                                   name="attribute-property-{{$loop->index+1}}"
+                                                                                                                   value="{{$attributeVariation->id}}-{{$propertyVariation->id}}"
+                                                                                                                   checked
+                                                                                                                   disabled>
+                                                                                                            {{$propertyVariation->name}}
+                                                                                                        </li>
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </div>
                                                                                         @endforeach
-                                                                                    </ul>
-                                                                                </div>
                                                                             </div>
-                                                                        @endif
-                                                                    @endforeach
 
+                                                                                    <div class="form-group">
+                                                                                    <label for="price">Giá bán</label>
+                                                                                    <input type="number"
+                                                                                           class="form-control"
+                                                                                           id="price{{$productDetail->id}}"
+                                                                                           name="old_price{{$productDetail->id}}"
+                                                                                           value="{{ $productDetail->old_price }}">
+                                                                            </div>
+
+                                                                                    <div class="form-group">
+                                                                                    <label for="qty">Giá khuyến mãi</label>
+                                                                                    <input type="number"
+                                                                                           class="form-control"
+                                                                                           id="qty{{$productDetail->id}}"
+                                                                                           name="price{{$productDetail->id}}"
+                                                                                           value="{{$productDetail->price }}">
+                                                                            </div>
+
+                                                                                    <div class="form-group">
+                                                                                <label for="thumbnail">Thumbnail</label>
+                                                                                <input type="file"
+                                                                                       class="form-control-file"
+                                                                                       id="thumbnail"
+                                                                                       name="thumbnail{{$productDetail->id}}"
+                                                                                       accept="image/*">
+                                                                                @if ($productDetail->thumbnail)
+                                                                                            <img class="mt-2"
+                                                                                                 style="height: 100px"
+                                                                                                 src="{{ asset('storage/' . $productDetail->thumbnail) }}"
+                                                                                                 alt="Thumbnail">
+                                                                                            </a>
+                                                                                        @endif
+                                                                            </div>
+                                                                                @endif
+                                                                                <input hidden="" name="id{{$loop->index+1}}"
+                                                                                       value="{{$productDetail->id}}">
+                                                                            @endforeach
+                                                                            <input hidden="" name="countBegin"
+                                                                                   value="{{count($productDetails)}}">
+                                                                        @else
+                                                                            @php
+                                                                                $productDetail = $productDetails[0];
+                                                                            @endphp
+                                                                            <div class="form-group">
+                                                                                    <label for="price">Giá bán</label>
+                                                                                    <input type="number"
+                                                                                           class="form-control"
+                                                                                           id="price{{$productDetail->id}}"
+                                                                                           name="old_price1"
+                                                                                           value="{{ $productDetail->old_price }}">
+                                                                            </div>
+
+                                                                            <div class="form-group">
+                                                                                    <label for="qty">Giá khuyến mãi</label>
+                                                                                    <input type="number"
+                                                                                           class="form-control"
+                                                                                           id="qty{{$productDetail->id}}"
+                                                                                           name="price1"
+                                                                                           value="{{$productDetail->price }}">
+                                                                            </div>
+
+                                                                            <div class="form-group">
+                                                                                <label for="thumbnail">Thumbnail</label>
+                                                                                <input type="file"
+                                                                                       class="form-control-file"
+                                                                                       id="thumbnail"
+                                                                                       name="thumbnail{{$loop->index+1}}"
+                                                                                       accept="image/*">
+                                                                                @if ($productDetail->thumbnail)
+                                                                                    <img class="mt-2"
+                                                                                         style="height: 100px"
+                                                                                         src="{{ asset('storage/' . $productDetail->thumbnail) }}"
+                                                                                         alt="Thumbnail">
+                                                                                    </a>
+                                                                                @endif
+                                                                            </div>
+                                                                            <input hidden="" name="countBegin"
+                                                                                   value="1">
+                                                                        @endif
+                                                                    @endif
                                                                 </div>
 
                                                                 <input id="inputHotProduct{{$product->id}}" type="text"
@@ -729,22 +364,6 @@
                                                                             @break
                                                                         @endif
                                                                     @endfor
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <label for="thumbnail">Thumbnail</label>
-                                                                    <input type="file" class="form-control-file"
-                                                                           id="thumbnail"
-                                                                           name="thumbnail" accept="image/*">
-                                                                    @if ($product->thumbnail)
-                                                                        <a href="{{ asset('storage/' . $product->thumbnail) }}"
-                                                                           data-fancybox="group"
-                                                                           data-caption="This image has a caption 1">
-                                                                            <img class="mt-2" style="height: 100px"
-                                                                                 src="{{ asset('storage/' . $product->thumbnail) }}"
-                                                                                 alt="Thumbnail">
-                                                                        </a>
-                                                                    @endif
                                                                 </div>
 
                                                                 <div class="form-group">
@@ -801,7 +420,6 @@
                                                             <form action="{{route('seller.products.destroy', $product->id)}}"
                                                                   method="post">
                                                                 @csrf
-                                                                @method('DELETE')
                                                                 <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
@@ -1002,72 +620,6 @@
                 </tfoot>
                 {{--END TFOOT TABLE--}}
             </table>
-            {{--END TABLE--}}
-
-            {{--START ACTION--}}
-            <div class="tablenav bottom">
-                <div class="alignleft actions bulkactions">
-                    <label for="bulk-action-selector-bottom" class="screen-reader-text">
-                        Lựa chọn thao tác hàng loạt
-                    </label>
-                    <select name="action2" id="bulk-action-selector-bottom">
-                        <option value="-1">
-                            Hành động
-                        </option>
-                        <option value="edit" class="hide-if-no-js">
-                            Chỉnh sửa
-                        </option>
-                        <option value="trash">
-                            Bỏ vào thùng rác
-                        </option>
-                    </select>
-                    <input type="submit" id="doaction2" class="button action" value="Áp dụng">
-                </div>
-                <div class="alignleft actions">
-                </div>
-                <div class="tablenav-pages one-page">
-          <span class="displaying-num">
-            0 mục
-          </span>
-                    <span class="pagination-links">
-            <span class="tablenav-pages-navspan button disabled" aria-hidden="true">
-              «
-            </span>
-            <span class="tablenav-pages-navspan button disabled" aria-hidden="true">
-              ‹
-            </span>
-            <span class="screen-reader-text">
-              Trang hiện tại
-            </span>
-            <span id="table-paging" class="paging-input">
-              <span class="tablenav-paging-text">
-                1 trên
-                <span class="total-pages">
-                  1
-                </span>
-              </span>
-            </span>
-            <span class="tablenav-pages-navspan button disabled" aria-hidden="true">
-              ›
-            </span>
-            <span class="tablenav-pages-navspan button disabled" aria-hidden="true">
-              »
-            </span>
-          </span>
-                </div>
-                <br class="clear">
-            </div>
-            {{--END ACTION--}}
-            <div id="ajax-response">
-            </div>
-            <div class="clear">
-            </div>
-        </div>
-        <div>
-            <div class="woocommerce-embedded-layout__primary" id="woocommerce-embedded-layout__primary">
-            </div>
-        </div>
-        <div class="clear">
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>

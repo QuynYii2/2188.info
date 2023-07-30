@@ -24,7 +24,8 @@ class CategoryController extends Controller
     {
         (new HomeController())->getLocale($request);
         $categories = Category::get()->toTree();
-        $listProduct = Product::where('category_id', '=', $id)->paginate(9);
+//        $listProduct = Product::whereIn('list_category',$id)->paginate(9);
+        $listProduct = Product::whereRaw("FIND_IN_SET(?, list_category)", [$id])->paginate(9);
         $listPayment = PaymentMethod::all();
         $listTransport = TransportMethod::all();
         return view('frontend/pages/category', compact('categories', 'listProduct', 'listPayment', 'listTransport'));

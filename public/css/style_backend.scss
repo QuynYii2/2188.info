@@ -23,6 +23,7 @@ $color-main: #fd6506;
 .header-card{
   margin-top: 56px;
   &--left{
+    padding-bottom: 30px;
     .wrapper {
       width: 16.7%;
       height: 100%;
@@ -33,7 +34,7 @@ $color-main: #fd6506;
       left: 0;
       bottom: 0;
       .items {
-        padding: 18px 0;
+        padding: 0;
         font-size: 18px;
         li{
           list-style: none;
@@ -134,7 +135,7 @@ $color-main: #fd6506;
 
 
 .items > li{
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .items > li > a {
@@ -551,14 +552,6 @@ $color-main: #fd6506;
     font-size: 1.1em;
   }
 
-  .tablenav {
-    clear: both;
-    height: 30px;
-    margin: 6px 0 4px;
-    padding-top: 5px;
-    vertical-align: middle;
-  }
-
   .widefat {
     border-spacing: 0;
     width: 100%;
@@ -702,8 +695,6 @@ $color-main: #fd6506;
     cursor: pointer;
     vertical-align: middle;
     background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E");
-    background-position-x: right 5px;
-    background-position-y: top 55%;
     background-repeat-x: no-repeat;
     background-repeat-y: no-repeat;
     background-attachment: initial;
@@ -1396,8 +1387,6 @@ select {
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
   border-top: 4px solid #777;
-  -webkit-transform: origin(50% 20%);
-  transform: origin(50% 20%);
   transition: all 0.125s ease-in-out;
   content: '';
   display: block;
