@@ -207,16 +207,14 @@
                     <div class="swiper NewProducts">
                         <div class="swiper-wrapper">
                             @foreach($newProducts as $newProduct)
-                                @dd($newProduct)
                                 @php
                                     $productDetail = \App\Models\Variation::where('product_id', $newProduct->id)->first();
-                                    dd($productDetail);
                                 @endphp
                                 <div class="swiper-slide">
                                     <div class="item">
                                         <div class="item-img">
-                                            @if($productDetail->thumbnail)
-                                                <img src="{{ asset('storage/' . $productDetail->thumbnail) }}"
+                                            @if($newProduct->thumbnail)
+                                                <img src="{{ asset('storage/' . $newProduct->thumbnail) }}"
                                                      alt="">
                                             @endif
                                             <div class="button-view">
