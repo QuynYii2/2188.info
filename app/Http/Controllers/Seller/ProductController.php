@@ -164,7 +164,7 @@ class ProductController extends Controller
             }
         } catch (\Exception $exception) {
             alert()->error('Error', 'Error, Please try again!');
-            dd($exception);
+//            dd($exception);
             return back();
         }
     }
