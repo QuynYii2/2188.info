@@ -263,7 +263,7 @@
                                                                 <strong>$189.000</strong>
                                                             </div> -->
                                                 <div class="price-sale">
-                                                    <strong>${{$productDetail->price}}</strong>
+                                                    <strong>${{$newProduct->price}}</strong>
                                                 </div>
                                                 <div class="price-cost">
                                                     @if($productDetail->old_price != null)
