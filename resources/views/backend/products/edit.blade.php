@@ -405,6 +405,35 @@
                                     <input hidden="" name="count"
                                            value="1">
                                 @endif
+                            @else
+                                <div class="form-group">
+                                    <label for="price">Giá bán</label>
+                                    <input type="number"
+                                           class="form-control"
+                                           id="price1"
+                                           name="old_price1"
+                                           value="">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="qty">Giá khuyến mãi</label>
+                                    <input type="number"
+                                           class="form-control"
+                                           id="qty1"
+                                           name="price1"
+                                           value="">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="thumbnail">Thumbnail</label>
+                                    <input type="file"
+                                           class="form-control-file"
+                                           id="thumbnail"
+                                           name="thumbnail1"
+                                           accept="image/*">
+                                </div>
+                                <input hidden="" name="count"
+                                       value="1">
                             @endif
                         </div>
                     </div>
