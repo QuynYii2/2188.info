@@ -80,7 +80,7 @@
                     @foreach($listPayment as $payment)
                         <div class="OptionContainer">
                             <div class="OptionHead">
-                                <input type="checkbox" name="payment_method[]"
+                                <input type="checkbox" class="payment-checkbox"
                                        value="{{ $payment->id }}">{{ $payment->name }}
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                     @foreach($listTransport as $transport)
                         <div class="OptionContainer">
                             <div class="OptionHead">
-                                <input type="checkbox" name="transport_method[]"
+                                <input type="checkbox" class="transport-checkbox"
                                        value="{{ $transport->id }}">{{ $transport->name }}
                             </div>
                         </div>
@@ -130,7 +130,7 @@
                 <!-- Tab panes -->
                 <div class="tab-content col-xl-10">
                     <div id="home" class="tab-pane active "><br>
-                        <div class="row">
+                        <div class="row" id="renderProduct">
                             @foreach($listProduct as $product)
                                 <div class="col-xl-3 col-md-4 col-6 section">
                                     <div class="item">
@@ -376,39 +376,119 @@
     </script>
 
     <script>
-        var jq = $.noConflict();
+        let sortBy = '';
+        let countPerPage = '';
+        let selectedPayments = [];
+        let selectedTransports = [];
+
+        selectedPayments.push('0');
+        selectedTransports.push('0');
+        const jq = $.noConflict();
+        handleCountPerPage();
+        handleSortBy();
+        callApiFilter();
 
         $(document).on('change', '#count-per-page', function () {
             handleCountPerPage();
+            callApiFilter();
         });
 
-        let url = '/category/filter/' + getIdCategory();
 
-         $(document).on('change', '#sort-by', function () {
+        $(document).on('change', '#sort-by', function () {
             handleSortBy();
-
-             jq.ajax({
-                url: url,
-                method: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function (response) {
-                    console.log(response)
-                },
-                error: function (exception) {
-                    console.log(exception)
-                }
-            });
+            callApiFilter();
         });
+
 
         function getIdCategory() {
             let arrUrl = window.location.href.split('/');
             return arrUrl[arrUrl.length - 1];
         }
 
-        let sortBy = '';
-        let countPerPage = '';
+        function callApiFilter() {
+            const url = '/category/filter/' + getIdCategory();
+            let data = {
+                sortBy: sortBy,
+                countPerPage: countPerPage,
+                selectedPayments: selectedPayments,
+                selectedTransports: selectedTransports,
+            }
+            jq.ajax({
+                url: url,
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    data: data,
+                },
+                success: function (response) {
+                    renderProduct(response.data);
+                },
+                error: function (exception) {
+                    console.log(exception)
+                }
+            });
+        }
+
+        function renderProduct(response) {
+            let str = "";
+            response.forEach(function (product) {
+                console.log(product);
+                str += `<div class="col-xl-3 col-md-4 col-6 section">
+                                    <div class="item">
+                                        <div class="item-img">
+                                            <img src="\{\{ asset('storage/${product.thumbnail}')  }}"
+                                                 alt="">
+                                            <div class="button-view">
+                                                <button>Quick view</button>
+                                            </div>
+                                            <div class="text">
+                                                <div class="text-sale">
+                                                    Sale
+                                                </div>
+                                                <div class="text-new">
+                                                    New
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item-body">
+                                            <div class="card-rating">
+                                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                <span>(1)</span>
+                                            </div>
+                <div class="card-brand">
+                </div>
+                <div class="card-title">
+                    <a href="\{\{route('detail_product.show', ${product.id})}}">${product.product_name}</a>
+                                            </div>
+                                            <div class="card-price d-flex justify-content-between">
+                                                <div class="price-sale">
+                                                    <strong>${product.price}</strong>
+                                                </div>
+                                                <div class="price-cost">`;
+                if (product.old_price != null) {
+                    str += `<strike>${product.old_price}</strike>`
+                }
+               str += `</div>
+            </div>
+            <div class="card-bottom d-flex justify-content-between">
+                <div class="card-bottom--left">
+                    <a href="\{\{route('detail_product.show', ${product.id})}}">Choose
+                                                        Options</a>
+                                                </div>
+                                                <div class="card-bottom--right">
+                                                    <i class="item-icon fa-regular fa-heart"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`;
+            })
+            document.getElementById('renderProduct').innerHTML = str;
+        }
 
         function handleSortBy() {
             sortBy = document.getElementById('sort-by').value
@@ -418,6 +498,39 @@
             countPerPage = document.getElementById('count-per-page').value
         }
 
+        const paymentCheckboxes = document.querySelectorAll('.payment-checkbox');
+        paymentCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', (event) => {
+                const paymentId = event.target.value;
 
+                if (event.target.checked) {
+                    selectedPayments.push(paymentId);
+                } else {
+                    const index = selectedPayments.indexOf(paymentId);
+                    if (index !== -1) {
+                        selectedPayments.splice(index, 1);
+                    }
+                }
+                callApiFilter();
+            });
+        });
+
+
+        const transportCheckboxes = document.querySelectorAll('.transport-checkbox');
+        transportCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', (event) => {
+                const transportId = event.target.value;
+
+                if (event.target.checked) {
+                    selectedTransports.push(transportId);
+                } else {
+                    const index = selectedTransports.indexOf(transportId);
+                    if (index !== -1) {
+                        selectedTransports.splice(index, 1);
+                    }
+                }
+                callApiFilter();
+            });
+        });
     </script>
 @endsection

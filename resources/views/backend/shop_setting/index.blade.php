@@ -38,7 +38,7 @@
                         @csrf
                         @foreach($listTransport as $transport)
                             <label>
-                                <input name="payment_method[]" type="checkbox" value="{{ $transport->id }}">
+                                <input name="transport_method[]" type="checkbox" value="{{ $transport->id }}">
                                 {{ $transport->name }}
                             </label>
                         @endforeach
