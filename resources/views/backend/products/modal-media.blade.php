@@ -325,10 +325,11 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <button type="button" class="btn btn-primary" data-toggle="modal"
-        data-target="#exampleModal">
+        data-target="#galleryModal">
     Launch demo modal
 </button>
-<div class="modal fade" id="exampleModal" style="z-index: 99999; display: none" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<div class="modal fade" id="galleryModal" style="z-index: 99999; display: none" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog h-100" style="max-width: 60%; max-height: 80%">
         <div class="modal-content h-100">
             <div class="modal-header">
@@ -370,22 +371,20 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    const selectedImagesArray = []; // Mảng lưu trữ src của ảnh đã chọn
+    const selectedImagesArray = [];
 
-    function toggleImageSelection(divElement) {
+    function toggleImageSelect(divElement) {
         divElement.classList.toggle("selected-image");
 
-        // Lấy danh sách ảnh đã chọn
         const selectedImages = document.querySelectorAll(".thumbnail.image-item.selected-image img");
 
-        // Cập nhật lại mảng src của ảnh đã chọn
-        selectedImagesArray.length = 0; // Xóa toàn bộ phần tử trong mảng trước khi cập nhật
+        selectedImagesArray.length = 0;
 
         selectedImages.forEach((selectedImage) => {
             selectedImagesArray.push(selectedImage.src);
         });
-
         document.getElementById('imgGallery').value = JSON.stringify(selectedImagesArray);
+        document.getElementById('imgThumbnail').value = selectedImagesArray[0];
     }
 
     (function () {
@@ -434,7 +433,7 @@
                 $.each(response, function (index, img) {
                     var imageItem = '<div class="attachment">' +
                         '<div class="attachment-preview portrait">' +
-                        '<div class="thumbnail image-item" onclick="toggleImageSelection(this)">' +
+                        '<div class="thumbnail image-item" onclick="toggleImageSelect(this)">' +
                         '<div class="centered">' +
                         '<img src="{{ asset('storage/') }}/' + img + '" draggable="false" alt="">' +
                         '</div>' +

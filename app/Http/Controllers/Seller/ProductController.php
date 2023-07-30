@@ -124,13 +124,6 @@ class ProductController extends Controller
     {
         try {
             $product = new Product();
-            if ($request->hasFile('gallery')) {
-                $galleryPaths = array_map(function ($image) {
-                    return $image->store('gallery', 'public');
-                }, $request->file('gallery'));
-                $product->gallery = implode(',', $galleryPaths);
-            }
-
             $qty_in_storage = DB::table('storage_products')->where('id', $request->input('storage-id'))->value('quantity');
 
             $product->storage_id = $request->input('storage-id');
@@ -141,7 +134,8 @@ class ProductController extends Controller
             $product->category_id = $request->input('category_id');
             $product->user_id = Auth::user()->id;
             $product->location = Auth::user()->region;
-
+            $product->gallery = $this->handleGallery($request->input('imgGallery'));
+            $product->thumbnail = $this->handleGallery($request->input('imgThumbnail'));
             $product->slug = \Str::slug($request->input('name'));
 
             $hot = $request->input('hot_product');
@@ -158,7 +152,6 @@ class ProductController extends Controller
             } else {
                 $product->feature = 0;
             }
-
             $count = $request->input('count');
 
             $createProduct = $this->createProduct($product, $request, $count);
@@ -171,6 +164,7 @@ class ProductController extends Controller
             }
         } catch (\Exception $exception) {
             alert()->error('Error', 'Error, Please try again!');
+            dd($exception);
             return back();
         }
     }
@@ -204,7 +198,7 @@ class ProductController extends Controller
         try {
             $product = Product::findOrFail($id);
 
-//            $product->gallery = $this->handleGallery($request->input('imgGallery'));
+            $product->gallery = $this->handleGallery($request->input('imgGallery'));
             $number = $request->input('count');
             $isNew = $request->input('isNew');
 
@@ -231,12 +225,6 @@ class ProductController extends Controller
                 $arrayProduct = [];
                 for ($i = 1; $i < $number + 1; $i++) {
                     $newVariationData = [];
-
-                    if ($request->hasFile('thumbnail' . $i)) {
-                        $thumbnail = $request->file('thumbnail' . $i);
-                        $thumbnailPath = $thumbnail->store('thumbnails', 'public');
-                        $newVariationData['thumbnail'] = $thumbnailPath;
-                    }
 
                     $newVariationData['price'] = $request->input('price' . $i);
                     $newVariationData['old_price'] = $request->input('old_price' . $i);
@@ -277,6 +265,18 @@ class ProductController extends Controller
             alert()->error('Error', 'Error, please try again');
             return back();
         }
+    }
+
+    public function handleGallery($input)
+    {
+        $pattern = '/\/storage\/([^,"]+),?/'; // Modified regex pattern
+        $matches = array();
+        $arrResult = array();
+        foreach ($input as $item) {
+            preg_match_all($pattern, $item, $matches);
+            array_push($arrResult, $matches[1]);
+        }
+        return implode(',', $arrResult[0]);
     }
 
     public function destroy(Product $product)
@@ -461,6 +461,7 @@ class ProductController extends Controller
             'price' => 0,
             'old_price' => 0,
             'gallery' => $product->gallery,
+            'thumbnail' => $product->thumbnail,
         ];
 
         $success = Product::create($newProductData);
@@ -496,7 +497,7 @@ class ProductController extends Controller
 
         Variation::insert($arrayProduct);
         $sourceArray = session()->get('sourceArray');
-        $this->createAttributeProduct($product, $sourceArray[0]);
+        //  $this->createAttributeProduct($product, $sourceArray[0]);
 
         return $success;
     }
@@ -527,8 +528,6 @@ class ProductController extends Controller
             return null;
         }
     }
-
-
 
 
 }

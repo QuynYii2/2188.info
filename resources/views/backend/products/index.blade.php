@@ -549,7 +549,7 @@
                             <td class="thumb column-thumb" data-colname="Image">
                                 <a href="#">
                                     <img width="150" height="150"
-                                         src="{{ asset('storage/'.$productDetail->thumbnail) }}"
+                                         src="{{ asset('storage/'.$product->thumbnail) }}"
                                          class="woocommerce-placeholder wp-post-image" alt="Placeholder"
                                          decoding="async"
                                          loading="lazy">
