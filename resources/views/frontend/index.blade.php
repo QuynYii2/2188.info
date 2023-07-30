@@ -266,8 +266,8 @@
                                                     <strong>${{$newProduct->price}}</strong>
                                                 </div>
                                                 <div class="price-cost">
-                                                    @if($productDetail->old_price != null)
-                                                        <strike>${{$productDetail->old_price}}</strike>
+                                                    @if($newProduct->old_price != null)
+                                                        <strike>${{$newProduct->old_price}}</strike>
                                                     @endif
                                                 </div>
                                             </div>
