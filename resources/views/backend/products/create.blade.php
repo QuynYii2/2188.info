@@ -52,6 +52,11 @@
     #checkboxes label {
         display: block;
     }
+
+    /**/
+    select {
+        display: none !important;
+    }
 </style>
 @extends('backend.layouts.master')
 
