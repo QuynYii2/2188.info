@@ -6,6 +6,7 @@ use App\Enums\BannerStatus;
 use App\Enums\NotificationStatus;
 use App\Enums\ProductStatus;
 use App\Enums\PromotionStatus;
+use App\Enums\StatisticStatus;
 use App\Enums\TopSellerConfigLocation;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Controller;
@@ -15,6 +16,7 @@ use App\Models\Category;
 use App\Models\Notification;
 use App\Models\Permission;
 use App\Models\Promotion;
+use App\Models\StatisticAccess;
 use App\Models\TopSellerConfig;
 use App\Models\Voucher;
 use Carbon\Carbon;
@@ -207,5 +209,25 @@ class HomeController extends Controller
             }
         }
         return $isAdmin;
+    }
+
+    public function createStatistic(){
+        $statisticAccess = StatisticAccess::where([
+            ['datetime', '<', Carbon::now()->addHours(7)->copy()->endOfDay()],
+            ['datetime', '>', Carbon::now()->addHours(7)->copy()->startOfDay()],
+            ['status', StatisticStatus::ACTIVE],
+        ])->first();
+
+        if ($statisticAccess) {
+            $statisticAccess->numbers = $statisticAccess->numbers + 1;
+            $statisticAccess->save();
+        } else {
+            $statisticAccess = [
+                'numbers' => 1,
+                'datetime' => Carbon::now()->addHours(7),
+            ];
+
+            StatisticAccess::create($statisticAccess);
+        }
     }
 }

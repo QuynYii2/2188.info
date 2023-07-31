@@ -10,10 +10,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\ProductInterested;
 use App\Models\StaffUsers;
 use App\Models\StorageProduct;
-use App\Models\User;
 use App\Models\Variation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,6 +34,7 @@ class ProductController extends Controller
 
     public function home()
     {
+
         return view('backend/products/home');
     }
 
