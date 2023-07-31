@@ -196,7 +196,6 @@ class ProductController extends Controller
 
     }
 
-
     public function update(Request $request, $id)
     {
         try {
@@ -229,6 +228,12 @@ class ProductController extends Controller
                 $arrayProduct = [];
                 for ($i = 1; $i < $number + 1; $i++) {
                     $newVariationData = [];
+
+                    if ($request->hasFile('thumbnail' . $i)) {
+                        $thumbnail = $request->file('thumbnail' . $i);
+                        $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+                        $newVariationData['thumbnail'] = $thumbnailPath;
+                    }
 
                     $newVariationData['price'] = $request->input('price' . $i);
                     $newVariationData['old_price'] = $request->input('old_price' . $i);

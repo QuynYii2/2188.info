@@ -2904,19 +2904,20 @@ footer {
   }
   .image-list {
     margin: auto;
-    width: 40%;
+    width: 60%;
     display: flex;
     overflow: hidden;
   }
   .image-list li {
+    text-align: center;
     margin: 0 0.75rem 0 0;
     flex-basis: 100%;
-    border: 1px solid black;
   }
   .image-list img {
-    width: 100%;
+    width: 20%;
     transition: opacity 0.3s ease;
     cursor: pointer;
+    border: 1px solid black;
   }
   .image-list img:hover {
     opacity: 0.7;
