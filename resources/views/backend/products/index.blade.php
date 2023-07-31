@@ -22,7 +22,6 @@
 @section('content')
     <div id="wpbody-content" class="snipcss-PfbzX">
         <div class="">
-
             {{--START TABLE--}}
             <table class="wp-list-table widefat fixed striped table-view-list posts">
                 {{--START THEAD TABLE--}}
@@ -51,7 +50,7 @@
                     <th scope="col" id="sku" class="manage-column column-sku sortable desc">
                         <a href="#">
                 <span>
-                  SKU
+                  Người đăng
                 </span>
                             <span class="sorting-indicator">
                 </span>
@@ -71,9 +70,6 @@
                     </th>
                     <th scope="col" id="product_cat" class="manage-column column-product_cat">
                         Categories
-                    </th>
-                    <th scope="col" id="product_tag" class="manage-column column-product_tag">
-                        Tags
                     </th>
                     <th scope="col" id="hot" class="manage-column column-hot style-RlVfN">
                               <span class="wc-hot parent-tips" data-tip="Hot">
@@ -115,10 +111,6 @@
                             </th>
                             <td class="thumb column-thumb" data-colname="Image">
                                 <a href="#">
-                                    @php
-                                        // tại sao phải query thêm cái này, trong khi có thể dùng $product->thumbnail
-                                        $thum = \App\Models\Variation::where('product_id', $product->id)->get();
-                                    @endphp
                                     @if($product->thumbnail)
                                         <img width="150" height="150"
                                              src="{{ asset('storage/'.$product->thumbnail) }}"
@@ -473,27 +465,34 @@
                                 </button>
                             </td>
                             <td class="sku column-sku" data-colname="SKU">
-              <span class="na">
-                –
-              </span>
+                                @php
+                                    $namenewProduct = DB::table('users')->where('id', $product->user_id)->first();
+                                @endphp
+                              <span class="na">
+                                {{$namenewProduct->name}}
+                              </span>
                             </td>
                             <td class="is_in_stock column-is_in_stock" data-colname="Stock">
                                 <mark class="instock">
-                                    In stock
+                                    {{$product->status}}
                                 </mark>
                             </td>
                             <td class="price column-price" data-colname="Price">
                                 {{$product->price}}
                             </td>
                             <td class="product_cat column-product_cat" data-colname="Categories">
-                                <a href="">
-                                    {{$product->category->name}}
-                                </a>
-                            </td>
-                            <td class="product_tag column-product_tag" data-colname="Tags">
-              <span class="na">
-                –
-              </span>
+                                @php
+                                    $listCate = $product->list_category;
+                                    $cate1 = explode(',', $listCate);
+                                @endphp
+                                @foreach($cate1 as $cates)
+                                    @php
+                                        $category = \App\Models\Category::find($cates);
+                                    @endphp
+                                    @if($category)
+                                        <a href="">{{$category->name}}</a> </br>
+                                    @endif
+                                @endforeach
                             </td>
                             <td class="hot column-hot" data-colname="Hot">
                                 @for($i = 0; $i< count($permissionUsers); $i++)
@@ -541,10 +540,9 @@
                                     @endif
                                 @endfor
                             </td>
-                            <td class="date column-date" data-colname="Date">
-                                Đã xuất bản
-                                <br>
-                                18/07/2023 lúc 3:18 sáng
+                            <td>
+                                Đã xuất bản <br>
+                               {{$product->created_at}}
                             </td>
                         </tr>
                     @endforeach
@@ -552,76 +550,6 @@
                 </tbody>
                 {{--END TBODY TABLE--}}
 
-                {{--START TFOOT TABLE--}}
-                <tfoot>
-                <tr>
-                    <td class="manage-column column-cb check-column">
-                        <label class="screen-reader-text" for="cb-select-all-2">
-                            Chọn toàn bộ
-                        </label>
-                        <input id="cb-select-all-2" type="checkbox">
-                    </td>
-                    <th scope="col" class="manage-column column-thumb">
-              <span class="wc-image tips">
-                Image
-              </span>
-                    </th>
-                    <th scope="col" class="manage-column column-name column-primary sortable desc">
-                        <a href="#">
-                <span>
-                  Name
-                </span>
-                            <span class="sorting-indicator">
-                </span>
-                        </a>
-                    </th>
-                    <th scope="col" class="manage-column column-sku sortable desc">
-                        <a href="#">
-                <span>
-                  SKU
-                </span>
-                            <span class="sorting-indicator">
-                </span>
-                        </a>
-                    </th>
-                    <th scope="col" class="manage-column column-is_in_stock">
-                        Stock
-                    </th>
-                    <th scope="col" class="manage-column column-price sortable desc">
-                        <a href="#">
-                                <span>
-                                  Price
-                                </span>
-                            <span class="sorting-indicator">
-                                </span>
-                        </a>
-                    </th>
-                    <th scope="col" class="manage-column column-product_cat">
-                        Categories
-                    </th>
-                    <th scope="col" class="manage-column column-product_tag">
-                        Tags
-                    </th>
-                    <th scope="col" class="manage-column column-hot style-DCT76" id="style-DCT76">
-                              <span class="wc-hot parent-tips" data-tip="Hot">
-                                Hot
-                              </span>
-                    </th>
-                    <th scope="col" class="manage-column column-featured">
-                        Featured
-                    </th>
-                    <th scope="col" class="manage-column column-date sortable asc">
-                        <a href="#">
-                                <span>
-                                  Date
-                                </span>
-                            <span class="sorting-indicator">
-                                </span>
-                        </a>
-                    </th>
-                </tr>
-                </tfoot>
-                {{--END TFOOT TABLE--}}
             </table>
         </div>
     </div>

@@ -97,7 +97,7 @@
                     @endforeach
                     <div class="MenuContainer"></div>
                     <hr>
-                    <input type="checkbox" value="123" id="check_sale">Sản phẩm đang Sale
+                    <input type="checkbox" value="" id="check_sale" onchange="checkSale(this)">Sản phẩm đang Sale
                     <hr>
                     <div class="content">PRICE</div>
                     <div class="category-price">
@@ -123,8 +123,8 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="content">BRANDS</div>
-                    <input type="text" value="" id="search-origin">Sản phẩm theo hãng
+                    <div class="content">ORIGIN</div>
+                    <input type="text" value="" id="search-origin" onchange="searchOrigin(this)" >Sản phẩm theo xuất xứ
 
                 </div>
                 <!-- Tab panes -->
@@ -316,21 +316,6 @@
             $(this).addClass("current");
         });
 
-
-        // $(function () {
-        //     $("#slider-range").slider({
-        //         range: true,
-        //         min: 0,
-        //         max: 10000,
-        //         values: [0, 250],
-        //         slide: function (event, ui) {
-        //             $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-        //         }
-        //     });
-        //     $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-        //         " - $" + $("#slider-range").slider("values", 1));
-        // });
-
         const rangeInput = document.querySelectorAll(".range-input input"),
             priceInput = document.querySelectorAll(".price-input input"),
             range = document.querySelector(".slider .progress");
@@ -389,10 +374,12 @@
     <script>
         let sortBy = '';
         let countPerPage = '';
+        let search_origin = '';
         let selectedPayments = [];
         let selectedTransports = [];
         let minPrice = '';
         let maxPrice = '';
+        let isSale = false;
 
         selectedPayments.push('0');
         selectedTransports.push('0');
@@ -427,6 +414,11 @@
             callApiFilter();
         }
 
+        function checkSale(input) {
+            isSale = input.checked;
+            callApiFilter();
+        }
+
         function callApiFilter() {
             const url = '/category/filter/' + getIdCategory();
             let data = {
@@ -437,6 +429,7 @@
                 minPrice: minPrice,
                 maxPrice: maxPrice,
                 search_origin: search_origin,
+                isSale: isSale,
             }
             jq.ajax({
                 url: url,

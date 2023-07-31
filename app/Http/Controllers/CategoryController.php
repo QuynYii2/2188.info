@@ -39,6 +39,7 @@ class CategoryController extends Controller
         $search_origin = $request->data['search_origin'];
         $minPrice = $request->data['minPrice'];
         $maxPrice = $request->data['maxPrice'];
+        $isSale = $request->data['isSale'];
 
         $query = Product::where('category_id', '=', $id)
             ->join('users', 'products.user_id', '=', 'users.id');
@@ -62,14 +63,6 @@ class CategoryController extends Controller
             });
         }
 
-        if ($minPrice !== null && $maxPrice !== null) {
-            $query->whereBetween('products.price', [$minPrice, $maxPrice]);
-        } elseif ($minPrice !== null) {
-            $query->where('products.price', '>=', $minPrice);
-        } elseif ($maxPrice !== null) {
-            $query->where('products.price', '<=', $maxPrice);
-        }
-
         $selectedTransportsArray = [];
         foreach ($selectedTransports as $transport) {
             $selectedTransportsArray = array_merge($selectedTransportsArray, explode(',', $transport));
@@ -83,6 +76,18 @@ class CategoryController extends Controller
                     $query->orWhere('users.transport_method', 'LIKE', '%' . $transport . '%');
                 }
             });
+        }
+
+        if ($minPrice !== null && $maxPrice !== null) {
+            $query->whereBetween('products.price', [$minPrice, $maxPrice]);
+        } elseif ($minPrice !== null) {
+            $query->where('products.price', '>=', $minPrice);
+        } elseif ($maxPrice !== null) {
+            $query->where('products.price', '<=', $maxPrice);
+        }
+
+        if ($isSale == 'true') {
+            $query->whereNotNull('products.old_price');
         }
 
         $listProduct = $query->orderBy('products.' . $sortArr[0], $sortArr[1])
