@@ -54,35 +54,35 @@
             <div class="title-small">Những việc cần phải làm</div>
             <div class="row mt-4 todo_list--bottom">
                 <div class="col-md-3 col-6 list_item">
-                    <span class="number">0</span>
+                    <span class="number">{{count($productWaitPayments)}}</span>
                     <p>Chờ xác nhận</p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
-                    <span class="number">0</span>
-                    <p> Chờ Lấy Hàng </p>
-                </div>
-                <div class="col-md-3 col-6 list_item">
-                    <span class="number">0</span>
+                    <span class="number">{{count($productProcessings)}}</span>
                     <p> Đã Xử Lý </p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
-                    <span class="number">0</span>
+                    <span class="number">{{count($productShippings)}}</span>
+                    <p> Đã Lấy Hàng </p>
+                </div>
+                <div class="col-md-3 col-6 list_item">
+                    <span class="number">{{count($productDelivereds)}}</span>
+                    <p> Đơn thành công </p>
+                </div>
+                <div class="col-md-3 col-6 list_item">
+                    <span class="number">{{count($productCancels)}}</span>
                     <p> Đơn Hủy </p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
-                    <span class="number">0</span>
+                    <span class="number">{{count($productCancels)}}</span>
                     <p> Trả Hàng / Hoàn Tiền Chờ Xử Lý </p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
-                    <span class="number">0</span>
-                    <p> Sản Phẩm Bị Tạm Khóa </p>
-                </div>
-                <div class="col-md-3 col-6 list_item">
-                    <span class="number">0</span>
+                    <span class="number">{{count($productPause)}}</span>
                     <p> Sản Phẩm Hết Hàng </p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
-                    <span class="number">0</span>
+                    <span class="number">{{count($promotions)}}</span>
                     <p>Chương Trình Khuyến Mãi Chờ Xử Lý</p>
                 </div>
             </div>
