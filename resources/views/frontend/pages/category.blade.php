@@ -97,7 +97,7 @@
                     @endforeach
                     <div class="MenuContainer"></div>
                     <hr>
-                    <input type="checkbox" value="123" id="check_sale">Sản phẩm đang Sale
+                    <input type="checkbox" value="" id="check_sale" onchange="checkSale(this)">Sản phẩm đang Sale
                     <hr>
                     <div class="content">PRICE</div>
                     <div class="category-price">
@@ -379,6 +379,7 @@
         let selectedTransports = [];
         let minPrice = '';
         let maxPrice = '';
+        let isSale = false;
 
         selectedPayments.push('0');
         selectedTransports.push('0');
@@ -413,6 +414,11 @@
             callApiFilter();
         }
 
+        function checkSale(input) {
+            isSale = input.checked;
+            callApiFilter();
+        }
+
         function callApiFilter() {
             const url = '/category/filter/' + getIdCategory();
             let data = {
@@ -423,6 +429,7 @@
                 minPrice: minPrice,
                 maxPrice: maxPrice,
                 search_origin: search_origin,
+                isSale: isSale,
             }
             jq.ajax({
                 url: url,
