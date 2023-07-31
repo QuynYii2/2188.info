@@ -44,6 +44,9 @@ return [
     'discount code' => '할인 코드',
     'my coin management' => '내 코인 관리',
     'my bookcare' => '내 bookcare',
+    'voucher management'=>'바우처 관리',
+    'product multilviews'=>'제품 멀티뷰',
+    'category interest'=>'범주 관심',
 
 
     //thông tin cá nhân, họ và tên, nickname, ngày sinh, giới tính, quốc tịch, số điện thoại và email, số điện thoại, địa chỉ email, bảo mật, đổi mật khẩu, thiết lập mã pin, liên kết mạng xã hội, lưu thay đổi, địa chỉ
@@ -253,6 +256,8 @@ return [
     'Gift Cards'=>'기프트 카드',
     'Wish Lists'=>'위시리스트',
     'Help'=>'돕다',
+    'upgrade'=>'업그레이드',
+
 
 
 ];
