@@ -111,7 +111,7 @@
                                         $role_id = DB::table('role_user')->where('user_id', $user)->get();
                                         $isAdmin = false;
                                         foreach ($role_id as $item) {
-                                            if ($item->role_id == 1) {
+                                            if ($item->role_id == 1 || 2) {
                                                 $isAdmin = true;
                                             }
                                         }
@@ -160,9 +160,12 @@
                                             <p>Chưa có sản phẩm trong giỏ hàng.</p>
                                         @else
                                             @foreach ($cartItems as $cartItem)
+                                                @php
+                                                    $productDetail = \App\Models\Variation::where('product_id', $cartItem->product->id)->first();
+                                                @endphp
                                                 <div class="shop-item row">
                                                     <div class="col-3 shop-item--img">
-                                                        <img src="{{ asset('storage/'.$cartItem->product->thumbnail) }}" alt="">
+                                                        <img src="{{ asset('storage/'.$productDetail->thumbnail) }}" alt="">
                                                     </div>
                                                     <div class="col-8 shop-item--text">
                                                         <div class="text-seller">
@@ -197,16 +200,16 @@
                                                     </div>
                                                 </div>
                                                 <div class="cart">
-                                                    <div class="check_now">
-                                                        <a href="{{ route('checkout.show') }}">
+                                                    <a class="a-cart" href="{{ route('checkout.show') }}">
+                                                        <div class="check_now">
                                                             Check out now
-                                                        </a>
-                                                    </div>
-                                                    <div class="view-card">
-                                                        <a href="{{ route('cart.index') }}">
+                                                        </div>
+                                                    </a>
+                                                    <a class="a-card" href="{{ route('cart.index') }}">
+                                                        <div class="view-card">
                                                             View Cart
-                                                        </a>
-                                                    </div>
+                                                        </div>
+                                                    </a>
                                                 </div>
                                             </div>
                                         @endif
@@ -296,122 +299,124 @@
                                 $listCate = DB::table('categories')->where('parent_id', null)->get();
                             @endphp
                             <div class="drop-menu">
-                                @foreach($listCate as $cate)
-                                    <div class=" header_bottom--one--list">
-                                        <div class="header_bottom--one--list--item">
-                                            <a class="item d-flex" href="{{ route('category.show', $cate->id) }}">
-                                                <i class="fa-solid fa-tv"></i>
-                                                <div class="item-text">{{ $cate->name }}</div>
-                                                <i class="fa-solid fa-angle-right"></i>
-                                            </a>
-                                            @if(!$listCate->isEmpty())
-                                                <ul class="hd_dropdown--right">
-                                                    <div class="list-category">
-                                                        @php
-                                                            $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
-                                                        @endphp
-                                                        @foreach($listChild as $child)
-                                                            <div class="colum d-block">
-                                                                <li>
-                                                                    <a class="colum-hd"
-                                                                       href="{{ route('category.show', $child->id) }}">{{ $child->name }}</a>
-                                                                </li>
-                                                                @php
-                                                                    $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
-                                                                @endphp
-                                                                @foreach($listChild2 as $child2)
+                                <div class="drop-relative">
+                                    @foreach($listCate as $cate)
+                                        <div class=" header_bottom--one--list">
+                                            <div class="header_bottom--one--list--item">
+                                                <a class="item d-flex" href="{{ route('category.show', $cate->id) }}">
+                                                    <i class="fa-solid fa-tv"></i>
+                                                    <div class="item-text">{{ $cate->name }}</div>
+                                                    <i class="fa-solid fa-angle-right"></i>
+                                                </a>
+                                                @if(!$listCate->isEmpty())
+                                                    <ul class="hd_dropdown--right">
+                                                        <div class="list-category">
+                                                            @php
+                                                                $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
+                                                            @endphp
+                                                            @foreach($listChild as $child)
+                                                                <div class="colum d-block">
                                                                     <li>
-                                                                        <a class="colum-item"
-                                                                           href="{{ route('category.show', $child2->id) }}">{{ $child2->name }}</a>
+                                                                        <a class="colum-hd"
+                                                                           href="{{ route('category.show', $child->id) }}">{{ $child->name }}</a>
                                                                     </li>
-                                                                @endforeach
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
-                                                    <div class="list-product row m-2">
-                                                        <div class="col-md-2">
-                                                            <b>Featured Products</b>
-                                                            <span>Quis ipsum suspendisse ultrices gravida. Risus an commodo viverra delta maecenas cumsan lacus de facilisis.</span>
-                                                        </div>
-                                                        <div class="col-md-6 list-product--swiper">
-                                                            <div class="swiper Category_listProduct">
-                                                                <div class="swiper-wrapper">
                                                                     @php
-                                                                        $products = DB::table('products')->get();
+                                                                        $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
                                                                     @endphp
-                                                                    @foreach($products as $product)
-                                                                        <div class="swiper-slide">
-                                                                            <div class="item">
-                                                                                <div class="item-img">
-                                                                                    <img src="{{ asset('storage/' . $product->thumbnail) }}"
-                                                                                         alt="">
-                                                                                    <div class="button-view">
-                                                                                        <button href="">Quick view</button>
-                                                                                    </div>
-                                                                                    <div class="text">
-                                                                                        <!-- <div class="text-sale">
-                                                                                                        Sale
-                                                                                                    </div>
-                                                                                                    <div class="text-new">
-                                                                                                        New
-                                                                                                    </div> -->
-                                                                                        <!-- <div class="text-bundle">
-                                                                                                        Bundle
-                                                                                                    </div> -->
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="item-body">
-                                                                                    <div class="card-rating">
-                                                                                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                                                                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                                                                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                                                                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                                                                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                                                                        <span>(1)</span>
-                                                                                    </div>
-                                                                                    @php
-                                                                                        $nameUser = DB::table('users')->where('id', $product->user_id)->first();
-                                                                                    @endphp
-                                                                                    <div class="card-brand">
-                                                                                        {{$nameUser->name}}
-                                                                                    </div>
-                                                                                    <div class="card-title">
-                                                                                        <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>
-                                                                                    </div>
-                                                                                    <div class="card-price d-flex justify-content-between">
-                                                                                        <!-- <div class="price">
-                                                                                                        <strong>$189.000</strong>
-                                                                                                    </div> -->
-                                                                                        <div class="price-sale">
-                                                                                            <strong>${{$product->qty}}</strong>
+                                                                    @foreach($listChild2 as $child2)
+                                                                        <li>
+                                                                            <a class="colum-item"
+                                                                               href="{{ route('category.show', $child2->id) }}">{{ $child2->name }}</a>
+                                                                        </li>
+                                                                    @endforeach
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                        <div class="list-product row m-2">
+                                                            <div class="col-md-2">
+                                                                <b>Featured Products</b>
+                                                                <span>Quis ipsum suspendisse ultrices gravida. Risus an commodo viverra delta maecenas cumsan lacus de facilisis.</span>
+                                                            </div>
+                                                            <div class="col-md-6 list-product--swiper">
+                                                                <div class="swiper Category_listProduct">
+                                                                    <div class="swiper-wrapper">
+                                                                        @php
+                                                                            $products = DB::table('products')->get();
+                                                                        @endphp
+                                                                        @foreach($products as $product)
+                                                                            <div class="swiper-slide">
+                                                                                <div class="item">
+                                                                                    <div class="item-img">
+                                                                                        <img src="{{ asset('storage/' . $product->thumbnail) }}"
+                                                                                             alt="">
+                                                                                        <div class="button-view">
+                                                                                            <button href="">Quick view</button>
                                                                                         </div>
-                                                                                        <div class="price-cost">
-                                                                                            <strike>${{$product->price}}</strike>
+                                                                                        <div class="text">
+                                                                                            <!-- <div class="text-sale">
+                                                                                                            Sale
+                                                                                                        </div>
+                                                                                                        <div class="text-new">
+                                                                                                            New
+                                                                                                        </div> -->
+                                                                                            <!-- <div class="text-bundle">
+                                                                                                            Bundle
+                                                                                                        </div> -->
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="card-bottom d-flex justify-content-between">
-                                                                                        <div class="card-bottom--left">
-                                                                                            <a href="{{route('detail_product.show', $product->id)}}">Choose Options</a>
+                                                                                    <div class="item-body">
+                                                                                        <div class="card-rating">
+                                                                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                                                            <span>(1)</span>
+                                                                                        </div>
+                                                                                        @php
+                                                                                            $nameUser = DB::table('users')->where('id', $product->user_id)->first();
+                                                                                        @endphp
+                                                                                        <div class="card-brand">
+                                                                                            {{$nameUser->name}}
+                                                                                        </div>
+                                                                                        <div class="card-title">
+                                                                                            <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>
+                                                                                        </div>
+                                                                                        <div class="card-price d-flex justify-content-between">
+                                                                                            <!-- <div class="price">
+                                                                                                            <strong>$189.000</strong>
+                                                                                                        </div> -->
+                                                                                            <div class="price-sale">
+                                                                                                <strong>${{$product->qty}}</strong>
+                                                                                            </div>
+                                                                                            <div class="price-cost">
+                                                                                                <strike>${{$product->price}}</strike>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="card-bottom d-flex justify-content-between">
+                                                                                            <div class="card-bottom--left">
+                                                                                                <a href="{{route('detail_product.show', $product->id)}}">Choose Options</a>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
-                                                                    @endforeach
+                                                                        @endforeach
+                                                                    </div>
+                                                                    <div class="swiper-button-next"></div>
+                                                                    <div class="swiper-button-prev"></div>
                                                                 </div>
-                                                                <div class="swiper-button-next"></div>
-                                                                <div class="swiper-button-prev"></div>
+                                                            </div>
+                                                            <div class="col-md-4 img">
+                                                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/mega-menu-style-1.jpg" alt="">
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-4 img">
-                                                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/mega-menu-style-1.jpg" alt="">
-                                                        </div>
-                                                    </div>
-                                                </ul>
-                                            @endif
+                                                    </ul>
+                                                @endif
+                                            </div>
                                         </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                         <div class="header-bottom-left--item">
