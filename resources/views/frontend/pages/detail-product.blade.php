@@ -2,6 +2,8 @@
     use App\Models\Attribute;
     use App\Models\VoucherItem;
     use App\Models\Properties;use Illuminate\Support\Facades\Auth;
+
+     (new \App\Http\Controllers\Frontend\HomeController())->createStatisticShopDetail('views', $product->user_id)
 @endphp
 
 
@@ -494,8 +496,8 @@
                                     $thumbnail = \App\Models\Variation::where('product_id', $product->id)->first();
                                 @endphp
                                 @if($thumbnail)
-                                <img src="{{ asset('storage/' . $thumbnail->thumbnail) }}"
-                                     alt="">
+                                    <img src="{{ asset('storage/' . $thumbnail->thumbnail) }}"
+                                         alt="">
                                 @endif
                                 <div class="button-view">
                                     <button>Quick view</button>
@@ -578,8 +580,8 @@
                                     $thum = \App\Models\Variation::where('product_id', $product->id)->first();
                                 @endphp
                                 @if($thum)
-                                <img src="{{ asset('storage/' . $thum->thumbnail) }}"
-                                     alt="">
+                                    <img src="{{ asset('storage/' . $thum->thumbnail) }}"
+                                         alt="">
                                 @endif
                                 <div class="button-view">
                                     <button>Quick view</button>

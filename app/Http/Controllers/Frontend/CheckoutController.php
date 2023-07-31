@@ -158,6 +158,7 @@ class CheckoutController extends Controller
                 'variable' => $productDetail->id,
                 'status' => OrderItemStatus::ACTIVE
             ];
+            (new HomeController())->createStatisticShopDetail('orders', $cart->product->user_id);
             OrderItem::create($item);
 
             $product = Product::find($cart->product->id);
@@ -352,7 +353,7 @@ class CheckoutController extends Controller
             $product = Product::find($cart->product_id);
             $sellerID = $product->user_id;
             $setup = RankSetUpSeller::where('user_id', $sellerID)->first();
-            if ($setup){
+            if ($setup) {
                 $orderItems = DB::table('order_items')
                     ->join('orders', 'orders.id', '=', 'order_items.order_id')
                     ->join('products', 'products.id', '=', 'order_items.product_id')
