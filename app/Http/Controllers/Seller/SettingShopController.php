@@ -24,6 +24,11 @@ class SettingShopController extends Controller
         return view('backend/shop_setting/index', compact('listPayment', 'listTransport', 'list'));
     }
 
+    public function profileShop()
+    {
+        return view('backend/shop_profile/index');
+    }
+
     public function savePaymentMethod(Request $request)
     {
         $user = Auth::user();

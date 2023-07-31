@@ -232,6 +232,7 @@ Route::group(['middleware' => 'role.admin'], function () {
 Route::group(['middleware' => 'role.seller-or-admin'], function () {
 //Setting shop
     Route::get('/setting-shop', [SettingShopController::class, 'index'])->name('setting.shop.index');
+    Route::get('/profile-shop', [SettingShopController::class, 'profileShop'])->name('profile.shop.index');
     Route::post('/setting-shop/pm', [SettingShopController::class, 'savePaymentMethod'])->name('setting.shop.payment.save');
     Route::post('/setting-shop/tm', [SettingShopController::class, 'saveTransportMethod'])->name('setting.shop.transport.save');
 
@@ -394,6 +395,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add-cart/{product}/{percent}', [CartController::class, 'addToCartPromotion'])->name('cart.add.promotion');
     //
     Route::get('/product-views', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByViews'])->name('product.views');
+
+    Route::get('/', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByViews'])->name('product.views');
 });
 
 // Backend v2
