@@ -29,7 +29,10 @@ class CategoryController extends Controller
         $listProduct = Product::whereRaw("FIND_IN_SET(?, list_category)", [$id])->paginate(9);
         $listPayment = PaymentMethod::all();
         $listTransport = TransportMethod::all();
-        return view('frontend/pages/category', compact('categories', 'listProduct', 'listPayment', 'listTransport'));
+        $priceProductOfCategory = Product::selectRaw('MAX(price) AS maxPrice, MIN(price) AS minPrice')
+            ->where('category_id', $id)
+            ->first();
+        return view('frontend/pages/category', compact('categories', 'listProduct', 'listPayment', 'listTransport', 'priceProductOfCategory'));
     }
 
     public function filterInCategory(Request $request, $id)

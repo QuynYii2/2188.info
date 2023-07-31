@@ -110,15 +110,15 @@
                                 <div class="separator">-</div>
                                 <div class="field">
                                     <span>Max</span>
-                                    <input type="number" class="input-max" id="price-max" value="10000">
+                                    <input type="number" class="input-max" id="price-max" value="{{ $priceProductOfCategory->maxPrice }}">
                                 </div>
                             </div>
                             <div class="slider">
                                 <div class="progress"></div>
                             </div>
                             <div class="range-input">
-                                <input type="range" class="range-min" min="0" max="10000" value="0" step="10">
-                                <input type="range" class="range-max" min="0" max="10000" value="10000" step="10">
+                                <input type="range" class="range-min" min="0" max="{{ $priceProductOfCategory->maxPrice }}" value="0" step="1">
+                                <input type="range" class="range-max" min="0" max="{{ $priceProductOfCategory->maxPrice }}" value="{{ $priceProductOfCategory->maxPrice }}" step="1">
                             </div>
                         </div>
                     </div>
@@ -319,7 +319,7 @@
         const rangeInput = document.querySelectorAll(".range-input input"),
             priceInput = document.querySelectorAll(".price-input input"),
             range = document.querySelector(".slider .progress");
-        let priceGap = 1000;
+        let priceGap = 1;
 
         priceInput.forEach((input) => {
             input.addEventListener("input", (e) => {
