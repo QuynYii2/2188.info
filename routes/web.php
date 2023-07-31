@@ -31,6 +31,7 @@ use App\Http\Controllers\Seller\StorageController;
 use App\Http\Controllers\Seller\TopSellerConfigController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\StatisticController;
+use App\Http\Controllers\StatisticShopController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
 use Illuminate\Support\Facades\Route;
@@ -357,6 +358,7 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::post('/export-excel-detail', [ExportFileController::class, 'exportExcelOrderDetail'])->name('order.manage.export.excel.detail');
     // Statistic
     Route::get('/statistic-access', [StatisticController::class, 'getStatisticAccess'])->name('admin.statistic.access');
+    Route::get('/statistic-shop', [StatisticShopController::class, 'getStatisticShops'])->name('shop.statistic.index');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {

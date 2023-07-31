@@ -51,3 +51,7 @@
     </section>
     <!-- Product Shop Section End -->
 @endsection
+
+@php
+      (new \App\Http\Controllers\Frontend\HomeController())->createStatisticShopDetail('access', $product->user_id)
+@endphp

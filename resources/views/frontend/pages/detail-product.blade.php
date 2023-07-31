@@ -2,6 +2,8 @@
     use App\Models\Attribute;
     use App\Models\VoucherItem;
     use App\Models\Properties;use Illuminate\Support\Facades\Auth;
+
+     (new \App\Http\Controllers\Frontend\HomeController())->createStatisticShopDetail('views', $product->user_id)
 @endphp
 
 

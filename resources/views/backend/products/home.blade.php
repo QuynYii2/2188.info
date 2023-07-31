@@ -2,16 +2,51 @@
 @section('title')
     Seller page
 @endsection
+@php
+    $isAdmin = (new \App\Http\Controllers\Frontend\HomeController())->checkAdmin();
+@endphp
 <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.37.3/apexcharts.min.js"></script>
 @section('content')
     <div class="container">
+        @if($isAdmin == true)
+            <div class="todo_list">
+                <div class="title">Báo cáo thống kê</div>
+                <div class="title-small">Toàn bộ thống kê chi tiết</div>
+                <div class="card-body">
+                    <!-- Line Chart -->
+                    <div id="reportsChart"></div>
+                    <!-- End Line Chart -->
+                </div>
+            </div>
+        @endif
         <div class="todo_list">
-            <div class="title">Báo cáo thống kê</div>
-            <div class="title-small">Toàn bộ thống kê chi tiết</div>
-            <div class="card-body">
-                <!-- Line Chart -->
-                <div id="reportsChart"></div>
-                <!-- End Line Chart -->
+            <div class="title">Phân tích bán hàng</div>
+            <div class="title-small">Phân tích bán hàng chi tiết</div>
+            <div class="full-width" id="listTodoRender">
+                <div class="d-flex">
+                    <div class="border w-25">
+                        <div class="smail">Lượt truy cập</div>
+                        <h3 id="countAccess">10</h3>
+                        <p class="text-warning">Vs hôm qua <span id="countAccessPercent">0,00</span>% --</p>
+                    </div>
+                    <div class="border w-25">
+                        <div class="smail">Lượt xem</div>
+                        <h3 id="countViews">10</h3>
+                        <p class="text-warning">Vs hôm qua <span id="countViewPercent">0,00</span>% --</p>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <div class="border w-25">
+                        <div class="smail">Đơn hàng</div>
+                        <h3 id="countOrders">10</h3>
+                        <p class="text-warning">Vs hôm qua <span id="countOrderPercent">0,00</span>% --</p>
+                    </div>
+                    <div class="border w-25">
+                        <div class="smail">Tỷ lệ chuyển đổi</div>
+                        <h3>10</h3>
+                        <p class="text-warning">Vs hôm qua <span>0,00</span>% --</p>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="todo_list">
@@ -194,82 +229,119 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+        function getAllStatisticAccess() {
+            $.ajax({
+                url: '{{route('admin.statistic.access')}}',
+                method: 'GET',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (response) {
+                    var data = response[0];
+                    getChar(data[0], data[1])
+                },
+                error: function (exception) {
+                    console.log(exception)
+                }
+            });
+        }
+
+        getAllStatisticAccess();
+
+        function getChar(data, datatime) {
+            document.addEventListener("DOMContentLoaded", () => {
+                new ApexCharts(document.querySelector("#reportsChart"), {
+                    series: [{
+                        name: 'Access',
+                        data: data,
+                    }
+                        , {
+                            name: 'Revenue',
+                            data: [11, 32, 45, 32, 34, 52, 41]
+                        }
+                        , {
+                            name: 'Customers',
+                            data: [15, 11, 32, 18, 9, 24, 11]
+                        }
+                    ],
+                    chart: {
+                        height: 350,
+                        type: 'area',
+                        toolbar: {
+                            show: false
+                        },
+                    },
+                    markers: {
+                        size: 4
+                    },
+                    colors: ['#4154f1', '#2eca6a', '#ff771d'],
+                    fill: {
+                        type: "gradient",
+                        gradient: {
+                            shadeIntensity: 1,
+                            opacityFrom: 0.3,
+                            opacityTo: 0.4,
+                            stops: [0, 90, 100]
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        curve: 'smooth',
+                        width: 2
+                    },
+                    xaxis: {
+                        type: 'datetime',
+                        categories: datatime
+                    },
+                    tooltip: {
+                        x: {
+                            format: 'dd/MM/yy HH:mm'
+                        },
+                    }
+                }).render();
+            });
+        }
+
+        function getAllStatisticShops() {
+            var access = document.getElementById('countAccess')
+            var accessPercent = document.getElementById('countAccessPercent')
+            var views = document.getElementById('countViews')
+            var viewPercent = document.getElementById('countViewPercent')
+            var orders = document.getElementById('countOrders')
+            var orderPercent = document.getElementById('countOrderPercent')
+
+            var listTodoRender = $('#listTodoRender');
+            $.ajax({
+                url: '{{route('shop.statistic.index')}}',
+                method: 'GET',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (response) {
+                    // listTodoRender.append(response);
+
+                    var nowShop = response[0][0];
+                    var perShop = response[1][1];
+
+                    access.innerText = nowShop[0];
+                    views.innerText = nowShop[1];
+                    orders.innerText = nowShop[2];
+
+                    accessPercent.innerText = (parseFloat(nowShop[0]) / parseFloat(perShop[0]) * 100).toFixed(2)
+                    viewPercent.innerText = (parseFloat(nowShop[1]) / parseFloat(perShop[1]) * 100).toFixed(2)
+                    orderPercent.innerText = (parseFloat(nowShop[2]) / parseFloat(perShop[2]) * 100).toFixed(2)
+
+                },
+                error: function (exception) {
+                    console.log(exception)
+                }
+            });
+        }
+
+        getAllStatisticShops();
+    </script>
 @endsection
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<script>
-    function getAllStatisticAccess() {
-        $.ajax({
-            url: '{{route('admin.statistic.access')}}',
-            method: 'GET',
-            data: {
-                _token: '{{ csrf_token() }}'
-            },
-            success: function (response) {
-                console.log(response[0])
-                var data = response[0];
-                getChar(data[0], data[1])
-            },
-            error: function (exception) {
-                console.log(exception)
-            }
-        });
-    }
-
-    getAllStatisticAccess();
-
-    function getChar(data, datatime) {
-        document.addEventListener("DOMContentLoaded", () => {
-            new ApexCharts(document.querySelector("#reportsChart"), {
-                series: [{
-                    name: 'Access',
-                    data: data,
-                }
-                    , {
-                        name: 'Revenue',
-                        data: [11, 32, 45, 32, 34, 52, 41]
-                    }
-                    , {
-                        name: 'Customers',
-                        data: [15, 11, 32, 18, 9, 24, 11]
-                    }
-                ],
-                chart: {
-                    height: 350,
-                    type: 'area',
-                    toolbar: {
-                        show: false
-                    },
-                },
-                markers: {
-                    size: 4
-                },
-                colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                fill: {
-                    type: "gradient",
-                    gradient: {
-                        shadeIntensity: 1,
-                        opacityFrom: 0.3,
-                        opacityTo: 0.4,
-                        stops: [0, 90, 100]
-                    }
-                },
-                dataLabels: {
-                    enabled: false
-                },
-                stroke: {
-                    curve: 'smooth',
-                    width: 2
-                },
-                xaxis: {
-                    type: 'datetime',
-                    categories: datatime
-                },
-                tooltip: {
-                    x: {
-                        format: 'dd/MM/yy HH:mm'
-                    },
-                }
-            }).render();
-        });
-    }
-</script>
