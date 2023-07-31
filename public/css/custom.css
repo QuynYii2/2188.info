@@ -5891,6 +5891,9 @@ button.bg-dark:focus {
 .d-inline-flex {
     display: inline-flex !important;
 }
+.header_back {
+    justify-content: space-between;
+}
 
 @media (min-width: 576px) {
     .d-sm-none {
