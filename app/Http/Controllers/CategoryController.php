@@ -36,7 +36,7 @@ class CategoryController extends Controller
         $sortArr = explode(' ', $request->data['sortBy']);
         $selectedPayments = $request->data['selectedPayments'];
         $selectedTransports = $request->data['selectedTransports'];
-
+        $search_origin = $request->data['search_origin'];
         $query = Product::where('category_id', '=', $id)
             ->join('users', 'products.user_id', '=', 'users.id');
 
@@ -46,6 +46,10 @@ class CategoryController extends Controller
         }
 
         $selectedPaymentsArray = array_unique($selectedPaymentsArray);
+
+        if ($search_origin) {
+            $query->where('products.origin', 'LIKE', '%' . $search_origin . '%');
+        }
 
         if (count($selectedPaymentsArray) > 1) {
             $query->where(function ($query) use ($selectedPaymentsArray) {

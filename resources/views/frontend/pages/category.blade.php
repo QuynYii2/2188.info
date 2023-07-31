@@ -105,26 +105,26 @@
                             <div class="price-input d-flex">
                                 <div class="field">
                                     <span>Min</span>
-                                    <input type="number" class="input-min" id="price-min" value="2500">
+                                    <input type="number" class="input-min" id="price-min" value="0">
                                 </div>
                                 <div class="separator">-</div>
                                 <div class="field">
                                     <span>Max</span>
-                                    <input type="number" class="input-max" id="price-max" value="7500">
+                                    <input type="number" class="input-max" id="price-max" value="10000">
                                 </div>
                             </div>
                             <div class="slider">
                                 <div class="progress"></div>
                             </div>
                             <div class="range-input">
-                                <input type="range" class="range-min" min="0" max="10000" value="2500" step="10">
-                                <input type="range" class="range-max" min="0" max="10000" value="7500" step="10">
+                                <input type="range" class="range-min" min="0" max="10000" value="0" step="10">
+                                <input type="range" class="range-max" min="0" max="10000" value="10000" step="10">
                             </div>
                         </div>
                     </div>
                     <hr>
-                    <div class="content">BRANDS</div>
-                    <input type="text" value="" id="search-origin">Sản phẩm theo hãng
+                    <div class="content">ORIGIN</div>
+                    <input type="text" value="" id="search-origin" onchange="searchOrigin(this)">Sản phẩm theo xuất xứ
 
                 </div>
                 <!-- Tab panes -->
@@ -334,7 +334,7 @@
         const rangeInput = document.querySelectorAll(".range-input input"),
             priceInput = document.querySelectorAll(".price-input input"),
             range = document.querySelector(".slider .progress");
-        let priceGap = 1000;
+        let priceGap = 10;
 
         priceInput.forEach((input) => {
             input.addEventListener("input", (e) => {
@@ -376,6 +376,7 @@
     </script>
 
     <script>
+        let search_origin = '';
         let sortBy = '';
         let countPerPage = '';
         let selectedPayments = [];
@@ -384,9 +385,13 @@
         selectedPayments.push('0');
         selectedTransports.push('0');
         const jq = $.noConflict();
-        handleCountPerPage();
-        handleSortBy();
-        callApiFilter();
+        loadData();
+
+        async function loadData() {
+            await handleCountPerPage();
+            await handleSortBy();
+            await callApiFilter();
+        }
 
         $(document).on('change', '#count-per-page', function () {
             handleCountPerPage();
@@ -405,6 +410,11 @@
             return arrUrl[arrUrl.length - 1];
         }
 
+        function searchOrigin(input) {
+            search_origin = input.value
+            callApiFilter();
+        }
+
         function callApiFilter() {
             const url = '/category/filter/' + getIdCategory();
             let data = {
@@ -412,6 +422,7 @@
                 countPerPage: countPerPage,
                 selectedPayments: selectedPayments,
                 selectedTransports: selectedTransports,
+                search_origin: search_origin,
             }
             jq.ajax({
                 url: url,
