@@ -54,35 +54,35 @@
             <div class="title-small">Những việc cần phải làm</div>
             <div class="row mt-4 todo_list--bottom">
                 <div class="col-md-3 col-6 list_item">
-                    <span class="number">0</span>
+                    <span class="number">{{count($productWaitPayments)}}</span>
                     <p>Chờ xác nhận</p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
-                    <span class="number">0</span>
-                    <p> Chờ Lấy Hàng </p>
-                </div>
-                <div class="col-md-3 col-6 list_item">
-                    <span class="number">0</span>
+                    <span class="number">{{count($productProcessings)}}</span>
                     <p> Đã Xử Lý </p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
-                    <span class="number">0</span>
+                    <span class="number">{{count($productShippings)}}</span>
+                    <p> Đã Lấy Hàng </p>
+                </div>
+                <div class="col-md-3 col-6 list_item">
+                    <span class="number">{{count($productDelivereds)}}</span>
+                    <p> Đơn thành công </p>
+                </div>
+                <div class="col-md-3 col-6 list_item">
+                    <span class="number">{{count($productCancels)}}</span>
                     <p> Đơn Hủy </p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
-                    <span class="number">0</span>
+                    <span class="number">{{count($productCancels)}}</span>
                     <p> Trả Hàng / Hoàn Tiền Chờ Xử Lý </p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
-                    <span class="number">0</span>
-                    <p> Sản Phẩm Bị Tạm Khóa </p>
-                </div>
-                <div class="col-md-3 col-6 list_item">
-                    <span class="number">0</span>
+                    <span class="number">{{count($productPause)}}</span>
                     <p> Sản Phẩm Hết Hàng </p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
-                    <span class="number">0</span>
+                    <span class="number">{{count($promotions)}}</span>
                     <p>Chương Trình Khuyến Mãi Chờ Xử Lý</p>
                 </div>
             </div>
@@ -91,7 +91,7 @@
             <div class="title">Kênh Marketing</div>
             <div class="title-small">Công cụ Marketing & Đăng ký chương trình Khuyến Mãi</div>
             <div class="row mt-4 todo_list--bottom">
-                <a href="#" class="col-md-4 marketing list_item">
+                <a href="{{route('seller.vouchers.list')}}" class="col-md-4 marketing list_item">
                     <div class="list_item--top">
                         <img src="https://deo.shopeemobile.com/shopee/shopee-seller-live-sg/rootpages/static/modules/marketing/module-icons/voucher.png"
                              alt="">
@@ -101,7 +101,7 @@
                         <p>Công cụ tăng đơn hàng bằng cách tạo mã giảm giá tặng cho người mua</p>
                     </div>
                 </a>
-                <a href="#" class="col-md-4 marketing list_item">
+                <a href="{{route('seller.promotion.list')}}" class="col-md-4 marketing list_item">
                     <div class="list_item--top">
                         <img src="https://deo.shopeemobile.com/shopee/shopee-seller-live-sg/rootpages/static/modules/marketing/module-icons/discount.png"
                              alt="">
@@ -111,7 +111,7 @@
                         <p>Công cụ tăng đơn hàng bằng cách tạo chương trình giảm giá</p>
                     </div>
                 </a>
-                <a href="#" class="col-md-4 marketing list_item">
+                <a href="{{route('seller.promotion.list')}}" class="col-md-4 marketing list_item">
                     <div class="list_item--top">
                         <img src="https://deo.shopeemobile.com/shopee/shopee-seller-live-sg/rootpages/static/modules/marketing/module-icons/bundle.png"
                              alt="">

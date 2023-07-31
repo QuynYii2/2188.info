@@ -4,13 +4,16 @@ namespace App\Http\Controllers\Seller;
 
 use App\Enums\AttributeProductStatus;
 use App\Enums\AttributeStatus;
+use App\Enums\OrderStatus;
 use App\Enums\ProductStatus;
+use App\Enums\PromotionStatus;
 use App\Enums\VariationStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Promotion;
 use App\Models\StaffUsers;
 use App\Models\StorageProduct;
 use App\Models\Variation;
@@ -40,8 +43,50 @@ class ProductController extends Controller
 
     public function home()
     {
-
-        return view('backend/products/home');
+        $productProcessings = DB::table('order_items')
+            ->join('orders', 'orders.id', '=', 'order_items.order_id')
+            ->join('products', 'products.id', '=', 'order_items.product_id')
+            ->where([['products.user_id', '=', Auth::user()->id], ['orders.status', '=', OrderStatus::PROCESSING]])
+            ->select('order_items.*')
+            ->get();
+        $productWaitPayments = DB::table('order_items')
+            ->join('orders', 'orders.id', '=', 'order_items.order_id')
+            ->join('products', 'products.id', '=', 'order_items.product_id')
+            ->where([['products.user_id', '=', Auth::user()->id], ['orders.status', '=', OrderStatus::WAIT_PAYMENT]])
+            ->select('order_items.*')
+            ->get();
+        $productShippings = DB::table('order_items')
+            ->join('orders', 'orders.id', '=', 'order_items.order_id')
+            ->join('products', 'products.id', '=', 'order_items.product_id')
+            ->where([['products.user_id', '=', Auth::user()->id], ['orders.status', '=', OrderStatus::SHIPPING]])
+            ->select('order_items.*')
+            ->get();
+        $productDelivereds = DB::table('order_items')
+            ->join('orders', 'orders.id', '=', 'order_items.order_id')
+            ->join('products', 'products.id', '=', 'order_items.product_id')
+            ->where([['products.user_id', '=', Auth::user()->id], ['orders.status', '=', OrderStatus::DELIVERED]])
+            ->select('order_items.*')
+            ->get();
+        $productCancels = DB::table('order_items')
+            ->join('orders', 'orders.id', '=', 'order_items.order_id')
+            ->join('products', 'products.id', '=', 'order_items.product_id')
+            ->where([['products.user_id', '=', Auth::user()->id], ['orders.status', '=', OrderStatus::CANCELED]])
+            ->select('order_items.*')
+            ->get();
+        $productPause = DB::table('products')
+            ->join('storage_products', 'storage_products.id', '=', 'products.storage_id')
+            ->where([['products.user_id', '=', Auth::user()->id], ['storage_products.quantity', '=', 0]])
+            ->select('products.*')
+            ->get();
+        $promotions = Promotion::where([['user_id', Auth::user()->id], ['status', PromotionStatus::INACTIVE]])->get();
+        return view('backend/products/home', compact(
+            'productProcessings',
+            'productWaitPayments',
+            'productShippings',
+            'productDelivereds',
+            'productCancels',
+            'productPause',
+            'promotions'));
     }
 
 

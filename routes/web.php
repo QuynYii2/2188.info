@@ -228,6 +228,13 @@ Route::group(['middleware' => 'role.admin'], function () {
     Route::post('/admin/banners', [BannerController::class, 'create'])->name('admin.banners.create');
     Route::post('/admin/banners/{id}', [BannerController::class, 'update'])->name('admin.banners.update');
     Route::delete('/admin/banners/{id}', [BannerController::class, 'delete'])->name('admin.banners.delete');
+    // Categories
+    Route::get('/categories', [CategoryController::class, 'index'])->name('seller.categories.index');
+    Route::get('/categories/create', [CategoryController::class, 'create'])->name('seller.categories.create');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('seller.categories.store');
+    Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('seller.categories.edit');
+    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('seller.categories.update');
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('seller.categories.destroy');
 
 });
 
@@ -273,13 +280,13 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::post('/toggle-products-feature/{id}', [ProductController::class, 'setFeatureProduct'])->name('seller.products.feature');
     // End
     Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('seller.products.destroy');
-    // Categories
-    Route::get('/categories', [CategoryController::class, 'index'])->name('seller.categories.index');
-    Route::get('/categories/create', [CategoryController::class, 'create'])->name('seller.categories.create');
-    Route::post('/categories', [CategoryController::class, 'store'])->name('seller.categories.store');
-    Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('seller.categories.edit');
-    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('seller.categories.update');
-    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('seller.categories.destroy');
+//    // Categories
+//    Route::get('/categories', [CategoryController::class, 'index'])->name('seller.categories.index');
+//    Route::get('/categories/create', [CategoryController::class, 'create'])->name('seller.categories.create');
+//    Route::post('/categories', [CategoryController::class, 'store'])->name('seller.categories.store');
+//    Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('seller.categories.edit');
+//    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('seller.categories.update');
+//    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('seller.categories.destroy');
 
     //Revenue
     Route::get('/revenues', [RevenusController::class, 'index'])->name('revenues.index');
