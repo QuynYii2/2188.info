@@ -432,7 +432,7 @@
                     data: data,
                 },
                 success: function (response) {
-                    renderProduct(response);
+                    renderProduct(response.data);
                 },
                 error: function (exception) {
                     console.log(exception)
@@ -442,63 +442,62 @@
 
         function renderProduct(response) {
             let str = "";
-            console.log(response)
-            {{--response.forEach(function (product) {--}}
-            {{--    str += `<div class="col-xl-3 col-md-4 col-6 section">--}}
-            {{--                        <div class="item">--}}
-            {{--                            <div class="item-img">--}}
-            {{--                                <img src="{{ asset('storage/${product.thumbnail}')  }}"--}}
-            {{--                                     alt="">--}}
-            {{--                                <div class="button-view">--}}
-            {{--                                    <button>Quick view</button>--}}
-            {{--                                </div>--}}
-            {{--                                <div class="text">--}}
-            {{--                                    <div class="text-sale">--}}
-            {{--                                        Sale--}}
-            {{--                                    </div>--}}
-            {{--                                    <div class="text-new">--}}
-            {{--                                        New--}}
-            {{--                                    </div>--}}
-            {{--                                </div>--}}
-            {{--                            </div>--}}
-            {{--                            <div class="item-body">--}}
-            {{--                                <div class="card-rating">--}}
-            {{--                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>--}}
-            {{--                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>--}}
-            {{--                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>--}}
-            {{--                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>--}}
-            {{--                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>--}}
-            {{--                                    <span>(1)</span>--}}
-            {{--                                </div>--}}
-            {{--    <div class="card-brand">--}}
-            {{--    </div>--}}
-            {{--    <div class="card-title">--}}
-            {{--        <a href="{{route('detail_product.show', ${product.id})}}">${product.product_name}</a>--}}
-            {{--                                </div>--}}
-            {{--                                <div class="card-price d-flex justify-content-between">--}}
-            {{--                                    <div class="price-sale">--}}
-            {{--                                        <strong>${product.price}</strong>--}}
-            {{--                                    </div>--}}
-            {{--                                    <div class="price-cost">`;--}}
-            {{--    if (product.old_price != null) {--}}
-            {{--        str += `<strike>${product.old_price}</strike>`--}}
-            {{--    }--}}
-            {{--   str += `</div>--}}
-            {{--</div>--}}
-            {{--<div class="card-bottom d-flex justify-content-between">--}}
-            {{--    <div class="card-bottom--left">--}}
-            {{--        <a href="\{\{route('detail_product.show', ${product.id})}}">Choose--}}
-            {{--                                            Options</a>--}}
-            {{--                                    </div>--}}
-            {{--                                    <div class="card-bottom--right">--}}
-            {{--                                        <i class="item-icon fa-regular fa-heart"></i>--}}
-            {{--                                    </div>--}}
-            {{--                                </div>--}}
-            {{--                            </div>--}}
-            {{--                        </div>--}}
-            {{--                    </div>`;--}}
-            {{--})--}}
-            document.getElementById('renderProduct').innerHTML = response;
+            response.forEach(function (product) {
+                str += `<div class="col-xl-3 col-md-4 col-6 section">
+                                    <div class="item">
+                                        <div class="item-img">
+                                            <img src="\{\{ asset('storage/${product.thumbnail}')  }}"
+                                                 alt="">
+                                            <div class="button-view">
+                                                <button>Quick view</button>
+                                            </div>
+                                            <div class="text">
+                                                <div class="text-sale">
+                                                    Sale
+                                                </div>
+                                                <div class="text-new">
+                                                    New
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item-body">
+                                            <div class="card-rating">
+                                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                <span>(1)</span>
+                                            </div>
+                <div class="card-brand">
+                </div>
+                <div class="card-title">
+                    <a href="\{\{route('detail_product.show', ${product.id})}}">${product.product_name}</a>
+                                            </div>
+                                            <div class="card-price d-flex justify-content-between">
+                                                <div class="price-sale">
+                                                    <strong>${product.price}</strong>
+                                                </div>
+                                                <div class="price-cost">`;
+                if (product.old_price != null) {
+                    str += `<strike>${product.old_price}</strike>`
+                }
+               str += `</div>
+            </div>
+            <div class="card-bottom d-flex justify-content-between">
+                <div class="card-bottom--left">
+                    <a href="\{\{route('detail_product.show', ${product.id})}}">Choose
+                                                        Options</a>
+                                                </div>
+                                                <div class="card-bottom--right">
+                                                    <i class="item-icon fa-regular fa-heart"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`;
+            })
+            document.getElementById('renderProduct').innerHTML = str;
         }
 
         function handleSortBy() {
