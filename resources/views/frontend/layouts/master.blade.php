@@ -41,6 +41,9 @@
 @include('sweetalert::alert')
 
 <div id="mt-body">
+    @php
+    (new \App\Http\Controllers\Frontend\HomeController())->createStatistic();
+    @endphp
     @yield('content')
 </div>
 

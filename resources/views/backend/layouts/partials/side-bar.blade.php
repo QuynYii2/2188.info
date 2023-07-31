@@ -24,6 +24,8 @@
     $check_ctv_shop = DB::table('staff_users')->where('user_id', Auth::user()->id)->first();
 
      $routeName = \Illuminate\Support\Facades\Route::currentRouteName();
+
+    (new \App\Http\Controllers\Frontend\HomeController())->createStatistic();
 @endphp
 <div class='wrapper text-nowrap'>
     <ul class='items'>
@@ -101,12 +103,12 @@
                                             banner</a>
                                     </li>
                                 @endif
-                                <li><a class="sidebarUrl" href="#">Quảng Cáo Shopee</a>
-                                </li>
-                                <li><a class="sidebarUrl" href="#">Tăng Đơn Cùng KOL</a>
-                                </li>
-                                <li><a class="sidebarUrl" href="#">Hiệu Quả Shopee Live</a>
-                                </li>
+{{--                                <li><a class="sidebarUrl" href="#">Quảng Cáo Shopee</a>--}}
+{{--                                </li>--}}
+{{--                                <li><a class="sidebarUrl" href="#">Tăng Đơn Cùng KOL</a>--}}
+{{--                                </li>--}}
+{{--                                <li><a class="sidebarUrl" href="#">Hiệu Quả Shopee Live</a>--}}
+{{--                                </li>--}}
                             </ul>
                         </li>
                         @break
@@ -118,12 +120,12 @@
                 <ul class='sub-items pl-3'>
                     <li><a class="sidebarUrl" href="{{route('revenues.index')}}">Doanh thu</a>
                     </li>
-                    <li><a class="sidebarUrl" href="#">Số dư TK Shopee</a>
-                    </li>
-                    <li><a class="sidebarUrl" href="#">Tài Khoản Ngân Hàng</a>
-                    </li>
-                    <li><a class="sidebarUrl" href="#">Cài Đặt Thanh Toán</a>
-                    </li>
+{{--                    <li><a class="sidebarUrl" href="#">Số dư TK Shopee</a>--}}
+{{--                    </li>--}}
+{{--                    <li><a class="sidebarUrl" href="#">Tài Khoản Ngân Hàng</a>--}}
+{{--                    </li>--}}
+{{--                    <li><a class="sidebarUrl" href="#">Cài Đặt Thanh Toán</a>--}}
+{{--                    </li>--}}
                 </ul>
             </li>
 
@@ -138,15 +140,15 @@
                     </ul>
                 </li>
             @endif
-            <li>
-                <a class="sidebar item" href='#'><i class="fa-solid fa-layer-group"></i> Phát Triển</a>
-                <ul class='sub-items pl-3'>
-                    <li><a class="sidebarUrl" href="#">Nhiệm Vụ Người Bán</a>
-                    </li>
-                    <li><a class="sidebarUrl" href="#">Shop Yêu Thích</a>
-                    </li>
-                </ul>
-            </li>
+{{--            <li>--}}
+{{--                <a class="sidebar item" href='#'><i class="fa-solid fa-layer-group"></i> Phát Triển</a>--}}
+{{--                <ul class='sub-items pl-3'>--}}
+{{--                    <li><a class="sidebarUrl" href="#">Nhiệm Vụ Người Bán</a>--}}
+{{--                    </li>--}}
+{{--                    <li><a class="sidebarUrl" href="#">Shop Yêu Thích</a>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </li>--}}
             @php
                 $check = true;
                 if (Auth::check()){
@@ -179,15 +181,15 @@
                     </ul>
                 </li>
             @endif
-            <li>
-                <a class="sidebar item" href='#'><i class="fa-solid fa-headset"></i> Chăm sóc khách hàng</a>
-                <ul class='sub-items pl-3'>
-                    <li><a class="sidebarUrl" href="#">Trợ Lý Chat</a>
-                    </li>
-                    <li><a class="sidebarUrl" href="#">Hỏi - Đáp</a>
-                    </li>
-                </ul>
-            </li>
+{{--            <li>--}}
+{{--                <a class="sidebar item" href='#'><i class="fa-solid fa-headset"></i> Chăm sóc khách hàng</a>--}}
+{{--                <ul class='sub-items pl-3'>--}}
+{{--                    <li><a class="sidebarUrl" href="#">Trợ Lý Chat</a>--}}
+{{--                    </li>--}}
+{{--                    <li><a class="sidebarUrl" href="#">Hỏi - Đáp</a>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </li>--}}
             <li>
                 <a class="sidebar item" href='#'><i class="fa-solid fa-shop"></i> Quản Lý Shop</a>
                 <ul class='sub-items pl-3'>
@@ -240,23 +242,23 @@
                     <li><a class="sidebarUrl" class="sidebarFUrl" href="{{ route('setting.shop.index') }}">Cấu hình
                             chung</a>
                     </li>
-                    <li><a class="sidebarUrl" href="#">Địa Chỉ</a>
-                    </li>
-                    <li><a class="sidebarUrl" href="#">Thiết Lập Shop</a>
-                    </li>
-                    <li><a class="sidebarUrl" href="#">Tài Khoản</a>
-                    </li>
-                    <li><a class="sidebarUrl" href="#">Nền Tảng Đối Tác (Kết nối API)</a>
-                    </li>
+{{--                    <li><a class="sidebarUrl" href="#">Địa Chỉ</a>--}}
+{{--                    </li>--}}
+{{--                    <li><a class="sidebarUrl" href="#">Thiết Lập Shop</a>--}}
+{{--                    </li>--}}
+{{--                    <li><a class="sidebarUrl" href="#">Tài Khoản</a>--}}
+{{--                    </li>--}}
+{{--                    <li><a class="sidebarUrl" href="#">Nền Tảng Đối Tác (Kết nối API)</a>--}}
+{{--                    </li>--}}
                 </ul>
             </li>
-            <li>
-                <a class="sidebar item" href='#'><i class="fa-solid fa-circle-question"></i> Trợ giúp</a>
-                <ul class='sub-items pl-3'>
-                    <li><a class="sidebarUrl" href="#">Cổng Thông Tin Hỗ Trợ Người Bán </a>
-                    </li>
-                </ul>
-            </li>
+{{--            <li>--}}
+{{--                <a class="sidebar item" href='#'><i class="fa-solid fa-circle-question"></i> Trợ giúp</a>--}}
+{{--                <ul class='sub-items pl-3'>--}}
+{{--                    <li><a class="sidebarUrl" href="#">Cổng Thông Tin Hỗ Trợ Người Bán </a>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </li>--}}
         @endif
     </ul>
 </div>

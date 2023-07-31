@@ -44,6 +44,9 @@ return [
     'discount code' => 'Mã giảm giá',
     'my coin management' => 'Quản lý xu của tôi',
     'my bookcare' => 'Bookcare của tôi',
+    'voucher management'=>'Quản lý mã giảm giá',
+    'product multilviews'=>'Lượt xem cao nhất',
+    'category interest'=>'Danh mục quan tâm',
 
     //thông tin cá nhân, họ và tên, nickname, ngày sinh, giới tính, quốc tịch, số điện thoại và email, số điện thoại, địa chỉ email, bảo mật, đổi mật khẩu, thiết lập mã pin, liên kết mạng xã hội, lưu thay đổi, địa chỉ
     'personal information' => 'Thông tin cá nhân',
@@ -258,5 +261,7 @@ return [
     'Gift Cards'=>'Thẻ quà tặng',
     'Wish Lists'=>'Danh sách yêu thích',
     'Help'=>'Hỗ trợ',
+    'voucher management'=>'Quản lý mã giảm giá',
+    'upgrade'=>'Nâng cấp',
 
 ];

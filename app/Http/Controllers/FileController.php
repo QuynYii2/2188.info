@@ -43,6 +43,7 @@ class FileController extends Controller
     public function saveImgByUser(Request $request)
     {
         $obj = new ImageUser();
+
         if ($request->hasFile('gallery')) {
             $gallery = $request->file('gallery');
             $galleryPaths = [];
@@ -52,12 +53,14 @@ class FileController extends Controller
             }
             $galleryString = implode(',', $galleryPaths);
             $obj->url_image = $galleryString;
+            $obj->user_id = Auth::user()->id;
+            $obj->save();
+            return response()->json($galleryString);
+
         }
+        return response()->json("Error");
 
 
-        $obj->user_id = Auth::user()->id;
-
-        $obj->save();
     }
 
     /**

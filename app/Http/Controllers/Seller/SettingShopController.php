@@ -21,7 +21,7 @@ class SettingShopController extends Controller
         $list = User::where('id', Auth::user()->id)->first(['payment_method', 'transport_method']);
         $listPayment = PaymentMethod::all();
         $listTransport = TransportMethod::all();
-        return view('backend/shop_setting/index', compact('listPayment', 'listTransport'));
+        return view('backend/shop_setting/index', compact('listPayment', 'listTransport', 'list'));
     }
 
     public function savePaymentMethod(Request $request)

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,12 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::where('user_id', Auth::user()->id)->get();
+        $isAdmin = (new HomeController())->checkAdmin();
+        if ($isAdmin){
+            $categories = Category::all();
+        } else {
+            $categories = Category::where('user_id', Auth::user()->id)->get();
+        }
         return view('backend/categories/index', [
             'categories' => $categories
         ]);
@@ -21,7 +27,12 @@ class CategoryController extends Controller
 
     public function create()
     {
-        $categories = Category::where('user_id', Auth::user()->id)->get();
+        $isAdmin = (new HomeController())->checkAdmin();
+        if ($isAdmin){
+            $categories = Category::all();
+        } else {
+            $categories = Category::where('user_id', Auth::user()->id)->get();
+        }
         return view('backend/categories/create', [
             'categories' => $categories
         ]);
@@ -93,11 +104,16 @@ class CategoryController extends Controller
 
     public function edit($id)
     {
+        $isAdmin = (new HomeController())->checkAdmin();
+        if ($isAdmin){
+            $categories = Category::all();
+        } else {
+            $categories = Category::where('user_id', Auth::user()->id)->get();
+        }
         $category = Category::find($id);
         if (!$category) {
             return back();
         }
-        $categories = Category::where('user_id', Auth::user()->id)->get();
         return view('backend/categories/edit', compact('category', 'categories'));
     }
 

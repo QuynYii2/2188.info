@@ -20,17 +20,14 @@
                             <td><input name="category_name" id="category_name" type="text" value="{{$category->name}}"
                                        size="40"
                                        aria-required="true" aria-describedby="name-description">
-                                <p class="description" id="name-description">The name is how it appears on your
-                                    site.</p></td>
+                            </td>
                         </tr>
                         <tr class="form-field term-slug-wrap">
                             <th scope="row"><label for="category_slug">Đường dẫn</label></th>
                             <td><input name="category_slug" id="category_slug" type="text" value="{{$category->slug}}"
                                        size="40"
                                        aria-describedby="slug-description">
-                                <p class="description" id="slug-description">“slug” là đường dẫn thân thiện của tên. Nó
-                                    thường chỉ bao gồm kí tự viết thường, số và dấu gạch ngang, không dùng tiếng
-                                    Việt.</p></td>
+                              </td>
                         </tr>
                         <tr class="form-field term-parent-wrap">
                             <th scope="row"><label for="category_parentID">Parent category</label></th>
@@ -54,8 +51,6 @@
                                         <option value="-1">Trống</option>
                                     @endif
                                 </select>
-                                <p class="description" id="parent-description">Chỉ định một chuyên mục cha để tạo đa
-                                    cấp. Chẳng hạn, chuyên mục Nhạc sẽ là chuyên mục cha của Hiphop và Jazz.</p>
                             </td>
                         </tr>
                         <tr class="form-field term-description-wrap">
@@ -63,8 +58,7 @@
                             <td><textarea name="category_description" id="category_description" rows="5" cols="50"
                                           class="large-text"
                                           aria-describedby="description-description">{{$category->description}}</textarea>
-                                <p class="description" id="description-description">The description is not prominent by
-                                    default; however, some themes may show it.</p></td>
+                              </td>
                         </tr>
                         {{--                        <tr class="form-field term-display-type-wrap">--}}
                         {{--                            <th scope="row" valign="top"><label>Display type</label></th>--}}
