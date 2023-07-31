@@ -14,8 +14,8 @@ class InsertTypeColumnProducts extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->mediumText('thumbnail')->nullable();
-            $table->longText('gallery')->nullable();
+            $table->mediumText('thumbnail');
+            $table->longText('gallery');
         });
     }
 
