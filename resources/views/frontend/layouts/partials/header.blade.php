@@ -154,9 +154,12 @@
                                             <p>Chưa có sản phẩm trong giỏ hàng.</p>
                                         @else
                                             @foreach ($cartItems as $cartItem)
+                                                @php
+                                                    $productDetail = \App\Models\Variation::where('product_id', $cartItem->product->id)->first();
+                                                @endphp
                                                 <div class="shop-item row">
                                                     <div class="col-3 shop-item--img">
-                                                        <img src="{{ asset('storage/'.$cartItem->product->thumbnail) }}" alt="">
+                                                        <img src="{{ asset('storage/'.$productDetail->thumbnail) }}" alt="">
                                                     </div>
                                                     <div class="col-8 shop-item--text">
                                                         <div class="text-seller">

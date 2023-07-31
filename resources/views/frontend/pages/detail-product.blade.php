@@ -268,12 +268,12 @@
                                 </div>
                             @endforeach
                         </div>
-                        <a id="resetSelect" class="btn btn-warning mt-3">Reset select</a>
+                        <a id="resetSelect" class="btn btn-dark mt-3 " style="color: white"> Reset select</a>
                     @endif
                     <div class="">
                         <input id="product_id" hidden value="{{$product->id}}">
-                        @if(count($variables)>0)
-                            <input name="variable" id="variable" hidden value="{{$variables[0]->variation}}">
+                        @if(count($productDetails)>0)
+                            <input name="variable" id="variable" hidden value="{{$productDetails[0]->variation}}">
                         @endif
 
                     </div>
@@ -534,12 +534,16 @@
                                     <!-- <div class="price">
                                                     <strong>$189.000</strong>
                                                 </div> -->
-                                    <div class="price-sale">
-                                        <strong>${{$product->qty}}</strong>
-                                    </div>
-                                    <div class="price-cost">
-                                        <strike>${{$product->price}}</strike>
-                                    </div>
+                                    @if($thumbnail)
+                                        <div class="price-sale">
+                                            <strong>${{$thumbnail->price}}</strong>
+                                        </div>
+                                        @if($thumbnail->old_price != null)
+                                            <div class="price-cost">
+                                                <strike>${{$thumbnail->old_price}}</strike>
+                                            </div>
+                                        @endif
+                                    @endif
                                 </div>
                                 <div class="card-bottom d-flex justify-content-between">
                                     <div class="card-bottom--left">
@@ -618,12 +622,16 @@
                                     <!-- <div class="price">
                                                     <strong>$189.000</strong>
                                                 </div> -->
-                                    <div class="price-sale">
-                                        <strong>${{$product->price}}</strong>
-                                    </div>
-                                    <div class="price-cost">
-                                        <strike>${{$product->price}}</strike>
-                                    </div>
+                                    @if($thum)
+                                        <div class="price-sale">
+                                            <strong>${{$thum->price}}</strong>
+                                        </div>
+                                        @if($thum->old_price != null)
+                                            <div class="price-cost">
+                                                <strike>${{$thum->old_price}}</strike>
+                                            </div>
+                                        @endif
+                                    @endif
                                 </div>
                                 <div class="card-bottom d-flex justify-content-between">
                                     <div class="card-bottom--left">

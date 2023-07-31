@@ -360,15 +360,13 @@
                                                 <div class="button-view">
                                                     <button type="button" class="btn view_modal" data-toggle="modal"
                                                             data-value="{{$newProduct}}" data-id="{{$productDetail}}"
-                                                            data-target="#exampleModal">Quick
-                                                        view
+                                                            data-target="#exampleModal">Quick view
                                                     </button>
                                                 </div>
                                                 <div class="text">
                                                     <div class="text-new">
                                                         New
                                                     </div>
-
                                                 </div>
                                             </div>
                                         @endif
@@ -567,7 +565,6 @@
                                         <strike id="price-old">price old</strike>
                                     </div>
                                     <div class="description-text" id="description-text">
-                                        description-text"
                                     </div>
                                     <div class="row">
                                     </div>
@@ -1296,7 +1293,7 @@
                 </div>
             </div>
         </div>
-        <input type="text" id="inputUrl" value="{{asset('storage/')}}">
+        <input type="text" id="inputUrl" hidden value="{{asset('storage/')}}">
     </section>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>

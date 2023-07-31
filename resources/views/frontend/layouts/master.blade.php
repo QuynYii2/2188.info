@@ -11,29 +11,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>@yield('title')</title>
-{{--    <script src="https://unpkg.com/sweetalert2@7.18.0/dist/sweetalert2.all.js"></script>--}}
-{{--    <!-- Fonts -->--}}
-{{--    <link rel="preconnect" href="https://fonts.gstatic.com">--}}
-{{--    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">--}}
-{{--    <link rel="dns-prefetch preconnect" href="https://cdn11.bigcommerce.com/s-3uw22zu194" crossorigin><link rel="dns-prefetch preconnect" href="https://fonts.googleapis.com/" crossorigin><link rel="dns-prefetch preconnect" href="https://fonts.gstatic.com/" crossorigin>--}}
-{{--    <link rel='canonical' href='https://superkart-demo-02.mybigcommerce.com/' /><meta name='platform' content='bigcommerce.stencil' />--}}
-{{--    <link href="https://cdn11.bigcommerce.com/r-0d0e7ebe415bc7b0d922632811abb75311658663/img/bc_favicon.ico" rel="shortcut icon">--}}
-{{--    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">--}}
-{{--    <link rel="stylesheet" href="{{asset('css/vendor/bootstrap.min.css')}}">--}}
-{{--    <link rel="stylesheet" href="{{asset('css/vendor/font-awesome.min.css')}}">--}}
-{{--    <link rel="stylesheet" href="{{asset('css/vendor/themify-icons.css')}}">--}}
-{{--    <link rel="stylesheet" href="{{asset('css/vendor/elegant-icons.css')}}">--}}
-{{--    <link rel="stylesheet" href="{{asset('css/vendor/owl.carousel.min.css')}}">--}}
-{{--    <link rel="stylesheet" href="{{asset('css/vendor/nice-select.css')}}">--}}
-{{--    <link rel="stylesheet" href="{{asset('css/vendor/jquery-ui.min.css')}}">--}}
-{{--    <link rel="stylesheet" href="{{asset('css/vendor/slicknav.min.css')}}">--}}
-{{--    <link rel="stylesheet" href="{{asset('css/mainV1.css')}}">--}}
-{{--    <link rel="stylesheet" href="{{asset('css/index.css')}}">--}}
-{{--    <link rel="stylesheet" href="{{asset('css/style_font.css')}}">--}}
-{{--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">--}}
-{{--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />--}}
-{{--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />--}}
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />

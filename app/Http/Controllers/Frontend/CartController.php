@@ -34,7 +34,6 @@ class CartController extends Controller
             $variable = $request->input('variable');
             $valid = false;
 
-
             $productDetail = \App\Models\Variation::where([
                 ['product_id', $productID],
                 ['variation', $variable]
@@ -78,6 +77,7 @@ class CartController extends Controller
                 ];
                 $success = Cart::create($cart);
             }
+
             if ($success) {
                 return redirect()->route('cart.index')->with('success', 'Product added to cart successfully!');
             } else {
