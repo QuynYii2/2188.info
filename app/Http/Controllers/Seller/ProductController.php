@@ -7,6 +7,7 @@ use App\Enums\AttributeStatus;
 use App\Enums\ProductStatus;
 use App\Enums\VariationStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
@@ -23,11 +24,16 @@ class ProductController extends Controller
     public function index()
     {
         $categories = Category::all();
-        $check_ctv_shop = StaffUsers::where('user_id', Auth::user()->id)->first();
-        if ($check_ctv_shop) {
-            $products = Product::where([['user_id', $check_ctv_shop->parent_user_id], ['status', '!=', ProductStatus::DELETED]])->orderByDesc('id')->get();
+        $isAdmin = (new HomeController())->checkAdmin();
+        if ($isAdmin) {
+            $products = Product::where('status', '!=', ProductStatus::DELETED)->orderByDesc('id')->get();
         } else {
-            $products = Product::where([['user_id', Auth::user()->id], ['status', '!=', ProductStatus::DELETED]])->orderByDesc('id')->get();
+            $check_ctv_shop = StaffUsers::where('user_id', Auth::user()->id)->first();
+            if ($check_ctv_shop) {
+                $products = Product::where([['user_id', $check_ctv_shop->parent_user_id], ['status', '!=', ProductStatus::DELETED]])->orderByDesc('id')->get();
+            } else {
+                $products = Product::where([['user_id', Auth::user()->id], ['status', '!=', ProductStatus::DELETED]])->orderByDesc('id')->get();
+            }
         }
         return view('backend/products/index', ['products' => $products, 'categories' => $categories]);
     }
@@ -127,6 +133,11 @@ class ProductController extends Controller
             $product = new Product();
             $qty_in_storage = DB::table('storage_products')->where('id', $request->input('storage-id'))->value('quantity');
 
+            if ($request->hasFile('thumbnail')) {
+                $thumbnail = $request->file('thumbnail');
+                $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+                $product->thumbnail = $thumbnailPath;
+            }
             $product->storage_id = $request->input('storage-id');
             $product->name = $request->input('name');
             $product->description = $request->input('description');
@@ -136,10 +147,10 @@ class ProductController extends Controller
             $product->user_id = Auth::user()->id;
             $product->location = Auth::user()->region;
             $product->gallery = $this->handleGallery($request->input('imgGallery'));
-            $product->thumbnail = $this->handleGallery($request->input('imgThumbnail'));
+//            $product->thumbnail = $this->handleGallery($request->input('imgThumbnail'));
             $product->slug = \Str::slug($request->input('name'));
-            $product->price = $request->input('giaban');
-            $product->old_price = $request->input('giakhuyenmai') ?? 0;
+            $product-> price = $request->input('giakhuyenmai');
+            $product-> old_price = $request->input('giaban') ?? 0;
 
             $hot = $request->input('hot_product');
             $feature = $request->input('feature_product');

@@ -21,7 +21,11 @@
                         @csrf
                         @foreach($listPayment as $payment)
                             <label>
-                                <input name="payment_method[]" type="checkbox" value="{{ $payment->id }}">
+                                <input name="payment_method[]" type="checkbox" value="{{ $payment->id }}"
+                                       @if (in_array($payment->id, explode(',', $list->payment_method)))
+                                           checked
+                                        @endif
+                                >
                                 {{ $payment->name }}
                             </label>
                         @endforeach
@@ -38,7 +42,11 @@
                         @csrf
                         @foreach($listTransport as $transport)
                             <label>
-                                <input name="transport_method[]" type="checkbox" value="{{ $transport->id }}">
+                                <input name="transport_method[]" type="checkbox" value="{{ $transport->id }}"
+                                       @if (in_array($transport->id, explode(',', $list->transport_method)))
+                                           checked
+                                        @endif
+                                >
                                 {{ $transport->name }}
                             </label>
                         @endforeach

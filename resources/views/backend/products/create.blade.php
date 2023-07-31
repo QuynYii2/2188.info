@@ -3,15 +3,16 @@
     use App\Enums\PropertiStatus;
 @endphp
 <style>
-    .btn-success{
-        color: white!important;
+    .btn-success {
+        color: white !important;
     }
 
-    .name{
+    .name {
         margin-top: 20px;
         font-size: 14px;
         margin-bottom: 5px;
     }
+
     @media all {
 
         .attachment .portrait img {
@@ -33,7 +34,7 @@
         }
     }
 
-    .attribute-form{
+    .attribute-form {
         background: white;
         padding: 20px;
     }
@@ -41,11 +42,12 @@
     #checkboxes {
         background-color: white;
         height: 60vh;
-        overflow-y: auto!important;
+        overflow-y: auto !important;
         display: none;
         border: 1px #dadada solid;
     }
-    .dropdown-content{
+
+    .dropdown-content {
         margin-top: 10px;
     }
 
@@ -53,7 +55,7 @@
         display: block;
     }
 
-    /**/
+        /**/
     select {
         display: none !important;
     }
@@ -191,7 +193,7 @@
                         <div class="form-group">
                             <div class="name">Nhập giá khuyến mãi(nếu có)</div>
                             <input type="number" class="form-control" name="giakhuyenmai" id="name"
-                                   placeholder="Nhập giá khuyến mãi" min="1">
+                                    placeholder="Nhập giá khuyến mãi" min="1">
                         </div>
                         <div class="form-group">
                             <div class="name">Tất cả danh mục</div>
@@ -238,8 +240,24 @@
                         </div>
                         <div class="form-group">
                             <div class="form-group col-12 col-sm-12 ">
-                                <label for="gallery">Thư viện ảnh:</label>
                                 @include('backend.products.modal-media')
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group col-12 col-sm-12" id="list-img-thumbnail"></div>
+                            <div class="form-group col-12 col-sm-12" id="list-img-gallery"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-group col-12 col-sm-12 pt-3">
+                                <label for="thumbnail">Ảnh đại diện:</label>
+                                <label class='__lk-fileInput'>
+                                    <span data-default='Choose file'>Choose file</span>
+                                    <input type="file" id="thumbnail" class="img-cfg"
+                                           name="thumbnail"
+                                           accept="image/*"
+                                           required>
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -304,7 +322,7 @@
 
         checkInput();
 
-        $(document).on('change', '.property-attribute', function (event) {
+        $(document).on('change', '.property-attribute', function () {
             checkInput();
         });
 
@@ -393,7 +411,7 @@
                     dropdown.find('.current').html(selected.data('display-text') || selected.text());
                     options.each(function (j, o) {
                         var display = $(o).data('display-text') || '';
-                        dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+                        dropdown.find('ul').append('<li class="option attribute-create ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
                     });
                 }
             });
@@ -731,6 +749,8 @@
                 }
             }
         }
+
+
     </script>
 
 @endsection
