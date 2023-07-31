@@ -105,20 +105,20 @@
                             <div class="price-input d-flex">
                                 <div class="field">
                                     <span>Min</span>
-                                    <input type="number" class="input-min" id="price-min" value="2500">
+                                    <input type="number" class="input-min" id="price-min" value="0">
                                 </div>
                                 <div class="separator">-</div>
                                 <div class="field">
                                     <span>Max</span>
-                                    <input type="number" class="input-max" id="price-max" value="7500">
+                                    <input type="number" class="input-max" id="price-max" value="10000">
                                 </div>
                             </div>
                             <div class="slider">
                                 <div class="progress"></div>
                             </div>
                             <div class="range-input">
-                                <input type="range" class="range-min" min="0" max="10000" value="2500" step="10">
-                                <input type="range" class="range-max" min="0" max="10000" value="7500" step="10">
+                                <input type="range" class="range-min" min="0" max="10000" value="0" step="10">
+                                <input type="range" class="range-max" min="0" max="10000" value="10000" step="10">
                             </div>
                         </div>
                     </div>
@@ -135,13 +135,8 @@
                                 <div class="col-xl-3 col-md-4 col-6 section">
                                     <div class="item">
                                         <div class="item-img">
-                                            @php
-                                                $thum = \App\Models\Variation::where('product_id', $product->id)->first();
-                                            @endphp
-                                            @if($thum)
-                                            <img src="{{ asset('storage/' . $thum->thumbnail) }}"
+                                            <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                                  alt="">
-                                            @endif
                                             <div class="button-view">
                                                 <button>Quick view</button>
                                             </div>
@@ -173,16 +168,14 @@
                                                 <a href="{{route('detail_product.show', $product->id)}}">{{ $product->name }}</a>
                                             </div>
                                             <div class="card-price d-flex justify-content-between">
-                                                @if($thum)
                                                 <div class="price-sale">
-                                                    <strong>${{ $thum->price }}</strong>
+                                                    <strong>${{ $product->price }}</strong>
                                                 </div>
                                                 <div class="price-cost">
-                                                    @if($thum->old_price !=  null)
-                                                        <strike>${{ $thum->old_price }}</strike>
+                                                    @if($product->old_price !=  null)
+                                                        <strike>${{ $product->old_price }}</strike>
                                                     @endif
                                                 </div>
-                                                @endif
                                             </div>
                                             <div class="card-bottom d-flex justify-content-between">
                                                 <div class="card-bottom--left">
@@ -204,13 +197,8 @@
                             <div class="mt-3 category-list section">
                                 <div class="item row">
                                     <div class="item-img col-md-3 col-5">
-                                        @php
-                                            $thum = \App\Models\Variation::where('product_id', $product->id)->first();
-                                        @endphp
-                                        @if($thum)
-                                        <img src="{{ asset('storage/' . $thum->thumbnail) }}"
+                                        <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                              alt="">
-                                        @endif
                                         <div class="button-view">
                                             <button>Quick view</button>
                                         </div>
@@ -242,16 +230,14 @@
                                             <a href="{{route('detail_product.show', $product->id)}}">{{ $product->name }}</a>
                                         </div>
                                         <div class="card-price d-flex">
-                                            @if($thum)
                                             <div class="price-sale mr-4">
-                                                <strong>${{ $thum->price }}</strong>
+                                                <strong>${{ $product->price }}</strong>
                                             </div>
                                             <div class="price-cost">
-                                                @if($thum->old_price != null)
-                                                    <strike>${{ $thum->old_price }}</strike>
+                                                @if($product->old_price != null)
+                                                    <strike>${{ $product->old_price }}</strike>
                                                 @endif
                                             </div>
-                                            @endif
                                         </div>
                                         <div class="card-desc">
                                             {{ $product->description }}
@@ -331,19 +317,19 @@
         });
 
 
-        $(function () {
-            $("#slider-range").slider({
-                range: true,
-                min: 0,
-                max: 1000,
-                values: [130, 250],
-                slide: function (event, ui) {
-                    $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-                }
-            });
-            $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-                " - $" + $("#slider-range").slider("values", 1));
-        });
+        // $(function () {
+        //     $("#slider-range").slider({
+        //         range: true,
+        //         min: 0,
+        //         max: 10000,
+        //         values: [0, 250],
+        //         slide: function (event, ui) {
+        //             $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+        //         }
+        //     });
+        //     $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+        //         " - $" + $("#slider-range").slider("values", 1));
+        // });
 
         const rangeInput = document.querySelectorAll(".range-input input"),
             priceInput = document.querySelectorAll(".price-input input"),
@@ -385,6 +371,17 @@
                     range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
                 }
             });
+            input.addEventListener("change", () => {
+                switch (input.className.split('-')[1]) {
+                    case 'max':
+                        maxPrice = input.value
+                        break;
+                    case 'min':
+                        minPrice = input.value
+                        break;
+                }
+                callApiFilter();
+            });
         });
 
     </script>
@@ -394,13 +391,19 @@
         let countPerPage = '';
         let selectedPayments = [];
         let selectedTransports = [];
+        let minPrice = '';
+        let maxPrice = '';
 
         selectedPayments.push('0');
         selectedTransports.push('0');
         const jq = $.noConflict();
-        handleCountPerPage();
-        handleSortBy();
-        callApiFilter();
+        loadData();
+
+        async function loadData() {
+            await handleCountPerPage();
+            await handleSortBy();
+            await callApiFilter();
+        }
 
         $(document).on('change', '#count-per-page', function () {
             handleCountPerPage();
@@ -419,6 +422,11 @@
             return arrUrl[arrUrl.length - 1];
         }
 
+        function searchOrigin(input) {
+            search_origin = input.value
+            callApiFilter();
+        }
+
         function callApiFilter() {
             const url = '/category/filter/' + getIdCategory();
             let data = {
@@ -426,6 +434,9 @@
                 countPerPage: countPerPage,
                 selectedPayments: selectedPayments,
                 selectedTransports: selectedTransports,
+                minPrice: minPrice,
+                maxPrice: maxPrice,
+                search_origin: search_origin,
             }
             jq.ajax({
                 url: url,
@@ -446,7 +457,6 @@
         function renderProduct(response) {
             let str = "";
             response.forEach(function (product) {
-                console.log(product);
                 str += `<div class="col-xl-3 col-md-4 col-6 section">
                                     <div class="item">
                                         <div class="item-img">
