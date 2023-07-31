@@ -3,15 +3,16 @@
     use App\Enums\PropertiStatus;
 @endphp
 <style>
-    .btn-success{
-        color: white!important;
+    .btn-success {
+        color: white !important;
     }
 
-    .name{
+    .name {
         margin-top: 20px;
         font-size: 14px;
         margin-bottom: 5px;
     }
+
     @media all {
 
         .attachment .portrait img {
@@ -33,7 +34,7 @@
         }
     }
 
-    .attribute-form{
+    .attribute-form {
         background: white;
         padding: 20px;
     }
@@ -41,11 +42,12 @@
     #checkboxes {
         background-color: white;
         height: 60vh;
-        overflow-y: auto!important;
+        overflow-y: auto !important;
         display: none;
         border: 1px #dadada solid;
     }
-    .dropdown-content{
+
+    .dropdown-content {
         margin-top: 10px;
     }
 
@@ -238,9 +240,12 @@
                         </div>
                         <div class="form-group">
                             <div class="form-group col-12 col-sm-12 ">
-                                <label for="gallery">Thư viện ảnh:</label>
                                 @include('backend.products.modal-media')
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group col-12 col-sm-12" id="list-img-thumbnail"></div>
+                            <div class="form-group col-12 col-sm-12" id="list-img-gallery"></div>
                         </div>
                     </div>
                     <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
@@ -304,7 +309,7 @@
 
         checkInput();
 
-        $(document).on('change', '.property-attribute', function (event) {
+        $(document).on('change', '.property-attribute', function () {
             checkInput();
         });
 
@@ -731,6 +736,8 @@
                 }
             }
         }
+
+
     </script>
 
 @endsection

@@ -20,6 +20,7 @@
         white-space: nowrap;
         width: 200px;
     }
+
     .file-upload__input {
         bottom: 0;
         color: transparent;
@@ -32,9 +33,11 @@
         width: 100%;
         height: 100%;
     }
+
     .selected-image {
         border: 2px solid blue;
     }
+
     @media all {
         .media-frame-router {
             position: absolute;
@@ -325,11 +328,12 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <button type="button" class="btn btn-primary" data-toggle="modal"
-        data-target="#galleryModal">
-    Launch demo modal
+        data-target="#galleryModal" id="button-open-modal">
+    Chọn ảnh
 </button>
 
-<div class="modal fade" id="galleryModal" style="z-index: 99999; display: none" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="galleryModal" style="z-index: 99999; display: none" tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog h-100" style="max-width: 60%; max-height: 80%">
         <div class="modal-content h-100">
             <div class="modal-header">
@@ -341,29 +345,37 @@
             <div class="modal-body">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#upload-media"
+                        <button class="nav-link active" id="upload-tab" data-toggle="tab" data-target="#upload-media"
                                 type="button" role="tab" aria-controls="home" aria-selected="true">Upload File
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#list-media"
+                        <button class="nav-link" id="media-tab" data-toggle="tab" data-target="#list-media"
                                 type="button" role="tab" aria-controls="profile" aria-selected="false">Media
                         </button>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent" style="height: 95%">
                     <div class="tab-pane fade show active h-100" id="upload-media" role="tabpanel"
-                         aria-labelledby="home-tab">
+                         aria-labelledby="upload-tab">
                         <div class="file-upload h-100">
                             <label class="file-upload__label">Select or drop files here</label><input
                                     class="file-upload__input" multiple type="file" accept="image/*">
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="list-media" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="tab-pane fade" id="list-media" role="tabpanel" aria-labelledby="media-tab">
                         <div class="attachments-wrapper w-100" id="gallery-container">
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="choseImageToUse(1)">Chọn
+                    làm ảnh Thumbnail
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="choseImageToUse(2)">Chọn làm
+                    ảnh Gallery
+                </button>
             </div>
         </div>
     </div>
@@ -371,7 +383,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    const selectedImagesArray = [];
+    let selectedImagesArray = [];
 
     function toggleImageSelect(divElement) {
         divElement.classList.toggle("selected-image");
@@ -383,8 +395,28 @@
         selectedImages.forEach((selectedImage) => {
             selectedImagesArray.push(selectedImage.src);
         });
-        document.getElementById('imgGallery').value = JSON.stringify(selectedImagesArray);
-        document.getElementById('imgThumbnail').value = selectedImagesArray[0];
+    }
+
+    function choseImageToUse(check) {
+        switch (check) {
+            case 1:
+                document.getElementById('imgThumbnail').value = selectedImagesArray[0];
+                if (selectedImagesArray.length > 1) {
+                    alert('Avatar sẽ là ảnh đầu tiên')
+                }
+                const selectedImages = document.querySelectorAll(".thumbnail.image-item.selected-image");
+
+                selectedImages.forEach(function (element) {
+                    element.classList.remove("selected-image");
+                });
+                renderImg('thumbnail');
+                break;
+            case 2:
+                document.getElementById('imgGallery').value = JSON.stringify(selectedImagesArray);
+                selectedImagesArray = [];
+                renderImg('gallery');
+                break;
+        }
     }
 
     (function () {
@@ -393,8 +425,9 @@
                 var csrfToken = $('meta[name="csrf-token"]').attr('content');
                 var formData = new FormData();
 
-                for (let i = 0; i < this.files.length; i++) {
-                    formData.append('gallery[]', this.files[i]);
+                const listFile = this.files;
+                for (let i = 0; i < listFile.length; i++) {
+                    formData.append('gallery[]', listFile[i]);
                 }
                 formData.append('_token', csrfToken);
 
@@ -404,15 +437,15 @@
                     data: formData,
                     contentType: false,
                     processData: false,
-                    success: function (response) {
+                    success: async function (response) {
                         alert('Upload success')
-                        getListImg();
+                        await getListImg();
+                        await handleAfterUpload(response.split(','));
                     },
                     error: function (xhr, status, error) {
                         console.error(error);
                     }
                 });
-
                 return $('.file-upload__label').html([this.files.length, 'Files to upload'].join(' '));
             });
         });
@@ -449,4 +482,73 @@
             }
         });
     }
+
+    function changeTextOfModal() {
+        console.log(document.getElementById('imgGallery').value);
+    }
+
+    function renderImg(whereRender) {
+        switch (whereRender) {
+            case 'thumbnail': {
+                const imageContainer = document.getElementById('list-img-thumbnail');
+                imageContainer.innerHTML = "";
+                const label = document.createElement('label');
+                label.textContent = 'Thumbnail';
+                imageContainer.appendChild(label);
+
+                const thumbnailImg = document.getElementById('imgThumbnail').value;
+                const imgElement = document.createElement('img');
+                imgElement.src = thumbnailImg;
+                imgElement.style.height = '100px';
+                imgElement.style.width = '100px';
+                imgElement.classList.toggle('m-2')
+                imgElement.classList.toggle('ml-0')
+                imageContainer.appendChild(imgElement);
+                break;
+            }
+            case 'gallery': {
+                const imageContainer = document.getElementById('list-img-gallery');
+                imageContainer.innerHTML = "";
+                const arrGallery = document.getElementById('imgGallery').value;
+                const label = document.createElement('label');
+                label.textContent = 'Gallery';
+                imageContainer.appendChild(label);
+
+                JSON.parse(arrGallery).forEach(function (url) {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = url;
+                    imgElement.style.height = '100px';
+                    imgElement.style.width = '100px';
+                    imgElement.classList.toggle('m-2')
+                    imgElement.classList.toggle('ml-0')
+                    imageContainer.appendChild(imgElement);
+                });
+                break;
+            }
+        }
+        document.getElementById('button-open-modal').textContent = 'Sửa ảnh'
+    }
+
+    function handleAfterUpload(fileUploaded) {
+        const mediaTabButton = document.getElementById('media-tab');
+        mediaTabButton.click();
+        const thumbnailImageItems = document.querySelectorAll(".thumbnail.image-item img");
+
+        thumbnailImageItems.forEach((imgElement) => {
+            const imgSrc = imgElement.src.match(/\/storage\/([^,]+),?/)[1];
+            // console.log(imgSrc)
+            // if (fileUploaded.includes(imgSrc)) {
+            //     console.log('123')
+            //     imgElement.parentElement.classList.add("selected-image");
+            // }
+            // console.log(456)
+
+            const isImageSelected = fileUploaded.some((fileName) => fileName === imgSrc);
+            console.log(isImageSelected);
+            if (isImageSelected) {
+                imgElement.parentElement.classList.add("selected-image");
+            }
+        });
+    }
+
 </script>
