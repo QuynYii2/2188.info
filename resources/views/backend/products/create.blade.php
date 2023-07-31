@@ -53,7 +53,7 @@
         display: block;
     }
 
-    /**/
+        /**/
     select {
         display: none !important;
     }
@@ -242,6 +242,19 @@
                                 @include('backend.products.modal-media')
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <div class="form-group col-12 col-sm-12 pt-3">
+                                <label for="thumbnail">Ảnh đại diện:</label>
+                                <label class='__lk-fileInput'>
+                                    <span data-default='Choose file'>Choose file</span>
+                                    <input type="file" id="thumbnail" class="img-cfg"
+                                           name="thumbnail"
+                                           accept="image/*"
+                                           required>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
                     <input type="text" hidden id="imgGallery" value="" name="imgGallery[]">
@@ -393,7 +406,7 @@
                     dropdown.find('.current').html(selected.data('display-text') || selected.text());
                     options.each(function (j, o) {
                         var display = $(o).data('display-text') || '';
-                        dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+                        dropdown.find('ul').append('<li class="option attribute-create ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
                     });
                 }
             });

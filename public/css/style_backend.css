@@ -1127,10 +1127,6 @@
   margin-right: 10px;
 }
 
-#style-o1yHF.style-o1yHF {
-  line-height: 60px;
-}
-
 #style-oQOfK.style-oQOfK {
   display: none;
 }
@@ -1157,11 +1153,6 @@
 
 .text-black {
   color: #000000 !important;
-}
-
-/**/
-select {
-  display: none !important;
 }
 
 .dropdown-select-attribute,

@@ -371,21 +371,6 @@
 
                                                 </div>
                                             </div>
-                                        @else
-                                            <div class="item-img">
-                                                <img src="{{ asset('storage/' . $productDetail->thumbnail) }}" alt="">
-                                                <div class="button-view">
-                                                    <button type="button" class="btn view_modal" data-toggle="modal"
-                                                            data-value="{{$newProduct}}" data-id="{{$productDetail}}"
-                                                            data-target="#exampleModal">Quick view
-                                                    </button>
-                                                </div>
-                                                <div class="text">
-                                                    <div class="text-new">
-                                                        New
-                                                    </div>
-                                                </div>
-                                            </div>
                                         @endif
                                         <div class="item-body">
                                             <div class="card-rating">
@@ -413,25 +398,18 @@
 
                                             @if($newProduct->price)
                                                 <div class="card-price d-flex justify-content-between">
-                                                    <div class="price-sale">
-                                                        <strong>${{$newProduct->price}}</strong>
-                                                    </div>
-                                                    <div class="price-cost">
-                                                        @if($newProduct->old_price != null)
+                                                    @if($newProduct->price != null)
+                                                        <div class="price-sale">
+                                                            <strong>${{$newProduct->price}}</strong>
+                                                        </div>
+                                                        <div class="price-cost">
                                                             <strike>${{$newProduct->old_price}}</strike>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            @else
-                                                <div class="card-price d-flex justify-content-between">
-                                                    <div class="price-sale">
-                                                        <strong>${{$productDetail->price}}</strong>
-                                                    </div>
-                                                    <div class="price-cost">
-                                                        @if($productDetail->old_price != null)
-                                                            <strike>${{$productDetail->old_price}}</strike>
-                                                        @endif
-                                                    </div>
+                                                        </div>
+                                                    @else
+                                                        <div class="price-sale">
+                                                            <strong>${{$newProduct->old_price}}</strong>
+                                                        </div>
+                                                    @endif
                                                 </div>
                                             @endif
                                             <div class="card-bottom d-flex justify-content-between">
@@ -440,8 +418,7 @@
                                                         <a href="{{route('detail_product.show', $newProduct->id)}}">Choose
                                                             Options</a>
                                                     @else
-                                                        <a class="check_url">Choose
-                                                            Options</a>
+                                                        <a class="check_url">Choose Options</a>
                                                     @endif
                                                 </div>
                                                 <div class="card-bottom--right" id-product="{{$newProduct->id}}">
@@ -485,24 +462,6 @@
 
                                                     </div>
                                                 </div>
-                                            @else
-                                                <div class="item-img">
-                                                    <img src="{{ asset('storage/' . $productDetail->thumbnail) }}"
-                                                         alt="">
-                                                    <div class="button-view">
-                                                        <button type="button" class="btn view_modal" data-toggle="modal"
-                                                                data-value="{{$product}}" data-id="{{$productDetail}}"
-                                                                data-target="#exampleModal">Quick
-                                                            view
-                                                        </button>
-                                                    </div>
-                                                    <div class="text">
-                                                        <div class="text-new">
-                                                            New
-                                                        </div>
-
-                                                    </div>
-                                                </div>
                                             @endif
                                             <div class="item-body">
                                                 <div class="card-rating">
@@ -528,25 +487,18 @@
                                                 </div>
                                                 @if($product->price)
                                                     <div class="card-price d-flex justify-content-between">
-                                                        <div class="price-sale">
-                                                            <strong>${{$product->price}}</strong>
-                                                        </div>
-                                                        <div class="price-cost">
-                                                            @if($product->old_price != null)
+                                                        @if($product->price != null)
+                                                            <div class="price-sale">
+                                                                <strong>${{$product->price}}</strong>
+                                                            </div>
+                                                            <div class="price-cost">
                                                                 <strike>${{$product->old_price}}</strike>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                @else
-                                                    <div class="card-price d-flex justify-content-between">
-                                                        <div class="price-sale">
-                                                            <strong>${{$productDetail->price}}</strong>
-                                                        </div>
-                                                        <div class="price-cost">
-                                                            @if($productDetail->old_price != null)
-                                                                <strike>${{$productDetail->old_price}}</strike>
-                                                            @endif
-                                                        </div>
+                                                            </div>
+                                                        @else
+                                                            <div class="price-sale">
+                                                                <strong>${{$product->old_price}}</strong>
+                                                            </div>
+                                                        @endif
                                                     </div>
                                                 @endif
                                                 <div class="card-bottom d-flex justify-content-between">
@@ -676,23 +628,6 @@
 
                                             </div>
                                         </div>
-                                    @else
-                                        <div class="item-img">
-                                            <img src="{{ asset('storage/' . $productDetail->thumbnail) }}" alt="">
-                                            <div class="button-view">
-                                                <button type="button" class="btn view_modal" data-toggle="modal"
-                                                        data-value="{{$hotProduct}}" data-id="{{$productDetail}}"
-                                                        data-target="#exampleModal">Quick
-                                                    view
-                                                </button>
-                                            </div>
-                                            <div class="text">
-                                                <div class="text-new">
-                                                    New
-                                                </div>
-
-                                            </div>
-                                        </div>
                                     @endif
                                     <div class="item-body">
                                         <div class="card-rating">
@@ -719,25 +654,18 @@
 
                                         @if($hotProduct->price)
                                             <div class="card-price d-flex justify-content-between">
-                                                <div class="price-sale">
-                                                    <strong>${{$hotProduct->price}}</strong>
-                                                </div>
-                                                <div class="price-cost">
-                                                    @if($hotProduct->old_price != null)
+                                                @if($hotProduct->price != null)
+                                                    <div class="price-sale">
+                                                        <strong>${{$hotProduct->price}}</strong>
+                                                    </div>
+                                                    <div class="price-cost">
                                                         <strike>${{$hotProduct->old_price}}</strike>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        @else
-                                            <div class="card-price d-flex justify-content-between">
-                                                <div class="price-sale">
-                                                    <strong>${{$productDetail->price}}</strong>
-                                                </div>
-                                                <div class="price-cost">
-                                                    @if($productDetail->old_price != null)
-                                                        <strike>${{$productDetail->old_price}}</strike>
-                                                    @endif
-                                                </div>
+                                                    </div>
+                                                @else
+                                                    <div class="price-sale">
+                                                        <strong>${{$hotProduct->old_price}}</strong>
+                                                    </div>
+                                                @endif
                                             </div>
                                         @endif
 
@@ -859,26 +787,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                @else
-                                                    <div class="item-img">
-                                                        <img src="{{ asset('storage/' . $productDetail->thumbnail) }}"
-                                                             alt="">
-                                                        <div class="button-view">
-                                                            <button type="button" class="btn view_modal"
-                                                                    data-toggle="modal"
-                                                                    data-value="{{$product}}"
-                                                                    data-id="{{$productDetail}}"
-                                                                    data-target="#exampleModal">Quick
-                                                                view
-                                                            </button>
-                                                        </div>
-                                                        <div class="text">
-                                                            <div class="text-new">
-                                                                New
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
                                                 @endif
 
                                                 <div class="item-body">
@@ -903,25 +811,18 @@
                                                     </div>
                                                     @if($product->price)
                                                         <div class="card-price d-flex justify-content-between">
-                                                            <div class="price-sale">
-                                                                <strong>${{$product->price}}</strong>
-                                                            </div>
-                                                            <div class="price-cost">
-                                                                @if($product->old_price != null)
+                                                            @if($product->price != null)
+                                                                <div class="price-sale">
+                                                                    <strong>${{$product->price}}</strong>
+                                                                </div>
+                                                                <div class="price-cost">
                                                                     <strike>${{$product->old_price}}</strike>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                    @else
-                                                        <div class="card-price d-flex justify-content-between">
-                                                            <div class="price-sale">
-                                                                <strong>${{$productDetail->price}}</strong>
-                                                            </div>
-                                                            <div class="price-cost">
-                                                                @if($productDetail->old_price != null)
-                                                                    <strike>${{$productDetail->old_price}}</strike>
-                                                                @endif
-                                                            </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="price-sale">
+                                                                    <strong>${{$product->old_price}}</strong>
+                                                                </div>
+                                                            @endif
                                                         </div>
                                                     @endif
                                                     <div class="card-bottom d-flex justify-content-between">
@@ -1131,13 +1032,13 @@
                 let urggg = document.getElementById('url').value;
                 $('#form_cart').attr('action', urggg + '/' + product['id']);
                 var modal_img = document.getElementById('img-modal')
-                modal_img.src = url.value + '/' + productDetail['thumbnail'];
+                modal_img.src = url.value + '/' + product['thumbnail'];
                 var modal_name = document.getElementById('productName-modal')
                 modal_name.innerText = product['name'];
                 var price_sale = document.getElementById('price-sale')
-                price_sale.innerText = productDetail['price'];
+                price_sale.innerText = product['price'];
                 var price_old = document.getElementById('price-old')
-                price_old.innerText = productDetail['old_price'];
+                price_old.innerText = product['old_price'];
                 var description_text = document.getElementById('description-text')
                 description_text.innerText = productDetail['description'];
                 var qty = document.getElementById('qty')

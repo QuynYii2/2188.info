@@ -246,8 +246,8 @@
                         <span>Grand total: </span>
                         <span>$ <span id="max-total"> {{ $cartItem->price*$cartItem->quantity }}</span></span>
                     </div>
-                    <button type="submit" class="btn mb-2 submit float-right submit-100"><a
-                                href="{{route('checkout.show')}}">Check out</a></button>
+                    <a href="{{route('checkout.show')}}"><button type="submit" class="btn mb-2 submit float-right submit-100">
+                                Check out</button></a>
                 </div>
             </div>
         @endif

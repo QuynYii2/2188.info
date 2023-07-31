@@ -134,6 +134,11 @@ class ProductController extends Controller
             $product = new Product();
             $qty_in_storage = DB::table('storage_products')->where('id', $request->input('storage-id'))->value('quantity');
 
+            if ($request->hasFile('thumbnail')) {
+                $thumbnail = $request->file('thumbnail');
+                $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+                $product->thumbnail = $thumbnailPath;
+            }
             $product->storage_id = $request->input('storage-id');
             $product->name = $request->input('name');
             $product->description = $request->input('description');
@@ -143,10 +148,10 @@ class ProductController extends Controller
             $product->user_id = Auth::user()->id;
             $product->location = Auth::user()->region;
             $product->gallery = $this->handleGallery($request->input('imgGallery'));
-            $product->thumbnail = $this->handleGallery($request->input('imgThumbnail'));
+//            $product->thumbnail = $this->handleGallery($request->input('imgThumbnail'));
             $product->slug = \Str::slug($request->input('name'));
-            $product->price = $request->input('giaban');
-            $product->old_price = $request->input('giakhuyenmai') ?? 0;
+            $product-> price = $request->input('giakhuyenmai');
+            $product-> old_price = $request->input('giaban') ?? 0;
 
             $hot = $request->input('hot_product');
             $feature = $request->input('feature_product');

@@ -198,11 +198,10 @@
         @endphp
         <div class="grid product">
             <div class="column-xs-12 column-md-7">
-                @if($productDetail)
                     <div class="product-gallery">
                         <div class="product-image">
                             <img id="productThumbnail" class="active"
-                                 src="{{ asset('storage/' . $productDetail->thumbnail) }}">
+                                 src="{{ asset('storage/' . $product->thumbnail) }}">
                             <input type="text" id="urlImage" value="{{asset('storage/')}}" hidden="">
                         </div>
                         <ul class="image-list">
@@ -210,7 +209,7 @@
                                 $gallery = $product->gallery;
                                 $arrayGallery = explode(',', $gallery);
                             @endphp
-                            <li class="image-item"><img src="{{ asset('storage/' . $productDetail->thumbnail) }}"></li>
+                            <li class="image-item"><img src="{{ asset('storage/' . $product->thumbnail) }}"></li>
                             @if(count($arrayGallery)>1)
                                 @foreach($arrayGallery as $gallerys)
                                     <li class="image-item"><img src="{{ asset('storage/' . $gallerys) }}"></li>
@@ -218,7 +217,6 @@
                             @endif
                         </ul>
                     </div>
-                @endif
             </div>
             <div class="column-xs-12 column-md-5">
                 <form action="{{ route('cart.add', $product) }}" method="POST">
@@ -233,12 +231,14 @@
                         <i class="fa fa-star-half-o"></i>
                         <span>4.7(21)</span>
                     </div>
-                    @if($productDetail)
-                        <div class="product-price d-flex" style="gap: 3rem">
-                            <div id="productPrice" class="price">${{$productDetail->price}}</div>
-                            <strike id="productOldPrice">${{$productDetail->old_price}}</strike>
-                        </div>
-                    @endif
+                    <div class="product-price d-flex" style="gap: 3rem">
+                        @if($product->price != null)
+                            <div id="productPrice" class="price">${{$product->price}}</div>
+                            <strike id="productOldPrice">${{$product->old_price}}</strike>
+                        @else
+                            <strike id="productOldPrice">${{$product->price}}</strike>
+                        @endif
+                    </div>
                     <div class="description-text">
                         {{ $product->short_description }}
                     </div>
@@ -493,10 +493,8 @@
                                 @php
                                     $thumbnail = \App\Models\Variation::where('product_id', $product->id)->first();
                                 @endphp
-                                @if($thumbnail)
-                                <img src="{{ asset('storage/' . $thumbnail->thumbnail) }}"
+                                <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                      alt="">
-                                @endif
                                 <div class="button-view">
                                     <button>Quick view</button>
                                 </div>
@@ -531,18 +529,17 @@
                                     <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>
                                 </div>
                                 <div class="card-price d-flex justify-content-between">
-                                    <!-- <div class="price">
-                                                    <strong>$189.000</strong>
-                                                </div> -->
-                                    @if($thumbnail)
+                                    @if($product->price != null)
                                         <div class="price-sale">
-                                            <strong>${{$thumbnail->price}}</strong>
+                                            <strong>${{$product->price}}</strong>
                                         </div>
-                                        @if($thumbnail->old_price != null)
-                                            <div class="price-cost">
-                                                <strike>${{$thumbnail->old_price}}</strike>
-                                            </div>
-                                        @endif
+                                        <div class="price-cost">
+                                            <strike>${{$product->old_price}}</strike>
+                                        </div>
+                                    @else
+                                        <div class="price-sale">
+                                            <strong>${{$product->old_price}}</strong>
+                                        </div>
                                     @endif
                                 </div>
                                 <div class="card-bottom d-flex justify-content-between">
@@ -581,10 +578,8 @@
                                 @php
                                     $thum = \App\Models\Variation::where('product_id', $product->id)->first();
                                 @endphp
-                                @if($thum)
-                                <img src="{{ asset('storage/' . $thum->thumbnail) }}"
+                                <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                      alt="">
-                                @endif
                                 <div class="button-view">
                                     <button>Quick view</button>
                                 </div>
@@ -619,18 +614,17 @@
                                     <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>
                                 </div>
                                 <div class="card-price d-flex justify-content-between">
-                                    <!-- <div class="price">
-                                                    <strong>$189.000</strong>
-                                                </div> -->
-                                    @if($thum)
+                                    @if($product->price != null)
                                         <div class="price-sale">
-                                            <strong>${{$thum->price}}</strong>
+                                            <strong>${{$product->price}}</strong>
                                         </div>
-                                        @if($thum->old_price != null)
-                                            <div class="price-cost">
-                                                <strike>${{$thum->old_price}}</strike>
-                                            </div>
-                                        @endif
+                                        <div class="price-cost">
+                                            <strike>${{$product->old_price}}</strike>
+                                        </div>
+                                    @else
+                                        <div class="price-sale">
+                                            <strong>${{$product->old_price}}</strong>
+                                        </div>
                                     @endif
                                 </div>
                                 <div class="card-bottom d-flex justify-content-between">
