@@ -13,12 +13,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $isAdmin = (new HomeController())->checkAdmin();
-        if ($isAdmin){
-            $categories = Category::all();
-        } else {
-            $categories = Category::where('user_id', Auth::user()->id)->get();
-        }
+        $categories = Category::all();
         return view('backend/categories/index', [
             'categories' => $categories
         ]);
@@ -27,12 +22,7 @@ class CategoryController extends Controller
 
     public function create()
     {
-        $isAdmin = (new HomeController())->checkAdmin();
-        if ($isAdmin){
-            $categories = Category::all();
-        } else {
-            $categories = Category::where('user_id', Auth::user()->id)->get();
-        }
+        $categories = Category::all();
         return view('backend/categories/create', [
             'categories' => $categories
         ]);
@@ -40,60 +30,60 @@ class CategoryController extends Controller
 
 
     public function store(Request $request)
-        {
-            try {
-                $validatedData = $request->validate([
-                    'category_name' => 'required',
-                    'category_parentID' => 'nullable',
-                ]);
+    {
+        try {
+            $validatedData = $request->validate([
+                'category_name' => 'required',
+                'category_parentID' => 'nullable',
+            ]);
 
-                $categoryOld = DB::table('categories')->where([['name', $validatedData['category_name']], ['parent_id', $validatedData['category_parentID']]])->first();
-                if ($categoryOld) {
-                    alert()->error('Error', 'Tên chuyên mục tồn tại');
-                    return back();
-                }
+            $categoryOld = DB::table('categories')->where([['name', $validatedData['category_name']], ['parent_id', $validatedData['category_parentID']]])->first();
+            if ($categoryOld) {
+                alert()->error('Error', 'Tên chuyên mục tồn tại');
+                return back();
+            }
 
-                $slug = $request->input('category_slug');
-                $name = $validatedData['category_name'];
-                if (!$slug) {
-                    $slug = \Str::slug($name);
-                }
+            $slug = $request->input('category_slug');
+            $name = $validatedData['category_name'];
+            if (!$slug) {
+                $slug = \Str::slug($name);
+            }
 
-                $category = new Category();
-                $category->name = $name;
-                $category->user_id = Auth::user()->id;
-                $category->slug = $slug;
-                $category->description = $request->input('category_description');
+            $category = new Category();
+            $category->name = $name;
+            $category->user_id = Auth::user()->id;
+            $category->slug = $slug;
+            $category->description = $request->input('category_description');
 
-                if ($request->hasFile('thumbnail')) {
-                    $thumbnail = $request->file('thumbnail');
-                    $thumbnailPath = $thumbnail->store('categories', 'public');
-                    $category->thumbnail = $thumbnailPath;
-                }
+            if ($request->hasFile('thumbnail')) {
+                $thumbnail = $request->file('thumbnail');
+                $thumbnailPath = $thumbnail->store('categories', 'public');
+                $category->thumbnail = $thumbnailPath;
+            }
 
-                if ($validatedData['category_parentID']) {
-                    $parentCategory = Category::find($validatedData['category_parentID']);
-                    if ($parentCategory) {
-                        $updateCategory = $category->appendToNode($parentCategory)->save();
-                    } else {
-                        $updateCategory = $category->saveAsRoot();
-                    }
+            if ($validatedData['category_parentID']) {
+                $parentCategory = Category::find($validatedData['category_parentID']);
+                if ($parentCategory) {
+                    $updateCategory = $category->appendToNode($parentCategory)->save();
                 } else {
                     $updateCategory = $category->saveAsRoot();
                 }
-
-                if ($updateCategory) {
-                    alert()->success('Success', 'Tạo mới chuyên mục thành công');
-                    return redirect()->route('seller.categories.index');
-                }
-                alert()->error('Error', 'Tạo mới không thành công.');
-                return back();
-
-            } catch (\Exception $exception) {
-                alert()->error('Error', 'Error, Please try again!');
-                return back();
+            } else {
+                $updateCategory = $category->saveAsRoot();
             }
+
+            if ($updateCategory) {
+                alert()->success('Success', 'Tạo mới chuyên mục thành công');
+                return redirect()->route('seller.categories.index');
+            }
+            alert()->error('Error', 'Tạo mới không thành công.');
+            return back();
+
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error, Please try again!');
+            return back();
         }
+    }
 
 
     public function show(Category $category)
@@ -104,12 +94,7 @@ class CategoryController extends Controller
 
     public function edit($id)
     {
-        $isAdmin = (new HomeController())->checkAdmin();
-        if ($isAdmin){
-            $categories = Category::all();
-        } else {
-            $categories = Category::where('user_id', Auth::user()->id)->get();
-        }
+        $categories = Category::all();
         $category = Category::find($id);
         if (!$category) {
             return back();
@@ -138,7 +123,7 @@ class CategoryController extends Controller
                 $slug = \Str::slug($name);
             }
 
-            if ( $category->name != $name){
+            if ($category->name != $name) {
                 $categoryOld = DB::table('categories')->where([
                     ['name', $validatedData['category_name']],
                     ['parent_id', $validatedData['category_parentID']]
@@ -154,7 +139,7 @@ class CategoryController extends Controller
             $category->slug = $slug;
             $category->description = $request->input('category_description');
 
-            if (!$validatedData['category_parentID']){
+            if (!$validatedData['category_parentID']) {
                 $category->parent_id = $validatedData['category_parentID'];
             }
 

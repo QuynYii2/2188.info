@@ -91,7 +91,7 @@
             <div class="title">Kênh Marketing</div>
             <div class="title-small">Công cụ Marketing & Đăng ký chương trình Khuyến Mãi</div>
             <div class="row mt-4 todo_list--bottom">
-                <a href="#" class="col-md-4 marketing list_item">
+                <a href="{{route('seller.vouchers.list')}}" class="col-md-4 marketing list_item">
                     <div class="list_item--top">
                         <img src="https://deo.shopeemobile.com/shopee/shopee-seller-live-sg/rootpages/static/modules/marketing/module-icons/voucher.png"
                              alt="">
@@ -101,7 +101,7 @@
                         <p>Công cụ tăng đơn hàng bằng cách tạo mã giảm giá tặng cho người mua</p>
                     </div>
                 </a>
-                <a href="#" class="col-md-4 marketing list_item">
+                <a href="{{route('seller.promotion.list')}}" class="col-md-4 marketing list_item">
                     <div class="list_item--top">
                         <img src="https://deo.shopeemobile.com/shopee/shopee-seller-live-sg/rootpages/static/modules/marketing/module-icons/discount.png"
                              alt="">
@@ -111,7 +111,7 @@
                         <p>Công cụ tăng đơn hàng bằng cách tạo chương trình giảm giá</p>
                     </div>
                 </a>
-                <a href="#" class="col-md-4 marketing list_item">
+                <a href="{{route('seller.promotion.list')}}" class="col-md-4 marketing list_item">
                     <div class="list_item--top">
                         <img src="https://deo.shopeemobile.com/shopee/shopee-seller-live-sg/rootpages/static/modules/marketing/module-icons/bundle.png"
                              alt="">
