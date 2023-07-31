@@ -278,7 +278,8 @@
                                                                                         @endif
                                                                             </div>
                                                                                 @endif
-                                                                                <input hidden="" name="id{{$loop->index+1}}"
+                                                                                <input hidden=""
+                                                                                       name="id{{$loop->index+1}}"
                                                                                        value="{{$productDetail->id}}">
                                                                             @endforeach
                                                                             <input hidden="" name="countBegin"
@@ -418,8 +419,9 @@
                                                          role="dialog" aria-labelledby="exampleModalLabel"
                                                          aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
-                                                            <form action="{{route('seller.products.destroy', $product->id)}}"
+                                                            <form action="{{route('seller.products.destroy', $product)}}"
                                                                   method="post">
+                                                                @method('DELETE')
                                                                 @csrf
                                                                 <div class="modal-content">
                                                                 <div class="modal-header">

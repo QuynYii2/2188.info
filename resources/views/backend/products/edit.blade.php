@@ -4,15 +4,16 @@
 
 
 <style>
-    .btn-success{
-        color: white!important;
+    .btn-success {
+        color: white !important;
     }
 
-    .name{
+    .name {
         margin-top: 20px;
         font-size: 14px;
         margin-bottom: 5px;
     }
+
     @media all {
 
         .attachment .portrait img {
@@ -34,7 +35,7 @@
         }
     }
 
-    .attribute-form{
+    .attribute-form {
         background: white;
         padding: 20px;
     }
@@ -42,11 +43,12 @@
     #checkboxes {
         background-color: white;
         height: 60vh;
-        overflow-y: auto!important;
+        overflow-y: auto !important;
         display: none;
         border: 1px #dadada solid;
     }
-    .dropdown-content{
+
+    .dropdown-content {
         margin-top: 10px;
     }
 
@@ -164,6 +166,189 @@
                                 @endforeach
                             @endif
                         </div>
+
+
+                        <div id="removeInputAttribute " class="form-group row">
+                            @if(!$productDetails->isEmpty())
+                                @if(count($productDetails)>1)
+                                    @foreach($productDetails as $productDetail)
+                                        @if($productDetail->variation && $productDetail->variation != 0)
+                                            <div class="form-group">
+                                                <label class="control-label text-warning">Thông số sản phẩm</label>
+                                                @php
+                                                    $variable = $productDetail->variation;
+                                                    $arrayVariation = explode(',', $variable);
+                                                @endphp
+                                                @foreach($arrayVariation as $itemVariation)
+                                                    @php
+                                                        $arrayItemVariation = explode('-', $itemVariation);
+                                                        $attributeVariation = \App\Models\Attribute::find($arrayItemVariation[0]);
+                                                        $propertyVariation = \App\Models\Properties::find($arrayItemVariation[1]);
+                                                    @endphp
+                                                    <div class="">
+                                                        <label class="control-label"
+                                                               for="color">{{$attributeVariation->name}}</label>
+                                                        <div class="col-md-12 overflow-scroll custom-scrollbar">
+                                                            <input class="form-control" type="text"
+                                                                   value="{{$propertyVariation->name}}" disabled>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+
+                                            <div class="form-group ">
+                                                <label for="price">Giá bán</label>
+                                                <input type="number"
+                                                       class="form-control"
+                                                       id="price{{$productDetail->id}}"
+                                                       name="old_price{{$productDetail->id}}"
+                                                       value="{{ $productDetail->old_price }}">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="qty">Giá khuyến mãi</label>
+                                                <input type="number"
+                                                       class="form-control"
+                                                       id="qty{{$productDetail->id}}"
+                                                       name="price{{$productDetail->id}}"
+                                                       value="{{$productDetail->price }}">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="thumbnail">Thumbnail</label>
+                                                <input type="file"
+                                                       class="form-control-file"
+                                                       id="thumbnail"
+                                                       name="thumbnail{{$productDetail->id}}"
+                                                       accept="image/*">
+                                                @if ($productDetail->thumbnail)
+                                                    <img class="mt-2"
+                                                         style="height: 100px"
+                                                         src="{{ asset('storage/' . $productDetail->thumbnail) }}"
+                                                         alt="Thumbnail">
+                                                    </a>
+                                                @endif
+                                            </div>
+                                        @endif
+                                        <input hidden="" name="id{{$loop->index+1}}"
+                                               value="{{$productDetail->id}}">
+                                        <a class="btnRemove btn btn-danger mb-3"
+                                           data-value="{{$productDetail->id}}">Remove</a>
+                                    @endforeach
+                                    <input hidden="" name="count"
+                                           value="{{count($productDetails)}}">
+                                @else
+                                    @php
+                                        $productDetail = $productDetails[0];
+                                    @endphp
+                                    <div class="form-group col-6">
+                                        <label for="price">Giá bán</label>
+                                        <input type="number"
+                                               class="form-control"
+                                               id="price{{$productDetail->id}}"
+                                               name="old_price1"
+                                               value="{{ $productDetail->old_price }}">
+                                    </div>
+
+                                    <div class="form-group col-6">
+                                        <label for="qty">Giá khuyến mãi</label>
+                                        <input type="number"
+                                               class="form-control"
+                                               id="qty{{$productDetail->id}}"
+                                               name="price1"
+                                               value="{{$productDetail->price }}">
+                                    </div>
+
+                                    <div class="form-group col-6">
+                                        <label for="thumbnail">Thumbnail</label>
+                                        <input type="file"
+                                               class="form-control-file"
+                                               id="thumbnail"
+                                               name="thumbnail1"
+                                               accept="image/*">
+                                        @if ($productDetail->thumbnail)
+                                            <img class="mt-2"
+                                                 style="height: 100px"
+                                                 src="{{ asset('storage/' . $productDetail->thumbnail) }}"
+                                                 alt="Thumbnail">
+                                            </a>
+                                        @endif
+                                    </div>
+                                    <input hidden="" name="count"
+                                           value="1">
+                                @endif
+                            @endif
+                        </div>
+                        <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
+                        <div class="form-group col-6 mt-2 row">
+                            <label class="name">Thông số sản phẩm</label>
+                            <select class="form-control" name="attribute_id" id="selectAttribute">
+                                @foreach($attributes as $attribute)
+                                    <option value="{{ $attribute->id }}">{{ $attribute->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="row">
+                            @foreach($attributes as $attribute)
+                                @php
+                                    $properties = DB::table('properties')->where([['status', PropertiStatus::ACTIVE], ['attribute_id', $attribute->id]])->get();
+                                @endphp
+                                @if(!$properties->isEmpty())
+                                    <div id="attributeID_{{$attribute->id}}" class="d-none">
+                                        <label class="name" for="date_start">{{$attribute->name}}</label>
+                                        <input type="text" class="form-control"
+                                               onclick="showDropdown('attribute_property{{$attribute->id}}', 'attribute_property-dropdownList{{$attribute->id}}')"
+                                               disabled id="attribute_property{{$attribute->id}}" required>
+                                        <div class="dropdown-content"
+                                             id="attribute_property-dropdownList{{$attribute->id}}">
+                                            <label>
+                                                @foreach($properties as $property)
+                                                    @php
+                                                        $isChecked = false
+                                                    @endphp
+                                                    @foreach($att_of_product as $att)
+                                                        @if($att->attribute_id == $attribute->id )
+                                                            @php
+                                                                $value = explode(',', $att->value);
+                                                            foreach($value as $item){
+                                                                if($item == $property->id ){
+                                                                    $isChecked = true;
+                                                                    }
+                                                                }
+                                                            @endphp
+                                                        @endif
+
+                                                    @endforeach
+                                                    <input class="property-attribute checkbox{{$attribute->id}}"
+                                                           type="checkbox"
+                                                           value="{{$attribute->id}}-{{$property->id}}"
+                                                           {{ $isChecked ? 'checked' : '' }}
+                                                           name="property-{{$attribute->id}}"
+                                                           onchange="updateSelectedOptions(this, 'attribute_property{{$attribute->id}}', 'attribute_property-dropdownList{{$attribute->id}}')">
+                                                    {{$property->name}}
+                                                @endforeach
+                                            </label>
+                                        </div>
+                                        <div class="">
+                                            <a class="btn btn-success addALlNavberBtn">
+                                                SelectAll
+                                            </a>
+                                            <a class="btn btn-success removeAllNavberBtn">
+                                                Remove All
+                                            </a>
+                                            <a class="btn btn-secondary hiddenNavberBtn">
+                                                Hidden
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                        <div id="renderInputAttribute">
+                        </div>
+                        <a id="btnSaveAttribute" class="btn btn-success mb-1 mt-1">SaveAttribute</a>
+                        <input type="text" hidden="" name="isNew" id="isNew" value="0">
+
                     </div>
 
                     <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
@@ -171,13 +356,24 @@
                             <div class="name">Tất cả danh mục</div>
                             @php
                                 $categories = DB::table('categories')->where('parent_id', null)->get();
+                                $productListCategory = $product->list_category;
+                                $productArrayCategory = explode(',', $productListCategory);
                             @endphp
                             <div id="checkboxes" style=" display: block">
                                 @foreach($categories as $category)
+                                    @php
+                                        $isValid = false;
+                                        foreach ($productArrayCategory as $productArrayCategoryItem){
+                                            if ($category->id == $productArrayCategoryItem){
+                                                $isValid = true;
+                                            }
+                                        }
+                                    @endphp
                                     <label class="ml-2" for="category-{{$category->id}}">
                                         <input type="checkbox" id="category-{{$category->id}}"
                                                name="category-{{$category->id}}"
                                                value="{{$category->id}}"
+                                               {{ $isValid ? 'checked' : '' }}
                                                class="inputCheckboxCategory mr-2 p-3"/>
                                         <span class="labelCheckboxCategory">{{$category->name}}</span>
                                     </label>
@@ -186,10 +382,19 @@
                                             $categories = DB::table('categories')->where('parent_id', $category->id)->get();
                                         @endphp
                                         @foreach($categories as $child)
+                                            @php
+                                                $isValidChild = false;
+                                                foreach ($productArrayCategory as $productArrayCategoryItem){
+                                                    if ($child->id == $productArrayCategoryItem){
+                                                        $isValidChild = true;
+                                                    }
+                                                }
+                                            @endphp
                                             <label class="ml-4" for="category-{{$child->id}}">
                                                 <input type="checkbox" id="category-{{$child->id}}"
                                                        name="category-{{$child->id}}"
                                                        value="{{$child->id}}"
+                                                       {{ $isValidChild ? 'checked' : '' }}
                                                        class="inputCheckboxCategory mr-2 p-3"/>
                                                 <span class="labelCheckboxCategory">{{$child->name}}</span>
                                             </label>
@@ -197,10 +402,19 @@
                                                 $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
                                             @endphp
                                             @foreach($listChild2 as $child2)
+                                                @php
+                                                    $isValidChild2 = false;
+                                                    foreach ($productArrayCategory as $productArrayCategoryItem){
+                                                        if ($child2->id == $productArrayCategoryItem){
+                                                            $isValidChild2 = true;
+                                                        }
+                                                    }
+                                                @endphp
                                                 <label class="ml-5" for="category-{{$child2->id}}">
                                                     <input type="checkbox" id="category-{{$child2->id}}"
                                                            name="category-{{$child2->id}}"
                                                            value="{{$child2->id}}"
+                                                           {{ $isValidChild2 ? 'checked' : '' }}
                                                            class="inputCheckboxCategory mr-2 p-3"/>
                                                     <span class="labelCheckboxCategory">{{$child2->name}}</span>
                                                 </label>
@@ -211,8 +425,7 @@
                             </div>
                         </div>
                     </div>
-                    <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
-                    <div class="form-group col-12 col-md-7 col-sm-8 ">
+                    <div class="border-top form-group col-12 col-md-7 col-sm-8 ">
                         <div class="row justify-content-center">
                             <button type="submit" class="btn btn-success">Gửi</button>
                         </div>
