@@ -3,6 +3,131 @@
 @section('title', 'Home page')
 
 @section('content')
+    <style>
+        .col-lg-6.item.item-left.text-center:first-child a:before {
+            display: block;
+            content: '';
+            background-image:url("https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/original/w/sport-icon__06672.original.jpg");
+            width: 50px;
+            height: 50px;
+            position: relative;
+            margin: -15px 50px;
+            background-size: 22px;
+            background-repeat: no-repeat;
+
+        }
+        .col-lg-6.item.item-left.text-center:nth-child(2) > a:before {
+            display: block;
+            content: '';
+            background-image:url("https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/original/o/apparel-icon__20228.original.jpg");
+            width: 50px;
+            height: 50px;
+            position: relative;
+            margin: -15px 50px;
+            background-size: 22px;
+            background-repeat: no-repeat;
+        }
+        .col-lg-6.item.item-left.text-center:nth-child(3) > a:before {
+            display: block;
+            content: '';
+            background-image:url('https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/original/y/accessories-icon__74809.original.jpg');
+            width: 50px;
+            height: 50px;
+            position: relative;
+            margin: -15px 50px;
+            background-size: 22px;
+            background-repeat: no-repeat;}
+        .col-lg-6.item.item-left.text-center:nth-child(4) > a:before {
+            display: block;
+            content: '';
+            background-image:url('https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/original/u/materials-icon__11291.original.jpg');
+            width: 50px;
+            height: 50px;
+            position: relative;
+            margin: -15px 50px;
+            background-size: 22px;
+            background-repeat: no-repeat;}
+        .col-lg-6.item.item-left.text-center:nth-child(5) > a:before {
+            display: block;
+            content: '';
+            background-image:url('https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/original/y/machinery-icon__72700.original.jpg');
+            width: 50px;
+            height: 50px;
+            position: relative;
+            margin: -15px 50px;
+            background-size: 22px;
+            background-repeat: no-repeat;}
+        .col-lg-6.item.item-left.text-center:nth-child(6) > a:before {
+            display: block;
+            content: '';
+            background-image:url('https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/original/l/bread-icon__67993.original.jpg');
+            width: 50px;
+            height: 50px;
+            position: relative;
+            margin: -15px 50px;
+            background-size: 22px;
+            background-repeat: no-repeat;}
+        .col-lg-6.item.item-left.text-center:nth-child(7) > a:before {
+            display: block;
+            content: '';
+            background-image:url('https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/original/u/furniture-icon__64784.original.jpg');
+            width: 50px;
+            height: 50px;
+            position: relative;
+            margin: -15px 50px;
+            background-size: 22px;
+            background-repeat: no-repeat;}
+        .col-lg-6.item.item-left.text-center:nth-child(8) > a:before {
+            display: block;
+            content: '';
+            background-image:url('https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/original/j/lights-lighting-icon__35198.original.jpg');
+            width: 50px;
+            height: 50px;
+            position: relative;
+            margin: -15px 50px;
+            background-size: 22px;
+            background-repeat: no-repeat;}
+        .col-lg-6.item.item-left.text-center:nth-child(9) > a:before {
+            display: block;
+            content: '';
+            background-image:url('https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/original/z/baby-bottle-icon__56241.original.jpg');
+            width: 50px;
+            height: 50px;
+            position: relative;
+            margin: -15px 50px;
+            background-size: 22px;
+            background-repeat: no-repeat;}
+        .col-lg-6.item.item-left.text-center:nth-child(10) > a:before {
+            display: block;
+            content: '';
+            background-image:url('https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/original/j/garden-shears-icon__28465.original.jpg');
+            width: 50px;
+            height: 50px;
+            position: relative;
+            margin: -15px 50px;
+            background-size: 22px;
+            background-repeat: no-repeat;}
+        .col-lg-6.item.item-left.text-center:nth-child(11) > a:before {
+            display: block;
+            content: '';
+            background-image:url('https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/original/l/lipstick-icon__92847.original.jpg');
+            width: 50px;
+            height: 50px;
+            position: relative;
+            margin: -15px 50px;
+            background-size: 22px;
+            background-repeat: no-repeat;}
+        col-lg-6.item.item-left.text-center:last-child > a:before {
+            display: block;
+            content: '';
+            background-image:url('https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/original/d/gifts-crafts-icon__77933.original.jpg');
+            width: 50px;
+            height: 50px;
+            position: relative;
+            margin: -15px 50px;
+            background-size: 22px;
+            background-repeat: no-repeat;}
+    </style>
 
     <div class="body" id="body-content">
         <section class="section-First pt-3 pb-3 container-fluid">
@@ -19,14 +144,12 @@
                                 <div class="col-lg-6 item item-left text-center">
                                     @if(Auth::check())
                                         <a href="{{ route('category.show', $listCate[$i]->id) }}">
-                                            <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
-                                                 alt="">
+{{--                                            <img class="icon_i" alt="">--}}
                                             <div class="text">{{ $listCate[$i]->name }}</div>
                                         </a>
                                     @else
                                         <a class="check_url">
-                                            <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
-                                                 alt="">
+{{--                                                <img class="icon_i" alt="">--}}
                                             <div class="text">{{ $listCate[$i]->name }}</div>
                                         </a>
                                     @endif
@@ -37,14 +160,12 @@
                                 <div class="col-lg-6 item item-left text-center">
                                     @if(Auth::check())
                                         <a href="{{ route('category.show', $cate->id) }}">
-                                            <img src="{{ asset('storage/' . $cate->thumbnail) }}"
-                                                 alt="">
+{{--                                            <img class="icon_i" alt="">--}}
                                             <div class="text">{{ $cate->name }}</div>
                                         </a>
                                     @else
                                         <a class="check_url">
-                                            <img src="{{ asset('storage/' . $cate->thumbnail) }}"
-                                                 alt="">
+{{--                                            <img class="icon_i" alt="">--}}
                                             <div class="text">{{ $cate->name }}</div>
                                         </a>
                                     @endif
@@ -368,7 +489,7 @@
                                                             <a class="check_url">Choose Options</a>
                                                         @endif
                                                     </div>
-                                                    <div class="card-bottom--right">
+                                                    <div class="card-bottom--right"  >
                                                         <i class="item-icon fa-regular fa-heart"></i>
                                                     </div>
                                                 </div>
@@ -538,7 +659,7 @@
                                                     <a class="check_url">Choose Options</a>
                                                 @endif
                                             </div>
-                                            <div class="card-bottom--right">
+                                            <div class="card-bottom--right" >
                                                 <i class="item-icon fa-regular fa-heart"></i>
                                             </div>
                                         </div>
@@ -699,7 +820,7 @@
                                                             <a class="check_url">Choose Options</a>
                                                         @endif
                                                     </div>
-                                                    <div class="card-bottom--right">
+                                                    <div class="card-bottom--right" >
                                                         <i class="item-icon fa-regular fa-heart"></i>
                                                     </div>
                                                 </div>
