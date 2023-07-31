@@ -37,6 +37,9 @@ class CategoryController extends Controller
         $selectedPayments = $request->data['selectedPayments'];
         $selectedTransports = $request->data['selectedTransports'];
         $search_origin = $request->data['search_origin'];
+        $minPrice = $request->data['minPrice'];
+        $maxPrice = $request->data['maxPrice'];
+
         $query = Product::where('category_id', '=', $id)
             ->join('users', 'products.user_id', '=', 'users.id');
 
@@ -57,6 +60,14 @@ class CategoryController extends Controller
                     $query->orWhere('users.payment_method', 'LIKE', '%' . $payment . '%');
                 }
             });
+        }
+
+        if ($minPrice !== null && $maxPrice !== null) {
+            $query->whereBetween('products.price', [$minPrice, $maxPrice]);
+        } elseif ($minPrice !== null) {
+            $query->where('products.price', '>=', $minPrice);
+        } elseif ($maxPrice !== null) {
+            $query->where('products.price', '<=', $maxPrice);
         }
 
         $selectedTransportsArray = [];
