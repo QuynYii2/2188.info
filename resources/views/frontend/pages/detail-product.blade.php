@@ -490,8 +490,13 @@
                     <div class="swiper-slide">
                         <div class="item">
                             <div class="item-img">
-                                <img src="{{ asset('storage/' . $product->thumbnail) }}"
+                                @php
+                                    $thumbnail = \App\Models\Variation::where('product_id', $product->id)->first();
+                                @endphp
+                                @if($thumbnail)
+                                <img src="{{ asset('storage/' . $thumbnail->thumbnail) }}"
                                      alt="">
+                                @endif
                                 <div class="button-view">
                                     <button>Quick view</button>
                                 </div>
@@ -569,8 +574,13 @@
                     <div class="swiper-slide">
                         <div class="item">
                             <div class="item-img">
-                                <img src="{{ asset('storage/' . $product->thumbnail) }}"
+                                @php
+                                    $thum = \App\Models\Variation::where('product_id', $product->id)->first();
+                                @endphp
+                                @if($thum)
+                                <img src="{{ asset('storage/' . $thum->thumbnail) }}"
                                      alt="">
+                                @endif
                                 <div class="button-view">
                                     <button>Quick view</button>
                                 </div>
@@ -609,7 +619,7 @@
                                                     <strong>$189.000</strong>
                                                 </div> -->
                                     <div class="price-sale">
-                                        <strong>${{$product->qty}}</strong>
+                                        <strong>${{$product->price}}</strong>
                                     </div>
                                     <div class="price-cost">
                                         <strike>${{$product->price}}</strike>

@@ -504,6 +504,12 @@
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     background: #fff;
   }
+  table.wp-list-table mark.instock {
+    font-weight: 700;
+    background: transparent none;
+    line-height: 1;
+    color: #7ad03a;
+  }
   table.fixed {
     table-layout: fixed;
   }
@@ -1153,6 +1159,10 @@
   color: #000000 !important;
 }
 
+/**/
+select {
+  display: none !important;
+}
 
 .dropdown-select-attribute,
 .dropdown-select-category,

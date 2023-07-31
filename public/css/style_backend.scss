@@ -565,6 +565,13 @@ $color-main: #fd6506;
     background: #fff;
   }
 
+  table.wp-list-table mark.instock  {
+    font-weight:  700;
+    background:  transparent none;
+    line-height:  1;
+    color: #7ad03a;
+  }
+
   table.fixed {
     table-layout: fixed;
   }
