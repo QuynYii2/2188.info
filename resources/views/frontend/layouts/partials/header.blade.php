@@ -2,6 +2,10 @@
         <!-- Header Section Begin -->
 @php
     $config = \App\Models\ConfigProject::where('status', \App\Enums\ConfigProjectStatus::ACTIVE)->orderBy('created_at', 'desc')->limit(1)->get();
+     $coin = null;
+     if (Auth::check()){
+         $coin = \App\Models\Coin::where([['status', \App\Enums\CoinStatus::ACTIVE], ['user_id', Auth::user()->id]])->first();
+     }
 @endphp
 <header class="header">
     <div class="header-pc halo-header">
@@ -95,7 +99,9 @@
                                         <a href="{{route('profile.show')}}">{{ __('home.profile') }}</a>
                                     </div>
                                     <div class="drop-item">
-                                        <a href="">Coins: </a>
+                                        @if($coin)
+                                            <a href="">Coins: {{$coin->quantity}}</a>
+                                        @endif
                                     </div>
                                     <div class="drop-item">
                                         <a href="{{route('buy.coin.show')}}">{{ __('home.buy coin') }}</a>
