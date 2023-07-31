@@ -24,6 +24,8 @@
     $check_ctv_shop = DB::table('staff_users')->where('user_id', Auth::user()->id)->first();
 
      $routeName = \Illuminate\Support\Facades\Route::currentRouteName();
+
+    (new \App\Http\Controllers\Frontend\HomeController())->createStatistic();
 @endphp
 <div class='wrapper text-nowrap'>
     <ul class='items'>

@@ -30,6 +30,7 @@ use App\Http\Controllers\Seller\StaffController;
 use App\Http\Controllers\Seller\StorageController;
 use App\Http\Controllers\Seller\TopSellerConfigController;
 use App\Http\Controllers\SocialController;
+use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
 use Illuminate\Support\Facades\Route;
@@ -354,6 +355,8 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::get('/order-managers/{id}', [\App\Http\Controllers\Seller\OrderController::class, 'detail'])->name('seller.order.detail');
     Route::post('/export-excel', [ExportFileController::class, 'exportExcelOrder'])->name('order.manage.export.excel');
     Route::post('/export-excel-detail', [ExportFileController::class, 'exportExcelOrderDetail'])->name('order.manage.export.excel.detail');
+    // Statistic
+    Route::get('/statistic-access', [StatisticController::class, 'getStatisticAccess'])->name('admin.statistic.access');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {

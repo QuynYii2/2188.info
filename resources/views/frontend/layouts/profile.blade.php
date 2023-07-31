@@ -8,6 +8,9 @@
 @section('title', 'Profile')
 
 @section('content')
+    @php
+        (new \App\Http\Controllers\Frontend\HomeController())->createStatistic();
+    @endphp
     <style>
         body {
             background-color: #ebebeb;
