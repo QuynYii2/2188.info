@@ -353,6 +353,17 @@
 
                     <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
                         <div class="form-group">
+                            <div class="name">Giá bán</div>
+                            <input type="number" class="form-control" name="giaban" id="name"
+                                   placeholder="Nhập giá bán" value="{{$product->old_price}}"
+                                   required min="1">
+                        </div>
+                        <div class="form-group">
+                            <div class="name">Nhập giá khuyến mãi(nếu có)</div>
+                            <input type="number" class="form-control" name="giakhuyenmai" id="name"
+                                   placeholder="Nhập giá khuyến mãi"  value="{{$product->price}}" min="1">
+                        </div>
+                        <div class="form-group">
                             <div class="name">Tất cả danh mục</div>
                             @php
                                 $categories = DB::table('categories')->where('parent_id', null)->get();
@@ -423,6 +434,19 @@
                                     @endif
                                 @endforeach
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group col-12 col-sm-12 pt-3">
+                                <label for="thumbnail">Ảnh đại diện:</label>
+                                <label class='__lk-fileInput'>
+                                    <span data-default='Choose file'>Choose file</span>
+                                    <input type="file" id="thumbnail" class="img-cfg"
+                                           name="thumbnail"
+                                           accept="image/*"
+                                           required>
+                                </label>
+                            </div>
+                            <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="" width="60px" height="60px">
                         </div>
                     </div>
                     <div class="border-top form-group col-12 col-md-7 col-sm-8 ">

@@ -223,6 +223,15 @@ class ProductController extends Controller
                 $product->name = $request->input('name');
                 $product->slug = \Str::slug($request->input('name'));
 
+                $product->old_price = $request->input('giaban');
+                $product->price = $request->input('giakhuyenmai');
+
+                if ($request->hasFile('thumbnail')) {
+                    $thumbnail = $request->file('thumbnail');
+                    $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+                    $product->thumbnail = $thumbnailPath;
+                }
+
                 $hot = $request->input('hot_product');
                 $feature = $request->input('feature_product');
 
@@ -239,38 +248,39 @@ class ProductController extends Controller
                 }
 
                 $arrayProduct = [];
-                for ($i = 1; $i < $number + 1; $i++) {
-                    $newVariationData = [];
+                if ($number){
+                    for ($i = 1; $i < $number + 1; $i++) {
+                        $newVariationData = [];
 
-                    if ($request->hasFile('thumbnail' . $i)) {
-                        $thumbnail = $request->file('thumbnail' . $i);
-                        $thumbnailPath = $thumbnail->store('thumbnails', 'public');
-                        $newVariationData['thumbnail'] = $thumbnailPath;
+                        if ($request->hasFile('thumbnail' . $i)) {
+                            $thumbnail = $request->file('thumbnail' . $i);
+                            $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+                            $newVariationData['thumbnail'] = $thumbnailPath;
+                        }
+
+                        $newVariationData['price'] = $request->input('price' . $i);
+                        $newVariationData['old_price'] = $request->input('old_price' . $i);
+                        $attPro = $request->input('attribute_property' . $i);
+                        $newVariationData['variation'] = $attPro;
+
+                        $newVariationData['product_id'] = $product->id;
+                        $newVariationData['user_id'] = Auth::user()->id;
+                        $newVariationData['status'] = VariationStatus::ACTIVE;
+                        $newVariationData['description'] = $request->input('description' . $i);
+                        $newVariationData['quantity'] = $request->input('quantity' . $i);
+
+                        if (!$request->input('price' . $i) || $request->input('old_price' . $i) < $request->input('price' . $i)) {
+                            $newVariationData['price'] = $request->input('old_price' . $i);
+                        }
+
+                        $arrayProduct[] = $newVariationData;
                     }
 
-                    $newVariationData['price'] = $request->input('price' . $i);
-                    $newVariationData['old_price'] = $request->input('old_price' . $i);
-                    $attPro = $request->input('attribute_property' . $i);
-                    $newVariationData['variation'] = $attPro;
-
-                    $newVariationData['product_id'] = $product->id;
-                    $newVariationData['user_id'] = Auth::user()->id;
-                    $newVariationData['status'] = VariationStatus::ACTIVE;
-                    $newVariationData['description'] = $request->input('description' . $i);
-                    $newVariationData['quantity'] = $request->input('quantity' . $i);
-
-                    if (!$request->input('price' . $i) || $request->input('old_price' . $i) < $request->input('price' . $i)) {
-                        $newVariationData['price'] = $request->input('old_price' . $i);
-                    }
-
-                    $arrayProduct[] = $newVariationData;
+                    Variation::where('product_id', $product->id)->delete();
+                    Variation::insert($arrayProduct);
+                    DB::table('product_attribute')->where('product_id', $product->id)->delete();
+                    $this->createAttributeProduct($product, $newArray);
                 }
-
-                Variation::where('product_id', $product->id)->delete();
-                Variation::insert($arrayProduct);
-                DB::table('product_attribute')->where('product_id', $product->id)->delete();
-                $this->createAttributeProduct($product, $newArray);
-
                 $updateProduct = $product->save();
             } else {
                 $updateProduct = $this->updateProduct($product, $request, $number);
@@ -355,6 +365,15 @@ class ProductController extends Controller
         $product->name = $request->input('name');
         $product->slug = \Str::slug($request->input('name'));
 
+        $product->old_price = $request->input('giaban');
+        $product->price = $request->input('giakhuyenmai');
+
+        if ($request->hasFile('thumbnail')) {
+            $thumbnail = $request->file('thumbnail');
+            $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+            $product->thumbnail = $thumbnailPath;
+        }
+
         $arrayIDs = $this->getCategory($request);
         if (!$arrayIDs || count($arrayIDs) == 0) {
             $categories = Category::all();
@@ -381,51 +400,53 @@ class ProductController extends Controller
             $product->feature = 0;
         }
 
-        if ($number > 1) {
-            for ($i = 1; $i < $number + 1; $i++) {
-                $id = $request->input('id' . $i);
+        if ($number){
+            if ($number > 1) {
+                for ($i = 1; $i < $number + 1; $i++) {
+                    $id = $request->input('id' . $i);
 
-                $newVariationData = Variation::find($id);
+                    $newVariationData = Variation::find($id);
 
-                if ($request->hasFile('thumbnail' . $id)) {
-                    $thumbnail = $request->file('thumbnail' . $id);
+                    if ($request->hasFile('thumbnail' . $id)) {
+                        $thumbnail = $request->file('thumbnail' . $id);
+                        $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+                        $newVariationData->thumbnail = $thumbnailPath;
+                    }
+
+                    $newVariationData->price = $request->input('price' . $id);
+                    $newVariationData->old_price = $request->input('old_price' . $id);
+
+                    if (!$request->input('price' . $id) || $request->input('old_price' . $id) < $request->input('price' . $id)) {
+                        $newVariationData->price = $request->input('old_price' . $id);
+                    }
+
+                    $newVariationData->save();
+                }
+            } else {
+                $newVariationData = Variation::where([['product_id', $product->id], ['status', VariationStatus::ACTIVE]])->first();
+                if (!$newVariationData) {
+                    $newVariationData = new Variation();
+                    $newVariationData->product_id = $product->id;
+                    $newVariationData->user_id = Auth::user()->id;
+                    $newVariationData->variation = 0;
+                    $newVariationData->quantity = 100;
+                }
+
+                if ($request->hasFile('thumbnail1')) {
+                    $thumbnail = $request->file('thumbnail1');
                     $thumbnailPath = $thumbnail->store('thumbnails', 'public');
                     $newVariationData->thumbnail = $thumbnailPath;
                 }
 
-                $newVariationData->price = $request->input('price' . $id);
-                $newVariationData->old_price = $request->input('old_price' . $id);
+                $newVariationData->price = $request->input('price1');
+                $newVariationData->old_price = $request->input('old_price1');
 
-                if (!$request->input('price' . $id) || $request->input('old_price' . $id) < $request->input('price' . $id)) {
-                    $newVariationData->price = $request->input('old_price' . $id);
+                if (!$request->input('price1') || $request->input('old_price1') < $request->input('price')) {
+                    $newVariationData->price = $request->input('old_price1');
                 }
 
                 $newVariationData->save();
             }
-        } else {
-            $newVariationData = Variation::where([['product_id', $product->id], ['status', VariationStatus::ACTIVE]])->first();
-            if (!$newVariationData) {
-                $newVariationData = new Variation();
-                $newVariationData->product_id = $product->id;
-                $newVariationData->user_id = Auth::user()->id;
-                $newVariationData->variation = 0;
-                $newVariationData->quantity = 100;
-            }
-
-            if ($request->hasFile('thumbnail1')) {
-                $thumbnail = $request->file('thumbnail1');
-                $thumbnailPath = $thumbnail->store('thumbnails', 'public');
-                $newVariationData->thumbnail = $thumbnailPath;
-            }
-
-            $newVariationData->price = $request->input('price1');
-            $newVariationData->old_price = $request->input('old_price1');
-
-            if (!$request->input('price1') || $request->input('old_price1') < $request->input('price')) {
-                $newVariationData->price = $request->input('old_price1');
-            }
-
-            $newVariationData->save();
         }
 
         $success = $product->save();
@@ -517,36 +538,37 @@ class ProductController extends Controller
         $product = Product::where('user_id', Auth::user()->id)->orderByDesc('id')->first();
 
         $arrayProduct = [];
-        for ($i = 1; $i < $number + 1; $i++) {
-            $newVariationData = [];
+        if ($number) {
+            for ($i = 1; $i < $number + 1; $i++) {
+                $newVariationData = [];
 
-            if ($request->hasFile('thumbnail' . $i)) {
-                $thumbnail = $request->file('thumbnail' . $i);
-                $thumbnailPath = $thumbnail->store('thumbnails', 'public');
-                $newVariationData['thumbnail'] = $thumbnailPath;
+                if ($request->hasFile('thumbnail' . $i)) {
+                    $thumbnail = $request->file('thumbnail' . $i);
+                    $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+                    $newVariationData['thumbnail'] = $thumbnailPath;
+                }
+
+                $newVariationData['price'] = $request->input('price' . $i);
+                $newVariationData['old_price'] = $request->input('old_price' . $i);
+                $attPro = $request->input('attribute_property' . $i);
+                $newVariationData['variation'] = $attPro;
+
+                $newVariationData['product_id'] = $product->id;
+                $newVariationData['user_id'] = Auth::user()->id;
+                $newVariationData['status'] = VariationStatus::ACTIVE;
+                $newVariationData['description'] = $request->input('description' . $i);
+                $newVariationData['quantity'] = $request->input('quantity' . $i);
+
+                if (!$request->input('price' . $i) || $request->input('old_price' . $i) < $request->input('price' . $i)) {
+                    $newVariationData['price'] = $request->input('old_price' . $i);
+                }
+
+                $arrayProduct[] = $newVariationData;
             }
-
-            $newVariationData['price'] = $request->input('price' . $i);
-            $newVariationData['old_price'] = $request->input('old_price' . $i);
-            $attPro = $request->input('attribute_property' . $i);
-            $newVariationData['variation'] = $attPro;
-
-            $newVariationData['product_id'] = $product->id;
-            $newVariationData['user_id'] = Auth::user()->id;
-            $newVariationData['status'] = VariationStatus::ACTIVE;
-            $newVariationData['description'] = $request->input('description' . $i);
-            $newVariationData['quantity'] = $request->input('quantity' . $i);
-
-            if (!$request->input('price' . $i) || $request->input('old_price' . $i) < $request->input('price' . $i)) {
-                $newVariationData['price'] = $request->input('old_price' . $i);
-            }
-
-            $arrayProduct[] = $newVariationData;
+            Variation::insert($arrayProduct);
+            $sourceArray = session()->get('sourceArray');
+            $this->createAttributeProduct($product, $sourceArray[0]);
         }
-
-        Variation::insert($arrayProduct);
-        $sourceArray = session()->get('sourceArray');
-        $this->createAttributeProduct($product, $sourceArray[0]);
 
         return $success;
     }
