@@ -882,7 +882,6 @@
                                         <div class="brand-item d-flex justify-content-between">
                                             <div class="brand-item-text">
                                                 <div class="name">{{ $listChild[$i]->name }}</div>
-                                                <div
                                                 @if(Auth::check())
                                                     <a href="{{ route('category.show', $listChild[$i]->id) }}">Shop now</a>
                                                 @else
