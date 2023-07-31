@@ -100,16 +100,16 @@
                     @endif
 
                     <div class="col-12 col-md-7 border-right mt-2 rm-pd-on-mobile">
-{{--                        <div class="form-group">--}}
-{{--                            <div class="name">Chọn sản phẩm từ kho</div>--}}
-{{--                            <div class="main">--}}
-{{--                                <select id="selectStorage" name="storage-id" class="form-control">--}}
-{{--                                    @foreach($storages as $storage)--}}
-{{--                                        <option value="{{ $storage->id }}">{{ $storage->name }}</option>--}}
-{{--                                    @endforeach--}}
-{{--                                </select>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
+                        <div class="form-group">
+                            <div class="name">Chọn sản phẩm từ kho</div>
+                            <div class="main">
+                                <select id="selectStorage" name="storage-id" class="form-control">
+                                    @foreach($storages as $storage)
+                                        <option value="{{ $storage->id }}">{{ $storage->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="name">Tên sản phẩm</div>
                             <input type="text" class="form-control" name="name" id="name"
