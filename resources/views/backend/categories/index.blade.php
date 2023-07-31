@@ -3,11 +3,6 @@
 @section('title')
     List Category
 @endsection
-<style>
-    select{
-        display: block!important;
-    }
-</style>
 @section('content')
 
     <div class="wrap nosubsub snipcss-yDRNt">
@@ -45,7 +40,7 @@
                                     Parent category
                                 </label>
                                 <select name="category_parentID" id="category_parentID" class="postform w-100"
-                                        aria-describedby="parent-description">
+                                        aria-describedby="parent-description" style="display: block!important;">
                                     <option value="-1">
                                         Trống
                                     </option>
@@ -206,7 +201,8 @@
                                                                                     <select name="category_parentID"
                                                                                             id="category_parentID"
                                                                                             class="postform"
-                                                                                            aria-describedby="parent-description">
+                                                                                            aria-describedby="parent-description"
+                                                                                            style="display: block!important;">
                                                                                         @if($category->parent_id > 0)
                                                                                             @php
                                                                                                 $categoryParent = \App\Models\Category::find($category->parent_id);
