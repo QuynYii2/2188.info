@@ -149,8 +149,11 @@ class ProductController extends Controller
             $product->gallery = $this->handleGallery($request->input('imgGallery'));
 //            $product->thumbnail = $this->handleGallery($request->input('imgThumbnail'));
             $product->slug = \Str::slug($request->input('name'));
-            $product-> price = $request->input('giakhuyenmai');
-            $product-> old_price = $request->input('giaban') ?? 0;
+            $product->old_price = $request->input('giaban');
+
+            if ($request->input('giakhuyenmai')) {
+                $product->price = $request->input('giakhuyenmai');
+            }
 
             $hot = $request->input('hot_product');
             $feature = $request->input('feature_product');
