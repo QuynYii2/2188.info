@@ -28,7 +28,8 @@
 @include('sweetalert::alert')
 <!-- Header -->
 <header class="container-fluid header_back d-flex">
-   <div class="name"><a href="{{ route('seller.products.home') }}">Kênh người bán</a></div>
+    <div class="name"><a href="{{ route('seller.products.home') }}">Kênh người bán</a></div>
+    <div class="name"><a href="{{ route('/') }}" target="_blank">Xem trang chủ</a></div>
 </header>
 
 <!-- Main Content -->
