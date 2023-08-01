@@ -346,7 +346,7 @@ class ProductController extends Controller
 
     public function handleGallery($input)
     {
-        $pattern = '/\/storage\/([^,"]+),?/'; // Modified regex pattern
+        $pattern = '/\/storage\/([^,"]+),?/';
         $matches = array();
         $arrResult = array();
         foreach ($input as $item) {
