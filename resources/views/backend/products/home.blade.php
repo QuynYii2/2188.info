@@ -267,6 +267,12 @@
 
         getAllStatisticAccess();
 
+        getAllStatisticRevenue();
+
+        // var customerChart = localStorage.getItem('item');
+        // console.log(customerChart)
+        // getCustomerChart(customerChart);
+
         function getChar(data, datatime) {
             document.addEventListener("DOMContentLoaded", () => {
                 new ApexCharts(document.querySelector("#reportsChart"), {
@@ -331,8 +337,6 @@
             });
         }
 
-        getAllStatisticRevenue();
-
         function getRevenueChar(data, datatime) {
             document.addEventListener("DOMContentLoaded", () => {
                 new ApexCharts(document.querySelector("#revenueChart"), {
@@ -387,6 +391,7 @@
             });
         }
 
+        getAllStatisticUser();
 
         function getAllStatisticUser() {
             $.ajax({
@@ -406,15 +411,16 @@
             });
         }
 
-        getAllStatisticUser();
+        var item = localStorage.getItem('item');
+        console.log(item)
+        arrayItem = item.split(',');
 
-        var customerChart = localStorage.getItem('item');
-        getCustomerChart(customerChart);
+        getCustomerChart(parseInt(arrayItem[0]), parseInt(arrayItem[1]));
 
-        function getCustomerChart(customerChart) {
+        function getCustomerChart(customerChart, testChart) {
             document.addEventListener("DOMContentLoaded", () => {
                 new ApexCharts(document.querySelector("#customerChart"), {
-                    series: [customerChart],
+                    series: [customerChart, testChart],
                     chart: {
                         height: 350,
                         type: 'pie',
