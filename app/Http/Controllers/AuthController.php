@@ -567,7 +567,7 @@ class AuthController extends Controller
                         'registerMember' => $register->member
                     ]));
                 } else {
-                    alert()->success('Success', 'Success, Verify success!');
+                    alert()->success('Success', 'Success, Verify success! Please login and paid bill');
                     return redirect(route('login'));
                 }
             }

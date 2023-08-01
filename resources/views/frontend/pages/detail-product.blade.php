@@ -333,7 +333,10 @@
                         <div class="">{{ __('home.write a read') }}</div>
                         @php
                             if (Auth::check()){
-                                $isMember = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                                $isMember = \App\Models\MemberRegisterPersonSource::where([
+                                    ['email', Auth::user()->email],
+                                    ['check', 1]
+                                ])->first();
                             }
                         @endphp
                         @if($isMember)
