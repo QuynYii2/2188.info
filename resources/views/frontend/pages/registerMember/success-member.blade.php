@@ -11,15 +11,13 @@
                     <div class="title">Payment Register Member</div>
                 </div>
                 <h3 class="text-center">
-                    Phí gia nhập hội viên {{$registerMember}}
+                    Gia nhập hội viên
                 </h3>
                 <div class="mt-5">
                     <div class="row p-5">
                         <br>
                         @php
-                            $memberRegister = \App\Models\MemberRegisterInfo::where([
-                                ['user_id', Auth::user()->id],
-                                ['member', $registerMember]])->orderBy('created_at', 'desc')->first();
+                            $memberRegister = \App\Models\MemberRegisterInfo::where('id', $registerMember)->first();
                         @endphp
                         <h5>Info</h5>
                         <table class="table table-bordered">
@@ -52,8 +50,7 @@
                         </table>
                         @php
                             $memberRegisterSource = \App\Models\MemberRegisterPersonSource::where([
-                                ['user_id', Auth::user()->id],
-                                ['member_id', $memberRegister->id],
+                                ['member_id', $registerMember],
                                 ['type', \App\Enums\MemberRegisterType::SOURCE]])->orderBy('created_at', 'desc')->first();
                         @endphp
                         <h5>Account Member Source</h5>
@@ -77,7 +74,6 @@
                         </table>
                         @php
                             $memberRegisterRepresent = \App\Models\MemberRegisterPersonSource::where([
-                                ['user_id', Auth::user()->id],
                                 ['person', $memberRegisterSource->id],
                                 ['type', \App\Enums\MemberRegisterType::REPRESENT]])->orderBy('created_at', 'desc')->first();
                         @endphp
