@@ -331,56 +331,63 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <div class="">{{ __('home.write a read') }}</div>
-                        <form method="post" action="{{route('create.evaluate')}}">
-                            @csrf
-                            <input type="text" class="form-control" id="product_id" name="product_id"
-                                   value="{{$product->id}}" hidden/>
-                            <div class="rating">
-                                <input type="radio" name="star_number" id="star1" value="1" hidden="">
-                                <label for="star1" onclick="starCheck(1)"><i id="icon-star-1"
-                                                                             class="fa fa-star"></i></label>
-                                <input type="radio" name="star_number" id="star2" value="2" hidden="">
-                                <label for="star2" onclick="starCheck(2)"><i id="icon-star-2"
-                                                                             class="fa fa-star"></i></label>
-                                <input type="radio" name="star_number" id="star3" value="3" hidden="">
-                                <label for="star3" onclick="starCheck(3)"><i id="icon-star-3"
-                                                                             class="fa fa-star"></i></label>
-                                <input type="radio" name="star_number" id="star4" value="4" hidden="">
-                                <label for="star4" onclick="starCheck(4)"><i id="icon-star-4"
-                                                                             class="fa fa-star"></i></label>
-                                <input type="radio" name="star_number" id="star5" value="5" hidden="">
-                                <label for="star5" onclick="starCheck(5)"><i id="icon-star-5"
-                                                                             class="fa fa-star"></i></label>
-                            </div>
-                            <input id="input-star" value="0" hidden="">
-                            <div id="text-message" class="text-danger d-none">Please select star rating
-                            </div>
-
-                            <div class="form-group row">
-                                <label for=""
-                                       class="col-sm-12 col-form-label">{{ __('home.your name') }}</label>
-                                <div class="col-sm-12">
-                                    <input onclick="checkStar()" type="text" class="form-control" id=""
-                                           name="username"
-                                           placeholder="{{ __('home.your name') }}" required/>
+                        @php
+                            if (Auth::check()){
+                                $isMember = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                            }
+                        @endphp
+                        @if($isMember)
+                            <form method="post" action="{{route('create.evaluate')}}">
+                                @csrf
+                                <input type="text" class="form-control" id="product_id" name="product_id"
+                                       value="{{$product->id}}" hidden/>
+                                <div class="rating">
+                                    <input type="radio" name="star_number" id="star1" value="1" hidden="">
+                                    <label for="star1" onclick="starCheck(1)"><i id="icon-star-1"
+                                                                                 class="fa fa-star"></i></label>
+                                    <input type="radio" name="star_number" id="star2" value="2" hidden="">
+                                    <label for="star2" onclick="starCheck(2)"><i id="icon-star-2"
+                                                                                 class="fa fa-star"></i></label>
+                                    <input type="radio" name="star_number" id="star3" value="3" hidden="">
+                                    <label for="star3" onclick="starCheck(3)"><i id="icon-star-3"
+                                                                                 class="fa fa-star"></i></label>
+                                    <input type="radio" name="star_number" id="star4" value="4" hidden="">
+                                    <label for="star4" onclick="starCheck(4)"><i id="icon-star-4"
+                                                                                 class="fa fa-star"></i></label>
+                                    <input type="radio" name="star_number" id="star5" value="5" hidden="">
+                                    <label for="star5" onclick="starCheck(5)"><i id="icon-star-5"
+                                                                                 class="fa fa-star"></i></label>
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for=""
-                                       class="col-sm-12 col-form-label">{{ __('home.your review') }}</label>
-                                <div class="col-sm-12">
+                                <input id="input-star" value="0" hidden="">
+                                <div id="text-message" class="text-danger d-none">Please select star rating
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for=""
+                                           class="col-sm-12 col-form-label">{{ __('home.your name') }}</label>
+                                    <div class="col-sm-12">
+                                        <input onclick="checkStar()" type="text" class="form-control" id=""
+                                               name="username"
+                                               placeholder="{{ __('home.your name') }}" required/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for=""
+                                           class="col-sm-12 col-form-label">{{ __('home.your review') }}</label>
+                                    <div class="col-sm-12">
                                         <textarea onclick="checkStar()" class="form-control" id=""
                                                   name="content"
                                                   placeholder="{{ __('home.your review') }}"
                                                   rows="3" required></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <button id="btn-submit" class="btn btn-primary btn-16" type="submit">
-                                    Submit
-                                </button>
-                            </div>
-                        </form>
+                                <div class="form-group row">
+                                    <button id="btn-submit" class="btn btn-primary btn-16" type="submit">
+                                        Submit
+                                    </button>
+                                </div>
+                            </form>
+                        @endif
                     </div>
                 </div>
                 <div class="card">

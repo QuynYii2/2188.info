@@ -8,6 +8,7 @@ use App\Enums\MemberRegisterPersonSourceStatus;
 use App\Enums\MemberRegisterType;
 use App\Enums\PermissionUserStatus;
 use App\Enums\RegisterMember;
+use App\Enums\RegisterMemberPrice;
 use App\Enums\StatisticStatus;
 use App\Enums\UserStatus;
 use App\Http\Controllers\Frontend\HomeController;
@@ -322,6 +323,21 @@ class AuthController extends Controller
 
             $id = 0;
 
+            $newID = (integer)$member;
+
+            $memberAccount = MemberRegisterInfo::find($newID);
+            $typeMember = $memberAccount->member;
+            if ($typeMember == RegisterMember::POWER_PRODUCTION) {
+                $price = RegisterMemberPrice::POWER_PRODUCTION;
+            } elseif ($typeMember == RegisterMember::PRODUCTION) {
+                $price = RegisterMemberPrice::PRODUCTION;
+            } elseif ($typeMember == RegisterMember::POWER_VENDOR) {
+                $price = RegisterMemberPrice::POWER_VENDOR;
+            } else {
+                $price = RegisterMemberPrice::VENDOR;
+            }
+            //member
+
             $create = [
                 'user_id' => $id,
                 'name' => $fullName,
@@ -334,6 +350,7 @@ class AuthController extends Controller
                 'type' => MemberRegisterType::SOURCE,
                 'verifyCode' => $code,
                 'isVerify' => 0,
+                'price' => $price,
                 'status' => MemberRegisterPersonSourceStatus::INACTIVE
             ];
 
@@ -413,6 +430,7 @@ class AuthController extends Controller
                 'person' => $personSource,
                 'staff' => $staff,
                 'member_id' => $memberBefore->member_id,
+                'price' => $memberBefore->price,
                 'rank' => '0',
                 'sns_account' => $sns_account,
                 'type' => MemberRegisterType::REPRESENT,
@@ -466,24 +484,34 @@ class AuthController extends Controller
             }
             $role = $request->input('role');
             $price = $request->input('price');
+
             $coin = Coin::where([['user_id', Auth::user()->id], ['status', CoinStatus::ACTIVE]])->first();
             $member->status = MemberRegisterInfoStatus::ACTIVE;
+
             if ($coin != null) {
                 if ($coin->quantity >= $price * 10) {
                     $coin->quantity = $coin->quantity - $price * 10;
                     $coin->save();
                     $success = $member->save();
+                    $relaseMember = MemberRegisterPersonSource::where('member_id', $member->id)->get();
+
+                    foreach ($relaseMember as $item) {
+                        $item->check = 1;
+                        $item->price = 0;
+                        $item->save();
+                    }
+
                     if ($success) {
                         alert()->success('Success', 'Payment success!');
-                        return redirect(route('show.success.payment.member', $role));
+                        return redirect(route('show.success.payment.member', $member->id));
                     }
                 } else {
-                    alert()->error('Error', 'Not enough coin!');
-                    return back();
+                    alert()->error('Error', 'Not enough coin! Buy coin now!!!');
+                    return redirect(route('buy.coin.show'));
                 }
             }
-            alert()->error('Error', 'Error, Payment error!');
-            return back();
+            alert()->error('Error', 'Error, Payment error! Buy coin now!!!');
+            return redirect(route('buy.coin.show'));
         } catch (\Exception $exception) {
             alert()->error('Error', 'Error, Please try again!');
             return back();
