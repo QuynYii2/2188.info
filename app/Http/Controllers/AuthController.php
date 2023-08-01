@@ -257,8 +257,10 @@ class AuthController extends Controller
                 return back();
             }
 
+            $id = 0;
+
             $create = [
-                'user_id' => Auth::user()->id,
+                'user_id' => $id,
                 'name' => $companyName,
                 'phone' => $phoneNumber,
                 'fax' => $fax,
@@ -274,7 +276,7 @@ class AuthController extends Controller
 
             $success = MemberRegisterInfo::create($create);
             $newUser = MemberRegisterInfo::where([
-                ['user_id', Auth::user()->id],
+                ['user_id', $id],
                 ['member', $registerMember],
             ])->orderBy('created_at', 'desc')->first();
             if ($success) {
@@ -318,8 +320,10 @@ class AuthController extends Controller
 
             $this->sendMail($data, $email);
 
+            $id = 0;
+
             $create = [
-                'user_id' => Auth::user()->id,
+                'user_id' => $id,
                 'name' => $fullName,
                 'password' => $password,
                 'phone' => $phoneNumber,
@@ -396,15 +400,19 @@ class AuthController extends Controller
 
             $this->sendMail($data, $email);
 
+            $id = 0;
+
+            $memberBefore = MemberRegisterPersonSource::where('id', $personSource)->first();
+
             $create = [
-                'user_id' => Auth::user()->id,
+                'user_id' => $id,
                 'name' => $fullName,
                 'password' => $password,
                 'phone' => $phoneNumber,
                 'email' => $email,
                 'person' => $personSource,
                 'staff' => $staff,
-                'member_id' => '0',
+                'member_id' => $memberBefore->member_id,
                 'rank' => '0',
                 'sns_account' => $sns_account,
                 'type' => MemberRegisterType::REPRESENT,
@@ -532,7 +540,7 @@ class AuthController extends Controller
                     ]));
                 } else {
                     alert()->success('Success', 'Success, Verify success!');
-                    return redirect(route('show.payment.member', $register->member));
+                    return redirect(route('login'));
                 }
             }
             alert()->error('Error', 'Error, Verify error!');
