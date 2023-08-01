@@ -220,28 +220,28 @@
                         @else
                             <div class="item">
                                 <button class="button" onclick="signIn()"><i class="item-icon fa-regular fa-user"></i>
-                                    <div class="item-text">Sign in</div>
+                                    <div class="item-text">{{ __('home.Sign in') }}</div>
                                 </button>
                                 <div class="signMenu" id="signMenu">
-                                    <div class="login">LOGIN</div>
+                                    <div class="login">{{ __('home.LOGIN') }}</div>
                                     <div class="content">
-                                        If you are already registered, please log in.
+                                        {{ __('home.If you are already registered, please log in') }}
                                     </div>
                                     <form action="{{route('login.submit')}}" method="post">
                                         @csrf
                                         <div class="email">
-                                            Email Address:<span class="text-danger">*</span> <br>
+                                            {{ __('home.Email Address') }}<span class="text-danger">*</span> <br>
                                             <input class="mt-2" name="login_field" type="email"
                                                    placeholder="{{ __('home.input email') }}" style="box-shadow: none">
                                         </div>
                                         <div class="password">
-                                            Password: <span class="text-danger">*</span> <br>
+                                            {{ __('home.Password') }} <span class="text-danger">*</span> <br>
                                             <input class="mt-2" name="password" type="password"
                                                    placeholder="{{ __('home.input password') }}"
                                                    style="box-shadow: none">
                                         </div>
                                         <div class="card-bottom--left">
-                                            <button type="submit">Sign In</button>
+                                            <button type="submit">{{ __('home.Sign In') }}</button>
                                         </div>
                                         <div class="d-flex justify-content-center social-buttons form-group mt-2">
                                             <button type="button" class="button btn mg-icon"
@@ -269,13 +269,13 @@
                                     </form>
                                     <hr>
                                     <div class="content">
-                                        Create your account and enjoy a new shopping experience.
+                                        {{ __('home.Create your account and enjoy a new shopping experience') }}
                                     </div>
                                     <a href="{{route('register.show')}}" class="register">
-                                        <button type="submit">Create A New Account</button>
+                                        <button type="submit">{{ __('home.Create A New Account') }}</button>
                                     </a>
                                     <a href="https://staging-b2b.2188.info/register-member" class="register">
-                                        <button class="mt-3" type="submit">Đăng kí hội viên</button>
+                                        <button class="mt-3" type="submit">{{ __('home.Sign up for membership') }}</button>
                                     </a>
                                 </div>
                             </div>

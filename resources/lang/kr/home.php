@@ -314,6 +314,16 @@ return [
     'Household Plants' => '가정용 식물',
     'Bonsai' => '분재',
     'Quick view' => '퀵뷰',
+    'LOGIN' => '로그인',
+    'If you are already registered, please log in' => '이미 등록되어 있는 경우 로그인하십시오',
+    'Email Address' => '이메일 주소:',
+    'Password' => '비밀번호',
+    'Sign In' => '로그인',
+    'Create your account and enjoy a new shopping experience' => '계정을 만들고 새로운 쇼핑 경험을 즐기십시오',
+    'Create A New Account' => '새 계정 생성',
+    'Sign up for membership' => '회원가입',
+    'Sign in' => '로그인',
+
 
 
 
