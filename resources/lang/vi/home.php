@@ -319,6 +319,16 @@ return [
     'Household Plants' => 'cây gia dụng',
     'Bonsai' => 'cây cảnh',
     'Quick view' => 'Xem lướt qua',
+    'LOGIN' => 'ĐĂNG NHẬP',
+    'If you are already registered, please log in' => 'Nếu bạn đã đăng ký, xin vui lòng đăng nhập',
+    'Email Address' => 'Địa chỉ email:',
+    'Password' => 'Mật khẩu',
+    'Sign In' => 'Đăng nhập',
+    'Create your account and enjoy a new shopping experience' => 'Tạo tài khoản của bạn và tận hưởng trải nghiệm mua sắm mới',
+    'Create A New Account' => 'Tạo tài khoản mới',
+    'Sign up for membership' => 'Đăng kí hội viên',
+    'Sign in' => 'Đăng nhập',
+
 
 
 
