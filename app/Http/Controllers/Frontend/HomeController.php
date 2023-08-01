@@ -6,6 +6,7 @@ use App\Enums\BannerStatus;
 use App\Enums\NotificationStatus;
 use App\Enums\ProductStatus;
 use App\Enums\PromotionStatus;
+use App\Enums\StatisticStatus;
 use App\Enums\TopSellerConfigLocation;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Controller;
@@ -15,6 +16,8 @@ use App\Models\Category;
 use App\Models\Notification;
 use App\Models\Permission;
 use App\Models\Promotion;
+use App\Models\StatisticAccess;
+use App\Models\StatisticShop;
 use App\Models\TopSellerConfig;
 use App\Models\Voucher;
 use Carbon\Carbon;
@@ -58,7 +61,7 @@ class HomeController extends Controller
         $productByJp = Product::where('location', 'jp')->limit(10)->get();
         $productByCn = Product::where('location', 'cn')->limit(10)->get();
 
-        $newProducts = Product::where('status',ProductStatus::ACTIVE)->orderBy('created_at','desc')->limit(10)->get();
+        $newProducts = Product::where('status', ProductStatus::ACTIVE)->orderBy('created_at', 'desc')->limit(10)->get();
         $newProducts = $newProducts->unique('slug');
 
         $permissionHot = Permission::where('name', 'Nâng cấp sản phẩm hot')->first();
@@ -207,5 +210,81 @@ class HomeController extends Controller
             }
         }
         return $isAdmin;
+    }
+
+    public function createStatistic()
+    {
+        $statisticAccess = StatisticAccess::where([
+            ['datetime', '<', Carbon::now()->addHours(7)->copy()->endOfDay()],
+            ['datetime', '>', Carbon::now()->addHours(7)->copy()->startOfDay()],
+            ['status', StatisticStatus::ACTIVE],
+        ])->first();
+
+        if ($statisticAccess) {
+            $statisticAccess->numbers = $statisticAccess->numbers + 1;
+            $statisticAccess->save();
+        } else {
+            $statisticAccess = [
+                'numbers' => 1,
+                'datetime' => Carbon::now()->addHours(7),
+            ];
+
+            StatisticAccess::create($statisticAccess);
+        }
+    }
+
+    public function createStatisticShopDetail($value, $id)
+    {
+        $this->createStatisticShop($value, $id);
+    }
+
+    private function createStatisticShop($value, $id)
+    {
+        $statisticShop = StatisticShop::where([
+            ['user_id', $id],
+            ['datetime', '<', Carbon::now()->addHours(7)->copy()->endOfDay()],
+            ['datetime', '>', Carbon::now()->addHours(7)->copy()->startOfDay()]
+        ])->first();
+
+        if ($value == 'access') {
+            if ($statisticShop) {
+                $statisticShop->access = $statisticShop->access + 1;
+                $statisticShop->save();
+            } else {
+                $statisticShop = [
+                    'access' => 1,
+                    'user_id' => $id,
+                    'datetime' => Carbon::now()->addHours(7),
+                ];
+
+                StatisticShop::create($statisticShop);
+            }
+        } elseif ($value == 'views') {
+            if ($statisticShop) {
+                $statisticShop->views = $statisticShop->views + 1;
+                $statisticShop->save();
+            } else {
+                $statisticShop = [
+                    'views' => 1,
+                    'user_id' => $id,
+                    'datetime' => Carbon::now()->addHours(7),
+                ];
+
+                StatisticShop::create($statisticShop);
+            }
+        } else {
+            if ($statisticShop) {
+                $statisticShop->orders = $statisticShop->orders + 1;
+                $statisticShop->save();
+            } else {
+                $statisticShop = [
+                    'orders' => 1,
+                    'user_id' => $id,
+                    'datetime' => Carbon::now()->addHours(7),
+                ];
+
+                StatisticShop::create($statisticShop);
+            }
+        }
     }
 }

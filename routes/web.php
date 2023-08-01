@@ -30,6 +30,8 @@ use App\Http\Controllers\Seller\StaffController;
 use App\Http\Controllers\Seller\StorageController;
 use App\Http\Controllers\Seller\TopSellerConfigController;
 use App\Http\Controllers\SocialController;
+use App\Http\Controllers\StatisticController;
+use App\Http\Controllers\StatisticShopController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
 use Illuminate\Support\Facades\Route;
@@ -226,6 +228,13 @@ Route::group(['middleware' => 'role.admin'], function () {
     Route::post('/admin/banners', [BannerController::class, 'create'])->name('admin.banners.create');
     Route::post('/admin/banners/{id}', [BannerController::class, 'update'])->name('admin.banners.update');
     Route::delete('/admin/banners/{id}', [BannerController::class, 'delete'])->name('admin.banners.delete');
+    // Categories
+    Route::get('/categories', [CategoryController::class, 'index'])->name('seller.categories.index');
+    Route::get('/categories/create', [CategoryController::class, 'create'])->name('seller.categories.create');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('seller.categories.store');
+    Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('seller.categories.edit');
+    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('seller.categories.update');
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('seller.categories.destroy');
 
 });
 
@@ -272,13 +281,13 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::post('/toggle-products-feature/{id}', [ProductController::class, 'setFeatureProduct'])->name('seller.products.feature');
     // End
     Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('seller.products.destroy');
-    // Categories
-    Route::get('/categories', [CategoryController::class, 'index'])->name('seller.categories.index');
-    Route::get('/categories/create', [CategoryController::class, 'create'])->name('seller.categories.create');
-    Route::post('/categories', [CategoryController::class, 'store'])->name('seller.categories.store');
-    Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('seller.categories.edit');
-    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('seller.categories.update');
-    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('seller.categories.destroy');
+//    // Categories
+//    Route::get('/categories', [CategoryController::class, 'index'])->name('seller.categories.index');
+//    Route::get('/categories/create', [CategoryController::class, 'create'])->name('seller.categories.create');
+//    Route::post('/categories', [CategoryController::class, 'store'])->name('seller.categories.store');
+//    Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('seller.categories.edit');
+//    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('seller.categories.update');
+//    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('seller.categories.destroy');
 
     //Revenue
     Route::get('/revenues', [RevenusController::class, 'index'])->name('revenues.index');
@@ -355,6 +364,9 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::get('/order-managers/{id}', [\App\Http\Controllers\Seller\OrderController::class, 'detail'])->name('seller.order.detail');
     Route::post('/export-excel', [ExportFileController::class, 'exportExcelOrder'])->name('order.manage.export.excel');
     Route::post('/export-excel-detail', [ExportFileController::class, 'exportExcelOrderDetail'])->name('order.manage.export.excel.detail');
+    // Statistic
+    Route::get('/statistic-access', [StatisticController::class, 'getStatisticAccess'])->name('admin.statistic.access');
+    Route::get('/statistic-shop', [StatisticShopController::class, 'getStatisticShops'])->name('shop.statistic.index');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {

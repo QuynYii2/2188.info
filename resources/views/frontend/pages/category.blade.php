@@ -168,14 +168,22 @@
                                                 <a href="{{route('detail_product.show', $product->id)}}">{{ $product->name }}</a>
                                             </div>
                                             <div class="card-price d-flex justify-content-between">
-                                                <div class="price-sale">
-                                                    <strong>${{ $product->price }}</strong>
-                                                </div>
-                                                <div class="price-cost">
-                                                    @if($product->old_price !=  null)
-                                                        <strike>${{ $product->old_price }}</strike>
-                                                    @endif
-                                                </div>
+                                                @if($product->price)
+                                                    <div class="card-price d-flex justify-content-between">
+                                                        @if($product->price != null)
+                                                            <div class="price-sale">
+                                                                <strong>${{$product->price}}</strong>
+                                                            </div>
+                                                            <div class="price-cost">
+                                                                <strike>${{$product->old_price}}</strike>
+                                                            </div>
+                                                        @else
+                                                            <div class="price-sale">
+                                                                <strong>${{$product->old_price}}</strong>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                @endif
                                             </div>
                                             <div class="card-bottom d-flex justify-content-between">
                                                 <div class="card-bottom--left">
@@ -230,14 +238,22 @@
                                             <a href="{{route('detail_product.show', $product->id)}}">{{ $product->name }}</a>
                                         </div>
                                         <div class="card-price d-flex">
-                                            <div class="price-sale mr-4">
-                                                <strong>${{ $product->price }}</strong>
-                                            </div>
-                                            <div class="price-cost">
-                                                @if($product->old_price != null)
-                                                    <strike>${{ $product->old_price }}</strike>
-                                                @endif
-                                            </div>
+                                            @if($product->price)
+                                                <div class="card-price d-flex justify-content-between">
+                                                    @if($product->price != null)
+                                                        <div class="price-sale">
+                                                            <strong>${{$product->price}}</strong>
+                                                        </div>
+                                                        <div class="price-cost">
+                                                            <strike>${{$product->old_price}}</strike>
+                                                        </div>
+                                                    @else
+                                                        <div class="price-sale">
+                                                            <strong>${{$product->old_price}}</strong>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            @endif
                                         </div>
                                         <div class="card-desc">
                                             {{ $product->description }}

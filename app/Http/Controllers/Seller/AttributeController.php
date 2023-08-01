@@ -22,7 +22,6 @@ class AttributeController extends Controller
         return view('backend.attributes.create');
     }
 
-
     public function store(Request $request)
     {
         try {

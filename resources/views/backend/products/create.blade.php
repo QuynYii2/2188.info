@@ -55,7 +55,7 @@
         display: block;
     }
 
-    /**/
+        /**/
     select {
         display: none !important;
     }
@@ -193,7 +193,7 @@
                         <div class="form-group">
                             <div class="name">Nhập giá khuyến mãi(nếu có)</div>
                             <input type="number" class="form-control" name="giakhuyenmai" id="name"
-                                   placeholder="Nhập giá khuyến mãi" min="1">
+                                    placeholder="Nhập giá khuyến mãi" min="1">
                         </div>
                         <div class="form-group">
                             <div class="name">Tất cả danh mục</div>
@@ -246,6 +246,19 @@
                         <div class="form-group">
                             <div class="form-group col-12 col-sm-12" id="list-img-thumbnail"></div>
                             <div class="form-group col-12 col-sm-12" id="list-img-gallery"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-group col-12 col-sm-12 pt-3">
+                                <label for="thumbnail">Ảnh đại diện:</label>
+                                <label class='__lk-fileInput'>
+                                    <span data-default='Choose file'>Choose file</span>
+                                    <input type="file" id="thumbnail" class="img-cfg"
+                                           name="thumbnail"
+                                           accept="image/*"
+                                           required>
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
@@ -398,7 +411,7 @@
                     dropdown.find('.current').html(selected.data('display-text') || selected.text());
                     options.each(function (j, o) {
                         var display = $(o).data('display-text') || '';
-                        dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+                        dropdown.find('ul').append('<li class="option attribute-create ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
                     });
                 }
             });

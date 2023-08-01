@@ -179,7 +179,7 @@
                             <input type="text" id="discount_price_by_rank" name="discount_price_by_rank"
                                    value="{{$totalSaleByRank}}" hidden="">
                             <input type="text" id="voucher_discount_price" value="0" hidden="">
-                            <input value="{{asset('/detail-product')}}" id="url">
+                            <input hidden value="{{asset('/detail-product')}}" id="url">
                         </div>
                     </form>
                 @endif
