@@ -154,7 +154,7 @@
         <section class="section-First pt-3 pb-3 container-fluid">
             <div class="row m-0">
                 <div class="section-First-left section-First-hd col-xl-2 col-12">
-                    <span class="content">SHOP BY CATEGORIES</span>
+                    <span class="content">{{ __('home.SHOP BY CATEGORIES') }}</span>
                     <hr>
                     <div class="row list">
                         @php
@@ -304,7 +304,7 @@
                  alt="">
         </section>
         <section class="section-Third section container-fluid">
-            <div class="content">Shop by Categories</div>
+            <div class="content">{{ __('home.SHOP BY CATEGORIES') }}</div>
             <div class="swiper Categories category-item">
                 <div class="swiper-wrapper">
                     @php
@@ -345,7 +345,7 @@
         <section class="section-Fourth section pt-3 pb-3 container-fluid">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="content">New Products</div>
+                    <div class="content">{{ __('home.New Products') }}</div>
                     <div class="swiper NewProducts">
                         <div class="swiper-wrapper">
                             @foreach($newProducts as $newProduct)
@@ -360,9 +360,7 @@
                                                 <div class="button-view">
                                                     <button type="button" class="btn view_modal" data-toggle="modal"
                                                             data-value="{{$newProduct}}" data-id="{{$productDetail}}"
-                                                            data-target="#exampleModal">Quick
-                                                        view
-                                                    </button>
+                                                            data-target="#exampleModal">{{ __('home.Quick view') }}</button>
                                                 </div>
                                                 <div class="text">
                                                     <div class="text-new">
@@ -415,8 +413,7 @@
                                             <div class="card-bottom d-flex justify-content-between">
                                                 <div class="card-bottom--left">
                                                     @if(Auth::check())
-                                                        <a href="{{route('detail_product.show', $newProduct->id)}}">Choose
-                                                            Options</a>
+                                                        <a href="{{route('detail_product.show', $newProduct->id)}}">{{ __('home.Choose Options') }}</a>
                                                     @else
                                                         <a class="check_url">Choose Options</a>
                                                     @endif
@@ -435,7 +432,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="content">Featured Products</div>
+                    <div class="content">{{ __('home.Featured Products') }}</div>
                     <div class="swiper FeaturedProducts">
                         <div class="swiper-wrapper">
                             @foreach($productFeatures as $productFeature)
@@ -451,9 +448,7 @@
                                                     <div class="button-view">
                                                         <button type="button" class="btn view_modal" data-toggle="modal"
                                                                 data-value="{{$product}}" data-id="{{$productDetail}}"
-                                                                data-target="#exampleModal">Quick
-                                                            view
-                                                        </button>
+                                                                data-target="#exampleModal">{{ __('home.Quick view') }}</button>
                                                     </div>
                                                     <div class="text">
                                                         <div class="text-new">
@@ -504,8 +499,7 @@
                                                 <div class="card-bottom d-flex justify-content-between">
                                                     <div class="card-bottom--left">
                                                         @if(Auth::check())
-                                                            <a href="{{route('detail_product.show', $product->id)}}">Choose
-                                                                Options</a>
+                                                            <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
                                                         @else
                                                             <a class="check_url">Choose Options</a>
                                                         @endif
@@ -601,7 +595,7 @@
         </div>
         <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
         <section class="section-Fifth section pt-3 pb-3 container-fluid">
-            <div class="content"><i class="fa-solid fa-fire-flame-curved"></i> Hot Deals</div>
+            <div class="content"><i class="fa-solid fa-fire-flame-curved"></i>{{ __('home.Hot Deals') }}</div>
             <div class="swiper HotDeals">
                 <div class="swiper-wrapper">
                     @foreach($productHots as $productHot)
@@ -617,9 +611,7 @@
                                             <div class="button-view">
                                                 <button type="button" class="btn view_modal" data-toggle="modal"
                                                         data-value="{{$hotProduct}}" data-id="{{$productDetail}}"
-                                                        data-target="#exampleModal">Quick
-                                                    view
-                                                </button>
+                                                        data-target="#exampleModal">{{ __('home.Quick view') }}</button>
                                             </div>
                                             <div class="text">
                                                 <div class="text-new">
@@ -672,10 +664,9 @@
                                         <div class="card-bottom d-flex justify-content-between">
                                             <div class="card-bottom--left">
                                                 @if(Auth::check())
-                                                    <a href="{{route('detail_product.show', $product->id)}}">Choose
-                                                        Options</a>
+                                                    <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
                                                 @else
-                                                    <a class="check_url">Choose Options</a>
+                                                    <a class="check_url">{{ __('home.Choose Options') }}</a>
                                                 @endif
                                             </div>
                                             <div class="card-bottom--right">
@@ -693,7 +684,7 @@
             </div>
         </section>
         <section class="section-Sixth section pt-3 pb-3 container-fluid">
-            <div class="content">Top Brands</div>
+            <div class="content">{{ __('home.Top Brands') }}</div>
             <div class="swiper TopBrands">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
@@ -777,9 +768,7 @@
                                                                     data-toggle="modal"
                                                                     data-value="{{$product}}"
                                                                     data-id="{{$productDetail}}"
-                                                                    data-target="#exampleModal">Quick
-                                                                view
-                                                            </button>
+                                                                    data-target="#exampleModal">{{ __('home.Quick view') }}</button>
                                                         </div>
                                                         <div class="text">
                                                             <div class="text-new">
@@ -828,8 +817,7 @@
                                                     <div class="card-bottom d-flex justify-content-between">
                                                         <div class="card-bottom--left">
                                                             @if(Auth::check())
-                                                                <a href="{{route('detail_product.show', $product->id)}}">Choose
-                                                                    Options</a>
+                                                                <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
                                                             @else
                                                                 <a class="check_url">Choose Options</a>
                                                             @endif
@@ -856,8 +844,7 @@
                                     <div class="brand-item d-flex justify-content-between">
                                         <div class="brand-item--all">
                                             @if(Auth::check())
-                                                <a href="{{ route('category.show', $cate->id) }}">View all
-                                                    categories</a>
+                                                <a href="{{ route('category.show', $cate->id) }}">{{ __('home.View all categories') }}</a>
                                             @else
                                                 <a class="check_url">View all categories</a>
                                             @endif
@@ -870,9 +857,9 @@
                                                 <div class="brand-item-text">
                                                     <div class="name">{{ $child->name }}</div>
                                                     @if(Auth::check())
-                                                        <a href="{{ route('category.show', $child->id) }}">Shop now</a>
+                                                        <a href="{{ route('category.show', $child->id) }}">{{ __('home.shop now') }}</a>
                                                     @else
-                                                        <a class="check_url">Shop now</a>
+                                                        <a class="check_url">{{ __('home.shop now') }}</a>
                                                     @endif
                                                 </div>
                                                 <div class="brand-item-img">
@@ -887,10 +874,9 @@
                                                 <div class="brand-item-text">
                                                     <div class="name">{{ $listChild[$i]->name }}</div>
                                                     @if(Auth::check())
-                                                        <a href="{{ route('category.show', $listChild[$i]->id) }}">Shop
-                                                            now</a>
+                                                        <a href="{{ route('category.show', $listChild[$i]->id) }}">{{ __('home.shop now') }}</a>
                                                     @else
-                                                        <a class="check_url">Shop now</a>
+                                                        <a class="check_url">{{ __('home.shop now') }}</a>
                                                     @endif
                                                 </div>
                                                 <div class="brand-item-img">
@@ -903,8 +889,7 @@
                                     <div class="brand-item d-flex justify-content-between">
                                         <div class="brand-item--all">
                                             @if(Auth::check())
-                                                <a href="{{ route('category.show', $cate->id) }}">View all
-                                                    categories</a>
+                                                <a href="{{ route('category.show', $cate->id) }}">{{ __('home.View all categories') }}</a>
                                             @else
                                                 <a class="check_url">View all categories</a>
                                             @endif
@@ -948,7 +933,7 @@
                     Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor porta.
                 </span>
                 </p>
-                <button onclick="myFunction()" id="myBtn">Show More</button>
+                <button onclick="myFunction()" id="myBtn">{{ __('home.Show More') }}</button>
             </div>
         </section>
         <section class="section-Eight">

@@ -71,14 +71,14 @@
                                         }
                                     @endphp
                                     <div class="item-text">
-                                        <a href="{{route('wish.list.index')}}" style="color: #fff; text-decoration: none">Wish Lists</a>
+                                        <a href="{{route('wish.list.index')}}" style="color: #fff; text-decoration: none">{{ __('home.Wish Lists') }}</a>
                                     </div>
                                 </button>
                             </div>
                             <div class="item">
                                 <button class="button" onclick="">
                                     <i class="item-icon fa-solid fa-gift"></i>
-                                    <div class="item-text">Gift Cards</div>
+                                    <div class="item-text">{{ __('home.Gift Cards') }}</div>
                                 </button>
                             </div>
                             <div class="item user">
@@ -89,10 +89,10 @@
                                     <div class="name">
                                         <a href="{{route('profile.show')}}">{{Auth::user()->name}}</a>
                                         <br> <br>
-                                        <a href="{{route('process.register.member')}}" class="">Đăng kí thành viên</a>
+                                        <a href="{{route('process.register.member')}}" class="">{{ __('home.Member registration') }}</a>
                                     </div>
                                     <hr>
-                                    <button class="signOut" href="#" onclick="logout()">Sign Out</button>
+                                    <button class="signOut" href="#" onclick="logout()">{{ __('home.Sign Out') }}</button>
                                 </div>
                                 <div class="hover-list">
                                     <div class="drop-item">
@@ -118,14 +118,14 @@
                                     @endphp
                                     @if($isAdmin == true)
                                         <div class="drop-item">
-                                            <a href="{{ route('seller.products.home') }}">Kênh người bán</a>
+                                            <a href="{{ route('seller.products.home') }}">{{ __('home.Seller channel') }}</a>
                                         </div>
                                     @endif
                                     <div class="drop-item">
-                                        <a href="{{route('product.index')}}">Shop</a>
+                                        <a href="{{route('product.index')}}">{{ __('home.Shop') }}</a>
                                     </div>
                                     <div class="drop-item">
-                                        <button onclick="logout()" href="">Đăng xuất</button>
+                                        <button onclick="logout()" href="">{{ __('home.Log out') }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -147,7 +147,7 @@
                                 <div class="total_shop">{{count($cartViews)}}</div>
                                 <div class="shop-menu" id="closeShop">
                                     <div class="d-flex pb-4">
-                                        <span class="cart mr-4">REVIEW YOUR CART</span>
+                                        <span class="cart mr-4">{{ __('home.REVIEW YOUR CART') }}</span>
                                         <span>{{count($cartViews)}} item</span>
                                     </div>
                                     <div class="shop-list">
@@ -157,7 +157,7 @@
                                                 ['status', \App\Enums\CartStatus::WAIT_ORDER]])->get();
                                         @endphp
                                         @if ($cartItems->isEmpty())
-                                            <p>Chưa có sản phẩm trong giỏ hàng.</p>
+                                            <p>{{ __('home.There are no products in the cart') }}</p>
                                         @else
                                             @foreach ($cartItems as $cartItem)
                                                 @php
@@ -292,7 +292,7 @@
                         <div class="header-bottom-left--item header_bottom--one col-2 pl-0">
                             <div class="header_bottom--one--hd">
                                 <i class="fa-solid fa-bars"></i>
-                                Category
+                                {{ __('home.Category') }}
                                 <i class="fa-solid fa-angle-down"></i>
                             </div>
                             @php
@@ -421,45 +421,45 @@
                         </div>
                         <div class="header-bottom-left--item">
                             <a href="">
-                                <span class="text">About Us</span>
+                                <span class="text">{{ __('home.About Us') }}</span>
                             </a>
                         </div>
                         <div class="header-bottom-left--item">
                             <a href="">
-                                <span class="text">Lookbook</span>
+                                <span class="text">{{ __('home.Lookbook') }}</span>
                             </a>
 
                         </div>
                         <div class="header-bottom-left--item">
                             <a href="">
-                                <span class="text">Buy Superkart</span>
+                                <span class="text">{{ __('home.Buy Superkart') }}</span>
                             </a>
                         </div>
                         <div class="header-bottom-left--item">
                             <a href="">
-                                <span class="text">Theme FAQs</span>
+                                <span class="text">{{ __('home.Theme FAQs') }}</span>
                             </a>
                         </div>
                         <div class="header-bottom-left--item">
                             <a href="">
-                                <span class="text">Shipping & Returns</span>
+                                <span class="text">{{ __('home.Shipping & Returns') }}</span>
                             </a>
                         </div>
                         <div class="header-bottom-left--item">
                             <a href="">
-                                <span class="text">Contact Us</span>
+                                <span class="text">{{ __('home.Contact Us') }}</span>
                             </a>
                         </div>
                         <div class="header-bottom-left--item">
                             <a href="">
-                                <span class="text">Blog</span>
+                                <span class="text">{{ __('home.Blog') }}</span>
                             </a>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-2 header-bottom-right d-flex align-items-center justify-content-end">
                         <div class="help">
                             <i class="fa-solid fa-headset"></i>
-                            <span>Help</span>
+                            <span>{{ __('home.Help') }}</span>
                         </div>
 
                         <div class="lan-selector">
