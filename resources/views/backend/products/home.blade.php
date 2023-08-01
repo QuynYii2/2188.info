@@ -6,6 +6,7 @@
     $isAdmin = (new \App\Http\Controllers\Frontend\HomeController())->checkAdmin();
 @endphp
 <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.37.3/apexcharts.min.js"></script>
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.2.2/echarts.min.js"></script>--}}
 @section('content')
     <div class="container">
         @if($isAdmin == true)
@@ -13,8 +14,23 @@
                 <div class="title">Báo cáo thống kê</div>
                 <div class="title-small">Toàn bộ thống kê chi tiết</div>
                 <div class="card-body">
+                    <h3 class="text-center mt-3 mb-3">Lưu lượng người truy cập </h3>
                     <!-- Line Chart -->
                     <div id="reportsChart"></div>
+                    <!-- End Line Chart -->
+                </div>
+
+                <div class="card-body">
+                    <h3 class="text-center mt-3 mb-3">Tổng số doanh thu</h3>
+                    <!-- Line Chart -->
+                    <div id="revenueChart"></div>
+                    <!-- End Line Chart -->
+                </div>
+
+                <div class="card-body">
+                    <h3 class="text-center mt-3 mb-3">Tỉ lệ khách hàng</h3>
+                    <!-- Line Chart -->
+                    <div id="customerChart"></div>
                     <!-- End Line Chart -->
                 </div>
             </div>
@@ -230,6 +246,7 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
     <script>
         function getAllStatisticAccess() {
             $.ajax({
@@ -256,16 +273,7 @@
                     series: [{
                         name: 'Access',
                         data: data,
-                    }
-                        , {
-                            name: 'Revenue',
-                            data: [11, 32, 45, 32, 34, 52, 41]
-                        }
-                        , {
-                            name: 'Customers',
-                            data: [15, 11, 32, 18, 9, 24, 11]
-                        }
-                    ],
+                    }],
                     chart: {
                         height: 350,
                         type: 'area',
@@ -276,7 +284,7 @@
                     markers: {
                         size: 4
                     },
-                    colors: ['#4154f1', '#2eca6a', '#ff771d'],
+                    colors: ['#4154f1'],
                     fill: {
                         type: "gradient",
                         gradient: {
@@ -302,6 +310,119 @@
                             format: 'dd/MM/yy HH:mm'
                         },
                     }
+                }).render();
+            });
+        }
+
+        function getAllStatisticRevenue() {
+            $.ajax({
+                url: '{{route('admin.statistic.revenues')}}',
+                method: 'GET',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (response) {
+                    var data = response[0];
+                    getRevenueChar(data[0], data[1])
+                },
+                error: function (exception) {
+                    console.log(exception)
+                }
+            });
+        }
+
+        getAllStatisticRevenue();
+
+        function getRevenueChar(data, datatime) {
+            document.addEventListener("DOMContentLoaded", () => {
+                new ApexCharts(document.querySelector("#revenueChart"), {
+                    series: [{
+                        name: 'Net Profit',
+                        data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+                    }, {
+                        name: 'Revenue',
+                        data: data
+                    }, {
+                        name: 'Free Cash Flow',
+                        data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
+                    }],
+                    chart: {
+                        type: 'bar',
+                        height: 350
+                    },
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            columnWidth: '55%',
+                            endingShape: 'rounded'
+                        },
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        show: true,
+                        width: 2,
+                        colors: ['transparent']
+                    },
+                    xaxis: {
+                        categories: datatime,
+                    },
+                    yaxis: {
+                        title: {
+                            text: '$ (thousands)'
+                        }
+                    },
+                    fill: {
+                        opacity: 1
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function (val) {
+                                return "$ " + val + " thousands"
+                            }
+                        }
+                    }
+                }).render();
+            });
+        }
+
+
+        function getAllStatisticUser() {
+            $.ajax({
+                url: '{{route('admin.statistic.users')}}',
+                method: 'GET',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (response) {
+                    let customerChart = [];
+                    customerChart.push(response[0], response[1])
+                    localStorage.setItem('item', customerChart);
+                },
+                error: function (exception) {
+                    console.log(exception)
+                }
+            });
+        }
+
+        getAllStatisticUser();
+
+        var customerChart = localStorage.getItem('item');
+        getCustomerChart(customerChart);
+
+        function getCustomerChart(customerChart) {
+            document.addEventListener("DOMContentLoaded", () => {
+                new ApexCharts(document.querySelector("#customerChart"), {
+                    series: [customerChart],
+                    chart: {
+                        height: 350,
+                        type: 'pie',
+                        toolbar: {
+                            show: true
+                        }
+                    },
+                    labels: ['Buyer', 'Seller']
                 }).render();
             });
         }
@@ -344,4 +465,217 @@
 
         getAllStatisticShops();
     </script>
+
+    {{--    <script>--}}
+    {{--        function getAllStatisticAccess() {--}}
+    {{--            $.ajax({--}}
+    {{--                url: '{{route('admin.statistic.access')}}',--}}
+    {{--                method: 'GET',--}}
+    {{--                data: {--}}
+    {{--                    _token: '{{ csrf_token() }}'--}}
+    {{--                },--}}
+    {{--                success: function (response) {--}}
+    {{--                    var data = response[0];--}}
+    {{--                    getChar(data[0], data[1])--}}
+    {{--                },--}}
+    {{--                error: function (exception) {--}}
+    {{--                    console.log(exception)--}}
+    {{--                }--}}
+    {{--            });--}}
+    {{--        }--}}
+
+    {{--        getAllStatisticAccess();--}}
+
+    {{--        function getAllStatisticRevenue() {--}}
+    {{--            $.ajax({--}}
+    {{--                url: '{{route('admin.statistic.revenues')}}',--}}
+    {{--                method: 'GET',--}}
+    {{--                data: {--}}
+    {{--                    _token: '{{ csrf_token() }}'--}}
+    {{--                },--}}
+    {{--                success: function (response) {--}}
+    {{--                    var data = response[0];--}}
+    {{--                    getRevenueChar(data[0], data[1])--}}
+    {{--                },--}}
+    {{--                error: function (exception) {--}}
+    {{--                    console.log(exception)--}}
+    {{--                }--}}
+    {{--            });--}}
+    {{--        }--}}
+
+    {{--        getAllStatisticRevenue();--}}
+
+    {{--        function getAllStatisticUser() {--}}
+    {{--            $.ajax({--}}
+    {{--                url: '{{route('admin.statistic.users')}}',--}}
+    {{--                method: 'GET',--}}
+    {{--                data: {--}}
+    {{--                    _token: '{{ csrf_token() }}'--}}
+    {{--                },--}}
+    {{--                success: function (response) {--}}
+    {{--                    getCustomerChart(response)--}}
+    {{--                },--}}
+    {{--                error: function (exception) {--}}
+    {{--                    console.log(exception)--}}
+    {{--                }--}}
+    {{--            });--}}
+    {{--        }--}}
+
+    {{--        getAllStatisticUser();--}}
+
+    {{--        function getChar(data, datatime) {--}}
+    {{--            document.addEventListener("DOMContentLoaded", () => {--}}
+    {{--                new ApexCharts(document.querySelector("#reportsChart"), {--}}
+    {{--                    series: [{--}}
+    {{--                        name: 'Access',--}}
+    {{--                        data: data,--}}
+    {{--                    }],--}}
+    {{--                    chart: {--}}
+    {{--                        height: 350,--}}
+    {{--                        type: 'area',--}}
+    {{--                        toolbar: {--}}
+    {{--                            show: false--}}
+    {{--                        },--}}
+    {{--                    },--}}
+    {{--                    markers: {--}}
+    {{--                        size: 4--}}
+    {{--                    },--}}
+    {{--                    colors: ['#4154f1'],--}}
+    {{--                    fill: {--}}
+    {{--                        type: "gradient",--}}
+    {{--                        gradient: {--}}
+    {{--                            shadeIntensity: 1,--}}
+    {{--                            opacityFrom: 0.3,--}}
+    {{--                            opacityTo: 0.4,--}}
+    {{--                            stops: [0, 90, 100]--}}
+    {{--                        }--}}
+    {{--                    },--}}
+    {{--                    dataLabels: {--}}
+    {{--                        enabled: false--}}
+    {{--                    },--}}
+    {{--                    stroke: {--}}
+    {{--                        curve: 'smooth',--}}
+    {{--                        width: 2--}}
+    {{--                    },--}}
+    {{--                    xaxis: {--}}
+    {{--                        type: 'datetime',--}}
+    {{--                        categories: datatime--}}
+    {{--                    },--}}
+    {{--                    tooltip: {--}}
+    {{--                        x: {--}}
+    {{--                            format: 'dd/MM/yy HH:mm'--}}
+    {{--                        },--}}
+    {{--                    }--}}
+    {{--                }).render();--}}
+    {{--            });--}}
+    {{--        }--}}
+
+    {{--        function getRevenueChar(data, datatime) {--}}
+    {{--            document.addEventListener("DOMContentLoaded", () => {--}}
+    {{--                new ApexCharts(document.querySelector("#revenueChart"), {--}}
+    {{--                    series: [{--}}
+    {{--                        name: 'Net Profit',--}}
+    {{--                        data: [44, 55, 57, 56, 61, 58, 63, 60, 66]--}}
+    {{--                    }, {--}}
+    {{--                        name: 'Revenue',--}}
+    {{--                        data: data--}}
+    {{--                    }, {--}}
+    {{--                        name: 'Free Cash Flow',--}}
+    {{--                        data: [35, 41, 36, 26, 45, 48, 52, 53, 41]--}}
+    {{--                    }],--}}
+    {{--                    chart: {--}}
+    {{--                        type: 'bar',--}}
+    {{--                        height: 350--}}
+    {{--                    },--}}
+    {{--                    plotOptions: {--}}
+    {{--                        bar: {--}}
+    {{--                            horizontal: false,--}}
+    {{--                            columnWidth: '55%',--}}
+    {{--                            endingShape: 'rounded'--}}
+    {{--                        },--}}
+    {{--                    },--}}
+    {{--                    dataLabels: {--}}
+    {{--                        enabled: false--}}
+    {{--                    },--}}
+    {{--                    stroke: {--}}
+    {{--                        show: true,--}}
+    {{--                        width: 2,--}}
+    {{--                        colors: ['transparent']--}}
+    {{--                    },--}}
+    {{--                    xaxis: {--}}
+    {{--                        categories: datatime,--}}
+    {{--                    },--}}
+    {{--                    yaxis: {--}}
+    {{--                        title: {--}}
+    {{--                            text: '$ (thousands)'--}}
+    {{--                        }--}}
+    {{--                    },--}}
+    {{--                    fill: {--}}
+    {{--                        opacity: 1--}}
+    {{--                    },--}}
+    {{--                    tooltip: {--}}
+    {{--                        y: {--}}
+    {{--                            formatter: function (val) {--}}
+    {{--                                return "$ " + val + " thousands"--}}
+    {{--                            }--}}
+    {{--                        }--}}
+    {{--                    }--}}
+    {{--                }).render();--}}
+    {{--            });--}}
+    {{--        }--}}
+
+    {{--        function getCustomerChart(data) {--}}
+    {{--            document.addEventListener("DOMContentLoaded", () => {--}}
+    {{--                new ApexCharts(document.querySelector("#customerChart"), {--}}
+    {{--                    series: data,--}}
+    {{--                    chart: {--}}
+    {{--                        height: 350,--}}
+    {{--                        type: 'pie',--}}
+    {{--                        toolbar: {--}}
+    {{--                            show: true--}}
+    {{--                        }--}}
+    {{--                    },--}}
+    {{--                    labels: ['Buyer', 'Seller']--}}
+    {{--                }).render();--}}
+    {{--            });--}}
+    {{--        }--}}
+
+    {{--        function getAllStatisticShops() {--}}
+    {{--            var access = document.getElementById('countAccess')--}}
+    {{--            var accessPercent = document.getElementById('countAccessPercent')--}}
+    {{--            var views = document.getElementById('countViews')--}}
+    {{--            var viewPercent = document.getElementById('countViewPercent')--}}
+    {{--            var orders = document.getElementById('countOrders')--}}
+    {{--            var orderPercent = document.getElementById('countOrderPercent')--}}
+
+    {{--            var listTodoRender = $('#listTodoRender');--}}
+    {{--            $.ajax({--}}
+    {{--                url: '{{route('shop.statistic.index')}}',--}}
+    {{--                method: 'GET',--}}
+    {{--                data: {--}}
+    {{--                    _token: '{{ csrf_token() }}'--}}
+    {{--                },--}}
+    {{--                success: function (response) {--}}
+    {{--                    // listTodoRender.append(response);--}}
+
+    {{--                    var nowShop = response[0][0];--}}
+    {{--                    var perShop = response[1][1];--}}
+
+    {{--                    access.innerText = nowShop[0];--}}
+    {{--                    views.innerText = nowShop[1];--}}
+    {{--                    orders.innerText = nowShop[2];--}}
+
+    {{--                    accessPercent.innerText = (parseFloat(nowShop[0]) / parseFloat(perShop[0]) * 100).toFixed(2)--}}
+    {{--                    viewPercent.innerText = (parseFloat(nowShop[1]) / parseFloat(perShop[1]) * 100).toFixed(2)--}}
+    {{--                    orderPercent.innerText = (parseFloat(nowShop[2]) / parseFloat(perShop[2]) * 100).toFixed(2)--}}
+
+    {{--                },--}}
+    {{--                error: function (exception) {--}}
+    {{--                    console.log(exception)--}}
+    {{--                }--}}
+    {{--            });--}}
+    {{--        }--}}
+
+    {{--        getAllStatisticShops();--}}
+    {{--    </script>--}}
 @endsection
