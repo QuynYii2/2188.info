@@ -25,13 +25,19 @@ class CategoryController extends Controller
     {
         (new HomeController())->getLocale($request);
         $categories = Category::get()->toTree();
-//        $listProduct = Product::whereIn('list_category',$id)->paginate(9);
-        $listProduct = Product::whereRaw("FIND_IN_SET(?, list_category)", [$id])->paginate(9);
         $listPayment = PaymentMethod::all();
         $listTransport = TransportMethod::all();
         $priceProductOfCategory = Product::selectRaw('MAX(price) AS maxPrice, MIN(price) AS minPrice')
-            ->where('category_id', $id)
+            ->where([['products.status', '=', ProductStatus::ACTIVE]])
+            ->whereRaw("FIND_IN_SET(?, products.list_category)", [$id])
             ->first();
+        if ($priceProductOfCategory->maxPrice === null) {
+            $priceProductOfCategory->maxPrice = 1000;
+        }
+        if ($priceProductOfCategory->minPrice === null) {
+            $priceProductOfCategory->minPrice = 0;
+        }
+        $listProduct = [];
         return view('frontend/pages/category', compact('categories', 'listProduct', 'listPayment', 'listTransport', 'priceProductOfCategory'));
     }
 
@@ -45,8 +51,9 @@ class CategoryController extends Controller
         $maxPrice = $request->data['maxPrice'];
         $isSale = $request->data['isSale'];
 
-        $query = Product::select('products.*', 'users.payment_method', 'users.transport_method', )
-            ->where([['category_id', '=', $id], ['products.status', '=', ProductStatus::ACTIVE]])
+        $query = Product::select('products.*', 'users.payment_method', 'users.transport_method' )
+            ->where([ ['products.status', '=', ProductStatus::ACTIVE]])
+            ->whereRaw("FIND_IN_SET(?, products.list_category)", [$id])
             ->join('users', 'products.user_id', '=', 'users.id');
 
         $selectedPaymentsArray = [];
