@@ -101,7 +101,9 @@
 
         @php
             if (Auth::check()){
-                $isMember = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                $isMember = \App\Models\MemberRegisterPersonSource::where([
+                                    ['email', Auth::user()->email],
+                                    ['check', 1]])->first();
                 $member = \App\Models\MemberRegisterInfo::find($isMember->member_id);
                 $isProduction = false;
                 if ($member->member == \App\Enums\RegisterMember::PRODUCTION || $member->member == \App\Enums\RegisterMember::POWER_PRODUCTION){
@@ -118,7 +120,9 @@
 
         @php
             if (Auth::check()){
-                $isMember = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                $isMember = \App\Models\MemberRegisterPersonSource::where([
+                                    ['email', Auth::user()->email],
+                                    ['check', 1]])->first();
                 $member = \App\Models\MemberRegisterInfo::find($isMember->member_id);
                 $isPVendor = false;
                 if ($member->member != \App\Enums\RegisterMember::VENDOR){
