@@ -348,7 +348,7 @@
                         </div>
                         <div id="renderInputAttribute">
                         </div>
-                        <a id="btnSaveAttribute" class="btn btn-success mb-1 mt-1">SaveAttribute11</a>
+                        <a id="btnSaveAttribute" class="btn btn-success mb-3 mt-3" style="display:none;">SaveAttribute</a>
                         <input type="text" hidden="" name="isNew" id="isNew" value="0">
 
                     </div>
@@ -937,15 +937,30 @@
         });
     </script>
     <script>
-        ClassicEditor
-            .create(document.querySelector('#description'))
-            .catch(error => {
-                console.error(error);
-            });
-        ClassicEditor
-            .create(document.querySelector('#description-detail'))
-            .catch(error => {
-                console.error(error);
-            });
+        let desc = document.querySelectorAll('.description');
+        for (let i = 0; i < desc.length; i++) {
+            ClassicEditor
+                .create(desc[i])
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    </script>
+    <script>
+        $('.property-attribute').on('change', function () {
+            var tests = document.getElementsByClassName('property-attribute');
+            var btn = document.getElementById('btnSaveAttribute');
+            var isValid = false;
+            for(let i = 0; i<tests.length; i++){
+                if(tests[i].checked){
+                    isValid = true;
+                }
+            }
+            if(isValid == true){
+                btn.style.display = 'block';
+            } else {
+                btn.style.display = 'none';
+            }
+        })
     </script>
 @endsection

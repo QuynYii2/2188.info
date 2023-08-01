@@ -24,6 +24,31 @@ class SettingShopController extends Controller
         return view('backend/shop_setting/index', compact('listPayment', 'listTransport', 'list'));
     }
 
+    public function profileShop()
+    {
+        $user = Auth::user();
+        return view('backend/shop_profile/index', compact('user'));
+    }
+
+    public function saveProfileShop(Request $request)
+    {
+        $user = Auth::user();
+        $user->name = $request->input('name');
+        $user->region = $request->input('region');
+        $user->rental_code = $request->input('rental_code');
+        $user->product_name = $request->input('product_name');
+        $user->product_code = $request->input('product_code');
+        $user->industry = $request->input('industry');
+        if ($request->hasFile('image')) {
+            $gallery = $request->file('image');
+            $galleryPath = $gallery->store('images', 'public');
+            $user->image = $galleryPath;
+        }
+
+        $user->save();
+        return view('backend/shop_profile/index', compact('user'));
+    }
+
     public function savePaymentMethod(Request $request)
     {
         $user = Auth::user();
@@ -53,7 +78,7 @@ class SettingShopController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -64,7 +89,7 @@ class SettingShopController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -75,7 +100,7 @@ class SettingShopController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -86,8 +111,8 @@ class SettingShopController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -98,7 +123,7 @@ class SettingShopController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

@@ -181,7 +181,7 @@
                             @endforeach
                         </div>
                         <div id="renderInputAttribute" class="row"></div>
-                        <a id="btnSaveAttribute" class="btn btn-success mt-4" style="color: white">SaveAttribute</a>
+                        <a id="btnSaveAttribute" class="btn btn-success mt-4 mb-5" style="color: white; display: none">SaveAttribute</a>
                     </div>
                     <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
                         <div class="form-group">
@@ -751,6 +751,23 @@
         }
 
 
+    </script>
+    <script>
+        $('.property-attribute').on('change', function () {
+            var tests = document.getElementsByClassName('property-attribute');
+            var btn = document.getElementById('btnSaveAttribute');
+            var isValid = false;
+            for(let i = 0; i<tests.length; i++){
+                if(tests[i].checked){
+                    isValid = true;
+                }
+            }
+            if(isValid == true){
+                btn.style.display = 'block';
+            } else {
+                btn.style.display = 'none';
+            }
+        })
     </script>
 
 @endsection

@@ -210,7 +210,7 @@
                     @endif
                     <li>
                     <li><a class="sidebarUrl" href="{{route('seller.evaluates.index')}}">Quản lí bình luận</a></li>
-                    <li><a class="sidebarUrl" href="#">Hồ Sơ Shop</a>
+                    <li><a class="sidebarUrl" href="{{ route('profile.shop.index') }}">Hồ Sơ Shop</a>
                     </li>
                     <li><a class="sidebarUrl" href="#">Trang Trí Shop</a>
                     </li>

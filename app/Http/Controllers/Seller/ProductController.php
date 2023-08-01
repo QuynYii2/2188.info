@@ -75,7 +75,7 @@ class ProductController extends Controller
             ->get();
         $productPause = DB::table('products')
             ->join('storage_products', 'storage_products.id', '=', 'products.storage_id')
-            ->where([['products.user_id', '=', Auth::user()->id], ['storage_products.quantity', '=', 0]])
+            ->where([['products.user_id', '=', Auth::user()->id], ['storage_products.quantity', '=', 0], ['storage_products.create_by', '=',Auth::user()->id]])
             ->select('products.*')
             ->get();
         $promotions = Promotion::where([['user_id', Auth::user()->id], ['status', PromotionStatus::INACTIVE]])->get();
@@ -347,7 +347,7 @@ class ProductController extends Controller
 
     public function handleGallery($input)
     {
-        $pattern = '/\/storage\/([^,"]+),?/'; // Modified regex pattern
+        $pattern = '/\/storage\/([^,"]+),?/';
         $matches = array();
         $arrResult = array();
         foreach ($input as $item) {
