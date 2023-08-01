@@ -186,9 +186,9 @@
             <div class="column-xs-12">
                 <nav>
                     <ol class="breadcrumb-list">
-                        <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Household Plants</a></li>
-                        <li class="breadcrumb-item active">Bonsai</li>
+                        <li class="breadcrumb-item"><a href="{{route('home')}}">{{ __('home.Home') }}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('home.Household Plants') }}</a></li>
+                        <li class="breadcrumb-item active">{{ __('home.Bonsai') }}</li>
                     </ol>
                 </nav>
             </div>
@@ -280,7 +280,7 @@
 
                     </div>
                     <div class="count__wrapper count__wrapper--ml mt-3">
-                        <label for="qty">Còn lại: <span id="productQuantity">{{$product->qty}}</span></label>
+                        <label for="qty">{{ __('home.remaining') }}<span id="productQuantity">{{$product->qty}}</span></label>
 
                     </div>
                     <div class="d-flex buy justify-content-around">
@@ -292,9 +292,9 @@
                             </div>
                         </div>
                         @if(!$attributes->isEmpty())
-                            <button type="submit" id="btnAddCard" class="add-to-cart">Add To Cart</button>
+                            <button type="submit" id="btnAddCard" class="add-to-cart">{{ __('home.Add To Cart') }}</button>
                         @else
-                            <button type="submit" class="add-to-cart">Add To Cart</button>
+                            <button type="submit" class="add-to-cart">{{ __('home.Add To Cart') }}</button>
                         @endif
                         <button class="share"><i class="fa-regular fa-heart"></i></button>
                         <button class="share"><i class="fa-solid fa-share-nodes"></i></button>
@@ -481,7 +481,7 @@
         </div>
     </div>
     <section class="section-Fifth section pt-3 pb-3 container-fluid">
-        <div class="content">Related Products</div>
+        <div class="content">{{ __('home.Related Products') }}</div>
         <div class="swiper HotDeals">
             <div class="swiper-wrapper">
                 @php
@@ -498,18 +498,12 @@
                                 <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                      alt="">
                                 <div class="button-view">
-                                    <button>Quick view</button>
+                                    <button>{{ __('home.Quick view') }}</button>
                                 </div>
                                 <div class="text">
                                     <div class="text-sale">
                                         Hot
                                     </div>
-                                    {{--                                            <div class="text-new">--}}
-                                    {{--                                                New--}}
-                                    {{--                                            </div>--}}
-                                    <!-- <div class="text-bundle">
-                                                Bundle
-                                            </div> -->
                                 </div>
                             </div>
                             <div class="item-body">
@@ -547,9 +541,9 @@
                                 <div class="card-bottom d-flex justify-content-between">
                                     <div class="card-bottom--left">
                                         @if(Auth::check())
-                                            <a href="{{route('detail_product.show', $product->id)}}">Choose Options</a>
+                                            <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
                                         @else
-                                            <a class="check_url">Choose Options</a>
+                                            <a class="check_url">{{ __('home.Choose Options') }}</a>
                                         @endif
                                     </div>
                                     <div class="card-bottom--right">
@@ -566,7 +560,7 @@
         </div>
     </section>
     <section class="section-Fifth section pt-3 pb-3 container-fluid">
-        <div class="content">Customers Also Viewed</div>
+        <div class="content">{{ __('home.Customers Also Viewed') }}</div>
         <div class="swiper HotDeals">
             <div class="swiper-wrapper">
                 @php
@@ -583,7 +577,7 @@
                                 <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                      alt="">
                                 <div class="button-view">
-                                    <button>Quick view</button>
+                                    <button>{{ __('home.Quick view') }}</button>
                                 </div>
                                 <div class="text">
                                     <div class="text-sale">
@@ -632,9 +626,9 @@
                                 <div class="card-bottom d-flex justify-content-between">
                                     <div class="card-bottom--left">
                                         @if(Auth::check())
-                                            <a href="{{route('detail_product.show', $product->id)}}">Choose Options</a>
+                                            <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
                                         @else
-                                            <a class="check_url">Choose Options</a>
+                                            <a class="check_url">{{ __('home.Choose Options') }}</a>
                                         @endif
                                     </div>
                                     <div class="card-bottom--right">

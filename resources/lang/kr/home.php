@@ -257,6 +257,74 @@ return [
     'Wish Lists'=>'위시리스트',
     'Help'=>'돕다',
     'upgrade'=>'업그레이드',
+    'Seller channel'=>'판매자 채널',
+    'Shop'=>'가게',
+    'Log out'=>'로그 아웃',
+    'Category'=>'범주',
+    'About Us'=>'회사 소개',
+    'Buy Superkart'=>'쇼핑',
+    'Theme FAQs'=>'자주 묻는 질문',
+    'SHOP BY CATEGORIES'=>'카테고리별 쇼핑',
+    'New Products' => '신제품',
+    'Hot Deals' => '핫딜',
+    'Top Brands' => '탑 브랜드',
+    'SUBSCRIBE TO OUR NEWSLETTER' => '뉴스레터 구독',
+    'CATEGORIES' => '카테고리',
+    'FURTHER INFO' => '추가 정보',
+    'BRANDS' => '브랜드',
+    'CUSTOMER SERVICE' => '고객 서비스',
+    'Get the latest updates on new products and upcoming sales' => '신제품 및 예정된 판매에 대한 최신 업데이트를 받으십시오.',
+    'Choose Options' => '옵션 선택',
+    'Sign Out' => '로그아웃',
+    'Member registration' => '회원가입',
+    'Featured Products' => '주요 제품',
+    'Show More' => '자세히보기',
+    'View all categories' => '모든 카테고리 보기',
+    'shop now' => '지금 쇼핑',
+    'Wishlist' => '위시리스트',
+    'REVIEW YOUR CART' => '장바구니 검토',
+    'There are no products in the cart' => '장바구니에 상품이 없습니다',
+    'PAYMENT METHODS' => '지불 방법',
+    'SHIPPING METHODS' => '배송 방법',
+    'Products on sale' => '판매 중인 제품',
+    'Products by origin' => '원산지별 제품',
+    'ORIGIN' => '기원',
+    'PRICE' => '가격',
+    'Sort By' => '정렬 기준',
+    'Show' => '보여주다',
+    '10 products per page' => '페이지당 10개 제품',
+    '20 products per page' => '페이지당 20개 제품',
+    '30 products per page' => '페이지당 30개 제품',
+    '40 products per page' => '페이지당 40개 제품',
+    '50 products per page' => '페이지당 50개 제품',
+    'Newest Items' => '최신 항목',
+    'Name: A to Z' => '이름: A부터 Z까지',
+    'Name: Z to A' => '이름: Z에서 A로',
+    'Price: Ascending' => '가격: 오름차순',
+    'Price: Descending' => '가격: 내림차순',
+    'Jump to' => '이동',
+    'Electronics' => '전자제품',
+    'Home' => '집',
+    'Min' => '분',
+    'Max' => '최대',
+    'Related Products' => '관련 상품',
+    'Add To Cart' => '장바구니에 담기',
+    'Customers Also Viewed' => '고객도 조회',
+    'remaining' => '남은:',
+    'Household Plants' => '가정용 식물',
+    'Bonsai' => '분재',
+    'Quick view' => '퀵뷰',
+
+
+
+
+
+
+
+
+
+
+
 
 
 
