@@ -110,13 +110,13 @@
                                    required>
                         </div>
                         <div class="form-group">
-                            <label for="description">Mô tả ngắn</label>
-                            <textarea id="description" class="form-control description" name="description"
-                                      rows="5">{{$product->description}}</textarea>
+                            <label for="short_description">Mô tả ngắn</label>
+                            <textarea id="short_description" class="form-control short_description" name="short_description"
+                                      rows="5">{{$product->short_description}}</textarea>
                         </div>
                         <div class="form-group">
-                            <label for="description-detail">Mô tả chi tiết</label>
-                            <textarea id="description-detail" class="form-control description" name="description-detail"
+                            <label for="description">Mô tả chi tiết</label>
+                            <textarea id="description" class="form-control description" name="description"
                                       rows="5">{{$product->description}}</textarea>
                         </div>
                         <input id="inputHotProduct" type="text" class="d-none" value="{{ $product->hot }}">
@@ -168,13 +168,13 @@
                         </div>
 
 
+                        <label class="control-label text-warning">Thông số sản phẩm</label>
                         <div id="removeInputAttribute " class="form-group row">
                             @if(!$productDetails->isEmpty())
                                 @if(count($productDetails)>1)
                                     @foreach($productDetails as $productDetail)
                                         @if($productDetail->variation && $productDetail->variation != 0)
                                             <div class="form-group">
-                                                <label class="control-label text-warning">Thông số sản phẩm</label>
                                                 @php
                                                     $variable = $productDetail->variation;
                                                     $arrayVariation = explode(',', $variable);
@@ -230,10 +230,12 @@
                                                 @endif
                                             </div>
                                         @endif
+                                    <div>
                                         <input hidden="" name="id{{$loop->index+1}}"
                                                value="{{$productDetail->id}}">
                                         <a class="btnRemove btn btn-danger mb-3"
                                            data-value="{{$productDetail->id}}">Remove</a>
+                                    </div>
                                     @endforeach
                                     <input hidden="" name="count"
                                            value="{{count($productDetails)}}">
@@ -288,7 +290,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="row">
+                        <div class="row pl-2">
                             @foreach($attributes as $attribute)
                                 @php
                                     $properties = DB::table('properties')->where([['status', PropertiStatus::ACTIVE], ['attribute_id', $attribute->id]])->get();
@@ -442,8 +444,7 @@
                                     <span data-default='Choose file'>Choose file</span>
                                     <input type="file" id="thumbnail" class="img-cfg"
                                            name="thumbnail"
-                                           accept="image/*"
-                                           required>
+                                           accept="image/*">
                                 </label>
                             </div>
                             <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="" width="60px" height="60px">

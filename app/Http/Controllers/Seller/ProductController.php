@@ -186,6 +186,7 @@ class ProductController extends Controller
             $product->storage_id = $request->input('storage-id');
             $product->name = $request->input('name');
             $product->description = $request->input('description');
+            $product->short_description = $request->input('short_description');
             $product->product_code = $request->input('product_code');
             $product->qty = $qty_in_storage;
             $product->category_id = $request->input('category_id');
@@ -564,6 +565,7 @@ class ProductController extends Controller
             'storage_id' => $product->storage_id,
             'name' => $product->name,
             'description' => $product->description,
+            'short_description' =>  $product->short_description,
             'product_code' => $product->product_code,
             'qty' => $product->qty,
             'category_id' => $product->category_id,

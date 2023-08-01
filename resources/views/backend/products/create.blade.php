@@ -124,13 +124,13 @@
                                    placeholder="Nhập mã sản phẩm" required>
                         </div>
                         <div class="form-group">
-                            <label for="description">Mô tả ngắn</label>
-                            <textarea id="description" class="form-control description" name="description"
+                            <label for="short_description">Mô tả ngắn</label>
+                            <textarea id="short_description" class="form-control short_description" name="short_description"
                                       rows="5"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="description-detail">Mô tả chi tiết</label>
-                            <textarea id="description-detail" class="form-control description" name="description-detail"
+                            <label for="description">Mô tả chi tiết</label>
+                            <textarea id="description" class="form-control description" name="description"
                                       rows="5"></textarea>
                         </div>
                         <div class="form-group mb-3">
