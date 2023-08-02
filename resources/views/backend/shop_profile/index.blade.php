@@ -118,14 +118,16 @@
                         <label for="day" class="col-md-3 col-12 col-form-label">Tên sản phẩm đăng ký</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control" name="product_name" value="{{ $user->product_name }}">
+                            <input type="text" class="form-control" name="product_name"
+                                   value="{{ $user->product_name }}">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label for="day" class="col-md-3 col-12 col-form-label">Mã sản phẩm đăng ký</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control" name="product_code" value="{{ $user->product_code }}">
+                            <input type="text" class="form-control" name="product_code"
+                                   value="{{ $user->product_code }}">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -138,7 +140,11 @@
                     <div class="row form-group">
                         <label for="short_description" class="col-md-3 col-12 col-form-label">Thông tin công ty</label>
                         <div class="col-md-9 col-12">
-                        <textarea class="form-control description" name="information" rows="5">{{$shop_infos->information }}</textarea>
+                            <textarea class="form-control description" name="information" rows="5">
+                                @if($shop_infos)
+                                    {{$shop_infos->information}}
+                                @endif
+                            </textarea>
                         </div>
                     </div>
                     <div class="row form-group">
@@ -146,7 +152,8 @@
 
                         <div class="col-md-9 col-12">
                             <input type="file" class="form-control" name="image" accept="image/*">
-                            <img src="{{ asset('storage/' . $user->image) }}" alt="Ảnh giấy phép kinh doanh" height="100" width="100">
+                            <img src="{{ asset('storage/' . $user->image) }}" alt="Ảnh giấy phép kinh doanh"
+                                 height="100" width="100">
                         </div>
                     </div>
                     <div class="row pl-2 pt-3">
