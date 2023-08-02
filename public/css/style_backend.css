@@ -129,6 +129,12 @@
   border-bottom: 3px solid #fd6506;
 }
 
+.add-form-field {
+  border: 1px dotted gray;
+  color: #fd6506;
+  font-size: 14px;
+}
+
 .items > li {
   margin-bottom: 10px;
 }
@@ -579,6 +585,7 @@
     padding: 0 8px;
     line-height: 2;
     min-height: 30px;
+    margin-right: 5px;
   }
   input[type=text]:focus {
     border-color: #2271b1;
@@ -1155,6 +1162,10 @@
   color: #000000 !important;
 }
 
+/**/
+select {
+  display: none !important;
+}
 
 .dropdown-select-attribute,
 .dropdown-select-category,

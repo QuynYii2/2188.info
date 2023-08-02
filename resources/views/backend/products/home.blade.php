@@ -38,25 +38,25 @@
             <div class="title">Phân tích bán hàng</div>
             <div class="title-small">Phân tích bán hàng chi tiết</div>
             <div class="full-width" id="listTodoRender">
-                <div class="d-flex">
-                    <div class="border w-25">
+                <div class="d-flex text-center">
+                    <div class="border w-50">
                         <div class="smail">Lượt truy cập</div>
                         <h3 id="countAccess">10</h3>
                         <p class="text-warning">Vs hôm qua <span id="countAccessPercent">0,00</span>% --</p>
                     </div>
-                    <div class="border w-25">
+                    <div class="border w-50">
                         <div class="smail">Lượt xem</div>
                         <h3 id="countViews">10</h3>
                         <p class="text-warning">Vs hôm qua <span id="countViewPercent">0,00</span>% --</p>
                     </div>
                 </div>
-                <div class="d-flex">
-                    <div class="border w-25">
+                <div class="d-flex text-center">
+                    <div class="border w-50">
                         <div class="smail">Đơn hàng</div>
                         <h3 id="countOrders">10</h3>
                         <p class="text-warning">Vs hôm qua <span id="countOrderPercent">0,00</span>% --</p>
                     </div>
-                    <div class="border w-25">
+                    <div class="border w-50">
                         <div class="smail">Tỷ lệ chuyển đổi</div>
                         <h3>10</h3>
                         <p class="text-warning">Vs hôm qua <span>0,00</span>% --</p>

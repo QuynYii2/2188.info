@@ -27,7 +27,8 @@ class Product extends Model
         'gallery',
         'short_description',
         'list_category',
-
+        'min',
+        'origin',
     ];
 
     // Product.php

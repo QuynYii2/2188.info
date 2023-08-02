@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ShopInformationController;
 use App\Models\PaymentMethod;
+use App\Models\ShopInfo;
 use App\Models\TransportMethod;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -27,7 +29,8 @@ class SettingShopController extends Controller
     public function profileShop()
     {
         $user = Auth::user();
-        return view('backend/shop_profile/index', compact('user'));
+        $shop_infos  = ShopInfo::where('user_id' ,'=', Auth::user()->id)->orderBy('created_at', 'DESC')->first();
+        return view('backend/shop_profile/index', compact('user', 'shop_infos'));
     }
 
     public function saveProfileShop(Request $request)
@@ -44,9 +47,9 @@ class SettingShopController extends Controller
             $galleryPath = $gallery->store('images', 'public');
             $user->image = $galleryPath;
         }
-
+        $infoShop = (new ShopInformationController())->store($request);
         $user->save();
-        return view('backend/shop_profile/index', compact('user'));
+        return redirect(route('profile.shop.index'));
     }
 
     public function savePaymentMethod(Request $request)

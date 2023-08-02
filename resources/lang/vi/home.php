@@ -130,6 +130,7 @@ return [
     'quantity' => 'Số lượng',
     'description' => 'Mô tả sản phẩm',
     'specification' => 'Thông số chi tiết',
+    'company information' => 'Thông tin công ty',
     'review' => 'Đánh giá',
     'read more' => 'Xem tất cả',
     'read less' => 'Thu gọn',

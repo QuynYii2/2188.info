@@ -10,54 +10,18 @@
 @extends('frontend.layouts.master')
 @section('title', 'Detail')
 @section('content')
-
     <style>
-
         .product-content p {
             margin-bottom: 0;
         }
-
         .btn-16 {
             margin: 0 16px;
         }
-
-
-        @media only screen and (min-width: 1200px) {
-            .tabs-product {
-            }
-
-            .img-focus {
-                width: 80px;
-                height: 80px;
-                cursor: pointer;
-            }
-        }
-
-
-        @media only screen and (min-width: 992px) and (max-width: 1199px) {
-            .tabs-product {
-
-            }
-
-            .img-focus {
-                width: 80px;
-                height: 80px;
-            }
-        }
-
-
         @media only screen and (min-width: 769px) and (max-width: 991px) {
             .tabs-item a {
                 font-size: 15px;
             }
-
-
-            .tabs-product {
-                display: flex !important;
-            }
         }
-
-
         @media only screen and (max-width: 767px) {
 
 
@@ -65,80 +29,20 @@
                 font-size: 15px;
             }
         }
-
-
         @media only screen and (max-width: 767px) {
 
 
             .tabs-item a {
                 font-size: 15px;
             }
-
-
-            .img-focus {
-                width: 80px;
-                height: 80px;
-            }
         }
-
-
         @media only screen and (max-width: 365px) {
 
 
             .tabs-item a {
                 font-size: 12px;
             }
-
-
-            .btn-block {
-                display: block;
-            }
-
-
-            .img-focus {
-                width: 60px;
-                height: 60px;
-            }
         }
-
-
-        .col-2_5 {
-            width: 20%;
-            position: relative;
-            padding-right: 10px;
-            padding-left: 10px;
-        }
-
-
-        .col-2_5 .card {
-            height: 100%;
-        }
-
-
-        .col-2_5 .card .d-flex {
-            height: 100%;
-            flex-wrap: wrap;
-            align-content: center;
-        }
-
-
-        .tablet-button {
-            display: none;
-        }
-
-
-        @media only screen and (min-width: 576px ) and (max-width: 991px) {
-            .tablet-button {
-                display: block;
-            }
-
-
-            .not-tablet-button {
-                display: none !important;
-            }
-        }
-
-
         @media not (min-width: 576px ) and (max-width: 991px) {
             .tablet-button {
                 display: none;
@@ -149,13 +53,11 @@
                 display: block !important;
             }
         }
-
         .radio-toolbar input[type="radio"] {
             opacity: 0;
             position: fixed;
             width: 0;
         }
-
         .radio-toolbar label {
             display: inline-block;
             background-color: #f9f9f9;
@@ -165,22 +67,84 @@
             border: 2px solid #f7f7f7;
             border-radius: 4px;
         }
-
         .radio-toolbar label:hover {
             cursor: pointer;
             background-color: #cccccc;
         }
-
         .radio-toolbar input[type="radio"]:focus + label {
             border: 2px solid #444;
         }
-
         .radio-toolbar input[type="radio"]:checked + label {
             background-color: #f7f7f7;
             border-color: #ccc;
         }
+        .table-title h3 {
+            color: #fafafa;
+            font-size: 30px;
+            font-weight: 400;
+            font-style:normal;
+            font-family: "Roboto", helvetica, arial, sans-serif;
+            text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+        }
+        .modal-content{
+            width: 400px;
+            margin: auto;
+        }
+        .table-fill{
+            width: 100%;
+        }
+        th {
+            background: #b1b5bd;
+            border-right: 1px solid #343a45;
+            }
+            th:first-child {
+                border-top-left-radius:3px;
+            }
 
-    </style>
+            th:last-child {
+                border-top-right-radius:3px;
+                border-right:none;
+            }
+
+            tr {
+                border-top: 1px solid #C1C3D1;
+                border-bottom-: 1px solid #C1C3D1;
+                color:#666B85;
+                font-size:16px;
+                font-weight:normal;
+                text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+            }
+            tr:first-child {
+                border-top:none;
+            }
+
+            tr:last-child {
+                border-bottom:none;
+            }
+
+            td {
+                background:#FFFFFF;
+                padding:20px;
+                text-align:left;
+                vertical-align:middle;
+                font-weight:300;
+                font-size:18px;
+                text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+                border-right: 1px solid #C1C3D1;
+            }
+
+            td:last-child {
+                border-right: 0px;
+            }
+
+            th.text-left {
+                text-align: left;
+            }
+
+            td.text-left {
+                text-align: left;
+            }
+</style>
     <div class="container-fluid detail">
         <div class="grid second-nav">
             <div class="column-xs-12">
@@ -199,32 +163,33 @@
             $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
         @endphp
         <div class="grid product">
-            <div class="column-xs-12 column-md-7">
-                    <div class="product-gallery">
-                        <div class="product-image">
-                            <img id="productThumbnail" class="active"
-                                 src="{{ asset('storage/' . $product->thumbnail) }}">
-                            <input type="text" id="urlImage" value="{{asset('storage/')}}" hidden="">
-                        </div>
-                        <ul class="image-list">
-                            @php
-                                $gallery = $product->gallery;
-                                $arrayGallery = explode(',', $gallery);
-                            @endphp
-                            <li class="image-item"><img src="{{ asset('storage/' . $product->thumbnail) }}"></li>
-                            @if(count($arrayGallery)>1)
-                                @foreach($arrayGallery as $gallerys)
-                                    <li class="image-item"><img src="{{ asset('storage/' . $gallerys) }}"></li>
-                                @endforeach
-                            @endif
-                        </ul>
+            <div class="column-xs-12 column-md-4">
+                <div class="product-gallery">
+                    <div class="product-image">
+                        <img id="productThumbnail" class="active"
+                             src="{{ asset('storage/' . $product->thumbnail) }}">
+                        <input type="text" id="urlImage" value="{{asset('storage/')}}" hidden="">
                     </div>
+                    <ul class="image-list">
+                        @php
+                            $gallery = $product->gallery;
+                            $arrayGallery = explode(',', $gallery);
+                        @endphp
+                        <li class="image-item"><img src="{{ asset('storage/' . $product->thumbnail) }}"></li>
+                        @if(count($arrayGallery)>1)
+                            @foreach($arrayGallery as $gallerys)
+                                <li class="image-item"><img src="{{ asset('storage/' . $gallerys) }}"></li>
+                            @endforeach
+                        @endif
+                    </ul>
+                </div>
             </div>
             <div class="column-xs-12 column-md-5">
                 <form action="{{ route('cart.add', $product) }}" method="POST">
                     @csrf
                     <div class="product-name">{{$name->name}}</div>
                     <div class="product-title">{{$product->name}}</div>
+                    <div class="product-origin">Xuất xứ: {{$product->origin}}</div>
                     <div class="product-rating">
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
@@ -281,11 +246,49 @@
                     </div>
                     <div class="count__wrapper count__wrapper--ml mt-3">
                         <label for="qty">{{ __('home.remaining') }}<span id="productQuantity">{{$product->qty}}</span></label>
-
+                    </div><!-- Button to trigger modal -->
+                    <!-- Button trigger modal -->
+                    <a class="p-2 btn-light" style="" data-toggle="modal" data-target="#exampleModal">
+                        Bảng giá sỉ
+                    </a>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Bảng giá</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table-fill">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-left">Month</th>
+                                            <th class="text-left">Sales</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="table-hover">
+                                        @php
+                                            $price_sales = \App\Models\ProductSale::where('product_id', '=', $product->id)->get();
+                                        @endphp
+                                        @foreach($price_sales as $price_sale)
+                                            <tr>
+                                                <td class="text-left">{{$price_sale->quantity}}</td>
+                                                <td class="text-left">-{{$price_sale->sales}} %</td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="d-flex buy justify-content-around">
                         <div>
-                            <input min="1" value="1" type="number" class="input" name="quantity">
+                            <input min="{{$product->min}}" value="{{$product->min}}" type="number" class="input"
+                                   name="quantity">
                             <div class="spinner">
                                 <button type="button" class="up button">&rsaquo;</button>
                                 <button type="button" class="down button">&lsaquo;</button>
@@ -302,6 +305,62 @@
                     <div class="eyes"><i class="fa-regular fa-eye"></i> 19 customers are viewing this product</div>
                 </form>
             </div>
+            <div class="column-xs-12 column-md-3 layout-fixed">
+                <div class="main-actions">
+                    <form action="">
+                        <div class="express-header">
+                            <p>The minimum order quantity is 2 pair</p>
+                            <div class="item-center d-flex justify-content-between">
+                                <span>0/2 pair</span>
+                                <span>from <b>$12.98$</b></span>
+                            </div>
+                            <p class="">Lead time 15 days <i class="fa-solid fa-info"></i></p>
+                        </div>
+                        <div class="express-body">
+                            <div class="item-center d-flex justify-content-between">
+                                <span>Shipping</span>
+                                <span>from <b>$12.98$</b></span>
+                            </div>
+                            <div>
+                                <p class="">Lead time 15 days <i class="fa-solid fa-info"></i></p>
+                            </div>
+                        </div>
+                        <div class="express-footer">
+                            <a href="#"><div class="button-start">Start order</div></a>
+                            <a href="#"><div class="button-call"><i class="fa-solid fa-envelope"></i> Contact supplier</div></a>
+                            <a href="#"><div class="button-call"><i class="fa-solid fa-phone"></i> Call us</div></a>
+                            <div class="addtocard"><button><i class="fa-solid fa-cart-shopping"></i> Add to cart</button></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="detail-module">
+                    <form action="">
+                        <div class="express-header">
+                            <p>The minimum order quantity is 2 pair</p>
+                            <div class="item-center d-flex justify-content-between">
+                                <span>0/2 pair</span>
+                                <span>from <b>$12.98$</b></span>
+                            </div>
+                            <p class="">Lead time 15 days <i class="fa-solid fa-info"></i></p>
+                        </div>
+                        <div class="express-body">
+                            <div class="item-center d-flex justify-content-between">
+                                <span>Shipping</span>
+                                <span>from <b>$12.98$</b></span>
+                            </div>
+                            <div>
+                                <p class="">Lead time 15 days <i class="fa-solid fa-info"></i></p>
+                            </div>
+                        </div>
+                        <div class="express-footer">
+                            <a href="#"><div class="button-start">Start order</div></a>
+                            <a href="#"><div class="button-call"><i class="fa-solid fa-envelope"></i> Contact supplier</div></a>
+                            <a href="#"><div class="button-call"><i class="fa-solid fa-phone"></i> Call us</div></a>
+                            <div class="addtocard"><button><i class="fa-solid fa-cart-shopping"></i> Add to cart</button></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <div class="productView-description">
@@ -310,9 +369,10 @@
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
                    aria-selected="true">{{ __('home.description') }}</a>
             </li>
-            {{--            <li class="nav-item">--}}
-            {{--                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">{{ __('home.specification') }}</a>--}}
-            {{--            </li>--}}
+            <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                   aria-controls="profile" aria-selected="false">{{ __('home.company information') }}</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
                    aria-controls="contact" aria-selected="false">{{ __('home.review') }}</a>
@@ -322,11 +382,12 @@
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 {{$product->description}}
             </div>
-            {{--            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">--}}
-            {{--                <div class="tab-title">--}}
-            {{--                    --}}
-            {{--                </div>--}}
-            {{--            </div>--}}
+            @php
+                $infos = DB::table('shop_infos')->first();
+            @endphp
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                {{$infos->information}}
+            </div>
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                 <div class="card mb-4">
                     <div class="card-body">
