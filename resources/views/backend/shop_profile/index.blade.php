@@ -193,4 +193,15 @@
                 console.log(error);
             });
     </script>
+
+    <script>
+        let desc = document.querySelectorAll('.description');
+        for (let i = 0; i < desc.length; i++) {
+            ClassicEditor
+                .create(desc[i])
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    </script>
 @endsection
