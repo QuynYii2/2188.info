@@ -10,7 +10,6 @@
 @extends('frontend.layouts.master')
 @section('title', 'Detail')
 @section('content')
-
     <style>
 
         .product-content p {
@@ -22,39 +21,10 @@
         }
 
 
-        @media only screen and (min-width: 1200px) {
-            .tabs-product {
-            }
-
-            .img-focus {
-                width: 80px;
-                height: 80px;
-                cursor: pointer;
-            }
-        }
-
-
-        @media only screen and (min-width: 992px) and (max-width: 1199px) {
-            .tabs-product {
-
-            }
-
-            .img-focus {
-                width: 80px;
-                height: 80px;
-            }
-        }
-
-
         @media only screen and (min-width: 769px) and (max-width: 991px) {
             .tabs-item a {
                 font-size: 15px;
             }
-
-
-            .tabs-product {
-                display: flex !important;
-            }
         }
 
 
@@ -72,12 +42,6 @@
 
             .tabs-item a {
                 font-size: 15px;
-            }
-
-
-            .img-focus {
-                width: 80px;
-                height: 80px;
             }
         }
 
@@ -87,54 +51,6 @@
 
             .tabs-item a {
                 font-size: 12px;
-            }
-
-
-            .btn-block {
-                display: block;
-            }
-
-
-            .img-focus {
-                width: 60px;
-                height: 60px;
-            }
-        }
-
-
-        .col-2_5 {
-            width: 20%;
-            position: relative;
-            padding-right: 10px;
-            padding-left: 10px;
-        }
-
-
-        .col-2_5 .card {
-            height: 100%;
-        }
-
-
-        .col-2_5 .card .d-flex {
-            height: 100%;
-            flex-wrap: wrap;
-            align-content: center;
-        }
-
-
-        .tablet-button {
-            display: none;
-        }
-
-
-        @media only screen and (min-width: 576px ) and (max-width: 991px) {
-            .tablet-button {
-                display: block;
-            }
-
-
-            .not-tablet-button {
-                display: none !important;
             }
         }
 
@@ -199,32 +115,33 @@
             $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
         @endphp
         <div class="grid product">
-            <div class="column-xs-12 column-md-7">
-                    <div class="product-gallery">
-                        <div class="product-image">
-                            <img id="productThumbnail" class="active"
-                                 src="{{ asset('storage/' . $product->thumbnail) }}">
-                            <input type="text" id="urlImage" value="{{asset('storage/')}}" hidden="">
-                        </div>
-                        <ul class="image-list">
-                            @php
-                                $gallery = $product->gallery;
-                                $arrayGallery = explode(',', $gallery);
-                            @endphp
-                            <li class="image-item"><img src="{{ asset('storage/' . $product->thumbnail) }}"></li>
-                            @if(count($arrayGallery)>1)
-                                @foreach($arrayGallery as $gallerys)
-                                    <li class="image-item"><img src="{{ asset('storage/' . $gallerys) }}"></li>
-                                @endforeach
-                            @endif
-                        </ul>
+            <div class="column-xs-12 column-md-4">
+                <div class="product-gallery">
+                    <div class="product-image">
+                        <img id="productThumbnail" class="active"
+                             src="{{ asset('storage/' . $product->thumbnail) }}">
+                        <input type="text" id="urlImage" value="{{asset('storage/')}}" hidden="">
                     </div>
+                    <ul class="image-list">
+                        @php
+                            $gallery = $product->gallery;
+                            $arrayGallery = explode(',', $gallery);
+                        @endphp
+                        <li class="image-item"><img src="{{ asset('storage/' . $product->thumbnail) }}"></li>
+                        @if(count($arrayGallery)>1)
+                            @foreach($arrayGallery as $gallerys)
+                                <li class="image-item"><img src="{{ asset('storage/' . $gallerys) }}"></li>
+                            @endforeach
+                        @endif
+                    </ul>
+                </div>
             </div>
             <div class="column-xs-12 column-md-5">
                 <form action="{{ route('cart.add', $product) }}" method="POST">
                     @csrf
                     <div class="product-name">{{$name->name}}</div>
                     <div class="product-title">{{$product->name}}</div>
+                    <div class="product-origin">Xuất xứ: {{$product->origin}}</div>
                     <div class="product-rating">
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
@@ -285,7 +202,8 @@
                     </div>
                     <div class="d-flex buy justify-content-around">
                         <div>
-                            <input min="1" value="1" type="number" class="input" name="quantity">
+                            <input min="{{$product->min}}" value="{{$product->min}}" type="number" class="input"
+                                   name="quantity">
                             <div class="spinner">
                                 <button type="button" class="up button">&rsaquo;</button>
                                 <button type="button" class="down button">&lsaquo;</button>
@@ -302,6 +220,62 @@
                     <div class="eyes"><i class="fa-regular fa-eye"></i> 19 customers are viewing this product</div>
                 </form>
             </div>
+            <div class="column-xs-12 column-md-3 layout-fixed">
+                <div class="main-actions">
+                    <form action="">
+                        <div class="express-header">
+                            <p>The minimum order quantity is 2 pair</p>
+                            <div class="item-center d-flex justify-content-between">
+                                <span>0/2 pair</span>
+                                <span>from <b>$12.98$</b></span>
+                            </div>
+                            <p class="">Lead time 15 days <i class="fa-solid fa-info"></i></p>
+                        </div>
+                        <div class="express-body">
+                            <div class="item-center d-flex justify-content-between">
+                                <span>Shipping</span>
+                                <span>from <b>$12.98$</b></span>
+                            </div>
+                            <div>
+                                <p class="">Lead time 15 days <i class="fa-solid fa-info"></i></p>
+                            </div>
+                        </div>
+                        <div class="express-footer">
+                            <a href="#"><div class="button-start">Start order</div></a>
+                            <a href="#"><div class="button-call"><i class="fa-solid fa-envelope"></i> Contact supplier</div></a>
+                            <a href="#"><div class="button-call"><i class="fa-solid fa-phone"></i> Call us</div></a>
+                            <div class="addtocard"><button><i class="fa-solid fa-cart-shopping"></i> Add to cart</button></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="detail-module">
+                    <form action="">
+                        <div class="express-header">
+                            <p>The minimum order quantity is 2 pair</p>
+                            <div class="item-center d-flex justify-content-between">
+                                <span>0/2 pair</span>
+                                <span>from <b>$12.98$</b></span>
+                            </div>
+                            <p class="">Lead time 15 days <i class="fa-solid fa-info"></i></p>
+                        </div>
+                        <div class="express-body">
+                            <div class="item-center d-flex justify-content-between">
+                                <span>Shipping</span>
+                                <span>from <b>$12.98$</b></span>
+                            </div>
+                            <div>
+                                <p class="">Lead time 15 days <i class="fa-solid fa-info"></i></p>
+                            </div>
+                        </div>
+                        <div class="express-footer">
+                            <a href="#"><div class="button-start">Start order</div></a>
+                            <a href="#"><div class="button-call"><i class="fa-solid fa-envelope"></i> Contact supplier</div></a>
+                            <a href="#"><div class="button-call"><i class="fa-solid fa-phone"></i> Call us</div></a>
+                            <div class="addtocard"><button><i class="fa-solid fa-cart-shopping"></i> Add to cart</button></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <div class="productView-description">
@@ -310,9 +284,10 @@
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
                    aria-selected="true">{{ __('home.description') }}</a>
             </li>
-            {{--            <li class="nav-item">--}}
-            {{--                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">{{ __('home.specification') }}</a>--}}
-            {{--            </li>--}}
+            <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                   aria-controls="profile" aria-selected="false">{{ __('home.company information') }}</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
                    aria-controls="contact" aria-selected="false">{{ __('home.review') }}</a>
@@ -322,11 +297,12 @@
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 {{$product->description}}
             </div>
-            {{--            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">--}}
-            {{--                <div class="tab-title">--}}
-            {{--                    --}}
-            {{--                </div>--}}
-            {{--            </div>--}}
+            @php
+                $infos = DB::table('shop_infos')->first();
+            @endphp
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                {{$infos->information}}
+            </div>
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                 <div class="card mb-4">
                     <div class="card-body">

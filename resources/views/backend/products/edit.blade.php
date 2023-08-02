@@ -111,7 +111,7 @@
                         </div>
                         <div class="form-group">
                             <label for="short_description">Mô tả ngắn</label>
-                            <textarea id="short_description" class="form-control short_description" name="short_description"
+                            <textarea id="short_description" class="form-control description" name="short_description"
                                       rows="5">{{$product->short_description}}</textarea>
                         </div>
                         <div class="form-group">
@@ -121,11 +121,11 @@
                         </div>
                         <input id="inputHotProduct" type="text" class="d-none" value="{{ $product->hot }}">
                         <input id="inputFeatureProduct" type="text" class="d-none" value="{{ $product->feature }}">
-                        <div class="form-group row">
+                        <div class="form-group row ">
                             @for($i = 0; $i< count($permissionUsers); $i++)
                                 @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm hot')
-                                    <div class="col-4 d-flex">
-                                        <label for="hot_product" class="col-8 col-sm-8">Sản phẩm hot</label>
+                                    <div class="col-4 d-flex align-items-center">
+                                        <label for="hot_product" >Sản phẩm hot</label>
                                         <div class="col-4 col-sm-4">
                                             <input class="form-control" type="checkbox" id="hot_product"
                                                    name="hot_product">
@@ -136,11 +136,10 @@
                             @endfor
                             @for($i = 0; $i< count($permissionUsers); $i++)
                                 @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm nổi bật')
-                                    <div class="col-4 d-flex">
-                                        <label for="feature_product" class="col-8 col-sm-8">Sản phẩm nổi bật</label>
+                                    <div class="col-4 d-flex align-items-center">
+                                        <label for="feature_product" class="">Sản phẩm nổi bật</label>
                                         <div class="col-4 col-sm-4">
-                                            <input class="form-control" type="checkbox" id="feature_product"
-                                                   name="feature_product">
+                                            <input class="form-control" type="checkbox" id="feature_product" name="feature_product">
                                         </div>
                                     </div>
                                     @break
@@ -166,119 +165,72 @@
                                 @endforeach
                             @endif
                         </div>
-
-
-                        <label class="control-label text-warning">Thông số sản phẩm</label>
                         <div id="removeInputAttribute " class="form-group row">
                             @if(!$productDetails->isEmpty())
-                                @if(count($productDetails)>1)
-                                    @foreach($productDetails as $productDetail)
-                                        @if($productDetail->variation && $productDetail->variation != 0)
-                                            <div class="form-group">
+                                @foreach($productDetails as $productDetail)
+                                    @if($productDetail->variation && $productDetail->variation != 0)
+                                        <div class="form-group col-12">
+                                            @php
+                                                $variable = $productDetail->variation;
+                                                $arrayVariation = explode(',', $variable);
+                                            @endphp
+                                            @foreach($arrayVariation as $itemVariation)
                                                 @php
-                                                    $variable = $productDetail->variation;
-                                                    $arrayVariation = explode(',', $variable);
+                                                    $arrayItemVariation = explode('-', $itemVariation);
+                                                    $attributeVariation = \App\Models\Attribute::find($arrayItemVariation[0]);
+                                                    $propertyVariation = \App\Models\Properties::find($arrayItemVariation[1]);
                                                 @endphp
-                                                @foreach($arrayVariation as $itemVariation)
-                                                    @php
-                                                        $arrayItemVariation = explode('-', $itemVariation);
-                                                        $attributeVariation = \App\Models\Attribute::find($arrayItemVariation[0]);
-                                                        $propertyVariation = \App\Models\Properties::find($arrayItemVariation[1]);
-                                                    @endphp
-                                                    <div class="">
-                                                        <label class="control-label"
-                                                               for="color">{{$attributeVariation->name}}</label>
-                                                        <div class="col-md-12 overflow-scroll custom-scrollbar">
-                                                            <input class="form-control" type="text"
-                                                                   value="{{$propertyVariation->name}}" disabled>
-                                                        </div>
+                                                <div class="">
+                                                    <label class="control-label"
+                                                           for="color">{{$attributeVariation->name}}</label>
+                                                    <div class="overflow-scroll custom-scrollbar">
+                                                        <input class="form-control" type="text"
+                                                               value="{{$propertyVariation->name}}" disabled>
                                                     </div>
-                                                @endforeach
-                                            </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <div class="form-group  col-6">
+                                            <label for="price">Giá bán</label>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   id="price{{$productDetail->id}}"
+                                                   name="old_price{{$productDetail->id}}"
+                                                   value="{{ $productDetail->old_price }}">
+                                        </div>
 
-                                            <div class="form-group ">
-                                                <label for="price">Giá bán</label>
-                                                <input type="number"
-                                                       class="form-control"
-                                                       id="price{{$productDetail->id}}"
-                                                       name="old_price{{$productDetail->id}}"
-                                                       value="{{ $productDetail->old_price }}">
-                                            </div>
+                                        <div class="form-group col-6">
+                                            <label for="qty">Giá khuyến mãi</label>
+                                            <input type="number"
+                                                   class="form-control"
+                                                   id="qty{{$productDetail->id}}"
+                                                   name="price{{$productDetail->id}}"
+                                                   value="{{$productDetail->price }}">
+                                        </div>
 
-                                            <div class="form-group">
-                                                <label for="qty">Giá khuyến mãi</label>
-                                                <input type="number"
-                                                       class="form-control"
-                                                       id="qty{{$productDetail->id}}"
-                                                       name="price{{$productDetail->id}}"
-                                                       value="{{$productDetail->price }}">
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="thumbnail">Thumbnail</label>
-                                                <input type="file"
-                                                       class="form-control-file"
-                                                       id="thumbnail"
-                                                       name="thumbnail{{$productDetail->id}}"
-                                                       accept="image/*">
-                                                @if ($productDetail->thumbnail)
-                                                    <img class="mt-2"
-                                                         style="height: 100px"
-                                                         src="{{ asset('storage/' . $productDetail->thumbnail) }}"
-                                                         alt="Thumbnail">
-                                                    </a>
-                                                @endif
-                                            </div>
-                                        @endif
-                                    <div>
-                                        <input hidden="" name="id{{$loop->index+1}}"
-                                               value="{{$productDetail->id}}">
-                                        <a class="btnRemove btn btn-danger mb-3"
-                                           data-value="{{$productDetail->id}}">Remove</a>
-                                    </div>
-                                    @endforeach
-                                    <input hidden="" name="count"
-                                           value="{{count($productDetails)}}">
-                                @else
-                                    @php
-                                        $productDetail = $productDetails[0];
-                                    @endphp
-                                    <div class="form-group col-6">
-                                        <label for="price">Giá bán</label>
-                                        <input type="number"
-                                               class="form-control"
-                                               id="price{{$productDetail->id}}"
-                                               name="old_price1"
-                                               value="{{ $productDetail->old_price }}">
-                                    </div>
-
-                                    <div class="form-group col-6">
-                                        <label for="qty">Giá khuyến mãi</label>
-                                        <input type="number"
-                                               class="form-control"
-                                               id="qty{{$productDetail->id}}"
-                                               name="price1"
-                                               value="{{$productDetail->price }}">
-                                    </div>
-
-                                    <div class="form-group col-6">
                                         <label for="thumbnail">Thumbnail</label>
-                                        <input type="file"
-                                               class="form-control-file"
-                                               id="thumbnail"
-                                               name="thumbnail1"
-                                               accept="image/*">
-                                        @if ($productDetail->thumbnail)
-                                            <img class="mt-2"
-                                                 style="height: 100px"
-                                                 src="{{ asset('storage/' . $productDetail->thumbnail) }}"
-                                                 alt="Thumbnail">
-                                            </a>
-                                        @endif
-                                    </div>
-                                    <input hidden="" name="count"
-                                           value="1">
-                                @endif
+                                        <div class="form-group col-12">
+                                            @if ($productDetail->thumbnail)
+                                                <img class="mt-2 mb-2"
+                                                     style="height: 100px"
+                                                     src="{{ asset('storage/' . $productDetail->thumbnail) }}"
+                                                     alt="Thumbnail">
+                                                </a>
+                                            @endif
+                                            <input type="file"
+                                                   class="form-control-file"
+                                                   id="thumbnail"
+                                                   name="thumbnail{{$productDetail->id}}"
+                                                   accept="image/*">
+                                        </div>
+                                    @endif
+                                <div>
+                                    <input hidden="" name="id{{$loop->index+1}}"
+                                           value="{{$productDetail->id}}">
+                                    <a class="btnRemove btn btn-danger mb-3" style="color: white"
+                                       data-value="{{$productDetail->id}}">Remove</a>
+                                </div>
+                                @endforeach
                             @endif
                         </div>
                         <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
@@ -348,7 +300,7 @@
                         </div>
                         <div id="renderInputAttribute">
                         </div>
-                        <a id="btnSaveAttribute" class="btn btn-success mb-3 mt-3" style="display:none;">SaveAttribute</a>
+                        <a id="btnSaveAttribute" class="btn btn-success mb-1 mt-1">SaveAttribute11</a>
                         <input type="text" hidden="" name="isNew" id="isNew" value="0">
 
                     </div>
@@ -937,30 +889,15 @@
         });
     </script>
     <script>
-        let desc = document.querySelectorAll('.description');
-        for (let i = 0; i < desc.length; i++) {
-            ClassicEditor
-                .create(desc[i])
-                .catch(error => {
-                    console.error(error);
-                });
-        }
-    </script>
-    <script>
-        $('.property-attribute').on('change', function () {
-            var tests = document.getElementsByClassName('property-attribute');
-            var btn = document.getElementById('btnSaveAttribute');
-            var isValid = false;
-            for(let i = 0; i<tests.length; i++){
-                if(tests[i].checked){
-                    isValid = true;
-                }
-            }
-            if(isValid == true){
-                btn.style.display = 'block';
-            } else {
-                btn.style.display = 'none';
-            }
-        })
+        ClassicEditor
+            .create(document.querySelector('#description'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#description-detail'))
+            .catch(error => {
+                console.error(error);
+            });
     </script>
 @endsection

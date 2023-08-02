@@ -1040,11 +1040,10 @@
                 var price_old = document.getElementById('price-old')
                 price_old.innerText = product['old_price'];
                 var description_text = document.getElementById('description-text')
-                description_text.innerText = productDetail['description'];
+                description_text.innerHTML = productDetail['description'];
                 var qty = document.getElementById('qty')
                 qty.innerText = product['qty'];
                 var variable = document.getElementById('variable_id')
-                console.log(variable)
                 variable.value = productDetail['variation'];
             })
 

@@ -133,6 +133,12 @@ $color-main: #fd6506;
   }
 }
 
+//create product
+.add-form-field{
+  border: 1px dotted gray;
+  color: #fd6506;
+  font-size: 14px;
+}
 
 .items > li{
   margin-bottom: 10px;
@@ -655,6 +661,7 @@ $color-main: #fd6506;
     padding: 0 8px;
     line-height: 2;
     min-height: 30px;
+    margin-right: 5px;
   }
 
   input[type="text"]:focus {
