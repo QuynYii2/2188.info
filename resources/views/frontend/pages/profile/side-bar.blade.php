@@ -104,10 +104,12 @@
                 $isMember = \App\Models\MemberRegisterPersonSource::where([
                                     ['email', Auth::user()->email],
                                     ['check', 1]])->first();
-                $member = \App\Models\MemberRegisterInfo::find($isMember->member_id);
-                $isProduction = false;
-                if ($member->member == \App\Enums\RegisterMember::PRODUCTION || $member->member == \App\Enums\RegisterMember::POWER_PRODUCTION){
-                    $isProduction = true;
+                 $isProduction = false;
+                if ($isMember){
+                    $member = \App\Models\MemberRegisterInfo::find($isMember->member_id);
+                    if ($member->member == \App\Enums\RegisterMember::PRODUCTION || $member->member == \App\Enums\RegisterMember::POWER_PRODUCTION){
+                        $isProduction = true;
+                    }
                 }
             }
         @endphp
@@ -123,10 +125,12 @@
                 $isMember = \App\Models\MemberRegisterPersonSource::where([
                                     ['email', Auth::user()->email],
                                     ['check', 1]])->first();
-                $member = \App\Models\MemberRegisterInfo::find($isMember->member_id);
                 $isPVendor = false;
-                if ($member->member != \App\Enums\RegisterMember::VENDOR){
-                    $isPVendor = true;
+                if ($isMember){
+                    $member = \App\Models\MemberRegisterInfo::find($isMember->member_id);
+                    if ($member->member != \App\Enums\RegisterMember::VENDOR){
+                        $isPVendor = true;
+                    }
                 }
             }
         @endphp
