@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductSale;
 use App\Models\Promotion;
 use App\Models\StaffUsers;
 use App\Models\StorageProduct;
@@ -75,7 +76,7 @@ class ProductController extends Controller
             ->get();
         $productPause = DB::table('products')
             ->join('storage_products', 'storage_products.id', '=', 'products.storage_id')
-            ->where([['products.user_id', '=', Auth::user()->id], ['storage_products.quantity', '=', 0], ['storage_products.create_by', '=',Auth::user()->id]])
+            ->where([['products.user_id', '=', Auth::user()->id], ['storage_products.quantity', '=', 0], ['storage_products.create_by', '=', Auth::user()->id]])
             ->select('products.*')
             ->get();
         $promotions = Promotion::where([['user_id', Auth::user()->id], ['status', PromotionStatus::INACTIVE]])->get();
@@ -186,6 +187,7 @@ class ProductController extends Controller
             $product->storage_id = $request->input('storage-id');
             $product->name = $request->input('name');
             $product->description = $request->input('description');
+            $product->short_description = $request->input('short_description');
             $product->product_code = $request->input('product_code');
             $product->qty = $qty_in_storage;
             $product->category_id = $request->input('category_id');
@@ -195,10 +197,18 @@ class ProductController extends Controller
 //            $product->thumbnail = $this->handleGallery($request->input('imgThumbnail'));
             $product->slug = \Str::slug($request->input('name'));
             $product->old_price = $request->input('giaban');
+            $product->origin = $request->input('origin');
 
             if ($request->input('giakhuyenmai')) {
                 $product->price = $request->input('giakhuyenmai');
             }
+
+            if ($request->input('min')) {
+                $product->min = $request->input('min');
+            } else {
+                $product->min = 10;
+            }
+
 
             $hot = $request->input('hot_product');
             $feature = $request->input('feature_product');
@@ -226,7 +236,6 @@ class ProductController extends Controller
             }
         } catch (\Exception $exception) {
             alert()->error('Error', 'Error, Please try again!');
-//            dd($exception);
             return back();
         }
     }
@@ -293,7 +302,7 @@ class ProductController extends Controller
                 }
 
                 $arrayProduct = [];
-                if ($number){
+                if ($number) {
                     for ($i = 1; $i < $number + 1; $i++) {
                         $newVariationData = [];
 
@@ -445,7 +454,7 @@ class ProductController extends Controller
             $product->feature = 0;
         }
 
-        if ($number){
+        if ($number) {
             if ($number > 1) {
                 for ($i = 1; $i < $number + 1; $i++) {
                     $id = $request->input('id' . $i);
@@ -564,6 +573,7 @@ class ProductController extends Controller
             'storage_id' => $product->storage_id,
             'name' => $product->name,
             'description' => $product->description,
+            'short_description' => $product->short_description,
             'product_code' => $product->product_code,
             'qty' => $product->qty,
             'category_id' => $product->category_id,
@@ -577,10 +587,29 @@ class ProductController extends Controller
             'gallery' => $product->gallery,
             'thumbnail' => $product->thumbnail,
             'list_category' => $listIDs,
+            'min' => $product->min,
+            'origin' => $product->origin,
+            'status' => ProductStatus::INACTIVE,
         ];
 
         $success = Product::create($newProductData);
         $product = Product::where('user_id', Auth::user()->id)->orderByDesc('id')->first();
+
+        $quantity = $request->input('quantity');
+        $sales = $request->input('sales');
+
+        $counts = count($quantity);
+        for ($i = 0; $i<$counts; $i++){
+            $newProductSale = null;
+            $newProductSale = [
+                'user_id' => $product->user_id,
+                'product_id' => $product->id,
+                'quantity' => $quantity[$i],
+                'sales' => $sales[$i],
+            ];
+            ProductSale::create($newProductSale);
+        }
+
 
         $arrayProduct = [];
         if ($number) {

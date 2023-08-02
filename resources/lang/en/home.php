@@ -130,6 +130,7 @@ return [
     'quantity' => '수량',
     'description' => '설명',
     'specification' => '사양',
+    'company information' => '회사 정보',
     'review' => '검토',
     'read more' => '더 읽으십시오',
     'read less' => '덜 읽으십시오',

@@ -3,9 +3,7 @@
 @endphp
 
 @extends('backend.layouts.master')
-
 @section('title', 'Information')
-
 @section('content')
     <style>
         #dateOfBirth select {
@@ -84,7 +82,6 @@
         }
 
     </style>
-
     <div class="container rounded mt-5 bg-white m-auto">
         <div class="row my-5">
             <div id="form-info" class="col-sm-12 col-12 border-bottom border-right">
@@ -103,12 +100,10 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row form-group">
                         <label for="day" class="col-md-3 col-12 col-form-label">Quốc gia</label>
-
                         <div class="col-md-9 col-12">
-                            <select class="form-control" id="country" name="region">
+                            <select style="display: block!important;" class="form-control" id="country" name="region">
                             </select>
                         </div>
                     </div>
@@ -141,6 +136,12 @@
                         </div>
                     </div>
                     <div class="row form-group">
+                        <label for="short_description" class="col-md-3 col-12 col-form-label">Thông tin công ty</label>
+                        <div class="col-md-9 col-12">
+                        <textarea class="form-control description" name="information" rows="5">{{$shop_infos->information }}</textarea>
+                        </div>
+                    </div>
+                    <div class="row form-group">
                         <label for="day" class="col-md-3 col-12 col-form-label">Ảnh giấy phép kinh doanh</label>
 
                         <div class="col-md-9 col-12">
@@ -150,7 +151,6 @@
                     </div>
                     <div class="row pl-2 pt-3">
                         <label for="day" class="col-sm-3 col-form-label col-12"></label>
-
                         <div class="col-md-9 col-12">
                             <button class="btn btn-outline-primary align-center" type="submit">Lưu</button>
                         </div>
@@ -192,5 +192,16 @@
             .catch(function (error) {
                 console.log(error);
             });
+    </script>
+
+    <script>
+        let desc = document.querySelectorAll('.description');
+        for (let i = 0; i < desc.length; i++) {
+            ClassicEditor
+                .create(desc[i])
+                .catch(error => {
+                    console.error(error);
+                });
+        }
     </script>
 @endsection
