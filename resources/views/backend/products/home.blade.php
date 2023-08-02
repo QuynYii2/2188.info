@@ -268,10 +268,6 @@
 
         getAllStatisticRevenue();
 
-        // var customerChart = localStorage.getItem('item');
-        // console.log(customerChart)
-        // getCustomerChart(customerChart);
-
         function getChar(data, datatime) {
             document.addEventListener("DOMContentLoaded", () => {
                 new ApexCharts(document.querySelector("#reportsChart"), {
@@ -334,60 +330,60 @@
                     console.log(exception)
                 }
             });
-        }
 
-        function getRevenueChar(data, datatime) {
-            document.addEventListener("DOMContentLoaded", () => {
-                new ApexCharts(document.querySelector("#revenueChart"), {
-                    series: [{
-                        name: 'Net Profit',
-                        data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
-                    }, {
-                        name: 'Revenue',
-                        data: data
-                    }, {
-                        name: 'Free Cash Flow',
-                        data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
-                    }],
-                    chart: {
-                        type: 'bar',
-                        height: 350
-                    },
-                    plotOptions: {
-                        bar: {
-                            horizontal: false,
-                            columnWidth: '55%',
-                            endingShape: 'rounded'
+            function getRevenueChar(data, datatime) {
+                document.addEventListener("DOMContentLoaded", () => {
+                    new ApexCharts(document.querySelector("#revenueChart"), {
+                        series: [{
+                            name: 'Net Profit',
+                            data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+                        }, {
+                            name: 'Revenue',
+                            data: data
+                        }, {
+                            name: 'Free Cash Flow',
+                            data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
+                        }],
+                        chart: {
+                            type: 'bar',
+                            height: 350
                         },
-                    },
-                    dataLabels: {
-                        enabled: false
-                    },
-                    stroke: {
-                        show: true,
-                        width: 2,
-                        colors: ['transparent']
-                    },
-                    xaxis: {
-                        categories: datatime,
-                    },
-                    yaxis: {
-                        title: {
-                            text: '$ (thousands)'
-                        }
-                    },
-                    fill: {
-                        opacity: 1
-                    },
-                    tooltip: {
-                        y: {
-                            formatter: function (val) {
-                                return "$ " + val + " thousands"
+                        plotOptions: {
+                            bar: {
+                                horizontal: false,
+                                columnWidth: '55%',
+                                endingShape: 'rounded'
+                            },
+                        },
+                        dataLabels: {
+                            enabled: false
+                        },
+                        stroke: {
+                            show: true,
+                            width: 2,
+                            colors: ['transparent']
+                        },
+                        xaxis: {
+                            categories: datatime,
+                        },
+                        yaxis: {
+                            title: {
+                                text: '$ (thousands)'
+                            }
+                        },
+                        fill: {
+                            opacity: 1
+                        },
+                        tooltip: {
+                            y: {
+                                formatter: function (val) {
+                                    return "$ " + val + " thousands"
+                                }
                             }
                         }
-                    }
-                }).render();
-            });
+                    }).render();
+                });
+            }
         }
 
         getAllStatisticUser();

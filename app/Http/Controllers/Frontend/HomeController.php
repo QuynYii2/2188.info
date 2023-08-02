@@ -214,22 +214,25 @@ class HomeController extends Controller
 
     public function createStatistic()
     {
-        $statisticAccess = StatisticAccess::where([
-            ['datetime', '<', Carbon::now()->addHours(7)->copy()->endOfDay()],
-            ['datetime', '>', Carbon::now()->addHours(7)->copy()->startOfDay()],
-            ['status', StatisticStatus::ACTIVE],
-        ])->first();
+        if (!isset($_COOKIE["access"])) {
+            $statisticAccess = StatisticAccess::where([
+                ['datetime', '<', Carbon::now()->addHours(7)->copy()->endOfDay()],
+                ['datetime', '>', Carbon::now()->addHours(7)->copy()->startOfDay()],
+                ['status', StatisticStatus::ACTIVE],
+            ])->first();
 
-        if ($statisticAccess) {
-            $statisticAccess->numbers = $statisticAccess->numbers + 1;
-            $statisticAccess->save();
-        } else {
-            $statisticAccess = [
-                'numbers' => 1,
-                'datetime' => Carbon::now()->addHours(7),
-            ];
+            if ($statisticAccess) {
+                $statisticAccess->numbers = $statisticAccess->numbers + 1;
+                $statisticAccess->save();
+            } else {
+                $statisticAccess = [
+                    'numbers' => 1,
+                    'datetime' => Carbon::now()->addHours(7),
+                ];
 
-            StatisticAccess::create($statisticAccess);
+                StatisticAccess::create($statisticAccess);
+            }
+            setcookie("access", "SHOPPING MALL", time() + 600, "/");
         }
     }
 
