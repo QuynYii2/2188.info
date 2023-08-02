@@ -41,7 +41,7 @@
 
     #checkboxes {
         background-color: white;
-        height: 60vh;
+        height: 30vh;
         overflow-y: auto !important;
         display: none;
         border: 1px #dadada solid;
