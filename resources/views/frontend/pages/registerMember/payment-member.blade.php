@@ -17,9 +17,10 @@
                     <div class="row p-5">
                         <br>
                         @php
-                            $memberRegister = \App\Models\MemberRegisterInfo::where([
-                                ['user_id', Auth::user()->id],
-                                ['member', $registerMember]])->orderBy('created_at', 'desc')->first();
+                                $id = 0;
+                                $memberRegister = \App\Models\MemberRegisterInfo::where([
+                                    ['user_id', $id],
+                                    ['member', $registerMember]])->orderBy('created_at', 'desc')->first();
                         @endphp
                         <h5>Info</h5>
                         <table class="table table-bordered">
@@ -52,7 +53,7 @@
                         </table>
                         @php
                             $memberRegisterSource = \App\Models\MemberRegisterPersonSource::where([
-                                ['user_id', Auth::user()->id],
+                                ['user_id', $id],
                                 ['member_id', $memberRegister->id],
                                 ['type', \App\Enums\MemberRegisterType::SOURCE]])->orderBy('created_at', 'desc')->first();
                         @endphp
@@ -77,7 +78,7 @@
                         </table>
                         @php
                             $memberRegisterRepresent = \App\Models\MemberRegisterPersonSource::where([
-                                ['user_id', Auth::user()->id],
+                                ['user_id', $id],
                                 ['person', $memberRegisterSource->id],
                                 ['type', \App\Enums\MemberRegisterType::REPRESENT]])->orderBy('created_at', 'desc')->first();
                         @endphp
@@ -149,7 +150,8 @@
                                             Payment now
                                         </button>
                                     @else
-                                        <a href="{{route('show.success.payment.member', $registerMember)}}" class="btn btn-success">
+                                        <a href="{{route('show.success.payment.member', $registerMember)}}"
+                                           class="btn btn-success">
                                             Review now
                                         </a>
                                     @endif

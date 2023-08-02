@@ -4,17 +4,17 @@
 <footer class="footer">
     <div class="footer-content text-center">
         <div class="footer-content--big">
-            SUBSCRIBE TO OUR NEWSLETTER
+            {{ __('home.SUBSCRIBE TO OUR NEWSLETTER') }}
         </div>
         <div class="footer-content--small">
-            Get the latest updates on new products and upcoming sales
+            {{ __('home.Get the latest updates on new products and upcoming sales') }}
         </div>
     </div>
     <div class="footer-list">
         <div class="row">
             <div class="footer-item col-xl-2 col-md-4">
                 <div class="item-content">
-                    CATEGORIES
+                    {{ __('home.CATEGORIES') }}
                 </div>
                 @php
                     $listCate = DB::table('categories')->where('parent_id', null)->get();
@@ -35,7 +35,7 @@
             </div>
             <div class="footer-item col-xl-2 col-md-4">
                 <div class="item-content">
-                    BRANDS
+                    {{ __('home.BRANDS') }}
                 </div>
                 <div class="item-small">
                     <a href="#">Benjamin Button</a>
@@ -55,7 +55,7 @@
             </div>
             <div class="footer-item col-xl-2 col-md-4">
                 <div class="item-content">
-                    FURTHER INFO.
+                    {{ __('home.FURTHER INFO') }}.
                 </div>
                 <div class="item-small">
                     <a href="#">About us</a>
@@ -75,7 +75,7 @@
             </div>
             <div class="footer-item col-xl-2 col-md-4">
                 <div class="item-content">
-                    CUSTOMER SERVICE
+                    {{ __('home.CUSTOMER SERVICE') }}
                 </div>
                 <div class="item-small">
                     <a href="#">Help & FAQs</a>
