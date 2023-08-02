@@ -70,7 +70,6 @@ class UserController extends Controller
         }
 
 
-
         // Lưu thông tin người dùng vào cơ sở dữ liệu
         $user = new User;
         $user->name = $request->name;
@@ -347,15 +346,15 @@ class UserController extends Controller
     public function myVoucher()
     {
         $listVouchers = Voucher::all();
-        $sellerIds = DB::table('role_user')->where('role_id','=','2')->get(); // Lấy tất cả ca user_id là seller trong bảng role_user
-        $adminIds =  DB::table('role_user')->where('role_id','=','1')->get(); // Lấy tất cả ca user_id là admin  trong bảng role_user
-        $sellers=[];
-        $admins=[];
-        foreach ($sellerIds as $sellerId){
+        $sellerIds = DB::table('role_user')->where('role_id', '=', '2')->get(); // Lấy tất cả ca user_id là seller trong bảng role_user
+        $adminIds = DB::table('role_user')->where('role_id', '=', '1')->get(); // Lấy tất cả ca user_id là admin  trong bảng role_user
+        $sellers = [];
+        $admins = [];
+        foreach ($sellerIds as $sellerId) {
             array_push($sellers, $sellerId->user_id);
         }
 
-        foreach ($adminIds as $adminId){
+        foreach ($adminIds as $adminId) {
             array_push($admins, $adminId->user_id);
         }
 
@@ -363,7 +362,7 @@ class UserController extends Controller
         $voucherWithAdmin = Voucher::whereIn('user_id', $admins)->get(); // Viết câu truy vấn lấy tất cả các voucher có user_id có trong mảng  $adminIds
 
 
-        return view('frontend.pages.profile.my-voucher',[
+        return view('frontend.pages.profile.my-voucher', [
             'all' => $listVouchers,
             'shoppe' => $voucherWithAdmin,
             'shop' => $voucherWithSellers
