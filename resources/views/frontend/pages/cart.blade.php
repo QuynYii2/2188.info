@@ -162,7 +162,7 @@
                                            name="quantity" style="border-radius: 15px; border-color: #ccc"
                                            value="{{ $cartItem->quantity }}"
                                            onchange="myfunction({{ $cartItem->id }}); "
-                                           min="1"/>
+                                           min="{{$cartItem->product->min}}"/>
                                 </form>
                             </td>
 {{--                            @dd($percent)--}}
