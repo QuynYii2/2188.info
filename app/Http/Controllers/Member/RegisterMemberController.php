@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Member;
 
+use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\HomeController;
@@ -23,7 +24,7 @@ class RegisterMemberController extends Controller
 //        if ($isMember) {
         (new HomeController())->getLocale($request);
 //            $memberCompany = MemberRegisterInfo::find($isMember->member_id);
-        $memberCompanys = MemberRegisterInfo::all();
+        $memberCompanys = MemberRegisterInfo::where('status', MemberRegisterInfoStatus::ACTIVE)->get();
 //        $products = Product::where([['user_id', Auth::user()->id], ['status', ProductStatus::ACTIVE]])->get();
 //        return view('frontend/pages/member/index', compact('products', 'memberCompany'));
         return view('frontend/pages/member/index', compact('memberCompanys'));
