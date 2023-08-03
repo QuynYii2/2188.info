@@ -37,6 +37,16 @@
                                 ['product_id', $cartItem->product->id],
                                 ['variation', $cartItem->values]
                                 ])->first();
+
+                            $sales = \App\Models\ProductSale::where([
+                                ['product_id', $cartItem->product->id],
+                                ['quantity','<=', $cartItem->quantity]
+                                ])->orderBy('sales', 'desc')->first();
+
+                            $percent = null;
+                            if ($sales){
+                                $percent = $sales->sales;
+                            }
                         @endphp
                         <tr>
                             <td>
@@ -155,7 +165,13 @@
                                            min="1"/>
                                 </form>
                             </td>
-                            <td id="total-quantity-{{ $cartItem->id }}">{{ $cartItem->price*$cartItem->quantity }}</td>
+{{--                            @dd($percent)--}}
+                            @if($percent)
+                                <td id="total-quantity-{{ $cartItem->id }}">{{ ($cartItem->price*$cartItem->quantity) - ($cartItem->price*$cartItem->quantity)*$percent/100 }}</td>
+                            @else
+                                <td id="total-quantity-{{ $cartItem->id }}">{{ $cartItem->price*$cartItem->quantity }}</td>
+                            @endif
+
                             <td>
                                 <form class="text-center" action="{{ route('cart.delete', $cartItem->id) }}"
                                       method="POST">
@@ -176,8 +192,7 @@
                         <label for="inputPassword2">Enter your coupon code if you have one.</label>
                         <form class="d-flex align-items-center justify-content-between">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="inputPassword2"
-                                       placeholder="Enter your coupon code">
+                                <input type="text" class="form-control" id="inputPassword2" placeholder="Enter your coupon code">
                             </div>
                             <button type="submit" class="btn mb-2 submit">Apply</button>
                         </form>
@@ -187,8 +202,7 @@
                         <label for="inputPassword2">Enter your coupon code if you have one.</label>
                         <form class="d-flex align-items-center justify-content-between">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="inputPassword2"
-                                       placeholder="Enter your coupon code">
+                                <input type="text" class="form-control" id="inputPassword2" placeholder="Enter your coupon code">
                             </div>
                             <button type="submit" class="btn mb-2 submit">Apply</button>
                         </form>
@@ -246,8 +260,9 @@
                         <span>Grand total: </span>
                         <span>$ <span id="max-total"> {{ $cartItem->price*$cartItem->quantity }}</span></span>
                     </div>
-                    <a href="{{route('checkout.show')}}"><button type="submit" class="btn mb-2 submit float-right submit-100">
-                                Check out</button></a>
+                    <a href="{{route('checkout.show')}}">
+                        <button type="submit" class="btn mb-2 submit float-right submit-100"> Check out</button>
+                    </a>
                 </div>
             </div>
         @endif
