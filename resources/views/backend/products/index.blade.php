@@ -200,11 +200,13 @@
 
                         <div class="form-group">
                             <div class="name">Xuất xứ</div>
-                            <input type="text" class="form-control" name="origin" id="origin" placeholder="Nhập xuất xứ" value="{{$product->origin}}">
+                            <input type="text" class="form-control" name="origin" id="origin" placeholder="Nhập xuất xứ"
+                                   value="{{$product->origin}}">
                         </div>
                         <div class="form-group">
                             <div class="name">Sản phẩm tối thiểu</div>
-                            <input type="number" value="{{$product->min}}" class="form-control" name="min" id="min" placeholder="Nhập số lượng tối thiểu" min="1">
+                            <input type="number" value="{{$product->min}}" class="form-control" name="min" id="min"
+                                   placeholder="Nhập số lượng tối thiểu" min="1">
                         </div>
                         <div class="form-group">
                             <div class="d-flex">
@@ -212,11 +214,13 @@
                             </div>
                             <div>
                                 <div class="">
-                                    <div class="add-fields" data-af_base="#base-package-fields" data-af_target=".packages">
+                                    <div class="add-fields" data-af_base="#base-package-fields"
+                                         data-af_target=".packages">
                                         <div class="packages">
 
                                         </div>
-                                        <button type="button" class="btn add-form-field"><i class="fa-solid fa-plus"></i> Thêm khoảng giá</button>
+                                        <button type="button" class="btn add-form-field"><i
+                                                    class="fa-solid fa-plus"></i> Thêm khoảng giá</button>
                                     </div>
                                     <div id="base-package-fields" hidden>
                                         @php
@@ -227,13 +231,18 @@
                                                 <div class="form-group form-group-price">
                                                     <div class="d-flex align-items-center">
                                                         <div class="">
-                                                            <input value="{{$price_sale->quantity}}" type="number" class="form-control form-price" name="quantity[]" placeholder="Từ (sản phẩm)">
+                                                            <input value="{{$price_sale->quantity}}" type="number"
+                                                                   class="form-control form-price" name="quantity[]"
+                                                                   placeholder="Từ (sản phẩm)">
                                                         </div>
                                                         <div class="">
-                                                            <input value="{{$price_sale->sales}}" type="number" class="form-control form-price" name="sales[]" placeholder="Giảm %">
+                                                            <input value="{{$price_sale->sales}}" type="number"
+                                                                   class="form-control form-price" name="sales[]"
+                                                                   placeholder="Giảm %">
                                                         </div>
                                                         <div class="">
-                                                            <button type="button" class="btn remove-form-field"><i class="fa-regular fa-trash-can"></i></button>
+                                                            <button type="button" class="btn remove-form-field"><i
+                                                                        class="fa-regular fa-trash-can"></i></button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -242,13 +251,16 @@
                                             <div class="form-group form-group-price">
                                                 <div class="d-flex align-items-center">
                                                     <div class="">
-                                                        <input type="number" class="form-control form-price" name="quantity[]" placeholder="Từ (sản phẩm)">
+                                                        <input type="number" class="form-control form-price"
+                                                               name="quantity[]" placeholder="Từ (sản phẩm)">
                                                     </div>
                                                     <div class="">
-                                                        <input type="number" class="form-control form-price" name="sales[]" placeholder="Giảm %">
+                                                        <input type="number" class="form-control form-price"
+                                                               name="sales[]" placeholder="Giảm %">
                                                     </div>
                                                     <div class="">
-                                                        <button type="button" class="btn remove-form-field"><i class="fa-regular fa-trash-can"></i></button>
+                                                        <button type="button" class="btn remove-form-field"><i
+                                                                    class="fa-regular fa-trash-can"></i></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -313,6 +325,12 @@
                                                                                            name="price{{$productDetail->id}}"
                                                                                            value="{{$productDetail->price }}">
                                                                             </div>
+
+                                                                                    <div class="form-group">
+                                                                                        <div class="name">Nhập số lượng</div>
+                                                                                        <input type="number" class="form-control" name="qty" id="qty"
+                                                                                               placeholder="Nhập giá khuyến mãi" value="{{$product->qty}}" min="1">
+                                                                                    </div>
 
                                                                                     <div class="form-group">
                                                                                 <label for="thumbnail">Thumbnail</label>
@@ -527,7 +545,7 @@
                                 @php
                                     $namenewProduct = DB::table('users')->where('id', $product->user_id)->first();
                                 @endphp
-                              <span class="na">
+                                <span class="na">
                                 {{$namenewProduct->name}}
                               </span>
                             </td>
@@ -601,7 +619,7 @@
                             </td>
                             <td>
                                 Đã xuất bản <br>
-                               {{$product->created_at}}
+                                {{$product->created_at}}
                             </td>
                         </tr>
                     @endforeach
@@ -740,24 +758,24 @@
         }
     </script>
     <script>
-        $('.add-fields').each(function(index, el) {
+        $('.add-fields').each(function (index, el) {
             var warp = $(this);
             var target = $(this).data('af_target') || '.content';
             var index = $(target).children('div, tr').length;
-            var baseEl =$($(this).data('af_base')) || $(target).find('.form-field-base');
+            var baseEl = $($(this).data('af_base')) || $(target).find('.form-field-base');
             var base = baseEl.html();
             baseEl.remove();
             //alert(base);
             warp.find(target).append(base.replace('.form-price', index));
-            index ++;
+            index++;
 
-            warp.on('click', '.add-form-field', function(e) {
+            warp.on('click', '.add-form-field', function (e) {
                 e.preventDefault();
                 warp.find(target).append(base.replace('.form-price', index));
                 index++;
             });
 
-            warp.on('click', '.remove-form-field', function(e) {
+            warp.on('click', '.remove-form-field', function (e) {
                 e.preventDefault();
                 $(this).parents($(this).data('target') || '.form-group-price').remove();
             });

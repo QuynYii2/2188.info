@@ -183,7 +183,12 @@
                         <div class="form-group">
                             <div class="name">Nhập giá khuyến mãi(nếu có)</div>
                             <input type="number" class="form-control" name="giakhuyenmai" id="name"
-                                    placeholder="Nhập giá khuyến mãi" min="1">
+                                    placeholder="Nhập số lượng" min="1">
+                        </div>
+                        <div class="form-group">
+                            <div class="name">Nhập số lượng</div>
+                            <input type="number" class="form-control" name="qty" id="qty"
+                                   placeholder="Nhập giá khuyến mãi" min="1">
                         </div>
                         <div class="form-group">
                             <div class="name">Xuất xứ</div>
