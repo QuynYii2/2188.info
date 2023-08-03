@@ -33,6 +33,40 @@
                     <!-- End Line Chart -->
                 </div>
             </div>
+
+            <div class="todo_list">
+                <div class="title">Duyệt sản phẩm</div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Shop Name</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($productAll as $productAllItem)
+                        <tr>
+                            <th scope="row">{{$loop->index+1}}</th>
+                            <td>{{$productAllItem->name}}</td>
+                            <td>{{$productAllItem->user->name}}</td>
+                            <td id="productStatus{{$productAllItem->id}}">{{$productAllItem->status}}</td>
+                            @php
+                                $isChecked = false;
+                                if ($productAllItem->status == \App\Enums\ProductStatus::ACTIVE){
+                                    $isChecked = true;
+                                }
+                            @endphp
+                            <td>
+                                <input type="checkbox" class="toggleProduct" value="{{$productAllItem->id}}" {{ $isChecked ? 'checked' : '' }}>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         @endif
         <div class="todo_list">
             <div class="title">Phân tích bán hàng</div>
@@ -245,7 +279,30 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+        $(".toggleProduct").click(function () {
+            var productID = $(this).val();
+            console.log(productID)
+            function setProductFeatures(productID) {
+                $.ajax({
+                    url: '/toggle-products-all/' + productID,
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function (response) {
+                        let status = document.getElementById('productStatus' + productID)
+                        status.innerText = response['status'];
+                    },
+                    error: function (exception) {
+                        console.log(exception)
+                    }
+                });
+            }
 
+            setProductFeatures(productID);
+        });
+    </script>
     <script>
         function getAllStatisticAccess() {
             $.ajax({

@@ -235,6 +235,8 @@ Route::group(['middleware' => 'role.admin'], function () {
     Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('seller.categories.edit');
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('seller.categories.update');
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('seller.categories.destroy');
+    //
+    Route::post('/toggle-products-all/{id}', [ProductController::class, 'toggleProduct'])->name('admin.toggle.products');
 
 });
 

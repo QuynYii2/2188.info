@@ -207,7 +207,7 @@
                         @endif
                     </div>
                     <div class="description-text">
-                        {{ $product->short_description }}
+                        {!! $product->short_description!!}
                     </div>
                     @if(!$attributes->isEmpty())
                         <div class="row">
@@ -248,9 +248,12 @@
                         <label for="qty">{{ __('home.remaining') }}<span id="productQuantity">{{$product->qty}}</span></label>
                     </div><!-- Button to trigger modal -->
                     <!-- Button trigger modal -->
-                    <a class="p-2 btn-light" style="" data-toggle="modal" data-target="#exampleModal">
-                        Bảng giá sỉ
-                    </a>
+                    @php
+                        $price_sales = \App\Models\ProductSale::where('product_id', '=', $product->id)->get();
+                    @endphp
+                        <a class="p-2 btn-light" style="cursor: pointer" data-toggle="modal" data-target="#exampleModal">
+                            Bảng giá sỉ
+                        </a>
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -273,12 +276,14 @@
                                         @php
                                             $price_sales = \App\Models\ProductSale::where('product_id', '=', $product->id)->get();
                                         @endphp
-                                        @foreach($price_sales as $price_sale)
-                                            <tr>
-                                                <td class="text-left">{{$price_sale->quantity}}</td>
-                                                <td class="text-left">-{{$price_sale->sales}} %</td>
-                                            </tr>
-                                        @endforeach
+                                        @if(!$price_sales->isEmpty())
+                                            @foreach($price_sales as $price_sale)
+                                                <tr>
+                                                    <td class="text-left">{{$price_sale->quantity}}</td>
+                                                    <td class="text-left">-{{$price_sale->sales}} %</td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -380,13 +385,15 @@
         </ul>
         <div class="tab-content container-fluid" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                {{$product->description}}
+                {!! $product->description!!}
             </div>
             @php
                 $infos = DB::table('shop_infos')->first();
             @endphp
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                {{$infos->information}}
+                @if($infos)
+                    {{$infos->information}}
+                @endif
             </div>
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                 <div class="card mb-4">
