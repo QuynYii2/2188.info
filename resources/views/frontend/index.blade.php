@@ -148,6 +148,14 @@
             background-size: 22px;
             background-repeat: no-repeat;
         }
+        .flag-ct {
+            content: '';
+            width: 45px;
+            height: 30px;
+            position: relative;
+            background-size: 30px;
+            background-repeat: no-repeat;
+        }
     </style>
 
     <div class="body" id="body-content">
@@ -632,10 +640,10 @@
                                         @php
                                             $nameHot = DB::table('users')->where('id', $hotProduct->user_id)->first();
                                         @endphp
-                                        <div class="card-brand">
+                                        <div class="card-brand" >
                                             {{$nameHot->name}}
                                         </div>
-                                        <div class="card-title">
+                                        <div id="before-nation-flag" class="card-title">
                                             @if(Auth::check())
                                                 <a href="{{route('detail_product.show', $hotProduct->id)}}">{{$hotProduct->name}}</a>
                                             @else
@@ -672,7 +680,7 @@
                                                 <i class="item-icon fa-regular fa-heart"></i>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div >
                                 </div>
                             </div>
                         @endforeach
@@ -680,70 +688,69 @@
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
-        </section>
-        {{--        <section class="section-Sixth section pt-3 pb-3 container-fluid">--}}
-        {{--            <div class="content">{{ __('home.Top Brands') }}</div>--}}
-        {{--            <div class="swiper TopBrands">--}}
-        {{--                <div class="swiper-wrapper">--}}
-        {{--                    <div class="swiper-slide">--}}
-        {{--                        <div class="brand">--}}
-        {{--                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/brand3.png"--}}
-        {{--                                 alt="">--}}
-        {{--                        </div>--}}
-        {{--                    </div>--}}
-        {{--                    <div class="swiper-slide">--}}
-        {{--                        <div class="brand">--}}
-        {{--                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/brand3.png"--}}
-        {{--                                 alt="">--}}
-        {{--                        </div>--}}
-        {{--                    </div>--}}
-        {{--                    <div class="swiper-slide">--}}
-        {{--                        <div class="brand">--}}
-        {{--                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/brand3.png"--}}
-        {{--                                 alt="">--}}
-        {{--                        </div>--}}
-        {{--                    </div>--}}
-        {{--                    <div class="swiper-slide">--}}
-        {{--                        <div class="brand">--}}
-        {{--                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/brand3.png"--}}
-        {{--                                 alt="">--}}
-        {{--                        </div>--}}
-        {{--                    </div>--}}
-        {{--                    <div class="swiper-slide">--}}
-        {{--                        <div class="brand">--}}
-        {{--                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/brand3.png"--}}
-        {{--                                 alt="">--}}
-        {{--                        </div>--}}
-        {{--                    </div>--}}
-        {{--                    <div class="swiper-slide">--}}
-        {{--                        <div class="brand">--}}
-        {{--                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/brand3.png"--}}
-        {{--                                 alt="">--}}
-        {{--                        </div>--}}
-        {{--                    </div>--}}
-        {{--                    <div class="swiper-slide">--}}
-        {{--                        <div class="brand">--}}
-        {{--                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/brand3.png"--}}
-        {{--                                 alt="">--}}
-        {{--                        </div>--}}
-        {{--                    </div>--}}
-        {{--                </div>--}}
-        {{--                <div class="swiper-button-next"></div>--}}
-        {{--                <div class="swiper-button-prev"></div>--}}
-        {{--            </div>--}}
-        {{--        </section>--}}
+{{--        </section>--}}
+{{--                <section class="section-Sixth section pt-3 pb-3 container-fluid">--}}
+{{--                    <div class="content">{{ __('home.Top Brands') }}</div>--}}
+{{--                    <div class="swiper TopBrands">--}}
+{{--                        <div class="swiper-wrapper">--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <div class="brand">--}}
+{{--                                    <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/brand3.png"--}}
+{{--                                         alt="">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <div class="brand">--}}
+{{--                                    <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/brand3.png"--}}
+{{--                                         alt="">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <div class="brand">--}}
+{{--                                    <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/brand3.png"--}}
+{{--                                         alt="">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <div class="brand">--}}
+{{--                                    <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/brand3.png"--}}
+{{--                                         alt="">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <div class="brand">--}}
+{{--                                    <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/brand3.png"--}}
+{{--                                         alt="">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <div class="brand">--}}
+{{--                                    <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/brand3.png"--}}
+{{--                                         alt="">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="swiper-slide">--}}
+{{--                                <div class="brand">--}}
+{{--                                    <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/brand3.png"--}}
+{{--                                         alt="">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="swiper-button-next"></div>--}}
+{{--                        <div class="swiper-button-prev"></div>--}}
+{{--                    </div>--}}
+{{--                </section>--}}
 
-        {{--        @php--}}
-        {{--            $listCate = DB::table('categories')->where('parent_id', null)->get();--}}
-        {{--        @endphp--}}
-        {{--        @if(!$listCate->isEmpty())--}}
-        {{--            @foreach($listCate as $cate)--}}
-
-
-
-{{-- Danh Mục Đã Chọn --}}
+{{--                @php--}}
+{{--                    $listCate = DB::table('categories')->where('parent_id', null)->get();--}}
+{{--                @endphp--}}
+{{--                @if(!$listCate->isEmpty())--}}
+{{--                    @foreach($listCate as $cate)--}}
+{{-- Location --}}
         <section class="section pt-3 pb-3 container-fluid">
-            <div class="content"></div>
+            <div  class="content ">Việt Nam
+                <img class="flag-ct" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
+            </div>
             <div class="row">
                 <div class="col-md-3 col-xl-2 section-left">
                     <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/products-block-banner-left-2.jpg"
@@ -752,10 +759,10 @@
                 <div class="col-12 col-md-9 col-xl-8">
                     <div class="swiper listProduct">
                         <div class="swiper-wrapper">
-                            @php
-                                $products = \App\Models\Product::where([['location','=','vi'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
-                            @endphp
-                            @foreach($products as $product)
+{{--                            @php--}}
+{{--                                $products = \App\Models\Product::where([['location','=','vi'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();--}}
+{{--                            @endphp--}}
+                            @foreach($currentProducts as $product)
                                 @php
                                     $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
                                 @endphp
@@ -920,9 +927,11 @@
                 </div>
             </div>
         </section>
-{{-- Việt Nam --}}
+{{-- Location 0 --}}
         <section class="section pt-3 pb-3 container-fluid">
-            <div class="content">Việt Nam</div>
+            <div class="content">Hàn Quốc
+                <img class="flag-ct" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png">
+            </div>
             <div class="row">
                 <div class="col-md-3 col-xl-2 section-left">
                     <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/products-block-banner-left-2.jpg"
@@ -931,10 +940,8 @@
                 <div class="col-12 col-md-9 col-xl-8">
                     <div class="swiper listProduct">
                         <div class="swiper-wrapper">
-                            @php
-                                $products = \App\Models\Product::where([['location','=','vi'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
-                            @endphp
-                            @foreach($products as $product)
+
+                            @foreach($krProducts as $product)
                                 @php
                                     $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
                                 @endphp
@@ -1099,9 +1106,11 @@
                 </div>
             </div>
         </section>
-{{-- Hàn Quốc --}}
+{{-- Location 1 --}}
         <section class="section pt-3 pb-3 container-fluid">
-            <div class="content">Hàn Quốc</div>
+            <div  class="content">Trung Quốc
+                <img class="flag-ct" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
+            </div>
             <div class="row">
                 <div class="col-md-3 col-xl-2 section-left">
                     <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/products-block-banner-left-2.jpg"
@@ -1110,190 +1119,8 @@
                 <div class="col-12 col-md-9 col-xl-8">
                     <div class="swiper listProduct">
                         <div class="swiper-wrapper">
-                            @php
-                                $products = \App\Models\Product::where([['location','=','kr'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
-                            @endphp
-                            @foreach($products as $product)
-                                @php
-                                    $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
-                                @endphp
-                                <div class="swiper-slide">
-                                    <div class="item">
-                                        @if($product->thumbnail)
-                                            <div class="item-img">
-                                                <img src="{{ asset('storage/' . $product->thumbnail) }}"
-                                                     alt="">
-                                                <div class="button-view">
-                                                    <button type="button" class="btn view_modal"
-                                                            data-toggle="modal"
-                                                            data-value="{{$product}}"
-                                                            data-id="{{$productDetail}}"
-                                                            data-target="#exampleModal">{{ __('home.Quick view') }}</button>
-                                                </div>
-                                                <div class="text">
-                                                    <div class="text-new">
-                                                        New
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
 
-                                        <div class="item-body">
-                                            <div class="card-rating">
-                                                @for($i = 0; $i < 5; $i++)
-                                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                                @endfor
-                                                <span>(1)</span>
-                                            </div>
-                                            @php
-                                                $nameUser = DB::table('users')->where('id', $product->user_id)->first();
-                                            @endphp
-                                            <div class="card-brand">
-                                                {{$nameUser->name}}
-                                            </div>
-                                            <div class="card-title">
-                                                @if(Auth::check())
-                                                    <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>
-                                                @else
-                                                    <a class="check_url">{{$product->name}}</a>
-                                                @endif
-                                            </div>
-                                            @if($product->price)
-                                                <div class="card-price d-flex justify-content-between">
-                                                    @if($product->price != null)
-                                                        <div class="price-sale">
-                                                            <strong>${{$product->price}}</strong>
-                                                        </div>
-                                                        <div class="price-cost">
-                                                            <strike>${{$product->old_price}}</strike>
-                                                        </div>
-                                                    @else
-                                                        <div class="price-sale">
-                                                            <strong>${{$product->old_price}}</strong>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endif
-                                            <div class="card-bottom d-flex justify-content-between">
-                                                <div class="card-bottom--left">
-                                                    @if(Auth::check())
-                                                        <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
-                                                    @else
-                                                        <a class="check_url">Choose Options</a>
-                                                    @endif
-                                                </div>
-                                                <div class="card-bottom--right " id-product="{{$newProduct->id}}">
-                                                    <i class="item-icon fa-regular fa-heart"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                    </div>
-                </div>
-                @if(!$listCate->isEmpty())
-                    @php
-                        $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
-                    @endphp
-                    <div class="col-xl-2 category-right">
-                        @if(count($listChild) == 0)
-                            <div class="brand-item d-flex justify-content-between">
-                                <div class="brand-item--all">
-                                    @if(Auth::check())
-                                        <a href="{{ route('category.show', $cate->id) }}">{{ __('home.View all categories') }}</a>
-                                    @else
-                                        <a class="check_url">View all categories</a>
-                                    @endif
-                                </div>
-                            </div>
-                        @else
-                            @if(count($listChild) < 3)
-                                @foreach($listChild as $child)
-                                    <div class="brand-item d-flex justify-content-between">
-                                        <div class="brand-item-text">
-                                            <div class="name">{{ $child->name }}</div>
-                                            @if(Auth::check())
-                                                <a href="{{ route('category.show', $child->id) }}">{{ __('home.shop now') }}</a>
-                                            @else
-                                                <a class="check_url">{{ __('home.shop now') }}</a>
-                                            @endif
-                                        </div>
-                                        <div class="brand-item-img">
-                                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/70x70/q/for-men__79756.original.jpg"
-                                                 alt="">
-                                        </div>
-                                    </div>
-                                @endforeach
-                            @else
-                                @for($i = 0; $i < 3; $i++)
-                                    <div class="brand-item d-flex justify-content-between">
-                                        <div class="brand-item-text">
-                                            <div class="name">{{ $listChild[$i]->name }}</div>
-                                            @if(Auth::check())
-                                                <a href="{{ route('category.show', $listChild[$i]->id) }}">{{ __('home.shop now') }}</a>
-                                            @else
-                                                <a class="check_url">{{ __('home.shop now') }}</a>
-                                            @endif
-                                        </div>
-                                        <div class="brand-item-img">
-                                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/70x70/q/for-men__79756.original.jpg"
-                                                 alt="">
-                                        </div>
-                                    </div>
-                                @endfor
-                            @endif
-                            <div class="brand-item d-flex justify-content-between">
-                                <div class="brand-item--all">
-                                    @if(Auth::check())
-                                        <a href="{{ route('category.show', $cate->id) }}">{{ __('home.View all categories') }}</a>
-                                    @else
-                                        <a class="check_url">View all categories</a>
-                                    @endif
-                                </div>
-                            </div>
-                        @endif
-                    </div>
-                @endif
-            </div>
-        </section>
-        <section class="section pt-3 pb-3 container-fluid">
-            <div class="product-banner">
-                <div class="row">
-                    <div class="col-md-4 col-12">
-                        <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/banner-two-images1.jpg"
-                             alt="">
-                    </div>
-                    <div class="col-md-4 col-12">
-                        <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/banner-two-images2.jpg"
-                             alt="">
-                    </div>
-                    <div class="col-md-4 col-12">
-                        <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/banner-two-images1.jpg"
-                             alt="">
-                    </div>
-                </div>
-            </div>
-        </section>
-{{-- Trung Quốc --}}
-        <section class="section pt-3 pb-3 container-fluid">
-
-            <div class="content">Trung Quốc</div>
-            <div class="row">
-                <div class="col-md-3 col-xl-2 section-left">
-                    <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/products-block-banner-left-2.jpg"
-                         alt="">
-                </div>
-                <div class="col-12 col-md-9 col-xl-8">
-                    <div class="swiper listProduct">
-                        <div class="swiper-wrapper">
-                            @php
-                                $products = \App\Models\Product::where([['location','=','cn'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
-                            @endphp
-                            @foreach($products as $product)
+                            @foreach($cnProducts as $product)
                                 @php
                                     $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
                                 @endphp
@@ -1459,184 +1286,186 @@
             </div>
         </section>
 {{-- Nhật Bản --}}
-        <section class="section pt-3 pb-3 container-fluid">
-            <div class="content">Nhật Bản</div>
-            <div class="row">
-                <div class="col-md-3 col-xl-2 section-left">
-                    <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/products-block-banner-left-2.jpg"
-                         alt="">
-                </div>
-                <div class="col-12 col-md-9 col-xl-8">
-                    <div class="swiper listProduct">
-                        <div class="swiper-wrapper">
-                            @php
-                                $products = \App\Models\Product::where([['location','=','jp'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
-                            @endphp
-                            @foreach($products as $product)
-                                @php
-                                    $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
-                                @endphp
-                                <div class="swiper-slide">
-                                    <div class="item">
-                                        @if($product->thumbnail)
-                                            <div class="item-img">
-                                                <img src="{{ asset('storage/' . $product->thumbnail) }}"
-                                                     alt="">
-                                                <div class="button-view">
-                                                    <button type="button" class="btn view_modal"
-                                                            data-toggle="modal"
-                                                            data-value="{{$product}}"
-                                                            data-id="{{$productDetail}}"
-                                                            data-target="#exampleModal">{{ __('home.Quick view') }}</button>
-                                                </div>
-                                                <div class="text">
-                                                    <div class="text-new">
-                                                        New
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
+{{--        <section class="section pt-3 pb-3 container-fluid">--}}
+{{--            <div id="nhat-ban" class="content">Nhật Bản--}}
+{{--                <img class="flag-ct" src="https://nhatbanchotoinhe.com/wp-content/uploads/2021/04/co-nhat-4795-1497173124.png">--}}
+{{--            </div>--}}
+{{--            <div class="row">--}}
+{{--                <div class="col-md-3 col-xl-2 section-left">--}}
+{{--                    <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/products-block-banner-left-2.jpg"--}}
+{{--                         alt="">--}}
+{{--                </div>--}}
+{{--                <div class="col-12 col-md-9 col-xl-8">--}}
+{{--                    <div class="swiper listProduct">--}}
+{{--                        <div class="swiper-wrapper">--}}
+{{--                            @php--}}
+{{--                                $products = \App\Models\Product::where([['location','=','jp'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();--}}
+{{--                            @endphp--}}
+{{--                            @foreach($products as $product)--}}
+{{--                                @php--}}
+{{--                                    $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();--}}
+{{--                                @endphp--}}
+{{--                                <div class="swiper-slide">--}}
+{{--                                    <div class="item">--}}
+{{--                                        @if($product->thumbnail)--}}
+{{--                                            <div class="item-img">--}}
+{{--                                                <img src="{{ asset('storage/' . $product->thumbnail) }}"--}}
+{{--                                                     alt="">--}}
+{{--                                                <div class="button-view">--}}
+{{--                                                    <button type="button" class="btn view_modal"--}}
+{{--                                                            data-toggle="modal"--}}
+{{--                                                            data-value="{{$product}}"--}}
+{{--                                                            data-id="{{$productDetail}}"--}}
+{{--                                                            data-target="#exampleModal">{{ __('home.Quick view') }}</button>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="text">--}}
+{{--                                                    <div class="text-new">--}}
+{{--                                                        New--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        @endif--}}
 
-                                        <div class="item-body">
-                                            <div class="card-rating">
-                                                @for($i = 0; $i < 5; $i++)
-                                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                                @endfor
-                                                <span>(1)</span>
-                                            </div>
-                                            @php
-                                                $nameUser = DB::table('users')->where('id', $product->user_id)->first();
-                                            @endphp
-                                            <div class="card-brand">
-                                                {{$nameUser->name}}
-                                            </div>
-                                            <div class="card-title">
-                                                @if(Auth::check())
-                                                    <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>
-                                                @else
-                                                    <a class="check_url">{{$product->name}}</a>
-                                                @endif
-                                            </div>
-                                            @if($product->price)
-                                                <div class="card-price d-flex justify-content-between">
-                                                    @if($product->price != null)
-                                                        <div class="price-sale">
-                                                            <strong>${{$product->price}}</strong>
-                                                        </div>
-                                                        <div class="price-cost">
-                                                            <strike>${{$product->old_price}}</strike>
-                                                        </div>
-                                                    @else
-                                                        <div class="price-sale">
-                                                            <strong>${{$product->old_price}}</strong>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endif
-                                            <div class="card-bottom d-flex justify-content-between">
-                                                <div class="card-bottom--left">
-                                                    @if(Auth::check())
-                                                        <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
-                                                    @else
-                                                        <a class="check_url">Choose Options</a>
-                                                    @endif
-                                                </div>
-                                                <div class="card-bottom--right" id-product="{{$newProduct->id}}">
-                                                    <i class="item-icon fa-regular fa-heart"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                    </div>
-                </div>
-                @if(!$listCate->isEmpty())
-                    @php
-                        $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
-                    @endphp
-                    <div class="col-xl-2 category-right">
-                        @if(count($listChild) == 0)
-                            <div class="brand-item d-flex justify-content-between">
-                                <div class="brand-item--all">
-                                    @if(Auth::check())
-                                        <a href="{{ route('category.show', $cate->id) }}">{{ __('home.View all categories') }}</a>
-                                    @else
-                                        <a class="check_url">View all categories</a>
-                                    @endif
-                                </div>
-                            </div>
-                        @else
-                            @if(count($listChild) < 3)
-                                @foreach($listChild as $child)
-                                    <div class="brand-item d-flex justify-content-between">
-                                        <div class="brand-item-text">
-                                            <div class="name">{{ $child->name }}</div>
-                                            @if(Auth::check())
-                                                <a href="{{ route('category.show', $child->id) }}">{{ __('home.shop now') }}</a>
-                                            @else
-                                                <a class="check_url">{{ __('home.shop now') }}</a>
-                                            @endif
-                                        </div>
-                                        <div class="brand-item-img">
-                                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/70x70/q/for-men__79756.original.jpg"
-                                                 alt="">
-                                        </div>
-                                    </div>
-                                @endforeach
-                            @else
-                                @for($i = 0; $i < 3; $i++)
-                                    <div class="brand-item d-flex justify-content-between">
-                                        <div class="brand-item-text">
-                                            <div class="name">{{ $listChild[$i]->name }}</div>
-                                            @if(Auth::check())
-                                                <a href="{{ route('category.show', $listChild[$i]->id) }}">{{ __('home.shop now') }}</a>
-                                            @else
-                                                <a class="check_url">{{ __('home.shop now') }}</a>
-                                            @endif
-                                        </div>
-                                        <div class="brand-item-img">
-                                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/70x70/q/for-men__79756.original.jpg"
-                                                 alt="">
-                                        </div>
-                                    </div>
-                                @endfor
-                            @endif
-                            <div class="brand-item d-flex justify-content-between">
-                                <div class="brand-item--all">
-                                    @if(Auth::check())
-                                        <a href="{{ route('category.show', $cate->id) }}">{{ __('home.View all categories') }}</a>
-                                    @else
-                                        <a class="check_url">View all categories</a>
-                                    @endif
-                                </div>
-                            </div>
-                        @endif
-                    </div>
-                @endif
-            </div>
-        </section>
-        <section class="section pt-3 pb-3 container-fluid">
-            <div class="product-banner">
-                <div class="row">
-                    <div class="col-md-4 col-12">
-                        <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/banner-two-images1.jpg"
-                             alt="">
-                    </div>
-                    <div class="col-md-4 col-12">
-                        <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/banner-two-images2.jpg"
-                             alt="">
-                    </div>
-                    <div class="col-md-4 col-12">
-                        <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/banner-two-images1.jpg"
-                             alt="">
-                    </div>
-                </div>
-            </div>
-        </section>
+{{--                                        <div class="item-body">--}}
+{{--                                            <div class="card-rating">--}}
+{{--                                                @for($i = 0; $i < 5; $i++)--}}
+{{--                                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>--}}
+{{--                                                @endfor--}}
+{{--                                                <span>(1)</span>--}}
+{{--                                            </div>--}}
+{{--                                            @php--}}
+{{--                                                $nameUser = DB::table('users')->where('id', $product->user_id)->first();--}}
+{{--                                            @endphp--}}
+{{--                                            <div class="card-brand">--}}
+{{--                                                {{$nameUser->name}}--}}
+{{--                                            </div>--}}
+{{--                                            <div class="card-title">--}}
+{{--                                                @if(Auth::check())--}}
+{{--                                                    <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>--}}
+{{--                                                @else--}}
+{{--                                                    <a class="check_url">{{$product->name}}</a>--}}
+{{--                                                @endif--}}
+{{--                                            </div>--}}
+{{--                                            @if($product->price)--}}
+{{--                                                <div class="card-price d-flex justify-content-between">--}}
+{{--                                                    @if($product->price != null)--}}
+{{--                                                        <div class="price-sale">--}}
+{{--                                                            <strong>${{$product->price}}</strong>--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="price-cost">--}}
+{{--                                                            <strike>${{$product->old_price}}</strike>--}}
+{{--                                                        </div>--}}
+{{--                                                    @else--}}
+{{--                                                        <div class="price-sale">--}}
+{{--                                                            <strong>${{$product->old_price}}</strong>--}}
+{{--                                                        </div>--}}
+{{--                                                    @endif--}}
+{{--                                                </div>--}}
+{{--                                            @endif--}}
+{{--                                            <div class="card-bottom d-flex justify-content-between">--}}
+{{--                                                <div class="card-bottom--left">--}}
+{{--                                                    @if(Auth::check())--}}
+{{--                                                        <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>--}}
+{{--                                                    @else--}}
+{{--                                                        <a class="check_url">Choose Options</a>--}}
+{{--                                                    @endif--}}
+{{--                                                </div>--}}
+{{--                                                <div class="card-bottom--right" id-product="{{$newProduct->id}}">--}}
+{{--                                                    <i class="item-icon fa-regular fa-heart"></i>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            @endforeach--}}
+{{--                        </div>--}}
+{{--                        <div class="swiper-button-next"></div>--}}
+{{--                        <div class="swiper-button-prev"></div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                @if(!$listCate->isEmpty())--}}
+{{--                    @php--}}
+{{--                        $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();--}}
+{{--                    @endphp--}}
+{{--                    <div class="col-xl-2 category-right">--}}
+{{--                        @if(count($listChild) == 0)--}}
+{{--                            <div class="brand-item d-flex justify-content-between">--}}
+{{--                                <div class="brand-item--all">--}}
+{{--                                    @if(Auth::check())--}}
+{{--                                        <a href="{{ route('category.show', $cate->id) }}">{{ __('home.View all categories') }}</a>--}}
+{{--                                    @else--}}
+{{--                                        <a class="check_url">View all categories</a>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        @else--}}
+{{--                            @if(count($listChild) < 3)--}}
+{{--                                @foreach($listChild as $child)--}}
+{{--                                    <div class="brand-item d-flex justify-content-between">--}}
+{{--                                        <div class="brand-item-text">--}}
+{{--                                            <div class="name">{{ $child->name }}</div>--}}
+{{--                                            @if(Auth::check())--}}
+{{--                                                <a href="{{ route('category.show', $child->id) }}">{{ __('home.shop now') }}</a>--}}
+{{--                                            @else--}}
+{{--                                                <a class="check_url">{{ __('home.shop now') }}</a>--}}
+{{--                                            @endif--}}
+{{--                                        </div>--}}
+{{--                                        <div class="brand-item-img">--}}
+{{--                                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/70x70/q/for-men__79756.original.jpg"--}}
+{{--                                                 alt="">--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                @endforeach--}}
+{{--                            @else--}}
+{{--                                @for($i = 0; $i < 3; $i++)--}}
+{{--                                    <div class="brand-item d-flex justify-content-between">--}}
+{{--                                        <div class="brand-item-text">--}}
+{{--                                            <div class="name">{{ $listChild[$i]->name }}</div>--}}
+{{--                                            @if(Auth::check())--}}
+{{--                                                <a href="{{ route('category.show', $listChild[$i]->id) }}">{{ __('home.shop now') }}</a>--}}
+{{--                                            @else--}}
+{{--                                                <a class="check_url">{{ __('home.shop now') }}</a>--}}
+{{--                                            @endif--}}
+{{--                                        </div>--}}
+{{--                                        <div class="brand-item-img">--}}
+{{--                                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/images/stencil/70x70/q/for-men__79756.original.jpg"--}}
+{{--                                                 alt="">--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                @endfor--}}
+{{--                            @endif--}}
+{{--                            <div class="brand-item d-flex justify-content-between">--}}
+{{--                                <div class="brand-item--all">--}}
+{{--                                    @if(Auth::check())--}}
+{{--                                        <a href="{{ route('category.show', $cate->id) }}">{{ __('home.View all categories') }}</a>--}}
+{{--                                    @else--}}
+{{--                                        <a class="check_url">View all categories</a>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        @endif--}}
+{{--                    </div>--}}
+{{--                @endif--}}
+{{--            </div>--}}
+{{--        </section>--}}
+{{--        <section class="section pt-3 pb-3 container-fluid">--}}
+{{--            <div class="product-banner">--}}
+{{--                <div class="row">--}}
+{{--                    <div class="col-md-4 col-12">--}}
+{{--                        <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/banner-two-images1.jpg"--}}
+{{--                             alt="">--}}
+{{--                    </div>--}}
+{{--                    <div class="col-md-4 col-12">--}}
+{{--                        <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/banner-two-images2.jpg"--}}
+{{--                             alt="">--}}
+{{--                    </div>--}}
+{{--                    <div class="col-md-4 col-12">--}}
+{{--                        <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/banner-two-images1.jpg"--}}
+{{--                             alt="">--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </section>--}}
         <section class="section-Seven ">
             <div class="container-fluid">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum

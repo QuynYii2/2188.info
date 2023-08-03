@@ -8,17 +8,33 @@
      }
 @endphp
 <style>
-    .header-bottom-left--item.icon-flag:first-child a::before {
+    .header-bottom-left--item.item-left a:before {
         display: block;
+        content: '';
         background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png");
-        width: 50px;
-        height: 50px;
+        width: 30px;
+        height: 30px;
         position: relative;
-        margin: -15px 50px;
-        background-size: 22px;
-        background-repeat: no-repeat;
-
-    }
+        background-size: 30px;
+        background-repeat: no-repeat;}
+    .header-bottom-left--item.item-leftt a:before {
+        display: block;
+        content: '';
+        background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png");
+        width: 30px;
+        height: 30px;
+        position: relative;
+        background-size: 30px;
+        background-repeat: no-repeat;}
+    .header-bottom-left--item.item-left:last-child a:before {
+        display: block;
+        content: '';
+        background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png");
+        width: 30px;
+        height: 30px;
+        position: relative;
+        background-size: 30px;
+        background-repeat: no-repeat;}
 
 </style>
 <header class="header">
@@ -498,16 +514,14 @@
                                 <span class="text">{{ __('home.Blog') }}</span>
                             </a>
                         </div>
-                        <div class="header-bottom-left--item icon-flag">
-                            <a href="">
-                                <span>ll</span>
-                            </a>
+                        <div class="header-bottom-left--item item-left">
+                                <a href="#before-nation-flag"></a>
                         </div>
-                        <div class="header-bottom-left--item icon-flag">
-                            <a href="">kl</a>
+                        <div class="header-bottom-left--item item-leftt">
+                                <a href="#before-nation-flag"></a>
                         </div>
-                        <div class="header-bottom-left--item icon-flag">
-                            <a href=""></a>
+                        <div class="header-bottom-left--item item-left">
+                                <a href="#before-nation-flag"></a>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-2 header-bottom-right d-flex align-items-center justify-content-end">

@@ -34,17 +34,34 @@ class HomeController extends Controller
     {
         $this->getLocale($request);
         $locale = app()->getLocale();
-
+        $locations = ['vi', 'kr', 'cn'];
+        $defaultLocale = 'vi';
+        $locale = in_array($locale, $locations) ? $locale : $defaultLocale;
         $currencies = [
             'vi' => 'VND',
             'kr' => 'KRW',
             'cn' => 'CNY',
             'jp' => 'JPY',
         ];
+        $currentProducts = Product::where([['location', $locale],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
+        if (($key = array_search($locale, $locations)) !== false) {
+            unset($locations[$key]);
+        }
+        $newLocations = [];
+        foreach ($locations as $locationNew) {
+            array_push($newLocations, $locationNew);
+        }
+            $krProducts = Product::where([['location', $newLocations[0]], ['status', \App\Enums\ProductStatus::ACTIVE]])->get();
+            $cnProducts = Product::where([['location', $newLocations[1]], ['status', \App\Enums\ProductStatus::ACTIVE]])->get();
+
+
+
+
 
         if (array_key_exists($locale, $currencies)) {
             $currency = $currencies[$locale];
         }
+
 
         $productByLocal = Product::where('location', $locale)->limit(10)->get();
 
@@ -139,6 +156,10 @@ class HomeController extends Controller
             'configsTop5' => $configsTop5,
             'banner' => $banner,
             'newProducts' => $newProducts,
+            'currentProducts' => $currentProducts,
+            'krProducts' => $krProducts,
+            'cnProducts' => $cnProducts,
+            'locale' => $locale,
         ]);
     }
 
