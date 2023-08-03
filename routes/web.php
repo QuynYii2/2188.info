@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\OrderController;
+use App\Http\Controllers\Member\RegisterMemberController;
 use App\Http\Controllers\PaypalPaymentController;
 use App\Http\Controllers\PermissionRankController;
 use App\Http\Controllers\ProductInterestController;
@@ -238,6 +239,8 @@ Route::group(['middleware' => 'role.admin'], function () {
     Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('seller.categories.edit');
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('seller.categories.update');
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('seller.categories.destroy');
+    //
+    Route::post('/toggle-products-all/{id}', [ProductController::class, 'toggleProduct'])->name('admin.toggle.products');
 
 });
 
@@ -373,6 +376,9 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::get('/statistic-revenues', [StatisticController::class, 'getStatisticRevenue'])->name('admin.statistic.revenues');
     Route::get('/statistic-users', [StatisticController::class, 'getStatisticUser'])->name('admin.statistic.users');
     Route::get('/statistic-shop', [StatisticShopController::class, 'getStatisticShops'])->name('shop.statistic.index');
+    // Register member
+    Route::get('/products-register-member', [RegisterMemberController::class, 'index'])->name('products.register.member.index');
+    Route::post('/products-register-member', [RegisterMemberController::class, 'saveProduct'])->name('products.register.member.create');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {

@@ -70,7 +70,7 @@ class CartController extends Controller
                 $cart = [
                     'user_id' => Auth::user()->id,
                     'product_id' => $product->id,
-                    'price' => $productDetail->price,
+                    'price' => $product->price,
                     'quantity' => $quantity,
                     'values' => $variable,
                     'status' => CartStatus::WAIT_ORDER,

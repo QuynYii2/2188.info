@@ -42,7 +42,7 @@
 
     #checkboxes {
         background-color: white;
-        height: 60vh;
+        height: 30vh;
         overflow-y: auto !important;
         display: none;
         border: 1px #dadada solid;
@@ -101,7 +101,6 @@
                             {{ session('error_create_product') }}
                         </div>
                     @endif
-
                     <div class="col-12 col-md-7 border-right mt-2 rm-pd-on-mobile">
                         <div class="form-group">
                             <div class="name">Tên sản phẩm</div>
@@ -304,7 +303,6 @@
                         <input type="text" hidden="" name="isNew" id="isNew" value="0">
 
                     </div>
-
                     <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
                         <div class="form-group">
                             <div class="name">Giá bán</div>
@@ -316,6 +314,65 @@
                             <div class="name">Nhập giá khuyến mãi(nếu có)</div>
                             <input type="number" class="form-control" name="giakhuyenmai" id="name"
                                    placeholder="Nhập giá khuyến mãi"  value="{{$product->price}}" min="1">
+                        </div>
+                        <div class="form-group">
+                            <div class="name">Xuất xứ</div>
+                            <input type="text" class="form-control" name="origin" id="origin" placeholder="Nhập xuất xứ" value="{{$product->origin}}">
+                        </div>
+                        <div class="form-group">
+                            <div class="name">Sản phẩm tối thiểu</div>
+                            <input type="number" value="{{$product->min}}" class="form-control" name="min" id="min" placeholder="Nhập số lượng tối thiểu" min="1">
+                        </div>
+                        <div class="form-group">
+                            <div class="d-flex">
+                                <div class="name">Mua nhiều giảm giá</div>
+                            </div>
+                            <div>
+                                <div class="">
+                                    <div class="add-fields" data-af_base="#base-package-fields" data-af_target=".packages">
+                                        <div class="packages">
+
+                                        </div>
+                                        <button type="button" class="btn add-form-field"><i class="fa-solid fa-plus"></i> Thêm khoảng giá</button>
+                                    </div>
+                                    <div id="base-package-fields" hidden>
+                                        @php
+                                            $price_sales = \App\Models\ProductSale::where('product_id', '=', $product->id)->get();
+                                        @endphp
+                                        @if(!$price_sales->isEmpty())
+                                            @foreach($price_sales as $price_sale)
+                                                <div class="form-group form-group-price">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="">
+                                                            <input value="{{$price_sale->quantity}}" type="number" class="form-control form-price" name="quantity[]" placeholder="Từ (sản phẩm)">
+                                                        </div>
+                                                        <div class="">
+                                                            <input value="{{$price_sale->sales}}" type="number" class="form-control form-price" name="sales[]" placeholder="Giảm %">
+                                                        </div>
+                                                        <div class="">
+                                                            <button type="button" class="btn remove-form-field"><i class="fa-regular fa-trash-can"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @else
+                                            <div class="form-group form-group-price">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="">
+                                                        <input type="number" class="form-control form-price" name="quantity[]" placeholder="Từ (sản phẩm)">
+                                                    </div>
+                                                    <div class="">
+                                                        <input type="number" class="form-control form-price" name="sales[]" placeholder="Giảm %">
+                                                    </div>
+                                                    <div class="">
+                                                        <button type="button" class="btn remove-form-field"><i class="fa-regular fa-trash-can"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <div class="name">Tất cả danh mục</div>
@@ -899,5 +956,30 @@
             .catch(error => {
                 console.error(error);
             });
+    </script>
+    <script>
+        $('.add-fields').each(function(index, el) {
+            var warp = $(this);
+            var target = $(this).data('af_target') || '.content';
+            var index = $(target).children('div, tr').length;
+            var baseEl =$($(this).data('af_base')) || $(target).find('.form-field-base');
+            var base = baseEl.html();
+            baseEl.remove();
+            //alert(base);
+
+            warp.find(target).append(base.replace('.form-price', index));
+            index ++;
+
+            warp.on('click', '.add-form-field', function(e) {
+                e.preventDefault();
+                warp.find(target).append(base.replace('.form-price', index));
+                index++;
+            });
+
+            warp.on('click', '.remove-form-field', function(e) {
+                e.preventDefault();
+                $(this).parents($(this).data('target') || '.form-group-price').remove();
+            });
+        });
     </script>
 @endsection
