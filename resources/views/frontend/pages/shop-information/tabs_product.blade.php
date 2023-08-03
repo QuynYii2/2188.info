@@ -2,7 +2,6 @@
 
     <div class="category-header align-items-center mt-4 mb-3 container-fluid d-flex justify-content-between">
         <div class="category-header--left">
-            <a href="{{route('home')}}">{{ __('home.Home') }}</a> / <a href="#">{{ __('home.Electronics') }}</a>
         </div>
         <div class="category-header--right">
             <div class="show-item mr-4 align-items-center">
@@ -25,14 +24,6 @@
                     <option value="price desc">{{ __('home.Price: Descending') }}</option>
                 </select>
             </div>
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item layout-horizontal">
-                    <a class="nav-link active" data-toggle="tab" href="#home"><i class="fa-solid fa-grip"></i></a>
-                </li>
-                <li class="nav-item layout-vertical">
-                    <a class="nav-link" data-toggle="tab" href="#menu1"><i class="fa-solid fa-list"></i></a>
-                </li>
-            </ul>
         </div>
     </div>
     <hr>

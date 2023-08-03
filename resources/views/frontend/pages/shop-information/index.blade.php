@@ -355,7 +355,6 @@
                 </div>
                 <div class="section-seller-overview-horizontal__leading-content">
                     <div class="section-seller-overview-horizontal__seller-portrait UgJq78">
-                        <a class="section-seller-overview-horizontal__seller-portrait-link" href="/coolmate.vn">
                             <div class="shopee-avatar wEpezN">
                                 <div class="shopee-avatar__placeholder">
                                     <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0" class="shopee-svg-icon icon-headshot">
@@ -374,7 +373,6 @@
                                     <img class="WgnEaf" src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/483071c49603aa7163a7f51708bff61b.png" loading="lazy" width="64" height="16">
                                 </div>
                             </div>
-                        </a>
                         <div class="section-seller-overview-horizontal__portrait-info">
                             <h1 class="section-seller-overview-horizontal__portrait-name">
                                 {{ $sellerInfo->name }}
@@ -449,6 +447,12 @@
                 </div>
                 <div class="section-seller-overview__item">
                     <div class="section-seller-overview__item-text">
+                        <div class="section-seller-overview__item-icon-wrapper">
+                            <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0" class="shopee-svg-icon icon-rating">
+                                <polygon fill="none" points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10">
+                                </polygon>
+                            </svg>
+                        </div>
                         <div class="section-seller-overview__item-text-name">
                             Tỉ lệ phản hồi Chat:&nbsp;
                         </div>
@@ -502,11 +506,11 @@
                                    aria-selected="true">Thông tin Shop</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#product" role="tab"
                                    aria-controls="profile" aria-selected="false">Tất cả sản phẩm</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#vouchers" role="tab"
                                    aria-controls="contact" aria-selected="false">Voucher Shop</a>
                             </li>
                         </ul>
@@ -514,11 +518,11 @@
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 123
                             </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="profile-tab">
                                 @include('frontend.pages.shop-information.tabs_product')
                             </div>
-                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                456
+                            <div class="tab-pane fade" id="vouchers" role="tabpanel" aria-labelledby="contact-tab">
+                                @include('frontend.pages.shop-information.tabs_voucher')
                             </div>
                         </div>
                     </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\ProductStatus;
 use App\Models\Product;
 use App\Models\ShopInfo;
+use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,8 +32,11 @@ class ShopInformationController extends Controller
         $countProductBySeller = Product::selectRaw('COUNT(*) as countProduct')
             ->where('user_id', '=', $id)
             ->first();
-        return view('frontend/pages/shop-information/index', compact('listProduct', 'priceProductOfCategory', 'sellerInfo', 'countProductBySeller'));
+
+        $listVouchers = Voucher::where('user_id', '=', $id)->get();
+        return view('frontend/pages/shop-information/index', compact('listProduct', 'priceProductOfCategory', 'sellerInfo', 'countProductBySeller', 'listVouchers'));
     }
+
 
     public function filterProductBySeller(Request $request, $id)
     {
