@@ -1162,11 +1162,6 @@
   color: #000000 !important;
 }
 
-/**/
-select {
-  display: none !important;
-}
-
 .dropdown-select-attribute,
 .dropdown-select-category,
 .dropdown-select {

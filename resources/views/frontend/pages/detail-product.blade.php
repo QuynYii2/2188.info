@@ -389,10 +389,18 @@
             </div>
             @php
                 $infos = DB::table('shop_infos')->first();
+                $user = DB::table('users')->first();
             @endphp
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    {{$user->name}} <br>
+                @if($user)
+                    {{$user->region}}<br>
+                @endif
+                @if($user)
+                    {{$user->industry}} <br>
+                @endif
                 @if($infos)
-                    {{$infos->information}}
+                    {!! $infos->information!!}
                 @endif
             </div>
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
