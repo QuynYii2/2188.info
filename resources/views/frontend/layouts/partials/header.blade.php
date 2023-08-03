@@ -179,7 +179,7 @@
                                                 @endphp
                                                 <div class="shop-item row">
                                                     <div class="col-3 shop-item--img">
-                                                        <img src="{{ asset('storage/'.$productDetail->thumbnail) }}" alt="">
+{{--                                                        <img src="{{ asset('storage/'.$productDetail->thumbnail) }}" alt="">--}}
                                                     </div>
                                                     <div class="col-8 shop-item--text">
                                                         <div class="text-seller">

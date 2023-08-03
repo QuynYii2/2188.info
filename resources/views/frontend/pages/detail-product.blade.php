@@ -187,7 +187,7 @@
             <div class="column-xs-12 column-md-5">
                 <form action="{{ route('cart.add', $product) }}" method="POST">
                     @csrf
-                    <div class="product-name">{{$name->name}}</div>
+                    <div class="product-name"><a href="{{ route('shop.information.show', $name->id) }}">{{$name->name}}</a></div>
                     <div class="product-title">{{$product->name}}</div>
                     <div class="product-origin">Xuất xứ: {{$product->origin}}</div>
                     <div class="product-rating">

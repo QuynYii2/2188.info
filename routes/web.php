@@ -142,6 +142,9 @@ Route::middleware('auth.product')->group(function () {
 });
 
 Route::get('/detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
+Route::get('/shop/information/{id}', [\App\Http\Controllers\ShopInformationController::class, 'index'])->name('shop.information.show');
+Route::get('/shop/product/{id}', [\App\Http\Controllers\ShopInformationController::class, 'index'])->name('shop.product.show');
+Route::post('/shop/product/filter/{id}', [\App\Http\Controllers\ShopInformationController::class, 'filterProductBySeller'])->name('shop.product.filter');
 Route::get('/product/detail/{slug}', [\App\Http\Controllers\ProductController::class, 'findBySlug'])->name('find.by.slug.product');
 Route::get('/detail-product/{id}', [\App\Http\Controllers\ProductController::class, 'detailProduct'])->name('detail_product.api');
 Route::get('/category/{id}', [\App\Http\Controllers\CategoryController::class, 'category'])->name('category.show');
