@@ -275,18 +275,18 @@
                             <div class="form-group col-12 col-sm-12" id="list-img-thumbnail"></div>
                             <div class="form-group col-12 col-sm-12" id="list-img-gallery"></div>
                         </div>
-                        <div class="form-group">
-                            <div class="form-group col-12 col-sm-12 pt-3">
-                                <label for="thumbnail">Ảnh đại diện:</label>
-                                <label class='__lk-fileInput'>
-                                    <span data-default='Choose file'>Choose file</span>
-                                    <input type="file" id="thumbnail" class="img-cfg"
-                                           name="thumbnail"
-                                           accept="image/*"
-                                           required>
-                                </label>
-                            </div>
-                        </div>
+{{--                        <div class="form-group">--}}
+{{--                            <div class="form-group col-12 col-sm-12 pt-3">--}}
+{{--                                <label for="thumbnail">Ảnh đại diện:</label>--}}
+{{--                                <label class='__lk-fileInput'>--}}
+{{--                                    <span data-default='Choose file'>Choose file</span>--}}
+{{--                                    <input type="file" id="thumbnail" class="img-cfg"--}}
+{{--                                           name="thumbnail"--}}
+{{--                                           accept="image/*"--}}
+{{--                                           required>--}}
+{{--                                </label>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                     </div>
                     <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
                     <input type="text" hidden id="imgGallery" value="" name="imgGallery[]">
@@ -708,11 +708,15 @@
     <script>
         let desc = document.querySelectorAll('.description');
         for (let i = 0; i < desc.length; i++) {
-            ClassicEditor
-                .create(desc[i])
-                .catch(error => {
-                    console.error(error);
-                });
+            CKEDITOR.replace( desc[i], {
+                filebrowserBrowseUrl: '{{ asset('ckfinder/ckfinder.html') }}',
+                filebrowserImageBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Images') }}',
+                filebrowserFlashBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Flash') }}',
+                filebrowserUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}',
+                filebrowserImageUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images') }}',
+                filebrowserFlashUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash') }}'
+            } );
+            // CKEDITOR.replace(desc[i]);
         }
     </script>
     <script>
@@ -796,8 +800,6 @@
             }
         })
     </script>
-
-
     <script>
         $('.add-fields').each(function(index, el) {
             var warp = $(this);

@@ -447,15 +447,15 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="form-group col-12 col-sm-12 pt-3">
-                                <label for="thumbnail">Ảnh đại diện:</label>
-                                <label class='__lk-fileInput'>
-                                    <span data-default='Choose file'>Choose file</span>
-                                    <input type="file" id="thumbnail" class="img-cfg"
-                                           name="thumbnail"
-                                           accept="image/*">
-                                </label>
-                            </div>
+{{--                            <div class="form-group col-12 col-sm-12 pt-3">--}}
+{{--                                <label for="thumbnail">Ảnh đại diện:</label>--}}
+{{--                                <label class='__lk-fileInput'>--}}
+{{--                                    <span data-default='Choose file'>Choose file</span>--}}
+{{--                                    <input type="file" id="thumbnail" class="img-cfg"--}}
+{{--                                           name="thumbnail"--}}
+{{--                                           accept="image/*">--}}
+{{--                                </label>--}}
+{{--                            </div>--}}
                             <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="" width="60px" height="60px">
                         </div>
                     </div>
@@ -946,16 +946,17 @@
         });
     </script>
     <script>
-        ClassicEditor
-            .create(document.querySelector('#description'))
-            .catch(error => {
-                console.error(error);
-            });
-        ClassicEditor
-            .create(document.querySelector('#description-detail'))
-            .catch(error => {
-                console.error(error);
-            });
+        let desc = document.querySelectorAll('.description');
+        for (let i = 0; i < desc.length; i++) {
+            CKEDITOR.replace( desc[i], {
+                filebrowserBrowseUrl: '{{ asset('ckfinder/ckfinder.html') }}',
+                filebrowserImageBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Images') }}',
+                filebrowserFlashBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Flash') }}',
+                filebrowserUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}',
+                filebrowserImageUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images') }}',
+                filebrowserFlashUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash') }}'
+            } );
+        }
     </script>
     <script>
         $('.add-fields').each(function(index, el) {

@@ -207,7 +207,7 @@ class ProductController extends Controller
             $product->user_id = Auth::user()->id;
             $product->location = Auth::user()->region;
             $product->gallery = $this->handleGallery($request->input('imgGallery'));
-//            $product->thumbnail = $this->handleGallery($request->input('imgThumbnail'));
+            $product->thumbnail = $this->handleGallery($request->input('imgThumbnail'));
             $product->slug = \Str::slug($request->input('name'));
             $product->old_price = $request->input('giaban');
             $product->origin = $request->input('origin');
@@ -290,6 +290,32 @@ class ProductController extends Controller
             $quantity = $request->input('quantity');
             $sales = $request->input('sales');
 
+            $product->description = $request->input('description');
+            $product->short_description = $request->input('short_description');
+
+            $product->name = $request->input('name');
+            $product->slug = \Str::slug($request->input('name'));
+
+            $product->old_price = $request->input('giaban');
+            $product->price = $request->input('giakhuyenmai');
+
+            $product->origin = $request->input('origin');
+            $product->min = $request->input('min');
+
+            $hot = $request->input('hot_product');
+            $feature = $request->input('feature_product');
+
+            if ($hot) {
+                $product->hot = 1;
+            } else {
+                $product->hot = 0;
+            }
+
+            if ($feature) {
+                $product->feature = 1;
+            } else {
+                $product->feature = 0;
+            }
 
             if($quantity){
                 $counts = count($quantity);
@@ -307,34 +333,11 @@ class ProductController extends Controller
 
             if ($isNew > 10) {
                 $newArray = $this->getAttributeProperty($request);
-                $product->name = $request->input('name');
-                $product->slug = \Str::slug($request->input('name'));
-
-                $product->old_price = $request->input('giaban');
-                $product->price = $request->input('giakhuyenmai');
-
-                $product->origin = $request->input('origin');
-                $product->min = $request->input('min');
 
                 if ($request->hasFile('thumbnail')) {
                     $thumbnail = $request->file('thumbnail');
                     $thumbnailPath = $thumbnail->store('thumbnails', 'public');
                     $product->thumbnail = $thumbnailPath;
-                }
-
-                $hot = $request->input('hot_product');
-                $feature = $request->input('feature_product');
-
-                if ($hot) {
-                    $product->hot = 1;
-                } else {
-                    $product->hot = 0;
-                }
-
-                if ($feature) {
-                    $product->feature = 1;
-                } else {
-                    $product->feature = 0;
                 }
 
                 $arrayProduct = [];
@@ -452,15 +455,6 @@ class ProductController extends Controller
 
     private function updateProduct($product, $request, $number)
     {
-        $product->name = $request->input('name');
-        $product->slug = \Str::slug($request->input('name'));
-
-        $product->old_price = $request->input('giaban');
-        $product->price = $request->input('giakhuyenmai');
-
-        $product->origin = $request->input('origin');
-        $product->min = $request->input('min');
-
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
             $thumbnailPath = $thumbnail->store('thumbnails', 'public');
@@ -477,21 +471,6 @@ class ProductController extends Controller
         $product->category_id = $arrayIDs[0];
 
         $product->list_category = $listIDs;
-
-        $hot = $request->input('hot_product');
-        $feature = $request->input('feature_product');
-
-        if ($hot) {
-            $product->hot = 1;
-        } else {
-            $product->hot = 0;
-        }
-
-        if ($feature) {
-            $product->feature = 1;
-        } else {
-            $product->feature = 0;
-        }
 
         if ($number) {
             if ($number > 1) {
