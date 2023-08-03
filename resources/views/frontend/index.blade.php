@@ -518,6 +518,8 @@
                         <div class="swiper-button-prev"></div>
                     </div>
                 </div>
+
+            </div>
         </section>
         <div class="modal fade detail" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
@@ -528,24 +530,42 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                    @php
+                        $name = DB::table('users')->where('id', $product->user_id)->first();
+                        $productDetails = \App\Models\Variation::where('product_id', $product->id)->get();
+                        $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
+                        $attributes = DB::table('product_attribute')->where([['product_id', $product->id], ['status', \App\Enums\AttributeProductStatus::ACTIVE]])->get();
+                    @endphp
                     <div class="modal-body">
                         <div class="grid product">
-                            <div class="column-xs-12 column-md-5">
+                            <div class="column-xs-12 column-md-6">
                                 <div class="product-gallery">
                                     <div class="product-image">
-                                        <img src="#" alt="" id="img-modal">
+                                        <img id="productThumbnail" class="active"
+                                             src="{{ asset('storage/' . $product->thumbnail) }}">
+                                        <input type="text" id="urlImage" value="{{asset('storage/')}}" hidden="">
                                     </div>
-                                    <ul class="image-list ">
-                                        {{--                                        <li class="image-item"><img src="{{ asset('storage/' . $product->thumbnail) }}"></li>--}}
+                                    <ul class="image-list">
+                                        @php
+                                            $gallery = $product->gallery;
+                                            $arrayGallery = explode(',', $gallery);
+                                        @endphp
+                                        <li class="image-item"><img src="{{ asset('storage/' . $product->thumbnail) }}"></li>
+                                        @if(count($arrayGallery)>1)
+                                            @foreach($arrayGallery as $gallerys)
+                                                <li class="image-item"><img src="{{ asset('storage/' . $gallerys) }}"></li>
+                                            @endforeach
+                                        @endif
                                     </ul>
                                 </div>
                             </div>
-                            <div class="column-xs-12 column-md-7">
-                                <form action="" method="post" id="form_cart">
+                            <div class="column-xs-12 column-md-6">
+                                <form action="{{ route('cart.add', $product) }}" method="POST">
                                     @csrf
-                                    <div class="product-name" id="category-modal">Name seller</div>
-                                    <div class="product-title" id="productName-modal">name</div>
-                                    <div class="product-rating" id="product-rating">
+                                    <div class="product-name">{{$name->name}}</div>
+                                    <div class="product-title">{{$product->name}}</div>
+                                    <div class="product-origin">Xuất xứ: {{$product->origin}}</div>
+                                    <div class="product-rating">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>
@@ -554,37 +574,115 @@
                                         <span>4.7(21)</span>
                                     </div>
                                     <div class="product-price d-flex" style="gap: 3rem">
-                                        <div class="price" id="price-sale">price sale</div>
-                                        <strike id="price-old">price old</strike>
+                                        @if($product->price != null)
+                                            <div id="productPrice" class="price">${{$product->price}}</div>
+                                            <strike id="productOldPrice">${{$product->old_price}}</strike>
+                                        @else
+                                            <strike id="productOldPrice">${{$product->price}}</strike>
+                                        @endif
                                     </div>
-                                    <div class="description-text" id="description-text">
+                                    <div class="description-text">
+                                        {!! $product->short_description!!}
                                     </div>
-                                    <div class="row">
-                                    </div>
-                                    <input id="variable_id" name="variable" hidden>
+                                    @if(!$attributes->isEmpty())
+                                        <div class="row">
+                                            @foreach($attributes as $attribute)
+                                                @php
+                                                    $att = \App\Models\Attribute::find($attribute->attribute_id);
+                                                    $properties_id = $attribute->value;
+                                                    $arrayAtt = array();
+                                                    $arrayAtt = explode(',', $properties_id);
+                                                @endphp
+                                                <div class="col-sm-6 col-6">
+                                                    <label>{{$att->name}}</label>
+                                                    <div class="radio-toolbar mt-3">
+                                                        @foreach($arrayAtt as $data)
+                                                            @php
+                                                                $property = \App\Models\Properties::find($data);
+                                                            @endphp
+                                                            <input class="inputRadioButton"
+                                                                   id="input-{{$attribute->attribute_id}}-{{$loop->index+1}}"
+                                                                   name="inputProperty-{{$attribute->attribute_id}}" type="radio"
+                                                                   value="{{$attribute->attribute_id}}-{{$property->id}}">
+                                                            <label for="input-{{$attribute->attribute_id}}-{{$loop->index+1}}">{{$property->name}}</label>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <a id="resetSelect" class="btn btn-dark mt-3 " style="color: white"> Reset select</a>
+                                    @endif
                                     <div class="">
-                                        <input id="product_id" hidden value="">
+                                        <input id="product_id" hidden value="{{$product->id}}">
+                                        @if(count($productDetails)>0)
+                                            <input name="variable" id="variable" hidden value="{{$productDetails[0]->variation}}">
+                                        @endif
+
                                     </div>
                                     <div class="count__wrapper count__wrapper--ml mt-3">
-                                        <span>Còn lại: </span>
-                                        <label for="qty" id="qty"></label>
-
+                                        <label for="qty">{{ __('home.remaining') }}<span id="productQuantity">{{$product->qty}}</span></label>
+                                    </div><!-- Button to trigger modal -->
+                                    <!-- Button trigger modal -->
+                                    @php
+                                        $price_sales = \App\Models\ProductSale::where('product_id', '=', $product->id)->get();
+                                    @endphp
+                                    <a class="p-2 btn-light" style="cursor: pointer" data-toggle="modal" data-target="#exampleModal">
+                                        Bảng giá sỉ
+                                    </a>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Bảng giá</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table class="table-fill">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="text-left">Month</th>
+                                                            <th class="text-left">Sales</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody class="table-hover">
+                                                        @php
+                                                            $price_sales = \App\Models\ProductSale::where('product_id', '=', $product->id)->get();
+                                                        @endphp
+                                                        @if(!$price_sales->isEmpty())
+                                                            @foreach($price_sales as $price_sale)
+                                                                <tr>
+                                                                    <td class="text-left">{{$price_sale->quantity}}</td>
+                                                                    <td class="text-left">-{{$price_sale->sales}} %</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @endif
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="d-flex buy justify-content-around">
                                         <div>
-                                            <input type="number" class="input" value="1" min="1">
+                                            <input min="{{$product->min}}" value="{{$product->min}}" type="number" class="input"
+                                                   name="quantity">
                                             <div class="spinner">
                                                 <button type="button" class="up button">&rsaquo;</button>
                                                 <button type="button" class="down button">&lsaquo;</button>
                                             </div>
                                         </div>
-                                        <button class="add-to-cart" id="add-to-cart">Add To Cart</button>
+                                        @if(!$attributes->isEmpty())
+                                            <button type="submit" id="btnAddCard" class="add-to-cart">{{ __('home.Add To Cart') }}</button>
+                                        @else
+                                            <button type="submit" class="add-to-cart">{{ __('home.Add To Cart') }}</button>
+                                        @endif
                                         <button class="share"><i class="fa-regular fa-heart"></i></button>
                                         <button class="share"><i class="fa-solid fa-share-nodes"></i></button>
                                     </div>
-                                    <div class="eyes"><i class="fa-regular fa-eye"></i> 19 customers are viewing this
-                                        product
-                                    </div>
+                                    <div class="eyes"><i class="fa-regular fa-eye"></i> 19 customers are viewing this product</div>
                                 </form>
                             </div>
                         </div>
@@ -604,22 +702,20 @@
                             @endphp
                             <div class="swiper-slide">
                                 <div class="item">
-                                    @if($hotProduct->thumbnail)
-                                        <div class="item-img">
-                                            <img src="{{ asset('storage/' . $hotProduct->thumbnail) }}" alt="">
-                                            <div class="button-view">
-                                                <button type="button" class="btn view_modal" data-toggle="modal"
-                                                        data-value="{{$hotProduct}}" data-id="{{$productDetail}}"
-                                                        data-target="#exampleModal">{{ __('home.Quick view') }}</button>
-                                            </div>
-                                            <div class="text">
-                                                <div class="text-new">
-                                                    New
-                                                </div>
-
-                                            </div>
+                                    <div class="item-img">
+                                        <img src="{{ asset('storage/' . $hotProduct->thumbnail) }}" alt="">
+                                        <div class="button-view">
+                                            <button type="button" class="btn view_modal" data-toggle="modal"
+                                                    data-value="{{$hotProduct}}" data-id="{{$productDetail}}"
+                                                    data-target="#exampleModal">{{ __('home.Quick view') }}</button>
                                         </div>
-                                    @endif
+                                        <div class="text">
+                                            <div class="text-new">
+                                                New
+                                            </div>
+
+                                        </div>
+                                    </div>
                                     <div class="item-body">
                                         <div class="card-rating">
                                             <i class="fa-solid fa-star" style="color: #fac325;"></i>

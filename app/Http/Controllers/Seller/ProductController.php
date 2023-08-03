@@ -80,6 +80,7 @@ class ProductController extends Controller
             ->select('products.*')
             ->get();
         $promotions = Promotion::where([['user_id', Auth::user()->id], ['status', PromotionStatus::INACTIVE]])->get();
+        $productAll = Product::where('status', '!=', ProductStatus::DELETED)->orderBy('created_at', 'desc')->get();
         return view('backend/products/home', compact(
             'productProcessings',
             'productWaitPayments',
@@ -87,7 +88,19 @@ class ProductController extends Controller
             'productDelivereds',
             'productCancels',
             'productPause',
+            'productAll',
             'promotions'));
+    }
+
+    public function toggleProduct($id){
+        $product = Product::find($id);
+        if ($product->status == ProductStatus::ACTIVE){
+            $product->status = ProductStatus::INACTIVE;
+        } else {
+            $product->status = ProductStatus::ACTIVE;
+        }
+        $product->save();
+        return $product;
     }
 
 
@@ -272,6 +285,26 @@ class ProductController extends Controller
             $number = $request->input('count');
             $isNew = $request->input('isNew');
 
+            ProductSale::where('product_id', '=', $product->id)->delete();
+
+            $quantity = $request->input('quantity');
+            $sales = $request->input('sales');
+
+
+            if($quantity){
+                $counts = count($quantity);
+                for ($i = 0; $i<$counts; $i++) {
+                    $newProductSale = null;
+                    $newProductSale = [
+                        'user_id' => $product->user_id,
+                        'product_id' => $product->id,
+                        'quantity' => $quantity[$i],
+                        'sales' => $sales[$i],
+                    ];
+                    ProductSale::create($newProductSale);
+                }
+            }
+
             if ($isNew > 10) {
                 $newArray = $this->getAttributeProperty($request);
                 $product->name = $request->input('name');
@@ -279,6 +312,9 @@ class ProductController extends Controller
 
                 $product->old_price = $request->input('giaban');
                 $product->price = $request->input('giakhuyenmai');
+
+                $product->origin = $request->input('origin');
+                $product->min = $request->input('min');
 
                 if ($request->hasFile('thumbnail')) {
                     $thumbnail = $request->file('thumbnail');
@@ -421,6 +457,9 @@ class ProductController extends Controller
 
         $product->old_price = $request->input('giaban');
         $product->price = $request->input('giakhuyenmai');
+
+        $product->origin = $request->input('origin');
+        $product->min = $request->input('min');
 
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
