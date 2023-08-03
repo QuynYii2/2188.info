@@ -9,7 +9,6 @@ use App\Enums\MemberRegisterType;
 use App\Enums\PermissionUserStatus;
 use App\Enums\RegisterMember;
 use App\Enums\RegisterMemberPrice;
-use App\Enums\StatisticStatus;
 use App\Enums\UserStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Libraries\GeoIP;
@@ -18,8 +17,6 @@ use App\Models\Coin;
 use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
 use App\Models\Permission;
-use App\Models\StatisticAccess;
-use App\Models\TopSellerConfig;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -467,8 +464,9 @@ class AuthController extends Controller
     }
 
     /*Show form thanh toán đăng ký hội viên*/
-    public function showPaymentMember($registerMember)
+    public function showPaymentMember($registerMember, Request $request)
     {
+        (new HomeController())->getLocale($request);
         return view('frontend.pages.registerMember.payment-member', compact('registerMember'));
     }
 
@@ -519,8 +517,9 @@ class AuthController extends Controller
     }
 
     /*Show form success hội viên*/
-    public function successRegisterMember($registerMember)
+    public function successRegisterMember($registerMember, Request $request)
     {
+        (new HomeController())->getLocale($request);
         return view('frontend.pages.registerMember.success-member', compact('registerMember'));
     }
 
@@ -647,5 +646,11 @@ class AuthController extends Controller
         $user->region = $locale;
         $user->image = 'Default';
         $user->save();
+
+        $newUser = User::where('email', $email)->first();
+        $roleUser = DB::table('role_user')->insert([
+            'role_id' => 2,
+            'user_id' => $newUser->id
+        ]);
     }
 }

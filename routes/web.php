@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\OrderController;
+use App\Http\Controllers\Member\RegisterMemberController;
 use App\Http\Controllers\PaypalPaymentController;
 use App\Http\Controllers\PermissionRankController;
 use App\Http\Controllers\ProductInterestController;
@@ -370,6 +371,9 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::get('/statistic-revenues', [StatisticController::class, 'getStatisticRevenue'])->name('admin.statistic.revenues');
     Route::get('/statistic-users', [StatisticController::class, 'getStatisticUser'])->name('admin.statistic.users');
     Route::get('/statistic-shop', [StatisticShopController::class, 'getStatisticShops'])->name('shop.statistic.index');
+    // Register member
+    Route::get('/products-register-member', [RegisterMemberController::class, 'index'])->name('products.register.member.index');
+    Route::post('/products-register-member', [RegisterMemberController::class, 'saveProduct'])->name('products.register.member.create');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {

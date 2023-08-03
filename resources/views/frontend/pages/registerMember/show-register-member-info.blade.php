@@ -58,13 +58,41 @@
                                     </div>
                                     <div id="checkboxes" class="mt-1">
                                         @foreach($categories as $category)
-                                            <label class="ml-2" for="category-{{$category->id}}">
-                                                <input type="checkbox" id="category-{{$category->id}}"
-                                                       name="category-{{$category->id}}"
-                                                       value="{{$category->id}}"
-                                                       class="mr-2 p-3"/>
-                                                {{$category->name}}
-                                            </label>
+                                            @if(!$category->parent_id)
+                                                <label class="ml-2" for="category-{{$category->id}}">
+                                                    <input type="checkbox" id="category-{{$category->id}}"
+                                                           name="category-{{$category->id}}"
+                                                           value="{{$category->id}}"
+                                                           class="inputCheckboxCategory mr-2 p-3"/>
+                                                    <span class="labelCheckboxCategory">{{$category->name}}</span>
+                                                </label>
+                                                @if(!$categories->isEmpty())
+                                                    @php
+                                                        $categories = DB::table('categories')->where('parent_id', $category->id)->get();
+                                                    @endphp
+                                                    @foreach($categories as $child)
+                                                        <label class="ml-4" for="category-{{$child->id}}">
+                                                            <input type="checkbox" id="category-{{$child->id}}"
+                                                                   name="category-{{$child->id}}"
+                                                                   value="{{$child->id}}"
+                                                                   class="inputCheckboxCategory mr-2 p-3"/>
+                                                            <span class="labelCheckboxCategory">{{$child->name}}</span>
+                                                        </label>
+                                                        @php
+                                                            $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
+                                                        @endphp
+                                                        @foreach($listChild2 as $child2)
+                                                            <label class="ml-5" for="category-{{$child2->id}}">
+                                                                <input type="checkbox" id="category-{{$child2->id}}"
+                                                                       name="category-{{$child2->id}}"
+                                                                       value="{{$child2->id}}"
+                                                                       class="inputCheckboxCategory mr-2 p-3"/>
+                                                                <span class="labelCheckboxCategory">{{$child2->name}}</span>
+                                                            </label>
+                                                        @endforeach
+                                                    @endforeach
+                                                @endif
+                                            @endif
                                         @endforeach
                                     </div>
                                 </div>
