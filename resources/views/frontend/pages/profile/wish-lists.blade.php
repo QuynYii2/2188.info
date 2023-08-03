@@ -60,7 +60,8 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        console.log(response.message);
+                        alert('Sản phẩm đã được xóa khỏi danh sách yêu thích');
+                        window.location.reload();
                     },
                     error: function(xhr, status, error) {
                         console.error("Lỗi khi xóa dữ liệu: " + error);

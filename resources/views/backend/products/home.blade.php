@@ -33,30 +33,64 @@
                     <!-- End Line Chart -->
                 </div>
             </div>
+
+            <div class="todo_list">
+                <div class="title">Duyệt sản phẩm</div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Shop Name</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($productAll as $productAllItem)
+                        <tr>
+                            <th scope="row">{{$loop->index+1}}</th>
+                            <td>{{$productAllItem->name}}</td>
+                            <td>{{$productAllItem->user->name}}</td>
+                            <td id="productStatus{{$productAllItem->id}}">{{$productAllItem->status}}</td>
+                            @php
+                                $isChecked = false;
+                                if ($productAllItem->status == \App\Enums\ProductStatus::ACTIVE){
+                                    $isChecked = true;
+                                }
+                            @endphp
+                            <td>
+                                <input type="checkbox" class="toggleProduct" value="{{$productAllItem->id}}" {{ $isChecked ? 'checked' : '' }}>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         @endif
         <div class="todo_list">
             <div class="title">Phân tích bán hàng</div>
             <div class="title-small">Phân tích bán hàng chi tiết</div>
             <div class="full-width" id="listTodoRender">
-                <div class="d-flex">
-                    <div class="border w-25">
+                <div class="d-flex text-center">
+                    <div class="border w-50">
                         <div class="smail">Lượt truy cập</div>
                         <h3 id="countAccess">0</h3>
                         <p class="text-warning">Vs hôm qua <span id="countAccessPercent">0,00</span>% --</p>
                     </div>
-                    <div class="border w-25">
+                    <div class="border w-50">
                         <div class="smail">Lượt xem</div>
                         <h3 id="countViews">0</h3>
                         <p class="text-warning">Vs hôm qua <span id="countViewPercent">0,00</span>% --</p>
                     </div>
                 </div>
-                <div class="d-flex">
-                    <div class="border w-25">
+                <div class="d-flex text-center">
+                    <div class="border w-50">
                         <div class="smail">Đơn hàng</div>
                         <h3 id="countOrders">0</h3>
                         <p class="text-warning">Vs hôm qua <span id="countOrderPercent">0,00</span>% --</p>
                     </div>
-                    <div class="border w-25">
+                    <div class="border w-50">
                         <div class="smail">Tỷ lệ chuyển đổi</div>
                         <h3>0</h3>
                         <p class="text-warning">Vs hôm qua <span>0,00</span>% --</p>
@@ -245,7 +279,30 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+        $(".toggleProduct").click(function () {
+            var productID = $(this).val();
+            console.log(productID)
+            function setProductFeatures(productID) {
+                $.ajax({
+                    url: '/toggle-products-all/' + productID,
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function (response) {
+                        let status = document.getElementById('productStatus' + productID)
+                        status.innerText = response['status'];
+                    },
+                    error: function (exception) {
+                        console.log(exception)
+                    }
+                });
+            }
 
+            setProductFeatures(productID);
+        });
+    </script>
     <script>
         function getAllStatisticAccess() {
             $.ajax({

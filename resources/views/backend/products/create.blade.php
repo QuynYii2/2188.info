@@ -41,7 +41,7 @@
 
     #checkboxes {
         background-color: white;
-        height: 60vh;
+        height: 30vh;
         overflow-y: auto !important;
         display: none;
         border: 1px #dadada solid;
@@ -101,17 +101,7 @@
                         </div>
                     @endif
 
-                    <div class="col-12 col-md-7 border-right mt-2 rm-pd-on-mobile">
-                        <div class="form-group">
-                            <div class="name">Chọn sản phẩm từ kho</div>
-                            <div class="main">
-                                <select id="selectStorage" name="storage-id" class="form-control">
-                                    @foreach($storages as $storage)
-                                        <option value="{{ $storage->id }}">{{ $storage->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+                    <div class=".col-12 col-md-7 border-right mt-2 rm-pd-on-mobile">
                         <div class="form-group">
                             <div class="name">Tên sản phẩm</div>
                             <input type="text" class="form-control" name="name" id="name"
@@ -124,14 +114,14 @@
                                    placeholder="Nhập mã sản phẩm" required>
                         </div>
                         <div class="form-group">
-                            <label for="description">Mô tả ngắn</label>
-                            <textarea id="description" class="form-control description" name="description"
-                                      rows="5"></textarea>
+                            <label for="short_description">Mô tả ngắn</label>
+                            <textarea id="short_description" class="form-control description" name="short_description" rows="5">
+                            </textarea>
                         </div>
                         <div class="form-group">
-                            <label for="description-detail">Mô tả chi tiết</label>
-                            <textarea id="description-detail" class="form-control description" name="description-detail"
-                                      rows="5"></textarea>
+                            <label for="description">Mô tả chi tiết</label>
+                            <textarea id="description" class="form-control description" name="description" rows="5">
+                            </textarea>
                         </div>
                         <div class="form-group mb-3">
                             <label class="name">Thông số sản phẩm</label>
@@ -151,7 +141,7 @@
                                         <label class="name" for="date_start">{{$attribute->name}}</label>
                                         <input type="text" class="form-control"
                                                onclick="showDropdown('attribute_property{{$attribute->id}}', 'attribute_property-dropdownList{{$attribute->id}}')"
-                                               disabled id="attribute_property{{$attribute->id}}" required>
+                                               disabled id="attribute_property{{$attribute->id}}">
                                         <div class="dropdown-content"
                                              id="attribute_property-dropdownList{{$attribute->id}}">
                                             <label>
@@ -194,6 +184,44 @@
                             <div class="name">Nhập giá khuyến mãi(nếu có)</div>
                             <input type="number" class="form-control" name="giakhuyenmai" id="name"
                                     placeholder="Nhập giá khuyến mãi" min="1">
+                        </div>
+                        <div class="form-group">
+                            <div class="name">Xuất xứ</div>
+                            <input type="text" class="form-control" name="origin" id="origin" placeholder="Nhập xuất xứ">
+                        </div>
+                        <div class="form-group">
+                            <div class="name">Sản phẩm tối thiểu</div>
+                            <input type="number" class="form-control" name="min" id="min" placeholder="Nhập số lượng tối thiểu" min="1">
+                        </div>
+                        <div class="form-group">
+                            <div class="d-flex">
+                                <div class="name">Mua nhiều giảm giá</div>
+                            </div>
+                            <div>
+                                <div class="">
+                                    <div class="add-fields" data-af_base="#base-package-fields" data-af_target=".packages">
+                                        <div class="packages">
+
+                                        </div>
+                                        <button type="button" class="btn add-form-field"><i class="fa-solid fa-plus"></i> Thêm khoảng giá</button>
+                                    </div>
+                                    <div id="base-package-fields" hidden>
+                                        <div class="form-group form-group-price">
+                                            <div class="d-flex align-items-center">
+                                                <div class="">
+                                                    <input type="number" class="form-control form-price" name="quantity[]" placeholder="Từ (sản phẩm)">
+                                                </div>
+                                                <div class="">
+                                                    <input type="number" class="form-control form-price" name="sales[]" placeholder="Giảm %">
+                                                </div>
+                                                <div class="">
+                                                    <button type="button" class="btn remove-form-field"><i class="fa-regular fa-trash-can"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <div class="name">Tất cả danh mục</div>
@@ -247,7 +275,6 @@
                             <div class="form-group col-12 col-sm-12" id="list-img-thumbnail"></div>
                             <div class="form-group col-12 col-sm-12" id="list-img-gallery"></div>
                         </div>
-
                         <div class="form-group">
                             <div class="form-group col-12 col-sm-12 pt-3">
                                 <label for="thumbnail">Ảnh đại diện:</label>
@@ -770,5 +797,31 @@
         })
     </script>
 
+
+    <script>
+        $('.add-fields').each(function(index, el) {
+            var warp = $(this);
+            var target = $(this).data('af_target') || '.content';
+            var index = $(target).children('div, tr').length;
+            var baseEl =$($(this).data('af_base')) || $(target).find('.form-field-base');
+            var base = baseEl.html();
+            baseEl.remove();
+            //alert(base);
+
+            warp.find(target).append(base.replace('.form-price', index));
+            index ++;
+
+            warp.on('click', '.add-form-field', function(e) {
+                e.preventDefault();
+                warp.find(target).append(base.replace('.form-price', index));
+                index++;
+            });
+
+            warp.on('click', '.remove-form-field', function(e) {
+                e.preventDefault();
+                $(this).parents($(this).data('target') || '.form-group-price').remove();
+            });
+        });
+    </script>
 @endsection
 

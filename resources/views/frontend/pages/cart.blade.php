@@ -42,7 +42,7 @@
                             <td>
                                 <div class="row mt-3">
                                     <div class="col-md-2 img-product">
-                                        <img class="img" src="{{ asset('storage/'.$productDetail->thumbnail) }}"
+                                        <img class="img" src="{{ asset('storage/'.$cartItem->thumbnail) }}"
                                              alt="" width="60px" height="60px">
                                     </div>
                                     <div class="col-md-10 float-left">

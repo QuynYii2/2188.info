@@ -47,8 +47,6 @@
                                            name="price1" id="qty1"
                                            placeholder="Nhập giá khuyến mãi">
                                 </div>
-                            </div>
-                            <div class="form-row">
                                 <div class="col-4 d-inline-block">
                                     <label class="control-label small name"
                                            for="quantity1">Quantity</label>

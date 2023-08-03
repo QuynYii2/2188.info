@@ -122,13 +122,13 @@
                                         <input required type="text" class="form-control" name="social_media"
                                                placeholder="{{ __('home.input socialNetwork') }}">
                                     </div>
-                                    <div class="form-group col-md-6 col-12">
+                                    <div class="form-group col-md-6 col-12" >
                                         <div class="multiselect position-relative">
-                                            <div class="selectBox" id="div-click" onclick="showCheckboxes()">
+                                            <div  class="selectBox" id="div-click" onclick="showCheckboxes()">
                                                 <select>
-                                                    <option>Please select the type of product you are interested in</option>
+                                                    <option >Please select the type of product you are interested in</option>
                                                 </select>
-                                                <div class="overSelect"></div>
+                                                <div  class="overSelect"></div>
                                             </div>
                                             <div id="checkboxes" class="mt-1 position-absolute bg-white p-2" style="left:0; right: 0; z-index: 1">
                                                 @foreach($categories as $category)
@@ -141,6 +141,7 @@
                                                     </label>
                                                 @endforeach
                                             </div>
+                                            <input type="hidden" name="product_interested" value="category-{{$category->id}}">
                                         </div>
                                     </div>
 

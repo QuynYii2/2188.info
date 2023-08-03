@@ -7,6 +7,20 @@
          $coin = \App\Models\Coin::where([['status', \App\Enums\CoinStatus::ACTIVE], ['user_id', Auth::user()->id]])->first();
      }
 @endphp
+<style>
+    .header-bottom-left--item.icon-flag:first-child a::before {
+        display: block;
+        background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png");
+        width: 50px;
+        height: 50px;
+        position: relative;
+        margin: -15px 50px;
+        background-size: 22px;
+        background-repeat: no-repeat;
+
+    }
+
+</style>
 <header class="header">
     <div class="header-pc halo-header">
         <div class="header-top text-center">
@@ -181,8 +195,7 @@
                                                 @endphp
                                                 <div class="shop-item row">
                                                     <div class="col-3 shop-item--img">
-                                                        <img src="{{ asset('storage/'.$productDetail->thumbnail) }}"
-                                                             alt="">
+                                                        <img src="{{ asset('storage/'.$cartItem->thumbnail) }}" alt="">
                                                     </div>
                                                     <div class="col-8 shop-item--text">
                                                         <div class="text-seller">
@@ -238,7 +251,10 @@
                         @else
                             <div class="item">
                                 <button class="button" onclick="signIn()"><i class="item-icon fa-regular fa-user"></i>
-                                    <div class="item-text">{{ __('home.Sign in') }}</div>
+                                    <div class="item-text">B2B</div>
+                                </button>
+                                <button class="button" onclick="signIn()"><i class="item-icon fa-regular fa-user"></i>
+                                    <div class="item-text">B2C</div>
                                 </button>
                                 <div class="signMenu" id="signMenu">
                                     <div class="login">{{ __('home.LOGIN') }}</div>
@@ -481,6 +497,17 @@
                             <a href="">
                                 <span class="text">{{ __('home.Blog') }}</span>
                             </a>
+                        </div>
+                        <div class="header-bottom-left--item icon-flag">
+                            <a href="">
+                                <span>ll</span>
+                            </a>
+                        </div>
+                        <div class="header-bottom-left--item icon-flag">
+                            <a href="">kl</a>
+                        </div>
+                        <div class="header-bottom-left--item icon-flag">
+                            <a href=""></a>
                         </div>
                     </div>
                     <div class="col-xl-3 col-md-2 header-bottom-right d-flex align-items-center justify-content-end">

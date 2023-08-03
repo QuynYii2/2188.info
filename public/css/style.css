@@ -11,6 +11,67 @@ body {
   margin-top: 170px;
 }
 
+.layout-fixed .main-actions {
+  border-radius: 15px;
+  padding: 15px 20px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+.layout-fixed .main-actions .express-header {
+  border-bottom: 1px solid #f1f1f1;
+}
+.layout-fixed .main-actions .express-header p {
+  text-align: end;
+}
+.layout-fixed .main-actions .express-footer a {
+  text-decoration: none;
+  margin-top: 10px;
+}
+.layout-fixed .main-actions .express-footer .button-start {
+  font-size: 14px;
+  padding: 5px 15px;
+  background: #fd6506;
+  color: white;
+  border-radius: 20px;
+  width: 100%;
+  text-decoration: none;
+  text-align: center;
+}
+.layout-fixed .main-actions .express-footer .button-start:hover {
+  border: 1px solid #fd6506;
+  color: #fd6506;
+  background: white;
+}
+.layout-fixed .main-actions .express-footer .button-call {
+  margin-top: 10px;
+  font-size: 14px;
+  padding: 5px 15px;
+  border: 1px solid #fd6506;
+  color: #fd6506;
+  border-radius: 20px;
+  width: 100%;
+  text-decoration: none;
+  text-align: center;
+}
+.layout-fixed .main-actions .express-footer .button-call:hover {
+  background-color: #fd6506;
+  color: white;
+}
+.layout-fixed .main-actions .express-footer .addtocard {
+  margin-top: 5px;
+  text-align: center;
+  font-size: 15px;
+}
+.layout-fixed .main-actions .express-footer .addtocard button {
+  border: none;
+  background: none;
+}
+.layout-fixed .detail-module {
+  margin-top: 15px;
+  border-radius: 15px;
+  padding: 15px 20px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
 .list-voucher {
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
 }
@@ -292,7 +353,11 @@ body {
 .detail .product .product-title {
   font-weight: bold;
   font-size: 25px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+}
+.detail .product-origin {
+  color: #666;
+  font-size: 14px;
 }
 .detail .product .product-price {
   font-family: "Rubik", sans-serif;
@@ -306,11 +371,12 @@ body {
 .detail .product .description-text {
   text-align: start;
   border-top: 0.0625rem solid #e3dddd;
-  margin: 20px 0;
+  margin: 10px 0;
   padding: 1rem 0 0 0;
 }
-.detail .product .product-rating {
-  color: #fac325;
+.detail .product .product-rating i {
+  color: #fd6506;
+  font-size: 14px;
 }
 .detail .product .eyes {
   margin: 15px 0;
@@ -1955,9 +2021,9 @@ hr {
   line-height: 34px;
 }
 .section .item-body .card-bottom--left a {
-  padding: 0 5px;
+  padding: 0 15px;
   font-weight: 600;
-  font-size: 15px;
+  font-size: 13px;
 }
 .section .item-body .card-bottom--left:hover {
   background-color: #fd6506;
@@ -2914,15 +2980,14 @@ footer {
   }
   .image-list {
     justify-content: center;
-    margin: 10px auto;
-    width: 60%;
+    margin: auto;
+    width: 100%;
     display: flex;
     overflow: hidden;
   }
   .image-list li {
     text-align: center;
-    margin: 0 0.75rem 0 0;
-    width: 20%;
+    width: 15%;
     height: 100px;
   }
   .image-list img {

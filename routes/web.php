@@ -206,7 +206,7 @@ Route::middleware(['auth'])->group(function () {
     //
     Route::get('/wish-list', [App\Http\Controllers\WishListController::class, 'wishListIndex'])->name('wish.list.index');
     Route::post('/wish-list-store', [App\Http\Controllers\WishListController::class, 'wishListStore'])->name('user.wish.lists');
-    Route::delete('/wish-list-delete/{id}', [App\Http\Controllers\WishListController::class, 'wishListSotfDelete'])->name('wish.list.delete');
+    Route::post('/wish-list-delete/{id}', [App\Http\Controllers\WishListController::class, 'wishListSotfDelete'])->name('wish.list.delete');
 
 
 });
@@ -236,6 +236,8 @@ Route::group(['middleware' => 'role.admin'], function () {
     Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('seller.categories.edit');
     Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('seller.categories.update');
     Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('seller.categories.destroy');
+    //
+    Route::post('/toggle-products-all/{id}', [ProductController::class, 'toggleProduct'])->name('admin.toggle.products');
 
 });
 
