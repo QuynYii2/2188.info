@@ -19,17 +19,24 @@
             @if(!$memberCompanys->isEmpty())
                 @foreach($memberCompanys as $memberCompany)
                     @php
-                        $products = \App\Models\Product::where(function ($query) use ($memberCompany){
-                            $products = \App\Models\Product::where([['user_id', $memberCompany->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])->get();
-                            $memberAccounts = \App\Models\MemberRegisterPersonSource::where('member_id', $memberCompany->id)->get();
+                        $memberAccounts = \App\Models\MemberRegisterPersonSource::where('member_id', $memberCompany->id)->get();
+                       if (!$memberAccounts->isEmpty()){
+                         $products = \App\Models\Product::where(function ($query) use ($memberCompany, $memberAccounts){
+                               if (count($memberAccounts) == 2){
+                                   $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
+                                   $user2 = \App\Models\User::where('email', $memberAccounts[1]->email)->first();
+                               } else{
+                                   $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
+                                   $user2 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
+                               }
 
-                            $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
-                            $user2 = \App\Models\User::where('email', $memberAccounts[1]->email)->first();
-
-                            $query->where([['user_id', $memberCompany->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])
-                                  ->orWhere([['user_id', $user1->id], ['status', \App\Enums\ProductStatus::ACTIVE]])
-                                  ->orWhere([['user_id', $user2->id], ['status', \App\Enums\ProductStatus::ACTIVE]]);
-                            })->get();
+                               $query->where([['user_id', $memberCompany->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])
+                                     ->orWhere([['user_id', $user1->id], ['status', \App\Enums\ProductStatus::ACTIVE]])
+                                     ->orWhere([['user_id', $user2->id], ['status', \App\Enums\ProductStatus::ACTIVE]]);
+                               })->get();
+                       } else{
+                           $products = \App\Models\Product::where([['user_id', $memberCompany->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])->get();
+                       }
                     @endphp
                     <tr>
                         <td colspan="7" class="text-center">
