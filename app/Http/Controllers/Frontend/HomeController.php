@@ -34,36 +34,19 @@ class HomeController extends Controller
     {
         $this->getLocale($request);
         $locale = app()->getLocale();
-        $locations = ['vi', 'kr', 'cn'];
-        $defaultLocale = 'vi';
-        $locale = in_array($locale, $locations) ? $locale : $defaultLocale;
         $currencies = [
             'vi' => 'VND',
             'kr' => 'KRW',
             'cn' => 'CNY',
             'jp' => 'JPY',
         ];
-        $currentProducts = Product::where([['location', $locale],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
-        if (($key = array_search($locale, $locations)) !== false) {
-            unset($locations[$key]);
-        }
-        $newLocations = [];
-        foreach ($locations as $locationNew) {
-            array_push($newLocations, $locationNew);
-        }
-            $krProducts = Product::where([['location', $newLocations[0]], ['status', \App\Enums\ProductStatus::ACTIVE]])->get();
-            $cnProducts = Product::where([['location', $newLocations[1]], ['status', \App\Enums\ProductStatus::ACTIVE]])->get();
 
-
-
-
+        $currentProducts = Product::where([['location', $locale], ['status', ProductStatus::ACTIVE]])->get();
 
         if (array_key_exists($locale, $currencies)) {
             $currency = $currencies[$locale];
         }
 
-
-        $productByLocal = Product::where('location', $locale)->limit(10)->get();
 
         $categories = Category::get()->toTree();
 
@@ -74,9 +57,18 @@ class HomeController extends Controller
         $productByLocal = Product::whereIn('location', array_slice($locations, 0, 3))
             ->limit(10)
             ->get();
-        $productByKr = Product::where('location', 'kr')->limit(10)->get();
-        $productByJp = Product::where('location', 'jp')->limit(10)->get();
-        $productByCn = Product::where('location', 'cn')->limit(10)->get();
+
+        $productByVi = Product::where([['location', 'vi'], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
+        $productByKr = Product::where([['location', 'kr'], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
+        $productByJp = Product::where([['location', 'jp'], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
+        $productByCn = Product::where([['location', 'cn'], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
+
+        $arrayProducts = [
+            'vi' => $productByVi,
+            'kr' => $productByKr,
+            'cn' => $productByCn,
+            'jp' => $productByJp
+        ];
 
         $newProducts = Product::where('status', ProductStatus::ACTIVE)->orderBy('created_at', 'desc')->limit(10)->get();
         $newProducts = $newProducts->unique('slug');
@@ -144,6 +136,7 @@ class HomeController extends Controller
             'currency' => $currency,
             'countryCode' => $locale,
             'categories' => $categories,
+            'productByVi' => $productByVi,
             'productByKr' => $productByKr,
             'productByJp' => $productByJp,
             'productByCn' => $productByCn,
@@ -157,8 +150,7 @@ class HomeController extends Controller
             'banner' => $banner,
             'newProducts' => $newProducts,
             'currentProducts' => $currentProducts,
-            'krProducts' => $krProducts,
-            'cnProducts' => $cnProducts,
+            'arrayProducts' => $arrayProducts,
             'locale' => $locale,
         ]);
     }

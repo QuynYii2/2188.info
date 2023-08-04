@@ -514,15 +514,17 @@
                                 <span class="text">{{ __('home.Blog') }}</span>
                             </a>
                         </div>
+
                         <div class="header-bottom-left--item item-left">
-                                <a href="#before-nation-flag"></a>
+                                <a href="{{ route('language', ['locale' => 'vi']) }}"></a>
                         </div>
                         <div class="header-bottom-left--item item-leftt">
-                                <a href="#before-nation-flag"></a>
+                                <a href="{{ route('language', ['locale' => 'cn']) }}"></a>
                         </div>
                         <div class="header-bottom-left--item item-left">
-                                <a href="#before-nation-flag"></a>
+                                <a href="{{ route('language', ['locale' => 'kr']) }}"></a>
                         </div>
+
                     </div>
                     <div class="col-xl-3 col-md-2 header-bottom-right d-flex align-items-center justify-content-end">
                         <div class="help">
