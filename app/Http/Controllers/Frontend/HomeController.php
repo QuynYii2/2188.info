@@ -34,6 +34,10 @@ class HomeController extends Controller
     {
         $this->getLocale($request);
         $locale = app()->getLocale();
+        if ($locale == 'vn') {
+            $locale = 'vi';
+        }
+
         $currencies = [
             'vi' => 'VND',
             'kr' => 'KRW',
@@ -252,6 +256,16 @@ class HomeController extends Controller
     public function createStatisticShopDetail($value, $id)
     {
         $this->createStatisticShop($value, $id);
+    }
+
+    public function setLocale($locale)
+    {
+        if (!$locale || $locale == 'vn') {
+            $locale = 'vi';
+        }
+        // Chưa tìm được giải pháp
+//        session()->put('locale', $locale);
+//        app()->setLocale($locale);
     }
 
     private function createStatisticShop($value, $id)

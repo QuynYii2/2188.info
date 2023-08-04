@@ -648,7 +648,7 @@
                     </div>
                 </div>
                 @php
-                    $listCurrentCategory = \App\Models\Category::where([['country', $locale], ['parent_id', null]])->get();
+                    $listCurrentCategory = \App\Models\Category::where('country', $locale)->get();
                 @endphp
 
                 @if(!$listCurrentCategory->isEmpty())
@@ -982,7 +982,7 @@
                     </div>
                 </div>
             </div>
-            <input type="text" id="inputUrl" value="{{asset('storage/')}}">
+            <input type="text" hidden="" id="inputUrl" value="{{asset('storage/')}}">
         </section>
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
         <script>

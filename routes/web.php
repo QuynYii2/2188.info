@@ -52,6 +52,7 @@ Route::get('/lang/{locale}', function ($locale) {
     return redirect()->back();
 })->name('language');
 
+Route::get('/set-locale/{locale}', [HomeController::class, 'setLocale'])->name('app.set.locale');
 
 Route::post('/register', [UserController::class, 'store'])->name('register.store');
 
