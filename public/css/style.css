@@ -474,10 +474,14 @@ body {
 }
 .productView-description .tab-content {
   padding-top: 40px;
+  display: flex;
 }
 .productView-description .tab-content .tab-title {
   font-size: 16px;
   line-height: 30px;
+}
+.productView-description .tab-content .tab-title .active {
+  display: flex;
 }
 
 .swiper {

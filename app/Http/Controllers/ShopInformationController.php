@@ -11,11 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ShopInformationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index($id)
     {
         $priceProductOfCategory = Product::selectRaw('MAX(price) AS maxPrice, MIN(price) AS minPrice')
@@ -35,6 +31,9 @@ class ShopInformationController extends Controller
 
         $listVouchers = Voucher::where('user_id', '=', $id)->get();
         return view('frontend/pages/shop-information/index', compact('listProduct', 'priceProductOfCategory', 'sellerInfo', 'countProductBySeller', 'listVouchers'));
+
+//        $shopInformation = ShopInfo::all();
+//        return view('frontend/pages/shop-information/index', compact('shopInformation'));
     }
 
 

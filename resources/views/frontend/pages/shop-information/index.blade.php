@@ -1,13 +1,13 @@
 <style>
-    .XEshP\ +  {
-        transition: margin-top .3s cubic-bezier(.4,0,.2,1);
+    .XEshP\  + {
+        transition: margin-top .3s cubic-bezier(.4, 0, .2, 1);
         -webkit-overflow-scrolling: touch;
     }
 
     .shop-page__info {
         background: #fff;
         padding: 1.25rem 0;
-        box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
     }
 
     .section-seller-overview-horizontal {
@@ -53,7 +53,7 @@
         left: 0;
         bottom: 0;
         right: 0;
-        background-color: rgba(0,0,0,.6);
+        background-color: rgba(0, 0, 0, .6);
     }
 
     .section-seller-overview-horizontal__leading-content {
@@ -78,7 +78,7 @@
         user-select: none;
     }
 
-    .section-seller-overview-horizontal .section-seller-overview__item  {
+    .section-seller-overview-horizontal .section-seller-overview__item {
         display: flex;
         padding-top: .625rem;
         padding-bottom: .625rem;
@@ -106,7 +106,7 @@
         font-size: .9375rem;
     }
 
-    .section-seller-overview-horizontal .section-seller-overview__item div  {
+    .section-seller-overview-horizontal .section-seller-overview__item div {
         display: inline-block;
     }
 
@@ -149,7 +149,7 @@
         overflow: hidden;
     }
 
-    .section-seller-overview-horizontal .section-seller-overview__item svg  {
+    .section-seller-overview-horizontal .section-seller-overview__item svg {
         stroke: #000;
     }
 
@@ -157,7 +157,7 @@
         color: #ee4d2d;
     }
 
-    .section-seller-overview__item-text-value  {
+    .section-seller-overview__item-text-value {
         color: #d0011b;
     }
 
@@ -167,11 +167,11 @@
         height: 1.875rem;
         position: relative;
         border-radius: 50%;
-        border: .0625rem solid rgba(0,0,0,.09);
+        border: .0625rem solid rgba(0, 0, 0, .09);
         box-sizing: border-box;
     }
 
-    .UgJq78 .wEpezN  {
+    .UgJq78 .wEpezN {
         display: block;
         cursor: pointer;
         -webkit-user-select: none;
@@ -181,7 +181,7 @@
         width: 5rem;
         box-sizing: border-box;
         border-width: .25rem;
-        border-color: hsla(0,0%,100%,.4);
+        border-color: hsla(0, 0%, 100%, .4);
     }
 
     .section-seller-overview-horizontal__preferred-badge-wrapper {
@@ -213,7 +213,7 @@
     .shopee-button-outline {
         outline: none;
         cursor: pointer;
-        border: 1px solid rgba(0,0,0,.09);
+        border: 1px solid rgba(0, 0, 0, .09);
         font-size: .875rem;
         font-weight: 300;
         line-height: 1;
@@ -221,10 +221,10 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: background-color .1s cubic-bezier(.4,0,.6,1);
+        transition: background-color .1s cubic-bezier(.4, 0, .6, 1);
         border-radius: 2px;
         background: transparent;
-        color: rgba(0,0,0,.8);
+        color: rgba(0, 0, 0, .8);
     }
 
     .shopee-button-outline--fill {
@@ -234,7 +234,7 @@
         padding-bottom: 0;
     }
 
-    .section-seller-overview-horizontal__button > .shopee-button-outline  {
+    .section-seller-overview-horizontal__button > .shopee-button-outline {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -253,22 +253,22 @@
         border-color: #00bfa5;
     }
 
-    .section-seller-overview-horizontal__button > .shopee-button-outline:hover  {
+    .section-seller-overview-horizontal__button > .shopee-button-outline:hover {
         color: #fff;
         border-color: #fff;
-        box-shadow: 0 1px 1px 0 rgba(0,0,0,.05);
+        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .05);
     }
 
-    .section-seller-overview-horizontal .section-seller-overview__inline-icon  {
+    .section-seller-overview-horizontal .section-seller-overview__inline-icon {
         vertical-align: top;
     }
 
-    .section-seller-overview-horizontal .section-seller-overview__inline-icon--help  {
+    .section-seller-overview-horizontal .section-seller-overview__inline-icon--help {
         cursor: pointer;
         -webkit-user-select: none;
         -moz-user-select: none;
         user-select: none;
-        color: rgba(0,0,0,.54);
+        color: rgba(0, 0, 0, .54);
         margin-left: 3px;
     }
 
@@ -286,19 +286,19 @@
     }
 
     .shopee-avatar__img {
-        display:  block;
-        position:  absolute;
-        top:  0;
-        left:  0;
-        width:  100%;
-        height:  100%;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         border-radius: 50%;
     }
 
     .section-seller-overview-horizontal__active-time {
         vertical-align: middle;
         font-size: .75rem;
-        color: hsla(0,0%,100%,.7);
+        color: hsla(0, 0%, 100%, .7);
         margin: .3125rem 0 .375rem;
     }
 
@@ -310,12 +310,12 @@
         font-size: .9375rem;
     }
 
-    .shopee-avatar__placeholder .icon-headshot  {
+    .shopee-avatar__placeholder .icon-headshot {
         stroke: #c6c6c6;
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
         font-size: 1.5rem;
         font-weight: 400;
         line-height: 2rem;
@@ -328,7 +328,7 @@
         width: 64px;
     }
 
-    .section-seller-overview-horizontal__icon .icon-plus-sign  {
+    .section-seller-overview-horizontal__icon .icon-plus-sign {
         font-size: .625rem;
     }
 
@@ -355,24 +355,29 @@
                 </div>
                 <div class="section-seller-overview-horizontal__leading-content">
                     <div class="section-seller-overview-horizontal__seller-portrait UgJq78">
-                            <div class="shopee-avatar wEpezN">
-                                <div class="shopee-avatar__placeholder">
-                                    <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0" class="shopee-svg-icon icon-headshot">
-                                        <g>
-                                            <circle cx="7.5" cy="4.5" fill="none" r="3.8" stroke-miterlimit="10">
-                                            </circle>
-                                            <path d="m1.5 14.2c0-3.3 2.7-6 6-6s6 2.7 6 6" fill="none" stroke-linecap="round" stroke-miterlimit="10">
-                                            </path>
-                                        </g>
-                                    </svg>
-                                </div>
-                                <img class="shopee-avatar__img" src="https://down-ws-vn.img.susercontent.com/02cc55b581a1da07745c4e19070c0f16_tn">
+                        <div class="shopee-avatar wEpezN">
+                            <div class="shopee-avatar__placeholder">
+                                <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0"
+                                     class="shopee-svg-icon icon-headshot">
+                                    <g>
+                                        <circle cx="7.5" cy="4.5" fill="none" r="3.8" stroke-miterlimit="10">
+                                        </circle>
+                                        <path d="m1.5 14.2c0-3.3 2.7-6 6-6s6 2.7 6 6" fill="none" stroke-linecap="round"
+                                              stroke-miterlimit="10">
+                                        </path>
+                                    </g>
+                                </svg>
                             </div>
-                            <div class="section-seller-overview-horizontal__preferred-badge-wrapper">
-                                <div class="official-shop-new-badge">
-                                    <img class="WgnEaf" src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/483071c49603aa7163a7f51708bff61b.png" loading="lazy" width="64" height="16">
-                                </div>
+                            <img class="shopee-avatar__img"
+                                 src="https://down-ws-vn.img.susercontent.com/02cc55b581a1da07745c4e19070c0f16_tn">
+                        </div>
+                        <div class="section-seller-overview-horizontal__preferred-badge-wrapper">
+                            <div class="official-shop-new-badge">
+                                <img class="WgnEaf"
+                                     src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/483071c49603aa7163a7f51708bff61b.png"
+                                     loading="lazy" width="64" height="16">
                             </div>
+                        </div>
                         <div class="section-seller-overview-horizontal__portrait-info">
                             <h1 class="section-seller-overview-horizontal__portrait-name">
                                 {{ $sellerInfo->name ?? 'Shop Name'}}
@@ -388,7 +393,8 @@
                         <a class="section-seller-overview-horizontal__button">
                             <button class="shopee-button-outline shopee-button-outline--complement shopee-button-outline--fill">
               <span class="section-seller-overview-horizontal__icon">
-                <svg enable-background="new 0 0 10 10" viewBox="0 0 10 10" x="0" y="0" class="shopee-svg-icon icon-plus-sign">
+                <svg enable-background="new 0 0 10 10" viewBox="0 0 10 10" x="0" y="0"
+                     class="shopee-svg-icon icon-plus-sign">
                   <polygon points="10 4.5 5.5 4.5 5.5 0 4.5 0 4.5 4.5 0 4.5 0 5.5 4.5 5.5 4.5 10 5.5 10 5.5 5.5 10 5.5">
                   </polygon>
                 </svg>
@@ -415,7 +421,8 @@
             <div class="section-seller-overview-horizontal__seller-info-list">
                 <div class="section-seller-overview__item section-seller-overview__item--clickable">
                     <div class="section-seller-overview__item-icon-wrapper">
-                        <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0" stroke-width="0" class="shopee-svg-icon">
+                        <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0" stroke-width="0"
+                             class="shopee-svg-icon">
                             <path d="m13 1.9c-.2-.5-.8-1-1.4-1h-8.4c-.6.1-1.2.5-1.4 1l-1.4 4.3c0 .8.3 1.6.9 2.1v4.8c0 .6.5 1 1.1 1h10.2c.6 0 1.1-.5 1.1-1v-4.6c.6-.4.9-1.2.9-2.3zm-11.4 3.4 1-3c .1-.2.4-.4.6-.4h8.3c.3 0 .5.2.6.4l1 3zm .6 3.5h.4c.7 0 1.4-.3 1.8-.8.4.5.9.8 1.5.8.7 0 1.3-.5 1.5-.8.2.3.8.8 1.5.8.6 0 1.1-.3 1.5-.8.4.5 1.1.8 1.7.8h.4v3.9c0 .1 0 .2-.1.3s-.2.1-.3.1h-9.5c-.1 0-.2 0-.3-.1s-.1-.2-.1-.3zm8.8-1.7h-1v .1s0 .3-.2.6c-.2.1-.5.2-.9.2-.3 0-.6-.1-.8-.3-.2-.3-.2-.6-.2-.6v-.1h-1v .1s0 .3-.2.5c-.2.3-.5.4-.8.4-1 0-1-.8-1-.8h-1c0 .8-.7.8-1.3.8s-1.1-1-1.2-1.7h12.1c0 .2-.1.9-.5 1.4-.2.2-.5.3-.8.3-1.2 0-1.2-.8-1.2-.9z">
                             </path>
                         </svg>
@@ -431,8 +438,11 @@
                 </div>
                 <div class="section-seller-overview__item section-seller-overview__item--clickable">
                     <div class="section-seller-overview__item-icon-wrapper">
-                        <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0" class="shopee-svg-icon icon-rating">
-                            <polygon fill="none" points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10">
+                        <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0"
+                             class="shopee-svg-icon icon-rating">
+                            <polygon fill="none"
+                                     points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
+                                     stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10">
                             </polygon>
                         </svg>
                     </div>
@@ -448,8 +458,11 @@
                 <div class="section-seller-overview__item">
                     <div class="section-seller-overview__item-text">
                         <div class="section-seller-overview__item-icon-wrapper">
-                            <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0" class="shopee-svg-icon icon-rating">
-                                <polygon fill="none" points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10">
+                            <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0"
+                                 class="shopee-svg-icon icon-rating">
+                                <polygon fill="none"
+                                         points="7.5 .8 9.7 5.4 14.5 5.9 10.7 9.1 11.8 14.2 7.5 11.6 3.2 14.2 4.3 9.1 .5 5.9 5.3 5.4"
+                                         stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10">
                                 </polygon>
                             </svg>
                         </div>
@@ -477,9 +490,11 @@
                             <g>
                                 <circle cx="6.8" cy="4.2" fill="none" r="3.8" stroke-miterlimit="10">
                                 </circle>
-                                <polyline fill="none" points="9.2 12.5 11.2 14.5 14.2 11" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10">
+                                <polyline fill="none" points="9.2 12.5 11.2 14.5 14.2 11" stroke-linecap="round"
+                                          stroke-linejoin="round" stroke-miterlimit="10">
                                 </polyline>
-                                <path d="m .8 14c0-3.3 2.7-6 6-6 2.1 0 3.9 1 5 2.6" fill="none" stroke-linecap="round" stroke-miterlimit="10">
+                                <path d="m .8 14c0-3.3 2.7-6 6-6 2.1 0 3.9 1 5 2.6" fill="none" stroke-linecap="round"
+                                      stroke-miterlimit="10">
                                 </path>
                             </g>
                         </svg>
@@ -502,7 +517,8 @@
                     <div class="productView-description">
                         <ul class="nav nav-tabs container-fluid pt-4" id="myTab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                   aria-controls="home"
                                    aria-selected="true">Thông tin Shop</a>
                             </li>
                             <li class="nav-item">
@@ -516,7 +532,7 @@
                         </ul>
                         <div class="tab-content container-fluid" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                123
+                                @include('frontend.pages.shop-information.tabs_shop_info')
                             </div>
                             <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="profile-tab">
                                 @include('frontend.pages.shop-information.tabs_product')
