@@ -316,6 +316,11 @@
                                    placeholder="Nhập giá khuyến mãi"  value="{{$product->price}}" min="1">
                         </div>
                         <div class="form-group">
+                            <div class="name">Nhập số lượng</div>
+                            <input type="number" class="form-control" name="qty" id="qty"
+                                   placeholder="Nhập giá khuyến mãi" value="{{$product->qty}}" min="1">
+                        </div>
+                        <div class="form-group">
                             <div class="name">Xuất xứ</div>
                             <input type="text" class="form-control" name="origin" id="origin" placeholder="Nhập xuất xứ" value="{{$product->origin}}">
                         </div>

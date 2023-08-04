@@ -202,7 +202,7 @@ class ProductController extends Controller
             $product->description = $request->input('description');
             $product->short_description = $request->input('short_description');
             $product->product_code = $request->input('product_code');
-            $product->qty = $qty_in_storage;
+            $product->qty = $request->input('qty');;
             $product->category_id = $request->input('category_id');
             $product->user_id = Auth::user()->id;
             $product->location = Auth::user()->region;
@@ -298,6 +298,9 @@ class ProductController extends Controller
 
             $product->old_price = $request->input('giaban');
             $product->price = $request->input('giakhuyenmai');
+
+            $product->qty = $request->input('qty');
+
 
             $product->origin = $request->input('origin');
             $product->min = $request->input('min');

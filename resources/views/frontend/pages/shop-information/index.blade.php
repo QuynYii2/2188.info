@@ -375,7 +375,7 @@
                             </div>
                         <div class="section-seller-overview-horizontal__portrait-info">
                             <h1 class="section-seller-overview-horizontal__portrait-name">
-                                {{ $sellerInfo->name }}
+                                {{ $sellerInfo->name ?? 'Shop Name'}}
                             </h1>
                             <div class="section-seller-overview-horizontal__portrait-status">
                                 <div class="section-seller-overview-horizontal__active-time">
