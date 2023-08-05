@@ -11,6 +11,7 @@ use App\Enums\TopSellerConfigLocation;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PermissionRankController;
+use App\Http\Controllers\TranslateController;
 use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Notification;
@@ -135,6 +136,7 @@ class HomeController extends Controller
 
         $banner = Banner::where('status', BannerStatus::ACTIVE)->orderBy('created_at', 'desc')->first();
 
+        $trans = new TranslateController();
         return view('frontend/index', [
             'productByLocal' => $productByLocal,
             'currency' => $currency,
@@ -154,7 +156,7 @@ class HomeController extends Controller
             'banner' => $banner,
             'newProducts' => $newProducts,
             'currentProducts' => $currentProducts,
-            'arrayProducts' => $arrayProducts,
+            'arrayProducts' => $trans->translateRecursiveDeep($arrayProducts),
             'locale' => $locale,
         ]);
     }

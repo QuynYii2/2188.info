@@ -20,7 +20,8 @@
         "socialiteproviders/kakao": "^4.2",
         "socialiteproviders/manager": "^4.3",
         "spatie/simple-excel": "^3.2",
-        "srmklive/paypal": "*"
+        "srmklive/paypal": "*",
+        "stichoza/google-translate-php": "^5.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

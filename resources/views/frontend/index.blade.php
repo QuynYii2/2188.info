@@ -2,6 +2,9 @@
 
 @section('title', 'Home page')
 
+<?php
+    $trans = new \App\Http\Controllers\TranslateController();
+?>
 @section('content')
     <link rel="stylesheet" href="{{asset('css/frontend.css')}}">
     <!-- test nhanh -->
@@ -326,8 +329,8 @@
                                                     $nameFeature = DB::table('users')->where('id', $product->user_id)->first();
                                                 @endphp
                                                 <div class="card-brand">
-                                                    {{$nameFeature->name}}
                                                 </div>
+                                                12312312
                                                 <div class="card-title">
                                                     @if(Auth::check())
                                                         <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>
@@ -604,7 +607,7 @@
                                             </div>
                                             <div class="card-title">
                                                 @if(Auth::check())
-                                                    <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>
+                                                    <a href="{{route('detail_product.show', $product->id)}}">{{ $trans->translateText($product->name) }}</a>
                                                 @else
                                                     <a class="check_url">{{$product->name}}</a>
                                                 @endif
