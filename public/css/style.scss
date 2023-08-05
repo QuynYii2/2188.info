@@ -504,13 +504,9 @@ $color-main: #fd6506;
   }
   .tab-content{
     padding-top: 40px;
-    display: flex;
     .tab-title{
       font-size: 16px;
       line-height: 30px;
-      .active{
-        display: flex;
-      }
     }
   }
 }
