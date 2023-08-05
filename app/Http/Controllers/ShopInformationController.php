@@ -29,11 +29,10 @@ class ShopInformationController extends Controller
             ->where('user_id', '=', $id)
             ->first();
 
+            $shopInformation = ShopInfo::all();
         $listVouchers = Voucher::where('user_id', '=', $id)->get();
-        return view('frontend/pages/shop-information/index', compact('listProduct', 'priceProductOfCategory', 'sellerInfo', 'countProductBySeller', 'listVouchers'));
+        return view('frontend/pages/shop-information/index', compact('listProduct', 'priceProductOfCategory', 'sellerInfo', 'countProductBySeller', 'listVouchers','shopInformation'));
 
-//        $shopInformation = ShopInfo::all();
-//        return view('frontend/pages/shop-information/index', compact('shopInformation'));
     }
 
 
@@ -177,7 +176,6 @@ class ShopInformationController extends Controller
     {
         try {
             $shopinformation = new ShopInfo();
-
             $shopinformation->user_id = Auth::user()->id;
             $shopinformation->name = $request->input('name');
             $shopinformation->country = $request->input('region');
@@ -187,6 +185,11 @@ class ShopInformationController extends Controller
             $shopinformation->product_key = $request->input('product_key');
             $shopinformation->information = $request->input('information');
             $shopinformation->business_license = $request->input('business_license');
+            $shopinformation->acreage = $request->input('acreage');
+            $shopinformation->industry_year = $request->input('industry_year');
+            $shopinformation->machine_number = $request->input('machine_number');
+            $shopinformation->marketing = $request->input('marketing');
+            $shopinformation->customers = $request->input('customers');
 
             $Shop = $shopinformation->save();
         } catch (\Exception $exception) {
