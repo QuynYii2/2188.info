@@ -34,6 +34,9 @@ class HomeController extends Controller
     {
         $this->getLocale($request);
         $locale = app()->getLocale();
+        if ($locale == 'vn') {
+            $locale = 'vi';
+        }
 
         $currencies = [
             'vi' => 'VND',
@@ -42,11 +45,12 @@ class HomeController extends Controller
             'jp' => 'JPY',
         ];
 
+        $currentProducts = Product::where([['location', $locale], ['status', ProductStatus::ACTIVE]])->get();
+
         if (array_key_exists($locale, $currencies)) {
             $currency = $currencies[$locale];
         }
 
-        $productByLocal = Product::where('location', $locale)->limit(10)->get();
 
         $categories = Category::get()->toTree();
 
@@ -57,9 +61,18 @@ class HomeController extends Controller
         $productByLocal = Product::whereIn('location', array_slice($locations, 0, 3))
             ->limit(10)
             ->get();
-        $productByKr = Product::where('location', 'kr')->limit(10)->get();
-        $productByJp = Product::where('location', 'jp')->limit(10)->get();
-        $productByCn = Product::where('location', 'cn')->limit(10)->get();
+
+        $productByVi = Product::where([['location', 'vi'], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
+        $productByKr = Product::where([['location', 'kr'], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
+        $productByJp = Product::where([['location', 'jp'], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
+        $productByCn = Product::where([['location', 'cn'], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
+
+        $arrayProducts = [
+            'vi' => $productByVi,
+            'kr' => $productByKr,
+            'cn' => $productByCn,
+            'jp' => $productByJp
+        ];
 
         $newProducts = Product::where('status', ProductStatus::ACTIVE)->orderBy('created_at', 'desc')->limit(10)->get();
         $newProducts = $newProducts->unique('slug');
@@ -127,6 +140,7 @@ class HomeController extends Controller
             'currency' => $currency,
             'countryCode' => $locale,
             'categories' => $categories,
+            'productByVi' => $productByVi,
             'productByKr' => $productByKr,
             'productByJp' => $productByJp,
             'productByCn' => $productByCn,
@@ -139,6 +153,9 @@ class HomeController extends Controller
             'configsTop5' => $configsTop5,
             'banner' => $banner,
             'newProducts' => $newProducts,
+            'currentProducts' => $currentProducts,
+            'arrayProducts' => $arrayProducts,
+            'locale' => $locale,
         ]);
     }
 
@@ -239,6 +256,16 @@ class HomeController extends Controller
     public function createStatisticShopDetail($value, $id)
     {
         $this->createStatisticShop($value, $id);
+    }
+
+    public function setLocale($locale)
+    {
+        if (!$locale || $locale == 'vn') {
+            $locale = 'vi';
+        }
+        // Chưa tìm được giải pháp
+//        session()->put('locale', $locale);
+//        app()->setLocale($locale);
     }
 
     private function createStatisticShop($value, $id)
