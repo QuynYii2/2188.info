@@ -8,7 +8,7 @@
      }
 @endphp
 <style>
-    .header-bottom-left--item.item-left a:before {
+    .header-bottom-left--item.item-left--vi a:before {
         display: block;
         content: '';
         background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png");
@@ -17,7 +17,7 @@
         position: relative;
         background-size: 30px;
         background-repeat: no-repeat;}
-    .header-bottom-left--item.item-leftt a:before {
+    .header-bottom-left--item.item-left--cn a:before {
         display: block;
         content: '';
         background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png");
@@ -25,11 +25,23 @@
         height: 30px;
         position: relative;
         background-size: 30px;
-        background-repeat: no-repeat;}
-    .header-bottom-left--item.item-left:last-child a:before {
+        background-repeat: no-repeat;
+    }
+
+    .header-bottom-left--item.item-left--kr a:before {
         display: block;
         content: '';
         background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png");
+        width: 30px;
+        height: 30px;
+        position: relative;
+        background-size: 30px;
+        background-repeat: no-repeat;}
+
+    .header-bottom-left--item.item-left--jp a:before {
+        display: block;
+        content: '';
+        background-image: url("https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png");
         width: 30px;
         height: 30px;
         position: relative;
@@ -514,125 +526,26 @@
                                 <span class="text">{{ __('home.Blog') }}</span>
                             </a>
                         </div>
-
-                        <div class="header-bottom-left--item item-left">
-                                <a href="{{ route('language', ['locale' => 'vi']) }}"></a>
-                        </div>
-                        <div class="header-bottom-left--item item-leftt">
-                                <a href="{{ route('language', ['locale' => 'cn']) }}"></a>
-                        </div>
-                        <div class="header-bottom-left--item item-left">
-                                <a href="{{ route('language', ['locale' => 'kr']) }}"></a>
-                        </div>
-
                     </div>
                     <div class="col-xl-3 col-md-2 header-bottom-right d-flex align-items-center justify-content-end">
                         <div class="help">
                             <i class="fa-solid fa-headset"></i>
                             <span>{{ __('home.Help') }}</span>
                         </div>
-
-                        <div class="lan-selector">
-                            <select class="language_drop" name="countries" id="countries"
-                                    style="width: 100%; padding-right: 15px"
-                                    onchange="location = this.value;">
-                                @if(session('locale') == 'vi' || session('locale') == null)
-                                    <option class="img" value='{{ route('language', ['locale' => 'vi']) }}'
-                                            data-image="{{ asset('images/vietnam.webp') }}" data-imagecss="flag vi">
-                                        <a class="text-body mr-3">Việt Nam</a>
-                                    </option>
-                                    <option class="img" value='{{ route('language', ['locale' => 'kr']) }}'
-                                            data-image="{{ asset('images/korea.png') }}" data-imagecss="flag kr">
-                                        <a class="text-body mr-3">Korea</a>
-                                    </option>
-                                    <option class="img" value='{{ route('language', ['locale' => 'jp']) }}'
-                                            data-image="{{ asset('images/japan.webp') }}" data-imagecss="flag jp"
-                                            data-title="Japan">
-                                        <a class="text-body mr-3">Japan</a>
-                                    </option>
-                                    <option class="img" value='{{ route('language', ['locale' => 'cn']) }}'
-                                            data-image="{{ asset('images/china.webp') }}" data-imagecss="flag cn">
-                                        <a class="text-body mr-3">China</a>
-                                    </option>
-                                @endif
-                                @if(session('locale') == 'kr')
-                                    <option class="img" value='{{ route('language', ['locale' => 'kr']) }}'
-                                            data-image="{{ asset('images/korea.png') }}" data-imagecss="flag kr"
-                                            data-title="Korea">
-                                        <a class="text-body mr-3">Korea</a>
-                                    </option>
-                                    <option class="img" value='{{ route('language', ['locale' => 'vi']) }}'
-                                            data-image="{{ asset('images/vietnam.webp') }}" data-imagecss="flag vi"
-                                            data-title="VietNam">
-                                        <a class="text-body mr-3">Việt Nam</a>
-                                    </option>
-                                    <option class="img" value='{{ route('language', ['locale' => 'jp']) }}'
-                                            data-image="{{ asset('images/japan.webp') }}" data-imagecss="flag jp"
-                                            data-title="Japan">
-                                        <a class="text-body mr-3">Japan</a>
-                                    </option>
-                                    <option class="img" value='{{ route('language', ['locale' => 'cn']) }}'
-                                            data-image="{{ asset('images/china.webp') }}" data-imagecss="flag cn"
-                                            data-title="China">
-                                        <a class="text-body mr-3">China</a>
-                                    </option>
-                                @endif
-                                @if(session('locale') == 'jp')
-                                    <option class="img" value='{{ route('language', ['locale' => 'jp']) }}'
-                                            data-image="{{ asset('images/japan.webp') }}" data-imagecss="flag jp"
-                                            data-title="Japan">
-                                        <a class="text-body mr-3">Japan</a>
-                                    </option>
-                                    <option class="img" value='{{ route('language', ['locale' => 'kr']) }}'
-                                            data-image="{{ asset('images/korea.png') }}" data-imagecss="flag kr"
-                                            data-title="Korea">
-                                        <a class="text-body mr-3">Korea</a>
-                                    </option>
-                                    <option class="img" value='{{ route('language', ['locale' => 'vi']) }}'
-                                            data-image="{{ asset('images/vietnam.webp') }}" data-imagecss="flag vi"
-                                            data-title="VietNam">
-                                        <a class="text-body mr-3">Việt Nam</a>
-                                    </option>
-                                    <option class="img" value='{{ route('language', ['locale' => 'cn']) }}'
-                                            data-image="{{ asset('images/china.webp') }}" data-imagecss="flag cn"
-                                            data-title="China">
-                                        <a class="text-body mr-3">China</a>
-                                    </option>
-                                @endif
-                                @if(session('locale') == 'cn')
-                                    <option class="img" value='{{ route('language', ['locale' => 'cn']) }}'
-                                            data-image="{{ asset('images/china.webp') }}" data-imagecss="flag cn"
-                                            data-title="China">
-                                        <a class="text-body mr-3">China</a>
-                                    <option class="img" value='{{ route('language', ['locale' => 'kr']) }}'
-                                            data-image="{{ asset('images/korea.png') }}" data-imagecss="flag kr"
-                                            data-title="Korea">
-                                        <a class="text-body mr-3">Korea</a>
-                                    </option>
-                                    <option class="img" value='{{ route('language', ['locale' => 'vi']) }}'
-                                            data-image="{{ asset('images/vietnam.webp') }}" data-imagecss="flag vi"
-                                            data-title="VietNam">
-                                        <a class="text-body mr-3">Việt Nam</a>
-                                    </option>
-                                    <option class="img" value='{{ route('language', ['locale' => 'jp']) }}'
-                                            data-image="{{ asset('images/japan.webp') }}" data-imagecss="flag jp"
-                                            data-title="Japan">
-                                        <a class="text-body mr-3">Japan</a>
-                                    </option>
-                                @endif
-                            </select>
+                        <div class="d-flex">
+                            <div class="header-bottom-left--item item-left--vi ">
+                                <a href="{{ route('language', ['locale' => 'vi']) }}"></a>
+                            </div>
+                            <div class="header-bottom-left--item item-left--cn">
+                                <a href="{{ route('language', ['locale' => 'cn']) }}"></a>
+                            </div>
+                            <div class="header-bottom-left--item item-left--kr">
+                                <a href="{{ route('language', ['locale' => 'kr']) }}"></a>
+                            </div>
+                            <div class="header-bottom-left--item item-left--jp">
+                                <a href="{{ route('language', ['locale' => 'jp']) }}"></a>
+                            </div>
                         </div>
-                        {{--                        <div class="nation dropdown">--}}
-                        {{--                            <button class="btn dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
-                        {{--                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/lib/flags/us.gif" alt=""> VN--}}
-                        {{--                            </button>--}}
-                        {{--                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">--}}
-                        {{--                                <a class="dropdown-item" href="#"> <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/lib/flags/us.gif" alt=""> HQ--}}
-                        {{--                                </a>--}}
-                        {{--                                <a class="dropdown-item" href="#"><img src="https://cdn11.bigcommerce.com/s-3uw22zu194/lib/flags/us.gif" alt=""> TQ</a>--}}
-                        {{--                                <a class="dropdown-item" href="#"><img src="https://cdn11.bigcommerce.com/s-3uw22zu194/lib/flags/us.gif" alt=""> NB</a>--}}
-                        {{--                            </div>--}}
-                        {{--                        </div>--}}
                     </div>
                 </div>
             </div>

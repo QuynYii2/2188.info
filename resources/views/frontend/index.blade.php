@@ -550,7 +550,7 @@
             @else
                 <div class="content ">Japan
                     <img class="flag-ct"
-                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
+                         src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
                 </div>
             @endif
             <div class="row">
@@ -734,7 +734,7 @@
                     @else
                         <div class="content ">Japan
                             <img class="flag-ct"
-                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
+                                 src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
                         </div>
                     @endif
                     <div class="row">
