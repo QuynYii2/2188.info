@@ -1,7 +1,3 @@
-@php use Illuminate\Support\Facades\Auth;
- $user = \App\Models\User::find(Auth::user()->id)
-@endphp
-
 @extends('backend.layouts.master')
 @section('title', 'Information')
 @section('content')
@@ -95,7 +91,7 @@
                                        class="col-md-3 col-12 col-form-label">Tên người bán</label>
                                 <div class="col-md-9 col-12">
                                     <input type="text" class="form-control" id="staticEmail" name="name"
-                                           value="{{$user->name}}">
+                                           value="{{ $sellerInfo->name ?? ''}}">
                                 </div>
                             </div>
                         </div>
@@ -111,7 +107,8 @@
                         <label for="day" class="col-md-3 col-12 col-form-label">Mã số thuế</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control" name="rental_code" value="{{ $user->rental_code }}">
+                            <input type="text" class="form-control" name="rental_code"
+                                   value="{{ $sellerInfo->masothue ?? ''}}">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -119,7 +116,7 @@
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" name="product_name"
-                                   value="{{ $user->product_name }}">
+                                   value="{{ $sellerInfo->product_name ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -127,23 +124,21 @@
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" name="product_code"
-                                   value="{{ $user->product_code }}">
+                                   value="{{ $sellerInfo->product_code ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label for="day" class="col-md-3 col-12 col-form-label">Ngành sản phẩm đăng ký</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control" name="industry" value="{{ $user->industry }}">
+                            <input type="text" class="form-control" name="industry" value="{{ $user->industry ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label for="short_description" class="col-md-3 col-12 col-form-label">Thông tin công ty</label>
                         <div class="col-md-9 col-12">
                             <textarea class="form-control description" name="information" rows="5">
-                                @if($shop_infos)
-                                    {{$shop_infos->information}}
-                                @endif
+                                    {{$sellerInfo->information ?? '' }}
                             </textarea>
                         </div>
                     </div>
