@@ -36,19 +36,22 @@ class SettingShopController extends Controller
     public function saveProfileShop(Request $request)
     {
         $user = Auth::user();
+       
         $user->name = $request->input('name');
         $user->region = $request->input('region');
         $user->rental_code = $request->input('rental_code');
         $user->product_name = $request->input('product_name');
         $user->product_code = $request->input('product_code');
+
         $user->industry = $request->input('industry');
         if ($request->hasFile('image')) {
             $gallery = $request->file('image');
             $galleryPath = $gallery->store('images', 'public');
             $user->image = $galleryPath;
         }
-        $infoShop = (new ShopInformationController())->store($request);
         $user->save();
+
+        $infoShop = (new ShopInfo())->store($request);
         return redirect(route('profile.shop.index'));
     }
 
