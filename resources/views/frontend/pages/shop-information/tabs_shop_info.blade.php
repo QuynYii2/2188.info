@@ -1,5 +1,4 @@
-{{--@dd($shopinformation)--}}
-{{--@foreach($shopinformation as $shopInfo)--}}
+@foreach($shopInformation as $shopInfo)
 <div class="title-information">
     <div class="title-information-container">Hồ sơ</div>
     <div class="title-information-download">
@@ -13,11 +12,11 @@
         <div>
             <div>
                 <span>Ngày đăng ký công ty</span>
-{{--                <li>{{ $shopInfo->name }} - {{ \Carbon\Carbon::parse($shopInfo->created_at)->format('d/m/Y') }}</li>--}}
+              <strong>{{ \Carbon\Carbon::parse($shopInfo->created_at)->format('d/m/Y') }}</strong>
             </div>
             <div>
                 <span>Diện tích sàn(㎡)</span>
-                <strong>1000</strong>
+                <strong>{{$shopInfo->acreage}}</strong>
             </div>
             <div>
                 <span>Doanh thu xuất khẩu hàng năm (USD)</span>
@@ -25,15 +24,15 @@
             </div>
             <div>
                 <span>Ngôn ngữ được chấp nhận</span>
-                <strong>Tiếng Anh</strong>
+                <strong>{{$shopInfo->country}}</strong>
             </div>
             <div>
                 <span>Năm xuất khẩu</span>
-                <strong>14</strong>
+                <strong>{{$shopInfo->industry_year}}</strong>
             </div>
             <div>
                 <span>Năm trong ngành</span>
-                <strong>14</strong>
+                <strong>{{$shopInfo->industry_year}}</strong>
             </div>
         </div>
     </dd>
@@ -41,7 +40,7 @@
         <span>Chứng nhận</span>
     </dt>
     <dd>
-        img
+        {{$shopInfo->business_license}}
     </dd>
     <dt>Khả năng sản xuất</dt>
     <dd>
@@ -56,7 +55,7 @@
             </div>
             <div>
                 <span>Máy móc sản xuất</span>
-                <strong>28</strong>
+                <strong>{{$shopInfo->machine_number}}</strong>
             </div>
         </div>
     </dd>
@@ -86,7 +85,7 @@
         <div>
             <div>
                 <span>Thị trường chính</span>
-                <strong>Bắc Mỹ(35%), Tây Âu(25%), Châu Đại Dương(17%)</strong>
+                <strong>{{$shopInfo->marketing}}</strong>
             </div>
             <div>
                 <span>Đối tác chuỗi cung ứng</span>
@@ -94,8 +93,7 @@
             </div>
             <div>
                 <span>Các loại khách hàng chính</span>
-                <strong>Nhà bán lẻ, Kỹ sư, Nhà bán buôn, Kinh doanh thương hiệu, Sử dụng cho mục đích cá nhân, Nhà sản
-                    xuất</strong>
+                <strong>{{$shopInfo->customers}}t</strong>
             </div>
         </div>
     </dd>
@@ -123,4 +121,4 @@
         </div>
     </dd>
 </dl>
-{{--@endforeach--}}
+@endforeach
