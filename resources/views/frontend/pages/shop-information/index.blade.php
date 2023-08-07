@@ -345,9 +345,9 @@
 @section('title', 'Information Shop')
 
 @section('content')
-    <?php
-    $trans = \App\Http\Controllers\TranslateController::getInstance();
-    ?>
+    @php
+        $trans = \App\Http\Controllers\TranslateController::getInstance();
+    @endphp
     <div class="shop-page__info snipcss-sPWYr">
         <div class="section-seller-overview-horizontal container">
             <div class="section-seller-overview-horizontal__leading row">

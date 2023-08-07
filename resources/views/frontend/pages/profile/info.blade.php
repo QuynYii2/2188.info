@@ -84,9 +84,9 @@
         }
 
     </style>
-    <?php
-    $trans = \App\Http\Controllers\TranslateController::getInstance();
-    ?>
+    @php
+        $trans = \App\Http\Controllers\TranslateController::getInstance();
+    @endphp
     <div class="container row rounded mt-5 bg-white m-auto">
         <div class="border-bottom"></div>
         <div class="row mb-5">

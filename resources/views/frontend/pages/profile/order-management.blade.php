@@ -31,10 +31,9 @@
 @endphp
 
 @section('sub-content')
-
-    <?php
-    $trans = \App\Http\Controllers\TranslateController::getInstance();
-    ?>
+    @php
+        $trans = \App\Http\Controllers\TranslateController::getInstance();
+    @endphp
     @for($i = 0; $i< count($permissionUsers); $i++)
         @if($permissionUsers[$i]->name == 'manage_orders')
             <div class="row mt-2 bg-white rounded">

@@ -3,9 +3,9 @@
 @section('title', 'Register Member')
 
 @section('content')
-    <?php
-    $trans = \App\Http\Controllers\TranslateController::getInstance();
-    ?>
+    @php
+        $trans = \App\Http\Controllers\TranslateController::getInstance();
+    @endphp
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
     <div class="start-page mb-3">
@@ -24,11 +24,6 @@
                                 <input type="text" class="form-control" id="companyName" name="companyName" required>
                             </div>
                             <div class="form-group col-md-4">
-                                <label for="numberBusiness">Number Business</label>
-                                <input type="text" class="form-control" id="numberBusiness" name="numberBusiness"
-                                       required>
-                            </div>
-                            <div class="form-group col-md-4">
                                 <label for="codeBusiness">Code Business</label>
                                 <input type="text" class="form-control" id="codeBusiness" name="codeBusiness"
                                        required>
@@ -38,17 +33,6 @@
                             <div class="form-group col-md-4">
                                 <label for="phoneNumber">PhoneNumber</label>
                                 <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label for="fax">Fax</label>
-                                <input type="text" class="form-control" id="fax" name="fax" required>
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label for="type">Status Company</label>
-                                <select id="type" name="type" class="form-control">
-                                    <option value="{{\App\Enums\StatusBusiness::ACTIVE}}">ACTIVE</option>
-                                    <option value="{{\App\Enums\StatusBusiness::INACTIVE}}">INACTIVE</option>
-                                </select>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="category">Category</label>

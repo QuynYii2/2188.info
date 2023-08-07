@@ -14,9 +14,9 @@
 </style>
 
 @section('sub-content')
-    <?php
-    $trans = \App\Http\Controllers\TranslateController::getInstance();
-    ?>
+    @php
+        $trans = \App\Http\Controllers\TranslateController::getInstance();
+    @endphp
     <div class="row mt-2 bg-white rounded">
 
         <div class="col-md-12 ">
