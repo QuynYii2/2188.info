@@ -1,6 +1,9 @@
 @extends('frontend.layouts.profile')
 
 @section('content')
+    <?php
+    $trans = \App\Http\Controllers\TranslateController::getInstance();
+    ?>
     <div class="container">
         <h2>{{ __('home.Wishlist') }}</h2>
         <div class="row">
@@ -16,10 +19,10 @@
                                 <img src="{{ asset('/storage/' . $product->thumbnail) }}"
                                      alt="">
                             </div>
-                            Tên sản phẩm: {{ $product->name }} <br>
-                            Giá gốc: {{ $product->price }} <br>
+                            Tên sản phẩm: {{ $tran->translateText($product->name) }}<br>
+                            Giá gốc: {{ $tran->translateText($product->price) }}<br>
                             @if($product->old_price)
-                                Giá khuyễn mãi: {{ $product->old_price }}
+                                Giá khuyễn mãi: {{ $tran->translateText($product->old_price) }}
                             @endif
 
                             <div>

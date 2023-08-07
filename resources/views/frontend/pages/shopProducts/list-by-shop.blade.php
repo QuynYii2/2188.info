@@ -3,6 +3,9 @@
 @section('title', 'Product')
 
 @section('content')
+    <?php
+    $trans = \App\Http\Controllers\TranslateController::getInstance();
+    ?>
     <div class="breacrumb-section">
         <div class="container">
             <div class="row">
@@ -31,12 +34,12 @@
                                         </div>
                                     </div>
                                     <div class="pi-text">
-                                        <div class="category-name">{{$product->category->name}}</div>
+                                        <div class="category-name">{{ $tran->translateText($product->category->name) }}</div>
                                         <a href="{{route('detail_product.show', $product->id)}}">
-                                            <h5>{{$product->name}}</h5>
+                                            <h5>{{ $tran->translateText($product->name) }}</h5>
                                         </a>
                                         <div class="product-price">
-                                            ${{$product->price}}
+                                            ${{ $tran->translateText($product->price) }}
                                         </div>
                                     </div>
                                 </div>

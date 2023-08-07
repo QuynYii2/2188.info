@@ -23,6 +23,9 @@
 </style>
 
 @section('content')
+    <?php
+    $trans = \App\Http\Controllers\TranslateController::getInstance();
+    ?>
     <div class="container-fluid">
         <div class="card">
             <div class="card card-products">
@@ -172,7 +175,7 @@
                                         @if($category)
                                             <div class="col-md-4">
                                                 <a href="{{route('category.show', $categoryID)}}" class="">
-                                                    {{$category->name}}
+                                                    {{ $tran->translateText($category->name) }}
                                                 </a>
                                             </div>
                                         @endif
@@ -192,7 +195,7 @@
                                                 @php
                                                     $shop = \App\Models\User::find($shopsID);
                                                 @endphp
-                                                {{$shop->name}}
+                                                {{ $tran->translateText($shop->name) }}
                                             </a>
                                         </div>
                                     @endforeach
@@ -246,9 +249,9 @@
                                             </div>
                                             <div class="product-content col-md-12 py-1">
                                                 <h2 class="product-title">
-                                                    <a href="{{route('detail_product.show', $product->id)}}}">{{$product->name}}</a>
+                                                    <a href="{{route('detail_product.show', $product->id)}}}">{{ $tran->translateText($product->name) }}</a>
                                                 </h2>
-                                                <small class="text-warning">{{$product->category->name}}</small>
+                                                <small class="text-warning">{{ $tran->translateText($product->category->name) }}</small>
                                                 <div class="product-rating">
                                                     <i class="fa fa-star"></i>
                                                     <i class="fa fa-star"></i>
@@ -275,14 +278,14 @@
                                                             $arrayAtt = explode(',', $properties_id);
                                                         @endphp
                                                         <div class="col-sm-6 col-6">
-                                                            <label for="{{$att->name}}">{{$att->name}}</label>
+                                                            <label for="{{$att->name}}">{{ $tran->translateText($att->name) }}</label>
                                                             <select id="{{$att->name}}" name="{{$att->name}}"
                                                                     class="form-control">
                                                                 @foreach($arrayAtt as $data)
                                                                     @php
                                                                         $property = \App\Models\Properties::find($data);
                                                                     @endphp
-                                                                    <option value="{{$data}}">{{$property->name}}</option>
+                                                                    <option value="{{$data}}">{{ $tran->translateText($property->name) }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -290,7 +293,7 @@
                                                 </div>
                                                 <div class="count__wrapper count__wrapper--ml mt-3">
                                                     @if($product->qty && $product->qty > 0)
-                                                        <label for="qty">Còn lại: {{$product->qty}}</label>
+                                                        <label for="qty">Còn lại: {{ $tran->translateText($product->qty) }}</label>
                                                     @else
                                                         <p class="text-danger">Hết hàng</p>
                                                     @endif
