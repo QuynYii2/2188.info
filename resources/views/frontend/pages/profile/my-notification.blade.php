@@ -14,6 +14,9 @@
 </style>
 
 @section('sub-content')
+    <?php
+    $trans = \App\Http\Controllers\TranslateController::getInstance();
+    ?>
     <div class="row mt-2 bg-white rounded">
 
         <div class="col-md-12 ">
@@ -79,9 +82,9 @@
                                         <tr>
                                             <th scope="row" class="text-center">{{ $loop->index + 1 }}</th>
                                             @if($notification->status == \App\Enums\NotificationStatus::UNSEEN)
-                                                <td><a href="" class="text-danger">{{$notification->content}}</a></td>
+                                                <td><a href="" class="text-danger">{{ $tran->translateText($notification->content) }}</a></td>
                                             @else
-                                                <td><a href="" class="" style="color: #ccc">{{$notification->content}}</a>
+                                                <td><a href="" class="" style="color: #ccc">{{ $tran->translateText($notification->content) }}</a>
                                                 </td>
                                             @endif
 
@@ -126,7 +129,7 @@
                                     @foreach($notificationsUnseen as $notification)
                                         <tr>
                                             <th scope="row" class="text-center">{{ $loop->index + 1 }}</th>
-                                            <td><a href="" class="text-danger">{{$notification->content}}</a></td>
+                                            <td><a href="" class="text-danger">{{ $tran->translateText($notification->content) }}</a></td>
                                             <td class="text-center">
                                                 <form method="post" action="{{route('notification.delete', $notification->id)}}">
                                                     @csrf
@@ -164,7 +167,7 @@
                                     @foreach($notificationsSeen as $notification)
                                         <tr>
                                             <th scope="row" class="text-center">{{ $loop->index + 1 }}</th>
-                                            <td><a href="" class="" style="color: #ccc">{{$notification->content}}</a>
+                                            <td><a href="" class="" style="color: #ccc">{{ $tran->translateText($notification->content) }}</a>
                                             <td class="text-center">
                                                 <form method="post" action="{{route('notification.delete', $notification->id)}}">
                                                     @csrf
@@ -202,7 +205,7 @@
                                     @foreach($notificationsDelete as $notification)
                                         <tr>
                                             <th scope="row" class="text-center">{{ $loop->index + 1 }}</th>
-                                            <td><a href="" class="" style="color: #ccc">{{$notification->content}}</a></td>
+                                            <td><a href="" class="" style="color: #ccc">{{ $tran->translateText($notification->content) }}</a></td>
                                             <td class="text-center">{{\App\Enums\NotificationStatus::DELETED}}</td>
                                         </tr>
                                     @endforeach

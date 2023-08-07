@@ -1,6 +1,10 @@
 @php
     $config = \App\Models\ConfigProject::where('status', \App\Enums\ConfigProjectStatus::ACTIVE)->orderBy('created_at', 'desc')->limit(1)->get();
 @endphp
+
+@php
+    $trans = \App\Http\Controllers\TranslateController::getInstance();
+@endphp
 <footer class="footer">
     <div class="footer-content text-center">
         <div class="footer-content--big">
@@ -22,13 +26,13 @@
                 @if(count($listCate)<6)
                     @foreach($listCate as $cate)
                         <div class="item-small">
-                            <a href="{{ route('category.show', $cate->id) }}">{{ $cate->name }}</a>
+                            <a href="{{ route('category.show', $cate->id) }}">{{ $tran->translateText($cate->name) }}</a>
                         </div>
                     @endforeach
                 @else
                     @for($i=0; $i<6; $i++)
                         <div class="item-small">
-                            <a href="{{ route('category.show', $listCate[$i]->id) }}">{{ $listCate[$i]->name }}</a>
+                            <a href="{{ route('category.show', $listCate[$i]->id) }}">{{ $tran->translateText($listCate[$i]->name) }}</a>
                         </div>
                     @endfor
                 @endif
