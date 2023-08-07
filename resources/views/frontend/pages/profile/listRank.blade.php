@@ -3,6 +3,9 @@
 @section('title', 'List Permission')
 
 @section('sub-content')
+    @php
+        $trans = \App\Http\Controllers\TranslateController::getInstance();
+    @endphp
     <div class="row mt-2 bg-white rounded">
         <div class="row  rounded pt-1 ml-5">
             <h5>{{ __('home.upgrade permission') }}</h5>
@@ -33,7 +36,7 @@
                        id="permission-duration-{{ $loop->index + 1 }}" value="1" hidden="">
                 <tr>
                     <th scope="row" class="text-center">{{ $loop->index + 1 }}</th>
-                    <td>{{$permission->name}}</td>
+                    <td>{{ $trans->translateText($permission->name) }}</td>
                     <td class="text-center">
                         $10
                     </td>

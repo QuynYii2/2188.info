@@ -3,12 +3,15 @@
 @section('title', 'Register Member')
 
 @section('content')
+    @php
+        $trans = \App\Http\Controllers\TranslateController::getInstance();
+    @endphp
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <div class="start-page mb-3">
         <div class="background container-fluid pt-3 justify-content-center pb-3">
             <div class="row card border">
                 <div class="form-title text-center pt-2">
-                    <div class="title">Đăng kí thông tin người dai dien cho hội viên {{$registerMember}}</div>
+                    <div class="title">Đăng kí thông tin người dai dien cho hội viên {{ $trans->translateText($registerMember) }}</div>
                 </div>
                 <div class="mt-5">
                     <form class="p-3" action="{{route('register.member.represent')}}" method="post">
@@ -46,7 +49,7 @@
                                 </select>
                             </div>
                         </div>
-                        <input type="text" class="form-control" name="person" value="{{$person}}" hidden="">
+                        <input type="text" class="form-control" name="person" value="{{ $trans->translateText($person) }}" hidden="">
                         <div class="form-group">
                             <label for="sns_account">SNS Account</label>
                             <input type="text" class="form-control" id="sns_account" name="sns_account" required>

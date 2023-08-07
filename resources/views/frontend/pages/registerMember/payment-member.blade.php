@@ -3,6 +3,9 @@
 @section('title', 'Payment Register Member')
 
 @section('content')
+    @php
+        $trans = \App\Http\Controllers\TranslateController::getInstance();
+    @endphp
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <div class="start-page mb-3">
         <div class="background container-fluid pt-3 justify-content-center pb-3">
@@ -11,7 +14,7 @@
                     <div class="title">Payment Register Member</div>
                 </div>
                 <h3 class="text-center">
-                    Phí gia nhập hội viên {{$registerMember}}
+                    Phí gia nhập hội viên {{ $trans->translateText($property->name) }}{{$registerMember}}
                 </h3>
                 <div class="mt-5">
                     <div class="row p-5">
@@ -36,11 +39,11 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td>{{$memberRegister->name}}</td>
-                                <td>{{$memberRegister->phone}}</td>
-                                <td>{{$memberRegister->fax}}</td>
-                                <td>{{$memberRegister->code_business}}</td>
-                                <td>{{$memberRegister->address}}</td>
+                                <td>{{ $trans->translateText($memberRegister->name) }}</td>
+                                <td>{{ $trans->translateText($memberRegister->phone) }}</td>
+                                <td>{{ $trans->translateText($memberRegister->fax) }}</td>
+                                <td>{{ $trans->translateText($memberRegister->code_business) }}</td>
+                                <td>{{ $trans->translateText($memberRegister->address) }}</td>
                                 <td>
                                     @if($memberRegister->status == \App\Enums\MemberRegisterInfoStatus::ACTIVE)
                                         <span class="text-success">PAID</span>
@@ -69,10 +72,10 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td>{{$memberRegisterSource->name}}</td>
-                                <td>{{$memberRegisterSource->phone}}</td>
-                                <td>{{$memberRegisterSource->email}}</td>
-                                <td>{{$memberRegisterSource->status}}</td>
+                                <td>{{ $trans->translateText($memberRegisterSource->name) }}</td>
+                                <td>{{ $trans->translateText($memberRegisterSource->phone) }}</td>
+                                <td>{{ $trans->translateText($memberRegisterSource->email) }}</td>
+                                <td>{{ $trans->translateText($memberRegisterSource->status) }}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -94,10 +97,10 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td>{{$memberRegisterRepresent->name}}</td>
-                                <td>{{$memberRegisterRepresent->phone}}</td>
-                                <td>{{$memberRegisterRepresent->email}}</td>
-                                <td>{{$memberRegisterRepresent->status}}</td>
+                                <td>{{ $trans->translateText($memberRegisterRepresent->name) }}</td>
+                                <td>{{ $trans->translateText($memberRegisterRepresent->phone) }}</td>
+                                <td>{{ $trans->translateText($memberRegisterRepresent->email) }}</td>
+                                <td>{{ $trans->translateText($memberRegisterRepresent->status) }}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -113,7 +116,7 @@
                             <form method="post" action="{{route('payment.member')}}">
                                 @csrf
                                 <input hidden="" type="text" name="member_id" value="{{$memberRegister->id}}">
-                                <input hidden="" type="text" name="role" value="{{$registerMember}}">
+                                <input hidden="" type="text" name="role" value="{{ $trans->translateText($registerMember) }}">
                                 <h5 class="text-center">Mức giá</h5>
                                 @if($registerMember == \App\Enums\RegisterMember::VENDOR)
                                     PRICE:

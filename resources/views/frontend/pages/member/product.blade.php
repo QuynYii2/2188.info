@@ -6,7 +6,9 @@
         $firstProduct = null;
     }
 @endphp
-
+@php
+    $trans = \App\Http\Controllers\TranslateController::getInstance();
+@endphp
 @if($firstProduct)
     <div class="col-md-6 border">
         @php
@@ -16,13 +18,13 @@
             <div class="">
                 <h5>Product Code</h5>
                 <p>
-                    {{$firstProduct->product_code}}
+                    {{ $trans->translateText($firstProduct->product_code) }}
                 </p>
             </div>
             <div class="">
                 <h5>Product Name</h5>
                 <p>
-                    {{$firstProduct->name}}
+                    {{ $trans->translateText($firstProduct->name) }}
                 </p>
             </div>
             <div class="">
@@ -46,7 +48,7 @@
                                        name="inputProperty-{{$attribute->attribute_id}}"
                                        type="radio"
                                        value="{{$attribute->attribute_id}}-{{$property->id}}">
-                                <label for="input-{{$attribute->attribute_id}}-{{$loop->index+1}}">{{$property->name}}</label>
+                                <label for="input-{{$attribute->attribute_id}}-{{$loop->index+1}}">{{ $tran->translateText($property->name) }}</label>
                             @endforeach
                         </div>
                     </div>
@@ -98,7 +100,7 @@
             <h5>
                 Điều kiện đặt hàng
             </h5>
-            <h5>Sản phẩm: <span class="text-warning">{{$firstProduct->name}}</span></h5>
+            <h5>Sản phẩm: <span class="text-warning">{{ $tran->translateText($firstProduct->name) }}</span></h5>
         </div>
         <table class="table table-bordered">
             <thead>

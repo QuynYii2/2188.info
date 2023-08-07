@@ -23,7 +23,7 @@ class GeoIP
                 case 'KR':
                     return 'kr';
                 case 'JP':
-                    return 'ja';
+                    return 'jp';
                 case 'CN':
                     return 'cn';
                 default:

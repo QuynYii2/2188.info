@@ -31,7 +31,9 @@
 @endphp
 
 @section('sub-content')
-
+    @php
+        $trans = \App\Http\Controllers\TranslateController::getInstance();
+    @endphp
     @for($i = 0; $i< count($permissionUsers); $i++)
         @if($permissionUsers[$i]->name == 'manage_orders')
             <div class="row mt-2 bg-white rounded">
@@ -138,14 +140,14 @@
                                                                                 <tr>
                                                                                     <td>
                                                                                         @if ($product)
-                                                                                            {{ $product->name }}
+                                                                                            {{ $trans->translateText($product->name) }}
                                                                                         @endif
                                                                                     </td>
                                                                                     <td>
-                                                                                        {{$order_item->quantity}}
+                                                                                        {{ $trans->translateText($order_item->quantity) }}
                                                                                     </td>
                                                                                     <td>
-                                                                                        {{$order_item->price}}
+                                                                                        {{ $trans->translateText($order_item->price) }}
                                                                                     </td>
                                                                                 </tr>
                                                                             @endforeach
@@ -176,13 +178,13 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                {{$order->orders_method}}
+                                                {{ $trans->translateText($order->orders_method) }}
                                             </td>
                                             <td>
-                                                {{$order->shipping_price}}
+                                                {{ $trans->translateText($order->shipping_price) }}
                                             </td>
                                             <td>
-                                                {{$order->discount_price}}
+                                                {{ $trans->translateText($order->discount_price) }}
                                             </td>
                                             <td>
                                                 @php
@@ -270,14 +272,14 @@
                                                                                 <tr>
                                                                                     <td>
                                                                                         @if ($product1)
-                                                                                            {{ $product1->name }}
+                                                                                            {{ $trans->translateText($product1->name) }}
                                                                                         @endif
                                                                                     </td>
                                                                                     <td>
-                                                                                        {{$orderItem->quantity}}
+                                                                                        {{ $trans->translateText($orderItem->quantity) }}
                                                                                     </td>
                                                                                     <td>
-                                                                                        {{$orderItem->price}}
+                                                                                        {{ $trans->translateText($orderItem->price) }}
                                                                                     </td>
                                                                                 </tr>
                                                                             @endforeach
@@ -308,13 +310,13 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                {{$order->orders_method}}
+                                                {{ $trans->translateText($order->orders_method) }}
                                             </td>
                                             <td>
-                                                {{$order->shipping_price}}
+                                                {{ $trans->translateText($order->shipping_price) }}
                                             </td>
                                             <td>
-                                                {{$order->discount_price}}
+                                                {{ $trans->translateText($order->discount_price) }}
                                             </td>
                                             <td>
                                                 @php
@@ -326,7 +328,7 @@
                                                 {{$order->total}}
                                             </td>
                                             <td>
-                                                {{$order->status}}
+                                                 {{$order->status}}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -403,14 +405,14 @@
                                                                                     <td>
 
                                                                                         @if ($product2)
-                                                                                            {{ $product2->name }}
+                                                                                            {{ $trans->translateText( $product2->name) }}
                                                                                         @endif
                                                                                     </td>
                                                                                     <td>
-                                                                                        {{$order_item2->quantity}}
+                                                                                        {{ $trans->translateText($order_item2->quantity) }}
                                                                                     </td>
                                                                                     <td>
-                                                                                        {{$order_item2->price}}
+                                                                                        {{ $trans->translateText($order_item2->price) }}
                                                                                     </td>
                                                                                 </tr>
                                                                             @endforeach
@@ -441,13 +443,13 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                {{$order->orders_method}}
+                                                {{ $trans->translateText($order->orders_method) }}
                                             </td>
                                             <td>
-                                                {{$order->shipping_price}}
+                                                {{ $trans->translateText($order->shipping_price) }}
                                             </td>
                                             <td>
-                                                {{$order->discount_price}}
+                                                {{ $trans->translateText($order->discount_price) }}
                                             </td>
                                             <td>
                                                 @php
@@ -535,14 +537,14 @@
                                                                                 <tr>
                                                                                     <td>
                                                                                         @if ($product3)
-                                                                                            {{ $product3->name }}
+                                                                                            {{ $trans->translateText($product3->name) }}
                                                                                         @endif
                                                                                     </td>
                                                                                     <td>
-                                                                                        {{$order_item3->quantity}}
+                                                                                        {{ $trans->translateText($order_item3->quantity) }}
                                                                                     </td>
                                                                                     <td>
-                                                                                        {{$order_item3->price}}
+                                                                                        {{ $trans->translateText($order_item3->price) }}
                                                                                     </td>
                                                                                 </tr>
                                                                             @endforeach
@@ -573,13 +575,13 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                {{$order->orders_method}}
+                                                {{ $trans->translateText($order->orders_method) }}
                                             </td>
                                             <td>
-                                                {{$order->shipping_price}}
+                                                {{ $trans->translateText($order->shipping_price) }}
                                             </td>
                                             <td>
-                                                {{$order->discount_price}}
+                                                {{ $trans->translateText($order->discount_price) }}
                                             </td>
                                             <td>
                                                 @php
@@ -588,10 +590,10 @@
                                                 {{count($quantity)}}
                                             </td>
                                             <td>
-                                                {{$order->total}}
+                                                {{ $trans->translateText($order->total) }}
                                             </td>
                                             <td>
-                                                {{$order->status}}
+                                                {{ $trans->translateText($order->status) }}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -667,14 +669,14 @@
                                                                                 <tr>
                                                                                     <td>
                                                                                         @if ($product4)
-                                                                                            {{ $product4->name }}
+                                                                                            {{ $trans->translateText($product4->name) }}
                                                                                         @endif
                                                                                     </td>
                                                                                     <td>
-                                                                                        {{$order_item4->quantity}}
+                                                                                        {{ $trans->translateText($order_item4->quantity) }}
                                                                                     </td>
                                                                                     <td>
-                                                                                        {{$order_item4->price}}
+                                                                                        {{ $trans->translateText($order_item4->price) }}
                                                                                     </td>
                                                                                 </tr>
                                                                             @endforeach
@@ -705,13 +707,13 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                {{$order->orders_method}}
+                                                {{ $trans->translateText($order->orders_method) }}
                                             </td>
                                             <td>
-                                                {{$order->shipping_price}}
+                                                {{ $trans->translateText($order->shipping_price) }}
                                             </td>
                                             <td>
-                                                {{$order->discount_price}}
+                                                {{ $trans->translateText($order->discount_price) }}
                                             </td>
                                             <td>
                                                 @php
@@ -720,10 +722,10 @@
                                                 {{count($quantity)}}
                                             </td>
                                             <td>
-                                                {{$order->total}}
+                                                {{ $trans->translateText($order->total) }}
                                             </td>
                                             <td>
-                                                {{$order->status}}
+                                                {{ $trans->translateText($order->status) }}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -800,14 +802,14 @@
                                                                                     <td>
 
                                                                                         @if ($product5)
-                                                                                            {{ $product5->name }}
+                                                                                            {{ $trans->translateText($product5->name) }}
                                                                                         @endif
                                                                                     </td>
                                                                                     <td>
-                                                                                        {{$order_item5->quantity}}
+                                                                                        {{ $trans->translateText($order_item5->quantity) }}
                                                                                     </td>
                                                                                     <td>
-                                                                                        {{$order_item5->price}}
+                                                                                        {{ $trans->translateText($order_item5->price) }}
                                                                                     </td>
                                                                                 </tr>
                                                                             @endforeach
@@ -838,13 +840,13 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                {{$order->orders_method}}
+                                                {{ $trans->translateText($order->orders_method) }}
                                             </td>
                                             <td>
-                                                {{$order->shipping_price}}
+                                                {{ $trans->translateText($order->shipping_price) }}
                                             </td>
                                             <td>
-                                                {{$order->discount_price}}
+                                                {{ $trans->translateText($order->discount_price) }}
                                             </td>
                                             <td>
                                                 @php

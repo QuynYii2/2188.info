@@ -11,6 +11,9 @@
     @php
         (new \App\Http\Controllers\Frontend\HomeController())->createStatistic();
     @endphp
+    @php
+        $trans = \App\Http\Controllers\TranslateController::getInstance();
+    @endphp
     <style>
         body {
             background-color: #ebebeb;
@@ -24,7 +27,7 @@
             </div>
             <div class="col-6 col-md-8 col-12 col-sm-12 col-lg-9">
                 <div class="dropdown mobile-button">
-                    <h6 style="text-align: center">{{ __('home.account of') }} <span style="font-size: 1.25rem">{{$user->name}}</span></h6>
+                    <h6 style="text-align: center">{{ __('home.account of') }} <span style="font-size: 1.25rem">{{ $trans->translateText($user->name) }}</span></h6>
                     <div class="dropdown-content" style="width: 90vw">
                         <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/info">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">

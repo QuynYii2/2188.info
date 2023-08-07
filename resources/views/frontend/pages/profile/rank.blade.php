@@ -3,6 +3,9 @@
 @section('title', 'List Permission')
 
 @section('sub-content')
+    @php
+        $trans = \App\Http\Controllers\TranslateController::getInstance();
+    @endphp
     <div class="row mt-5 bg-white rounded">
         <div class="rounded pt-1 ml-5">
             <h5>{{ __('home.list permission') }}</h5>
@@ -53,8 +56,8 @@
                     @php
                         $per = \App\Models\Permission::find($userPer->permission_id);
                     @endphp
-                    <td class="text-center">{{$per->name}}</td>
-                    <td class="text-center">{{$userPer->created_at}}</td>
+                    <td class="text-center">{{ $trans->translateText($per->name) }}</td>
+                    <td class="text-center">{{ $trans->translateText($userPer->created_at) }}</td>
                     <td class="text-center">
                         @php
                             $timeLevel = \App\Models\TimeLevelTable::where('permission_user_id', $userPer->id)->first();
@@ -62,10 +65,10 @@
                         @if($timeLevel == null)
                             <span class="text-uppercase">infinite</span>
                         @else
-                            {{$timeLevel->duration}} year
+                            {{ $trans->translateText($timeLevel->duration) }}year
                         @endif
                     </td>
-                    <td class="text-center">{{$userPer->status}}</td>
+                    <td class="text-center">{{ $trans->translateText($userPer->status) }}</td>
                 </tr>
             @endforeach
             </tbody>

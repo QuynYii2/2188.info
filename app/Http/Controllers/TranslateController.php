@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Cache;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class TranslateController extends Controller
@@ -25,7 +26,11 @@ class TranslateController extends Controller
 
     public function translateText($str)
     {
-        return $this->translate->translate($str);
+        $cacheKey = 'translated_text_' . md5($str);
+
+        return Cache::remember($cacheKey, now()->addHours(24), function () use ($str) {
+            return $this->translate->translate($str);
+        });
     }
 
     function getCurrentCountryCode()
