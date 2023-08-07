@@ -47,7 +47,7 @@
                             <div class="row">
                                 <div class="col-md-6 d-flex justify-content-between align-items-center">
                                     <div class="mt-2">
-                                        <h5 class="mb-3">{{ $tran->translateText($memberCompany->code_business) }}</h5>
+                                        <h5 class="mb-3">{{ $trans->translateText($memberCompany->code_business) }}</h5>
                                         <div class=""> Doanh nghiệp ưu tú
                                             <i class="fa-solid fa-trophy"></i>
                                             <i class="fa-solid fa-trophy"></i>
@@ -55,7 +55,7 @@
                                         </div>
                                     </div>
                                     <div class="mt-2">
-                                        <h5 class="mb-3">{{ $tran->translateText($memberCompany->name) }}</h5>
+                                        <h5 class="mb-3">{{ $trans->translateText($memberCompany->name) }}</h5>
                                         <div class="text-nowrap">Điểm trung bình đánh giá khách hàng
                                             <i class="fa-solid fa-star"></i>
                                             <i class="fa-solid fa-star"></i>
@@ -86,7 +86,7 @@
                                                     <p class="mt-2">
                                                         <a href="{{route('detail_product.show', $product->id)}}"
                                                            class="text-decoration-none">
-                                                            {{ $tran->translateText($product->name) }}
+                                                            {{ $trans->translateText($product->name) }}
                                                         </a>
                                                     </p>
                                                 </div>
@@ -105,13 +105,13 @@
                                                 <div class="">
                                                     <h5>Product Code</h5>
                                                     <p class="productCode{{$loop->index+1}}">
-                                                        {{ $tran->translateText($firstProduct->product_code) }}
+                                                        {{ $trans->translateText($firstProduct->product_code) }}
                                                     </p>
                                                 </div>
                                                 <div class="">
                                                     <h5>Product Name</h5>
                                                     <p class="productName{{$loop->index+1}}">
-                                                        {{ $tran->translateText($firstProduct->name) }}
+                                                        {{ $trans->translateText($firstProduct->name) }}
                                                     </p>
                                                 </div>
                                                 <div class="">
@@ -124,7 +124,7 @@
                                                             $arrayAtt = explode(',', $properties_id);
                                                         @endphp
                                                         <div class="col-sm-6 col-6">
-                                                            <label>{{ $tran->translateText($att->name) }}</label>
+                                                            <label>{{ $trans->translateText($att->name) }}</label>
                                                             <div class="radio-toolbar mt-3">
                                                                 @foreach($arrayAtt as $data)
                                                                     @php
@@ -135,7 +135,7 @@
                                                                            name="inputProperty-{{$attribute->attribute_id}}"
                                                                            type="radio"
                                                                            value="{{$attribute->attribute_id}}-{{$property->id}}">
-                                                                    <label for="input-{{$attribute->attribute_id}}-{{$loop->index+1}}">{{ $tran->translateText($property->name) }}</label>
+                                                                    <label for="input-{{$attribute->attribute_id}}-{{$loop->index+1}}">{{ $trans->translateText($property->name) }}</label>
                                                                 @endforeach
                                                             </div>
                                                         </div>
@@ -198,7 +198,7 @@
                                                     Điều kiện đặt hàng
                                                 </h5>
                                                 <h5>Sản phẩm: <span
-                                                            class="text-warning productName{{$loop->index+1}}">{{ $tran->translateText($firstProduct->name) }}</span>
+                                                            class="text-warning productName{{$loop->index+1}}">{{ $trans->translateText($firstProduct->name) }}</span>
                                                 </h5>
                                             </div>
                                             <table class="table table-bordered">

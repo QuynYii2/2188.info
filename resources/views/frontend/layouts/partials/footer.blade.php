@@ -26,13 +26,13 @@
                 @if(count($listCate)<6)
                     @foreach($listCate as $cate)
                         <div class="item-small">
-                            <a href="{{ route('category.show', $cate->id) }}">{{ $tran->translateText($cate->name) }}</a>
+                            <a href="{{ route('category.show', $cate->id) }}">{{ $trans->translateText($cate->name) }}</a>
                         </div>
                     @endforeach
                 @else
                     @for($i=0; $i<6; $i++)
                         <div class="item-small">
-                            <a href="{{ route('category.show', $listCate[$i]->id) }}">{{ $tran->translateText($listCate[$i]->name) }}</a>
+                            <a href="{{ route('category.show', $listCate[$i]->id) }}">{{ $trans->translateText($listCate[$i]->name) }}</a>
                         </div>
                     @endfor
                 @endif

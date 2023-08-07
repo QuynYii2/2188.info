@@ -19,10 +19,10 @@
                                 <img src="{{ asset('/storage/' . $product->thumbnail) }}"
                                      alt="">
                             </div>
-                            Tên sản phẩm: {{ $tran->translateText($product->name) }}<br>
-                            Giá gốc: {{ $tran->translateText($product->price) }}<br>
+                            Tên sản phẩm: {{ $trans->translateText($product->name) }}<br>
+                            Giá gốc: {{ $trans->translateText($product->price) }}<br>
                             @if($product->old_price)
-                                Giá khuyễn mãi: {{ $tran->translateText($product->old_price) }}
+                                Giá khuyễn mãi: {{ $trans->translateText($product->old_price) }}
                             @endif
 
                             <div>

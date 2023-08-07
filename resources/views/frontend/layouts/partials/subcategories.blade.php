@@ -4,7 +4,7 @@
         $trans = \App\Http\Controllers\TranslateController::getInstance();
     @endphp
     @foreach($subcategories as $subcategory)
-    <li>{{ $tran->translateText($subcategory->name) }}
+    <li>{{ $trans->translateText($subcategory->name) }}
         @if($subcategory->children->count() > 0)
             @include('frontend.layouts.partials.subcategories', ['subcategories' => $subcategory->children])
         @endif

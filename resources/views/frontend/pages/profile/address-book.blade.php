@@ -38,7 +38,7 @@
                 <div class="col-12 col-sm-12 my-2 border">
                     <div class="py-3">
                         <div class="d-flex justify-content-between">
-                            <h5 class="mb-1">{{ $tran->translateText($address->username) }}</h5>
+                            <h5 class="mb-1">{{ $trans->translateText($address->username) }}</h5>
                             <div class="">
                                 <button class="btn btn-outline- " onclick="editModal({{$address}})"
                                         data-target="#modal-address-edit"
@@ -47,9 +47,9 @@
 {{--                                <a href="{{ route('address.delete'),  $address->id }}"><button class="btn btn-outline- " style="color: red">{{ __('home.delete') }}</button></a>--}}
                             </div>
                         </div>
-                        <p class="mb-1">{{ __('home.address') }}:{{ $tran->translateText($address->address_detail) }}, {{ $tran->translateText($address->location) }},
-                            {{ $tran->translateText($property->name) }}{{$address->province}}, {{ $tran->translateText($address->city) }}</p>
-                        <small>{{ __('home.phone number') }}: {{ $tran->translateText($address->phone) }}</small>
+                        <p class="mb-1">{{ __('home.address') }}:{{ $trans->translateText($address->address_detail) }}, {{ $trans->translateText($address->location) }},
+                            {{ $trans->translateText($property->name) }}{{$address->province}}, {{ $trans->translateText($address->city) }}</p>
+                        <small>{{ __('home.phone number') }}: {{ $trans->translateText($address->phone) }}</small>
                     </div>
                 </div>
             @endforeach
