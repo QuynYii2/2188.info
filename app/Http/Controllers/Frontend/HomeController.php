@@ -3,30 +3,37 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Enums\BannerStatus;
+use App\Enums\MemberRegisterInfoStatus;
+use App\Enums\MemberRegisterPersonSourceStatus;
+use App\Enums\MemberRegisterType;
 use App\Enums\NotificationStatus;
 use App\Enums\ProductStatus;
 use App\Enums\PromotionStatus;
+use App\Enums\RegisterMember;
 use App\Enums\StatisticStatus;
 use App\Enums\TopSellerConfigLocation;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\PermissionRankController;
-use App\Http\Controllers\TranslateController;
+use App\Libraries\GeoIP;
 use App\Models\Banner;
 use App\Models\Category;
+use App\Models\MemberRegisterInfo;
+use App\Models\MemberRegisterPersonSource;
 use App\Models\Notification;
 use App\Models\Permission;
+use App\Models\Product;
 use App\Models\Promotion;
 use App\Models\StatisticAccess;
 use App\Models\StatisticShop;
 use App\Models\TopSellerConfig;
+use App\Models\User;
 use App\Models\Voucher;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
-use App\Libraries\GeoIP;
-use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 
 class HomeController extends Controller
@@ -248,6 +255,112 @@ class HomeController extends Controller
                 StatisticAccess::create($statisticAccess);
             }
             setcookie("access", "SHOPPING MALL", time() + 600, "/");
+        }
+    }
+
+    public function createMultilNewUser(Request $request)
+    {
+        $listUser = $request->input('listUser');
+        try {
+            if (!isset($_COOKIE["cookieInsertUser"])) {
+//                $passwordHash = Hash::make(env('PASSWORD_DEFAULT', 123456));
+                $passwordHash = Hash::make(env('PASSWORD_DEFAULT', 123456));
+                if ($listUser) {
+                    $arrayUser = explode(',', $listUser);
+                    foreach ($arrayUser as $email) {
+                        if ($email) {
+                            $email = trim($email);
+                            $oldUser = User::where('email', $email)->first();
+                            if (!$oldUser) {
+                                $newUser = new User();
+                                $newUser->name = 'default name';
+                                $newUser->email = $email;
+                                $newUser->phone = "default phone";
+                                $newUser->address = "default address";
+                                $newUser->region = "vi";
+                                $newUser->password = $passwordHash;
+                                $newUser->type_account = "seller";
+                                $newUser->email_verified_at = now();
+                                $newUser->image = 'default image';
+                                $newUser->save();
+
+                                $exitUser = null;
+                                $exitUser = User::where('email', $email)->first();
+
+                                $memberInfo = null;
+                                $memberInfo = [
+                                    'user_id' => $exitUser->id,
+                                    'name' => 'default name',
+                                    'phone' => 'default phone',
+                                    'fax' => 'default fax',
+                                    'code_fax' => 'default code fax',
+                                    'category_id' => '30,31,32',
+                                    'code_business' => 'default code business',
+                                    'number_business' => 'default number business',
+                                    'member' => RegisterMember::LOGISTIC,
+                                    'address' => 'default address',
+                                    'status' => MemberRegisterInfoStatus::ACTIVE
+                                ];
+                                MemberRegisterInfo::create($memberInfo);
+
+                                $exitMember = null;
+                                $exitMember = MemberRegisterInfo::where('user_id', $exitUser->id)->orderBy('created_at', 'desc')->first();
+
+                                $memberPersonSource = null;
+                                $memberPersonSource = [
+                                    'user_id' => $exitUser->id,
+                                    'name' => 'default name',
+                                    'password' => $passwordHash,
+                                    'phone' => 'default phone',
+                                    'email' => $email,
+                                    'staff' => 'default',
+                                    'member_id' => $exitMember->id,
+                                    'price' => 0,
+                                    'rank' => '0',
+                                    'sns_account' => 'default',
+                                    'type' => MemberRegisterType::SOURCE,
+                                    'verifyCode' => '',
+                                    'isVerify' => 0,
+                                    'status' => MemberRegisterPersonSourceStatus::ACTIVE
+                                ];
+
+                                MemberRegisterPersonSource::create($memberPersonSource);
+
+                                $exitMemberPer = null;
+                                $exitMemberPer = MemberRegisterPersonSource::where([
+                                    ['user_id', $exitUser->id],
+                                    ['email', $email],
+                                    ['type', MemberRegisterType::SOURCE]
+                                ])->first();
+
+                                $memberPersonRepresent = null;
+                                $memberPersonRepresent = [
+                                    'user_id' => $exitUser->id,
+                                    'name' => 'default name',
+                                    'password' => $passwordHash,
+                                    'phone' => 'default phone',
+                                    'email' => $email,
+                                    'staff' => 'default',
+                                    'person' => $exitMemberPer->id,
+                                    'member_id' => $exitMember->id,
+                                    'price' => 0,
+                                    'rank' => '0',
+                                    'sns_account' => 'default',
+                                    'type' => MemberRegisterType::REPRESENT,
+                                    'verifyCode' => '',
+                                    'isVerify' => 0,
+                                    'status' => MemberRegisterPersonSourceStatus::ACTIVE
+                                ];
+
+                                MemberRegisterPersonSource::create($memberPersonRepresent);
+                            }
+                        }
+                    }
+                }
+            }
+            setcookie("cookieInsertUser", "SHOPPING MALL", time() + 24 * 3600, "/");
+        } catch (Exception $exception) {
+            return $exception;
         }
     }
 
