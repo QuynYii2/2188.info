@@ -19,9 +19,9 @@
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="email">Email</label>
-                                <input type="text" class="form-control" id="email" name="email" disabled required value="{{ $tran->translateText($email) }}">
+                                <input type="text" class="form-control" id="email" name="email" disabled required value="{{ $trans->translateText($email) }}">
                             </div>
-                            <input type="text" class="form-control" name="processEmail" hidden="" value="{{ $tran->translateText($email) }}" required>
+                            <input type="text" class="form-control" name="processEmail" hidden="" value="{{ $trans->translateText($email) }}" required>
                             <div class="form-group col-md-4">
                                 <label for="code">Verify Code</label>
                                 <input type="text" class="form-control" id="code" name="code" required>

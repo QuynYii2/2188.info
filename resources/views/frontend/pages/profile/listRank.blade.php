@@ -36,7 +36,7 @@
                        id="permission-duration-{{ $loop->index + 1 }}" value="1" hidden="">
                 <tr>
                     <th scope="row" class="text-center">{{ $loop->index + 1 }}</th>
-                    <td>{{ $tran->translateText($permission->name) }}</td>
+                    <td>{{ $trans->translateText($permission->name) }}</td>
                     <td class="text-center">
                         $10
                     </td>

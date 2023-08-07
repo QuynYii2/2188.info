@@ -48,7 +48,7 @@
                             <div class="content align-self-center">
                                 <div class="voucher-details">
                                         <span class="voucher-percent">Voucher giảm {{ $voucher->percent }}%</span>
-                                        <div class="voucher-apply-products">Áp dụng cho {{ $tran->translateText($voucher->description) }}</div>
+                                        <div class="voucher-apply-products">Áp dụng cho {{ $trans->translateText($voucher->description) }}</div>
                                         <div class="voucher-end-date">Ngày kết thúc {{ $voucher->endDate }}</div>
                                         <div class="d-flex justify-content-between">
                                             <span class="voucher-code" id="voucher-code-{{ $voucher->id }}">{{ $voucher->code }}</span>
@@ -92,7 +92,7 @@
                                 <div class="content align-self-center">
                                     <div class="voucher-details">
                                         <span class="voucher-percent">Voucher giảm {{ $voucher->percent }}%</span>
-                                        <div class="voucher-apply-products">Áp dụng cho {{ $tran->translateText($voucher->description) }}</div>
+                                        <div class="voucher-apply-products">Áp dụng cho {{ $trans->translateText($voucher->description) }}</div>
                                         <div class="voucher-end-date">Ngày kết thúc {{ $voucher->endDate }}</div>
                                         <div class="d-flex justify-content-between">
                                             <span class="voucher-code" id="voucher-code-{{ $voucher->id }}">{{ $voucher->code }}</span>

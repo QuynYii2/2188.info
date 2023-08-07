@@ -427,7 +427,7 @@
                             Sản phẩm:&nbsp;
                         </div>
                         <div class="section-seller-overview__item-text-value">
-                            {{ $tran->translateText($countProductBySeller->countProduct) }}
+                            {{ $trans->translateText($countProductBySeller->countProduct) }}
                         </div>
                     </div>
                 </div>

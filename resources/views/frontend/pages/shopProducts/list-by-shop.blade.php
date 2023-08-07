@@ -34,12 +34,12 @@
                                         </div>
                                     </div>
                                     <div class="pi-text">
-                                        <div class="category-name">{{ $tran->translateText($product->category->name) }}</div>
+                                        <div class="category-name">{{ $trans->translateText($product->category->name) }}</div>
                                         <a href="{{route('detail_product.show', $product->id)}}">
-                                            <h5>{{ $tran->translateText($product->name) }}</h5>
+                                            <h5>{{ $trans->translateText($product->name) }}</h5>
                                         </a>
                                         <div class="product-price">
-                                            ${{ $tran->translateText($product->price) }}
+                                            ${{ $trans->translateText($product->price) }}
                                         </div>
                                     </div>
                                 </div>

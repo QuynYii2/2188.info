@@ -457,11 +457,11 @@
                                 <div class="MBisjS TkW9Xr _6GzLYL">
                                     <div class="ryAzTK">
                                         <div class="ow9AdM yGR6rn">
-                                            {{ $tran->translateText($voucher->name) }}
+                                            {{ $trans->translateText($voucher->name) }}
                                         </div>
                                     </div>
                                     <div class="a1Qos1 vMLRu-">
-                                        Giảm {{ $tran->translateText($voucher->percent) }}%
+                                        Giảm {{ $trans->translateText($voucher->percent) }}%
                                     </div>
                                 </div>
                                 <div>
@@ -473,7 +473,7 @@
                 </div>
                 <div class="xzzBCC">
                   <span class="">
-                    Số lượng: {{ $tran->translateText($voucher->quantity) }} - HSD: {{ $tran->translateText($voucher->endDate) }}
+                    Số lượng: {{ $trans->translateText($voucher->quantity) }} - HSD: {{ $trans->translateText($voucher->endDate) }}
                   </span>
                 </div>
               </span>

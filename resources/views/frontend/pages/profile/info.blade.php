@@ -121,7 +121,7 @@
                                        class="col-md-3 col-12 col-form-label">{{ __('home.full name') }}</label>
                                 <div class="col-md-9 col-12">
                                     <input type="text" class="form-control" id="staticEmail" name="name"
-                                           value="{{ $tran->translateText($user->name) }}">
+                                           value="{{ $trans->translateText($user->name) }}">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -129,7 +129,7 @@
                                        class="col-md-3 col-12 col-form-label">{{ __('home.nickname') }}</label>
                                 <div class="col-md-9 col-12">
                                     <input type="text" class="form-control" id="inputPassword" name="nickname"
-                                           value="{{ $tran->translateText($user->nickname) }}">
+                                           value="{{ $trans->translateText($user->nickname) }}">
                                 </div>
                             </div>
                         </div>
@@ -139,7 +139,7 @@
                                class="col-sm-3 col-12 col-form-label">{{ __('home.date of birth') }}</label>
                         <div class="col-md-9 col-12">
                             <input type="date" class="form-control" name="date_of_birth"
-                                   value="{{ $tran->translateText($user->date_of_birth) }}">
+                                   value="{{ $trans->translateText($user->date_of_birth) }}">
                         </div>
                     </div>
 
@@ -217,7 +217,7 @@
                                         </svg>
                                         {{ __('home.phone number') }}
                                     </h6>
-                                    <h6 class="mb-0" style="margin-left: 32px">{{ $tran->translateText($user->phone) }}</h6>
+                                    <h6 class="mb-0" style="margin-left: 32px">{{ $trans->translateText($user->phone) }}</h6>
                                 @endif
                             </div>
                             <button class="btn-outline-primary btn desktop-button" data-toggle="modal"
@@ -246,7 +246,7 @@
                                         </svg>
                                         {{ __('home.email') }}
                                     </h6>
-                                    <h6 class="mb-0" style="margin-left: 32px">{{ $tran->translateText($user->email) }}</h6>
+                                    <h6 class="mb-0" style="margin-left: 32px">{{ $trans->translateText($user->email) }}</h6>
                                 @endif
                             </div>
                             <button class="btn-outline-primary btn desktop-button" data-toggle="modal"

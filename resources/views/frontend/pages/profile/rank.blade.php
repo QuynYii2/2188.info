@@ -56,8 +56,8 @@
                     @php
                         $per = \App\Models\Permission::find($userPer->permission_id);
                     @endphp
-                    <td class="text-center">{{ $tran->translateText($per->name) }}</td>
-                    <td class="text-center">{{ $tran->translateText($userPer->created_at) }}</td>
+                    <td class="text-center">{{ $trans->translateText($per->name) }}</td>
+                    <td class="text-center">{{ $trans->translateText($userPer->created_at) }}</td>
                     <td class="text-center">
                         @php
                             $timeLevel = \App\Models\TimeLevelTable::where('permission_user_id', $userPer->id)->first();
@@ -65,10 +65,10 @@
                         @if($timeLevel == null)
                             <span class="text-uppercase">infinite</span>
                         @else
-                            {{ $tran->translateText($timeLevel->duration) }}year
+                            {{ $trans->translateText($timeLevel->duration) }}year
                         @endif
                     </td>
-                    <td class="text-center">{{ $tran->translateText($userPer->status) }}</td>
+                    <td class="text-center">{{ $trans->translateText($userPer->status) }}</td>
                 </tr>
             @endforeach
             </tbody>

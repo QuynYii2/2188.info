@@ -36,11 +36,11 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td>{{ $tran->translateText($memberRegister->name) }}</td>
-                                <td>{{ $tran->translateText($memberRegister->phone) }}</td>
-                                <td>{{ $tran->translateText($memberRegister->fax) }}</td>
-                                <td>{{ $tran->translateText($memberRegister->code_business) }}</td>
-                                <td>{{ $tran->translateText($memberRegister->address) }}</td>
+                                <td>{{ $trans->translateText($memberRegister->name) }}</td>
+                                <td>{{ $trans->translateText($memberRegister->phone) }}</td>
+                                <td>{{ $trans->translateText($memberRegister->fax) }}</td>
+                                <td>{{ $trans->translateText($memberRegister->code_business) }}</td>
+                                <td>{{ $trans->translateText($memberRegister->address) }}</td>
                                 <td>
                                     @if($memberRegister->status == \App\Enums\MemberRegisterInfoStatus::ACTIVE)
                                         <span class="text-success">PAID</span>
@@ -68,10 +68,10 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td>{{ $tran->translateText($memberRegisterSource->name) }}</td>
-                                <td>{{ $tran->translateText($memberRegisterSource->phone) }}</td>
-                                <td>{{ $tran->translateText($memberRegisterSource->email) }}</td>
-                                <td>{{ $tran->translateText($memberRegisterSource->status) }}</td>
+                                <td>{{ $trans->translateText($memberRegisterSource->name) }}</td>
+                                <td>{{ $trans->translateText($memberRegisterSource->phone) }}</td>
+                                <td>{{ $trans->translateText($memberRegisterSource->email) }}</td>
+                                <td>{{ $trans->translateText($memberRegisterSource->status) }}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -92,10 +92,10 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td>{{ $tran->translateText($memberRegisterRepresent->name) }}</td>
-                                <td>{{ $tran->translateText($memberRegisterRepresent->phone) }}</td>
-                                <td>{{ $tran->translateText($memberRegisterRepresent->email) }}</td>
-                                <td>{{ $tran->translateText($memberRegisterRepresent->status) }}</td>
+                                <td>{{ $trans->translateText($memberRegisterRepresent->name) }}</td>
+                                <td>{{ $trans->translateText($memberRegisterRepresent->phone) }}</td>
+                                <td>{{ $trans->translateText($memberRegisterRepresent->email) }}</td>
+                                <td>{{ $trans->translateText($memberRegisterRepresent->status) }}</td>
                             </tr>
                             </tbody>
                         </table>

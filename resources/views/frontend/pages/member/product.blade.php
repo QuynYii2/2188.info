@@ -18,13 +18,13 @@ $trans = \App\Http\Controllers\TranslateController::getInstance();
             <div class="">
                 <h5>Product Code</h5>
                 <p>
-                    {{ $tran->translateText($firstProduct->product_code) }}
+                    {{ $trans->translateText($firstProduct->product_code) }}
                 </p>
             </div>
             <div class="">
                 <h5>Product Name</h5>
                 <p>
-                    {{ $tran->translateText($firstProduct->name) }}
+                    {{ $trans->translateText($firstProduct->name) }}
                 </p>
             </div>
             <div class="">
