@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="09f138ca-6d39-4b65-96c6-a63ae3241f0f" name="2188" url="http://137.59.106.221">
-        <fileTransfer rootFolder="/public_html" host="137.59.106.221" port="21">
+        <fileTransfer rootFolder="/staging-b2b.2188.info" host="137.59.106.221" port="21">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

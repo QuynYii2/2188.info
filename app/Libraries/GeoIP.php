@@ -24,7 +24,7 @@ class GeoIP
             case 'JP':
                 return 'ja';
             case 'CN':
-                return 'zh-CN';
+                return 'cn';
             default:
                 return 'vi';
         }
