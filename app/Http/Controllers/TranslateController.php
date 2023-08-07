@@ -2,72 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class TranslateController extends Controller
 {
+    private static $instance = null;
+    private $translate;
+
+    private function __construct()
+    {
+        $this->translate = new GoogleTranslate();
+        $this->translate->setTarget($this->getCurrentCountryCode());
+    }
+
+    public static function getInstance()
+    {
+        if (self::$instance === null) {
+            self::$instance = new TranslateController();
+        }
+        return self::$instance;
+    }
 
     public function translateText($str)
     {
-        $translate = new GoogleTranslate();
-        $translate->setSource('vi');
-        $translate->setTarget('ko');
-
-        if (is_string($str)) {
-            return $translate->translate($str);
-        } else {
-            return $str;
-        }
+        return $this->translate->translate($str);
     }
-    public function translateMixedData($data)
+
+    function getCurrentCountryCode()
     {
-        $locale = app()->getLocale();
-        if ($locale == 'vn') {
-            $locale = 'vi';
-        }
+        $currentLocale = app()->getLocale();
 
-        $translate = new GoogleTranslate();
-        $translate->setSource('vi');
-        $translate->setTarget('ko');
+        $localeToCountryMap = [
+            'kr' => 'ko',
+            'cn' => 'zh-CN',
+            'vi' => 'vi',
+        ];
 
-        if (is_array($data)) {
-            $translatedData = [];
-            foreach ($data as $key => $value) {
-                $translatedData[$key] = $this->translateText($value);
-            }
-            return $translatedData;
-        } elseif (is_string($data)) {
-            return $translate->translate($data);
+        if (isset($localeToCountryMap[$currentLocale])) {
+            return $localeToCountryMap[$currentLocale];
         } else {
-            return $data;
+            return 'en';
         }
     }
-
-    public function translateRecursiveDeep(array $data)
-    {
-        $locale = app()->getLocale();
-        if ($locale == 'vn') {
-            $locale = 'vi';
-        }
-
-        $translatedArray = [];
-        $translate = new GoogleTranslate();
-        $translate->setSource('vi'); // Detect language automatically
-        $translate->setTarget('ko');
-
-        foreach ($data as $key => $value) {
-            if (is_array($value)) {
-                $translatedArray[$key] = $this->translateRecursiveDeep($value);
-            } elseif (is_string($value)) {
-                $translatedArray[$key] = $translate->translate($value);
-            } else {
-                $translatedArray[$key] = $value; // Preserve other types like numbers and objects
-            }
-        }
-
-        return $translatedArray;
-    }
-
 
 }

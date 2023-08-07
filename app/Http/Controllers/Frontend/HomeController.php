@@ -136,7 +136,6 @@ class HomeController extends Controller
 
         $banner = Banner::where('status', BannerStatus::ACTIVE)->orderBy('created_at', 'desc')->first();
 
-        $trans = new TranslateController();
         return view('frontend/index', [
             'productByLocal' => $productByLocal,
             'currency' => $currency,
@@ -156,7 +155,7 @@ class HomeController extends Controller
             'banner' => $banner,
             'newProducts' => $newProducts,
             'currentProducts' => $currentProducts,
-            'arrayProducts' => $trans->translateRecursiveDeep($arrayProducts),
+            'arrayProducts' => $arrayProducts,
             'locale' => $locale,
         ]);
     }
