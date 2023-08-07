@@ -27,28 +27,31 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($evaluates as $evaluate)
-                            <tr>
-                                <td><input type="checkbox" value="{{ $evaluate->id }}"></td>
-                                <td>{{ $evaluate->id }}</td>
-                                <td>{{ $evaluate->username }}</td>
-                                <td>{{ $evaluate->product_id }}</td>
-                                <td>{{ $evaluate->content }}</td>
-                                <td>{{ $evaluate->status }}</td>
-                                <td>
-                                    <a href="{{ route('seller.evaluates.detail', $evaluate->id) }}"
-                                       class="btn btn-primary">Chi tiết</a>
-                                    <form action="{{ route('seller.evaluates.delete', $evaluate->id) }}" method="POST"
-                                          style="display: inline-block">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger"
-                                                onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
+                        @if(!$evaluates)
+                            @foreach ($evaluates as $evaluate)
+                                <tr>
+                                    <td><input type="checkbox" value="{{ $evaluate->id }}"></td>
+                                    <td>{{ $evaluate->id }}</td>
+                                    <td>{{ $evaluate->username }}</td>
+                                    <td>{{ $evaluate->product_id }}</td>
+                                    <td>{{ $evaluate->content }}</td>
+                                    <td>{{ $evaluate->status }}</td>
+                                    <td>
+                                        <a href="{{ route('seller.evaluates.detail', $evaluate->id) }}"
+                                           class="btn btn-primary">Chi tiết</a>
+                                        <form action="{{ route('seller.evaluates.delete', $evaluate->id) }}"
+                                              method="POST"
+                                              style="display: inline-block">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger"
+                                                    onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
                         </tbody>
                     </table>
                 </div>

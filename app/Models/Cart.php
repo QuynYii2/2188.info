@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cart extends Model
 {
     use HasFactory;
-    protected $fillable = ['id', 'price', 'quantity','product_id', 'user_id', 'status'];
+    protected $fillable = ['id', 'price', 'quantity','product_id', 'user_id', 'values', 'status'];
 
     // Các mối quan hệ
     public function product()

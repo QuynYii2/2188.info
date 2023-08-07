@@ -275,6 +275,7 @@ class VoucherController extends Controller
             $listIDs = $voucher->apply;
             $arrayIDs = explode(',', $listIDs);
         }
+//        dd($myArray, $arrayIDs);
         return array_diff($myArray, $arrayIDs);
     }
 

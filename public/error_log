@@ -1,5 +1,0 @@
-[20-Jun-2023 02:06:16 UTC] PHP Fatal error:  Out of memory (allocated 4194304) (tried to allocate 4096 bytes) in /home/u0tg2fjicbap/public_html/vendor/composer/autoload_static.php on line 603
-[20-Jun-2023 02:06:16 UTC] PHP Fatal error:  Out of memory (allocated 6291456) (tried to allocate 57344 bytes) in /home/u0tg2fjicbap/public_html/vendor/composer/ClassLoader.php on line 571
-[20-Jun-2023 02:06:16 UTC] PHP Fatal error:  Out of memory (allocated 6291456) (tried to allocate 57344 bytes) in /home/u0tg2fjicbap/public_html/vendor/composer/ClassLoader.php on line 571
-[20-Jun-2023 02:06:16 UTC] PHP Fatal error:  Out of memory (allocated 14680064) (tried to allocate 98304 bytes) in /home/u0tg2fjicbap/public_html/vendor/composer/ClassLoader.php on line 571
-[20-Jun-2023 02:07:17 UTC] PHP Fatal error:  Out of memory (allocated 2097152) (tried to allocate 32768 bytes) in /home/u0tg2fjicbap/public_html/vendor/composer/autoload_static.php on line 2167

@@ -6,15 +6,19 @@ use App\Enums\BannerStatus;
 use App\Enums\NotificationStatus;
 use App\Enums\ProductStatus;
 use App\Enums\PromotionStatus;
+use App\Enums\StatisticStatus;
 use App\Enums\TopSellerConfigLocation;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PermissionRankController;
+use App\Http\Controllers\TranslateController;
 use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Notification;
 use App\Models\Permission;
 use App\Models\Promotion;
+use App\Models\StatisticAccess;
+use App\Models\StatisticShop;
 use App\Models\TopSellerConfig;
 use App\Models\Voucher;
 use Carbon\Carbon;
@@ -31,6 +35,9 @@ class HomeController extends Controller
     {
         $this->getLocale($request);
         $locale = app()->getLocale();
+        if ($locale == 'vn') {
+            $locale = 'vi';
+        }
 
         $currencies = [
             'vi' => 'VND',
@@ -39,11 +46,12 @@ class HomeController extends Controller
             'jp' => 'JPY',
         ];
 
+        $currentProducts = Product::where([['location', $locale], ['status', ProductStatus::ACTIVE]])->get();
+
         if (array_key_exists($locale, $currencies)) {
             $currency = $currencies[$locale];
         }
 
-        $productByLocal = Product::where('location', $locale)->limit(10)->get();
 
         $categories = Category::get()->toTree();
 
@@ -54,9 +62,21 @@ class HomeController extends Controller
         $productByLocal = Product::whereIn('location', array_slice($locations, 0, 3))
             ->limit(10)
             ->get();
-        $productByKr = Product::where('location', 'kr')->limit(10)->get();
-        $productByJp = Product::where('location', 'jp')->limit(10)->get();
-        $productByCn = Product::where('location', 'cn')->limit(10)->get();
+
+        $productByVi = Product::where([['location', 'vi'], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
+        $productByKr = Product::where([['location', 'kr'], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
+        $productByJp = Product::where([['location', 'jp'], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
+        $productByCn = Product::where([['location', 'cn'], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
+
+        $arrayProducts = [
+            'vi' => $productByVi,
+            'kr' => $productByKr,
+            'cn' => $productByCn,
+            'jp' => $productByJp
+        ];
+
+        $newProducts = Product::where('status', ProductStatus::ACTIVE)->orderBy('created_at', 'desc')->limit(10)->get();
+        $newProducts = $newProducts->unique('slug');
 
         $permissionHot = Permission::where('name', 'Nâng cấp sản phẩm hot')->first();
         $permissionSellerHots = DB::table('permission_user')->where('permission_id', $permissionHot->id)->get();
@@ -66,6 +86,7 @@ class HomeController extends Controller
                 ['status', ProductStatus::ACTIVE],
                 ['user_id', $permissionSellerHot->user_id]
             ])->orderBy('hot', 'desc')->get();
+            $products = $products->unique('slug');
             $productHots[] = $products;
         }
 //        dd($productHots);
@@ -77,6 +98,7 @@ class HomeController extends Controller
                 ['status', ProductStatus::ACTIVE],
                 ['user_id', $permissionSellerFeature->user_id]
             ])->orderBy('feature', 'desc')->get();
+            $products = $products->unique('slug');
             $productFeatures[] = $products;
         }
 //        $productFeatures = Product::where('feature', 1)->get();
@@ -119,6 +141,7 @@ class HomeController extends Controller
             'currency' => $currency,
             'countryCode' => $locale,
             'categories' => $categories,
+            'productByVi' => $productByVi,
             'productByKr' => $productByKr,
             'productByJp' => $productByJp,
             'productByCn' => $productByCn,
@@ -130,6 +153,10 @@ class HomeController extends Controller
             'configsTop4' => $configsTop4,
             'configsTop5' => $configsTop5,
             'banner' => $banner,
+            'newProducts' => $newProducts,
+            'currentProducts' => $currentProducts,
+            'arrayProducts' => $arrayProducts,
+            'locale' => $locale,
         ]);
     }
 
@@ -148,18 +175,15 @@ class HomeController extends Controller
 
     public function getLocale(Request $request)
     {
-        $locale = '';
         if ($request->session()->has('locale')) {
             $locale = $request->session()->get('locale');
             app()->setLocale($request->session()->get('locale'));
         } else {
             $ipAddress = $request->ip();
             $geoIp = new GeoIP();
-            $locale = $geoIp->get_country_from_ip('183.80.130.4');
+            $locale = $geoIp->get_country_from_ip($ipAddress);
             if ($locale !== null && is_array($locale)) {
                 $locale = $locale['countryCode'];
-            } else {
-                $locale = 'vi';
             }
         }
         app()->setLocale($locale);
@@ -201,5 +225,94 @@ class HomeController extends Controller
             }
         }
         return $isAdmin;
+    }
+
+    public function createStatistic()
+    {
+        if (!isset($_COOKIE["access"])) {
+            $statisticAccess = StatisticAccess::where([
+                ['datetime', '<', Carbon::now()->addHours(7)->copy()->endOfDay()],
+                ['datetime', '>', Carbon::now()->addHours(7)->copy()->startOfDay()],
+                ['status', StatisticStatus::ACTIVE],
+            ])->first();
+
+            if ($statisticAccess) {
+                $statisticAccess->numbers = $statisticAccess->numbers + 1;
+                $statisticAccess->save();
+            } else {
+                $statisticAccess = [
+                    'numbers' => 1,
+                    'datetime' => Carbon::now()->addHours(7),
+                ];
+
+                StatisticAccess::create($statisticAccess);
+            }
+            setcookie("access", "SHOPPING MALL", time() + 600, "/");
+        }
+    }
+
+    public function createStatisticShopDetail($value, $id)
+    {
+        $this->createStatisticShop($value, $id);
+    }
+
+    public function setLocale($locale)
+    {
+        if (!$locale || $locale == 'vn') {
+            $locale = 'vi';
+        }
+        // Chưa tìm được giải pháp
+//        session()->put('locale', $locale);
+//        app()->setLocale($locale);
+    }
+
+    private function createStatisticShop($value, $id)
+    {
+        $statisticShop = StatisticShop::where([
+            ['user_id', $id],
+            ['datetime', '<', Carbon::now()->addHours(7)->copy()->endOfDay()],
+            ['datetime', '>', Carbon::now()->addHours(7)->copy()->startOfDay()]
+        ])->first();
+
+        if ($value == 'access') {
+            if ($statisticShop) {
+                $statisticShop->access = $statisticShop->access + 1;
+                $statisticShop->save();
+            } else {
+                $statisticShop = [
+                    'access' => 1,
+                    'user_id' => $id,
+                    'datetime' => Carbon::now()->addHours(7),
+                ];
+
+                StatisticShop::create($statisticShop);
+            }
+        } elseif ($value == 'views') {
+            if ($statisticShop) {
+                $statisticShop->views = $statisticShop->views + 1;
+                $statisticShop->save();
+            } else {
+                $statisticShop = [
+                    'views' => 1,
+                    'user_id' => $id,
+                    'datetime' => Carbon::now()->addHours(7),
+                ];
+
+                StatisticShop::create($statisticShop);
+            }
+        } else {
+            if ($statisticShop) {
+                $statisticShop->orders = $statisticShop->orders + 1;
+                $statisticShop->save();
+            } else {
+                $statisticShop = [
+                    'orders' => 1,
+                    'user_id' => $id,
+                    'datetime' => Carbon::now()->addHours(7),
+                ];
+
+                StatisticShop::create($statisticShop);
+            }
+        }
     }
 }

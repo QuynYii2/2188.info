@@ -3,67 +3,128 @@
 @section('title', 'My Voucher')
 
 <style>
-    .link-tabs {
-        background-color: #f7f7f7 !important;
-    }
+     body {
+         font-family: 'Montserrat', sans-serif;
+         background-color: #f5f5f5;
+     }
 
-    .link-tabs:hover {
-        color: #c69500;
-    !important;
-    }
 </style>
 
 @section('sub-content')
-    <div class="row mt-2 bg-white rounded">
 
-        <div class="col-md-12 ">
-            <div class="row rounded pt-1 ml-5">
-                <h5>{{ __('home.my voucher') }}</h5>
+    <div class="p-4 list-voucher">
+        <p class="category">Kho Voucher</p>
+        <div class="search">
+            <div class="form-search d-flex align-items-center">
+                <div class="mr-3 voucher">Voucher</div>
+                <div class="input-group">
+                    <input type="text" class="form-control mr-3" placeholder="Nhập mã voucher tại đây" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">Lưu</button>
+                    </div>
+                </div>
             </div>
-            <div class="border-bottom"></div>
-            <div class="container">
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Voucher Name</th>
-                        <th scope="col">Voucher Code</th>
-                        <th scope="col">Voucher Percent</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Voucher Apply Products</th>
-                        <th scope="col">Voucher EndDate</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($voucherItems as $voucherItem)
-                        @php
-                            $voucher = \App\Models\Voucher::find($voucherItem->voucher_id)
-                        @endphp
-                        <tr>
-                            <th scope="row">{{$loop->index + 1}}</th>
-                            <td>{{$voucher->name}}</td>
-                            <td>{{$voucher->code}}</td>
-                            <td>{{$voucher->percent}}</td>
-                            <td>{{$voucherItem->quantity}}</td>
-                            <td>
-                                @php
-                                    $listIDs = $voucher->apply;
-                                    $arrayIds = explode(',', $listIDs);
-                                    $arrayName = null;
-                                    for ($i = 0; $i<count($arrayIds); $i++){
-                                        $product = \App\Models\Product::find($arrayIds[$i]);
-                                        $arrayName[] = $product->name;
-                                    }
-                                    $listName = implode(', ', $arrayName);
-                                @endphp
-                                {{$listName}}
-                            </td>
-                            <td>{{$voucher->endDate}}</td>
-                        </tr>
+        </div>
+        <ul class="nav nav-pills mb-3 mt-4" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Tất cả</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Shoppe</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Shop</a>
+            </li>
+        </ul>
+        <div class="tab-content item-voucher" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="row">
+                    @foreach ($all as $key => $voucher)
+                    <div class="col-xl-6 col-12 mt-3">
+                        <div class="item d-flex">
+                            <img src="{{asset('images/img.png')}}" alt="">
+                            <div class="content align-self-center">
+                                <div class="voucher-details">
+                                        <span class="voucher-percent">Voucher giảm {{ $voucher->percent }}%</span>
+                                        <div class="voucher-apply-products">Áp dụng cho {{ $voucher->description }}</div>
+                                        <div class="voucher-end-date">Ngày kết thúc {{ $voucher->endDate }}</div>
+                                        <div class="d-flex justify-content-between">
+                                            <span class="voucher-code" id="voucher-code-{{ $voucher->id }}">{{ $voucher->code }}</span>
+                                            <button onclick="copyCode({{ $voucher->id }})">Copy</button>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
                     @endforeach
-                    </tbody>
-                </table>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="row">
+                    @foreach ($shoppe as $key => $voucher)
+                        <div class="col-xl-6 col-12 mt-3">
+                            <div class="item d-flex">
+                                <img src="{{asset('images/img.png')}}" alt="">
+                                <div class="content align-self-center">
+                                    <div class="voucher-details">
+                                        <span class="voucher-percent">Voucher giảm {{ $voucher->percent }}%</span>
+                                        <div class="voucher-apply-products">Áp dụng cho {{ $voucher->description }}</div>
+                                        <div class="voucher-end-date">Ngày kết thúc {{ $voucher->endDate }}</div>
+                                        <div class="d-flex justify-content-between">
+                                            <span class="voucher-code" id="voucher-code-{{ $voucher->id }}">{{ $voucher->code }}</span>
+                                            <button onclick="copyCode({{ $voucher->id }})">Copy</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                <div class="row">
+                    @foreach ($shop as $key => $voucher)
+                        <div class="col-xl-6 col-12 mt-3">
+                            <div class="item d-flex">
+                                <img src="{{asset('images/img.png')}}" alt="">
+                                <div class="content align-self-center">
+                                    <div class="voucher-details">
+                                        <span class="voucher-percent">Voucher giảm {{ $voucher->percent }}%</span>
+                                        <div class="voucher-apply-products">Áp dụng cho {{ $voucher->description }}</div>
+                                        <div class="voucher-end-date">Ngày kết thúc {{ $voucher->endDate }}</div>
+                                        <div class="d-flex justify-content-between">
+                                            <span class="voucher-code" id="voucher-code-{{ $voucher->id }}">{{ $voucher->code }}</span>
+                                            <button onclick="copyCode({{ $voucher->id }})">Copy</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>
+<script>
+    // Hàm sao chép mã voucher vào clipboard khi nhấp nút Copy Code
+    function copyCode(voucherId) {
+        // Lấy mã voucher theo ID
+        var voucherCode = document.getElementById('voucher-code-' + voucherId).innerText;
+
+        // Tạo một textarea ẩn để copy vào clipboard
+        var tempInput = document.createElement('textarea');
+        tempInput.value = voucherCode;
+        document.body.appendChild(tempInput);
+
+        // Chọn và sao chép nội dung vào clipboard
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+
+        // Hiển thị thông báo hoặc xử lý sau khi sao chép thành công (tuỳ ý)
+        alert('Mã voucher đã được sao chép: ' + voucherCode);
+    }
+</script>
+</body>
+</html>
 @endsection

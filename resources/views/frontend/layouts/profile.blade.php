@@ -8,13 +8,16 @@
 @section('title', 'Profile')
 
 @section('content')
+    @php
+        (new \App\Http\Controllers\Frontend\HomeController())->createStatistic();
+    @endphp
     <style>
         body {
             background-color: #ebebeb;
         }
     </style>
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row mb-5 mt-5">
             <div class="col-6 col-md-4 col-12 col-sm-12 col-lg-3">
                 @include('frontend.pages.profile.side-bar')

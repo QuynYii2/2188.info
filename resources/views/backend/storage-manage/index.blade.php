@@ -153,37 +153,32 @@
     <div class="container-fluid">
 
         {{--        <a href="{{ route('storage.manage.export.pdf') }}"><button>Pdf</button></a>--}}
-        <h2>Quản lý kho hàng</h2>
+        <h2>                                                Quản lý kho hàng</h2>
 
-        <form action="{{ route('storage.manage.search') }}" class="row my-2">
+        <form action="{{ route('storage.manage.search') }}" class="row my-2 ">
             @csrf
             <div class="col-sm-2">
-                <h5>Tên sản phẩm</h5>
-                <input type="text" class="form-control" id="name-search" name="name-search"
+                <input placeholder="Tên sản phẩm" type="text" class="form-control" id="name-search" name="name-search"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <h5>Giá bán</h5>
-                <input type="number" class="form-control" id="price-search" name="price-search"
+                <input placeholder="Giá bán" type="number" class="form-control" id="price-search" name="price-search"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <h5>Xuất xứ </h5>
-                <input type="text" class="form-control" id="origin-search" name="origin-search"
+                <input placeholder="Xuất xứ" type="text" class="form-control" id="origin-search" name="origin-search"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <h5>Từ ngày</h5>
-                <input type="date" class="form-control" id="from-date" name="from-date"
+                <input placeholder="Từ ngày" type="date" class="form-control" id="from-date" name="from-date"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <h5>Đến ngày</h5>
-                <input type="date" class="form-control" id="to-date" name="to-date"
+                <input placeholder="Đến ngày" type="date" class="form-control" id="to-date" name="to-date"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <button type="submit" class="btn btn-primary position-absolute" style="bottom: 0">Search</button>
+                <button type="submit" class="btn btn-success position-absolute" style="bottom: 0">Search</button>
             </div>
         </form>
         <form action="{{ route('storage.manage.export.excel') }}" method="post">

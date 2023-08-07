@@ -122,13 +122,13 @@
                                         <input required type="text" class="form-control" name="social_media"
                                                placeholder="{{ __('home.input socialNetwork') }}">
                                     </div>
-                                    <div class="form-group col-md-6 col-12">
+                                    <div class="form-group col-md-6 col-12" >
                                         <div class="multiselect position-relative">
-                                            <div class="selectBox" id="div-click" onclick="showCheckboxes()">
+                                            <div  class="selectBox" id="div-click" onclick="showCheckboxes()">
                                                 <select>
-                                                    <option>Please select the type of product you are interested in</option>
+                                                    <option >Please select the type of product you are interested in</option>
                                                 </select>
-                                                <div class="overSelect"></div>
+                                                <div  class="overSelect"></div>
                                             </div>
                                             <div id="checkboxes" class="mt-1 position-absolute bg-white p-2" style="left:0; right: 0; z-index: 1">
                                                 @foreach($categories as $category)
@@ -141,6 +141,7 @@
                                                     </label>
                                                 @endforeach
                                             </div>
+                                            <input type="hidden" name="product_interested" value="category-{{$category->id}}">
                                         </div>
                                     </div>
 
@@ -239,9 +240,9 @@
                                         <select class="custom-select mr-sm-2" id="inlineFormCustomSelect"
                                                 name="industry">
                                             <option selected>{{ __('home.choose branch') }}</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
+                                            <option value="One">One</option>
+                                            <option value="Two">Two</option>
+                                            <option value="Three">Three</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6 col-12">
@@ -340,54 +341,6 @@
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    // function myFun(x) {
-    //     var btn = document.getElementById('btn-submit-permission');
-    //     btn.click();
-    // }
-
-    // function buyer() {
-    //     $(document).ready(function() {
-    //         $('.btn-info-buyer').prop('disabled', true);
-    //
-    //         function validateNextButton() {
-    //             var buttonDisabled = $('#name-buyer').val().trim() === '' || $('#email-buyer').val().trim() === '' ||
-    //                 $('#name-buyer').val().trim() === '' || $('#email-buyer').val().trim() === '';
-    //             $('.btn-info-buyer').prop('disabled', buttonDisabled);
-    //         }
-    //
-    //         $('#email-buyer').on('keyup', validateNextButton);
-    //         $('#name-seller').on('keyup', validateNextButton);
-    //     });
-    // }
-    //
-    // buyer();
-    //
-    // function seller() {
-    //     $(document).ready(function() {
-    //         $('.btn-info-seller').prop('disabled', true);
-    //
-    //         function validateNextButton() {
-    //             var buttonDisabled = $('#email-seller').val().trim() === '' || $('#name-seller').val().trim() === '';
-    //             $('.btn-info-seller').prop('disabled', buttonDisabled);
-    //         }
-    //
-    //         $('#email-seller').on('keyup', validateNextButton);
-    //         $('#name-seller').on('keyup', validateNextButton);
-    //     });
-    // }
-
-    // jQuery
-    // $(document).ready(function(){
-    //     $('.btn-info').attr('disabled',true);
-    //     $('#name-seller').keyup(function(){
-    //         if($(this).val().length !==0)
-    //             $('.btn-info').attr('disabled', false);
-    //         else
-    //             $('.btn-info').attr('disabled',true);
-    //     })
-    // });
-
-    //
 
     var expanded = false;
     var expandedPer = false;

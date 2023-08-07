@@ -44,6 +44,9 @@ return [
     'discount code' => '할인 코드',
     'my coin management' => '내 코인 관리',
     'my bookcare' => '내 bookcare',
+    'voucher management'=>'바우처 관리',
+    'product multilviews'=>'제품 멀티뷰',
+    'category interest'=>'범주 관심',
 
 
     //thông tin cá nhân, họ và tên, nickname, ngày sinh, giới tính, quốc tịch, số điện thoại và email, số điện thoại, địa chỉ email, bảo mật, đổi mật khẩu, thiết lập mã pin, liên kết mạng xã hội, lưu thay đổi, địa chỉ
@@ -127,6 +130,7 @@ return [
     'quantity' => '수량',
     'description' => '설명',
     'specification' => '사양',
+    'company information' => '회사 정보',
     'review' => '검토',
     'read more' => '더 읽으십시오',
     'read less' => '덜 읽으십시오',
@@ -245,6 +249,94 @@ return [
     'upgrade permission' => '권한 업그레이드',
     'payment management' => '결제 관리',
     'account manage' => '계정 관리',
+    'shop by categories' => '카테고리별로 쇼핑하기',
+    'Lookbook'=>'책을 보면',
+    'Shipping & Returns'=>'배송 및 반품',
+    'Contact Us'=>'문의하기',
+    'Blog'=>'블로그',
+    'Gift Cards'=>'기프트 카드',
+    'Wish Lists'=>'위시리스트',
+    'Help'=>'돕다',
+    'upgrade'=>'업그레이드',
+    'Seller channel'=>'판매자 채널',
+    'Shop'=>'가게',
+    'Log out'=>'로그 아웃',
+    'Category'=>'범주',
+    'About Us'=>'회사 소개',
+    'Buy Superkart'=>'쇼핑',
+    'Theme FAQs'=>'자주 묻는 질문',
+    'SHOP BY CATEGORIES'=>'카테고리별 쇼핑',
+    'New Products' => '신제품',
+    'Hot Deals' => '핫딜',
+    'Top Brands' => '탑 브랜드',
+    'SUBSCRIBE TO OUR NEWSLETTER' => '뉴스레터 구독',
+    'CATEGORIES' => '카테고리',
+    'FURTHER INFO' => '추가 정보',
+    'BRANDS' => '브랜드',
+    'CUSTOMER SERVICE' => '고객 서비스',
+    'Get the latest updates on new products and upcoming sales' => '신제품 및 예정된 판매에 대한 최신 업데이트를 받으십시오.',
+    'Choose Options' => '옵션 선택',
+    'Sign Out' => '로그아웃',
+    'Member registration' => '회원가입',
+    'Featured Products' => '주요 제품',
+    'Show More' => '자세히보기',
+    'View all categories' => '모든 카테고리 보기',
+    'shop now' => '지금 쇼핑',
+    'Wishlist' => '위시리스트',
+    'REVIEW YOUR CART' => '장바구니 검토',
+    'There are no products in the cart' => '장바구니에 상품이 없습니다',
+    'PAYMENT METHODS' => '지불 방법',
+    'SHIPPING METHODS' => '배송 방법',
+    'Products on sale' => '판매 중인 제품',
+    'Products by origin' => '원산지별 제품',
+    'ORIGIN' => '기원',
+    'PRICE' => '가격',
+    'Sort By' => '정렬 기준',
+    'Show' => '보여주다',
+    '10 products per page' => '페이지당 10개 제품',
+    '20 products per page' => '페이지당 20개 제품',
+    '30 products per page' => '페이지당 30개 제품',
+    '40 products per page' => '페이지당 40개 제품',
+    '50 products per page' => '페이지당 50개 제품',
+    'Newest Items' => '최신 항목',
+    'Name: A to Z' => '이름: A부터 Z까지',
+    'Name: Z to A' => '이름: Z에서 A로',
+    'Price: Ascending' => '가격: 오름차순',
+    'Price: Descending' => '가격: 내림차순',
+    'Jump to' => '이동',
+    'Electronics' => '전자제품',
+    'Home' => '집',
+    'Min' => '분',
+    'Max' => '최대',
+    'Related Products' => '관련 상품',
+    'Add To Cart' => '장바구니에 담기',
+    'Customers Also Viewed' => '고객도 조회',
+    'remaining' => '남은:',
+    'Household Plants' => '가정용 식물',
+    'Bonsai' => '분재',
+    'Quick view' => '퀵뷰',
+    'LOGIN' => '로그인',
+    'If you are already registered, please log in' => '이미 등록되어 있는 경우 로그인하십시오',
+    'Email Address' => '이메일 주소:',
+    'Password' => '비밀번호',
+    'Sign In' => '로그인',
+    'Create your account and enjoy a new shopping experience' => '계정을 만들고 새로운 쇼핑 경험을 즐기십시오',
+    'Create A New Account' => '새 계정 생성',
+    'Sign up for membership' => '회원가입',
+    'Sign in' => '로그인',
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ];

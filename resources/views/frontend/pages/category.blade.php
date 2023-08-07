@@ -2,625 +2,293 @@
 
 @section('title', 'Category')
 
-<style>
-    ul {
-        margin: 0;
-        padding: 0;
-        list-style-type: none;
-    }
-    a {
-        color: #646464;
-        text-decoration: none;
-    }
-    body {
-        background-color: #64D7E2;
-        font-family: "Source Sans Pro", sans-serif;
-    }
-    .wrapper {
-        width: 100%;
-        background-color: #fff;
-        font-size: 0.875em;
-    }
-    .items {
-        padding: 18px 0;
-    }
-    .items > li > a {
-        display: block;
-        margin: 0 auto;
-        text-indent: 18px;
-        line-height: 39px;
-    }
-    .items > li > a::after {
-        position: absolute;
-        right: 30px;
-        margin-top: 2px;
-        font-family: "FontAwesome";
-    }
-    .items > li > a::after {
-        right: 30px;
-        content: "\f061";
-    }
-    .items > li:not(:has(ul)) > a::after,
-    .items > li:not(:has(ul)) > a.expanded::after
-    {
-        content: none;
-    }
-    .itemHover {
-        color: #fff;
-        font-weight: 600;
-        transition: background-color 0.4s ease-in-out;
-    }
-    .items > li > a:hover {
-        background-color: #8EE8F1;
-        color: #fff;
-        font-weight: 600;
-        transition: background-color 0.4s ease-in-out;
-    }
-    .items > li > a.expanded {
-        background-color: #64D7E2;
-        color: #fff;
-        font-weight: 600;
-        transition: background-color 0.4s ease-in-out;
-    }
-    .items > li > a.expanded::after {
-        content: "\f063";
-    }
-    .sub-items > li:first-child > a {
-        margin-top: 17px;
-        height: 34px;
-    }
-    .sub-items > li:last-child > a {
-        margin-bottom: 17px;
-        height: 34px;
-    }
-    .sub-items a {
-        position: relative;
-        display: block;
-        margin: 0 auto;
-        width: 212px;
-        text-indent: 24px;
-        line-height: 39px;
-    }
-    .sub-items label {
-        position: relative;
-        display: block;
-        margin: 0 1rem;
-        width: 85%;
-        text-indent: 24px;
-        line-height: 39px;
-    }
-    .sub-items a {
-        border-left: 2px solid #64D7E2;
-    }
-    .sub-items .current {
-        position: relative;
-        color: #64D7E2;
-        border-color: white;
-    }
-    .sub-items > li:hover > a {
-        color: #64D7E2;
-        transition: color 0.4s ease-in-out;
-    }
-    .sub-items {
-        display: none;
-    }
-
-
-
-    .tabs-product-detail{
-        background-color: #fff;!important;
-    }
-
-    .link-tabs:hover{
-        color: #c69500;!important;
-    }
-
-    .text-more-tabs:hover{
-        color: #c69500;!important;
-    }
-
-    .title-search{
-        color: #000;
-    }
-
-    .title-search:hover{
-        color: #c69500;
-    }
-    .list-menu li a:hover{
-        color: #000;
-    }
-
-    @media only screen and (min-width: 1200px){
-
-    }
-
-    @media only screen and (min-width: 992px) and (max-width: 1199px){
-
-    }
-
-    @media only screen and (min-width: 768px) and (max-width: 991px) {
-
-    }
-
-    @media only screen and (max-width: 767px) {
-        .body-main{
-            padding-left: 0!important;
-            padding-right: 0!important;
-        }
-    }
-
-    @media only screen and (max-width: 365px) {
-
-    }
-
-
-
-    .sub-items input[type=checkbox] { display:none; } /* to hide the checkbox itself */
-    .sub-items input[type=checkbox] + label:before {
-        font-family: FontAwesome;
-        display: inline-block;
-    }
-
-    .sub-items input[type=checkbox] + label:before { content: "\f096"; } /* unchecked icon */
-    .sub-items input[type=checkbox] + label:before { letter-spacing: 10px; } /* space between checkbox and label */
-
-    .sub-items input[type=checkbox]:checked + label:before { content: "\f046"; } /* checked icon */
-    .sub-items input[type=checkbox]:checked + label:before { letter-spacing: 5px; } /* allow space for check mark */
-
-
-
-
-    .price-range-slider {
-        width: 100%;
-        float: left;
-        padding: 10px 20px;
-    }
-    .price-range-slider .range-value {
-        margin: 0;
-    }
-    .price-range-slider .range-value input {
-        width: 100%;
-        background: none;
-        color: #000;
-        font-size: 16px;
-        font-weight: initial;
-        box-shadow: none;
-        border: none;
-        margin: 20px 0 20px 0;
-    }
-    .price-range-slider .range-bar {
-        border: none;
-        background: #000;
-        height: 3px;
-        width: 96%;
-        margin-left: 8px;
-    }
-    .price-range-slider .range-bar .ui-slider-range {
-        background: #06b9c0;
-    }
-    .price-range-slider .range-bar .ui-slider-handle {
-        border: none;
-        border-radius: 25px;
-        background: #fff;
-        border: 2px solid #06b9c0;
-        height: 17px;
-        width: 17px;
-        top: -0.52em;
-        cursor: pointer;
-    }
-    .price-range-slider .range-bar .ui-slider-handle + span {
-        background: #06b9c0;
-    }
-
-
-    ::selection {
-        color: #fff;
-        background: #17a2b8;
-    }
-    .sub-items .wrapper {
-        width: 400px;
-        background: #fff;
-        border-radius: 10px;
-        padding: 25px;
-        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
-    }
-    header h2 {
-        font-size: 24px;
-        font-weight: 600;
-    }
-    header p {
-        margin-top: 5px;
-        font-size: 16px;
-    }
-    .price-input {
-        width: 100%;
-        display: flex;
-        margin-bottom: 20px;
-    }
-    .price-input .field {
-        display: flex;
-        width: 100%;
-        height: 35px;
-        align-items: center;
-    }
-    .field input {
-        width: 100%;
-        height: 100%;
-        outline: none;
-        font-size: 19px;
-        margin-left: 12px;
-        border-radius: 5px;
-        text-align: center;
-        border: 1px solid #999;
-        -moz-appearance: textfield;
-    }
-    input[type="number"]::-webkit-outer-spin-button,
-    input[type="number"]::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-    }
-    .price-input .separator {
-        width: 130px;
-        display: flex;
-        font-size: 19px;
-        align-items: center;
-        justify-content: center;
-    }
-    .slider {
-        height: 5px;
-        position: relative;
-        background: #ddd;
-        border-radius: 5px;
-    }
-    .slider .progress {
-        height: 100%;
-        left: 25%;
-        right: 25%;
-        position: absolute;
-        border-radius: 5px;
-        background: #17a2b8;
-    }
-    .range-input {
-        position: relative;
-    }
-    .range-input input {
-        position: absolute;
-        width: 100%;
-        height: 5px;
-        top: -5px;
-        background: none;
-        pointer-events: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-    }
-    input[type="range"]::-webkit-slider-thumb {
-        height: 17px;
-        width: 17px;
-        border-radius: 50%;
-        background: #17a2b8;
-        pointer-events: auto;
-        -webkit-appearance: none;
-        box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-    }
-    input[type="range"]::-moz-range-thumb {
-        height: 17px;
-        width: 17px;
-        border: none;
-        border-radius: 50%;
-        background: #17a2b8;
-        pointer-events: auto;
-        -moz-appearance: none;
-        box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-    }
-
-    /* Support */
-    .support-box {
-        top: 2rem;
-        position: relative;
-        bottom: 0;
-        text-align: center;
-        display: block;
-    }
-    .b-btn {
-        color: white;
-        text-decoration: none;
-        font-weight: bold;
-    }
-    .b-btn.paypal i {
-        color: blue;
-    }
-    .b-btn:hover {
-        text-decoration: none;
-        font-weight: bold;
-    }
-    .b-btn i {
-        font-size: 20px;
-        color: yellow;
-        margin-top: 2rem;
-    }
-
-</style>
-
 @section('content')
-    <div class="container">
-        <div id="header-carousel" class="carousel slide carousel-fade desktop-button" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#header-carousel" data-slide-to="0" class="active"></li>
-                <li data-target="#header-carousel" data-slide-to="1"></li>
-                <li data-target="#header-carousel" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-                <div class="carousel-item position-relative active" style="height: 450px;">
-                    <img class="position-absolute w-100 h-100 img" src="{{ asset('images//carousel-1.jpg') }}"
-                         style="object-fit: cover;">
-                </div>
-                <div class="carousel-item position-relative" style="height: 450px;">
-                    <img class=" img position-absolute w-100 h-100" src="{{ asset('images//carousel-2.jpg') }}"
-                         style="object-fit: cover;">
-                </div>
-                <div class="carousel-item position-relative" style="height: 450px;">
-                    <img class= "img position-absolute w-100 h-100" src="{{ asset('images//carousel-3.jpg') }}"
-                         style="object-fit: cover;">
-                </div>
+    <div id="body-content">
+        <div class="category-banner">
+            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/category-banner-top-layout-2.jpg"
+                 alt="">
+            <div class="category-name">
+                ELECTRONICS
             </div>
         </div>
-
-{{--        <div class="bg-white mt-3 only-desktop">--}}
-{{--            <h3 class="ml-3">{{ __('home.brands') }}</h3>--}}
-{{--            <table class="table table-bordered ">--}}
-
-{{--                <tr>--}}
-{{--                    <td class="col-2 align-middle">--}}
-{{--                        <a href="#!">--}}
-{{--                            <img--}}
-{{--                                    src="{{asset('images/vendor-8.jpg')}}"--}}
-{{--                                    class="w-100 img"--}}
-{{--                            />--}}
-{{--                        </a>--}}
-{{--                    </td>--}}
-{{--                    <td class="col-2 align-middle">--}}
-{{--                        <a href="#!">--}}
-{{--                            <img--}}
-{{--                                    src="{{asset('images/cat-2.jpg')}}"--}}
-{{--                                    class="w-100 img"--}}
-{{--                            />--}}
-{{--                        </a>--}}
-{{--                    </td>--}}
-{{--                    <td class="col-2 align-middle">--}}
-{{--                        <a href="#!">--}}
-{{--                            <img--}}
-{{--                                    src="{{asset('images/cat-3.jpg')}}"--}}
-{{--                                    class="w-100 img"--}}
-{{--                            />--}}
-{{--                        </a>--}}
-{{--                    </td>--}}
-{{--                    <td class="col-2 align-middle">--}}
-{{--                        <a href="#!">--}}
-{{--                            <img--}}
-{{--                                    src="{{asset('images/cat-4.jpg')}}"--}}
-{{--                                    class="w-100 img"--}}
-{{--                            />--}}
-{{--                        </a>--}}
-{{--                    </td>--}}
-{{--                    <td class="col-2 align-middle">--}}
-{{--                        <a href="#!">--}}
-{{--                            <img--}}
-{{--                                    src="{{asset('images/cat-1.jpg')}}"--}}
-{{--                                    class="w-100 img"--}}
-{{--                            />--}}
-{{--                        </a>--}}
-{{--                    </td>--}}
-{{--                    <td class="col-2 align-middle">--}}
-{{--                        <a href="#!">--}}
-{{--                            <img--}}
-{{--                                    src="{{asset('images/vendor-2.jpg')}}"--}}
-{{--                                    class="w-100 img"--}}
-{{--                            />--}}
-{{--                        </a>--}}
-{{--                    </td>--}}
-
-{{--                </tr>--}}
-{{--                <tr>--}}
-{{--                    <td class="col-2 align-middle">--}}
-{{--                        <a href="#!">--}}
-{{--                            <img--}}
-{{--                                    src="{{asset('images/vendor-3.jpg')}}"--}}
-{{--                                    class="w-100 img"--}}
-{{--                            />--}}
-{{--                        </a>--}}
-{{--                    </td>--}}
-{{--                    <td class="col-2 align-middle">--}}
-{{--                        <a href="#!">--}}
-{{--                            <img--}}
-{{--                                    src="{{asset('images/vendor-4.jpg')}}"--}}
-{{--                                    class="w-100 img"--}}
-{{--                            />--}}
-{{--                        </a>--}}
-{{--                    </td>--}}
-{{--                    <td class="col-2 align-middle">--}}
-{{--                        <a href="#!">--}}
-{{--                            <img--}}
-{{--                                    src="{{asset('images/vendor-1.jpg')}}"--}}
-{{--                                    class="w-100 img"--}}
-{{--                            />--}}
-{{--                        </a>--}}
-{{--                    </td>--}}
-{{--                    <td class="col-2 align-middle">--}}
-{{--                        <a href="#!">--}}
-{{--                            <img--}}
-{{--                                    src="{{asset('images/vendor-5.jpg')}}"--}}
-{{--                                    class="w-100 img"--}}
-{{--                            />--}}
-{{--                        </a>--}}
-{{--                    </td>--}}
-{{--                    <td class="col-2 align-middle img">--}}
-{{--                        <a href="#!">--}}
-{{--                            <img--}}
-{{--                                    src="{{asset('images/vendor-6.jpg')}}"--}}
-{{--                                    class="w-100"--}}
-{{--                            />--}}
-{{--                        </a>--}}
-{{--                    </td>--}}
-{{--                    <td class="col-2 align-middle">--}}
-{{--                        <a href="#!">--}}
-{{--                            <img--}}
-{{--                                    src="{{asset('images/vendor-7.jpg')}}"--}}
-{{--                                    class="w-100 img"--}}
-{{--                            />--}}
-{{--                        </a>--}}
-{{--                    </td>--}}
-{{--                </tr>--}}
-{{--            </table>--}}
-{{--        </div>--}}
-    </div>
-        <div class="container mt-5">
+        <section class="section container-fluid">
+            <div class="content">{{ __('home.Jump to') }}:</div>
+            <div class="swiper CategoriesOne category-item">
+                <div class="swiper-wrapper">
+                    @php
+                        $listCate = DB::table('categories')->where('parent_id', null)->get();
+                    @endphp
+                    @foreach($listCate as $cate)
+                        <div class="swiper-slide">
+                            <a href="{{ route('category.show', $cate->id) }}">
+                                <div class="img">
+                                    <img src="{{ asset('storage/' . $cate->thumbnail) }}"
+                                         alt="">
+                                </div>
+                                <div class="text">
+                                    {{$cate->name}}
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
+        <div class="category-header align-items-center mt-4 mb-3 container-fluid d-flex justify-content-between">
+            <div class="category-header--left">
+                <a href="{{route('home')}}">{{ __('home.Home') }}</a> / <a href="#">{{ __('home.Electronics') }}</a>
+            </div>
+            <div class="category-header--right">
+                <div class="show-item mr-4 align-items-center">
+                    <span class="mr-3">{{ __('home.Show') }}</span>
+                    <select class="drop btn dropdown-toggle" id="count-per-page" aria-label="Default select example">
+                        <option selected value="10">{{ __('home.10 products per page') }}</option>
+                        <option value="20">{{ __('home.20 products per page') }}</option>
+                        <option value="30">{{ __('home.30 products per page') }}</option>
+                        <option value="40">{{ __('home.40 products per page') }}</option>
+                        <option value="50">{{ __('home.50 products per page') }}</option>
+                    </select>
+                </div>
+                <div class="SortBy align-items-center mr-4">
+                    <span class="mr-3">{{ __('home.Sort By') }}</span>
+                    <select class="drop btn dropdown-toggle" id="sort-by" aria-label="Default select example">
+                        <option value="created_at desc" selected>{{ __('home.Newest Items') }}</option>
+                        <option value="name asc">{{ __('home.Name: A to Z') }}</option>
+                        <option value="name desc">{{ __('home.Name: Z to A') }}</option>
+                        <option value="price asc">{{ __('home.Price: Ascending') }}</option>
+                        <option value="price desc">{{ __('home.Price: Descending') }}</option>
+                    </select>
+                </div>
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item layout-horizontal">
+                        <a class="nav-link active" data-toggle="tab" href="#home"><i class="fa-solid fa-grip"></i></a>
+                    </li>
+                    <li class="nav-item layout-vertical">
+                        <a class="nav-link" data-toggle="tab" href="#menu1"><i class="fa-solid fa-list"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <div class="category-body container-fluid">
             <div class="row">
-                <div class="col-md-3 col-4">
-                    <div class="card mb-5">
-                        <div class='wrapper'>
-                            <ul class='items p-2'>
-                                <li>
-                                    <h4>Màu sắc</h4>
-                                        @php
-                                            $listProperties = DB::table('properties')->get();
-                                        @endphp
-                                        @foreach($listProperties as $propertie)
-                                            <li>
-                                                <input id="check{{ $propertie->id }}" type="checkbox" />
-                                                <label style="text-indent: 0px" for="check{{ $propertie->id }}">{{ $propertie->name }}</label>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                            <ul class='items p-2'>
-                            <h4>{{ __('home.brands') }}</h4>
-                                <li>
-                                    <input id="box1" type="checkbox" />
-                                    <label style="text-indent: 0px" for="box1">Mercedes</label>
-                                </li>
-                                <li>
-                                    <input id="box2" type="checkbox" />
-                                    <label style="text-indent: 0px" for="box2">Toyota</label>
-                                </li>
-                                <li>
-                                    <input id="box3" type="checkbox" />
-                                    <label style="text-indent: 0px" for="box3">Mitsubishi</label>
-                                </li>
-                                <li>
-                                    <input id="box4" type="checkbox" />
-                                    <label style="text-indent: 0px" for="box4">Honda</label>
-                                </li>
-                                <li>
-                                    <input id="box5" type="checkbox" />
-                                    <label style="text-indent: 0px" for="box5">Nissan</label>
-                                </li>
-                            </ul>
-                            <ul class='items p-2'>
-                                <li>
-                                    <h4>Khoảng giá</h4>
-                                    <div class="d-flex">
-                                            <div class="wrapper">
-                                                <div class="price-input">
-                                                    <div class="field">
-                                                        <span style="font-size: 16px">Min</span>
-                                                        <input type="number" class="input-min" value="2500">
-                                                    </div>
-                                                    <div class="separator">-</div>
-                                                    <div class="field">
-                                                        <span style="font-size: 16px">Max</span>
-                                                        <input type="number" class="input-max" value="7500">
-                                                    </div>
+                <div class="col-xl-2 category-body-left">
+                    <div class="content">{{ __('home.PAYMENT METHODS') }}</div>
+                    @foreach($listPayment as $payment)
+                        <div class="OptionContainer">
+                            <div class="OptionHead">
+                                <input type="checkbox" class="payment-checkbox"
+                                       value="{{ $payment->id }}">{{ $payment->name }}
+                            </div>
+                        </div>
+                    @endforeach
+                    <hr>
+                    <div class="content">{{ __('home.SHIPPING METHODS') }}</div>
+                    @foreach($listTransport as $transport)
+                        <div class="OptionContainer">
+                            <div class="OptionHead">
+                                <input type="checkbox" class="transport-checkbox"
+                                       value="{{ $transport->id }}">{{ $transport->name }}
+                            </div>
+                        </div>
+                    @endforeach
+                    <div class="MenuContainer"></div>
+                    <hr>
+                    <input type="checkbox" value="" id="check_sale" onchange="checkSale(this)">{{ __('home.Products on sale') }}
+                    <hr>
+                    <div class="content">{{ __('home.PRICE') }}</div>
+                    <div class="category-price">
+                        <div class="wrapper">
+                            <div class="price-input d-flex">
+                                <div class="field">
+                                    <span>{{ __('home.Min') }}</span>
+                                    <input type="number" class="input-min" id="price-min" value="0">
+                                </div>
+                                <div class="separator">-</div>
+                                <div class="field">
+                                    <span>{{ __('home.Max') }}</span>
+                                    <input type="number" class="input-max" id="price-max" value="{{ $priceProductOfCategory->maxPrice }}">
+                                </div>
+                            </div>
+                            <div class="slider">
+                                <div class="progress"></div>
+                            </div>
+                            <div class="range-input">
+                                <input type="range" class="range-min" min="0" max="{{ $priceProductOfCategory->maxPrice }}" value="0" step="1">
+                                <input type="range" class="range-max" min="0" max="{{ $priceProductOfCategory->maxPrice }}" value="{{ $priceProductOfCategory->maxPrice }}" step="1">
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="content">{{ __('home.ORIGIN') }}</div>
+                    <input type="text" value="" id="search-origin" onchange="searchOrigin(this)" >{{ __('home.Products by origin') }}
+
+                </div>
+                <!-- Tab panes -->
+                <div class="tab-content col-xl-10">
+                    <div id="home" class="tab-pane active "><br>
+                        <div class="row" id="renderProduct">
+                            @foreach($listProduct as $product)
+                                <div class="col-xl-3 col-md-4 col-6 section">
+                                    <div class="item">
+                                        <div class="item-img">
+                                            <img src="{{ asset('storage/' . $product->thumbnail) }}"
+                                                 alt="">
+                                            <div class="button-view">
+                                                <button>Quick view</button>
+                                            </div>
+                                            <div class="text">
+                                                <div class="text-sale">
+                                                    Sale
                                                 </div>
-                                                <div class="slider">
-                                                    <div class="progress"></div>
-                                                </div>
-                                                <div class="range-input">
-                                                    <input type="range" class="range-min" min="0" max="10000" value="2500" step="100">
-                                                    <input type="range" class="range-max" min="0" max="10000" value="7500" step="100">
+                                                <div class="text-new">
+                                                    New
                                                 </div>
                                             </div>
                                         </div>
-                                </li>
-                            </ul>
-                            <ul class='items p-2'>
-                                <li>
-                                    <h4>Kích thước</h4>
-                                    <li>
-                                        <input id="box10" type="checkbox" />
-                                        <label style="text-indent: 0px" for="box10">XS</label>
-                                    </li>
-                                    <li>
-                                        <input id="box11" type="checkbox" />
-                                        <label style="text-indent: 0px" for="box11">SM</label>
-                                    </li>
-                                    <li>
-                                        <input id="box12" type="checkbox" />
-                                        <label style="text-indent: 0px" for="box12">LG</label>
-                                    </li>
-                                    <li>
-                                        <input id="box13" type="checkbox" />
-                                        <label style="text-indent: 0px" for="box13">XXL</label>
-                                    </li>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-                <div class="col-md-9 col-8">
-                    <header class="border-bottom mb-4 pb-3 ">
-                        <div class="form-inline">
-                            <span class="mr-md-auto">{{$listProduct->total()}} {{ __('home.items found') }}</span>
-                            <select class="form-control">
-                                <option>{{ __('home.latest items') }}</option>
-                                <option>{{ __('home.trending') }}</option>
-                                <option>{{ __('home.most popular') }}</option>
-                                <option>{{ __('home.cheapest') }}</option>
-                            </select>
-                        </div>
-                    </header>
-
-                    <div class="row py-2">
-                        @foreach($listProduct as $product)
-                            <div class="col-md-4 col-sm-6 col-12 rounded product-map">
-                                <div class="product-item bg-light rounded ">
-                                    <div class="product-img position-relative overflow-hidden rounded">
-                                        <img class=" height-img w-100 img" src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
+                                        <div class="item-body">
+                                            <div class="card-rating">
+                                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                <span>(1)</span>
+                                            </div>
+                                            @php
+                                                $namenewProduct = DB::table('users')->where('id', $product->user_id)->first();
+                                            @endphp
+                                            <div class="card-brand">
+                                                {{$namenewProduct->name}}
+                                            </div>
+                                            <div class="card-title">
+                                                <a href="{{route('detail_product.show', $product->id)}}">{{ $product->name }}</a>
+                                            </div>
+                                            <div class="card-price d-flex justify-content-between">
+                                                @if($product->price)
+                                                    <div class="card-price d-flex justify-content-between">
+                                                        @if($product->price != null)
+                                                            <div class="price-sale">
+                                                                <strong>${{$product->price}}</strong>
+                                                            </div>
+                                                            <div class="price-cost">
+                                                                <strike>${{$product->old_price}}</strike>
+                                                            </div>
+                                                        @else
+                                                            <div class="price-sale">
+                                                                <strong>${{$product->old_price}}</strong>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="card-bottom d-flex justify-content-between">
+                                                <div class="card-bottom--left">
+                                                    <a href="{{route('detail_product.show', $product->id)}}">Choose
+                                                        Options</a>
+                                                </div>
+                                                <div class="card-bottom--right">
+                                                    <i class="item-icon fa-regular fa-heart"></i>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="text-center py-4 text-limit">
-                                        <a class="h6 text-decoration-none text-truncate tabs-product-detail" href="{{route('detail_product.show', $product->id)}}">{{ $product->name }}</a>
-                                        <div class="d-flex align-items-center justify-content-center mt-2">
-                                            <h5 class="text-danger">${{ $product->price }}</h5><h6 class="text-muted ml-2"></h6>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div id="menu1" class="tab-pane fade"><br>
+                        @foreach($listProduct as $product)
+                            <div class="mt-3 category-list section">
+                                <div class="item row">
+                                    <div class="item-img col-md-3 col-5">
+                                        <img src="{{ asset('storage/' . $product->thumbnail) }}"
+                                             alt="">
+                                        <div class="button-view">
+                                            <button>Quick view</button>
+                                        </div>
+                                        <div class="text">
+                                            <div class="text-sale">
+                                                Sale
+                                            </div>
+                                            <div class="text-new">
+                                                New
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item-body col-md-9 col-7">
+                                        <div class="card-rating">
+                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                            <span>(1)</span>
+                                        </div>
+                                        @php
+                                            $namenewProduct = DB::table('users')->where('id', $product->user_id)->first();
+                                        @endphp
+                                        <div class="card-brand">
+                                            {{$namenewProduct->name}}
+                                        </div>
+                                        <div class="card-title-list">
+                                            <a href="{{route('detail_product.show', $product->id)}}">{{ $product->name }}</a>
+                                        </div>
+                                        <div class="card-price d-flex">
+                                            @if($product->price)
+                                                <div class="card-price d-flex justify-content-between">
+                                                    @if($product->price != null)
+                                                        <div class="price-sale">
+                                                            <strong>${{$product->price}}</strong>
+                                                        </div>
+                                                        <div class="price-cost">
+                                                            <strike>${{$product->old_price}}</strike>
+                                                        </div>
+                                                    @else
+                                                        <div class="price-sale">
+                                                            <strong>${{$product->old_price}}</strong>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <div class="card-desc">
+                                            {{ $product->description }}
+                                        </div>
+                                        <div class="card-bottom d-flex mt-3">
+                                            <div class="card-bottom--left mr-4">
+                                                <a href="{{route('detail_product.show', $product->id)}}">Choose
+                                                    Options</a>
+                                            </div>
+                                            <div class="card-bottom--right">
+                                                <i class="item-icon fa-regular fa-heart"></i>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
                     </div>
-                    <nav class="mt-4 mb-5 d-flex justify-content-center" aria-label="Page navigation sample">
-                        <ul class="pagination">
-                            @foreach($listProduct->links()->elements[0] as $index => $page)
-                                <li class="page-item"><a class="page-link" href="{{ $page }}">{{ $index }}</a></li>
-                            @endforeach
-                        </ul>
-                    </nav>
-
                 </div>
             </div>
         </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function responsiveTable(y) {
             let tabs = document.getElementsByClassName('product-map');
             var i;
-            for (i=0; i<tabs.length; i++){
+            for (i = 0; i < tabs.length; i++) {
                 if (y.matches) {
                     tabs[i].classList.remove("col-md-4");
                     tabs[i].classList.add("col-sm-6");
                 }
             }
         }
+
         var y = window.matchMedia("(max-width: 991px)")
         responsiveTable(y);
         y.addListener(responsiveTable)
@@ -630,7 +298,7 @@
             let tabs = document.getElementsByClassName('toggle-link');
             let items = document.getElementsByClassName('filter-content');
             var i;
-            for (i=0; i<tabs.length; i++){
+            for (i = 0; i < tabs.length; i++) {
                 if (x.matches) {
                     tabs[i].classList.add("collapsed");
                     tabs[i].setAttribute('aria-expanded', 'false');
@@ -640,13 +308,13 @@
                 }
             }
         }
+
         var x = window.matchMedia("(max-width: 767px)")
         myFunciton(x);
         x.addListener(myFunciton)
 
 
-
-        $(".items > li > a").click(function(e) {
+        $(".items > li > a").click(function (e) {
             e.preventDefault();
             var $this = $(this);
             if ($this.hasClass("expanded")) {
@@ -659,31 +327,15 @@
             $this.parent().children("ul").stop(true, true).slideToggle("normal");
         });
 
-        $(".sub-items a").click(function() {
+        $(".sub-items a").click(function () {
             $(".sub-items a").removeClass("current");
             $(this).addClass("current");
-        });
-
-
-
-        $(function() {
-            $( "#slider-range" ).slider({
-                range: true,
-                min: 0,
-                max: 1000,
-                values: [ 130, 250 ],
-                slide: function( event, ui ) {
-                    $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-                }
-            });
-            $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
-                " - $" + $( "#slider-range" ).slider( "values", 1 ) );
         });
 
         const rangeInput = document.querySelectorAll(".range-input input"),
             priceInput = document.querySelectorAll(".price-input input"),
             range = document.querySelector(".slider .progress");
-        let priceGap = 1000;
+        let priceGap = 1;
 
         priceInput.forEach((input) => {
             input.addEventListener("input", (e) => {
@@ -720,7 +372,138 @@
                     range.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
                 }
             });
+            input.addEventListener("change", () => {
+                switch (input.className.split('-')[1]) {
+                    case 'max':
+                        maxPrice = input.value
+                        break;
+                    case 'min':
+                        minPrice = input.value
+                        break;
+                }
+                callApiFilter();
+            });
         });
 
+    </script>
+
+    <script>
+        let sortBy = '';
+        let countPerPage = '';
+        let search_origin = '';
+        let selectedPayments = [];
+        let selectedTransports = [];
+        let minPrice = '';
+        let maxPrice = '';
+        let isSale = false;
+
+        selectedPayments.push('0');
+        selectedTransports.push('0');
+        const jq = $.noConflict();
+        loadData();
+
+        async function loadData() {
+            await handleCountPerPage();
+            await handleSortBy();
+            await callApiFilter();
+        }
+
+        $(document).on('change', '#count-per-page', function () {
+            handleCountPerPage();
+            callApiFilter();
+        });
+
+
+        $(document).on('change', '#sort-by', function () {
+            handleSortBy();
+            callApiFilter();
+        });
+
+
+        function getIdCategory() {
+            let arrUrl = window.location.href.split('/');
+            return arrUrl[arrUrl.length - 1];
+        }
+
+        function searchOrigin(input) {
+            search_origin = input.value
+            callApiFilter();
+        }
+
+        function checkSale(input) {
+            isSale = input.checked;
+            callApiFilter();
+        }
+
+        function callApiFilter() {
+            const url = '/category/filter/' + getIdCategory();
+            let data = {
+                sortBy: sortBy,
+                countPerPage: countPerPage,
+                selectedPayments: selectedPayments,
+                selectedTransports: selectedTransports,
+                minPrice: minPrice,
+                maxPrice: maxPrice,
+                search_origin: search_origin,
+                isSale: isSale,
+            }
+            jq.ajax({
+                url: url,
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    data: data,
+                },
+                success: function (response) {
+                    document.getElementById('renderProduct').innerHTML = response;
+                },
+                error: function (exception) {
+                    console.log(exception)
+                }
+            });
+        }
+
+        function handleSortBy() {
+            sortBy = document.getElementById('sort-by').value
+        }
+
+        function handleCountPerPage() {
+            countPerPage = document.getElementById('count-per-page').value
+        }
+
+        const paymentCheckboxes = document.querySelectorAll('.payment-checkbox');
+        paymentCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', (event) => {
+                const paymentId = event.target.value;
+
+                if (event.target.checked) {
+                    selectedPayments.push(paymentId);
+                } else {
+                    const index = selectedPayments.indexOf(paymentId);
+                    if (index !== -1) {
+                        selectedPayments.splice(index, 1);
+                    }
+                }
+                callApiFilter();
+            });
+        });
+
+
+        const transportCheckboxes = document.querySelectorAll('.transport-checkbox');
+        transportCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', (event) => {
+                const transportId = event.target.value;
+
+                if (event.target.checked) {
+                    selectedTransports.push(transportId);
+                } else {
+                    const index = selectedTransports.indexOf(transportId);
+                    if (index !== -1) {
+                        selectedTransports.splice(index, 1);
+                    }
+                }
+                callApiFilter();
+            });
+        });
     </script>
 @endsection

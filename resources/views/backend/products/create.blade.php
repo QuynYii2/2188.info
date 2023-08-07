@@ -2,430 +2,336 @@
     use Illuminate\Support\Facades\DB;
     use App\Enums\PropertiStatus;
 @endphp
-
 <style>
+    .btn-success {
+        color: white !important;
+    }
 
+    .name {
+        margin-top: 20px;
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    @media all {
+
+        .attachment .portrait img {
+            max-width: 100%;
+        }
+
+        .attachment .thumbnail img {
+            top: 0;
+            left: 0;
+            position: absolute;
+        }
+
+        .attachment .thumbnail .centered img {
+            transform: translate(-50%, -50%);
+        }
+
+        .attachment .landscape img {
+            max-height: 100%;
+        }
+    }
+
+    .attribute-form {
+        background: white;
+        padding: 20px;
+    }
+
+    #checkboxes {
+        background-color: white;
+        height: 30vh;
+        overflow-y: auto !important;
+        display: none;
+        border: 1px #dadada solid;
+    }
+
+    .dropdown-content {
+        margin-top: 10px;
+    }
+
+    #checkboxes label {
+        display: block;
+    }
+
+        /**/
     select {
         display: none !important;
     }
-
-    .dropdown-select {
-        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%);
-        background-repeat: repeat-x;
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#40FFFFFF', endColorstr='#00FFFFFF', GradientType=0);
-        background-color: #fff;
-        border-radius: 6px;
-        border: solid 1px #eee;
-        box-sizing: border-box;
-        cursor: pointer;
-        display: block;
-        float: left;
-        font-size: 14px;
-        font-weight: normal;
-        height: 42px;
-        line-height: 40px;
-        outline: none;
-        padding-left: 18px;
-        padding-right: 30px;
-        position: relative;
-        text-align: left !important;
-        transition: all 0.2s ease-in-out;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        white-space: nowrap;
-        width: auto;
-
-    }
-
-    .dropdown-select:focus {
-        background-color: #fff;
-    }
-
-    .dropdown-select:hover {
-        background-color: #fff;
-    }
-
-    .dropdown-select:active,
-    .dropdown-select.open {
-        background-color: #fff !important;
-        border-color: #bbb;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05) inset;
-    }
-
-    .dropdown-select:after {
-        height: 0;
-        width: 0;
-        border-left: 4px solid transparent;
-        border-right: 4px solid transparent;
-        border-top: 4px solid #777;
-        -webkit-transform: origin(50% 20%);
-        transform: origin(50% 20%);
-        transition: all 0.125s ease-in-out;
-        content: '';
-        display: block;
-        margin-top: -2px;
-        pointer-events: none;
-        position: absolute;
-        right: 10px;
-        top: 50%;
-    }
-
-    .dropdown-select.open:after {
-        -webkit-transform: rotate(-180deg);
-        transform: rotate(-180deg);
-    }
-
-    .dropdown-select.open .list {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-        opacity: 1;
-        pointer-events: auto;
-    }
-
-    .dropdown-select.open .option {
-        cursor: pointer;
-    }
-
-    .dropdown-select.wide {
-        width: 100%;
-    }
-
-    .dropdown-select.wide .list {
-        left: 0 !important;
-        right: 0 !important;
-    }
-
-    .dropdown-select .list {
-        box-sizing: border-box;
-        transition: all 0.15s cubic-bezier(0.25, 0, 0.25, 1.75), opacity 0.1s linear;
-        -webkit-transform: scale(0.75);
-        transform: scale(0.75);
-        -webkit-transform-origin: 50% 0;
-        transform-origin: 50% 0;
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.09);
-        background-color: #fff;
-        border-radius: 6px;
-        margin-top: 4px;
-        padding: 3px 0;
-        opacity: 0;
-        overflow: hidden;
-        pointer-events: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        z-index: 999;
-        max-height: 250px;
-        overflow: auto;
-        border: 1px solid #ddd;
-    }
-
-    .dropdown-select .list:hover .option:not(:hover) {
-        background-color: transparent !important;
-    }
-
-    .dropdown-select .dd-search {
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0.5rem;
-    }
-
-    .dropdown-select .dd-searchbox {
-        width: 90%;
-        padding: 0.5rem;
-        border: 1px solid #999;
-        border-color: #999;
-        border-radius: 4px;
-        outline: none;
-    }
-
-    .dropdown-select .dd-searchbox:focus {
-        border-color: #12CBC4;
-    }
-
-    .dropdown-select .list ul {
-        padding: 0;
-    }
-
-    .dropdown-select .option {
-        cursor: default;
-        font-weight: 400;
-        line-height: 40px;
-        outline: none;
-        padding-left: 18px;
-        padding-right: 29px;
-        text-align: left;
-        transition: all 0.2s;
-        list-style: none;
-    }
-
-    .dropdown-select .option:hover,
-    .dropdown-select .option:focus {
-        background-color: #f6f6f6 !important;
-    }
-
-    .dropdown-select .option.selected {
-        font-weight: 600;
-        color: #12cbc4;
-    }
-
-    .dropdown-select .option.selected:focus {
-        background: #f6f6f6;
-    }
-
-    .dropdown-select a {
-        color: #aaa;
-        text-decoration: none;
-        transition: all 0.2s ease-in-out;
-    }
-
-    .dropdown-select a:hover {
-        color: #666;
-    }
-
 </style>
 @extends('backend.layouts.master')
 
+@section('title')
+    Create Product
+@endsection
+@php
+    use Illuminate\Support\Facades\Auth;
+    use App\Enums\PermissionUserStatus;
+
+    if (auth()->check() != null){
+        $permissionUsers = DB::table('permissions')
+        ->join('permission_user', 'permission_user.permission_id', '=', 'permissions.id')
+        ->where([['permission_user.user_id', Auth::user()->id], ['permission_user.status', PermissionUserStatus::ACTIVE]])
+        ->select('permissions.*')
+        ->get();
+    } else {
+        $permissionUsers[]= null;
+    }
+
+@endphp
 @section('content')
-    @php
-        use Illuminate\Support\Facades\Auth;
-        use App\Enums\PermissionUserStatus;
-
-        if (auth()->check() != null){
-            $permissionUsers = DB::table('permissions')
-            ->join('permission_user', 'permission_user.permission_id', '=', 'permissions.id')
-            ->where([['permission_user.user_id', Auth::user()->id], ['permission_user.status', PermissionUserStatus::ACTIVE]])
-            ->select('permissions.*')
-            ->get();
-        } else {
-            $permissionUsers[]= null;
-        }
-
-    @endphp
-
-    <div class="card-header d-flex justify-content-between align-items-center" style="padding: 15px;">
-        <h5 class="card-title">Thêm mới sản phẩm</h5>
-        @if (session('success_update_product'))
-            <div class="alert alert-success">
-                {{ session('success_update_product') }}
+    <div id="wpcontent">
+        <div id="wpbody" role="main">
+            <div class="card-header d-flex justify-content-between align-items-center" style="padding: 15px;">
+                <h5 class="card-title">Thêm mới sản phẩm</h5>
+                @if (session('success_update_product'))
+                    <div class="alert alert-success">
+                        {{ session('success_update_product') }}
+                    </div>
+                @endif
             </div>
-        @endif
-    </div>
-    <div class="container-fluid">
-        <form action="{{ route('seller.products.store') }}" method="post" enctype="multipart/form-data"
-              class="form-horizontal row" role="form">
-            @csrf
-            @if (session('success_update_product'))
-                <div class="alert alert-success">
-                    {{ session('error_create_product') }}
-                </div>
-            @endif
+            <div class="container-fluid">
+                <form action="{{ route('seller.products.store') }}" method="post" enctype="multipart/form-data"
+                      class="form-horizontal row" role="form">
+                    @csrf
+                    @if (session('success_update_product'))
+                        <div class="alert alert-success">
+                            {{ session('error_create_product') }}
+                        </div>
+                    @endif
 
-            <div class="col-12 col-md-7 border-right mt-2 rm-pd-on-mobile">
-                <div class="form-group">
-                    <div class="name">Chọn sản phẩm từ kho</div>
-                    <div class="main">
-                        <select name="storage-id" class="form-control">
-                            @foreach($storages as $storage)
-                                <option value="{{ $storage->id }}">{{ $storage->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="name">Tên sản phẩm</div>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Nhập tên sản phẩm"
-                           required>
-                </div>
-                <div class="form-group">
-                    <div class="name">Mã sản phẩm</div>
-                    <input type="text" class="form-control" name="product_code" id="product_code"
-                           placeholder="Nhập mã sản phẩm" required>
-                </div>
-                <div class="form-group">
-                    <div class="name">Mô tả ngắn</div>
-                    <textarea class="form-control tiny" name="description-ffff"></textarea>
-                </div>
-                <div class="form-group">
-                    <div class="name">Mô tả chi tiết</div>
-                    <textarea class="form-control tiny" name="description" required></textarea>
-                </div>
-                <div class="form-group row">
-                    <div class="col-4 d-inline-block">
-                        <label class="control-label small name" for="price">Giá bán</label>
-                        <input type="number" class="form-control" required name="price" id="price"
-                               placeholder="Nhập giá bán">
-                    </div>
-                    <div class="col-4 d-inline-block">
-                        <label class="control-label small name" for="qty">Giá khuyến mãi</label>
-                        <input type="number" class="form-control" name="qty" id="qty" placeholder="Nhập giá khuyến mãi">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @for($i = 0; $i< count($permissionUsers); $i++)
-                        @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm hot')
-                            <div class="col-4 d-flex">
-                                <label for="hot_product" class="col-8 col-sm-8">Sản phẩm hot</label>
-                                <div class="col-4 col-sm-4">
-                                    <input class="form-control" type="checkbox" id="hot_product" name="hot_product">
-                                </div>
-                            </div>
-                            @break
-                        @endif
-                    @endfor
-                    @for($i = 0; $i< count($permissionUsers); $i++)
-                        @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm nổi bật')
-                            <div class="col-4 d-flex">
-                                <label for="feature_product" class="col-8 col-sm-8">Sản phẩm nổi bật</label>
-                                <div class="col-4 col-sm-4">
-                                    <input class="form-control" type="checkbox" id="feature_product"
-                                           name="feature_product">
-                                </div>
-                            </div>
-                            @break
-                        @endif
-                    @endfor
-                </div>
-                <div class="form-group col-12 col-sm-12 pt-3">
-                    <label for="thumbnail">Ảnh đại diện:</label>
-                    <label class='__lk-fileInput'>
-                        <span data-default='Choose file'>Choose file</span>
-                        <input type="file" id="thumbnail" class="img-cfg" name="thumbnail" accept="image/*"
-                               required>
-                    </label>
-                </div>
-
-                <div class="form-group col-12 col-sm-12 ">
-                    <label for="gallery">Thư viện ảnh:</label>
-                    <label class='__lk-fileInput'>
-                        <span data-default='Choose file'>Choose file</span>
-                        <input type="file" id="gallery" class="img-cfg" name="gallery[]" accept="image/*" multiple>
-                    </label>
-                </div>
-            </div>
-            <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
-                <div class="form-group" id="cat-parameter">
-                    <label for="pet-select">Chuyên mục:</label>
-
-                    <select class="form-control" name="category_id" id="category_id">
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group border p-3 " id="pr-parameter">
-                    <label class="name">Thông số sản phẩm</label>
-                    @foreach($attributes as $attribute)
-                        @php
-                            $properties = DB::table('properties')->where([['status', PropertiStatus::ACTIVE], ['attribute_id', $attribute->id]])->get();
-                        @endphp
-                        @if(!$properties->isEmpty())
-                            <div id="{{$attribute->name}}-{{$attribute->id}}" class="">
-                                <label class="control-label">{{$attribute->name}}</label>
-                                <div class="col-md-12 ">
-                                    <ul class="list-unstyled">
-                                        @foreach($properties as $property)
-                                            <li>
-                                                <label>
-                                                    <input onchange="checkInput();" class="property-attribute"
-                                                           id="property-{{$property->id}}"
-                                                           type="checkbox" name="property-{{$attribute->name}}"
-                                                           value="{{$attribute->id}}-{{$property->id}}">
+                    <div class=".col-12 col-md-7 border-right mt-2 rm-pd-on-mobile">
+                        <div class="form-group">
+                            <div class="name">Tên sản phẩm</div>
+                            <input type="text" class="form-control" name="name" id="name"
+                                   placeholder="Nhập tên sản phẩm"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <div class="name">Mã sản phẩm</div>
+                            <input type="text" class="form-control" name="product_code" id="product_code"
+                                   placeholder="Nhập mã sản phẩm" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="short_description">Mô tả ngắn</label>
+                            <textarea id="short_description" class="form-control description" name="short_description" rows="5">
+                            </textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Mô tả chi tiết</label>
+                            <textarea id="description" class="form-control description" name="description" rows="5">
+                            </textarea>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label class="name">Thông số sản phẩm</label>
+                            <select class="form-control" name="attribute_id" id="selectAttribute">
+                                @foreach($attributes as $attribute)
+                                    <option value="{{ $attribute->id }}">{{ $attribute->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3 full-width">
+                            @foreach($attributes as $attribute)
+                                @php
+                                    $properties = DB::table('properties')->where([['status', PropertiStatus::ACTIVE], ['attribute_id', $attribute->id]])->get();
+                                @endphp
+                                @if(!$properties->isEmpty())
+                                    <div id="attributeID_{{$attribute->id}}" class="d-none attribute-form">
+                                        <label class="name" for="date_start">{{$attribute->name}}</label>
+                                        <input type="text" class="form-control"
+                                               onclick="showDropdown('attribute_property{{$attribute->id}}', 'attribute_property-dropdownList{{$attribute->id}}')"
+                                               disabled id="attribute_property{{$attribute->id}}">
+                                        <div class="dropdown-content"
+                                             id="attribute_property-dropdownList{{$attribute->id}}">
+                                            <label>
+                                                @foreach($properties as $property)
+                                                    <input class="property-attribute checkbox{{$attribute->id}}"
+                                                           type="checkbox"
+                                                           value="{{$attribute->id}}-{{$property->id}}"
+                                                           name="property-{{$attribute->id}}"
+                                                           onchange="updateSelectedOptions(this, 'attribute_property{{$attribute->id}}', 'attribute_property-dropdownList{{$attribute->id}}')">
                                                     {{$property->name}}
-                                                </label>
-                                            </li>
-                                        @endforeach
-                                    </ul>
+                                                @endforeach
+                                            </label>
+                                        </div>
+                                        <div class="">
+                                            <a class="btn btn-success  addALlNavberBtn">
+                                                SelectAll
+                                            </a>
+                                            <a class="btn btn-success removeAllNavberBtn">
+                                                Remove All
+                                            </a>
+                                            <a class="btn btn-secondary hiddenNavberBtn">
+                                                Hidden
+                                            </a>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                        <div id="renderInputAttribute" class="row"></div>
+                        <a id="btnSaveAttribute" class="btn btn-success mt-4 mb-5" style="color: white; display: none">SaveAttribute</a>
+                    </div>
+                    <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
+                        <div class="form-group">
+                            <div class="name">Giá bán</div>
+                            <input type="number" class="form-control" name="giaban" id="name"
+                                   placeholder="Nhập giá bán"
+                                   required min="1">
+                        </div>
+                        <div class="form-group">
+                            <div class="name">Nhập giá khuyến mãi(nếu có)</div>
+                            <input type="number" class="form-control" name="giakhuyenmai" id="name"
+                                    placeholder="Nhập số lượng" min="1">
+                        </div>
+                        <div class="form-group">
+                            <div class="name">Nhập số lượng</div>
+                            <input type="number" class="form-control" name="qty" id="qty"
+                                   placeholder="Nhập giá khuyến mãi" min="1">
+                        </div>
+                        <div class="form-group">
+                            <div class="name">Xuất xứ</div>
+                            <input type="text" class="form-control" name="origin" id="origin" placeholder="Nhập xuất xứ">
+                        </div>
+                        <div class="form-group">
+                            <div class="name">Sản phẩm tối thiểu</div>
+                            <input type="number" class="form-control" name="min" id="min" placeholder="Nhập số lượng tối thiểu" min="1">
+                        </div>
+                        <div class="form-group">
+                            <div class="d-flex">
+                                <div class="name">Mua nhiều giảm giá</div>
+                            </div>
+                            <div>
+                                <div class="">
+                                    <div class="add-fields" data-af_base="#base-package-fields" data-af_target=".packages">
+                                        <div class="packages">
+
+                                        </div>
+                                        <button type="button" class="btn add-form-field"><i class="fa-solid fa-plus"></i> Thêm khoảng giá</button>
+                                    </div>
+                                    <div id="base-package-fields" hidden>
+                                        <div class="form-group form-group-price">
+                                            <div class="d-flex align-items-center">
+                                                <div class="">
+                                                    <input type="number" class="form-control form-price" name="quantity[]" placeholder="Từ (sản phẩm)">
+                                                </div>
+                                                <div class="">
+                                                    <input type="number" class="form-control form-price" name="sales[]" placeholder="Giảm %">
+                                                </div>
+                                                <div class="">
+                                                    <button type="button" class="btn remove-form-field"><i class="fa-regular fa-trash-can"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        @endif
-                    @endforeach
-                </div>
-                <div class="border">
-                    <div class="col-sm-12 d-inline-block ">
-                        <label class="name" for="date_start">Hình thức thanh toán</label>
-                        <input type="text" class="form-control"
-                               onclick="showDropdown('payment-method', 'payment-dropdownList')"
-                               placeholder="Chọn hình thức thanh toán" id="payment-method" required>
-                        <div class="dropdown-content" id="payment-dropdownList">
-                            <label>
-                                <input type="checkbox" value="option1"
-                                       onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
-                                Nhận hàng thanh toán
-                            </label>
-                            <label>
-                                <input type="checkbox" value="option2"
-                                       onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
-                                Thanh toán thẻ nội địa
-                            </label>
-                            <label>
-                                <input type="checkbox" value="option3"
-                                       onchange="updateSelectedOptions(this, 'payment-method', 'payment-dropdownList')">
-                                Thanh toán qua paypal
-                            </label>
+                        </div>
+                        <div class="form-group">
+                            <div class="name">Tất cả danh mục</div>
+                            @php
+                                $categories = DB::table('categories')->where('parent_id', null)->get();
+                            @endphp
+                            <div id="checkboxes" style=" display: block">
+                                @foreach($categories as $category)
+                                    <label class="ml-2" for="category-{{$category->id}}">
+                                        <input type="checkbox" id="category-{{$category->id}}"
+                                               name="category-{{$category->id}}"
+                                               value="{{$category->id}}"
+                                               class="inputCheckboxCategory mr-2 p-3"/>
+                                        <span class="labelCheckboxCategory">{{$category->name}}</span>
+                                    </label>
+                                    @if(!$categories->isEmpty())
+                                        @php
+                                            $categories = DB::table('categories')->where('parent_id', $category->id)->get();
+                                        @endphp
+                                        @foreach($categories as $child)
+                                            <label class="ml-4" for="category-{{$child->id}}">
+                                                <input type="checkbox" id="category-{{$child->id}}"
+                                                       name="category-{{$child->id}}"
+                                                       value="{{$child->id}}"
+                                                       class="inputCheckboxCategory mr-2 p-3"/>
+                                                <span class="labelCheckboxCategory">{{$child->name}}</span>
+                                            </label>
+                                            @php
+                                                $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
+                                            @endphp
+                                            @foreach($listChild2 as $child2)
+                                                <label class="ml-5" for="category-{{$child2->id}}">
+                                                    <input type="checkbox" id="category-{{$child2->id}}"
+                                                           name="category-{{$child2->id}}"
+                                                           value="{{$child2->id}}"
+                                                           class="inputCheckboxCategory mr-2 p-3"/>
+                                                    <span class="labelCheckboxCategory">{{$child2->name}}</span>
+                                                </label>
+                                            @endforeach
+                                        @endforeach
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group col-12 col-sm-12 ">
+                                @include('backend.products.modal-media')
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group col-12 col-sm-12" id="list-img-thumbnail"></div>
+                            <div class="form-group col-12 col-sm-12" id="list-img-gallery"></div>
+                        </div>
+{{--                        <div class="form-group">--}}
+{{--                            <div class="form-group col-12 col-sm-12 pt-3">--}}
+{{--                                <label for="thumbnail">Ảnh đại diện:</label>--}}
+{{--                                <label class='__lk-fileInput'>--}}
+{{--                                    <span data-default='Choose file'>Choose file</span>--}}
+{{--                                    <input type="file" id="thumbnail" class="img-cfg"--}}
+{{--                                           name="thumbnail"--}}
+{{--                                           accept="image/*"--}}
+{{--                                           required>--}}
+{{--                                </label>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+                    </div>
+                    <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
+                    <input type="text" hidden id="imgGallery" value="" name="imgGallery[]">
+                    <input type="text" hidden id="imgThumbnail" value="" name="imgThumbnail[]">
+                    <div class="form-group col-12 col-md-7 col-sm-8 ">
+                        <div class="row justify-content-center">
+                            <button type="submit" class="btn btn-success">Gửi</button>
                         </div>
                     </div>
-
-                    <div class="form-group col-sm-12 d-inline-block">
-                        <label class="control-label small" for="date_start">Hình thức vận chuyển</label>
-                        <input type="text" class="form-control"
-                               onclick="showDropdown('transport-method', 'transport-dropdownList')"
-                               placeholder="Chọn hình thức vận chuyển" id="transport-method" required>
-                        <div class="dropdown-content" id="transport-dropdownList">
-                            <label>
-                                <input type="checkbox" value="option1"
-                                       onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
-                                Đường bộ
-                            </label>
-                            <label>
-                                <input type="checkbox" value="option2"
-                                       onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
-                                Đường thủy
-                            </label>
-                            <label>
-                                <input type="checkbox" value="option3"
-                                       onchange="updateSelectedOptions(this, 'transport-method', 'transport-dropdownList')">
-                                Đường hàng không
-                            </label>
-                        </div>
-                    </div>
-                </div>
+                </form>
             </div>
-            <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
-            <div class="form-group col-12 col-md-7 col-sm-8 ">
-                <div class="row justify-content-center">
-                    <button type="submit" class="btn btn-success">Gửi</button>
-                </div>
-            </div>
-        </form>
-    </div>
+        </div><!-- wpbody -->
+    </div><!-- wpcontent -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('#btnSaveAttribute').on('click', function () {
+            let attribute = document.getElementById('input-form-create-attribute').value;
+            var renderInputAttribute = $('#renderInputAttribute');
+            $.ajax({
+                url: '{{ route('product.v2.create.attribute') }}',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    'attribute_property': attribute
+                },
+                // dataType: 'json',
+                success: function (response) {
+                    console.log(response)
+                    // var item = response;
+                    renderInputAttribute.append(response);
+                },
+                error: function (xhr, status, error) {
+                    renderInputAttribute.append('<h3>Alooo</h3>');
+                }
+            })
+        })
+    </script>
     <script>
         var properties = document.getElementsByClassName('property-attribute')
         var number = properties.length
-
-        var priceInput = document.getElementById('price');
-        var qtyInput = document.getElementById('qty');
-
-        qtyInput.addEventListener('input', function () {
-            checkPrice();
-        });
-        priceInput.addEventListener('input', function () {
-            checkPrice();
-        });
-
-        function checkPrice() {
-            var price = parseFloat(priceInput.value);
-            var qty = parseFloat(qtyInput.value);
-
-            if (qty > price) {
-                alert('Giá khuyến mãi không được lớn hơn giá bán.');
-                qtyInput.value = '';
-            }
-        }
 
         function checkInput() {
             var propertyArray = [];
@@ -443,9 +349,14 @@
             }
             var attPro = document.getElementById('input-form-create-attribute')
             attPro.value = myArray;
+            localStorage.setItem('keys', myArray)
         }
 
         checkInput();
+
+        $(document).on('change', '.property-attribute', function () {
+            checkInput();
+        });
 
         function showDropdown(inputId, dropdownId) {
             var dropdownList = document.getElementById(dropdownId);
@@ -464,7 +375,6 @@
                 });
             selectedOptionsInput.value = selectedLabels.join(", ");
         }
-
 
         $(function () {
             $('input.img-cfg').change(function () {
@@ -493,7 +403,7 @@
         });
 
         function create_custom_dropdowns() {
-            $('select').each(function (i, select) {
+            $('#selectStorage').each(function (i, select) {
                 if (!$(this).next().hasClass('dropdown-select')) {
                     $(this).after('<div class="dropdown-select wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
                     var dropdown = $(this).next();
@@ -508,6 +418,37 @@
             });
 
             $('.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValue" autocomplete="off" onkeyup="filter()" class="dd-searchbox" type="text"></div>');
+
+            // $('#selectCategory').each(function (i, select) {
+            //     if (!$(this).next().hasClass('dropdown-select-category')) {
+            //         $(this).after('<div class="dropdown-select-category wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+            //         var dropdown = $(this).next();
+            //         var options = $(select).find('option');
+            //         var selected = $(this).find('option:selected');
+            //         dropdown.find('.current').html(selected.data('display-text') || selected.text());
+            //         options.each(function (j, o) {
+            //             var display = $(o).data('display-text') || '';
+            //             dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+            //         });
+            //     }
+            // });
+            // $('.dropdown-select-category ul').before('<div class="dd-search"><input id="txtSearchCategory" autocomplete="off" onkeyup="filter()" class="dd-searchbox" type="text"></div>');
+
+            $('#selectAttribute').each(function (i, select) {
+                if (!$(this).next().hasClass('dropdown-select-attribute')) {
+                    $(this).after('<div class="dropdown-select-attribute wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
+                    var dropdown = $(this).next();
+                    var options = $(select).find('option');
+                    var selected = $(this).find('option:selected');
+                    dropdown.find('.current').html(selected.data('display-text') || selected.text());
+                    options.each(function (j, o) {
+                        var display = $(o).data('display-text') || '';
+                        dropdown.find('ul').append('<li class="option attribute-create ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
+                    });
+                }
+            });
+
+            $('.dropdown-select-attribute ul').before('<div class="dd-search"><input id="txtSearchAttribute" autocomplete="off" onkeyup="filter()" class="dd-searchbox" type="text"></div>');
         }
 
         // Event listeners
@@ -528,11 +469,57 @@
             }
         });
 
+        $(document).on('click', '.dropdown-select-category', function (event) {
+            if ($(event.target).hasClass('dd-searchbox')) {
+                return;
+            }
+            $('.dropdown-select-category').not($(this)).removeClass('open');
+            $(this).toggleClass('open');
+            if ($(this).hasClass('open')) {
+                $(this).find('.option').attr('tabindex', 0);
+                $(this).find('.selected').focus();
+            } else {
+                $(this).find('.option').removeAttr('tabindex');
+                $(this).focus();
+            }
+        });
+
+        $(document).on('click', '.dropdown-select-attribute', function (event) {
+            if ($(event.target).hasClass('dd-searchbox')) {
+                return;
+            }
+            $('.dropdown-select-attribute').not($(this)).removeClass('open');
+            $(this).toggleClass('open');
+            if ($(this).hasClass('open')) {
+                $(this).find('.option').attr('tabindex', 0);
+                $(this).find('.selected').focus();
+            } else {
+                $(this).find('.option').removeAttr('tabindex');
+                $(this).focus();
+            }
+        });
+
         // Close when clicking outside
         $(document).on('click', function (event) {
             if ($(event.target).closest('.dropdown-select').length === 0) {
                 $('.dropdown-select').removeClass('open');
                 $('.dropdown-select .option').removeAttr('tabindex');
+            }
+            event.stopPropagation();
+        });
+
+        $(document).on('click', function (event) {
+            if ($(event.target).closest('.dropdown-select-category').length === 0) {
+                $('.dropdown-select-category').removeClass('open');
+                $('.dropdown-select-category .option').removeAttr('tabindex');
+            }
+            event.stopPropagation();
+        });
+
+        $(document).on('click', function (event) {
+            if ($(event.target).closest('.dropdown-select-attribute').length === 0) {
+                $('.dropdown-select-attribute').removeClass('open');
+                $('.dropdown-select-attribute .option').removeAttr('tabindex');
             }
             event.stopPropagation();
         });
@@ -543,7 +530,20 @@
                 var text = $(this).text();
                 (text.toLowerCase().indexOf(valThis.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
             });
-        };
+
+            var valThisCategoey = $('#txtSearchCategory').val();
+            $('.dropdown-select-category ul > li').each(function () {
+                var text = $(this).text();
+                (text.toLowerCase().indexOf(valThisCategoey.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
+            });
+
+            var valThisAttribute = $('#txtSearchAttribute').val();
+            $('.dropdown-select-attribute ul > li').each(function () {
+                var text = $(this).text();
+                (text.toLowerCase().indexOf(valThisAttribute.toLowerCase()) > -1) ? $(this).show() : $(this).hide();
+            });
+        }
+
         // Search
 
         // Option click
@@ -552,7 +552,46 @@
             $(this).addClass('selected');
             var text = $(this).data('display-text') || $(this).text();
             $(this).closest('.dropdown-select').find('.current').text(text);
-            $(this).closest('.dropdown-select').prev('select').val($(this).data('value')).trigger('change');
+            $(this).closest('.dropdown-select').prev('#selectStorage').val($(this).data('value')).trigger('change');
+        });
+
+        // $(document).on('click', '.dropdown-select-category .option', function (event) {
+        //     $(this).closest('.list').find('.selected').removeClass('selected');
+        //     $(this).addClass('selected');
+        //     var text = $(this).data('display-text') || $(this).text();
+        //     $(this).closest('.dropdown-select-category').find('.current').text(text);
+        //     $(this).closest('.dropdown-select-category').prev('#selectCategory').val($(this).data('value')).trigger('change');
+        // });
+
+        $(document).on('click', '.dropdown-select-attribute .option', function (event) {
+            $(this).closest('.list').find('.selected').removeClass('selected');
+            $(this).addClass('selected');
+            var text = $(this).data('display-text') || $(this).text();
+            $(this).closest('.dropdown-select-attribute').find('.current').text(text);
+            // $(this).closest('.dropdown-select-attribute').prev('#selectCategory').val($(this).data('value')).trigger('change');
+
+            let attributeID = $(this).attr('data-value');
+            var attribute = document.getElementById("attributeID_" + attributeID);
+            attribute.classList.remove("d-none");
+            var listProperties = document.getElementsByClassName("checkbox" + attributeID);
+
+            $(document).on('click', '.addALlNavberBtn', function (event) {
+                for (let i = 0; i < listProperties.length; i++) {
+                    listProperties[i].click();
+                }
+                checkInput();
+            });
+
+            $(document).on('click', '.removeAllNavberBtn', function (event) {
+                for (let i = 0; i < listProperties.length; i++) {
+                    listProperties[i].checked = false;
+                }
+                document.getElementById('attribute_property' + attributeID).value = '';
+            });
+
+            $(document).on('click', '.hiddenNavberBtn', function (event) {
+                attribute.classList.add("d-none");
+            });
         });
 
         // Keyboard events
@@ -593,8 +632,203 @@
             }
         });
 
+        $(document).on('keydown', '.dropdown-select-category', function (event) {
+            var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+            // Space or Enter
+            //if (event.keyCode == 32 || event.keyCode == 13) {
+            if (event.keyCode == 13) {
+                if ($(this).hasClass('open')) {
+                    focused_option.trigger('click');
+                } else {
+                    $(this).trigger('click');
+                }
+                return false;
+                // Down
+            } else if (event.keyCode == 40) {
+                if (!$(this).hasClass('open')) {
+                    $(this).trigger('click');
+                } else {
+                    focused_option.next().focus();
+                }
+                return false;
+                // Up
+            } else if (event.keyCode == 38) {
+                if (!$(this).hasClass('open')) {
+                    $(this).trigger('click');
+                } else {
+                    var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+                    focused_option.prev().focus();
+                }
+                return false;
+                // Esc
+            } else if (event.keyCode == 27) {
+                if ($(this).hasClass('open')) {
+                    $(this).trigger('click');
+                }
+                return false;
+            }
+        });
+
+        $(document).on('keydown', '.dropdown-select-attribute', function (event) {
+            var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+            // Space or Enter
+            //if (event.keyCode == 32 || event.keyCode == 13) {
+            if (event.keyCode == 13) {
+                if ($(this).hasClass('open')) {
+                    focused_option.trigger('click');
+                } else {
+                    $(this).trigger('click');
+                }
+                return false;
+                // Down
+            } else if (event.keyCode == 40) {
+                if (!$(this).hasClass('open')) {
+                    $(this).trigger('click');
+                } else {
+                    focused_option.next().focus();
+                }
+                return false;
+                // Up
+            } else if (event.keyCode == 38) {
+                if (!$(this).hasClass('open')) {
+                    $(this).trigger('click');
+                } else {
+                    var focused_option = $($(this).find('.list .option:focus')[0] || $(this).find('.list .option.selected')[0]);
+                    focused_option.prev().focus();
+                }
+                return false;
+                // Esc
+            } else if (event.keyCode == 27) {
+                if ($(this).hasClass('open')) {
+                    $(this).trigger('click');
+                }
+                return false;
+            }
+        });
+
         $(document).ready(function () {
             create_custom_dropdowns();
         });
     </script>
+    <script>
+        let desc = document.querySelectorAll('.description');
+        for (let i = 0; i < desc.length; i++) {
+            CKEDITOR.replace( desc[i], {
+                filebrowserBrowseUrl: '{{ asset('ckfinder/ckfinder.html') }}',
+                filebrowserImageBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Images') }}',
+                filebrowserFlashBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Flash') }}',
+                filebrowserUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}',
+                filebrowserImageUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images') }}',
+                filebrowserFlashUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash') }}'
+            } );
+            // CKEDITOR.replace(desc[i]);
+        }
+    </script>
+    <script>
+        var expanded = false;
+
+        function showCheckboxes() {
+            var checkboxes = document.getElementById("checkboxes");
+            var div = document.getElementById('div-click');
+            if (!expanded) {
+                checkboxes.style.display = "block";
+                expanded = true;
+                window.addEventListener('click', function (e) {
+                    if (checkboxes.contains(e.target) || div.contains(e.target)) {
+                        div.on('click', function () {
+                            checkboxes.style.display = "block";
+                            expanded = true;
+                        });
+                    } else {
+                        checkboxes.style.display = "none";
+                        expanded = false;
+                    }
+                })
+            } else {
+                checkboxes.style.display = "none";
+                expanded = false;
+            }
+        }
+
+    </script>
+    <script>
+        function showFormEdit(id) {
+            var formEdit = document.getElementById('formCreate' + id);
+            formEdit.classList.remove('d-none');
+        }
+
+        $('#btnSubmit').on('click', function () {
+            checkValue();
+        })
+
+        function checkValue() {
+            var inputValue = document.getElementsByClassName('value-check');
+            for (let i = 0; i < inputValue.length; i++) {
+                if (inputValue[i].value == '') {
+                    alert('Vui lòng nhập đầy đủ thông tin sản phẩm')
+                    break;
+                }
+            }
+        }
+
+        function validInput(id) {
+            var priceInput = document.getElementById('price' + id);
+            var qtyInput = document.getElementById('qty' + id);
+
+            function checkPrice() {
+                var price = parseFloat(priceInput.value);
+                var qty = parseFloat(qtyInput.value);
+
+                if (qty > price) {
+                    alert('Giá khuyến mãi không được lớn hơn giá bán.');
+                    qtyInput.value = '';
+                }
+            }
+        }
+
+
+    </script>
+    <script>
+        $('.property-attribute').on('change', function () {
+            var tests = document.getElementsByClassName('property-attribute');
+            var btn = document.getElementById('btnSaveAttribute');
+            var isValid = false;
+            for(let i = 0; i<tests.length; i++){
+                if(tests[i].checked){
+                    isValid = true;
+                }
+            }
+            if(isValid == true){
+                btn.style.display = 'block';
+            } else {
+                btn.style.display = 'none';
+            }
+        })
+    </script>
+    <script>
+        $('.add-fields').each(function(index, el) {
+            var warp = $(this);
+            var target = $(this).data('af_target') || '.content';
+            var index = $(target).children('div, tr').length;
+            var baseEl =$($(this).data('af_base')) || $(target).find('.form-field-base');
+            var base = baseEl.html();
+            baseEl.remove();
+            //alert(base);
+
+            warp.find(target).append(base.replace('.form-price', index));
+            index ++;
+
+            warp.on('click', '.add-form-field', function(e) {
+                e.preventDefault();
+                warp.find(target).append(base.replace('.form-price', index));
+                index++;
+            });
+
+            warp.on('click', '.remove-form-field', function(e) {
+                e.preventDefault();
+                $(this).parents($(this).data('target') || '.form-group-price').remove();
+            });
+        });
+    </script>
 @endsection
+

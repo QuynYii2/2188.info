@@ -1,114 +1,3 @@
-<style>
-
-
-    a {
-        color: #FFFFFF;
-    }
-
-    .wrapper {
-        width: 17%;
-        height: 100%;
-        overflow-y: auto;
-        background-color: #000000;
-        font-size: 0.875em;
-        position: fixed;
-        top: 55px;
-        left: 0;
-        bottom: 0;
-    }
-
-    .items {
-        padding: 18px 0;
-        font-size: 18px;
-    }
-
-    .items > li > a {
-        display: block;
-        text-indent: 18px;
-        line-height: 39px;
-    }
-
-    .items > li > a::after {
-        position: absolute;
-        right: 30px;
-        font-family: "FontAwesome";
-    }
-
-    .items > li > a::after {
-        right: 30px;
-        content: "\2192";
-    }
-
-    .itemHover {
-        color: #fff;
-        font-weight: 600;
-        transition: background-color 0.4s ease-in-out;
-    }
-
-    .items > li > a:hover {
-        background-color: black;
-        color: #fff;
-        font-weight: 600;
-        transition: background-color 0.4s ease-in-out;
-        text-decoration: none !important;
-    }
-
-    .items > li > a.expanded {
-        background-color: #64D7E2;
-        color: #fff;
-        font-weight: 600;
-        transition: background-color 0.4s ease-in-out;
-    }
-
-    .items > li > a.expanded::after {
-        content: "\2193";
-    }
-
-    .items > li:not(:has(ul)) > a::after,
-    .items > li:not(:has(ul)) > a.expanded::after {
-        content: none;
-    }
-
-    .sub-items > li:first-child > a {
-        margin-top: 17px;
-        height: 34px;
-    }
-
-    .sub-items > li:last-child > a {
-        margin-bottom: 17px;
-        height: 34px;
-    }
-
-    .sub-items a {
-        position: relative;
-        display: block;
-        margin: 0 1rem;
-        width: 212px;
-        text-indent: 24px;
-        line-height: 39px;
-    }
-
-    .sub-items a {
-        border-left: 2px solid #64D7E2;
-    }
-
-    .sub-items .current {
-        position: relative;
-        color: #64D7E2;
-        border-color: white;
-    }
-
-    .sub-items > li:hover > a {
-        color: #64D7E2;
-        transition: color 0.4s ease-in-out;
-        text-decoration: none;
-
-    }
-
-    .sub-items {
-        display: none;
-    }
-</style>
 @php
     use Illuminate\Support\Facades\DB;
 
@@ -132,56 +21,211 @@
     } else {
         $permissionUsers= null;
     }
+    $check_ctv_shop = DB::table('staff_users')->where('user_id', Auth::user()->id)->first();
 
+     $routeName = \Illuminate\Support\Facades\Route::currentRouteName();
+
+     $isAdmin = (new \App\Http\Controllers\Frontend\HomeController())->checkAdmin();
 @endphp
 <div class='wrapper text-nowrap'>
     <ul class='items'>
         <li>
-            <a href="#">Menu</a>
-            <ul class='items'>
-                <li>
-                    <a href='#'>Sản phẩm</a>
-                    <ul class='sub-items pl-3'>
-                        <li><a href="/products">Danh sách sản phẩm</a>
-                        </li>
-                        <li><a href="/products/create">Thêm mới sản phẩm</a>
-                        </li>
-                        <li><a href="{{route('seller.products.views')}}">Sort by views</a>
-                        </li>
-                        <li><a href="/categories">Chuyên mục</a>
-                        </li>
-                    </ul>
+            <a class="sidebar item" href='#'><i class="fa-solid fa-truck"></i> Vận chuyển</a>
+            <ul class='sub-items pl-3'>
+                <li><a class="sidebarUrl" href="#">Quản Lý Vận Chuyển</a>
                 </li>
-                <li>
-                    <a href="#!">Thuộc tính sản phẩm</a>
-                    <ul class='sub-items pl-3'>
+                <li><a class="sidebarUrl" href="#">Giao Hàng Loạt</a>
+                </li>
+                <li><a class="sidebarUrl" href="#">Cài Đặt Vận Chuyển</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a class="sidebar item" href='#'><i class="fa-solid fa-list-check"></i> Quản Lý Đơn Hàng</a>
+            <ul class='sub-items pl-3'>
+                <li><a class="sidebarUrl" href="{{route('seller.order.list')}}">Tất cả</a>
+                </li>
+                <li><a class="sidebarUrl" href="#">Đơn Huỷ</a>
+                </li>
+                <li><a class="sidebarUrl" href="#">Trả Hàng/Hoàn Tiền</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a class="sidebar item" href='#'><i class="fa-solid fa-bars-progress"></i> Quản Lý Sản Phẩm</a>
+            <ul class='sub-items pl-3'>
+                <li><a class="sidebarUrl" href="/products">Tất Cả Sản Phẩm</a>
+                </li>
+                @if(!$check_ctv_shop)
+                    <li><a class="sidebarUrl" href="/products/create">Thêm mới sản phẩm</a>
+                    </li>
+                @endif
+                <li><a class="sidebarUrl" href="{{route('seller.products.views')}}">Sắp xếp theo lượt xem</a>
+                </li>
+                @if($isAdmin == true)
+                    <li><a class="sidebarUrl" href="/categories">Chuyên mục</a>
+                    </li>
+                @endif
+            </ul>
+        </li>
+        <li>
+            <a class="sidebar item" class="sidebarUrl" href="#"><i class="fa-regular fa-clipboard"></i> Quản lí thuộc
+                tính</a>
+            <ul class='sub-items pl-3'>
 
-                        <li><a href="{{route('attributes.index')}}">Danh sách thuộc tính</a>
-                        </li>
-                        <li><a href="{{route('attributes.create')}}">Thêm mới thuộc tính</a>
-                        </li>
-                        <li><a href="{{route('properties.index')}}">Quản lí thuộc tính con</a>
-                        </li>
-                        <li><a href="{{route('properties.create')}}">Thêm mới thuộc tính con</a>
-                        </li>
-                    </ul>
+                <li><a class="sidebarUrl" href="{{route('attributes.index')}}">Danh sách thuộc tính</a>
                 </li>
-                <li>
-                    <a href='#'>Đơn hàng</a>
-                    <ul class='sub-items pl-3'>
-                        <li><a href="#!">Basic Tables</a>
-                        </li>
-
-                        <li><a href="#!">Data Tables</a>
-                        </li>
-                    </ul>
+                <li><a class="sidebarUrl" href="#">Quản lí thuộc tính con</a>
                 </li>
-                <li>
-                    <a href="#!">Quản lý kho</a>
-                    <ul class='sub-items pl-3'>
+            </ul>
+        </li>
+        @if(!$check_ctv_shop)
+            @if($permissionUsers)
+                @for($i = 0; $i< count($permissionUsers); $i++)
+                    @if($permissionUsers[$i]->name == 'Nâng cấp thành top-seller' || sizeof($roleUsers) != 0)
                         <li>
-                            <a href='{{ route('storage.manage.show.user') }}'>Thông tin kho hàng</a>
+                            <a class="sidebar item" href='#'><i class="fa-solid fa-tag"></i> Kênh Marketing</a>
+                            <ul class='sub-items pl-3'>
+                                <li><a class="sidebarUrl" href="{{route('seller.config.show')}}">Quản Lí Marketing</a>
+                                </li>
+                                <li>
+                                    <a class="sidebarUrl" href="{{route('seller.vouchers.list')}}">Mã Giảm Giá</a>
+                                </li>
+                                <li>
+                                    <a class="sidebarUrl" href="{{route('seller.vouchers.create.process')}}">Tạo Mã Giảm
+                                        Giá</a>
+                                </li>
+                                <li>
+                                    <a class="sidebarUrl" href="{{route('seller.promotion.list')}}">Danh sách khuyến
+                                        mãi</a>
+                                </li>
+                                @if(sizeof($roleUsers) != 0)
+                                    <li>
+                                        <a class="sidebarUrl" href="{{route('admin.banners.show')}}">Danh sách
+                                            banner</a>
+                                    </li>
+                                @endif
+                                {{--                                <li><a class="sidebarUrl" href="#">Quảng Cáo Shopee</a>--}}
+                                {{--                                </li>--}}
+                                {{--                                <li><a class="sidebarUrl" href="#">Tăng Đơn Cùng KOL</a>--}}
+                                {{--                                </li>--}}
+                                {{--                                <li><a class="sidebarUrl" href="#">Hiệu Quả Shopee Live</a>--}}
+                                {{--                                </li>--}}
+                            </ul>
                         </li>
+                        @break
+                    @endif
+                @endfor
+            @endif
+            <li>
+                <a class="sidebar item" href='#'><i class="fa-solid fa-book"></i> Tài Chính</a>
+                <ul class='sub-items pl-3'>
+                    <li><a class="sidebarUrl" href="{{route('revenues.index')}}">Doanh thu</a>
+                    </li>
+                    {{--                    <li><a class="sidebarUrl" href="#">Số dư TK Shopee</a>--}}
+                    {{--                    </li>--}}
+                    {{--                    <li><a class="sidebarUrl" href="#">Tài Khoản Ngân Hàng</a>--}}
+                    {{--                    </li>--}}
+                    {{--                    <li><a class="sidebarUrl" href="#">Cài Đặt Thanh Toán</a>--}}
+                    {{--                    </li>--}}
+                </ul>
+            </li>
+
+            @if(!$check_ctv_shop)
+                <li>
+                    <a class="sidebar item" href='#'><i class="fa-solid fa-chart-line"></i> Dữ Liệu</a>
+                    <ul class='sub-items pl-3'>
+                        <li><a class="sidebarUrl" href="#">Phân Tích Bán Hàng</a>
+                        </li>
+                        <li><a class="sidebarUrl" href="#!">Thống kê</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
+            {{--            <li>--}}
+            {{--                <a class="sidebar item" href='#'><i class="fa-solid fa-layer-group"></i> Phát Triển</a>--}}
+            {{--                <ul class='sub-items pl-3'>--}}
+            {{--                    <li><a class="sidebarUrl" href="#">Nhiệm Vụ Người Bán</a>--}}
+            {{--                    </li>--}}
+            {{--                    <li><a class="sidebarUrl" href="#">Shop Yêu Thích</a>--}}
+            {{--                    </li>--}}
+            {{--                </ul>--}}
+            {{--            </li>--}}
+            @php
+                $check = true;
+                if (Auth::check()){
+                    $rank = \App\Models\RankSetUpSeller::where('user_id', Auth::user()->id)->first();
+                if ($rank){
+                    $check = false;
+                }
+                }
+            @endphp
+            @if(!$check_ctv_shop)
+                <li>
+                    <a class="sidebar item" class="sidebarUrl" href="#!"><span><i class="fa-solid fa-users"></i> Phân hạng thành viên</span></a>
+                    <ul class='sub-items'>
+                        <li>
+                            <a class="sidebarUrl" href="{{route('seller.rank.setup.show')}}">Giảm giá theo hạng</a>
+                        </li>
+                        <li>
+                            <a class="sidebarUrl" href="{{route('seller.rank.setup.processCreate')}}">Tạo mới giảm giá
+                                theo hạng</a>
+                        </li>
+                        <li>
+                            <a class="sidebarUrl" href="{{route('seller.setup.show')}}">Quản lí phân hạng</a>
+                        </li>
+                        @if($check === true)
+                            <li>
+                                <a class="sidebarUrl" href="{{route('seller.setup.processCreate')}}">Tạo mới phân
+                                    hạng</a>
+                            </li>
+                        @endif
+                    </ul>
+                </li>
+            @endif
+            {{--            <li>--}}
+            {{--                <a class="sidebar item" href='#'><i class="fa-solid fa-headset"></i> Chăm sóc khách hàng</a>--}}
+            {{--                <ul class='sub-items pl-3'>--}}
+            {{--                    <li><a class="sidebarUrl" href="#">Trợ Lý Chat</a>--}}
+            {{--                    </li>--}}
+            {{--                    <li><a class="sidebarUrl" href="#">Hỏi - Đáp</a>--}}
+            {{--                    </li>--}}
+            {{--                </ul>--}}
+            {{--            </li>--}}
+            <li>
+                <a class="sidebar item" href='#'><i class="fa-solid fa-shop"></i> Quản Lý Shop</a>
+                <ul class='sub-items pl-3'>
+                    @if(sizeof($roleUsers) != 0)
+                        <li>
+                            <a class="sidebarUrl" href="{{route('account.manage.show')}}">Danh sách tài khoản</a>
+                        </li>
+                    @endif
+                    <li>
+                        <a href='{{ route('staff.manage.show') }}'>Danh sách tài khoản cấp dưới</a>
+                    </li>
+                    @if(!$check_ctv_shop)
+                        <li>
+                            <a href='{{ route('staff.manage.create') }}'>Thêm mới cấp dưới</a>
+                        </li>
+                    @endif
+                    <li>
+                    <li><a class="sidebarUrl" href="{{route('seller.evaluates.index')}}">Quản lí bình luận</a></li>
+                    <li><a class="sidebarUrl" href="{{ route('profile.shop.index') }}">Hồ Sơ Shop</a>
+                    </li>
+                    <li><a class="sidebarUrl" href="#">Trang Trí Shop</a>
+                    </li>
+                    <li><a class="sidebarUrl" href="#">Danh Mục Của Shop</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="sidebar item" class="sidebarUrl" href="#!"><i class="fa-solid fa-warehouse"></i> Quản lý
+                    kho</a>
+                <ul class='sub-items pl-3'>
+                    <li>
+                        <a href='{{ route('storage.manage.show.user') }}'>Thông tin kho hàng</a>
+                    </li>
+                    @if(!$check_ctv_shop)
                         <li>
                             <a href='{{ route('storage.manage.create') }}'>Thêm mới nhập kho</a>
                         </li>
@@ -190,157 +234,59 @@
                                 <a href='{{ route('storage.manage.show.all') }}'>Tất cả kho hàng</a>
                             </li>
                         @endif
-                    </ul>
-                </li>
-                <li>
-                    <a href='#'>Quản lý user</a>
-                    <ul class='sub-items pl-3'>
-                        <li>
-                            <a href='#'>Lorem ipsum dolor sit amet.</a>
-                        </li>
-                        <li>
-                            <a href='#'>Lorem ipsum dolor sit amet.</a>
-                        </li>
-                    </ul>
-                </li>
+                    @endif
+                </ul>
+            </li>
 
-                <li>
-                    <a href="#!"><span>Thống kê</span></a>
-                    <ul class='sub-items pl-3'>
-                        <li><a href="#!">Chartjs</a>
-                        </li>
-                        <li><a href="#!">Morris</a>
-                        </li>
-                        <li><a href="#!">C3 Charts</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#!"><span>Quản lý doanh thu</span></a>
-                    <ul class='sub-items pl-3'>
-                        <li><a href="{{route('revenues.index')}}">List Revenue</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="{{route('seller.products.views')}}">Sản phẩm xem nhiều nhất</a>
-                </li>
-                <li>
-                    <a href="#!"><span>Quản lý bình luận</span></a>
-                    <ul class='sub-items pl-3'>
-                        <li><a href="{{route('seller.evaluates.index')}}">List Evaluate</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#!"><span>Quản lý mã giảm giá</span></a>
-                    <ul class='sub-items'>
-                        <li>
-                            <a href="{{route('seller.vouchers.list')}}">List Vouchers</a>
-                        </li>
-                        <li>
-                            <a href="{{route('seller.vouchers.create.process')}}">Create Voucher</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#!"><span>Quản lý khuyến mãi</span></a>
-                    <ul class='sub-items'>
-                        <li>
-                            <a href="{{route('seller.promotion.list')}}">List Promotion</a>
-                        </li>
-                        <li>
-                            <a href="{{route('seller.promotion.create.process')}}">Create Promotion</a>
-                        </li>
-                    </ul>
-                </li>
-
-                @if(sizeof($roleUsers) != 0)
-                    <li>
-                        <a href="#!"><span>Quản lý tài khoản</span></a>
-                        <ul class='sub-items'>
-                            <li>
-                                <a href="{{route('account.manage.show')}}">Danh sách tài khoản</a>
-                            </li>
-                            <li>
-                                <a href="{{route('seller.promotion.create.process')}}">Create Promotion</a>
-                            </li>
-                        </ul>
+            <li>
+                <a class="sidebar item" href='#'><i class="fa-solid fa-gear"></i> Thiết Lập Shop</a>
+                <ul class='sub-items pl-3'>
+                    <li><a class="sidebarUrl" class="sidebarFUrl" href="{{ route('setting.shop.index') }}">Cấu hình
+                            chung</a>
                     </li>
-                @endif
-                @php
-                    $check = true;
-                    if (Auth::check()){
-                        $rank = \App\Models\RankSetUpSeller::where('user_id', Auth::user()->id)->first();
-                    if ($rank){
-                        $check = false;
-                    }
-                    }
-                @endphp
-                <li>
-                    <a href="#!"><span>Quản lý phân hạng thành viên</span></a>
-                    <ul class='sub-items'>
-                        <li>
-                            <a href="{{route('seller.rank.setup.show')}}">Danh sách giảm giá theo hạng</a>
-                        </li>
-                        <li>
-                            <a href="{{route('seller.rank.setup.processCreate')}}">Tạo mới mức giảm giá theo hạng</a>
-                        </li>
-                        <li>
-                            <a href="{{route('seller.setup.show')}}">Quản lí phân hạng</a>
-                        </li>
-                        @if($check === true)
-                            <li>
-                                <a href="{{route('seller.setup.processCreate')}}">Tạo mới phân hạng</a>
-                            </li>
-                        @endif
-                    </ul>
-                </li>
-                @if($permissionUsers)
-                    @for($i = 0; $i< count($permissionUsers); $i++)
-                        @if($permissionUsers[$i]->name == 'Nâng cấp thành top-seller' || sizeof($roleUsers) != 0)
-                            <li>
-                                <a href="#!"><span>Marketing</span></a>
-                                <ul class='sub-items'>
-                                    <li>
-                                        <a href="{{route('seller.config.show')}}">Quản lí marketing</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{route('seller.config.processCreate')}}">Tạo mới marketing</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            @break
-                        @endif
-                    @endfor
-                @endif
-                @if(sizeof($roleUsers) != 0)
-                    <li>
-                        <a href="#!"><span>Cấu hình dự án</span></a>
-                        <ul class='sub-items'>
-                            <li>
-                                <a href="{{route('admin.configs.show')}}">Danh sách cấu hình</a>
-                            </li>
-                            <li>
-                                <a href="{{route('admin.configs.processCreate')}}">Thiết lập cấu hình</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#!"><span>Cài đặt banner</span></a>
-                        <ul class='sub-items'>
-                            <li>
-                                <a href="{{route('admin.banners.show')}}">Danh sách banner</a>
-                            </li>
-                            <li>
-                                <a href="{{route('admin.banners.processCreate')}}">Thiết lập banner mới</a>
-                            </li>
-                        </ul>
-                    </li>
-                @endif
-            </ul>
-        </li>
+                    {{--                    <li><a class="sidebarUrl" href="#">Địa Chỉ</a>--}}
+                    {{--                    </li>--}}
+                    {{--                    <li><a class="sidebarUrl" href="#">Thiết Lập Shop</a>--}}
+                    {{--                    </li>--}}
+                    {{--                    <li><a class="sidebarUrl" href="#">Tài Khoản</a>--}}
+                    {{--                    </li>--}}
+                    {{--                    <li><a class="sidebarUrl" href="#">Nền Tảng Đối Tác (Kết nối API)</a>--}}
+                    {{--                    </li>--}}
+                </ul>
+            </li>
+            {{--            <li>--}}
+            {{--                <a class="sidebar item" href='#'><i class="fa-solid fa-circle-question"></i> Trợ giúp</a>--}}
+            {{--                <ul class='sub-items pl-3'>--}}
+            {{--                    <li><a class="sidebarUrl" href="#">Cổng Thông Tin Hỗ Trợ Người Bán </a>--}}
+            {{--                    </li>--}}
+            {{--                </ul>--}}
+            {{--            </li>--}}
+        @endif
     </ul>
 </div>
 
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function checkUrl() {
+        var listUrl = document.getElementsByClassName('sidebarUrl');
+        var currentUrl = window.location.href;
+        for (let i = 0; i < listUrl.length; i++) {
+            let url = listUrl[i].href;
+            if (currentUrl == url) {
+                console.log(listUrl[i].parentElement.parentElement.previousElementSibling)
+                let sideBarItem = listUrl[i].parentElement.parentElement.previousElementSibling;
+                let parentItem = listUrl[i].parentElement.parentElement;
+                sideBarItem.classList.add('expanded');
+                parentItem.style.display = 'block';
+                listUrl[i].classList.add('text-danger')
+                // listUrl[i].previousElementSibling
+            }
+        }
+    }
+
+    checkUrl();
+</script>
 <script>
     $(".items > li > a").click(function (e) {
         e.preventDefault();
