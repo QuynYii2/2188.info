@@ -44,6 +44,7 @@ class HomeController extends Controller
             'kr' => 'KRW',
             'cn' => 'CNY',
             'jp' => 'JPY',
+            'en' => "USD"
         ];
 
         $currentProducts = Product::where([['location', $locale], ['status', ProductStatus::ACTIVE]])->get();
