@@ -175,18 +175,15 @@ class HomeController extends Controller
 
     public function getLocale(Request $request)
     {
-        $locale = '';
         if ($request->session()->has('locale')) {
             $locale = $request->session()->get('locale');
             app()->setLocale($request->session()->get('locale'));
         } else {
             $ipAddress = $request->ip();
             $geoIp = new GeoIP();
-            $locale = $geoIp->get_country_from_ip('183.80.130.4');
+            $locale = $geoIp->get_country_from_ip($ipAddress);
             if ($locale !== null && is_array($locale)) {
                 $locale = $locale['countryCode'];
-            } else {
-                $locale = 'vi';
             }
         }
         app()->setLocale($locale);
