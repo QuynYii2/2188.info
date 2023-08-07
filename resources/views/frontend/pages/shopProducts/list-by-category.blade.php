@@ -3,6 +3,9 @@
 @section('title', 'Product')
 
 @section('content')
+    <?php
+    $trans = \App\Http\Controllers\TranslateController::getInstance();
+    ?>
     <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">
         <div class="container">

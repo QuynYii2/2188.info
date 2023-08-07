@@ -1,48 +1,4 @@
 <style>
-    .image-carousel__item-list {
-        display: flex;
-        position: relative;
-        height: 100%;
-        padding: 0;
-        margin: 0;
-    }
-
-    .shop-page__vouchers .image-carousel__item-list {
-        align-items: stretch;
-        padding-left: 1.25rem;
-    }
-
-    .image-carousel__item-list-wrapper {
-        height: 100%;
-        overflow: hidden;
-        touch-action: pan-y;
-    }
-
-    .image-carousel {
-        position: relative;
-        width: 100%;
-        height: 100%;
-    }
-
-    .shop-page__vouchers .image-carousel {
-        width: calc(100% + 3.75rem);
-        margin: 0 -1.875rem;
-    }
-
-    .shop-page__vouchers {
-        background-color: #fff;
-        padding: 1.25rem 1.875rem;
-    }
-
-    .container {
-        margin-right: auto;
-        margin-left: auto;
-        width: 1200px;
-    }
-
-    .shop-page .container {
-        padding-top: 1.25rem;
-    }
 
     .XEshP\  + {
         transition: margin-top .3s cubic-bezier(.4, 0, .2, 1);
@@ -106,8 +62,6 @@
         display: flex;
         min-width: .3125rem;
         margin-left: 1px;
-        border-top: 1px solid var(--border-color);
-        border-bottom: 1px solid var(--border-color);
         border-radius: .1875rem 0 0 .1875rem;
     }
 
@@ -118,7 +72,6 @@
 
     .uhLdFb.E6C7nR {
         background: linear-gradient(90deg, transparent 0, transparent .25rem, #fff4f4 0);
-        background: linear-gradient(90deg, transparent 0 .25rem, #fff4f4 .25rem);
         border-top: 1px solid #f8d0d3;
         border-bottom: 1px solid #f8d0d3;
     }
@@ -128,7 +81,6 @@
         display: flex;
         min-width: 0;
         background: #fff;
-        border: 1px solid var(--border-color);
         border-left: 0 solid transparent;
         border-radius: 0 .125rem .125rem 0;
     }
@@ -176,8 +128,6 @@
         left: 0;
         width: .25rem;
         height: 100%;
-        background: radial-gradient(circle at 0, at .375rem, transparent 0, transparent .1875rem, var(--border-color) 0, var(--border-color) .25rem, transparent 0);
-        background: radial-gradient(circle at 0 .375rem, transparent 0, transparent .1875rem, var(--border-color) 0, var(--border-color) .25rem, transparent 0);
         background-size: .25rem .625rem;
         background-repeat: repeat-y;
         background-repeat-x: no-repeat;
@@ -185,8 +135,6 @@
     }
 
     ._3CcOVS.pQXmTU {
-        background: radial-gradient(circle at 0, at .375rem, transparent 0, rgba(0, 0, 0, .03) .1875rem, var(--border-color) 0, var(--border-color) .25rem, transparent 0);
-        background: radial-gradient(circle at 0 .375rem, transparent 0, rgba(0, 0, 0, .03) .1875rem, var(--border-color) 0, var(--border-color) .25rem, transparent 0);
         background-size: .25rem .625rem;
         background-repeat: repeat-y;
         background-repeat-x: no-repeat;
@@ -194,8 +142,6 @@
     }
 
     .E6C7nR ._3CcOVS {
-        background: radial-gradient(circle at 0, at .375rem, transparent 0, transparent .1875rem, #f8d0d3 0, #f8d0d3 .25rem, #fff4f4 0);
-        background: radial-gradient(circle at 0 .375rem, transparent 0, transparent .1875rem, #f8d0d3 0, #f8d0d3 .25rem, #fff4f4 0);
         background-size: .25rem .625rem;
         background-repeat: repeat-y;
         background-repeat-x: no-repeat;
@@ -203,8 +149,6 @@
     }
 
     .E6C7nR ._3CcOVS.pQXmTU {
-        background: radial-gradient(circle at 0, at .375rem, transparent 0, rgba(0, 0, 0, .03) .1875rem, #f8d0d3 0, #f8d0d3 .25rem, #fff4f4 0);
-        background: radial-gradient(circle at 0 .375rem, transparent 0, rgba(0, 0, 0, .03) .1875rem, #f8d0d3 0, #f8d0d3 .25rem, #fff4f4 0);
         background-size: .25rem .625rem;
         background-repeat: repeat-y;
         background-repeat-x: no-repeat;
@@ -233,7 +177,6 @@
         position: absolute;
         height: 100%;
         width: 1px;
-        background: repeating-linear-gradient(var(--border-color), var(--border-color) .1875rem, transparent 0, transparent .625rem);
         background-size: 1px .625rem;
     }
 
@@ -362,14 +305,6 @@
 
     ._1FPK1h.o6ur9m {
         background: #d0011b;
-    }
-
-    .btn-solid-primary:not(.btn-solid-primary--disabled):hover {
-        background: #f05d40;
-    }
-
-    .btn-solid-primary:not(.btn-solid-primary--disabled):hover {
-        background: #d41830;
     }
 
     .guR87F {
@@ -501,6 +436,9 @@
 
 
 @foreach($listVouchers as $voucher)
+        <?php
+        $trans = \App\Http\Controllers\TranslateController::getInstance();
+        ?>
     <li class="image-carousel__item snipcss-rHVAl style-K4Ikr" id="style-K4Ikr">
         <div>
             <div class="HK7aiO style-gGoy2" id="style-gGoy2">
@@ -519,11 +457,11 @@
                                 <div class="MBisjS TkW9Xr _6GzLYL">
                                     <div class="ryAzTK">
                                         <div class="ow9AdM yGR6rn">
-                                            {{ $voucher->name }}
+                                            {{ $tran->translateText($voucher->name) }}
                                         </div>
                                     </div>
                                     <div class="a1Qos1 vMLRu-">
-                                        Giảm {{ $voucher->percent }}%
+                                        Giảm {{ $tran->translateText($voucher->percent) }}%
                                     </div>
                                 </div>
                                 <div>
@@ -535,7 +473,7 @@
                 </div>
                 <div class="xzzBCC">
                   <span class="">
-                    Số lượng: {{ $voucher->quantity }} - HSD: {{ $voucher->endDate }}
+                    Số lượng: {{ $tran->translateText($voucher->quantity) }} - HSD: {{ $tran->translateText($voucher->endDate) }}
                   </span>
                 </div>
               </span>

@@ -3,6 +3,9 @@
 @section('title', 'Register Member')
 
 @section('content')
+    <?php
+    $trans = \App\Http\Controllers\TranslateController::getInstance();
+    ?>
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
     <div class="start-page mb-3">
@@ -14,7 +17,7 @@
                 <div class="mt-5">
                     <form class="p-3" action="{{route('register.member.info')}}" method="post">
                         @csrf
-                        <input type="text" class="d-none" name="member" value="{{$registerMember}}">
+                        <input type="text" class="d-none" name="member" value="{{ $tran->translateText($property->name) }}{{$registerMember}}">
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="companyName">Company Name</label>
@@ -62,9 +65,9 @@
                                                 <label class="ml-2" for="category-{{$category->id}}">
                                                     <input type="checkbox" id="category-{{$category->id}}"
                                                            name="category-{{$category->id}}"
-                                                           value="{{$category->id}}"
+                                                           value="{{ $tran->translateText($property->name) }}{{$category->id}}"
                                                            class="inputCheckboxCategory mr-2 p-3"/>
-                                                    <span class="labelCheckboxCategory">{{$category->name}}</span>
+                                                    <span class="labelCheckboxCategory">{{ $tran->translateText($category->name) }}</span>
                                                 </label>
                                                 @if(!$categories->isEmpty())
                                                     @php
@@ -76,7 +79,7 @@
                                                                    name="category-{{$child->id}}"
                                                                    value="{{$child->id}}"
                                                                    class="inputCheckboxCategory mr-2 p-3"/>
-                                                            <span class="labelCheckboxCategory">{{$child->name}}</span>
+                                                            <span class="labelCheckboxCategory">{{ $tran->translateText($child->name) }}</span>
                                                         </label>
                                                         @php
                                                             $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
@@ -87,7 +90,7 @@
                                                                        name="category-{{$child2->id}}"
                                                                        value="{{$child2->id}}"
                                                                        class="inputCheckboxCategory mr-2 p-3"/>
-                                                                <span class="labelCheckboxCategory">{{$child2->name}}</span>
+                                                                <span class="labelCheckboxCategory">{{ $tran->translateText($child2->name) }}</span>
                                                             </label>
                                                         @endforeach
                                                     @endforeach

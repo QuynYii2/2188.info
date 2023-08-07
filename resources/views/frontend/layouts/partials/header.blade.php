@@ -49,6 +49,10 @@
         background-repeat: no-repeat;}
 
 </style>
+
+@php
+    $trans = \App\Http\Controllers\TranslateController::getInstance();
+@endphp
 <header class="header">
     <div class="header-pc halo-header">
         <div class="header-top text-center">
@@ -85,14 +89,14 @@
                                         $listCate = DB::table('categories')->where('parent_id', null)->get();
                                     @endphp
                                     @foreach($listCate as $cate)
-                                        <a class="item-hd dropdown-item " href="">-- {{ $cate->name }}</a>
+                                        <a class="item-hd dropdown-item " href="">-- {{ $tran->translateText($cate->name) }}</a>
                                         @if(!$listCate->isEmpty())
                                             <ul class="hd_dropdown--right row">
                                                 @php
                                                     $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
                                                 @endphp
                                                 @foreach($listChild as $child)
-                                                    <a class="dropdown-item" href="">––– {{ $child->name }}</a>
+                                                    <a class="dropdown-item" href="">––– {{ $tran->translateText($child->name) }}</a>
                                                 @endforeach
                                             </ul>
                                         @endif
@@ -227,10 +231,10 @@
                                                     </div>
                                                     <div class="col-8 shop-item--text">
                                                         <div class="text-seller">
-                                                            {{$cartItem->product->user->name}}
+                                                            {{ $tran->translateText($cartItem->product->user->name) }}
                                                         </div>
                                                         <div class="text-name">
-                                                            <a href="{{route('detail_product.show', $cartItem->product->id)}}">{{ $cartItem->product->name }}
+                                                            <a href="{{route('detail_product.show', $cartItem->product->id)}}">{{ $tran->translateText($cartItem->product->name) }}
                                                                 x1</a>
                                                         </div>
                                                         <div class="text-properties">
@@ -368,7 +372,7 @@
                                             <div class="header_bottom--one--list--item">
                                                 <a class="item d-flex" href="{{ route('category.show', $cate->id) }}">
                                                     <i class="fa-solid fa-tv"></i>
-                                                    <div class="item-text">{{ $cate->name }}</div>
+                                                    <div class="item-text">{{ $tran->translateText($cate->name) }}</div>
                                                     <i class="fa-solid fa-angle-right"></i>
                                                 </a>
                                                 @if(!$listCate->isEmpty())
@@ -381,7 +385,7 @@
                                                                 <div class="colum d-block">
                                                                     <li>
                                                                         <a class="colum-hd"
-                                                                           href="{{ route('category.show', $child->id) }}">{{ $child->name }}</a>
+                                                                           href="{{ route('category.show', $child->id) }}">{{ $tran->translateText($child->name) }}{{  }}</a>
                                                                     </li>
                                                                     @php
                                                                         $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
@@ -389,7 +393,7 @@
                                                                     @foreach($listChild2 as $child2)
                                                                         <li>
                                                                             <a class="colum-item"
-                                                                               href="{{ route('category.show', $child2->id) }}">{{ $child2->name }}</a>
+                                                                               href="{{ route('category.show', $child2->id) }}">{{ $tran->translateText($child2->name) }}</a>
                                                                         </li>
                                                                     @endforeach
                                                                 </div>
@@ -446,10 +450,10 @@
                                                                                             $nameUser = DB::table('users')->where('id', $product->user_id)->first();
                                                                                         @endphp
                                                                                         <div class="card-brand">
-                                                                                            {{$nameUser->name}}
+                                                                                            {{ $tran->translateText($nameUser->name) }}
                                                                                         </div>
                                                                                         <div class="card-title">
-                                                                                            <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>
+                                                                                            <a href="{{route('detail_product.show', $product->id)}}">{{ $tran->translateText($product->name) }}</a>
                                                                                         </div>
                                                                                         <div class="card-price d-flex justify-content-between">
                                                                                             <!-- <div class="price">
@@ -567,7 +571,7 @@
                         <div class="OptionContainer">
                             <div class="OptionHead">
                                 <a class="item d-flex"
-                                   href="{{ route('category.show', $cate->id) }}">{{ $cate->name }}</a>
+                                   href="{{ route('category.show', $cate->id) }}">{{ $tran->translateText($cate->name) }}</a>
                                 <div>
                                     <svg onclick="ToggleOption(this)" style="cursor: pointer;"
                                          xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
@@ -585,7 +589,7 @@
                                         <div class="OptionContainer">
                                             <div class="OptionHead">
                                                 <a class="item d-flex"
-                                                   href="{{ route('category.show', $child->id) }}">{{ $child->name }}</a>
+                                                   href="{{ route('category.show', $child->id) }}">{{ $tran->translateText($child->name) }}</a>
                                                 <div>
                                                     <svg onclick="ToggleOption(this)" style="cursor: pointer;"
                                                          xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20"
@@ -602,7 +606,7 @@
                                                     <div class="OptionContainer">
                                                         <div class="OptionHead">
                                                             <a class="item d-flex"
-                                                               href="{{ route('category.show', $child2->id) }}">{{ $child2->name }}</a>
+                                                               href="{{ route('category.show', $child2->id) }}">{{ $tran->translateText($child2->name) }}</a>
                                                         </div>
                                                     </div>
                                                 @endforeach
@@ -626,14 +630,14 @@
                         $listCate = DB::table('categories')->where('parent_id', null)->get();
                     @endphp
                     @foreach($listCate as $cate)
-                        <a class="item-hd dropdown-item " href="">-- {{ $cate->name }}</a>
+                        <a class="item-hd dropdown-item " href="">-- {{ $tran->translateText($cate->name) }}</a>
                         @if(!$listCate->isEmpty())
                             <ul class="hd_dropdown--right row">
                                 @php
                                     $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
                                 @endphp
                                 @foreach($listChild as $child)
-                                    <a class="dropdown-item" href="">––– {{ $child->name }}</a>
+                                    <a class="dropdown-item" href="">––– {{ $tran->translateText($child->name) }}</a>
                                 @endforeach
                             </ul>
                         @endif
@@ -687,17 +691,17 @@
                                         </div>
                                         <div class="col-8 shop-item--text">
                                             <div class="text-seller">
-                                                {{$cartItem->product->user->name}}
+                                                {{ $tran->translateText($cartItem->product->user->name) }}
                                             </div>
                                             <div class="text-name">
-                                                <a href="{{route('detail_product.show', $cartItem->product->id)}}">{{ $cartItem->product->name }}
+                                                <a href="{{route('detail_product.show', $cartItem->product->id)}}">{{ $tran->translateText($cartItem->product->name) }}
                                                     x1</a>
                                             </div>
                                             <div class="text-properties">
                                                 <span>Black/ 55 inch</span>
                                                 <span><i class="fa-regular fa-pen-to-square"></i></span>
                                             </div>
-                                            <div class="text-price">$ {{ $cartItem->price }} </div>
+                                            <div class="text-price">$ {{ $tran->translateText($cartItem->price) }} </div>
                                         </div>
                                         <div class="col-1">
                                             <form action="{{ route('cart.delete', $cartItem->id) }}"
@@ -813,714 +817,6 @@
     {{--    </div>--}}
 </header>
 
-
-{{--<header>--}}
-{{--    <div class="header-top align-items-center justify-content-between row"--}}
-{{--         style="padding-left: 2vw; padding-right: 2vw">--}}
-{{--        <div class="container">--}}
-{{--            <div style="float: left">--}}
-{{--                <div class="ht-left">--}}
-{{--                    @if(!$config->isEmpty())--}}
-{{--                        <div class="desktop-button">--}}
-{{--                            <div class="mail-service">--}}
-{{--                                <i class=" fa fa-envelope"></i>--}}
-{{--                                {{$config[0]->email}}--}}
-{{--                            </div>--}}
-{{--                            <div class="phone-service">--}}
-{{--                                <i class=" fa fa-phone"></i>--}}
-{{--                                {{$config[0]->phone}}--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    @endif--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--            <div class="mobile-button m-2">--}}
-{{--                <div class="btn-group">--}}
-{{--                    <button type="button" class="btn btn-warning mr-2 full-width text-nowrap" data-toggle="modal"--}}
-{{--                            data-target="#chooseLanguageOrder"--}}
-{{--                            aria-expanded="false">--}}
-{{--                        <a class="text-white" target="_blank" rel="noopener noreferrer"--}}
-{{--                           href="http://order.2188.info/">{{ __('home.orders') }}</a>--}}
-{{--                    </button>--}}
-{{--                    <button type="button" class="btn btn-success mr-2 full-width text-nowrap" data-toggle="modal"--}}
-{{--                            data-target="#chooseLanguagePurchase"--}}
-{{--                            aria-expanded="false"><a class="text-white"--}}
-{{--                                                     href="{{route('login')}}">{{ __('home.purchase') }}</a>--}}
-{{--                    </button>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--    <div class="inner-header container">--}}
-{{--        <div class="row not-mobile-button my-2">--}}
-
-{{--            @if (session('error'))--}}
-{{--                {{ session('error') }}--}}
-{{--            @endif--}}
-{{--            @if(session('login') || Auth::user()!= null)--}}
-{{--                <div class="col-lg-3 col-md-3 text-right col-md-4 col-12 col-sm-4">--}}
-{{--                    <div class="col-md-12">--}}
-{{--                        <div class="d-flex align-items-center">--}}
-{{--                            <ul class="nav-right mb-0">--}}
-{{--                                @php--}}
-{{--                                    $cartViews = \App\Models\Cart::where([--}}
-{{--                                            ['user_id', '=', Auth::user()->id],--}}
-{{--                                            ['status', '=', \App\Enums\CartStatus::WAIT_ORDER]--}}
-{{--                                    ])->get();--}}
-{{--                                    $totalHeader = 0;--}}
-{{--                                    foreach ($cartViews as $cart1){--}}
-{{--                                        $totalHeader = $totalHeader + ($cart1->price*$cart1->quantity);--}}
-{{--                                    }--}}
-{{--                                @endphp--}}
-{{--                                <li class="cart-icon">--}}
-{{--                                    <a href="#">--}}
-{{--                                        <i style="font-size: 30px" class="fa fa-shopping-cart"></i>--}}
-{{--                                        <span>{{count($cartViews)}}</span>--}}
-{{--                                    </a>--}}
-{{--                                    <div class="cart-hover" style="margin-left: 29px">--}}
-
-{{--                                        <div class="select-items table-responsive-sm">--}}
-{{--                                            @if(count($cartViews) > 0)--}}
-{{--                                                <table>--}}
-{{--                                                    <thead>--}}
-{{--                                                    <h6>{{ __('home.was new product') }}</h6>--}}
-{{--                                                    </thead>--}}
-{{--                                                    <tbody>--}}
-{{--                                                    @foreach($cartViews as $cartView)--}}
-{{--                                                        <tr>--}}
-{{--                                                            <td class="si-pic"><img--}}
-{{--                                                                        src="{{$cartView->product->thumbnail}}"--}}
-{{--                                                                        alt="">--}}
-{{--                                                            </td>--}}
-{{--                                                            <td class="si-text">--}}
-{{--                                                                <div class="product-selected">--}}
-{{--                                                                    <p>{{$cartView->product->name}}</p>--}}
-{{--                                                                </div>--}}
-{{--                                                            </td>--}}
-{{--                                                            <td class="si-text">--}}
-{{--                                                                <p>${{$cartView->price}}--}}
-{{--                                                                    x {{$cartView->quantity}} </p>--}}
-{{--                                                                <p>${{$cartView->price*$cartView->quantity}}</p>--}}
-{{--                                                            </td>--}}
-{{--                                                        </tr>--}}
-{{--                                                    @endforeach--}}
-
-{{--                                                    </tbody>--}}
-{{--                                                </table>--}}
-
-{{--                                        </div>--}}
-{{--                                        <div class="select-total">--}}
-{{--                                            <span>{{ __('home.Total Payment') }}:</span>--}}
-{{--                                            <h5>${{$totalHeader}}</h5>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="select-button">--}}
-{{--                                            <a href="{{route('cart.index')}}"--}}
-{{--                                               class="primary-btn view-card">{{ __('home.view card') }}</a>--}}
-{{--                                            <a href="{{route('checkout.show')}}"--}}
-{{--                                               class="primary-btn checkout-btn">{{ __('home.Pay Now') }}</a>--}}
-{{--                                        </div>--}}
-{{--                                        @else--}}
-{{--                                            <div class="">--}}
-{{--                                                <h6>No product</h6>--}}
-{{--                                            </div>--}}
-{{--                                        @endif--}}
-{{--                                    </div>--}}
-{{--                                </li>--}}
-{{--                            </ul>--}}
-{{--                            <div class="dropdown ml-3 text-nowrap">--}}
-{{--                                <h5 class="dropbtn text-center" style="margin-bottom: 0;" aria-expanded="false">--}}
-{{--                                    @if(Auth::user())--}}
-{{--                                        {{ Auth::user()->name }}--}}
-{{--                                    @endif--}}
-{{--                                </h5>--}}
-{{--                                @php--}}
-{{--                                    $coinUser = \App\Models\Coin::where([['user_id', Auth::user()->id], ['status', \App\Enums\CoinStatus::ACTIVE]])->first();--}}
-{{--                                    if ($coinUser == null){--}}
-{{--                                        $coin = 0;--}}
-{{--                                    } else {--}}
-{{--                                       $coin = $coinUser->quantity;--}}
-{{--                                    }--}}
-{{--                                @endphp--}}
-{{--                                <div class="dropdown-content text-left pt-0">--}}
-{{--                                    <ul class="mb-0">--}}
-{{--                                        <li>--}}
-{{--                                            <a class="dropdown-item"--}}
-{{--                                               href="{{route('profile.show')}}">{{ __('home.profile') }}</a>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <a class="dropdown-item"--}}
-{{--                                               href="#">Coins: {{$coin}}</a>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <a href="{{route('buy.coin.show')}}"--}}
-{{--                                               class="dropdown-item">{{ __('home.buy coin') }}</a>--}}
-{{--                                        </li>--}}
-{{--                                        <li>--}}
-{{--                                            <a class="dropdown-item" onclick="logout()"--}}
-{{--                                               href="#">{{ __('home.log out') }}</a>--}}
-{{--                                        </li>--}}
-{{--                                    </ul>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    @else--}}
-{{--                        <div class="col-lg-3 col-md-4 col-sm-4 desktop-button d-flex align-items-center">--}}
-{{--                            <div class="btn-group full-width">--}}
-{{--                                <button type="button" class="btn btn-warning mr-2 full-width text-nowrap"--}}
-{{--                                        data-toggle="modal"--}}
-{{--                                        data-target="#chooseLanguageOrder"--}}
-{{--                                        aria-expanded="false">--}}
-{{--                                    <a class="text-white" target="_blank" rel="noopener noreferrer"--}}
-{{--                                       href="http://order.2188.info/">{{ __('home.orders') }}</a>--}}
-{{--                                </button>--}}
-{{--                                <button type="button" class="btn btn-success mr-2 full-width text-nowrap"--}}
-{{--                                        data-toggle="modal"--}}
-{{--                                        data-target="#chooseLanguagePurchase"--}}
-{{--                                        aria-expanded="false"><a class="text-white"--}}
-{{--                                                                 href="{{route('login')}}">{{ __('home.purchase') }}</a>--}}
-{{--                                </button>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    @endif--}}
-{{--                </div>--}}
-{{--                <div class="m-0 row only-mobile-button justify-content-center">--}}
-{{--                    <div class="col-lg-2 col-md-2 col-sm-2 col-5 mt-2">--}}
-{{--                        <div class="logo">--}}
-{{--                            <a href="{{route('home')}}">--}}
-{{--                                <img src="{{asset('images/img/logo.png')}}" alt="">--}}
-{{--                            </a>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    @if(session('login') || Auth::user()!= null)--}}
-{{--                        <div class="col-lg-3 col-md-3 text-right col-md-4 col-7 mt-2">--}}
-{{--                            <div class="d-flex align-items-center">--}}
-{{--                                <ul class="nav-right mb-0">--}}
-{{--                                    @php--}}
-{{--                                        $cartViews = \App\Models\Cart::where([--}}
-{{--                                                ['user_id', '=', Auth::user()->id],--}}
-{{--                                                ['status', '=', \App\Enums\CartStatus::WAIT_ORDER]--}}
-{{--                                        ])->get();--}}
-{{--                                        $totalHeader = 0;--}}
-{{--                                        foreach ($cartViews as $cart1){--}}
-{{--                                            $totalHeader = $totalHeader + ($cart1->price*$cart1->quantity);--}}
-{{--                                        }--}}
-{{--                                    @endphp--}}
-{{--                                    <li class="cart-icon">--}}
-{{--                                        <a href="#">--}}
-{{--                                            <i class="fa fa-shopping-cart"></i>--}}
-{{--                                            <span>{{count($cartViews)}}</span>--}}
-{{--                                        </a>--}}
-{{--                                        <div class="cart-hover">--}}
-
-{{--                                            <div class="select-items table-responsive-sm">--}}
-{{--                                                @if(count($cartViews) > 0)--}}
-{{--                                                    <table>--}}
-{{--                                                        <thead>--}}
-{{--                                                        <h6>{{ __('home.was new product') }}</h6>--}}
-{{--                                                        </thead>--}}
-{{--                                                        <tbody>--}}
-{{--                                                        @foreach($cartViews as $cartView)--}}
-{{--                                                            <tr>--}}
-{{--                                                                <td class="si-pic"><img--}}
-{{--                                                                            src="{{$cartView->product->thumbnail}}"--}}
-{{--                                                                            alt="">--}}
-{{--                                                                </td>--}}
-{{--                                                                <td class="si-text">--}}
-{{--                                                                    <div class="product-selected">--}}
-{{--                                                                        <p>{{$cartView->product->name}}</p>--}}
-{{--                                                                    </div>--}}
-{{--                                                                </td>--}}
-{{--                                                                <td class="si-text">--}}
-{{--                                                                    <p>${{$cartView->price}}--}}
-{{--                                                                        x {{$cartView->quantity}} </p>--}}
-{{--                                                                    <p>${{$cartView->price*$cartView->quantity}}</p>--}}
-{{--                                                                </td>--}}
-{{--                                                            </tr>--}}
-{{--                                                        @endforeach--}}
-
-{{--                                                        </tbody>--}}
-{{--                                                    </table>--}}
-
-{{--                                            </div>--}}
-{{--                                            <div class="select-total">--}}
-{{--                                                <span>{{ __('home.Total Payment') }}:</span>--}}
-{{--                                                <h5>${{$totalHeader}}</h5>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="select-button">--}}
-{{--                                                <a href="{{route('cart.index')}}"--}}
-{{--                                                   class="primary-btn view-card">{{ __('home.view card') }}</a>--}}
-{{--                                                <a href="{{route('checkout.show')}}"--}}
-{{--                                                   class="primary-btn checkout-btn">{{ __('home.Pay Now') }}</a>--}}
-{{--                                            </div>--}}
-{{--                                            @else--}}
-{{--                                                <div class="">--}}
-{{--                                                    <h6>No product</h6>--}}
-{{--                                                </div>--}}
-{{--                                            @endif--}}
-{{--                                        </div>--}}
-{{--                                    </li>--}}
-{{--                                </ul>--}}
-{{--                                <div class="dropdown ml-3 ">--}}
-{{--                                    <h4 class="dropbtn text-center" style="margin-bottom: 0;" aria-expanded="false">--}}
-{{--                                        @if(Auth::user())--}}
-{{--                                            {{ Auth::user()->name }}--}}
-{{--                                        @endif--}}
-{{--                                    </h4>--}}
-{{--                                    @php--}}
-{{--                                        $coinUser = \App\Models\Coin::where([['user_id', Auth::user()->id], ['status', \App\Enums\CoinStatus::ACTIVE]])->first();--}}
-{{--                                        if ($coinUser == null){--}}
-{{--                                            $coin = 0;--}}
-{{--                                        } else {--}}
-{{--                                           $coin = $coinUser->quantity;--}}
-{{--                                        }--}}
-{{--                                    @endphp--}}
-{{--                                    <div class="dropdown-content text-left pt-0 mt-2" style="margin-left: -35px">--}}
-{{--                                        <ul class="mb-0">--}}
-{{--                                            <li>--}}
-{{--                                                <a class="dropdown-item"--}}
-{{--                                                   href="{{route('profile.show')}}">{{ __('home.profile') }}</a>--}}
-{{--                                            </li>--}}
-{{--                                            <li>--}}
-{{--                                                <a class="dropdown-item"--}}
-{{--                                                   href="#">Coins: {{$coin}}</a>--}}
-{{--                                            </li>--}}
-{{--                                            <li>--}}
-{{--                                                <a href="{{route('buy.coin.show')}}"--}}
-{{--                                                   class="dropdown-item">{{ __('home.buy coin') }}</a>--}}
-{{--                                            </li>--}}
-{{--                                            <li>--}}
-{{--                                                <a class="dropdown-item" onclick="logout()"--}}
-{{--                                                   href="#">{{ __('home.log out') }}</a>--}}
-{{--                                            </li>--}}
-{{--                                        </ul>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    @endif--}}
-{{--                    <div class="col-md-6 col-10 mt-2" id="in-search">--}}
-{{--                        <div class="advanced-search">--}}
-{{--                            <form class="search-wrapper">--}}
-{{--                                <input type="text" placeholder="{{ __('home.placeholder search') }}"--}}
-{{--                                       style="box-shadow: none">--}}
-{{--                                <button type="submit"><i class="fa fa-search"></i></button>--}}
-{{--                            </form>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    @if (session('error'))--}}
-{{--                        {{ session('error') }}--}}
-{{--                    @endif--}}
-{{--                </div>--}}
-{{--        </div>--}}
-{{--        <div class="nav-item mobile-button mt-2">--}}
-{{--            <div class="container">--}}
-{{--                <div class="row">--}}
-{{--                    <div>--}}
-{{--                        <nav class="nav-menu mobile-menu">--}}
-{{--                            <ul>--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a class="nav-link text-nowrap" href="#"><i class="fa fa-laptop"--}}
-{{--                                                                                aria-hidden="true"></i>&ensp; Electronic</a>--}}
-{{--                                    <ul>--}}
-{{--                                        <li class="nav-item">--}}
-{{--                                            <a class="nav-link text-nowrap" href="#">Điều hòa</a>--}}
-{{--                                            <ul>--}}
-{{--                                                <li class="nav-item">123</li>--}}
-{{--                                            </ul>--}}
-{{--                                        </li>--}}
-{{--                                        <li class="nav-item">hi</li>--}}
-{{--                                    </ul>--}}
-{{--                                </li>--}}
-
-{{--                                <li class="nav-item">--}}
-{{--                                    <a class="nav-link text-nowrap" href="/category/1"><i class="fa fa-laptop"--}}
-{{--                                                                                          aria-hidden="true"></i>&ensp;--}}
-{{--                                        Electronic Device123s</a>--}}
-{{--                                    <div class="megamenu">--}}
-{{--                                        <div class="row">--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Desktops Computers</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="/category/1">All-In-One</a></li>--}}
-{{--                                                    <li><a href="/category/1">Gaming Desktops</a></li>--}}
-{{--                                                    <li><a href="/category/1">DIY</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Laptops</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="/category/1">Traditional Laptops</a></li>--}}
-{{--                                                    <li><a href="/category/1">Gaming Laptops</a></li>--}}
-{{--                                                    <li><a href="/category/1">2-in-1s</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Audio</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="/category/1">Headphones & Headsets</a></li>--}}
-{{--                                                    <li><a href="/category/1">Portable Speakers</a></li>--}}
-{{--                                                    <li><a href="/category/1">Home Audio</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <hr>--}}
-{{--                                        <div class="row">--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Desktops Computers</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="/category/1">All-In-One</a></li>--}}
-{{--                                                    <li><a href="/category/1">Gaming Desktops</a></li>--}}
-{{--                                                    <li><a href="/category/1">DIY</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Laptops</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="/category/1">Traditional Laptops</a></li>--}}
-{{--                                                    <li><a href="/category/1">Gaming Laptops</a></li>--}}
-{{--                                                    <li><a href="/category/1">2-in-1s</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Audio</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="/category/1">Headphones & Headsets</a></li>--}}
-{{--                                                    <li><a href="/category/1">Portable Speakers</a></li>--}}
-{{--                                                    <li><a href="/category/1">Home Audio</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-
-{{--                                </li>--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a class="nav-link text-nowrap" href="/category/1"><i class="fa fa-television"--}}
-{{--                                                                                          aria-hidden="true"></i>&ensp;--}}
-{{--                                        TV & Home Appliances</a>--}}
-{{--                                </li>--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a class="nav-link text-nowrap" href="/category/1"><i class="fa fa-laptop"--}}
-{{--                                                                                          aria-hidden="true"></i>&ensp;--}}
-{{--                                        Electronic Devices</a>--}}
-{{--                                    <div class="megamenu">--}}
-{{--                                        <div class="row">--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Desktops Computers</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="/category/1">All-In-One</a></li>--}}
-{{--                                                    <li><a href="/category/1">Gaming Desktops</a></li>--}}
-{{--                                                    <li><a href="/category/1">DIY</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Laptops</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="/category/1">Traditional Laptops</a></li>--}}
-{{--                                                    <li><a href="/category/1">Gaming Laptops</a></li>--}}
-{{--                                                    <li><a href="/category/1">2-in-1s</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Audio</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="/category/1">Headphones & Headsets</a></li>--}}
-{{--                                                    <li><a href="/category/1">Portable Speakers</a></li>--}}
-{{--                                                    <li><a href="/category/1">Home Audio</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <hr>--}}
-{{--                                        <div class="row">--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Desktops Computers</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="/category/1">All-In-One</a></li>--}}
-{{--                                                    <li><a href="/category/1">Gaming Desktops</a></li>--}}
-{{--                                                    <li><a href="/category/1">DIY</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Laptops</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="/category/1">Traditional Laptops</a></li>--}}
-{{--                                                    <li><a href="/category/1">Gaming Laptops</a></li>--}}
-{{--                                                    <li><a href="/category/1">2-in-1s</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Audio</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="/category/1">Headphones & Headsets</a></li>--}}
-{{--                                                    <li><a href="/category/1">Portable Speakers</a></li>--}}
-{{--                                                    <li><a href="/category/1">Home Audio</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-
-{{--                                </li>--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a class="nav-link text-nowrap" href="#"><i class="fa fa-television"--}}
-{{--                                                                                aria-hidden="true"></i>&ensp; TV &--}}
-{{--                                        Home--}}
-{{--                                        Appliances</a>--}}
-{{--                                </li>--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a class="nav-link text-nowrap" href="#"><i class="fa fa-laptop"--}}
-{{--                                                                                aria-hidden="true"></i>&ensp;--}}
-{{--                                        Electronic--}}
-{{--                                        Devices</a>--}}
-{{--                                    <div class="megamenu">--}}
-{{--                                        <div class="row">--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Desktops Computers</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="#">All-In-One</a></li>--}}
-{{--                                                    <li><a href="#">Gaming Desktops</a></li>--}}
-{{--                                                    <li><a href="#">DIY</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Laptops</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="#">Traditional Laptops</a></li>--}}
-{{--                                                    <li><a href="#">Gaming Laptops</a></li>--}}
-{{--                                                    <li><a href="#">2-in-1s</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Audio</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="#">Headphones & Headsets</a></li>--}}
-{{--                                                    <li><a href="#">Portable Speakers</a></li>--}}
-{{--                                                    <li><a href="#">Home Audio</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <hr>--}}
-{{--                                        <div class="row">--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Desktops Computers</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="#">All-In-One</a></li>--}}
-{{--                                                    <li><a href="#">Gaming Desktops</a></li>--}}
-{{--                                                    <li><a href="#">DIY</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Laptops</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="#">Traditional Laptops</a></li>--}}
-{{--                                                    <li><a href="#">Gaming Laptops</a></li>--}}
-{{--                                                    <li><a href="#">2-in-1s</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Audio</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="#">Headphones & Headsets</a></li>--}}
-{{--                                                    <li><a href="#">Portable Speakers</a></li>--}}
-{{--                                                    <li><a href="#">Home Audio</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-
-{{--                                </li>--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a class="nav-link text-nowrap" href="#"><i class="fa fa-television"--}}
-{{--                                                                                aria-hidden="true"></i>&ensp; TV &--}}
-{{--                                        Home--}}
-{{--                                        Appliances</a>--}}
-{{--                                </li>--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a class="nav-link text-nowrap" href="#"><i class="fa fa-laptop"--}}
-{{--                                                                                aria-hidden="true"></i>&ensp;--}}
-{{--                                        Electronic--}}
-{{--                                        Devices</a>--}}
-{{--                                    <div class="megamenu">--}}
-{{--                                        <div class="row">--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Desktops Computers</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="#">All-In-One</a></li>--}}
-{{--                                                    <li><a href="#">Gaming Desktops</a></li>--}}
-{{--                                                    <li><a href="#">DIY</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Laptops</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="#">Traditional Laptops</a></li>--}}
-{{--                                                    <li><a href="#">Gaming Laptops</a></li>--}}
-{{--                                                    <li><a href="#">2-in-1s</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Audio</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="#">Headphones & Headsets</a></li>--}}
-{{--                                                    <li><a href="#">Portable Speakers</a></li>--}}
-{{--                                                    <li><a href="#">Home Audio</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <hr>--}}
-{{--                                        <div class="row">--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Desktops Computers</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="#">All-In-One</a></li>--}}
-{{--                                                    <li><a href="#">Gaming Desktops</a></li>--}}
-{{--                                                    <li><a href="#">DIY</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Laptops</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="#">Traditional Laptops</a></li>--}}
-{{--                                                    <li><a href="#">Gaming Laptops</a></li>--}}
-{{--                                                    <li><a href="#">2-in-1s</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-sm-4">--}}
-{{--                                                <h5>Audio</h5>--}}
-{{--                                                <ul>--}}
-{{--                                                    <li><a href="#">Headphones & Headsets</a></li>--}}
-{{--                                                    <li><a href="#">Portable Speakers</a></li>--}}
-{{--                                                    <li><a href="#">Home Audio</a></li>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-
-{{--                                </li>--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a class="nav-link text-nowrap" href="#"><i class="fa fa-television"--}}
-{{--                                                                                aria-hidden="true"></i>&ensp; TV &--}}
-{{--                                        Home--}}
-{{--                                        Appliances</a>--}}
-{{--                                </li>--}}
-{{--                            </ul>--}}
-{{--                        </nav>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--        <div id="mobile-menu-wrap" class="mg-menu" style=" width: calc(100vw - 2rem);"></div>--}}
-{{--    </div>--}}
-{{--    @unless(request()->is('/') || request()->is('login') || request()->is('register'))--}}
-{{--        <div class="nav-item" id="nav-black" style="background: black">--}}
-{{--            <div class="container">--}}
-{{--                <div class="col-sm-12">--}}
-{{--                    <div class="row" style="background: black">--}}
-{{--                        <div class="col-sm-4">--}}
-{{--                            <div class="nav-depart">--}}
-{{--                                <div class="depart-btn">--}}
-{{--                                    <i class="fa fa-bars"></i>--}}
-{{--                                    <span>{{ __('home.all_categories') }}</span>--}}
-{{--                                    <ul class="depart-hover ">--}}
-{{--                                        <li class="active"><a href="#">Women’s Clothing</a></li>--}}
-{{--                                        <li><a href="#">Men’s Clothing</a>--}}
-{{--                                            <div class="megamenu">--}}
-{{--                                                <div class="row">--}}
-{{--                                                    <div class="col-sm-4">--}}
-{{--                                                        <h4>Desktops Computers</h4>--}}
-{{--                                                        <ul>--}}
-{{--                                                            <li><a href="#">All-In-One</a></li>--}}
-{{--                                                            <li><a href="#">Gaming Desktops</a></li>--}}
-{{--                                                            <li><a href="#">DIY</a></li>--}}
-{{--                                                        </ul>--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="col-sm-4">--}}
-{{--                                                        <h4>Laptops</h4>--}}
-{{--                                                        <ul>--}}
-{{--                                                            <li><a href="#">Traditional Laptops</a></li>--}}
-{{--                                                            <li><a href="#">Gaming Laptops</a></li>--}}
-{{--                                                            <li><a href="#">2-in-1s</a></li>--}}
-{{--                                                        </ul>--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="col-sm-4">--}}
-{{--                                                        <h4>Audio</h4>--}}
-{{--                                                        <ul>--}}
-{{--                                                            <li><a href="#">Headphones & Headsets</a></li>--}}
-{{--                                                            <li><a href="#">Portable Speakers</a></li>--}}
-{{--                                                            <li><a href="#">Home Audio</a></li>--}}
-{{--                                                        </ul>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                                <hr>--}}
-{{--                                                <div class="row">--}}
-{{--                                                    <div class="col-sm-4">--}}
-{{--                                                        <h4>Desktops Computers</h4>--}}
-{{--                                                        <ul>--}}
-{{--                                                            <li><a href="#">All-In-One</a></li>--}}
-{{--                                                            <li><a href="#">Gaming Desktops</a></li>--}}
-{{--                                                            <li><a href="#">DIY</a></li>--}}
-{{--                                                        </ul>--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="col-sm-4">--}}
-{{--                                                        <h4>Laptops</h4>--}}
-{{--                                                        <ul>--}}
-{{--                                                            <li><a href="#">Traditional Laptops</a></li>--}}
-{{--                                                            <li><a href="#">Gaming Laptops</a></li>--}}
-{{--                                                            <li><a href="#">2-in-1s</a></li>--}}
-{{--                                                        </ul>--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="col-sm-4">--}}
-{{--                                                        <h4>Audio</h4>--}}
-{{--                                                        <ul>--}}
-{{--                                                            <li><a href="#">Headphones & Headsets</a></li>--}}
-{{--                                                            <li><a href="#">Portable Speakers</a></li>--}}
-{{--                                                            <li><a href="#">Home Audio</a></li>--}}
-{{--                                                        </ul>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </li>--}}
-{{--                                        @php--}}
-{{--                                            $listCate = DB::table('categories')->get();--}}
-{{--                                        @endphp--}}
-{{--                                        @foreach($listCate as $cate)--}}
-{{--                                            <li><a href="{{ route('category.show', $cate->id) }}">{{ $cate->name }}</a>--}}
-{{--                                            </li>--}}
-{{--                                        @endforeach--}}
-{{--                                    </ul>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="col-sm-8">--}}
-{{--                            <nav class="nav-menu row">--}}
-{{--                                <ul class="mb-0">--}}
-{{--                                    <li class="active"><a href="{{route('home')}}">Home</a></li>--}}
-{{--                                    <li><a href="{{route('product.index')}}">Shop</a></li>--}}
-{{--                                    <li><a href="#">Collection</a>--}}
-{{--                                        <ul class="dropdown">--}}
-{{--                                            <li><a href="#">Collection</a></li>--}}
-{{--                                            <li><a href="#">Women's</a></li>--}}
-{{--                                            <li><a href="#">Kid's</a></li>--}}
-{{--                                        </ul>--}}
-{{--                                    </li>--}}
-{{--                                    <li><a href="./contact.html">Contact</a></li>--}}
-{{--                                    <li><a href="#">Pages</a>--}}
-{{--                                        <ul class="dropdown">--}}
-{{--                                            <li><a href="./blog-details.html">Blog Details</a></li>--}}
-{{--                                            <li><a href="./shopping-cart.html">Shopping Cart</a></li>--}}
-{{--                                            <li><a href="./check-out.html">Checkout</a></li>--}}
-{{--                                            <li><a href="./faq.html">Faq</a></li>--}}
-{{--                                        </ul>--}}
-{{--                                    </li>--}}
-{{--                                </ul>--}}
-{{--                            </nav>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    @endunless--}}
-{{--</header>--}}
-<!-- Header End -->
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 {{--<script>--}}
 {{--    // variable to store our intervalID--}}
