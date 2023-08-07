@@ -418,6 +418,9 @@
   .header .header-mobile {
     display: block;
   }
+  #mt-body {
+    margin-top: 40px;
+  }
   .list-voucher .search .form-search {
     margin: 0px 20px;
   }
