@@ -2,9 +2,9 @@
 @section('title', 'Product Register Members')
 @section('content')
 
-    <?php
+@php
     $trans = \App\Http\Controllers\TranslateController::getInstance();
-    ?>
+@endphp
     <div class="container-fluid">
         <h3 class="text-center">Cửa hàng nhà cung cấp bán buôn *** Chọn một nhà cung cấp sản phẩm</h3>
         <table class="table table-bordered">

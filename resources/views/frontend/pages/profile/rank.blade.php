@@ -3,9 +3,9 @@
 @section('title', 'List Permission')
 
 @section('sub-content')
-    <?php
-    $trans = \App\Http\Controllers\TranslateController::getInstance();
-    ?>
+    @php
+        $trans = \App\Http\Controllers\TranslateController::getInstance();
+    @endphp
     <div class="row mt-5 bg-white rounded">
         <div class="rounded pt-1 ml-5">
             <h5>{{ __('home.list permission') }}</h5>

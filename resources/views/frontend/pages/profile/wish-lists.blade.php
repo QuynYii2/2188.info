@@ -1,9 +1,9 @@
 @extends('frontend.layouts.profile')
 
 @section('content')
-    <?php
-    $trans = \App\Http\Controllers\TranslateController::getInstance();
-    ?>
+    @php
+        $trans = \App\Http\Controllers\TranslateController::getInstance();
+    @endphp
     <div class="container">
         <h2>{{ __('home.Wishlist') }}</h2>
         <div class="row">

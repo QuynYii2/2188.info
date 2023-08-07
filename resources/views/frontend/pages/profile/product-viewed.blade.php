@@ -3,9 +3,9 @@
 @section('title', 'Product Viewed')
 
 @section('sub-content')
-    <?php
-    $trans = \App\Http\Controllers\TranslateController::getInstance();
-    ?>
+    @php
+        $trans = \App\Http\Controllers\TranslateController::getInstance();
+    @endphp
     <div class="row mt-2 bg-white rounded">
         <div class="row rounded pt-1 ml-5">
             <h5>{{ __('home.product viewed') }}</h5>

@@ -6,9 +6,9 @@
         $firstProduct = null;
     }
 @endphp
-<?php
-$trans = \App\Http\Controllers\TranslateController::getInstance();
-?>
+@php
+    $trans = \App\Http\Controllers\TranslateController::getInstance();
+@endphp
 @if($firstProduct)
     <div class="col-md-6 border">
         @php
