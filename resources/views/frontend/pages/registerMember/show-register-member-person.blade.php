@@ -11,7 +11,7 @@
         <div class="background container-fluid pt-3 justify-content-center pb-3">
             <div class="row card border">
                 <div class="form-title text-center pt-2">
-                    <div class="title">Đăng kí thông tin người đăng kí cho hội viên {{ $tran->translateText($registerMember) }}</div>
+                    <div class="title">Đăng kí thông tin người đăng kí cho hội viên {{ $trans->translateText($registerMember) }}</div>
                 </div>
                 <div class="mt-5">
                     <form class="p-3" action="{{route('register.member.source')}}" method="post">
