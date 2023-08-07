@@ -436,9 +436,9 @@
 
 
 @foreach($listVouchers as $voucher)
-        <?php
+    @php
         $trans = \App\Http\Controllers\TranslateController::getInstance();
-        ?>
+    @endphp
     <li class="image-carousel__item snipcss-rHVAl style-K4Ikr" id="style-K4Ikr">
         <div>
             <div class="HK7aiO style-gGoy2" id="style-gGoy2">

@@ -11,9 +11,9 @@
 </style>
 
 @section('sub-content')
-    <?php
-    $trans = \App\Http\Controllers\TranslateController::getInstance();
-    ?>
+    @php
+        $trans = \App\Http\Controllers\TranslateController::getInstance();
+    @endphp
     <div class="p-4 list-voucher">
         <p class="category">Kho Voucher</p>
         <div class="search">

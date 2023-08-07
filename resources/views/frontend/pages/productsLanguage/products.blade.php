@@ -23,9 +23,9 @@
 </style>
 
 @section('content')
-    <?php
-    $trans = \App\Http\Controllers\TranslateController::getInstance();
-    ?>
+    @php
+        $trans = \App\Http\Controllers\TranslateController::getInstance();
+    @endphp
     <div class="container-fluid">
         <div class="card">
             <div class="card card-products">

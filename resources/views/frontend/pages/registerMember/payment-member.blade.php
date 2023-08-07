@@ -3,9 +3,9 @@
 @section('title', 'Payment Register Member')
 
 @section('content')
-    <?php
-    $trans = \App\Http\Controllers\TranslateController::getInstance();
-    ?>
+    @php
+        $trans = \App\Http\Controllers\TranslateController::getInstance();
+    @endphp
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <div class="start-page mb-3">
         <div class="background container-fluid pt-3 justify-content-center pb-3">

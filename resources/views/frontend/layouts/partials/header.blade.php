@@ -417,7 +417,7 @@
                                                                                         <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                                                                              alt="">
                                                                                         <div class="button-view">
-                                                                                            <button href="">Quick view
+                                                                                            <button href="">{{ __('home.Quick view') }}
                                                                                             </button>
                                                                                         </div>
                                                                                         <div class="text">
@@ -468,8 +468,7 @@
                                                                                         </div>
                                                                                         <div class="card-bottom d-flex justify-content-between">
                                                                                             <div class="card-bottom--left">
-                                                                                                <a href="{{route('detail_product.show', $product->id)}}">Choose
-                                                                                                    Options</a>
+                                                                                                <a href="{{route('detail_product.show', $product->id)}}">Choose Options</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
