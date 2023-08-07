@@ -128,46 +128,6 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <label for="day" class="col-md-3 col-12 col-form-label">Diện tích sàn</label>
-
-                        <div class="col-md-9 col-12">
-                            <input type="text" class="form-control" name="acreage"
-                                   value="{{ $shopInfos->acreage ?? '' }}">
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <label for="day" class="col-md-3 col-12 col-form-label">Năm trong ngành</label>
-
-                        <div class="col-md-9 col-12">
-                            <input type="text" class="form-control" name="industry_year"
-                                   value="{{ $shopInfos->industry_year ?? '' }}">
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <label for="day" class="col-md-3 col-12 col-form-label">Số lượng máy móc sản xuất</label>
-
-                        <div class="col-md-9 col-12">
-                            <input type="text" class="form-control" name="machine_number"
-                                   value="{{ $shopInfos->machine_number ?? '' }}">
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <label for="day" class="col-md-3 col-12 col-form-label">Thị trường chính</label>
-
-                        <div class="col-md-9 col-12">
-                            <input type="text" class="form-control" name="marketing"
-                                   value="{{ $shopInfos->marketing ?? '' }}">
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <label for="day" class="col-md-3 col-12 col-form-label">Các loại khách hàng chính</label>
-
-                        <div class="col-md-9 col-12">
-                            <input type="text" class="form-control" name="customers"
-                                   value="{{ $shopInfos->customers ?? '' }}">
-                        </div>
-                    </div>
-                    <div class="row form-group">
                         <label for="day" class="col-md-3 col-12 col-form-label">Ngành sản phẩm đăng ký</label>
 
                         <div class="col-md-9 col-12">

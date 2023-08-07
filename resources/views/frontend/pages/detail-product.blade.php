@@ -84,68 +84,61 @@
         .radio-toolbar input[type="radio"]:focus + label {
             border: 2px solid #444;
         }
-
         .radio-toolbar input[type="radio"]:checked + label {
             background-color: #f7f7f7;
             border-color: #ccc;
         }
-
         .table-title h3 {
             color: #fafafa;
             font-size: 30px;
             font-weight: 400;
-            font-style: normal;
+            font-style:normal;
             font-family: "Roboto", helvetica, arial, sans-serif;
             text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
         }
-
-        .modal-content {
+        .modal-content{
             width: 400px;
             margin: auto;
         }
-
-        .table-fill {
+        .table-fill{
             width: 100%;
         }
-
         th {
             background: #b1b5bd;
             border-right: 1px solid #343a45;
         }
-
         th:first-child {
-            border-top-left-radius: 3px;
+                border-top-left-radius:3px;
         }
 
         th:last-child {
-            border-top-right-radius: 3px;
-            border-right: none;
+                border-top-right-radius:3px;
+                border-right:none;
         }
 
         tr {
             border-top: 1px solid #C1C3D1;
             border-bottom-: 1px solid #C1C3D1;
-            color: #666B85;
-            font-size: 16px;
-            font-weight: normal;
+                color:#666B85;
+                font-size:16px;
+                font-weight:normal;
             text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
         }
-
         tr:first-child {
-            border-top: none;
+                border-top:none;
         }
 
         tr:last-child {
-            border-bottom: none;
+                border-bottom:none;
         }
 
         td {
-            background: #FFFFFF;
-            padding: 20px;
-            text-align: left;
-            vertical-align: middle;
-            font-weight: 300;
-            font-size: 18px;
+                background:#FFFFFF;
+                padding:20px;
+                text-align:left;
+                vertical-align:middle;
+                font-weight:300;
+                font-size:18px;
             text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
             border-right: 1px solid #C1C3D1;
         }
@@ -174,6 +167,9 @@
                 </nav>
             </div>
         </div>
+        <?php
+        $trans = \App\Http\Controllers\TranslateController::getInstance();
+        ?>
         @php
             $name = DB::table('users')->where('id', $product->user_id)->first();
             $productDetails = \App\Models\Variation::where('product_id', $product->id)->get();
@@ -204,9 +200,8 @@
             <div class="column-xs-12 column-md-5">
                 <form action="{{ route('cart.add', $product) }}" method="POST">
                     @csrf
-                    <div class="product-name"><a
-                                href="{{ route('shop.information.show', $name->id) }}">{{$name->name}}</a></div>
-                    <div class="product-title">{{$product->name}}</div>
+                    <div class="product-name"><a href="{{ route('shop.information.show', $name->id) }}">{{$name->name}}</a></div>
+                    <div class="product-title">{{$trans->translateText($product->name)}}</div>
                     <div class="product-origin">Xuất xứ: {{$product->origin}}</div>
                     <div class="product-rating">
                         <i class="fa fa-star"></i>
@@ -263,8 +258,7 @@
 
                     </div>
                     <div class="count__wrapper count__wrapper--ml mt-3">
-                        <label for="qty">{{ __('home.remaining') }}<span
-                                    id="productQuantity">{{$product->qty}}</span></label>
+                        <label for="qty">{{ __('home.remaining') }}<span id="productQuantity">{{$product->qty}}</span></label>
                     </div><!-- Button to trigger modal -->
                     <!-- Button trigger modal -->
                     @php
@@ -274,8 +268,7 @@
                         Bảng giá sỉ
                     </a>
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -320,8 +313,7 @@
                             </div>
                         </div>
                         @if(!$attributes->isEmpty())
-                            <button type="submit" id="btnAddCard"
-                                    class="add-to-cart">{{ __('home.Add To Cart') }}</button>
+                            <button type="submit" id="btnAddCard" class="add-to-cart">{{ __('home.Add To Cart') }}</button>
                         @else
                             <button type="submit" class="add-to-cart">{{ __('home.Add To Cart') }}</button>
                         @endif
@@ -352,293 +344,38 @@
                             </div>
                         </div>
                         <div class="express-footer">
-                            <a href="#">
-                                <div class="button-start">Start order</div>
-                            </a>
-                            <a href="#">
-                                <div class="button-call"><i class="fa-solid fa-envelope"></i> Contact supplier</div>
-                            </a>
-                            <a href="#">
-                                <div class="button-call"><i class="fa-solid fa-phone"></i> Call us</div>
-                            </a>
-                            <div class="addtocard">
-                                <button><i class="fa-solid fa-cart-shopping"></i> Add to cart</button>
-                            </div>
+                            <a href="#"><div class="button-start">Start order</div></a>
+                            <a href="#"><div class="button-call"><i class="fa-solid fa-envelope"></i> Contact supplier</div></a>
+                            <a href="#"><div class="button-call"><i class="fa-solid fa-phone"></i> Call us</div></a>
+                            <div class="addtocard"><button><i class="fa-solid fa-cart-shopping"></i> Add to cart</button></div>
                         </div>
                     </form>
                 </div>
                 <div class="detail-module">
                     <form action="">
-                        <div class="widget-supplier-card company-card-integrated company-card-integrated-lite has-ta origin gps-background snipcss0-0-0-1 snipcss-Iordg style-3CsBv"
-                             data-role="widget-supplier-card" data-aui="supplier-card" id="style-3CsBv">
-                            <div class="card-central-logo snipcss0-1-1-2">
-                                <a href="//sale.alibaba.com/p/d7v3mp6m3" target="_blank" data-aui="ta-ordered"
-                                   rel="nofollow" class="snipcss0-2-2-3">
-                                    <img src="https://img.alicdn.com/imgextra/i1/O1CN01AOhmtZ1HQ08UWY7sf_!!6000000000751-2-tps-266-54.png_240x240.jpg"
-                                         class="snipcss0-3-3-4 style-ew3Uo" id="style-ew3Uo">
-                                </a>
+                        <div class="express-header">
+                            <p>The minimum order quantity is 2 pair</p>
+                            <div class="item-center d-flex justify-content-between">
+                                <span>0/2 pair</span>
+                                <span>from <b>$12.98$</b></span>
                             </div>
-                            <div class="company-name-container snipcss0-1-1-5">
-                                <a class="company-name company-name-lite-vb snipcss0-2-5-6"
-                                   href="https://idock.en.alibaba.com/minisiteentrance.html?from=detail&amp;productId=60718266587"
-                                   target="_blank" title="Công ty TNHH Công nghệ Vazio Thâm Quyến"
-                                   data-aui="company-name" data-domdot="id:3317">
-                                    <font id="style-vgWl7" class="style-vgWl7">
-                                        <font id="style-jTbe8" class="style-jTbe8">
-                                            <a href="{{ route('shop.information.show', $name->id) }}">{{$name->name}}</a>
-                                        </font>
-                                    </font>
-                                </a>
+                            <p class="">Lead time 15 days <i class="fa-solid fa-info"></i></p>
                             </div>
-                            <div class="company-brand snipcss0-1-1-7">
-    <span class="snipcss0-2-7-8">
-      <font id="style-JzYLr" class="style-JzYLr">
-        <font id="style-roxPs" class="style-roxPs">
-          nhà sản xuất tùy chỉnh
-        </font>
-      </font>
-    </span>
+                        <div class="express-body">
+                            <div class="item-center d-flex justify-content-between">
+                                <span>Shipping</span>
+                                <span>from <b>$12.98$</b></span>
                             </div>
-                            <div class="card-supplier card-icons-lite snipcss0-1-1-9">
-    <span class="company-name-country snipcss0-2-9-10">
-      <i class="icbu-icon-flag icbu-icon-flag-cn snipcss0-3-10-11">
-      </i>
-      <span class="register-country snipcss0-3-10-12">
-        <font id="style-OKs23" class="style-OKs23">
-          <font id="style-YRERN" class="style-YRERN">
-            CN
-          </font>
-        </font>
-      </span>
-    </span>
-                                <a class="verify-info snipcss0-2-9-13" data-aui="ggs-icon" rel="nofollow">
-      <span class="join-year snipcss0-3-13-14">
-        <span class="value snipcss0-4-14-15">
-          &nbsp;&nbsp;&nbsp;
-          <font id="style-mEqyl" class="style-mEqyl">
-            <font id="style-RHXPq" class="style-RHXPq">
-              14
-            </font>
-          </font>
-        </span>
-        <span class="unit snipcss0-4-14-16">
-          <font id="style-HTIe2" class="style-HTIe2">
-            <font id="style-qkEnm" class="style-qkEnm">
-              YRS
-            </font>
-          </font>
-        </span>
-      </span>
-                                </a>
+                            <div>
+                                <p class="">Lead time 15 days <i class="fa-solid fa-info"></i></p>
                             </div>
-                            <div class="ability snipcss0-1-1-17">
-                                <img src="https://img.alicdn.com/imgextra/i3/O1CN015NySK71aBmY1PTG9K_!!6000000003292-2-tps-28-28.png"
-                                     class="snipcss0-2-17-18">
-                                <font id="style-aO78e" class="style-aO78e">
-                                    <font id="style-R8Hor" class="style-R8Hor">
-                                        Nhãn hiệu đã đăng ký (1)
-                                    </font>
-                                </font>
                             </div>
-                            <div class="company-basicCapacity snipcss0-1-1-19">
-                                <a href="https://idock.en.alibaba.com/company_profile/feedback.html"
-                                   class="attr-item snipcss0-2-19-20" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-title snipcss0-3-20-21">
-                                        <font id="style-3L1q8" class="style-3L1q8">
-                                            <font id="style-zvjr9" class="style-zvjr9">
-                                                xếp hạng cửa hàng
-                                            </font>
-                                        </font>
+                        <div class="express-footer">
+                            <a href="#"><div class="button-start">Start order</div></a>
+                            <a href="#"><div class="button-call"><i class="fa-solid fa-envelope"></i> Contact supplier</div></a>
+                            <a href="#"><div class="button-call"><i class="fa-solid fa-phone"></i> Call us</div></a>
+                            <div class="addtocard"><button><i class="fa-solid fa-cart-shopping"></i> Add to cart</button></div>
                                     </div>
-                                    <div class="attr-content snipcss0-3-20-22" title="4,8/5">
-                                        <font id="style-fAO6E" class="style-fAO6E">
-                                            <font id="style-Etwn6" class="style-Etwn6">
-                                                4,8/5
-                                            </font>
-                                        </font>
-                                    </div>
-                                </a>
-                                <div class="attr-item snipcss0-2-19-23" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-title snipcss0-3-23-24">
-                                        <font id="style-EqeUq" class="style-EqeUq">
-                                            <font id="style-CcfWl" class="style-CcfWl">
-                                                Tỷ lệ giao hàng đúng hạn
-                                            </font>
-                                        </font>
-                                    </div>
-                                    <div class="attr-content snipcss0-3-23-25" title="94,3%">
-                                        <font id="style-CQ1sW" class="style-CQ1sW">
-                                            <font id="style-MTZVf" class="style-MTZVf">
-                                                94,3%
-                                            </font>
-                                        </font>
-                                    </div>
-                                </div>
-                                <div class="attr-item snipcss0-2-19-26" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-title snipcss0-3-26-27">
-                                        <font id="style-LnF9R" class="style-LnF9R">
-                                            <font id="style-BiAVI" class="style-BiAVI">
-                                                Thời gian đáp ứng
-                                            </font>
-                                        </font>
-                                    </div>
-                                    <div class="attr-content snipcss0-3-26-28" title="≤3h">
-                                        <font id="style-YHCDj" class="style-YHCDj">
-                                            <font id="style-U3v6e" class="style-U3v6e">
-                                                ≤3h
-                                            </font>
-                                        </font>
-                                    </div>
-                                </div>
-                                <div class="attr-item snipcss0-2-19-29" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-title snipcss0-3-29-30">
-                                        <font id="style-RAFUd" class="style-RAFUd">
-                                            <font id="style-o5M24" class="style-o5M24">
-                                                doanh thu trực tuyến
-                                            </font>
-                                        </font>
-                                    </div>
-                                    <div class="attr-content snipcss0-3-29-31" title="$480,000+">
-                                        <font id="style-65Uzc" class="style-65Uzc">
-                                            <font id="style-MnlP3" class="style-MnlP3">
-                                                $480,000+
-                                            </font>
-                                        </font>
-                                    </div>
-                                </div>
-                                <div class="attr-item snipcss0-2-19-32" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-title snipcss0-3-32-33">
-                                        <font id="style-AizIN" class="style-AizIN">
-                                            <font id="style-tcKq9" class="style-tcKq9">
-                                                Không gian sàn
-                                            </font>
-                                        </font>
-                                    </div>
-                                    <div class="attr-content snipcss0-3-32-34" title="1000m²">
-                                        <font id="style-2eXLi" class="style-2eXLi">
-                                            <font id="style-KJb5z" class="style-KJb5z">
-                                                1000m²
-                                            </font>
-                                        </font>
-                                    </div>
-                                </div>
-                                <div class="attr-item snipcss0-2-19-35" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-title snipcss0-3-35-36">
-                                        <font id="style-Y99Hx" class="style-Y99Hx">
-                                            <font id="style-8Tfa4" class="style-8Tfa4">
-                                                Nhân viên
-                                            </font>
-                                        </font>
-                                    </div>
-                                    <div class="attr-content snipcss0-3-35-37" title="14">
-                                        <font id="style-AnUmn" class="style-AnUmn">
-                                            <font id="style-9qRTF" class="style-9qRTF">
-                                                14
-                                            </font>
-                                        </font>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="company-productionServiceCapacity service-2 snipcss0-1-1-38">
-                                <div class="attr-title snipcss0-2-38-39">
-                                    <font id="style-oGaRs" class="style-oGaRs">
-                                        <font id="style-mdLo7" class="style-mdLo7">
-                                            Dịch vụ
-                                        </font>
-                                    </font>
-                                </div>
-                                <div class="attr-item snipcss0-2-38-40" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-content snipcss0-3-40-41" title="tùy chỉnh nhỏ">
-                                        <font id="style-9kbc4" class="style-9kbc4">
-                                            <font id="style-2VHih" class="style-2VHih">
-                                                tùy chỉnh nhỏ
-                                            </font>
-                                        </font>
-                                    </div>
-                                </div>
-                                <div class="attr-item snipcss0-2-38-42" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-content snipcss0-3-42-43" title="Tùy chỉnh dựa trên thiết kế">
-                                        <font id="style-aYrRe" class="style-aYrRe">
-                                            <font id="style-HJq62" class="style-HJq62">
-                                                Tùy chỉnh dựa trên thiết kế
-                                            </font>
-                                        </font>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="company-qualityAssuranceCapability service-3 snipcss0-1-1-44">
-                                <div class="attr-title snipcss0-2-44-45">
-                                    <font id="style-XhT85" class="style-XhT85">
-                                        <font id="style-ApknS" class="style-ApknS">
-                                            kiểm soát chất lượng
-                                        </font>
-                                    </font>
-                                </div>
-                                <div class="attr-item snipcss0-2-44-46" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-content snipcss0-3-46-47"
-                                         title="Nhận dạng truy xuất nguồn gốc nguyên liệu">
-                                        <font id="style-3aNnc" class="style-3aNnc">
-                                            <font id="style-diVmT" class="style-diVmT">
-                                                Nhận dạng truy xuất nguồn gốc nguyên liệu
-                                            </font>
-                                        </font>
-                                    </div>
-                                </div>
-                                <div class="attr-item snipcss0-2-44-48" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-content snipcss0-3-48-49" title="Kiểm tra thành phẩm">
-                                        <font id="style-obZ4s" class="style-obZ4s">
-                                            <font id="style-NVn7X" class="style-NVn7X">
-                                                Kiểm tra thành phẩm
-                                            </font>
-                                        </font>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="https://idock.en.alibaba.com/company_profile.html#cpRDCapacity"
-                               class="company-qualificationCertificate service-4 snipcss0-1-1-50">
-                                <i class="detail-next-icon detail-next-icon-arrow-right detail-next-xxs snipcss0-2-50-51">
-                                </i>
-                                <div class="attr-title snipcss0-2-50-52">
-                                    <font id="style-qDgo2" class="style-qDgo2">
-                                        <font id="style-JLwlq" class="style-JLwlq">
-                                            chứng chỉ
-                                        </font>
-                                    </font>
-                                </div>
-                                <div class="attr-item snipcss0-2-50-53" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-content snipcss0-3-53-54">
-                                        <font id="style-wzcBT" class="style-wzcBT">
-                                            <font id="style-lTWgc" class="style-lTWgc">
-                                                giấy chứng nhận
-                                            </font>
-                                        </font>
-                                    </div>
-                                </div>
-                            </a>
-                            <div class="company-profile snipcss0-1-1-55">
-                                <a href="https://idock.en.alibaba.com/company_profile.html"
-                                   class="detail-next-btn detail-next-medium detail-next-btn-normal snipcss0-2-55-56">
-      <span class="detail-next-btn-helper snipcss0-3-56-57">
-        <font id="style-Ii4jO" class="style-Ii4jO">
-          <font id="style-cKfJp" class="style-cKfJp">
-            hồ sơ công ty
-          </font>
-        </font>
-      </span>
-                                </a>
-                                <a href="https://idock.en.alibaba.com/minisiteentrance.html?from=detail&amp;productId=60718266587"
-                                   class="detail-next-btn detail-next-medium detail-next-btn-secondary snipcss0-2-55-58">
-      <span class="detail-next-btn-helper snipcss0-3-58-59">
-        <font id="style-z77eO" class="style-z77eO">
-          <font id="style-oRLeP" class="style-oRLeP">
-            Ghé thăm cửa hàng
-          </font>
-        </font>
-      </span>
-                                </a>
-                            </div>
-                        </div>
-
                     </form>
                 </div>
             </div>
@@ -691,7 +428,7 @@
                                 ])->first();
                             }
                         @endphp
-                        {{--                        @if($isMember)--}}
+                        @if($isMember)
                         <form method="post" action="{{route('create.evaluate')}}">
                             @csrf
                             <input type="text" class="form-control" id="product_id" name="product_id"
@@ -742,7 +479,7 @@
                                 </button>
                             </div>
                         </form>
-                        {{--                        @endif--}}
+                        @endif
                     </div>
                 </div>
                 <div class="card">
@@ -884,7 +621,7 @@
                                     {{$nameUser->name}}
                                 </div>
                                 <div class="card-title">
-                                    <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>
+                                    <a href="{{route('detail_product.show', $product->id)}}">{{$trans->translateText($product->name)}}</a>
                                 </div>
                                 <div class="card-price d-flex justify-content-between">
                                     @if($product->price != null)
@@ -969,7 +706,7 @@
                                     {{$nameUser->name}}
                                 </div>
                                 <div class="card-title">
-                                    <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>
+                                    <a href="{{route('detail_product.show', $product->id)}}">{{$trans->translateText($product->name)}}</a>
                                 </div>
                                 <div class="card-price d-flex justify-content-between">
                                     @if($product->price != null)
