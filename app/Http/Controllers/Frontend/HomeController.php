@@ -11,6 +11,7 @@ use App\Enums\TopSellerConfigLocation;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PermissionRankController;
+use App\Http\Controllers\TranslateController;
 use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Notification;
