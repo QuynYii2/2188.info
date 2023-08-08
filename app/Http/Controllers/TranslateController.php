@@ -7,33 +7,23 @@ use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class TranslateController extends Controller
 {
-    private static $instance = null;
     private $translate;
     private $languageDetect;
 
 
-    private function __construct()
+    public function __construct()
     {
         $this->translate = new GoogleTranslate();
         $this->languageDetect = new Language(['en', 'vi', 'ja', 'zh-Hans', 'ko']);
     }
 
-    public static function getInstance()
-    {
-        if (self::$instance === null) {
-            self::$instance = new TranslateController();
-        }
-        return self::$instance;
-    }
-
     public function translateText($str, $target)
     {
-        if (is_numeric($str)) {
+        if (is_numeric($str) || $this->detectLanguage($str) == $target) {
             return $str;
         }
         $this->translate->setSource($this->detectLanguage($str));
         $this->translate->setTarget($target);
-
         return $this->translate->translate($str);
     }
 
@@ -42,13 +32,15 @@ class TranslateController extends Controller
         $arrLang = $this->languageDetect->detect($str)->bestResults()->close();
         if (count($arrLang) != 0) {
             $langDetect = array_keys($arrLang)[0];
-            if ($langDetect == 'zh-CN') {
-                $langDetect = 'zh';
+            if ($langDetect == 'zh-Hans') {
+                $langDetect = 'zh-CN';
             }
             return $langDetect;
         }
         return '';
     }
+
+
 
 
     function getCurrentCountryCode()

@@ -190,6 +190,10 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         try {
+            $nameValue = $request->input('name');
+            $descriptionValue = $request->input('description');
+            $shortDescriptionValue = $request->input('short_description');
+
             $product = new Product();
             $qty_in_storage = DB::table('storage_products')->where('id', $request->input('storage-id'))->value('quantity');
 
@@ -199,9 +203,9 @@ class ProductController extends Controller
                 $product->thumbnail = $thumbnailPath;
             }
             $product->storage_id = $request->input('storage-id');
-            $product->name = $request->input('name');
-            $product->description = $request->input('description');
-            $product->short_description = $request->input('short_description');
+            $product->name = $nameValue;
+            $product->description = $descriptionValue;
+            $product->short_description = $shortDescriptionValue;
             $product->product_code = $request->input('product_code');
             $product->qty = $request->input('qty');;
             $product->category_id = $request->input('category_id');
@@ -213,7 +217,25 @@ class ProductController extends Controller
             $product->old_price = $request->input('giaban');
             $product->origin = $request->input('origin');
 
-            $ld = TranslateController::getInstance();
+            $ld = new TranslateController();
+
+            $product->name_vi = $ld->translateText($nameValue, 'vi');
+            $product->name_ja = $ld->translateText($nameValue, 'ja');
+            $product->name_ko = $ld->translateText($nameValue, 'ko');
+            $product->name_en = $ld->translateText($nameValue, 'en');
+            $product->name_zh = $ld->translateText($nameValue, 'zh-CN');
+            
+            $product->description_vi = $ld->translateText($descriptionValue, 'vi');
+            $product->description_ja = $ld->translateText($descriptionValue, 'ja');
+            $product->description_ko = $ld->translateText($descriptionValue, 'ko');
+            $product->description_en = $ld->translateText($descriptionValue, 'en');
+            $product->description_zh = $ld->translateText($descriptionValue, 'zh-CN');
+            
+            $product->short_description_vi = $ld->translateText($shortDescriptionValue, 'vi');
+            $product->short_description_ja = $ld->translateText($shortDescriptionValue, 'ja');
+            $product->short_description_ko = $ld->translateText($shortDescriptionValue, 'ko');
+            $product->short_description_en = $ld->translateText($shortDescriptionValue, 'en');
+            $product->short_description_zh = $ld->translateText($shortDescriptionValue, 'zh-CN');
 
 
             if ($request->input('giakhuyenmai')) {
@@ -285,6 +307,10 @@ class ProductController extends Controller
         try {
             $product = Product::findOrFail($id);
 
+            $nameValue = $request->input('name');
+            $descriptionValue = $request->input('description');
+            $shortDescriptionValue = $request->input('short_description');
+
 //            $product->gallery = $this->handleGallery($request->input('imgGallery'));
             $number = $request->input('count');
             $isNew = $request->input('isNew');
@@ -294,10 +320,10 @@ class ProductController extends Controller
             $quantity = $request->input('quantity');
             $sales = $request->input('sales');
 
-            $product->description = $request->input('description');
-            $product->short_description = $request->input('short_description');
+            $product->description = $descriptionValue;
+            $product->short_description = $shortDescriptionValue;
 
-            $product->name = $request->input('name');
+            $product->name = $nameValue;
             $product->slug = \Str::slug($request->input('name'));
 
             $product->old_price = $request->input('giaban');
@@ -308,6 +334,27 @@ class ProductController extends Controller
 
             $product->origin = $request->input('origin');
             $product->min = $request->input('min');
+
+            $ld = new TranslateController();
+
+            $product->name_vi = $ld->translateText($nameValue, 'vi');
+            $product->name_ja = $ld->translateText($nameValue, 'ja');
+            $product->name_ko = $ld->translateText($nameValue, 'ko');
+            $product->name_en = $ld->translateText($nameValue, 'en');
+            $product->name_zh = $ld->translateText($nameValue, 'zh-CN');
+
+            $product->description_vi = $ld->translateText($descriptionValue, 'vi');
+            $product->description_ja = $ld->translateText($descriptionValue, 'ja');
+            $product->description_ko = $ld->translateText($descriptionValue, 'ko');
+            $product->description_en = $ld->translateText($descriptionValue, 'en');
+            $product->description_zh = $ld->translateText($descriptionValue, 'zh-CN');
+
+            $product->short_description_vi = $ld->translateText($shortDescriptionValue, 'vi');
+            $product->short_description_ja = $ld->translateText($shortDescriptionValue, 'ja');
+            $product->short_description_ko = $ld->translateText($shortDescriptionValue, 'ko');
+            $product->short_description_en = $ld->translateText($shortDescriptionValue, 'en');
+            $product->short_description_zh = $ld->translateText($shortDescriptionValue, 'zh-CN');
+
 
             $hot = $request->input('hot_product');
             $feature = $request->input('feature_product');
@@ -615,6 +662,25 @@ class ProductController extends Controller
             'min' => $product->min,
             'origin' => $product->origin,
             'status' => ProductStatus::INACTIVE,
+            
+            'name_vi' => $product->name_vi,
+            'name_ja' => $product->name_ja,
+            'name_ko' => $product->name_ko,
+            'name_en' => $product->name_en,
+            'name_zh' => $product->name_zh,
+            
+            'description_vi' => $product->description_vi,
+            'description_ja' => $product->description_ja,
+            'description_ko' => $product->description_ko,
+            'description_en' => $product->description_en,
+            'description_zh' => $product->description_zh,
+            
+            'short_description_vi' => $product->short_description_vi,
+            'short_description_ja' => $product->short_description_ja,
+            'short_description_ko' => $product->short_description_ko,
+            'short_description_en' => $product->short_description_en,
+            'short_description_zh' => $product->short_description_zh,
+
         ];
 
         $success = Product::create($newProductData);
