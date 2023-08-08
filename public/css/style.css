@@ -3055,4 +3055,14 @@ footer {
   overflow-y: auto;
 }
 
+.register-member .multiselect {
+  position: relative;
+}
+.register-member .multiselect .checkboxes {
+  position: absolute;
+  background: white;
+  height: 30vh;
+  overflow-y: auto;
+}
+
 /*# sourceMappingURL=style.css.map */

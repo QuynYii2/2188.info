@@ -51,9 +51,10 @@ class SettingShopController extends Controller
         }
         $user->save();
 
-        $infoShop = (new ShopInfo())->store($request);
+        $infoShop = (new ShopInformationController())->store($request);
         return redirect(route('profile.shop.index'));
     }
+
 
     public function savePaymentMethod(Request $request)
     {

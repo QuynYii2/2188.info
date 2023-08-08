@@ -143,6 +143,9 @@ Route::middleware('auth.product')->group(function () {
     Route::get('/product/{id}', 'ProductController@show')->name('product.show');
 });
 
+//
+Route::post('/insert-multil-user', [HomeController::class, 'createMultilNewUser'])->name('insert.multil.user');
+
 Route::get('/detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
 Route::get('/shop/information/{id}', [\App\Http\Controllers\ShopInformationController::class, 'index'])->name('shop.information.show');
 Route::get('/shop/product/{id}', [\App\Http\Controllers\ShopInformationController::class, 'index'])->name('shop.product.show');
@@ -158,8 +161,6 @@ Route::get('/products-shop/{id}', [\App\Http\Controllers\Frontend\ProductControl
 Route::get('/products-shop-category/{category}/{shop}', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByCategoryAndShops'])->name('list.products.shop.category.show');
 
 Route::middleware(['auth'])->group(function () {
-    //
-    Route::post('/insert-multil-user', [HomeController::class, 'createMultilNewUser'])->name('insert.multil.user');
     //
     Route::get('/info/', [ProfileController::class, 'info'])->name('profile.show');
 //    Route::get('/my-notification/', [\App\Http\Controllers\ProfileController::class, 'my_notification']);

@@ -47,11 +47,11 @@
         <div>
             <div>
                 <span>Dây chuyền sản xuất</span>
-                <strong>1</strong>
+                <strong>{{$shopInfo->machine_number}}</strong>
             </div>
             <div>
                 <span>Tổng sản lượng hằng năm(đơn vị)</span>
-                <strong>560000</strong>
+                <strong>{{$shopInfo->annual_output}}</strong>
             </div>
             <div>
                 <span>Máy móc sản xuất</span>
@@ -68,7 +68,7 @@
             </div>
             <div>
                 <span>Phương pháp kiểm tra sản phẩm</span>
-                <strong>Kiểm tra tất cả các sản phẩm, Kiểm tra ngẫu nhiên, Theo yêu cầu của khách hàng</strong>
+                <strong>{{$shopInfo->test_method}}</strong>
             </div>
             <div>
                 <span>Kiểm soát chất lượng được thực hiện trên tất cả các dây chuyền sản xuất</span>
@@ -76,7 +76,7 @@
             </div>
             <div>
                 <span>Nhân viên kiểm tra QA/QC</span>
-                <strong>1</strong>
+                <strong>{{$shopInfo->inspection_staff}}</strong>
             </div>
         </div>
     </dd>
