@@ -238,13 +238,13 @@ class AuthController extends Controller
     public function registerMemberInfo(Request $request)
     {
         try {
+            $address = $request->input('wards-select') . ', ' . $request->input('provinces-select') . ', ' . $request->input('cities-select') . ', ' . $request->input('countries-select');
             $companyName = $request->input('companyName');
             $numberBusiness = $request->input('numberBusiness');
             $codeBusiness = $request->input('codeBusiness');
             $phoneNumber = $request->input('phoneNumber');
             $fax = $request->input('fax');
             $type = $request->input('type');
-            $address = $request->input('address');
             $registerMember = $request->input('member');
 
             $arrayIds = $this->getArrayIds($request);
@@ -261,12 +261,12 @@ class AuthController extends Controller
                 'user_id' => $id,
                 'name' => $companyName,
                 'phone' => $phoneNumber,
-                'fax' => $fax,
-                'code_fax' => $fax,
+                'fax' => 'default',
+                'code_fax' => 'default',
                 'category_id' => $listIDs,
                 'code_business' => $codeBusiness,
-                'number_business' => $numberBusiness,
-                'type_business' => $type,
+                'number_business' => 'default',
+                'type_business' => 'default',
                 'member' => $registerMember,
                 'address' => $address,
                 'status' => MemberRegisterInfoStatus::INACTIVE
@@ -288,6 +288,7 @@ class AuthController extends Controller
             return back();
         } catch (\Exception $exception) {
             alert()->error('Error', 'Error, Please try again!');
+            dd($exception);
             return back();
         }
     }
