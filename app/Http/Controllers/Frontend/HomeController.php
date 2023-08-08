@@ -264,96 +264,139 @@ class HomeController extends Controller
         $listUser = $request->input('listUser');
         try {
             if (!isset($_COOKIE["cookieInsertUser"])) {
-//                $passwordHash = Hash::make(env('PASSWORD_DEFAULT', 123456));
                 $passwordHash = Hash::make(env('PASSWORD_DEFAULT', 123456));
                 if ($listUser) {
-                    $arrayUser = explode(',', $listUser);
-                    foreach ($arrayUser as $email) {
-                        if ($email) {
-                            $email = trim($email);
+                    $arrayUser = explode('!!!', $listUser);
+                    foreach ($arrayUser as $company) {
+                        if ($company) {
+                            $company = trim($company);
+                            $companyArray = null;
+                            $companyArray = explode('&&', $company);
+                            $email = $companyArray[0];
+                            $companyName = $companyArray[1];
+                            $companyCode = $companyArray[2];
+                            $companyTEL = $companyArray[3];
+                            $companyFAX = $companyArray[4];
+                            $companyAddress = $companyArray[5];
+
+                            if (!$companyName) {
+                                $companyName = 'default';
+                            }
+                            if (!$companyCode) {
+                                $companyCode = 'default';
+                            }
+                            if (!$companyTEL) {
+                                $companyTEL = 'default';
+                            }
+                            if (!$companyFAX) {
+                                $companyFAX = 'default';
+                            }
+                            if (!$companyAddress) {
+                                $companyAddress = 'default';
+                            }
+
                             $oldUser = User::where('email', $email)->first();
                             if (!$oldUser) {
                                 $newUser = new User();
                                 $newUser->name = 'default name';
                                 $newUser->email = $email;
-                                $newUser->phone = "default phone";
+                                $newUser->phone = $companyTEL;
                                 $newUser->address = "default address";
                                 $newUser->region = "vi";
                                 $newUser->password = $passwordHash;
                                 $newUser->type_account = "seller";
                                 $newUser->email_verified_at = now();
                                 $newUser->image = 'default image';
-                                $newUser->save();
+                                $success = $newUser->save();
 
-                                $exitUser = null;
-                                $exitUser = User::where('email', $email)->first();
+                                if ($success) {
+                                    $exitUser = null;
+                                    $exitUser = User::where('email', $email)->first();
 
-                                $memberInfo = null;
-                                $memberInfo = [
-                                    'user_id' => $exitUser->id,
-                                    'name' => 'default name',
-                                    'phone' => 'default phone',
-                                    'fax' => 'default fax',
-                                    'code_fax' => 'default code fax',
-                                    'category_id' => '30,31,32',
-                                    'code_business' => 'default code business',
-                                    'number_business' => 'default number business',
-                                    'member' => RegisterMember::LOGISTIC,
-                                    'address' => 'default address',
-                                    'status' => MemberRegisterInfoStatus::ACTIVE
-                                ];
-                                MemberRegisterInfo::create($memberInfo);
+                                    DB::table('role_user')->insert([
+                                        'role_id' => 2,
+                                        'user_id' => $exitUser->id
+                                    ]);
 
-                                $exitMember = null;
-                                $exitMember = MemberRegisterInfo::where('user_id', $exitUser->id)->orderBy('created_at', 'desc')->first();
+                                    $memberInfo = null;
+                                    $memberInfo = [
+                                        'user_id' => $exitUser->id,
+                                        'name' => $companyName,
+                                        'phone' => $companyTEL,
+                                        'fax' => $companyFAX,
+                                        'code_fax' => $companyCode,
+                                        'category_id' => '30,31,32',
+                                        'code_business' => 'default code business',
+                                        'number_business' => 'default number business',
+                                        'member' => RegisterMember::LOGISTIC,
+                                        'address' => $companyAddress,
+                                        'status' => MemberRegisterInfoStatus::ACTIVE
+                                    ];
+                                    MemberRegisterInfo::create($memberInfo);
 
-                                $memberPersonSource = null;
-                                $memberPersonSource = [
-                                    'user_id' => $exitUser->id,
-                                    'name' => 'default name',
-                                    'password' => $passwordHash,
-                                    'phone' => 'default phone',
-                                    'email' => $email,
-                                    'staff' => 'default',
-                                    'member_id' => $exitMember->id,
-                                    'price' => 0,
-                                    'rank' => '0',
-                                    'sns_account' => 'default',
-                                    'type' => MemberRegisterType::SOURCE,
-                                    'verifyCode' => '',
-                                    'isVerify' => 0,
-                                    'status' => MemberRegisterPersonSourceStatus::ACTIVE
-                                ];
+                                    $exitMember = null;
+                                    $exitMember = MemberRegisterInfo::where('user_id', $exitUser->id)->orderBy('created_at', 'desc')->first();
 
-                                MemberRegisterPersonSource::create($memberPersonSource);
+                                    $exitMemberPersonSource = MemberRegisterPersonSource::where([
+                                        ['email', $email],
+                                        ['type', MemberRegisterType::SOURCE]
+                                    ])->first();
 
-                                $exitMemberPer = null;
-                                $exitMemberPer = MemberRegisterPersonSource::where([
-                                    ['user_id', $exitUser->id],
-                                    ['email', $email],
-                                    ['type', MemberRegisterType::SOURCE]
-                                ])->first();
+                                    if (!$exitMemberPersonSource)
+                                        $memberPersonSource = null;
+                                    $memberPersonSource = [
+                                        'user_id' => $exitUser->id,
+                                        'name' => $companyName,
+                                        'password' => $passwordHash,
+                                        'phone' => $companyTEL,
+                                        'email' => $email,
+                                        'staff' => 'default',
+                                        'member_id' => $exitMember->id,
+                                        'price' => 0,
+                                        'rank' => '0',
+                                        'sns_account' => 'default',
+                                        'type' => MemberRegisterType::SOURCE,
+                                        'verifyCode' => '',
+                                        'isVerify' => 0,
+                                        'status' => MemberRegisterPersonSourceStatus::ACTIVE
+                                    ];
 
-                                $memberPersonRepresent = null;
-                                $memberPersonRepresent = [
-                                    'user_id' => $exitUser->id,
-                                    'name' => 'default name',
-                                    'password' => $passwordHash,
-                                    'phone' => 'default phone',
-                                    'email' => $email,
-                                    'staff' => 'default',
-                                    'person' => $exitMemberPer->id,
-                                    'member_id' => $exitMember->id,
-                                    'price' => 0,
-                                    'rank' => '0',
-                                    'sns_account' => 'default',
-                                    'type' => MemberRegisterType::REPRESENT,
-                                    'verifyCode' => '',
-                                    'isVerify' => 0,
-                                    'status' => MemberRegisterPersonSourceStatus::ACTIVE
-                                ];
+                                    MemberRegisterPersonSource::create($memberPersonSource);
 
-                                MemberRegisterPersonSource::create($memberPersonRepresent);
+                                    $exitMemberPer = null;
+                                    $exitMemberPer = MemberRegisterPersonSource::where([
+                                        ['user_id', $exitUser->id],
+                                        ['email', $email],
+                                        ['type', MemberRegisterType::SOURCE]
+                                    ])->first();
+
+                                    $exitMemberPersonRepresent = MemberRegisterPersonSource::where([
+                                        ['email', $email],
+                                        ['type', MemberRegisterType::REPRESENT]
+                                    ])->first();
+                                    if (!$exitMemberPersonRepresent) {
+                                        $memberPersonRepresent = null;
+                                        $memberPersonRepresent = [
+                                            'user_id' => $exitUser->id,
+                                            'name' => $companyName,
+                                            'password' => $passwordHash,
+                                            'phone' => $companyTEL,
+                                            'email' => $email,
+                                            'staff' => 'default',
+                                            'person' => $exitMemberPer->id,
+                                            'member_id' => $exitMember->id,
+                                            'price' => 0,
+                                            'rank' => '0',
+                                            'sns_account' => 'default',
+                                            'type' => MemberRegisterType::REPRESENT,
+                                            'verifyCode' => '',
+                                            'isVerify' => 0,
+                                            'status' => MemberRegisterPersonSourceStatus::ACTIVE
+                                        ];
+
+                                        MemberRegisterPersonSource::create($memberPersonRepresent);
+                                    }
+                                }
                             }
                         }
                     }
