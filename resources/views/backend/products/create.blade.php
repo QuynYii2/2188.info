@@ -312,7 +312,7 @@
             let attribute = document.getElementById('input-form-create-attribute').value;
             var renderInputAttribute = $('#renderInputAttribute');
             $.ajax({
-                url: '{{ route('product.v2.create.attribute') }}',
+                url: '{{ route('attributes.store') }}',
                 type: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',

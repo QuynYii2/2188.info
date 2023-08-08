@@ -51,7 +51,7 @@
                                     <tr class="alternate">
                                         <td>
                                             <strong>
-                                                <a href="{{route('properties.v2.edit', $property->id)}}">
+                                                <a href="{{route('properties.update', $property->id)}}">
                                                     {{$property->name}}
                                                 </a>
                                             </strong>

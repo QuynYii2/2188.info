@@ -15,9 +15,10 @@ class InsertMultilColumnLanguageFromAttributesTable extends Migration
     {
         Schema::table('attributes', function (Blueprint $table) {
             $table->string('name_vi')->nullable();
-            $table->string('name_cn')->nullable();
-            $table->string('name_kr')->nullable();
-            $table->string('name_jp')->nullable();
+            $table->string('name_zh')->nullable();
+            $table->string('name_en')->nullable();
+            $table->string('name_ja')->nullable();
+            $table->string('name_ko')->nullable();
         });
     }
 
@@ -30,9 +31,10 @@ class InsertMultilColumnLanguageFromAttributesTable extends Migration
     {
         Schema::table('attributes', function (Blueprint $table) {
             $table->dropColumn('name_vi');
-            $table->dropColumn('name_cn');
-            $table->dropColumn('name_kr');
-            $table->dropColumn('name_jp');
+            $table->dropColumn('name_zh');
+            $table->dropColumn('name_en');
+            $table->dropColumn('name_ja');
+            $table->dropColumn('name_ko');
         });
     }
 }
