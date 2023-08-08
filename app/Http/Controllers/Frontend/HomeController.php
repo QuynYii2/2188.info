@@ -206,7 +206,7 @@ class HomeController extends Controller
 
         // Nếu tìm thấy, trả về giá trị tương ứng từ mảng $lang
         if ($index !== false) {
-            return $lang[$index];
+            return '_' . $lang[$index];
         } else {
             return ''; // Xử lý nếu không tìm thấy
         }

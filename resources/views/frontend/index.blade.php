@@ -248,9 +248,9 @@
                                             </div>
                                             <div class="card-title">
                                                 @if(Auth::check())
-                                                    <a href="{{route('detail_product.show', $newProduct->id)}}">{{($newProduct->{'name_' . $langDisplay->getLangDisplay()})}}</a>
+                                                    <a href="{{route('detail_product.show', $newProduct->id)}}">{{($newProduct->{'name' . $langDisplay->getLangDisplay()})}}</a>
                                                 @else
-                                                    <a class="check_url">{{($newProduct->{'name_' . $langDisplay->getLangDisplay()})}}</a>
+                                                    <a class="check_url">{{($newProduct->{'name' . $langDisplay->getLangDisplay()})}}</a>
                                                 @endif
 
 
