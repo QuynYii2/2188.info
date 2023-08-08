@@ -90,7 +90,7 @@
                                 <label for="staticEmail"
                                        class="col-md-3 col-12 col-form-label">Tên người bán</label>
                                 <div class="col-md-9 col-12">
-                                    <input type="text" class="form-control" id="staticEmail" name="name"
+                                    <input type="text" class="form-control" id="staticEmail" required name="name"
                                            value="{{ $sellerInfo->name ?? ''}}">
                                 </div>
                             </div>
@@ -115,7 +115,7 @@
                         <label for="day" class="col-md-3 col-12 col-form-label">Tên sản phẩm đăng ký</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control" name="product_name"
+                            <input type="text" class="form-control" required name="product_name"
                                    value="{{ $sellerInfo->product_name ?? '' }}">
                         </div>
                     </div>
@@ -123,15 +123,92 @@
                         <label for="day" class="col-md-3 col-12 col-form-label">Mã sản phẩm đăng ký</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control" name="product_code"
+                            <input type="text" class="form-control" required name="product_code"
                                    value="{{ $sellerInfo->product_code ?? '' }}">
                         </div>
                     </div>
+
+
+                    <div class="row form-group">
+                        <label for="day" class="col-md-3 col-12 col-form-label">Diện tích sàn(㎡)</label>
+
+                        <div class="col-md-9 col-12">
+                            <input type="text" class="form-control" required name="acreage"
+                                   value="{{ $shopinformation->acreage ?? '' }}">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label for="day" class="col-md-3 col-12 col-form-label">Dây chuyền sản xuất</label>
+
+                        <div class="col-md-9 col-12">
+                            <input type="text" class="form-control" required name="machine_number"
+                                   value="{{ $shopinformation->machine_number ?? '' }}">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label for="day" class="col-md-3 col-12 col-form-label">Tổng sản lượng hằng năm(đơn vị)</label>
+
+                        <div class="col-md-9 col-12">
+                            <input type="text" class="form-control" required name="annual_output"
+                                   value="{{ $shopinformation->annual_output ?? '' }}">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <label for="day" class="col-md-3 col-12 col-form-label">Năm trong ngành</label>
+
+                        <div class="col-md-9 col-12">
+                            <input type="text" class="form-control" required name="industry_year"
+                                   value="{{ $shopinformation->industry_year ?? '' }}">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label for="day" class="col-md-3 col-12 col-form-label">Thị trường chính</label>
+
+                        <div class="col-md-9 col-12">
+                            <input type="text" class="form-control" required name="marketing"
+                                   value="{{ $shopinformation->marketing ?? '' }}">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label for="day" class="col-md-3 col-12 col-form-label">Đối tác chuỗi cung ứng</label>
+
+                        <div class="col-md-9 col-12">
+                            <input type="text" class="form-control" required name="partner"
+                                   value="{{ $shopinformation->partner ?? '' }}">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label for="day" class="col-md-3 col-12 col-form-label">Các loại khách hàng chính</label>
+
+                        <div class="col-md-9 col-12">
+                            <input type="text" class="form-control" required name="customers"
+                                   value="{{ $shopinformation->customers ?? '' }}">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <label for="day" class="col-md-3 col-12 col-form-label">Phương pháp kiểm tra sản phẩm</label>
+
+                        <div class="col-md-9 col-12">
+                            <input type="text" class="form-control" required name="test_method"
+                                   value="{{ $shopinformation->test_method ?? '' }}">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label for="day" class="col-md-3 col-12 col-form-label">Nhân viên kiểm tra </label>
+
+                        <div class="col-md-9 col-12">
+                            <input type="text" class="form-control" required name="inspection_staff"
+                                   value="{{ $shopinformation->inspection_staff ?? '' }}">
+                        </div>
+                    </div>
+
                     <div class="row form-group">
                         <label for="day" class="col-md-3 col-12 col-form-label">Ngành sản phẩm đăng ký</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control" name="industry" value="{{ $user->industry ?? '' }}">
+                            <input type="text" class="form-control" required name="industry" value="{{ $user->industry ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -146,7 +223,7 @@
                         <label for="day" class="col-md-3 col-12 col-form-label">Ảnh giấy phép kinh doanh</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="file" class="form-control" name="image" accept="image/*">
+                            <input type="file" class="form-control" name="image" required accept="image/*">
                             <img src="{{ asset('storage/' . $user->image) }}" alt="Ảnh giấy phép kinh doanh"
                                  height="100" width="100">
                         </div>

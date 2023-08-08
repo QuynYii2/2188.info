@@ -4,7 +4,7 @@
 
 @section('content')
     @php
-        $trans = \App\Http\Controllers\TranslateController::getInstance();
+
     @endphp
     <!-- Breadcrumb Section Begin -->
     <div class="breacrumb-section">

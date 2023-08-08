@@ -168,7 +168,7 @@
             </div>
         </div>
         <?php
-        $trans = \App\Http\Controllers\TranslateController::getInstance();
+
         ?>
         @php
             $name = DB::table('users')->where('id', $product->user_id)->first();
@@ -201,7 +201,7 @@
                 <form action="{{ route('cart.add', $product) }}" method="POST">
                     @csrf
                     <div class="product-name"><a href="{{ route('shop.information.show', $name->id) }}">{{$name->name}}</a></div>
-                    <div class="product-title">{{$trans->translateText($product->name)}}</div>
+                    <div class="product-title">{{($product->name)}}</div>
                     <div class="product-origin">Xuất xứ: {{$product->origin}}</div>
                     <div class="product-rating">
                         <i class="fa fa-star"></i>
@@ -344,38 +344,283 @@
                             </div>
                         </div>
                         <div class="express-footer">
-                            <a href="#"><div class="button-start">Start order</div></a>
-                            <a href="#"><div class="button-call"><i class="fa-solid fa-envelope"></i> Contact supplier</div></a>
-                            <a href="#"><div class="button-call"><i class="fa-solid fa-phone"></i> Call us</div></a>
-                            <div class="addtocard"><button><i class="fa-solid fa-cart-shopping"></i> Add to cart</button></div>
+                            <a href="#">
+                                <div class="button-start">Start order</div>
+                            </a>
+                            <a href="#">
+                                <div class="button-call"><i class="fa-solid fa-envelope"></i> Contact supplier</div>
+                            </a>
+                            <a href="#">
+                                <div class="button-call"><i class="fa-solid fa-phone"></i> Call us</div>
+                            </a>
+                            <div class="addtocard">
+                                <button><i class="fa-solid fa-cart-shopping"></i> Add to cart</button>
+                            </div>
                         </div>
                     </form>
                 </div>
                 <div class="detail-module">
                     <form action="">
-                        <div class="express-header">
-                            <p>The minimum order quantity is 2 pair</p>
-                            <div class="item-center d-flex justify-content-between">
-                                <span>0/2 pair</span>
-                                <span>from <b>$12.98$</b></span>
+                        <div class="widget-supplier-card company-card-integrated company-card-integrated-lite has-ta origin gps-background snipcss0-0-0-1 snipcss-Kyhj9 style-v8cHz"
+                             data-role="widget-supplier-card" data-aui="supplier-card" id="style-v8cHz">
+                            <div class="card-central-logo snipcss0-1-1-2">
+                                <a href="" target="_blank" data-aui="ta-ordered"
+                                   rel="nofollow" class="snipcss0-2-2-3">
+                                    <img src="https://img.alicdn.com/imgextra/i1/O1CN01AOhmtZ1HQ08UWY7sf_!!6000000000751-2-tps-266-54.png_240x240.jpg"
+                                         class="snipcss0-3-3-4 style-q27At" id="style-q27At">
+                                </a>
                             </div>
-                            <p class="">Lead time 15 days <i class="fa-solid fa-info"></i></p>
+                            <div class="company-name-container snipcss0-1-1-5">
+                                <a class="company-name company-name-lite-vb snipcss0-2-5-6"
+                                   href="{{ route('shop.information.show', $name->id) }}"
+                                   target="_blank" title="Tên công ty"
+                                   data-aui="company-name" data-domdot="id:3317">
+                                    {{$name->name}}
+                                </a>
                             </div>
-                        <div class="express-body">
-                            <div class="item-center d-flex justify-content-between">
-                                <span>Shipping</span>
-                                <span>from <b>$12.98$</b></span>
+                            <div class="company-brand snipcss0-1-1-7">
+                                <span class="snipcss0-2-7-8">
+                                    <font id="style-twrc8" class="style-twrc8">
+                                        <font id="style-JCto6" class="style-JCto6">nhà sản xuất tùy chỉnh
+                                        </font>
+                                    </font>
+                                </span>
                             </div>
-                            <div>
-                                <p class="">Lead time 15 days <i class="fa-solid fa-info"></i></p>
+                            <div class="card-supplier card-icons-lite snipcss0-1-1-9">
+                                <span class="company-name-country snipcss0-2-9-10">
+                                    <i class="icbu-icon-flag icbu-icon-flag-cn snipcss0-3-10-11">
+
+                                    </i>
+                                    <span class="register-country snipcss0-3-10-12">
+                                        <font id="style-BXjXK" class="style-BXjXK">
+                                            <font id="style-RhoUs" class="style-RhoUs">CN
+                                            </font>
+                                        </font>
+                                    </span>
+                                </span>
+                                <a class="verify-info snipcss0-2-9-13" data-aui="ggs-icon" rel="nofollow">
+                                    <span class="join-year snipcss0-3-13-14">
+                                        <span class="value snipcss0-4-14-15">&nbsp;&nbsp;&nbsp;
+                                            <font id="style-FvU6h" class="style-FvU6h">
+                                                <font id="style-o4okX" class="style-o4okX">14
+                                                </font>
+                                            </font>
+                                        </span>
+                                        <span class="unit snipcss0-4-14-16">
+                                            <font id="style-bdSbl" class="style-bdSbl">
+                                                <font id="style-DR4jO" class="style-DR4jO">YRS
+                                                </font>
+                                            </font>
+                                        </span>
+                                    </span>
+                                </a>
                             </div>
+                            <div class="ability snipcss0-1-1-17">
+                                <img src="https://img.alicdn.com/imgextra/i3/O1CN015NySK71aBmY1PTG9K_!!6000000003292-2-tps-28-28.png"
+                                     class="snipcss0-2-17-18">
+                                <font id="style-bbycp" class="style-bbycp">
+                                    <font id="style-wCJO1" class="style-wCJO1">
+                                        Nhãn hiệu đã đăng ký (1)
+                                    </font>
+                                </font>
                             </div>
-                        <div class="express-footer">
-                            <a href="#"><div class="button-start">Start order</div></a>
-                            <a href="#"><div class="button-call"><i class="fa-solid fa-envelope"></i> Contact supplier</div></a>
-                            <a href="#"><div class="button-call"><i class="fa-solid fa-phone"></i> Call us</div></a>
-                            <div class="addtocard"><button><i class="fa-solid fa-cart-shopping"></i> Add to cart</button></div>
+                            <div class="company-basicCapacity snipcss0-1-1-19">
+                                <a href="https://idock.en.alibaba.com/company_profile/feedback.html"
+                                   class="attr-item snipcss0-2-19-20" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-title snipcss0-3-20-21">
+                                        <font id="style-yKftp" class="style-yKftp">
+                                            <font id="style-xZsfz" class="style-xZsfz">
+                                                xếp hạng cửa hàng
+                                            </font>
+                                        </font>
                                     </div>
+                                    <div class="attr-content snipcss0-3-20-22" title="4,8/5">
+                                        <font id="style-Z3p7E" class="style-Z3p7E">
+                                            <font id="style-mxKhJ" class="style-mxKhJ">
+                                                4,8/5
+                                            </font>
+                                        </font>
+                                    </div>
+                                </a>
+                                <div class="attr-item snipcss0-2-19-23" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-title snipcss0-3-23-24">
+                                        <font id="style-fMY2X" class="style-fMY2X">
+                                            <font id="style-4dBAm" class="style-4dBAm">
+                                                Tỷ lệ giao hàng đúng hạn
+                                            </font>
+                                        </font>
+                                    </div>
+                                    <div class="attr-content snipcss0-3-23-25" title="95,6%">
+                                        <font id="style-fSvyS" class="style-fSvyS">
+                                            <font id="style-nogxU" class="style-nogxU">
+                                                95,6%
+                                            </font>
+                                        </font>
+                                    </div>
+                                </div>
+                                <div class="attr-item snipcss0-2-19-26" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-title snipcss0-3-26-27">
+                                        <font id="style-FZhRS" class="style-FZhRS">
+                                            <font id="style-CNhAB" class="style-CNhAB">
+                                                Thời gian đáp ứng
+                                            </font>
+                                        </font>
+                                    </div>
+                                    <div class="attr-content snipcss0-3-26-28" title="≤3h">
+                                        <font id="style-cFJY2" class="style-cFJY2">
+                                            <font id="style-ClD8j" class="style-ClD8j">
+                                                ≤3h
+                                            </font>
+                                        </font>
+                                    </div>
+                                </div>
+                                <div class="attr-item snipcss0-2-19-29" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-title snipcss0-3-29-30">
+                                        <font id="style-M7ELy" class="style-M7ELy">
+                                            <font id="style-ZGYbG" class="style-ZGYbG">
+                                                doanh thu trực tuyến
+                                            </font>
+                                        </font>
+                                    </div>
+                                    <div class="attr-content snipcss0-3-29-31" title="$480,000+">
+                                        <font id="style-GXfN7" class="style-GXfN7">
+                                            <font id="style-k2XWQ" class="style-k2XWQ">
+                                                $480,000+
+                                            </font>
+                                        </font>
+                                    </div>
+                                </div>
+                                <div class="attr-item snipcss0-2-19-32" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-title snipcss0-3-32-33">
+                                        <font id="style-5JqCT" class="style-5JqCT">
+                                            <font id="style-24VUv" class="style-24VUv">
+                                                Không gian sàn
+                                            </font>
+                                        </font>
+                                    </div>
+                                    <div class="attr-content snipcss0-3-32-34" title="1000m²">
+                                        <font id="style-nO8TI" class="style-nO8TI">
+                                            <font id="style-cg5zw" class="style-cg5zw">
+                                                1000m²
+                                            </font>
+                                        </font>
+                                    </div>
+                                </div>
+                                <div class="attr-item snipcss0-2-19-35" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-title snipcss0-3-35-36">
+                                        <font id="style-tEo9S" class="style-tEo9S">
+                                            <font id="style-6bddo" class="style-6bddo">
+                                                Nhân viên
+                                            </font>
+                                        </font>
+                                    </div>
+                                    <div class="attr-content snipcss0-3-35-37" title="14">
+                                        <font id="style-cbtOx" class="style-cbtOx">
+                                            <font id="style-xMPCe" class="style-xMPCe">
+                                                14
+                                            </font>
+                                        </font>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="company-productionServiceCapacity service-2 snipcss0-1-1-38">
+                                <div class="attr-title snipcss0-2-38-39">
+                                    <font id="style-lRUBE" class="style-lRUBE">
+                                        <font id="style-mjbnv" class="style-mjbnv">
+                                            Dịch vụ
+                                        </font>
+                                    </font>
+                                </div>
+                                <div class="attr-item snipcss0-2-38-40" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-content snipcss0-3-40-41" title="tùy chỉnh nhỏ">
+                                        <font id="style-F5PSs" class="style-F5PSs">
+                                            <font id="style-KzRLz" class="style-KzRLz">
+                                                tùy chỉnh nhỏ
+                                            </font>
+                                        </font>
+                                    </div>
+                                </div>
+                                <div class="attr-item snipcss0-2-38-42" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-content snipcss0-3-42-43" title="Tùy chỉnh dựa trên thiết kế">
+                                        <font id="style-O7f3C" class="style-O7f3C">
+                                            <font id="style-d1bs9" class="style-d1bs9">
+                                                Tùy chỉnh dựa trên thiết kế
+                                            </font>
+                                        </font>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="company-qualityAssuranceCapability service-3 snipcss0-1-1-44">
+                                <div class="attr-title snipcss0-2-44-45">
+                                    <font id="style-9t8No" class="style-9t8No">
+                                        <font id="style-tlKBE" class="style-tlKBE">
+                                            kiểm soát chất lượng
+                                        </font>
+                                    </font>
+                                </div>
+                                <div class="attr-item snipcss0-2-44-46" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-content snipcss0-3-46-47"
+                                         title="Nhận dạng truy xuất nguồn gốc nguyên liệu">
+                                        <font id="style-2zB5p" class="style-2zB5p">
+                                            <font id="style-a9Kg6" class="style-a9Kg6">
+                                                Nhận dạng truy xuất nguồn gốc nguyên liệu
+                                            </font>
+                                        </font>
+                                    </div>
+                                </div>
+                                <div class="attr-item snipcss0-2-44-48" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-content snipcss0-3-48-49" title="Kiểm tra thành phẩm">
+                                        <font id="style-T8DUq" class="style-T8DUq">
+                                            <font id="style-9asoi" class="style-9asoi">
+                                                Kiểm tra thành phẩm
+                                            </font>
+                                        </font>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{{ route('shop.information.show', $name->id) }}"
+                               class="company-qualificationCertificate service-4 snipcss0-1-1-50">
+                                <i class="detail-next-icon detail-next-icon-arrow-right detail-next-xxs snipcss0-2-50-51">
+                                </i>
+                                <div class="attr-title snipcss0-2-50-52">
+                                    <font id="style-JxMtm" class="style-JxMtm">
+                                        <font id="style-KoWot" class="style-KoWot">
+                                            chứng chỉ
+                                        </font>
+                                    </font>
+                                </div>
+                                <div class="attr-item snipcss0-2-50-53" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-content snipcss0-3-53-54">
+                                        <font id="style-aRmDL" class="style-aRmDL">
+                                            <font id="style-f3fa1" class="style-f3fa1">
+                                                giấy chứng nhận
+                                            </font>
+                                        </font>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="company-profile snipcss0-1-1-55">
+                                <a href="{{ route('shop.information.show', $name->id) }}""
+                                   class="detail-next-btn detail-next-medium detail-next-btn-normal snipcss0-2-55-56">
+                                    <span class="detail-next-btn-helper snipcss0-3-56-57">
+                                        <font id="style-KLyLn" class="style-KLyLn">
+                                            <font id="style-HWZrj" class="style-HWZrj">hồ sơ công ty
+                                            </font>
+                                        </font>
+                                    </span>
+                                </a>
+                                <a href="{{ route('shop.information.show', $name->id) }}"
+                                   class="detail-next-btn detail-next-medium detail-next-btn-secondary snipcss0-2-55-58">
+                                    <span class="detail-next-btn-helper snipcss0-3-58-59">
+                                        <font id="style-9vj8y" class="style-9vj8y">
+                                            <font id="style-IzMOR" class="style-IzMOR">Ghé thăm cửa hàng
+                                            </font>
+                                        </font>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+
                     </form>
                 </div>
             </div>
@@ -621,7 +866,7 @@
                                     {{$nameUser->name}}
                                 </div>
                                 <div class="card-title">
-                                    <a href="{{route('detail_product.show', $product->id)}}">{{$trans->translateText($product->name)}}</a>
+                                    <a href="{{route('detail_product.show', $product->id)}}">{{($product->name)}}</a>
                                 </div>
                                 <div class="card-price d-flex justify-content-between">
                                     @if($product->price != null)
@@ -706,7 +951,7 @@
                                     {{$nameUser->name}}
                                 </div>
                                 <div class="card-title">
-                                    <a href="{{route('detail_product.show', $product->id)}}">{{$trans->translateText($product->name)}}</a>
+                                    <a href="{{route('detail_product.show', $product->id)}}">{{($product->name)}}</a>
                                 </div>
                                 <div class="card-price d-flex justify-content-between">
                                     @if($product->price != null)

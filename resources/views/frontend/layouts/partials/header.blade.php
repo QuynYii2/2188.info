@@ -51,7 +51,7 @@
 </style>
 
 @php
-    $trans = \App\Http\Controllers\TranslateController::getInstance();
+
 @endphp
 <header class="header">
     <div class="header-pc halo-header">
@@ -89,14 +89,14 @@
                                         $listCate = DB::table('categories')->where('parent_id', null)->get();
                                     @endphp
                                     @foreach($listCate as $cate)
-                                        <a class="item-hd dropdown-item " href="">-- {{ $trans->translateText($cate->name) }}</a>
+                                        <a class="item-hd dropdown-item " href="">-- {{ ($cate->name) }}</a>
                                         @if(!$listCate->isEmpty())
                                             <ul class="hd_dropdown--right row">
                                                 @php
                                                     $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
                                                 @endphp
                                                 @foreach($listChild as $child)
-                                                    <a class="dropdown-item" href="">––– {{ $trans->translateText($child->name) }}</a>
+                                                    <a class="dropdown-item" href="">––– {{ ($child->name) }}</a>
                                                 @endforeach
                                             </ul>
                                         @endif
@@ -231,10 +231,10 @@
                                                     </div>
                                                     <div class="col-8 shop-item--text">
                                                         <div class="text-seller">
-                                                            {{ $trans->translateText($cartItem->product->user->name) }}
+                                                            {{ ($cartItem->product->user->name) }}
                                                         </div>
                                                         <div class="text-name">
-                                                            <a href="{{route('detail_product.show', $cartItem->product->id)}}">{{ $trans->translateText($cartItem->product->name) }}
+                                                            <a href="{{route('detail_product.show', $cartItem->product->id)}}">{{ ($cartItem->product->name) }}
                                                                 x1</a>
                                                         </div>
                                                         <div class="text-properties">
@@ -372,7 +372,7 @@
                                             <div class="header_bottom--one--list--item">
                                                 <a class="item d-flex" href="{{ route('category.show', $cate->id) }}">
                                                     <i class="fa-solid fa-tv"></i>
-                                                    <div class="item-text">{{ $trans->translateText($cate->name) }}</div>
+                                                    <div class="item-text">{{ ($cate->name) }}</div>
                                                     <i class="fa-solid fa-angle-right"></i>
                                                 </a>
                                                 @if(!$listCate->isEmpty())
@@ -385,7 +385,7 @@
                                                                 <div class="colum d-block">
                                                                     <li>
                                                                         <a class="colum-hd"
-                                                                           href="{{ route('category.show', $child->id) }}">{{ $trans->translateText($child->name) }}</a>
+                                                                           href="{{ route('category.show', $child->id) }}">{{ ($child->name) }}</a>
                                                                     </li>
                                                                     @php
                                                                         $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
@@ -393,7 +393,7 @@
                                                                     @foreach($listChild2 as $child2)
                                                                         <li>
                                                                             <a class="colum-item"
-                                                                               href="{{ route('category.show', $child2->id) }}">{{ $trans->translateText($child2->name) }}</a>
+                                                                               href="{{ route('category.show', $child2->id) }}">{{ ($child2->name) }}</a>
                                                                         </li>
                                                                     @endforeach
                                                                 </div>
@@ -450,10 +450,10 @@
                                                                                             $nameUser = DB::table('users')->where('id', $product->user_id)->first();
                                                                                         @endphp
                                                                                         <div class="card-brand">
-                                                                                            {{ $trans->translateText($nameUser->name) }}
+                                                                                            {{ ($nameUser->name) }}
                                                                                         </div>
                                                                                         <div class="card-title">
-                                                                                            <a href="{{route('detail_product.show', $product->id)}}">{{ $trans->translateText($product->name) }}</a>
+                                                                                            <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
                                                                                         </div>
                                                                                         <div class="card-price d-flex justify-content-between">
                                                                                             <!-- <div class="price">
@@ -570,7 +570,7 @@
                         <div class="OptionContainer">
                             <div class="OptionHead">
                                 <a class="item d-flex"
-                                   href="{{ route('category.show', $cate->id) }}">{{ $trans->translateText($cate->name) }}</a>
+                                   href="{{ route('category.show', $cate->id) }}">{{ ($cate->name) }}</a>
                                 <div>
                                     <svg onclick="ToggleOption(this)" style="cursor: pointer;"
                                          xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
@@ -588,7 +588,7 @@
                                         <div class="OptionContainer">
                                             <div class="OptionHead">
                                                 <a class="item d-flex"
-                                                   href="{{ route('category.show', $child->id) }}">{{ $trans->translateText($child->name) }}</a>
+                                                   href="{{ route('category.show', $child->id) }}">{{ ($child->name) }}</a>
                                                 <div>
                                                     <svg onclick="ToggleOption(this)" style="cursor: pointer;"
                                                          xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20"
@@ -605,7 +605,7 @@
                                                     <div class="OptionContainer">
                                                         <div class="OptionHead">
                                                             <a class="item d-flex"
-                                                               href="{{ route('category.show', $child2->id) }}">{{ $trans->translateText($child2->name) }}</a>
+                                                               href="{{ route('category.show', $child2->id) }}">{{ ($child2->name) }}</a>
                                                         </div>
                                                     </div>
                                                 @endforeach
@@ -629,14 +629,14 @@
                         $listCate = DB::table('categories')->where('parent_id', null)->get();
                     @endphp
                     @foreach($listCate as $cate)
-                        <a class="item-hd dropdown-item " href="">-- {{ $trans->translateText($cate->name) }}</a>
+                        <a class="item-hd dropdown-item " href="">-- {{ ($cate->name) }}</a>
                         @if(!$listCate->isEmpty())
                             <ul class="hd_dropdown--right row">
                                 @php
                                     $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
                                 @endphp
                                 @foreach($listChild as $child)
-                                    <a class="dropdown-item" href="">––– {{ $trans->translateText($child->name) }}</a>
+                                    <a class="dropdown-item" href="">––– {{ ($child->name) }}</a>
                                 @endforeach
                             </ul>
                         @endif
@@ -690,17 +690,17 @@
                                         </div>
                                         <div class="col-8 shop-item--text">
                                             <div class="text-seller">
-                                                {{ $trans->translateText($cartItem->product->user->name) }}
+                                                {{ ($cartItem->product->user->name) }}
                                             </div>
                                             <div class="text-name">
-                                                <a href="{{route('detail_product.show', $cartItem->product->id)}}">{{ $trans->translateText($cartItem->product->name) }}
+                                                <a href="{{route('detail_product.show', $cartItem->product->id)}}">{{ ($cartItem->product->name) }}
                                                     x1</a>
                                             </div>
                                             <div class="text-properties">
                                                 <span>Black/ 55 inch</span>
                                                 <span><i class="fa-regular fa-pen-to-square"></i></span>
                                             </div>
-                                            <div class="text-price">$ {{ $trans->translateText($cartItem->price) }} </div>
+                                            <div class="text-price">$ {{ ($cartItem->price) }} </div>
                                         </div>
                                         <div class="col-1">
                                             <form action="{{ route('cart.delete', $cartItem->id) }}"

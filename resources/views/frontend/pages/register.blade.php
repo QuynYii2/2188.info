@@ -70,7 +70,7 @@
     }
 </style>
 <?php
-$trans = \App\Http\Controllers\TranslateController::getInstance();
+
 ?>
 @section('content')
     <div style="background: rgb(255, 235, 225)">
@@ -139,7 +139,7 @@ $trans = \App\Http\Controllers\TranslateController::getInstance();
                                                                name="category-{{$category->id}}"
                                                                value="{{$category->id}}"
                                                                class="mr-2 p-3"/>
-                                                        {{$trans->translateText($category->name)}}
+                                                        {{($category->name)}}
                                                     </label>
                                                 @endforeach
                                             </div>
@@ -178,7 +178,7 @@ $trans = \App\Http\Controllers\TranslateController::getInstance();
                                                                id="permission-{{$permission->id}}"
                                                                value="{{$permission->id}}"
                                                                class="form-check-input mr-2 p-3"/>
-                                                        {{$trans->translateText($permission->name)}}
+                                                        {{($permission->name)}}
                                                     </label>
                                                 @endforeach
                                             </div>
@@ -290,7 +290,7 @@ $trans = \App\Http\Controllers\TranslateController::getInstance();
                                                                id="permission-{{$permission->id}}"
                                                                value="{{$permission->id}}"
                                                                class="form-check-input mr-2 p-3"/>
-                                                        {{$trans->translateText($permission->name)}}
+                                                        {{($permission->name)}}
                                                     </label>
                                                 @endforeach
                                             </div>

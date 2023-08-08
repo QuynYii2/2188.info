@@ -2,7 +2,7 @@
 
 @section('content')
     @php
-        $trans = \App\Http\Controllers\TranslateController::getInstance();
+
     @endphp
     <div class="container">
         <h2>{{ __('home.Wishlist') }}</h2>
@@ -19,10 +19,10 @@
                                 <img src="{{ asset('/storage/' . $product->thumbnail) }}"
                                      alt="">
                             </div>
-                            Tên sản phẩm: {{ $trans->translateText($product->name) }}<br>
-                            Giá gốc: {{ $trans->translateText($product->price) }}<br>
+                            Tên sản phẩm: {{ ($product->name) }}<br>
+                            Giá gốc: {{ ($product->price) }}<br>
                             @if($product->old_price)
-                                Giá khuyễn mãi: {{ $trans->translateText($product->old_price) }}
+                                Giá khuyễn mãi: {{ ($product->old_price) }}
                             @endif
 
                             <div>

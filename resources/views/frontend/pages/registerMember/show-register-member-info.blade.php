@@ -3,9 +3,6 @@
 @section('title', 'Register Member')
 
 @section('content')
-    @php
-        $trans = \App\Http\Controllers\TranslateController::getInstance();
-    @endphp
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
     <div class="start-page mb-3">
@@ -14,44 +11,44 @@
                 <div class="form-title text-center pt-2">
                     <div class="title">Đăng kí thông tin</div>
                 </div>
-                <div class="mt-5">
+                <div class="container mt-5">
                     <form class="p-3" action="{{route('register.member.info')}}" method="post">
                         @csrf
-                        <input type="text" class="d-none" name="member" value="{{ $trans->translateText($property->name) }}{{$registerMember}}">
+                        <input type="text" class="d-none" name="member" value="{{ ($registerMember) }}">
                         <div class="form-row">
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 <label for="companyName">Company Name</label>
                                 <input type="text" class="form-control" id="companyName" name="companyName" required>
                             </div>
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 <label for="codeBusiness">Code Business</label>
                                 <input type="text" class="form-control" id="codeBusiness" name="codeBusiness"
                                        required>
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-4">
+                            <div class="form-group col-md-6">
                                 <label for="phoneNumber">PhoneNumber</label>
                                 <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-6 register-member">
                                 <label for="category">Category</label>
-                                <div class="multiselect">
+                                <div class="multiselect" style="position: relative">
                                     <div class="selectBox" id="div-click" onclick="showCheckboxes()">
                                         <select>
                                             <option>Chọn category áp dụng</option>
                                         </select>
                                         <div class="overSelect"></div>
                                     </div>
-                                    <div id="checkboxes" class="mt-1">
+                                    <div id="checkboxes" class="mt-1  checkboxes" >
                                         @foreach($categories as $category)
                                             @if(!$category->parent_id)
                                                 <label class="ml-2" for="category-{{$category->id}}">
                                                     <input type="checkbox" id="category-{{$category->id}}"
                                                            name="category-{{$category->id}}"
-                                                           value="{{ $trans->translateText($property->name) }}{{$category->id}}"
+                                                           value="{{ ($category->id) }}"
                                                            class="inputCheckboxCategory mr-2 p-3"/>
-                                                    <span class="labelCheckboxCategory">{{ $trans->translateText($category->name) }}</span>
+                                                    <span class="labelCheckboxCategory">{{ ($category->name) }}</span>
                                                 </label>
                                                 @if(!$categories->isEmpty())
                                                     @php
@@ -63,7 +60,7 @@
                                                                    name="category-{{$child->id}}"
                                                                    value="{{$child->id}}"
                                                                    class="inputCheckboxCategory mr-2 p-3"/>
-                                                            <span class="labelCheckboxCategory">{{ $trans->translateText($child->name) }}</span>
+                                                            <span class="labelCheckboxCategory">{{ ($child->name) }}</span>
                                                         </label>
                                                         @php
                                                             $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
@@ -74,7 +71,7 @@
                                                                        name="category-{{$child2->id}}"
                                                                        value="{{$child2->id}}"
                                                                        class="inputCheckboxCategory mr-2 p-3"/>
-                                                                <span class="labelCheckboxCategory">{{ $trans->translateText($child2->name) }}</span>
+                                                                <span class="labelCheckboxCategory">{{ ($child2->name) }}</span>
                                                             </label>
                                                         @endforeach
                                                     @endforeach
@@ -85,21 +82,33 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="address">Address</label>
-                            <input type="text" class="form-control" id="address" name="address" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Sign up</button>
+{{--                        <div class="form-group row">--}}
+{{--                            <label class="col-sm-3 col-form-label">Địa chỉ</label>--}}
+{{--                            <div class="col-sm-9">--}}
+{{--                                <textarea type="text" class="form-control" name="address_detail" required></textarea>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+                        <select name="" id="province">
+                            <option  value="">chọn tỉnh</option>
+                        </select>
+                        <select name="" id="district">
+                            <option  value="">chọn quận</option>
+                        </select>
+                        <select name="" id="ward">
+                            <option   value="">chọn phường</option>
+                        </select>
                     </form>
+                    <h2 id="result"></h2>
                 </div>
             </div>
         </div>
     </div>
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 <script>
     var expanded = false;
-
     function showCheckboxes() {
         var checkboxes = document.getElementById("checkboxes");
         if (!expanded) {
@@ -129,4 +138,5 @@
         }
     }
 </script>
+
 

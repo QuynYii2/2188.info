@@ -7,7 +7,7 @@
     }
 @endphp
 @php
-    $trans = \App\Http\Controllers\TranslateController::getInstance();
+
 @endphp
 @if($firstProduct)
     <div class="col-md-6 border">
@@ -18,13 +18,13 @@
             <div class="">
                 <h5>Product Code</h5>
                 <p>
-                    {{ $trans->translateText($firstProduct->product_code) }}
+                    {{ ($firstProduct->product_code) }}
                 </p>
             </div>
             <div class="">
                 <h5>Product Name</h5>
                 <p>
-                    {{ $trans->translateText($firstProduct->name) }}
+                    {{ ($firstProduct->name) }}
                 </p>
             </div>
             <div class="">

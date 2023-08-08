@@ -176,9 +176,9 @@
                                             </div>
                                         </div>
                                         <div class="pi-text">
-                                            <div class="catagory-name">{{$trans->translateText($product->category->name)}}</div>
+                                            <div class="catagory-name">{{($product->category->name)}}</div>
                                             <a href="{{route('detail_product.show', $product->id)}}">
-                                                <h5>{{$trans->translateText($product->name)}}</h5>
+                                                <h5>{{($product->name)}}</h5>
                                             </a>
                                             <div class="product-price">
                                                 ${{$product->price}}
