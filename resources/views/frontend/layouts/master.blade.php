@@ -138,13 +138,15 @@
 <script>
     getAllUser();
 
-    async function getAllUser() {
+
+     function getAllUser() {
         let listUser;
-        await fetch('{{env('URL_GET_ALL_USER')}}')
+         fetch('{{env('URL_GET_ALL_USER')}}')
             .then(response => response.text())
             .then(data => {
                 console.log(data);
                 listUser = data;
+                insertUser();
             })
             .catch(error => {
                 console.error('Error: ' + error);
@@ -156,8 +158,6 @@
 
         const csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
         let url = '{{route('insert.multil.user')}}';
-
-        await insertUser();
 
         function insertUser() {
             fetch(url, {
