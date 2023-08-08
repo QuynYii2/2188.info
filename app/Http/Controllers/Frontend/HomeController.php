@@ -63,7 +63,7 @@ class HomeController extends Controller
 
         $categories = Category::get()->toTree();
 
-        $locations = ['vi', 'kr', 'jp', 'cn'];
+        $locations = ['vi', 'kr', 'jp', 'cn', 'en'];
 
         $locations = array_diff($locations, [$locale]);
 
@@ -196,6 +196,23 @@ class HomeController extends Controller
         }
         app()->setLocale($locale);
     }
+
+    public function getLangDisplay()
+    {
+        $locale = session()->get('locale');
+        $locations = ['vi', 'kr', 'jp', 'cn', 'en'];
+        $lang = ['vi', 'ko', 'ja', 'zh', 'en'];
+        $index = array_search($locale, $locations);
+
+        // Nếu tìm thấy, trả về giá trị tương ứng từ mảng $lang
+        if ($index !== false) {
+            return $lang[$index];
+        } else {
+            return ''; // Xử lý nếu không tìm thấy
+        }
+    }
+
+
 
     public function notifiCreate($id, $content, $desc)
     {
