@@ -3659,3 +3659,15 @@ footer {
   }
 
 }
+.register-member{
+  .multiselect{
+    position: relative;
+    .checkboxes{
+      position: absolute;
+      background: white;
+      height: 30vh;
+      overflow-y: auto;
+    }
+  }
+
+}

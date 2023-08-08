@@ -1,7 +1,5 @@
 <div id="body-content">
-    @php
 
-    @endphp
     <div class="category-header align-items-center mt-4 mb-3 container-fluid d-flex justify-content-between">
         <div class="category-header--left">
         </div>
@@ -99,24 +97,24 @@
                                             $namenewProduct = DB::table('users')->where('id', $product->user_id)->first();
                                         @endphp
                                         <div class="card-brand">
-                                            {{ ($namenewProduct->name) }}
+                                            {{$namenewProduct->name}}
                                         </div>
                                         <div class="card-title">
-                                            <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
+                                            <a href="{{route('detail_product.show', $product->id)}}">{{ $product->name }}</a>
                                         </div>
                                         <div class="card-price d-flex justify-content-between">
                                             @if($product->price)
                                                 <div class="card-price d-flex justify-content-between">
                                                     @if($product->price != null)
                                                         <div class="price-sale">
-                                                            <strong>${{ ($product->price) }}</strong>
+                                                            <strong>${{$product->price}}</strong>
                                                         </div>
                                                         <div class="price-cost">
-                                                            <strike>${{ ($product->old_price) }}</strike>
+                                                            <strike>${{$product->old_price}}</strike>
                                                         </div>
                                                     @else
                                                         <div class="price-sale">
-                                                            <strong>${{ ($product->old_price) }}</strong>
+                                                            <strong>${{$product->old_price}}</strong>
                                                         </div>
                                                     @endif
                                                 </div>
@@ -169,24 +167,24 @@
                                         $namenewProduct = DB::table('users')->where('id', $product->user_id)->first();
                                     @endphp
                                     <div class="card-brand">
-                                        {{ ($namenewProduct->name) }}{{}}
+                                        {{$namenewProduct->name}}
                                     </div>
                                     <div class="card-title-list">
-                                        <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
+                                        <a href="{{route('detail_product.show', $product->id)}}">{{ $product->name }}</a>
                                     </div>
                                     <div class="card-price d-flex">
                                         @if($product->price)
                                             <div class="card-price d-flex justify-content-between">
                                                 @if($product->price != null)
                                                     <div class="price-sale">
-                                                        <strong>${{ ($product->price) }}</strong>
+                                                        <strong>${{$product->price}}</strong>
                                                     </div>
                                                     <div class="price-cost">
-                                                        <strike>${{ ($product->old_price) }}</strike>
+                                                        <strike>${{$product->old_price}}</strike>
                                                     </div>
                                                 @else
                                                     <div class="price-sale">
-                                                        <strong>${{ ($product->old_price) }}</strong>
+                                                        <strong>${{$product->old_price}}</strong>
                                                     </div>
                                                 @endif
                                             </div>
