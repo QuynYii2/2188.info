@@ -29,6 +29,25 @@ class Product extends Model
         'list_category',
         'min',
         'origin',
+
+        'name_vi',
+        'name_ja',
+        'name_ko',
+        'name_en',
+        'name_zh',
+
+        'description_vi',
+        'description_ja',
+        'description_ko',
+        'description_en',
+        'description_zh',
+
+        'short_description_vi',
+        'short_description_ja',
+        'short_description_ko',
+        'short_description_en',
+        'short_description_zh',
+
     ];
 
     // Product.php
