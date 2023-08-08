@@ -8,7 +8,9 @@ $color-main: #fd6506;
 #mt-body{
   margin-top: 170px;
 }
-
+#checkboxes{
+  z-index: 2;
+}
 .layout-fixed{
   .main-actions{
     border-radius: 15px;
@@ -825,7 +827,6 @@ a {
 
         .item {
           position: relative;
-          padding: 0 10px;
 
           button {
             background: none;
@@ -839,11 +840,12 @@ a {
           .button {
             color: white;
             cursor: pointer;
+            padding: 0;
           }
           .total_shop{
             position: absolute;
             top: -5px;
-            right: 15px;
+            right: -5px;
             height: 20px;
             width: 20px;
             border-radius: 30px;
