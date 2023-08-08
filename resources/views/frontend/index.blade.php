@@ -3,7 +3,7 @@
 @section('title', 'Home page')
 
 <?php
-    $tran = \App\Http\Controllers\TranslateController::getInstance();
+    $trans = \App\Http\Controllers\TranslateController::getInstance();
 ?>
 @section('content')
     <link rel="stylesheet" href="{{asset('css/frontend.css')}}">

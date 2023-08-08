@@ -25,6 +25,7 @@ class TranslateController extends Controller
 
     public function translateText($str)
     {
+        return $str;
         return $this->translate->translate($str);
     }
 

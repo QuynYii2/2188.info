@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <p class="mb-1">{{ __('home.address') }}:{{ $trans->translateText($address->address_detail) }}, {{ $trans->translateText($address->location) }},
-                            {{ $trans->translateText($property->name) }}{{$address->province}}, {{ $trans->translateText($address->city) }}</p>
+                            {{ $trans->translateText($address->province) }}, {{ $trans->translateText($address->city) }}</p>
                         <small>{{ __('home.phone number') }}: {{ $trans->translateText($address->phone) }}</small>
                     </div>
                 </div>
