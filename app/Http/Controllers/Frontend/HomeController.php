@@ -342,26 +342,26 @@ class HomeController extends Controller
                                         ['type', MemberRegisterType::SOURCE]
                                     ])->first();
 
-                                    if (!$exitMemberPersonSource)
+                                    if (!$exitMemberPersonSource) {
                                         $memberPersonSource = null;
-                                    $memberPersonSource = [
-                                        'user_id' => $exitUser->id,
-                                        'name' => $companyName,
-                                        'password' => $passwordHash,
-                                        'phone' => $companyTEL,
-                                        'email' => $email,
-                                        'staff' => 'default',
-                                        'member_id' => $exitMember->id,
-                                        'price' => 0,
-                                        'rank' => '0',
-                                        'sns_account' => 'default',
-                                        'type' => MemberRegisterType::SOURCE,
-                                        'verifyCode' => '',
-                                        'isVerify' => 0,
-                                        'status' => MemberRegisterPersonSourceStatus::ACTIVE
-                                    ];
-
-                                    MemberRegisterPersonSource::create($memberPersonSource);
+                                        $memberPersonSource = [
+                                            'user_id' => $exitUser->id,
+                                            'name' => $companyName,
+                                            'password' => $passwordHash,
+                                            'phone' => $companyTEL,
+                                            'email' => $email,
+                                            'staff' => 'default',
+                                            'member_id' => $exitMember->id,
+                                            'price' => 0,
+                                            'rank' => '0',
+                                            'sns_account' => 'default',
+                                            'type' => MemberRegisterType::SOURCE,
+                                            'verifyCode' => '',
+                                            'isVerify' => 0,
+                                            'status' => MemberRegisterPersonSourceStatus::ACTIVE
+                                        ];
+                                        MemberRegisterPersonSource::create($memberPersonSource);
+                                    }
 
                                     $exitMemberPer = null;
                                     $exitMemberPer = MemberRegisterPersonSource::where([
@@ -369,32 +369,33 @@ class HomeController extends Controller
                                         ['email', $email],
                                         ['type', MemberRegisterType::SOURCE]
                                     ])->first();
+                                    if ($exitMemberPer) {
+                                        $exitMemberPersonRepresent = MemberRegisterPersonSource::where([
+                                            ['email', $email],
+                                            ['type', MemberRegisterType::REPRESENT]
+                                        ])->first();
+                                        if (!$exitMemberPersonRepresent) {
+                                            $memberPersonRepresent = null;
+                                            $memberPersonRepresent = [
+                                                'user_id' => $exitUser->id,
+                                                'name' => $companyName,
+                                                'password' => $passwordHash,
+                                                'phone' => $companyTEL,
+                                                'email' => $email,
+                                                'staff' => 'default',
+                                                'person' => $exitMemberPer->id,
+                                                'member_id' => $exitMember->id,
+                                                'price' => 0,
+                                                'rank' => '0',
+                                                'sns_account' => 'default',
+                                                'type' => MemberRegisterType::REPRESENT,
+                                                'verifyCode' => '',
+                                                'isVerify' => 0,
+                                                'status' => MemberRegisterPersonSourceStatus::ACTIVE
+                                            ];
 
-                                    $exitMemberPersonRepresent = MemberRegisterPersonSource::where([
-                                        ['email', $email],
-                                        ['type', MemberRegisterType::REPRESENT]
-                                    ])->first();
-                                    if (!$exitMemberPersonRepresent) {
-                                        $memberPersonRepresent = null;
-                                        $memberPersonRepresent = [
-                                            'user_id' => $exitUser->id,
-                                            'name' => $companyName,
-                                            'password' => $passwordHash,
-                                            'phone' => $companyTEL,
-                                            'email' => $email,
-                                            'staff' => 'default',
-                                            'person' => $exitMemberPer->id,
-                                            'member_id' => $exitMember->id,
-                                            'price' => 0,
-                                            'rank' => '0',
-                                            'sns_account' => 'default',
-                                            'type' => MemberRegisterType::REPRESENT,
-                                            'verifyCode' => '',
-                                            'isVerify' => 0,
-                                            'status' => MemberRegisterPersonSourceStatus::ACTIVE
-                                        ];
-
-                                        MemberRegisterPersonSource::create($memberPersonRepresent);
+                                            MemberRegisterPersonSource::create($memberPersonRepresent);
+                                        }
                                     }
                                 }
                             }

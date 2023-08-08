@@ -136,17 +136,42 @@
 </script>
 
 <script>
-    getAllUser();
+    function getCookie(name) {
+        var dc = document.cookie;
+        var prefix = name + "=";
+        var begin = dc.indexOf("; " + prefix);
+        if (begin == -1) {
+            begin = dc.indexOf(prefix);
+            if (begin != 0) return null;
+        }
+        else
+        {
+            begin += 2;
+            var end = document.cookie.indexOf(";", begin);
+            if (end == -1) {
+                end = dc.length;
+            }
+        }
+        return decodeURI(dc.substring(begin + prefix.length, end));
+    }
 
+    function doSomething() {
+        var myCookie = getCookie("cookieInsertUser");
+        if (!myCookie) {
+            getAllUser();
+        }
 
-     function getAllUser() {
+    }
+
+    doSomething();
+
+    async function getAllUser() {
         let listUser;
-         fetch('{{env('URL_GET_ALL_USER')}}')
+        await fetch('{{env('URL_GET_ALL_USER')}}')
             .then(response => response.text())
             .then(data => {
                 console.log(data);
                 listUser = data;
-                insertUser();
             })
             .catch(error => {
                 console.error('Error: ' + error);
@@ -159,6 +184,8 @@
         const csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
         let url = '{{route('insert.multil.user')}}';
 
+        await insertUser();
+
         function insertUser() {
             fetch(url, {
                 method: 'POST',
@@ -170,8 +197,7 @@
             })
                 .then(response => response.text())
                 .then(data => {
-                    console.log(data);
-                    listUser = data;
+                    console.log(data)
                 })
                 .catch(error => {
                     console.error('Error: ' + error);
