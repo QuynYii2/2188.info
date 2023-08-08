@@ -50,8 +50,9 @@
 
 </style>
 
-@php
 
+@php
+    $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
 @endphp
 <header class="header">
     <div class="header-pc halo-header">
@@ -89,14 +90,14 @@
                                         $listCate = DB::table('categories')->where('parent_id', null)->get();
                                     @endphp
                                     @foreach($listCate as $cate)
-                                        <a class="item-hd dropdown-item " href="">-- {{ ($cate->name) }}</a>
+                                        <a class="item-hd dropdown-item " href="">-- {{($cate->{'name' . $langDisplay->getLangDisplay()})}}</a>
                                         @if(!$listCate->isEmpty())
                                             <ul class="hd_dropdown--right row">
                                                 @php
                                                     $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
                                                 @endphp
                                                 @foreach($listChild as $child)
-                                                    <a class="dropdown-item" href="">––– {{ ($child->name) }}</a>
+                                                    <a class="dropdown-item" href="">––– {{($child->{'name' . $langDisplay->getLangDisplay()})}}</a>
                                                 @endforeach
                                             </ul>
                                         @endif
@@ -372,7 +373,7 @@
                                             <div class="header_bottom--one--list--item">
                                                 <a class="item d-flex" href="{{ route('category.show', $cate->id) }}">
                                                     <i class="fa-solid fa-tv"></i>
-                                                    <div class="item-text">{{ ($cate->name) }}</div>
+                                                    <div class="item-text">{{($cate->{'name' . $langDisplay->getLangDisplay()})}}</div>
                                                     <i class="fa-solid fa-angle-right"></i>
                                                 </a>
                                                 @if(!$listCate->isEmpty())
@@ -385,7 +386,7 @@
                                                                 <div class="colum d-block">
                                                                     <li>
                                                                         <a class="colum-hd"
-                                                                           href="{{ route('category.show', $child->id) }}">{{ ($child->name) }}</a>
+                                                                           href="{{ route('category.show', $child->id) }}">{{($child->{'name' . $langDisplay->getLangDisplay()})}} </a>
                                                                     </li>
                                                                     @php
                                                                         $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
@@ -393,7 +394,7 @@
                                                                     @foreach($listChild2 as $child2)
                                                                         <li>
                                                                             <a class="colum-item"
-                                                                               href="{{ route('category.show', $child2->id) }}">{{ ($child2->name) }}</a>
+                                                                               href="{{ route('category.show', $child2->id) }}">{{($child2->{'name' . $langDisplay->getLangDisplay()})}}</a>
                                                                         </li>
                                                                     @endforeach
                                                                 </div>
