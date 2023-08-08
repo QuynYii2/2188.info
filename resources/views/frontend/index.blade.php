@@ -18,6 +18,8 @@
                     <div class="row list">
                         @php
                             $listCate = DB::table('categories')->where('parent_id', null)->get();
+                            $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
+
                         @endphp
                         @if(count($listCate)>10)
                             @for($i =0; $i <10; $i ++)
@@ -249,9 +251,9 @@
                                             </div>
                                             <div class="card-title">
                                                 @if(Auth::check())
-                                                    <a href="{{route('detail_product.show', $newProduct->id)}}">{{($newProduct->name)}}</a>
+                                                    <a href="{{route('detail_product.show', $newProduct->id)}}">{{($newProduct->{'name' . $langDisplay->getLangDisplay()})}}</a>
                                                 @else
-                                                    <a class="check_url">{{($newProduct->name)}}</a>
+                                                    <a class="check_url">{{($newProduct->{'name' . $langDisplay->getLangDisplay()})}}</a>
                                                 @endif
 
 
@@ -337,12 +339,11 @@
                                                 @endphp
                                                 <div class="card-brand">
                                                 </div>
-                                                12312312
                                                 <div class="card-title">
                                                     @if(Auth::check())
-                                                        <a href="{{route('detail_product.show', $product->id)}}">{{($product->name)}}</a>
+                                                        <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->{'name' . $langDisplay->getLangDisplay()}) }}</a>
                                                     @else
-                                                        <a class="check_url">{{($product->name)}}</a>
+                                                        <a class="check_url">{{ ($product->{'name' . $langDisplay->getLangDisplay()}) }}</a>
                                                     @endif
                                                 </div>
                                                 @if($product->price)

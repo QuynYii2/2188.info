@@ -26,10 +26,12 @@ class GeoIP
                     return 'jp';
                 case 'CN':
                     return 'cn';
-                default:
+                case 'VN':
                     return 'vi';
+                default:
+                    return 'en';
             }
         }
-        return 'vi';
+        return 'en';
     }
 }
