@@ -10,9 +10,7 @@
 @section('title', 'Product Interest')
 
 @section('content')
-    <?php
-    $trans = \App\Http\Controllers\TranslateController::getInstance();
-    ?>
+
     <div class="container">
         <div class="title mt-3 mb-3 text-center">Sản phẩm quan tâm</div>
         <div class=" p-3">
@@ -85,7 +83,7 @@
                                     <a class="nav-item nav-link " style="color: black" id="nav-{{$category->name}}-tab"
                                        data-toggle="tab" href="#nav-{{$category->name}}" role="tab"
                                        aria-controls="nav-{{$category->name}}"
-                                       aria-selected="true">{{$trans->translateText($category->name)}}</a>
+                                       aria-selected="true">{{($category->name)}}</a>
                                 @endif
                             @endfor
                         </div>
@@ -125,7 +123,7 @@
                                                             <div class="product-item">
                                                                 <div class="pi-text">
                                                                     <a href="{{route('detail_product.show', $item->id)}}">
-                                                                        <h5>{{$trans->translateText($item->name)}}</h5>
+                                                                        <h5>{{($item->name)}}</h5>
                                                                     </a>
                                                                 </div>
                                                             </div>

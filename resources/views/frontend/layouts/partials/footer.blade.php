@@ -3,7 +3,7 @@
 @endphp
 
 @php
-    $trans = \App\Http\Controllers\TranslateController::getInstance();
+
 @endphp
 <footer class="footer">
     <div class="footer-content text-center">
@@ -26,13 +26,13 @@
                 @if(count($listCate)<6)
                     @foreach($listCate as $cate)
                         <div class="item-small">
-                            <a href="{{ route('category.show', $cate->id) }}">{{ $trans->translateText($cate->name) }}</a>
+                            <a href="{{ route('category.show', $cate->id) }}">{{ ($cate->name) }}</a>
                         </div>
                     @endforeach
                 @else
                     @for($i=0; $i<6; $i++)
                         <div class="item-small">
-                            <a href="{{ route('category.show', $listCate[$i]->id) }}">{{ $trans->translateText($listCate[$i]->name) }}</a>
+                            <a href="{{ route('category.show', $listCate[$i]->id) }}">{{ ($listCate[$i]->name) }}</a>
                         </div>
                     @endfor
                 @endif

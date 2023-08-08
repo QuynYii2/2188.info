@@ -168,7 +168,7 @@
             </div>
         </div>
         <?php
-        $trans = \App\Http\Controllers\TranslateController::getInstance();
+
         ?>
         @php
             $name = DB::table('users')->where('id', $product->user_id)->first();
@@ -201,7 +201,7 @@
                 <form action="{{ route('cart.add', $product) }}" method="POST">
                     @csrf
                     <div class="product-name"><a href="{{ route('shop.information.show', $name->id) }}">{{$name->name}}</a></div>
-                    <div class="product-title">{{$trans->translateText($product->name)}}</div>
+                    <div class="product-title">{{($product->name)}}</div>
                     <div class="product-origin">Xuất xứ: {{$product->origin}}</div>
                     <div class="product-rating">
                         <i class="fa fa-star"></i>
@@ -621,7 +621,7 @@
                                     {{$nameUser->name}}
                                 </div>
                                 <div class="card-title">
-                                    <a href="{{route('detail_product.show', $product->id)}}">{{$trans->translateText($product->name)}}</a>
+                                    <a href="{{route('detail_product.show', $product->id)}}">{{($product->name)}}</a>
                                 </div>
                                 <div class="card-price d-flex justify-content-between">
                                     @if($product->price != null)
@@ -706,7 +706,7 @@
                                     {{$nameUser->name}}
                                 </div>
                                 <div class="card-title">
-                                    <a href="{{route('detail_product.show', $product->id)}}">{{$trans->translateText($product->name)}}</a>
+                                    <a href="{{route('detail_product.show', $product->id)}}">{{($product->name)}}</a>
                                 </div>
                                 <div class="card-price d-flex justify-content-between">
                                     @if($product->price != null)

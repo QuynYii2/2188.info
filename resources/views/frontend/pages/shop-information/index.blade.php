@@ -346,7 +346,7 @@
 
 @section('content')
     @php
-        $trans = \App\Http\Controllers\TranslateController::getInstance();
+
     @endphp
     <div class="shop-page__info snipcss-sPWYr">
         <div class="section-seller-overview-horizontal container">
@@ -434,7 +434,7 @@
                             Sản phẩm:&nbsp;
                         </div>
                         <div class="section-seller-overview__item-text-value">
-                            {{ $trans->translateText($countProductBySeller->countProduct) }}
+                            {{ ($countProductBySeller->countProduct) }}
                         </div>
                     </div>
                 </div>

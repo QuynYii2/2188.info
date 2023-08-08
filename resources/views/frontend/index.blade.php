@@ -5,7 +5,7 @@
 
 
 <?php
-$trans = \App\Http\Controllers\TranslateController::getInstance();
+
 ?>
 @section('content')
     <link rel="stylesheet" href="{{asset('css/frontend.css')}}">
@@ -26,12 +26,12 @@ $trans = \App\Http\Controllers\TranslateController::getInstance();
                                     @if(Auth::check())
                                         <a href="{{ route('category.show', $listCate[$i]->id) }}">
                                             {{-- <img class="icon_i" alt="">--}}
-                                            <div class="text">{{  $trans->translateText($listCate[$i]->name)}}</div>
+                                            <div class="text">{{  ($listCate[$i]->name)}}</div>
                                         </a>
                                     @else
                                         <a class="check_url">
                                             {{-- <img class="icon_i" alt="">--}}
-                                            <div class="text">{{  $trans->translateText($listCate[$i]->name)}}</div>
+                                            <div class="text">{{  ($listCate[$i]->name)}}</div>
                                         </a>
                                     @endif
                                 </div>
@@ -42,12 +42,12 @@ $trans = \App\Http\Controllers\TranslateController::getInstance();
                                     @if(Auth::check())
                                         <a href="{{ route('category.show', $cate->id) }}">
                                             {{-- <img class="icon_i" alt="">--}}
-                                            <div class="text">{{ $trans->translateText($cate->name) }}</div>
+                                            <div class="text">{{ ($cate->name) }}</div>
                                         </a>
                                     @else
                                         <a class="check_url">
                                             {{-- <img class="icon_i" alt="">--}}
-                                            <div class="text">{{  $trans->translateText($cate->name)}}</div>
+                                            <div class="text">{{  ($cate->name)}}</div>
                                         </a>
                                     @endif
                                 </div>
@@ -68,13 +68,13 @@ $trans = \App\Http\Controllers\TranslateController::getInstance();
                                     <a href="{{ route('category.show', $cate->id) }}">
                                         <img src="{{ asset('storage/' . $cate->thumbnail) }}"
                                              alt="">
-                                        <div class="text">{{  $trans->translateText($cate->name)}}</div>
+                                        <div class="text">{{  ($cate->name)}}</div>
                                     </a>
                                 @else
                                     <a class="check_url">
                                         <img src="{{ asset('storage/' . $cate->thumbnail) }}"
                                              alt="">
-                                        <div class="text">{{ $trans->translateText( $cate->name)}}</div>
+                                        <div class="text">{{ ( $cate->name)}}</div>
                                     </a>
                                 @endif
                             </div>
@@ -182,7 +182,7 @@ $trans = \App\Http\Controllers\TranslateController::getInstance();
                                              alt="">
                                     </div>
                                     <div class="text">
-                                        {{$trans->translateText($cate->name)}}
+                                        {{($cate->name)}}
                                     </div>
                                 </a>
                             @else
@@ -192,7 +192,7 @@ $trans = \App\Http\Controllers\TranslateController::getInstance();
                                              alt="">
                                     </div>
                                     <div class="text">
-                                        {{$trans->translateText($cate->name)}}
+                                        {{($cate->name)}}
                                     </div>
                                 </a>
                             @endif
@@ -246,13 +246,13 @@ $trans = \App\Http\Controllers\TranslateController::getInstance();
                                                 $namenewProduct = DB::table('users')->where('id', $newProduct->user_id)->first();
                                             @endphp
                                             <div class="card-brand">
-                                                {{$trans->translateText($namenewProduct->name)}}
+                                                {{($namenewProduct->name)}}
                                             </div>
                                             <div class="card-title">
                                                 @if(Auth::check())
-                                                    <a href="{{route('detail_product.show', $newProduct->id)}}">{{$trans->translateText($newProduct->name)}}</a>
+                                                    <a href="{{route('detail_product.show', $newProduct->id)}}">{{($newProduct->name)}}</a>
                                                 @else
-                                                    <a class="check_url">{{$trans->translateText($newProduct->name)}}</a>
+                                                    <a class="check_url">{{($newProduct->name)}}</a>
                                                 @endif
 
 
@@ -341,9 +341,9 @@ $trans = \App\Http\Controllers\TranslateController::getInstance();
                                                 12312312
                                                 <div class="card-title">
                                                     @if(Auth::check())
-                                                        <a href="{{route('detail_product.show', $product->id)}}">{{$trans->translateText($product->name)}}</a>
+                                                        <a href="{{route('detail_product.show', $product->id)}}">{{($product->name)}}</a>
                                                     @else
-                                                        <a class="check_url">{{$trans->translateText($product->name)}}</a>
+                                                        <a class="check_url">{{($product->name)}}</a>
                                                     @endif
                                                 </div>
                                                 @if($product->price)
@@ -502,7 +502,7 @@ $trans = \App\Http\Controllers\TranslateController::getInstance();
                                             $nameHot = DB::table('users')->where('id', $hotProduct->user_id)->first();
                                         @endphp
                                         <div class="card-brand">
-                                            {{$trans->translateText($nameHot->name)}}
+                                            {{($nameHot->name)}}
                                         </div>
 
 
@@ -616,13 +616,13 @@ $trans = \App\Http\Controllers\TranslateController::getInstance();
                                                 $nameUser = DB::table('users')->where('id', $product->user_id)->first();
                                             @endphp
                                             <div class="card-brand">
-                                                {{$trans->translateText($nameUser->name)}}
+                                                {{($nameUser->name)}}
                                             </div>
                                             <div class="card-title">
                                                 @if(Auth::check())
-                                                    <a href="{{route('detail_product.show', $product->id)}}">{{ $trans->translateText($product->name) }}</a>
+                                                    <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
                                                 @else
-                                                    <a class="check_url">{{$trans->translateText($product->name)}}</a>
+                                                    <a class="check_url">{{($product->name)}}</a>
                                                 @endif
                                             </div>
                                             @if($product->price)
@@ -685,7 +685,7 @@ $trans = \App\Http\Controllers\TranslateController::getInstance();
                                 @foreach($listCurrentCategory as $child)
                                     <div class="brand-item d-flex justify-content-between">
                                         <div class="brand-item-text">
-                                            <div class="name">{{  $trans->translateText($child->name)}}</div>
+                                            <div class="name">{{  ($child->name)}}</div>
                                             @if(Auth::check())
                                                 <a href="{{ route('category.show', $child->id) }}">{{ __('home.shop now') }}</a>
                                             @else
@@ -702,7 +702,7 @@ $trans = \App\Http\Controllers\TranslateController::getInstance();
                                 @for($i = 0; $i < 3; $i++)
                                     <div class="brand-item d-flex justify-content-between">
                                         <div class="brand-item-text">
-                                            <div class="name">{{  $trans->translateText($listCurrentCategory[$i]->name)}}</div>
+                                            <div class="name">{{  ($listCurrentCategory[$i]->name)}}</div>
                                             @if(Auth::check())
                                                 <a href="{{ route('category.show', $listCurrentCategory[$i]->id) }}">{{ __('home.shop now') }}</a>
                                             @else
@@ -799,13 +799,13 @@ $trans = \App\Http\Controllers\TranslateController::getInstance();
                                                         $nameUser = DB::table('users')->where('id', $product->user_id)->first();
                                                     @endphp
                                                     <div class="card-brand">
-                                                        {{$trans->translateText($nameUser->name)}}
+                                                        {{($nameUser->name)}}
                                                     </div>
                                                     <div class="card-title">
                                                         @if(Auth::check())
-                                                            <a href="{{route('detail_product.show', $product->id)}}">{{$trans->translateText($product->name)}}</a>
+                                                            <a href="{{route('detail_product.show', $product->id)}}">{{($product->name)}}</a>
                                                         @else
-                                                            <a class="check_url">{{$trans->translateText($product->name)}}</a>
+                                                            <a class="check_url">{{($product->name)}}</a>
                                                         @endif
                                                     </div>
                                                     @if($product->price)
@@ -868,7 +868,7 @@ $trans = \App\Http\Controllers\TranslateController::getInstance();
                                         @foreach($listCurrentCategory as $child)
                                             <div class="brand-item d-flex justify-content-between">
                                                 <div class="brand-item-text">
-                                                    <div class="name">{{  $trans->translateText($child->name)}}</div>
+                                                    <div class="name">{{  ($child->name)}}</div>
                                                     @if(Auth::check())
                                                         <a href="{{ route('category.show', $child->id) }}">{{ __('home.shop now') }}</a>
                                                     @else
@@ -885,7 +885,7 @@ $trans = \App\Http\Controllers\TranslateController::getInstance();
                                         @for($i = 0; $i < 3; $i++)
                                             <div class="brand-item d-flex justify-content-between">
                                                 <div class="brand-item-text">
-                                                    <div class="name">{{  $trans->translateText($listCurrentCategory[$i]->name)}}</div>
+                                                    <div class="name">{{  ($listCurrentCategory[$i]->name)}}</div>
                                                     @if(Auth::check())
                                                         <a href="{{ route('category.show', $listCurrentCategory[$i]->id) }}">{{ __('home.shop now') }}</a>
                                                     @else
