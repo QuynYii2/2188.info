@@ -10,6 +10,7 @@ use App\Enums\PromotionStatus;
 use App\Enums\VariationStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\TranslateController;
 use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
@@ -211,6 +212,9 @@ class ProductController extends Controller
             $product->slug = \Str::slug($request->input('name'));
             $product->old_price = $request->input('giaban');
             $product->origin = $request->input('origin');
+
+            $ld = TranslateController::getInstance();
+
 
             if ($request->input('giakhuyenmai')) {
                 $product->price = $request->input('giakhuyenmai');
