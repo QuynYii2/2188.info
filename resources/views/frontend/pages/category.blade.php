@@ -3,7 +3,9 @@
 @section('title', 'Category')
 
 @section('content')
-
+    @php
+        $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
+    @endphp
     <div id="body-content">
         <div class="category-banner">
             <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/category-banner-top-layout-2.jpg"
@@ -27,7 +29,7 @@
                                          alt="">
                                 </div>
                                 <div class="text">
-                                    {{($cate->name)}}
+                                    {{($cate->{'name' . $langDisplay->getLangDisplay()})}}
                                 </div>
                             </a>
                         </div>

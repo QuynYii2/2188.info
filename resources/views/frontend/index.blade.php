@@ -4,6 +4,9 @@
 @section('title', 'Home page')
 
 @section('content')
+    @php
+        $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
+    @endphp
     <link rel="stylesheet" href="{{asset('css/frontend.css')}}">
     <!-- test nhanh -->
     <div class="body" id="body-content">
@@ -24,12 +27,12 @@
                                     @if(Auth::check())
                                         <a href="{{ route('category.show', $listCate[$i]->id) }}">
                                             {{-- <img class="icon_i" alt="">--}}
-                                            <div class="text">{{  ($listCate[$i]->name)}}</div>
+                                            <div class="text">{{($listCate[$i]->{'name' . $langDisplay->getLangDisplay()})}}</div>
                                         </a>
                                     @else
                                         <a class="check_url">
                                             {{-- <img class="icon_i" alt="">--}}
-                                            <div class="text">{{  ($listCate[$i]->name)}}</div>
+                                            <div class="text">{{($listCate[$i]->{'name' . $langDisplay->getLangDisplay()})}}</div>
                                         </a>
                                     @endif
                                 </div>
@@ -40,12 +43,12 @@
                                     @if(Auth::check())
                                         <a href="{{ route('category.show', $cate->id) }}">
                                             {{-- <img class="icon_i" alt="">--}}
-                                            <div class="text">{{ ($cate->name) }}</div>
+                                            <div class="text">{{($cate->{'name' . $langDisplay->getLangDisplay()})}}</div>
                                         </a>
                                     @else
                                         <a class="check_url">
                                             {{-- <img class="icon_i" alt="">--}}
-                                            <div class="text">{{  ($cate->name)}}</div>
+                                            <div class="text">{{($cate->{'name' . $langDisplay->getLangDisplay()})}}</div>
                                         </a>
                                     @endif
                                 </div>
@@ -66,13 +69,13 @@
                                     <a href="{{ route('category.show', $cate->id) }}">
                                         <img src="{{ asset('storage/' . $cate->thumbnail) }}"
                                              alt="">
-                                        <div class="text">{{  ($cate->name)}}</div>
+                                        <div class="text">{{($cate->{'name' . $langDisplay->getLangDisplay()})}}</div>
                                     </a>
                                 @else
                                     <a class="check_url">
                                         <img src="{{ asset('storage/' . $cate->thumbnail) }}"
                                              alt="">
-                                        <div class="text">{{ ( $cate->name)}}</div>
+                                        <div class="text">{{($cate->{'name' . $langDisplay->getLangDisplay()})}}</div>
                                     </a>
                                 @endif
                             </div>
@@ -180,7 +183,7 @@
                                              alt="">
                                     </div>
                                     <div class="text">
-                                        {{($cate->name)}}
+                                        {{($cate->{'name' . $langDisplay->getLangDisplay()})}}
                                     </div>
                                 </a>
                             @else
@@ -190,7 +193,7 @@
                                              alt="">
                                     </div>
                                     <div class="text">
-                                        {{($cate->name)}}
+                                        {{($cate->{'name' . $langDisplay->getLangDisplay()})}}
                                     </div>
                                 </a>
                             @endif

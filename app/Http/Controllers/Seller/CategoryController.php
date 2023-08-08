@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\TranslateController;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -54,6 +55,14 @@ class CategoryController extends Controller
             $category->user_id = Auth::user()->id;
             $category->slug = $slug;
             $category->description = $request->input('category_description');
+
+            $ld = new TranslateController();
+
+            $category->name_vi = $ld->translateText($name, 'vi');
+            $category->name_ja = $ld->translateText($name, 'ja');
+            $category->name_ko = $ld->translateText($name, 'ko');
+            $category->name_en = $ld->translateText($name, 'en');
+            $category->name_zh = $ld->translateText($name, 'zh-CN');
 
             if ($request->hasFile('thumbnail')) {
                 $thumbnail = $request->file('thumbnail');
@@ -138,6 +147,15 @@ class CategoryController extends Controller
             $category->name = $name;
             $category->slug = $slug;
             $category->description = $request->input('category_description');
+
+
+            $ld = new TranslateController();
+
+            $category->name_vi = $ld->translateText($name, 'vi');
+            $category->name_ja = $ld->translateText($name, 'ja');
+            $category->name_ko = $ld->translateText($name, 'ko');
+            $category->name_en = $ld->translateText($name, 'en');
+            $category->name_zh = $ld->translateText($name, 'zh-CN');
 
             if (!$validatedData['category_parentID']) {
                 $category->parent_id = $validatedData['category_parentID'];
