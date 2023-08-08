@@ -3,7 +3,8 @@
     use App\Models\VoucherItem;
     use App\Models\Properties;use Illuminate\Support\Facades\Auth;
 
-     (new \App\Http\Controllers\Frontend\HomeController())->createStatisticShopDetail('views', $product->user_id)
+     (new \App\Http\Controllers\Frontend\HomeController())->createStatisticShopDetail('views', $product->user_id);
+     $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
 @endphp
 
 
@@ -232,7 +233,7 @@
                                     $arrayAtt = explode(',', $properties_id);
                                 @endphp
                                 <div class="col-sm-6 col-6">
-                                    <label>{{$att->name}}</label>
+                                    <label>{{($att->{'name' . $langDisplay->getLangDisplay()})}}</label>
                                     <div class="radio-toolbar mt-3">
                                         @foreach($arrayAtt as $data)
                                             @php

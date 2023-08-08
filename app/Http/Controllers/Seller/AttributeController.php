@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Enums\AttributeStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\TranslateController;
 use App\Models\Attribute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,12 +32,25 @@ class AttributeController extends Controller
 
             $name = $request->attribute_name;
 
+            $ld = new TranslateController();
+
+            $name_vi = $ld->translateText($name, 'vi');
+            $name_ja = $ld->translateText($name, 'ja');
+            $name_ko = $ld->translateText($name, 'ko');
+            $name_en = $ld->translateText($name, 'en');
+            $name_zh = $ld->translateText($name, 'zh-CN');
+
             $slug = $request->input('attribute_slug');
             if (!$slug) {
                 $slug = \Str::slug($name);
             }
             $attribute = Attribute::create([
                 'name' => $name,
+                'name_vi' => $name_vi,
+                'name_ja' => $name_ja,
+                'name_ko' => $name_ko,
+                'name_en' => $name_en,
+                'name_zh' => $name_zh,
                 'slug' => $slug,
                 'user_id' => Auth::user()->id,
             ]);
@@ -81,7 +95,20 @@ class AttributeController extends Controller
                 $slug = \Str::slug($name);
             }
 
+            $ld = new TranslateController();
+
+            $name_vi = $ld->translateText($name, 'vi');
+            $name_ja = $ld->translateText($name, 'ja');
+            $name_ko = $ld->translateText($name, 'ko');
+            $name_en = $ld->translateText($name, 'en');
+            $name_zh = $ld->translateText($name, 'zh-CN');
+
             $attribute->name = $name;
+            $attribute->name_vi = $name_vi;
+            $attribute->name_ko = $name_ko;
+            $attribute->name_ja = $name_ja;
+            $attribute->name_zh = $name_zh;
+            $attribute->name_en = $name_en;
             $attribute->slug = $slug;
             $success = $attribute->save();
             if ($success) {
