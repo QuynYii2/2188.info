@@ -3,10 +3,6 @@
 
 @section('title', 'Home page')
 
-
-<?php
-
-?>
 @section('content')
     <link rel="stylesheet" href="{{asset('css/frontend.css')}}">
     <!-- test nhanh -->
