@@ -18,9 +18,5 @@ class ShopInfo extends Model
         'product_code',
         'product_key',
         'business_license',
-        'acreage',
-        'industry_year',
-        'marketing',
-        'customers',
     ];
 }

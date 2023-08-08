@@ -5,6 +5,9 @@
 @section('title', 'View Cart')
 
 @section('content')
+    <?php
+    $trans = \App\Http\Controllers\TranslateController::getInstance();
+    ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('css/checkout.css') }}">
     <div class="checkout-bg">
@@ -74,10 +77,10 @@
                                                 @if($allArr!=null)
                                                     <option class="choose"
                                                             value="{{$voucherConvert}}-{{$voucher->percent}}-{{$voucher->id}}">
-                                                        {{$voucher->name}} - {{$voucher->code}}
+                                                        {{$trans->translateText($voucher->name)}} - {{$voucher->code}}
                                                     </option>
                                                 @else
-                                                    <option disabled>{{$voucher->name}} - Không thể sử dụng</option>
+                                                    <option disabled>{{$trans->translateText($trans->translateText($voucher->name))}} - Không thể sử dụng</option>
                                                 @endif
                                             @endforeach
                                         </select>
@@ -142,7 +145,7 @@
                                                 <img src="{{ asset('storage/' . $cartItem->product->thumbnail) }}" >
                                             </div>
                                             <div class="col-5 name d-flex">
-                                                {{ $cartItem->quantity }} x {{ $cartItem->product->name }}
+                                                {{ $cartItem->quantity }} x {{ $trans->translateText($cartItem->product->name) }}
                                             </div>
                                             <div class="col-4 price d-flex" style="color:black">
                                                 <span>$ <span class="price-quantity" id="total-quantity-{{ $cartItem->id }}">{{ $cartItem->price*$cartItem->quantity }}</span></span>

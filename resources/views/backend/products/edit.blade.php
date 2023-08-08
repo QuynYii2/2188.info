@@ -84,7 +84,7 @@
     <div id="wpcontent">
         <div id="wpbody" role="main">
             <div class="card-header d-flex justify-content-between align-items-center" style="padding: 15px;">
-                <h5 class="card-title">Chỉnh sửa sản phẩm: {{$product->name}}</h5>
+                <h5 class="card-title">Chỉnh sửa sản phẩm: {{$trans->translateText($product->name)}}</h5>
                 @if (session('success_update_product'))
                     <div class="alert alert-success">
                         {{ session('success_update_product') }}
@@ -105,7 +105,7 @@
                         <div class="form-group">
                             <div class="name">Tên sản phẩm</div>
                             <input type="text" class="form-control" name="name" id="name"
-                                   placeholder="Nhập tên sản phẩm" value="{{$product->name}}"
+                                   placeholder="Nhập tên sản phẩm" value="{{$trans->translateText($product->name)}}"
                                    required>
                         </div>
                         <div class="form-group">
@@ -181,7 +181,7 @@
                                                 @endphp
                                                 <div class="">
                                                     <label class="control-label"
-                                                           for="color">{{$attributeVariation->name}}</label>
+                                                           for="color">{{$trans->translateText($attributeVariation->name)}}</label>
                                                     <div class="overflow-scroll custom-scrollbar">
                                                         <input class="form-control" type="text"
                                                                value="{{$propertyVariation->name}}" disabled>
@@ -237,7 +237,7 @@
                             <label class="name">Thông số sản phẩm</label>
                             <select class="form-control" name="attribute_id" id="selectAttribute">
                                 @foreach($attributes as $attribute)
-                                    <option value="{{ $attribute->id }}">{{ $attribute->name }}</option>
+                                    <option value="{{ $attribute->id }}">{{  $trans->translateText($attribute->name)}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -248,7 +248,7 @@
                                 @endphp
                                 @if(!$properties->isEmpty())
                                     <div id="attributeID_{{$attribute->id}}" class="d-none">
-                                        <label class="name" for="date_start">{{$attribute->name}}</label>
+                                        <label class="name" for="date_start">{{$trans->translateText($attribute->name)}}</label>
                                         <input type="text" class="form-control"
                                                onclick="showDropdown('attribute_property{{$attribute->id}}', 'attribute_property-dropdownList{{$attribute->id}}')"
                                                disabled id="attribute_property{{$attribute->id}}" required>
@@ -278,7 +278,7 @@
                                                            {{ $isChecked ? 'checked' : '' }}
                                                            name="property-{{$attribute->id}}"
                                                            onchange="updateSelectedOptions(this, 'attribute_property{{$attribute->id}}', 'attribute_property-dropdownList{{$attribute->id}}')">
-                                                    {{$property->name}}
+                                                    {{$trans->translateText($property->name)}}
                                                 @endforeach
                                             </label>
                                         </div>
@@ -402,7 +402,7 @@
                                                value="{{$category->id}}"
                                                {{ $isValid ? 'checked' : '' }}
                                                class="inputCheckboxCategory mr-2 p-3"/>
-                                        <span class="labelCheckboxCategory">{{$category->name}}</span>
+                                        <span class="labelCheckboxCategory">{{$trans->translateText($category->name)}}</span>
                                     </label>
                                     @if(!$categories->isEmpty())
                                         @php
@@ -423,7 +423,7 @@
                                                        value="{{$child->id}}"
                                                        {{ $isValidChild ? 'checked' : '' }}
                                                        class="inputCheckboxCategory mr-2 p-3"/>
-                                                <span class="labelCheckboxCategory">{{$child->name}}</span>
+                                                <span class="labelCheckboxCategory">{{$trans->translateText($child->name)}}</span>
                                             </label>
                                             @php
                                                 $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
@@ -443,7 +443,7 @@
                                                            value="{{$child2->id}}"
                                                            {{ $isValidChild2 ? 'checked' : '' }}
                                                            class="inputCheckboxCategory mr-2 p-3"/>
-                                                    <span class="labelCheckboxCategory">{{$child2->name}}</span>
+                                                    <span class="labelCheckboxCategory">{{$trans->translateText($child2->name)}}</span>
                                                 </label>
                                             @endforeach
                                         @endforeach

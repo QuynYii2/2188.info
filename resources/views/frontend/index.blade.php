@@ -1,9 +1,11 @@
 @extends('frontend.layouts.master')
 
+
 @section('title', 'Home page')
 
+
 <?php
-    $tran = \App\Http\Controllers\TranslateController::getInstance();
+$trans = \App\Http\Controllers\TranslateController::getInstance();
 ?>
 @section('content')
     <link rel="stylesheet" href="{{asset('css/frontend.css')}}">
@@ -23,13 +25,13 @@
                                 <div class="col-lg-6 item item-left text-center">
                                     @if(Auth::check())
                                         <a href="{{ route('category.show', $listCate[$i]->id) }}">
-                                            {{--                                            <img class="icon_i" alt="">--}}
-                                            <div class="text">{{ $listCate[$i]->name }}</div>
+                                            {{-- <img class="icon_i" alt="">--}}
+                                            <div class="text">{{  $trans->translateText($listCate[$i]->name)}}</div>
                                         </a>
                                     @else
                                         <a class="check_url">
-                                            {{--                                                <img class="icon_i" alt="">--}}
-                                            <div class="text">{{ $listCate[$i]->name }}</div>
+                                            {{-- <img class="icon_i" alt="">--}}
+                                            <div class="text">{{  $trans->translateText($listCate[$i]->name)}}</div>
                                         </a>
                                     @endif
                                 </div>
@@ -39,13 +41,13 @@
                                 <div class="col-lg-6 item item-left text-center">
                                     @if(Auth::check())
                                         <a href="{{ route('category.show', $cate->id) }}">
-                                            {{--                                            <img class="icon_i" alt="">--}}
-                                            <div class="text">{{ $cate->name }}</div>
+                                            {{-- <img class="icon_i" alt="">--}}
+                                            <div class="text">{{ $trans->translateText($cate->name) }}</div>
                                         </a>
                                     @else
                                         <a class="check_url">
-                                            {{--                                            <img class="icon_i" alt="">--}}
-                                            <div class="text">{{ $cate->name }}</div>
+                                            {{-- <img class="icon_i" alt="">--}}
+                                            <div class="text">{{  $trans->translateText($cate->name)}}</div>
                                         </a>
                                     @endif
                                 </div>
@@ -66,13 +68,13 @@
                                     <a href="{{ route('category.show', $cate->id) }}">
                                         <img src="{{ asset('storage/' . $cate->thumbnail) }}"
                                              alt="">
-                                        <div class="text">{{ $cate->name }}</div>
+                                        <div class="text">{{  $trans->translateText($cate->name)}}</div>
                                     </a>
                                 @else
                                     <a class="check_url">
                                         <img src="{{ asset('storage/' . $cate->thumbnail) }}"
                                              alt="">
-                                        <div class="text">{{ $cate->name }}</div>
+                                        <div class="text">{{ $trans->translateText( $cate->name)}}</div>
                                     </a>
                                 @endif
                             </div>
@@ -82,6 +84,7 @@
                 <div class="section-First-middle col-xl-6 col-md-8 col-12">
                     <!-- Swiper -->
                     <div class="swiper mySwiper">
+
 
                         <div class="swiper-wrapper">
                             @if(!$banner)
@@ -169,6 +172,7 @@
                         $listCate = DB::table('categories')->where('parent_id', null)->get();
                     @endphp
 
+
                     @foreach($listCate as $cate)
                         <div class="swiper-slide">
                             @if(Auth::check())
@@ -178,7 +182,7 @@
                                              alt="">
                                     </div>
                                     <div class="text">
-                                        {{$cate->name}}
+                                        {{$trans->translateText($cate->name)}}
                                     </div>
                                 </a>
                             @else
@@ -188,7 +192,7 @@
                                              alt="">
                                     </div>
                                     <div class="text">
-                                        {{$cate->name}}
+                                        {{$trans->translateText($cate->name)}}
                                     </div>
                                 </a>
                             @endif
@@ -225,6 +229,7 @@
                                                         New
                                                     </div>
 
+
                                                 </div>
                                             </div>
                                         @endif
@@ -241,16 +246,18 @@
                                                 $namenewProduct = DB::table('users')->where('id', $newProduct->user_id)->first();
                                             @endphp
                                             <div class="card-brand">
-                                                {{$namenewProduct->name}}
+                                                {{$trans->translateText($namenewProduct->name)}}
                                             </div>
                                             <div class="card-title">
                                                 @if(Auth::check())
-                                                    <a href="{{route('detail_product.show', $newProduct->id)}}">{{$newProduct->name}}</a>
+                                                    <a href="{{route('detail_product.show', $newProduct->id)}}">{{$trans->translateText($newProduct->name)}}</a>
                                                 @else
-                                                    <a class="check_url">{{$newProduct->name}}</a>
+                                                    <a class="check_url">{{$trans->translateText($newProduct->name)}}</a>
                                                 @endif
 
+
                                             </div>
+
 
                                             @if($newProduct->price)
                                                 <div class="card-price d-flex justify-content-between">
@@ -313,6 +320,7 @@
                                                             New
                                                         </div>
 
+
                                                     </div>
                                                 </div>
                                             @endif
@@ -333,9 +341,9 @@
                                                 12312312
                                                 <div class="card-title">
                                                     @if(Auth::check())
-                                                        <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>
+                                                        <a href="{{route('detail_product.show', $product->id)}}">{{$trans->translateText($product->name)}}</a>
                                                     @else
-                                                        <a class="check_url">{{$product->name}}</a>
+                                                        <a class="check_url">{{$trans->translateText($product->name)}}</a>
                                                     @endif
                                                 </div>
                                                 @if($product->price)
@@ -395,7 +403,7 @@
                                         <img src="#" alt="" id="img-modal">
                                     </div>
                                     <ul class="image-list ">
-                                        {{--                                        <li class="image-item"><img src="{{ asset('storage/' . $product->thumbnail) }}"></li>--}}
+                                        {{-- <li class="image-item"><img src="{{ asset('storage/' . $product->thumbnail) }}"></li>--}}
                                     </ul>
                                 </div>
                             </div>
@@ -427,6 +435,7 @@
                                     <div class="count__wrapper count__wrapper--ml mt-3">
                                         <span>Còn lại: </span>
                                         <label for="qty" id="qty"></label>
+
 
                                     </div>
                                     <div class="d-flex buy justify-content-around">
@@ -476,6 +485,7 @@
                                                     New
                                                 </div>
 
+
                                             </div>
                                         </div>
                                     @endif
@@ -492,8 +502,9 @@
                                             $nameHot = DB::table('users')->where('id', $hotProduct->user_id)->first();
                                         @endphp
                                         <div class="card-brand">
-                                            {{$nameHot->name}}
+                                            {{$trans->translateText($nameHot->name)}}
                                         </div>
+
 
                                         @if($hotProduct->price)
                                             <div class="card-price d-flex justify-content-between">
@@ -511,6 +522,7 @@
                                                 @endif
                                             </div>
                                         @endif
+
 
                                         <div class="card-bottom d-flex justify-content-between">
                                             <div class="card-bottom--left">
@@ -592,6 +604,7 @@
                                             </div>
                                         @endif
 
+
                                         <div class="item-body">
                                             <div class="card-rating">
                                                 @for($i = 0; $i < 5; $i++)
@@ -603,13 +616,13 @@
                                                 $nameUser = DB::table('users')->where('id', $product->user_id)->first();
                                             @endphp
                                             <div class="card-brand">
-                                                {{$nameUser->name}}
+                                                {{$trans->translateText($nameUser->name)}}
                                             </div>
                                             <div class="card-title">
                                                 @if(Auth::check())
                                                     <a href="{{route('detail_product.show', $product->id)}}">{{ $trans->translateText($product->name) }}</a>
                                                 @else
-                                                    <a class="check_url">{{$product->name}}</a>
+                                                    <a class="check_url">{{$trans->translateText($product->name)}}</a>
                                                 @endif
                                             </div>
                                             @if($product->price)
@@ -654,6 +667,7 @@
                     $listCurrentCategory = \App\Models\Category::where('country', $locale)->get();
                 @endphp
 
+
                 @if(!$listCurrentCategory->isEmpty())
                     <div class="col-xl-2 category-right">
                         @if(count($listCurrentCategory) == 0)
@@ -671,7 +685,7 @@
                                 @foreach($listCurrentCategory as $child)
                                     <div class="brand-item d-flex justify-content-between">
                                         <div class="brand-item-text">
-                                            <div class="name">{{ $child->name }}</div>
+                                            <div class="name">{{  $trans->translateText($child->name)}}</div>
                                             @if(Auth::check())
                                                 <a href="{{ route('category.show', $child->id) }}">{{ __('home.shop now') }}</a>
                                             @else
@@ -688,7 +702,7 @@
                                 @for($i = 0; $i < 3; $i++)
                                     <div class="brand-item d-flex justify-content-between">
                                         <div class="brand-item-text">
-                                            <div class="name">{{ $listCurrentCategory[$i]->name }}</div>
+                                            <div class="name">{{  $trans->translateText($listCurrentCategory[$i]->name)}}</div>
                                             @if(Auth::check())
                                                 <a href="{{ route('category.show', $listCurrentCategory[$i]->id) }}">{{ __('home.shop now') }}</a>
                                             @else
@@ -773,6 +787,7 @@
                                                     </div>
                                                 @endif
 
+
                                                 <div class="item-body">
                                                     <div class="card-rating">
                                                         @for($i = 0; $i < 5; $i++)
@@ -784,13 +799,13 @@
                                                         $nameUser = DB::table('users')->where('id', $product->user_id)->first();
                                                     @endphp
                                                     <div class="card-brand">
-                                                        {{$nameUser->name}}
+                                                        {{$trans->translateText($nameUser->name)}}
                                                     </div>
                                                     <div class="card-title">
                                                         @if(Auth::check())
-                                                            <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>
+                                                            <a href="{{route('detail_product.show', $product->id)}}">{{$trans->translateText($product->name)}}</a>
                                                         @else
-                                                            <a class="check_url">{{$product->name}}</a>
+                                                            <a class="check_url">{{$trans->translateText($product->name)}}</a>
                                                         @endif
                                                     </div>
                                                     @if($product->price)
@@ -835,6 +850,7 @@
                             $listCurrentCategory = \App\Models\Category::where('country', $keys)->get();
                         @endphp
 
+
                         @if(!$listCurrentCategory->isEmpty())
                             <div class="col-xl-2 category-right">
                                 @if(count($listCurrentCategory) == 0)
@@ -852,7 +868,7 @@
                                         @foreach($listCurrentCategory as $child)
                                             <div class="brand-item d-flex justify-content-between">
                                                 <div class="brand-item-text">
-                                                    <div class="name">{{ $child->name }}</div>
+                                                    <div class="name">{{  $trans->translateText($child->name)}}</div>
                                                     @if(Auth::check())
                                                         <a href="{{ route('category.show', $child->id) }}">{{ __('home.shop now') }}</a>
                                                     @else
@@ -869,7 +885,7 @@
                                         @for($i = 0; $i < 3; $i++)
                                             <div class="brand-item d-flex justify-content-between">
                                                 <div class="brand-item-text">
-                                                    <div class="name">{{ $listCurrentCategory[$i]->name }}</div>
+                                                    <div class="name">{{  $trans->translateText($listCurrentCategory[$i]->name)}}</div>
                                                     @if(Auth::check())
                                                         <a href="{{ route('category.show', $listCurrentCategory[$i]->id) }}">{{ __('home.shop now') }}</a>
                                                     @else
@@ -905,11 +921,11 @@
                     interdum, nisi lorem egestas vitae scel
                     <span id="dots">...</span>
                     <span id="more">
-                    erisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor vitae massa.
-                    Fusce luctus vestibulum augue ut aliquet. Nunc sagittis dictum nisi, sed ullamcorper ipsum dignissim ac.
-                    In at libero sed nunc venenatis imperdiet sed ornare turpis. Donec vitae dui eget tellus gravida venenatis.
-                    Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor porta.
-                </span>
+erisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor vitae massa.
+Fusce luctus vestibulum augue ut aliquet. Nunc sagittis dictum nisi, sed ullamcorper ipsum dignissim ac.
+In at libero sed nunc venenatis imperdiet sed ornare turpis. Donec vitae dui eget tellus gravida venenatis.
+Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor porta.
+</span>
                 </p>
                 <button onclick="myFunction()" id="myBtn">{{ __('home.Show More') }}</button>
             </div>
@@ -1011,17 +1027,21 @@
                 variable.value = productDetail['variation'];
             })
 
+
         </script>
         <script>
             let side_cate = document.getElementById('side-cate');
             let carousel_1 = document.getElementById('carousel__1');
             let carousel_2 = document.getElementById('carousel__2');
 
+
             let h_car_1 = carousel_1.offsetHeight;
             let h_car_2 = carousel_2.offsetHeight;
 
+
             let heightB = h_car_1 !== 0 ? h_car_1 : h_car_2;
             side_cate.style.height = heightB + 'px';
+
 
         </script>
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -1030,6 +1050,7 @@
                 $(".card-bottom--right").click(function () {
                     var idProduct = jQuery(this).attr('id-product');
                     console.log(idProduct)
+
 
                     $.ajax({
                         url: '/wish-list-store/',
@@ -1050,3 +1071,4 @@
             });
         </script>
 @endsection
+
