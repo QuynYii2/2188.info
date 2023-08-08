@@ -1,4 +1,4 @@
-@php use Illuminate\Support\Facades\Auth; @endphp
+@php use App\Http\Controllers\Frontend\HomeController;use Illuminate\Support\Facades\Auth; @endphp
 
         <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -65,6 +65,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title')</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
@@ -100,7 +101,7 @@
 
 <div id="mt-body">
     @php
-    (new \App\Http\Controllers\Frontend\HomeController())->createStatistic();
+    (new HomeController())->createStatistic();
     @endphp
     @yield('content')
 </div>
@@ -115,8 +116,8 @@
             </span>
 </div>
 <!-- Scripts -->
-{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>--}}
-{{--<script src="{{ asset('js/vendor/jquery-3.3.1.min.js') }}"></script>--}}
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>--}}
+<script src="{{ asset('js/vendor/jquery-3.3.1.min.js') }}"></script>
 {{--<script src="{{ asset('js/vendor/bootstrap.min.js') }}"></script>--}}
 {{--<script src="{{ asset('mail/jqBootstrapValidation.min.js') }}"></script>--}}
 
@@ -132,6 +133,52 @@
             });
         }
     });
+</script>
+
+<script>
+    getAllUser();
+
+
+     function getAllUser() {
+        let listUser;
+         fetch('{{env('URL_GET_ALL_USER')}}')
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                listUser = data;
+                insertUser();
+            })
+            .catch(error => {
+                console.error('Error: ' + error);
+            });
+
+        const data = {
+            'listUser': listUser
+        };
+
+        const csrfToken = document.head.querySelector("[name~=csrf-token][content]").content;
+        let url = '{{route('insert.multil.user')}}';
+
+        function insertUser() {
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "X-CSRF-Token": csrfToken
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);
+                    listUser = data;
+                })
+                .catch(error => {
+                    console.error('Error: ' + error);
+                });
+        }
+
+    }
 </script>
 
 {{--<script src="{{ asset('js/vendor/jquery-ui.min.js') }}"></script>--}}

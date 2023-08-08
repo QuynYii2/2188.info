@@ -155,3 +155,5 @@ storage/.DS_Store
 .idea*
 *.idea
 .idea/*.xml
+#
+composer.lock
