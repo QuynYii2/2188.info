@@ -56,8 +56,8 @@
                                              alt="" width="60px" height="60px">
                                     </div>
                                     <div class="col-md-10 float-left">
-                                        <div class="text-secondary">{{$cartItem->product->category->name}}</div>
-                                        <a href="{{route('detail_product.show', $cartItem->product->id)}}">{{$cartItem->product->name}}</a>
+                                        <div class="text-secondary">{{($cartItem->product->category->name)}}</div>
+                                        <a href="{{route('detail_product.show', $cartItem->product->id)}}">{{($cartItem->product->name)}}</a>
                                         @if($cartItem->values != 0)
                                             @php
                                                 $list = $cartItem->values;
@@ -70,8 +70,8 @@
                                                     $pro = \App\Models\Properties::find($arrayAttPro[1]);
                                                 @endphp
                                                 <div class="font-italic"><span class="text-secondary">
-                                                {{$att->name}}
-                                            </span>: <span>{{$pro->name}}</span></div>
+                                                {{($att->name)}}
+                                            </span>: <span>{{($pro->name)}}</span></div>
                                             @endforeach
                                             <a class="text-edit" href="#" data-toggle="modal"
                                                data-target="#exampleModal">
@@ -84,7 +84,7 @@
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title" id="exampleModalLabel">
-                                                                Edit {{$cartItem->product->name}}</h5>
+                                                                Edit {{($cartItem->product->name)}}</h5>
                                                             <button type="button" class="close" data-dismiss="modal"
                                                                     aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>

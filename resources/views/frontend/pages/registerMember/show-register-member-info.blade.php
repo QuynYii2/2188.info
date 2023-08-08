@@ -3,9 +3,6 @@
 @section('title', 'Register Member')
 
 @section('content')
-    @php
-        $trans = \App\Http\Controllers\TranslateController::getInstance();
-    @endphp
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
     <div class="start-page mb-3">
@@ -17,7 +14,7 @@
                 <div class="container mt-5">
                     <form class="p-3" action="{{route('register.member.info')}}" method="post">
                         @csrf
-                        <input type="text" class="d-none" name="member" value="{{ $trans->translateText($registerMember) }}">
+                        <input type="text" class="d-none" name="member" value="{{ ($registerMember) }}">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="companyName">Company Name</label>
@@ -49,9 +46,9 @@
                                                 <label class="ml-2" for="category-{{$category->id}}">
                                                     <input type="checkbox" id="category-{{$category->id}}"
                                                            name="category-{{$category->id}}"
-                                                           value="{{ $trans->translateText($category->id) }}"
+                                                           value="{{ ($category->id) }}"
                                                            class="inputCheckboxCategory mr-2 p-3"/>
-                                                    <span class="labelCheckboxCategory">{{ $trans->translateText($category->name) }}</span>
+                                                    <span class="labelCheckboxCategory">{{ ($category->name) }}</span>
                                                 </label>
                                                 @if(!$categories->isEmpty())
                                                     @php
@@ -63,7 +60,7 @@
                                                                    name="category-{{$child->id}}"
                                                                    value="{{$child->id}}"
                                                                    class="inputCheckboxCategory mr-2 p-3"/>
-                                                            <span class="labelCheckboxCategory">{{ $trans->translateText($child->name) }}</span>
+                                                            <span class="labelCheckboxCategory">{{ ($child->name) }}</span>
                                                         </label>
                                                         @php
                                                             $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
@@ -74,7 +71,7 @@
                                                                        name="category-{{$child2->id}}"
                                                                        value="{{$child2->id}}"
                                                                        class="inputCheckboxCategory mr-2 p-3"/>
-                                                                <span class="labelCheckboxCategory">{{ $trans->translateText($child2->name) }}</span>
+                                                                <span class="labelCheckboxCategory">{{ ($child2->name) }}</span>
                                                             </label>
                                                         @endforeach
                                                     @endforeach
@@ -91,78 +88,23 @@
 {{--                                <textarea type="text" class="form-control" name="address_detail" required></textarea>--}}
 {{--                            </div>--}}
 {{--                        </div>--}}
-                        <h1>Chọn danh sách tỉnh</h1>
-                            <select name="" id="province">
-                            </select>
-                            <select name="" id="district">
-                                <option  value="">chọn quận</option>
-                            </select>
-                            <select name="" id="ward">
-                                <option   value="">chọn phường</option>
-                            </select>
-                        <button type="submit" class="btn btn-primary">Sign up</button>
+                        <select name="" id="province">
+                            <option  value="">chọn tỉnh</option>
+                        </select>
+                        <select name="" id="district">
+                            <option  value="">chọn quận</option>
+                        </select>
+                        <select name="" id="ward">
+                            <option   value="">chọn phường</option>
+                        </select>
                     </form>
+                    <h2 id="result"></h2>
                 </div>
             </div>
         </div>
     </div>
 @endsection
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js" integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    const host = "https://provinces.open-api.vn/api/";
-    var callAPI = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data, "province");
-            });
-    }
-    callAPI('https://provinces.open-api.vn/api/?depth=1');
-    var callApiDistrict = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data.districts, "district");
-            });
-    }
-    var callApiWard = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data.wards, "ward");
-            });
-    }
-
-    var renderData = (array, select) => {
-        let row = ' <option disable value="">chọn</option>';
-        array.forEach(element => {
-            row += `<option value="${element.code}">${element.name}</option>`
-        });
-        document.querySelector("#" + select).innerHTML = row
-    }
-
-    $("#province").change(() => {
-        callApiDistrict(host + "p/" + $("#province").val() + "?depth=2");
-        printResult();
-    });
-    $("#district").change(() => {
-        callApiWard(host + "d/" + $("#district").val() + "?depth=2");
-        printResult();
-    });
-    $("#ward").change(() => {
-        printResult();
-    })
-
-    var printResult = () => {
-        if ($("#district").val() != "" && $("#province").val() != "" &&
-            $("#ward").val() != "") {
-            let result = $("#province option:selected").text() +
-                " | " + $("#district option:selected").text() + " | " +
-                $("#ward option:selected").text();
-            $("#result").text(result)
-        }
-
-    }
-</script>
 
 
 <script>
@@ -196,4 +138,5 @@
         }
     }
 </script>
+
 

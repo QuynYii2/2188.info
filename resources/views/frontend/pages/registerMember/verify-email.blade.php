@@ -4,7 +4,7 @@
 
 @section('content')
     @php
-        $trans = \App\Http\Controllers\TranslateController::getInstance();
+
     @endphp
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <div class="start-page mb-3">
@@ -19,9 +19,9 @@
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="email">Email</label>
-                                <input type="text" class="form-control" id="email" name="email" disabled required value="{{ $trans->translateText($email) }}">
+                                <input type="text" class="form-control" id="email" name="email" disabled required value="{{ ($email) }}">
                             </div>
-                            <input type="text" class="form-control" name="processEmail" hidden="" value="{{ $trans->translateText($email) }}" required>
+                            <input type="text" class="form-control" name="processEmail" hidden="" value="{{ ($email) }}" required>
                             <div class="form-group col-md-4">
                                 <label for="code">Verify Code</label>
                                 <input type="text" class="form-control" id="code" name="code" required>

@@ -2,6 +2,7 @@
 
 @section('title', 'Home page')
 @section('content')
+
     <!-- Shop Start -->
     <div class="container-fluid mt-3">
         <div class="row px-xl-5">
@@ -37,7 +38,7 @@
                                     </div>
                                     <div class="text-center py-4">
                                         <div class="h6 text-decoration-none text-truncate" data-toggle="modal"
-                                             data-target="#exampleModal{{$product->id}}">{{$product->name}}</div>
+                                             data-target="#exampleModal{{$product->id}}">{{($product->name)}}</div>
                                         <div class="d-flex align-items-center justify-content-center mt-2">
                                             <h5 id="price-percent">
                                                 {{$product->price - $product->price * $newpromotion->percent / 100}}
@@ -79,8 +80,8 @@
                                                     </div>
                                                     <div class="product-content col-md-12 py-1" style="z-index: 88;">
                                                         @csrf
-                                                        <h2 class="product-title">{{$product->name}}</h2>
-                                                        <small class="text-warning">{{$product->category->name}}</small>
+                                                        <h2 class="product-title">{{($product->name)}}</h2>
+                                                        <small class="text-warning">{{($product->category->name)}}</small>
                                                         <div class="product-price d-flex" style="gap: 3rem">
                                                             <p class="last-price">{{ __('home.old price') }}:
                                                                 <span>
@@ -107,14 +108,14 @@
                                                                     $arrayAtt = explode(',', $properties_id);
                                                                 @endphp
                                                                 <div class="col-sm-6 col-6">
-                                                                    <label for="{{$att->name}}">{{$att->name}}</label>
-                                                                    <select id="{{$att->name}}" name="{{$att->name}}"
+                                                                    <label for="{{$att->name}}">{{($att->name)}}</label>
+                                                                    <select id="{{$att->name}}" name="{{($att->name)}}"
                                                                             class="form-control">
                                                                         @foreach($arrayAtt as $data)
                                                                             @php
                                                                                 $property = \App\Models\Properties::find($data);
                                                                             @endphp
-                                                                            <option value="{{$data}}">{{$property->name}}</option>
+                                                                            <option value="{{$data}}">{{($property->name)}}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>

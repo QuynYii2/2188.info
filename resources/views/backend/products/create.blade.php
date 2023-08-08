@@ -81,6 +81,7 @@
 
 @endphp
 @section('content')
+
     <div id="wpcontent">
         <div id="wpbody" role="main">
             <div class="card-header d-flex justify-content-between align-items-center" style="padding: 15px;">
@@ -240,7 +241,7 @@
                                                name="category-{{$category->id}}"
                                                value="{{$category->id}}"
                                                class="inputCheckboxCategory mr-2 p-3"/>
-                                        <span class="labelCheckboxCategory">{{$category->name}}</span>
+                                        <span class="labelCheckboxCategory">{{($category->name)}}</span>
                                     </label>
                                     @if(!$categories->isEmpty())
                                         @php
@@ -252,7 +253,7 @@
                                                        name="category-{{$child->id}}"
                                                        value="{{$child->id}}"
                                                        class="inputCheckboxCategory mr-2 p-3"/>
-                                                <span class="labelCheckboxCategory">{{$child->name}}</span>
+                                                <span class="labelCheckboxCategory">{{($child->name)}}</span>
                                             </label>
                                             @php
                                                 $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
@@ -263,7 +264,7 @@
                                                            name="category-{{$child2->id}}"
                                                            value="{{$child2->id}}"
                                                            class="inputCheckboxCategory mr-2 p-3"/>
-                                                    <span class="labelCheckboxCategory">{{$child2->name}}</span>
+                                                    <span class="labelCheckboxCategory">{{($child2->name)}}</span>
                                                 </label>
                                             @endforeach
                                         @endforeach

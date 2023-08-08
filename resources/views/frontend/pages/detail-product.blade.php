@@ -14,14 +14,17 @@
         .product-content p {
             margin-bottom: 0;
         }
+
         .btn-16 {
             margin: 0 16px;
         }
+
         @media only screen and (min-width: 769px) and (max-width: 991px) {
             .tabs-item a {
                 font-size: 15px;
             }
         }
+
         @media only screen and (max-width: 767px) {
 
 
@@ -29,6 +32,7 @@
                 font-size: 15px;
             }
         }
+
         @media only screen and (max-width: 767px) {
 
 
@@ -36,6 +40,7 @@
                 font-size: 15px;
             }
         }
+
         @media only screen and (max-width: 365px) {
 
 
@@ -43,6 +48,7 @@
                 font-size: 12px;
             }
         }
+
         @media not (min-width: 576px ) and (max-width: 991px) {
             .tablet-button {
                 display: none;
@@ -53,11 +59,13 @@
                 display: block !important;
             }
         }
+
         .radio-toolbar input[type="radio"] {
             opacity: 0;
             position: fixed;
             width: 0;
         }
+
         .radio-toolbar label {
             display: inline-block;
             background-color: #f9f9f9;
@@ -67,10 +75,12 @@
             border: 2px solid #f7f7f7;
             border-radius: 4px;
         }
+
         .radio-toolbar label:hover {
             cursor: pointer;
             background-color: #cccccc;
         }
+
         .radio-toolbar input[type="radio"]:focus + label {
             border: 2px solid #444;
         }
@@ -96,55 +106,55 @@
         th {
             background: #b1b5bd;
             border-right: 1px solid #343a45;
-            }
-            th:first-child {
+        }
+        th:first-child {
                 border-top-left-radius:3px;
-            }
+        }
 
-            th:last-child {
+        th:last-child {
                 border-top-right-radius:3px;
                 border-right:none;
-            }
+        }
 
-            tr {
-                border-top: 1px solid #C1C3D1;
-                border-bottom-: 1px solid #C1C3D1;
+        tr {
+            border-top: 1px solid #C1C3D1;
+            border-bottom-: 1px solid #C1C3D1;
                 color:#666B85;
                 font-size:16px;
                 font-weight:normal;
-                text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
-            }
-            tr:first-child {
+            text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+        }
+        tr:first-child {
                 border-top:none;
-            }
+        }
 
-            tr:last-child {
+        tr:last-child {
                 border-bottom:none;
-            }
+        }
 
-            td {
+        td {
                 background:#FFFFFF;
                 padding:20px;
                 text-align:left;
                 vertical-align:middle;
                 font-weight:300;
                 font-size:18px;
-                text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
-                border-right: 1px solid #C1C3D1;
-            }
+            text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+            border-right: 1px solid #C1C3D1;
+        }
 
-            td:last-child {
-                border-right: 0px;
-            }
+        td:last-child {
+            border-right: 0px;
+        }
 
-            th.text-left {
-                text-align: left;
-            }
+        th.text-left {
+            text-align: left;
+        }
 
-            td.text-left {
-                text-align: left;
-            }
-</style>
+        td.text-left {
+            text-align: left;
+        }
+    </style>
     <div class="container-fluid detail">
         <div class="grid second-nav">
             <div class="column-xs-12">
@@ -157,6 +167,9 @@
                 </nav>
             </div>
         </div>
+        <?php
+
+        ?>
         @php
             $name = DB::table('users')->where('id', $product->user_id)->first();
             $productDetails = \App\Models\Variation::where('product_id', $product->id)->get();
@@ -188,7 +201,7 @@
                 <form action="{{ route('cart.add', $product) }}" method="POST">
                     @csrf
                     <div class="product-name"><a href="{{ route('shop.information.show', $name->id) }}">{{$name->name}}</a></div>
-                    <div class="product-title">{{$product->name}}</div>
+                    <div class="product-title">{{($product->name)}}</div>
                     <div class="product-origin">Xuất xứ: {{$product->origin}}</div>
                     <div class="product-rating">
                         <i class="fa fa-star"></i>
@@ -251,9 +264,9 @@
                     @php
                         $price_sales = \App\Models\ProductSale::where('product_id', '=', $product->id)->get();
                     @endphp
-                        <a class="p-2 btn-light" style="cursor: pointer" data-toggle="modal" data-target="#exampleModal">
-                            Bảng giá sỉ
-                        </a>
+                    <a class="p-2 btn-light" style="cursor: pointer" data-toggle="modal" data-target="#exampleModal">
+                        Bảng giá sỉ
+                    </a>
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -347,7 +360,7 @@
                                 <span>from <b>$12.98$</b></span>
                             </div>
                             <p class="">Lead time 15 days <i class="fa-solid fa-info"></i></p>
-                        </div>
+                            </div>
                         <div class="express-body">
                             <div class="item-center d-flex justify-content-between">
                                 <span>Shipping</span>
@@ -356,13 +369,13 @@
                             <div>
                                 <p class="">Lead time 15 days <i class="fa-solid fa-info"></i></p>
                             </div>
-                        </div>
+                            </div>
                         <div class="express-footer">
                             <a href="#"><div class="button-start">Start order</div></a>
                             <a href="#"><div class="button-call"><i class="fa-solid fa-envelope"></i> Contact supplier</div></a>
                             <a href="#"><div class="button-call"><i class="fa-solid fa-phone"></i> Call us</div></a>
                             <div class="addtocard"><button><i class="fa-solid fa-cart-shopping"></i> Add to cart</button></div>
-                        </div>
+                                    </div>
                     </form>
                 </div>
             </div>
@@ -392,7 +405,7 @@
                 $user = DB::table('users')->first();
             @endphp
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    {{$user->name}} <br>
+                {{$user->name}} <br>
                 @if($user)
                     {{$user->region}}<br>
                 @endif
@@ -416,56 +429,56 @@
                             }
                         @endphp
                         @if($isMember)
-                            <form method="post" action="{{route('create.evaluate')}}">
-                                @csrf
-                                <input type="text" class="form-control" id="product_id" name="product_id"
-                                       value="{{$product->id}}" hidden/>
-                                <div class="rating">
-                                    <input type="radio" name="star_number" id="star1" value="1" hidden="">
-                                    <label for="star1" onclick="starCheck(1)"><i id="icon-star-1"
-                                                                                 class="fa fa-star"></i></label>
-                                    <input type="radio" name="star_number" id="star2" value="2" hidden="">
-                                    <label for="star2" onclick="starCheck(2)"><i id="icon-star-2"
-                                                                                 class="fa fa-star"></i></label>
-                                    <input type="radio" name="star_number" id="star3" value="3" hidden="">
-                                    <label for="star3" onclick="starCheck(3)"><i id="icon-star-3"
-                                                                                 class="fa fa-star"></i></label>
-                                    <input type="radio" name="star_number" id="star4" value="4" hidden="">
-                                    <label for="star4" onclick="starCheck(4)"><i id="icon-star-4"
-                                                                                 class="fa fa-star"></i></label>
-                                    <input type="radio" name="star_number" id="star5" value="5" hidden="">
-                                    <label for="star5" onclick="starCheck(5)"><i id="icon-star-5"
-                                                                                 class="fa fa-star"></i></label>
-                                </div>
-                                <input id="input-star" value="0" hidden="">
-                                <div id="text-message" class="text-danger d-none">Please select star rating
-                                </div>
+                        <form method="post" action="{{route('create.evaluate')}}">
+                            @csrf
+                            <input type="text" class="form-control" id="product_id" name="product_id"
+                                   value="{{$product->id}}" hidden/>
+                            <div class="rating">
+                                <input type="radio" name="star_number" id="star1" value="1" hidden="">
+                                <label for="star1" onclick="starCheck(1)"><i id="icon-star-1"
+                                                                             class="fa fa-star"></i></label>
+                                <input type="radio" name="star_number" id="star2" value="2" hidden="">
+                                <label for="star2" onclick="starCheck(2)"><i id="icon-star-2"
+                                                                             class="fa fa-star"></i></label>
+                                <input type="radio" name="star_number" id="star3" value="3" hidden="">
+                                <label for="star3" onclick="starCheck(3)"><i id="icon-star-3"
+                                                                             class="fa fa-star"></i></label>
+                                <input type="radio" name="star_number" id="star4" value="4" hidden="">
+                                <label for="star4" onclick="starCheck(4)"><i id="icon-star-4"
+                                                                             class="fa fa-star"></i></label>
+                                <input type="radio" name="star_number" id="star5" value="5" hidden="">
+                                <label for="star5" onclick="starCheck(5)"><i id="icon-star-5"
+                                                                             class="fa fa-star"></i></label>
+                            </div>
+                            <input id="input-star" value="0" hidden="">
+                            <div id="text-message" class="text-danger d-none">Please select star rating
+                            </div>
 
-                                <div class="form-group row">
-                                    <label for=""
-                                           class="col-sm-12 col-form-label">{{ __('home.your name') }}</label>
-                                    <div class="col-sm-12">
-                                        <input onclick="checkStar()" type="text" class="form-control" id=""
-                                               name="username"
-                                               placeholder="{{ __('home.your name') }}" required/>
-                                    </div>
+                            <div class="form-group row">
+                                <label for=""
+                                       class="col-sm-12 col-form-label">{{ __('home.your name') }}</label>
+                                <div class="col-sm-12">
+                                    <input onclick="checkStar()" type="text" class="form-control" id=""
+                                           name="username"
+                                           placeholder="{{ __('home.your name') }}" required/>
                                 </div>
-                                <div class="form-group row">
-                                    <label for=""
-                                           class="col-sm-12 col-form-label">{{ __('home.your review') }}</label>
-                                    <div class="col-sm-12">
+                            </div>
+                            <div class="form-group row">
+                                <label for=""
+                                       class="col-sm-12 col-form-label">{{ __('home.your review') }}</label>
+                                <div class="col-sm-12">
                                         <textarea onclick="checkStar()" class="form-control" id=""
                                                   name="content"
                                                   placeholder="{{ __('home.your review') }}"
                                                   rows="3" required></textarea>
-                                    </div>
                                 </div>
-                                <div class="form-group row">
-                                    <button id="btn-submit" class="btn btn-primary btn-16" type="submit">
-                                        Submit
-                                    </button>
-                                </div>
-                            </form>
+                            </div>
+                            <div class="form-group row">
+                                <button id="btn-submit" class="btn btn-primary btn-16" type="submit">
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
                         @endif
                     </div>
                 </div>
@@ -608,7 +621,7 @@
                                     {{$nameUser->name}}
                                 </div>
                                 <div class="card-title">
-                                    <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>
+                                    <a href="{{route('detail_product.show', $product->id)}}">{{($product->name)}}</a>
                                 </div>
                                 <div class="card-price d-flex justify-content-between">
                                     @if($product->price != null)
@@ -693,7 +706,7 @@
                                     {{$nameUser->name}}
                                 </div>
                                 <div class="card-title">
-                                    <a href="{{route('detail_product.show', $product->id)}}">{{$product->name}}</a>
+                                    <a href="{{route('detail_product.show', $product->id)}}">{{($product->name)}}</a>
                                 </div>
                                 <div class="card-price d-flex justify-content-between">
                                     @if($product->price != null)

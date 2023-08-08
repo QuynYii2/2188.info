@@ -437,7 +437,7 @@
 
 @foreach($listVouchers as $voucher)
     @php
-        $trans = \App\Http\Controllers\TranslateController::getInstance();
+
     @endphp
     <li class="image-carousel__item snipcss-rHVAl style-K4Ikr" id="style-K4Ikr">
         <div>
@@ -457,11 +457,11 @@
                                 <div class="MBisjS TkW9Xr _6GzLYL">
                                     <div class="ryAzTK">
                                         <div class="ow9AdM yGR6rn">
-                                            {{ $trans->translateText($voucher->name) }}
+                                            {{ ($voucher->name) }}
                                         </div>
                                     </div>
                                     <div class="a1Qos1 vMLRu-">
-                                        Giảm {{ $trans->translateText($voucher->percent) }}%
+                                        Giảm {{ ($voucher->percent) }}%
                                     </div>
                                 </div>
                                 <div>
@@ -473,7 +473,7 @@
                 </div>
                 <div class="xzzBCC">
                   <span class="">
-                    Số lượng: {{ $trans->translateText($voucher->quantity) }} - HSD: {{ $trans->translateText($voucher->endDate) }}
+                    Số lượng: {{ ($voucher->quantity) }} - HSD: {{ ($voucher->endDate) }}
                   </span>
                 </div>
               </span>

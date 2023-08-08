@@ -60,10 +60,10 @@
             @foreach($products as $product)
                 <tr>
                     <th scope="row">{{$loop->index +1}}</th>
-                    <td>{{$product->name}}</td>
-                    <td>{{$product->category->name}}</td>
+                    <td>{{($product->name)}}</td>
+                    <td>{{($product->category->name)}}</td>
                     @if($isAdmin)
-                        <td>{{$product->user->name}}</td>
+                        <td>{{($product->user->name)}}</td>
                     @endif
                     <td>{{$product->qty}}</td>
                     <td>{{$product->price}}</td>

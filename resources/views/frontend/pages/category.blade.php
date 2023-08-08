@@ -3,6 +3,7 @@
 @section('title', 'Category')
 
 @section('content')
+
     <div id="body-content">
         <div class="category-banner">
             <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/category-banner-top-layout-2.jpg"
@@ -26,7 +27,7 @@
                                          alt="">
                                 </div>
                                 <div class="text">
-                                    {{$cate->name}}
+                                    {{($cate->name)}}
                                 </div>
                             </a>
                         </div>
@@ -81,7 +82,7 @@
                         <div class="OptionContainer">
                             <div class="OptionHead">
                                 <input type="checkbox" class="payment-checkbox"
-                                       value="{{ $payment->id }}">{{ $payment->name }}
+                                       value="{{ $payment->id }}">{{  (($payment->name))}}
                             </div>
                         </div>
                     @endforeach
@@ -91,7 +92,7 @@
                         <div class="OptionContainer">
                             <div class="OptionHead">
                                 <input type="checkbox" class="transport-checkbox"
-                                       value="{{ $transport->id }}">{{ $transport->name }}
+                                       value="{{ $transport->id }}">{{ ($transport->name) }}
                             </div>
                         </div>
                     @endforeach
@@ -162,10 +163,10 @@
                                                 $namenewProduct = DB::table('users')->where('id', $product->user_id)->first();
                                             @endphp
                                             <div class="card-brand">
-                                                {{$namenewProduct->name}}
+                                                {{ ($namenewProduct->name)}}
                                             </div>
                                             <div class="card-title">
-                                                <a href="{{route('detail_product.show', $product->id)}}">{{ $product->name }}</a>
+                                                <a href="{{route('detail_product.show', $product->id)}}">{{  ($product->name)}}</a>
                                             </div>
                                             <div class="card-price d-flex justify-content-between">
                                                 @if($product->price)
@@ -232,10 +233,10 @@
                                             $namenewProduct = DB::table('users')->where('id', $product->user_id)->first();
                                         @endphp
                                         <div class="card-brand">
-                                            {{$namenewProduct->name}}
+                                            {{($namenewProduct->name)}}
                                         </div>
                                         <div class="card-title-list">
-                                            <a href="{{route('detail_product.show', $product->id)}}">{{ $product->name }}</a>
+                                            <a href="{{route('detail_product.show', $product->id)}}">{{  ($product->name)}}</a>
                                         </div>
                                         <div class="card-price d-flex">
                                             @if($product->price)
