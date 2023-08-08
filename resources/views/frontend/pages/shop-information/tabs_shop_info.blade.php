@@ -1,4 +1,6 @@
 @foreach($shopInformation as $shopInfo)
+@endforeach
+
 <div class="title-information">
     <div class="title-information-container">Hồ sơ</div>
     <div class="title-information-download">
@@ -121,4 +123,3 @@
         </div>
     </dd>
 </dl>
-@endforeach
