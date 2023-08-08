@@ -158,6 +158,9 @@ Route::get('/products-shop/{id}', [\App\Http\Controllers\Frontend\ProductControl
 Route::get('/products-shop-category/{category}/{shop}', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByCategoryAndShops'])->name('list.products.shop.category.show');
 
 Route::middleware(['auth'])->group(function () {
+    //
+    Route::post('/insert-multil-user', [HomeController::class, 'createMultilNewUser'])->name('insert.multil.user');
+    //
     Route::get('/info/', [ProfileController::class, 'info'])->name('profile.show');
 //    Route::get('/my-notification/', [\App\Http\Controllers\ProfileController::class, 'my_notification']);
 //    Route::get('/order-management/', [\App\Http\Controllers\ProfileController::class, 'order_management']);
