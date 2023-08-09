@@ -157,13 +157,13 @@
                                             </label>
                                         </div>
                                         <div class="">
-                                            <a class="btn btn-success  addALlNavberBtn" onclick="selectAllAttribute({{$attribute->id}})">
+                                            <a class="btn btn-success" onclick="selectAllAttribute({{$attribute->id}})">
                                                 SelectAll
                                             </a>
-                                            <a class="btn btn-success removeAllNavberBtn" onclick="removeAllAttribute({{$attribute->id}})">
+                                            <a class="btn btn-success" onclick="removeAllAttribute({{$attribute->id}})">
                                                 Remove All
                                             </a>
-                                            <a class="btn btn-secondary hiddenNavberBtn">
+                                            <a class="btn btn-secondary hiddenNavberBtn" onclick="hiddenAttribute({{$attribute->id}})">
                                                 Hidden
                                             </a>
                                         </div>
@@ -383,6 +383,11 @@
             document.getElementById('attribute_property' + id).value = '';
         }
 
+        function hiddenAttribute(id) {
+            var attribute = document.getElementById("attributeID_" + id);
+            attribute.classList.add("d-none");
+        }
+
         $(function () {
             $('input.img-cfg').change(function () {
                 const label = $(this).parent().find('span');
@@ -547,14 +552,6 @@
             $(this).closest('.dropdown-select').prev('#selectStorage').val($(this).data('value')).trigger('change');
         });
 
-        // $(document).on('click', '.dropdown-select-category .option', function (event) {
-        //     $(this).closest('.list').find('.selected').removeClass('selected');
-        //     $(this).addClass('selected');
-        //     var text = $(this).data('display-text') || $(this).text();
-        //     $(this).closest('.dropdown-select-category').find('.current').text(text);
-        //     $(this).closest('.dropdown-select-category').prev('#selectCategory').val($(this).data('value')).trigger('change');
-        // });
-
         $(document).on('click', '.dropdown-select-attribute .option', function (event) {
             $(this).closest('.list').find('.selected').removeClass('selected');
             $(this).addClass('selected');
@@ -565,12 +562,6 @@
             let attributeID = $(this).attr('data-value');
             var attribute = document.getElementById("attributeID_" + attributeID);
             attribute.classList.remove("d-none");
-            var listProperties = document.getElementsByClassName("checkbox" + attributeID);
-
-
-            $(document).on('click', '.hiddenNavberBtn', function (event) {
-                attribute.classList.add("d-none");
-            });
         });
 
         // Keyboard events
