@@ -19,6 +19,9 @@ class TranslateController extends Controller
 
     public function translateText($str, $target)
     {
+        if ($str == null || $str == '') {
+            return '';
+        }
         if (is_numeric($str) || $this->detectLanguage($str) == $target) {
             return $str;
         }
