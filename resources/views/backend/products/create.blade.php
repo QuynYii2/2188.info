@@ -163,7 +163,7 @@
                                             <a class="btn btn-success" onclick="removeAllAttribute({{$attribute->id}})">
                                                 Remove All
                                             </a>
-                                            <a class="btn btn-secondary hiddenNavberBtn" onclick="hiddenAttribute({{$attribute->id}})">
+                                            <a class="btn btn-secondary" onclick="hiddenAttribute({{$attribute->id}})">
                                                 Hidden
                                             </a>
                                         </div>

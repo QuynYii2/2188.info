@@ -266,7 +266,7 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     //
     //
     Route::get('/attributes/properties/{attributeID}', [PropertiesController::class, 'index'])->name('properties.index');
-    Route::get('/properties/create', [Propertientroller::class, 'create'])->name('properties.create');
+    Route::get('/properties/create', [PropertiesController::class, 'create'])->name('properties.create');
     Route::post('/properties', [PropertiesController::class, 'store'])->name('properties.store');
     //
     Route::get('/properties/{id}', [PropertiesController::class, 'show'])->name('properties.detail');

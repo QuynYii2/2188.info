@@ -287,13 +287,13 @@
                                             </label>
                                         </div>
                                         <div class="">
-                                            <a class="btn btn-success addALlNavberBtn" onclick="selectAllAttribute({{$attribute->id}})">
+                                            <a class="btn btn-success" onclick="selectAllAttribute({{$attribute->id}})">
                                                 SelectAll
                                             </a>
-                                            <a class="btn btn-success removeAllNavberBtn" onclick="removeAllAttribute({{$attribute->id}})">
+                                            <a class="btn btn-success" onclick="removeAllAttribute({{$attribute->id}})">
                                                 Remove All
                                             </a>
-                                            <a class="btn btn-secondary hiddenNavberBtn">
+                                            <a class="btn btn-secondary" onclick="hiddenAttribute({{$attribute->id}})">
                                                 Hidden
                                             </a>
                                         </div>
@@ -810,9 +810,6 @@
             let attributeID = $(this).attr('data-value');
             var attribute = document.getElementById("attributeID_" + attributeID);
             attribute.classList.remove("d-none");
-            $(document).on('click', '.hiddenNavberBtn', function (event) {
-                attribute.classList.add("d-none");
-            });
         });
 
         // Keyboard events
@@ -947,6 +944,11 @@
                 listProperties[i].checked = false;
             }
             document.getElementById('attribute_property' + id).value = '';
+        }
+
+        function hiddenAttribute(id) {
+            var attribute = document.getElementById("attributeID_" + id);
+            attribute.classList.add("d-none");
         }
     </script>
     <script>
