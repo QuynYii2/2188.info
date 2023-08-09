@@ -157,10 +157,10 @@
                                             </label>
                                         </div>
                                         <div class="">
-                                            <a class="btn btn-success  addALlNavberBtn">
+                                            <a class="btn btn-success  addALlNavberBtn" onclick="selectAllAttribute({{$attribute->id}})">
                                                 SelectAll
                                             </a>
-                                            <a class="btn btn-success removeAllNavberBtn">
+                                            <a class="btn btn-success removeAllNavberBtn" onclick="removeAllAttribute({{$attribute->id}})">
                                                 Remove All
                                             </a>
                                             <a class="btn btn-secondary hiddenNavberBtn">
@@ -281,18 +281,6 @@
                             <div class="form-group col-12 col-sm-12" id="list-img-thumbnail"></div>
                             <div class="form-group col-12 col-sm-12" id="list-img-gallery"></div>
                         </div>
-{{--                        <div class="form-group">--}}
-{{--                            <div class="form-group col-12 col-sm-12 pt-3">--}}
-{{--                                <label for="thumbnail">Ảnh đại diện:</label>--}}
-{{--                                <label class='__lk-fileInput'>--}}
-{{--                                    <span data-default='Choose file'>Choose file</span>--}}
-{{--                                    <input type="file" id="thumbnail" class="img-cfg"--}}
-{{--                                           name="thumbnail"--}}
-{{--                                           accept="image/*"--}}
-{{--                                           required>--}}
-{{--                                </label>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
                     </div>
                     <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
                     <input type="text" hidden id="imgGallery" value="" name="imgGallery[]">
@@ -377,6 +365,24 @@
             selectedOptionsInput.value = selectedLabels.join(", ");
         }
 
+        function selectAllAttribute(id) {
+            var listProperties = document.getElementsByClassName("checkbox" + id);
+
+            for (let i = 0; i < listProperties.length; i++) {
+                listProperties[i].click();
+            }
+            checkInput();
+        }
+
+        function removeAllAttribute(id) {
+            var listProperties = document.getElementsByClassName("checkbox" + id);
+
+            for (let i = 0; i < listProperties.length; i++) {
+                listProperties[i].checked = false;
+            }
+            document.getElementById('attribute_property' + id).value = '';
+        }
+
         $(function () {
             $('input.img-cfg').change(function () {
                 const label = $(this).parent().find('span');
@@ -419,21 +425,6 @@
             });
 
             $('.dropdown-select ul').before('<div class="dd-search"><input id="txtSearchValue" autocomplete="off" onkeyup="filter()" class="dd-searchbox" type="text"></div>');
-
-            // $('#selectCategory').each(function (i, select) {
-            //     if (!$(this).next().hasClass('dropdown-select-category')) {
-            //         $(this).after('<div class="dropdown-select-category wide ' + ($(this).attr('class') || '') + '" tabindex="0"><span class="current"></span><div class="list"><ul></ul></div></div>');
-            //         var dropdown = $(this).next();
-            //         var options = $(select).find('option');
-            //         var selected = $(this).find('option:selected');
-            //         dropdown.find('.current').html(selected.data('display-text') || selected.text());
-            //         options.each(function (j, o) {
-            //             var display = $(o).data('display-text') || '';
-            //             dropdown.find('ul').append('<li class="option ' + ($(o).is(':selected') ? 'selected' : '') + '" data-value="' + $(o).val() + '" data-display-text="' + display + '">' + $(o).text() + '</li>');
-            //         });
-            //     }
-            // });
-            // $('.dropdown-select-category ul').before('<div class="dd-search"><input id="txtSearchCategory" autocomplete="off" onkeyup="filter()" class="dd-searchbox" type="text"></div>');
 
             $('#selectAttribute').each(function (i, select) {
                 if (!$(this).next().hasClass('dropdown-select-attribute')) {
@@ -576,19 +567,6 @@
             attribute.classList.remove("d-none");
             var listProperties = document.getElementsByClassName("checkbox" + attributeID);
 
-            $(document).on('click', '.addALlNavberBtn', function (event) {
-                for (let i = 0; i < listProperties.length; i++) {
-                    listProperties[i].click();
-                }
-                checkInput();
-            });
-
-            $(document).on('click', '.removeAllNavberBtn', function (event) {
-                for (let i = 0; i < listProperties.length; i++) {
-                    listProperties[i].checked = false;
-                }
-                document.getElementById('attribute_property' + attributeID).value = '';
-            });
 
             $(document).on('click', '.hiddenNavberBtn', function (event) {
                 attribute.classList.add("d-none");

@@ -287,10 +287,10 @@
                                             </label>
                                         </div>
                                         <div class="">
-                                            <a class="btn btn-success addALlNavberBtn">
+                                            <a class="btn btn-success addALlNavberBtn" onclick="selectAllAttribute({{$attribute->id}})">
                                                 SelectAll
                                             </a>
-                                            <a class="btn btn-success removeAllNavberBtn">
+                                            <a class="btn btn-success removeAllNavberBtn" onclick="removeAllAttribute({{$attribute->id}})">
                                                 Remove All
                                             </a>
                                             <a class="btn btn-secondary hiddenNavberBtn">
@@ -810,22 +810,6 @@
             let attributeID = $(this).attr('data-value');
             var attribute = document.getElementById("attributeID_" + attributeID);
             attribute.classList.remove("d-none");
-            var listProperties = document.getElementsByClassName("checkbox" + attributeID);
-
-            $(document).on('click', '.addALlNavberBtn', function (event) {
-                for (let i = 0; i < listProperties.length; i++) {
-                    listProperties[i].click();
-                }
-                checkInput();
-            });
-
-            $(document).on('click', '.removeAllNavberBtn', function (event) {
-                for (let i = 0; i < listProperties.length; i++) {
-                    listProperties[i].checked = false;
-                }
-                document.getElementById('attribute_property' + attributeID).value = '';
-            });
-
             $(document).on('click', '.hiddenNavberBtn', function (event) {
                 attribute.classList.add("d-none");
             });
@@ -946,6 +930,24 @@
         $(document).ready(function () {
             create_custom_dropdowns();
         });
+
+        function selectAllAttribute(id) {
+            var listProperties = document.getElementsByClassName("checkbox" + id);
+
+            for (let i = 0; i < listProperties.length; i++) {
+                listProperties[i].click();
+            }
+            checkInput();
+        }
+
+        function removeAllAttribute(id) {
+            var listProperties = document.getElementsByClassName("checkbox" + id);
+
+            for (let i = 0; i < listProperties.length; i++) {
+                listProperties[i].checked = false;
+            }
+            document.getElementById('attribute_property' + id).value = '';
+        }
     </script>
     <script>
         let desc = document.querySelectorAll('.description');
