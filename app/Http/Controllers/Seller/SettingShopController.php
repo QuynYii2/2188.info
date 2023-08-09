@@ -30,13 +30,44 @@ class SettingShopController extends Controller
     {
         $user = Auth::user();
         $shop_infos  = ShopInfo::where('user_id' ,'=', Auth::user()->id)->orderBy('created_at', 'DESC')->first();
-        return view('backend/shop_profile/index', compact('user', 'shop_infos'));
+        // nếu $shop_infos tồn tại thì gọi update còn neeus ko có thì gọi view create
+        if ($shop_infos){
+            return view('backend/shop_profile/update', compact('user', 'shop_infos'));
+        } else {
+            return view('backend/shop_profile/index',compact('user', 'shop_infos'));
+        }
+
     }
 
+    public function updateProfileShop(Request $request)
+    {
+        $user = Auth::user();
+        $shopinformation = ShopInfo::where('user_id' ,'=', Auth::user()->id)->orderBy('created_at', 'DESC')->first();
+        $shopinformation->user_id = Auth::user()->id;
+        $shopinformation->name = $request->input('name');
+        $shopinformation->country = $request->input('region');
+        $shopinformation->masothue = $request->input('masothue');
+        $shopinformation->product_name = $request->input('product_name');
+        $shopinformation->product_code = $request->input('product_code');
+        $shopinformation->product_key = $request->input('product_key');
+        $shopinformation->information = $request->input('information');
+        $shopinformation->business_license = $request->input('business_license');
+        $shopinformation->acreage = $request->input('acreage');
+        $shopinformation->industry_year = $request->input('industry_year');
+        $shopinformation->machine_number = $request->input('machine_number');
+        $shopinformation->marketing = $request->input('marketing');
+        $shopinformation->customers = $request->input('customers');
+        $shopinformation->inspection_staff = $request->input('inspection_staff');
+        $shopinformation->test_method = $request->input('test_method');
+        $shopinformation->annual_output = $request->input('annual_output');
+        $shopinformation->partner = $request->input('partner');
+        $shopinformation->save();
+        return redirect(route('profile.shop.index'));
+    }
     public function saveProfileShop(Request $request)
     {
         $user = Auth::user();
-       
+
         $user->name = $request->input('name');
         $user->region = $request->input('region');
         $user->rental_code = $request->input('rental_code');
@@ -52,7 +83,7 @@ class SettingShopController extends Controller
         $user->save();
 
         $infoShop = (new ShopInformationController())->store($request);
-        return redirect(route('profile.shop.index'));
+        return redirect()->route('profile.shop.index')->with('success', 'Thông tin cửa hàng đã được cập nhật.');
     }
 
 

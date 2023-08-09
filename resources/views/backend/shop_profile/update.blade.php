@@ -81,8 +81,7 @@
     <div class="container rounded mt-5 bg-white m-auto">
         <div class="row my-5">
             <div id="form-info" class="col-sm-12 col-12 border-bottom border-right">
-{{--                @if() @endif--}}
-                <form action="{{ route('profile.shop.store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('profile.shop.update') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row align-items-center justify-content-center">
 
@@ -92,7 +91,7 @@
                                        class="col-md-3 col-12 col-form-label">Tên người bán</label>
                                 <div class="col-md-9 col-12">
                                     <input type="text" class="form-control" id="staticEmail" required name="name"
-                                           value="{{ $sellerInfo->name ?? ''}}">
+                                           value="{{ $shopinformation->name ?? ''}}">
                                 </div>
                             </div>
                         </div>
@@ -109,7 +108,7 @@
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" name="rental_code"
-                                   value="{{ $sellerInfo->masothue ?? ''}}">
+                                   value="{{ $shopinformation->masothue ?? ''}}">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -117,7 +116,7 @@
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" required name="product_name"
-                                   value="{{ $sellerInfo->product_name ?? '' }}">
+                                   value="{{ $shopinformation->product_name ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -125,7 +124,7 @@
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" required name="product_code"
-                                   value="{{ $sellerInfo->product_code ?? '' }}">
+                                   value="{{ $shopinformation->product_code ?? '' }}">
                         </div>
                     </div>
 
@@ -216,7 +215,7 @@
                         <label for="short_description" class="col-md-3 col-12 col-form-label">Thông tin công ty</label>
                         <div class="col-md-9 col-12">
                             <textarea class="form-control description" name="information" rows="5">
-                                    {{$sellerInfo->information ?? '' }}
+                                    {{$shopinformation->information ?? '' }}
                             </textarea>
                         </div>
                     </div>
