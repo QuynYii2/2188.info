@@ -136,6 +136,11 @@ Route::post(
     '/payment-register-member',
     [AuthController::class, 'paymentMember']
 )->name('payment.member');
+
+Route::get('/location-nation', [AuthController::class, 'getListNation'])->name('location.nation.get');
+Route::get('/location-state/{id}', [AuthController::class, 'getListStateByNation'])->name('location.state.get');
+Route::get('/location-city/{id}', [AuthController::class, 'getListCityByState'])->name('location.city.get');
+
 // End register member
 
 Route::middleware('auth.product')->group(function () {

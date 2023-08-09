@@ -83,19 +83,18 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="countries-select">Chọn quốc gia:</label>
-                                <select class="form-control" id="countries-select" name="countries-select" onchange="populateCities()">
-                                    <option value="">-- Chọn quốc gia --</option>
+                                <select class="form-control" id="countries-select" name="countries-select" onchange="getListState(this.value)">
                                 </select>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="cities-select">Chọn thành phố:</label>
-                                <select class="form-control" id="cities-select" name="cities-select" onchange="populateProvinces()">
+                                <select class="form-control" id="cities-select" name="cities-select" onchange="getListCity(this.value)">
                                     <option value="">-- Chọn thành phố --</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="provinces-select">Chọn quận/huyện:</label>
-                                <select class="form-control" id="provinces-select" name="provinces-select" onchange="populateWards()">
+                                <select class="form-control" id="provinces-select" name="provinces-select" onchange="getListState(this.value)">
                                     <option value="">-- Chọn quận/huyện --</option>
                                 </select>
                             </div>
@@ -105,6 +104,7 @@
                                     <option value="">-- Chọn phường/xã --</option>
                                 </select>
                             </div>
+
                         </div>
 {{--                        <div class="form-group row">--}}
 {{--                            <label class="col-sm-3 col-form-label">Địa chỉ</label>--}}
@@ -121,156 +121,6 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        const username = 'dainq1';
-        function fetchCountries() {
-            const countriesSelect = document.getElementById('countries-select');
-// Xóa tất cả các quốc gia đã chọn trước đó
-            while (countriesSelect.firstChild) {
-                countriesSelect.removeChild(countriesSelect.firstChild);
-            }
-// Lấy thông tin về tất cả các quốc gia
-            const url = `http://api.geonames.org/countryInfoJSON?username=${username}`;
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    data.geonames.forEach(country => {
-                        const option = document.createElement('option');
-                        option.value = country.countryCode;
-                        option.text = country.countryName;
-                        countriesSelect.add(option);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching countries:', error);
-                });
-        }
-        function populateCities() {
-            const countriesSelect = document.getElementById('countries-select');
-            const citiesSelect = document.getElementById('cities-select');
-// Xóa tất cả các thành phố đã chọn trước đó
-            while (citiesSelect.firstChild) {
-                citiesSelect.removeChild(citiesSelect.firstChild);
-            }
-// Lấy quốc gia đã chọn
-            const selectedCountry = countriesSelect.value;
-            if (selectedCountry) {
-                const url = `http://api.geonames.org/searchJSON?country=${selectedCountry}&featureCode=PPL&username=${username}`;
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        const seenCities = {};
-                        data.geonames.forEach(city => {
-                            if (!seenCities[city.adminName1]) {
-                                const option = document.createElement('option');
-                                option.value = city.adminName1;
-                                option.text = city.adminName1;
-                                citiesSelect.add(option);
-
-
-                                seenCities[city.adminName1] = true;
-                            }
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error fetching cities:', error);
-                    });
-            }
-        }
-
-
-        function populateProvinces() {
-            const citiesSelect = document.getElementById('cities-select');
-            const provincesSelect = document.getElementById('provinces-select');
-
-
-// Xóa tất cả các thành phố đã chọn trước đó
-            while (provincesSelect.firstChild) {
-                provincesSelect.removeChild(provincesSelect.firstChild);
-            }
-
-
-// Lấy quốc gia đã chọn
-            const selectedCountry = citiesSelect.value;
-
-
-            if (selectedCountry) {
-                const url = `http://api.geonames.org/searchJSON?q=${selectedCountry}&featureClass=A&featureCode=ADM2&username=${username}`;
-
-
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        const seenDistricts = {};
-                        data.geonames.forEach(district => {
-
-
-                            if (!seenDistricts[district.name]) {
-                                const option = document.createElement('option');
-                                option.value = district.name;
-                                option.text = district.name;
-                                provincesSelect.add(option);
-
-
-// Đánh dấu huyện đã xuất hiện
-                                seenDistricts[district.name] = true;
-                            }
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error fetching cities:', error);
-                    });
-            }
-        }
-        function populateWards() {
-            const provincesSelect = document.getElementById('provinces-select');
-            const wardsSelect = document.getElementById('wards-select');
-            const citiesSelect = document.getElementById('cities-select');
-
-
-// Xóa tất cả các thành phố đã chọn trước đó
-            while (wardsSelect.firstChild) {
-                wardsSelect.removeChild(wardsSelect.firstChild);
-            }
-
-
-// Lấy quốc gia đã chọn
-            const selectedCountry = provincesSelect.value;
-            const selectedCity = citiesSelect.value;
-
-
-            if (selectedCountry) {
-                const url = `http://api.geonames.org/searchJSON?q=${selectedCountry}&featureClass=A&featureCode=ADM3&adminName1=${selectedCity}&username=${username}`;
-// const url = `http://api.geonames.org/searchJSON?q=${selectedCountry}&username=${username}`;
-// const url = `http://api.geonames.org/searchJSON?q=${selectedCity}&username=${username}`;
-// const url = `http://api.geonames.org/searchJSON?q=${selectedCountry}&adminName1=${selectedCity}&username=${username}`;
-
-
-                fetch(url)
-                    .then(response => response.json())
-                    .then(data => {
-                        const seenDistricts = {};
-                        data.geonames.forEach(district => {
-
-
-                            if (!seenDistricts[district.name]) {
-                                const option = document.createElement('option');
-                                option.value = district.name;
-                                option.text = district.name;
-                                wardsSelect.add(option);
-
-
-// Đánh dấu huyện đã xuất hiện
-                                seenDistricts[district.name] = true;
-                            }
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error fetching cities:', error);
-                    });
-            }
-        }
-        fetchCountries();
-
     </script>
     <script>
         var expanded = false;
@@ -302,6 +152,54 @@
                 expanded = false;
             }
         }
+
+
+        const ID_COUNTRY = 'countries-select'
+        const ID_STATE = 'cities-select'
+        const ID_CITY = 'provinces-select'
+
+        getListNation();
+
+        function getListNation() {
+            let url = '{{ route('location.nation.get') }}'
+            fetch(url)
+                .then( async function (res) {
+                    const data = await res.json();
+                    makeHTMLFromJson(data, ID_COUNTRY)
+                });
+        }
+
+        function getListState(id) {
+            let url = '{{ route('location.state.get', ['id' => ':id']) }}';
+            url = url.replace(':id', id);
+            fetch(url)
+                .then( async function (res) {
+                    const data = await res.json();
+                    makeHTMLFromJson(data, ID_STATE)
+                });
+        }
+
+        function getListCity(id) {
+            let url = '{{ route('location.city.get', ['id' => ':id']) }}';
+            url = url.replace(':id', id);
+            fetch(url)
+                .then( async function (res) {
+                    const data = await res.json();
+                    makeHTMLFromJson(data, ID_CITY)
+                });
+        }
+
+        function makeHTMLFromJson(data, id_where) {
+            const selectElement = document.getElementById(id_where);
+            selectElement.innerHTML = '';
+            data.forEach(option => {
+                const optionElement = document.createElement('option');
+                optionElement.value = option.id;
+                optionElement.textContent = option.name;
+                selectElement.appendChild(optionElement);
+            })
+        }
+
     </script>
 @endsection
 

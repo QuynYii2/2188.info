@@ -341,7 +341,7 @@
                                     <a href="{{route('register.show')}}" class="register">
                                         <button type="submit">{{ __('home.Create A New Account') }}</button>
                                     </a>
-                                    <a href="https://staging-b2b.2188.info/register-member" class="register">
+                                    <a href="{{ route('process.register.member') }}" class="register">
                                         <button class="mt-3"
                                                 type="submit">{{ __('home.Sign up for membership') }}</button>
                                     </a>
