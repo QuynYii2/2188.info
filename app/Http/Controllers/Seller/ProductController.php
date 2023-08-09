@@ -311,7 +311,9 @@ class ProductController extends Controller
             $descriptionValue = $request->input('description');
             $shortDescriptionValue = $request->input('short_description');
 
-//            $product->gallery = $this->handleGallery($request->input('imgGallery'));
+            $product->gallery = $this->handleGallery($request->input('imgGallery'));
+            $product->thumbnail = $this->handleGallery($request->input('imgThumbnail'));
+
             $number = $request->input('count');
             $isNew = $request->input('isNew');
 

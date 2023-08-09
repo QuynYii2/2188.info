@@ -164,6 +164,10 @@
                                 @endforeach
                             @endif
                         </div>
+                        <div class="form-group">
+                            <div class="form-group col-12 col-sm-12" id="list-img-thumbnail"></div>
+                            <div class="form-group col-12 col-sm-12" id="list-img-gallery"></div>
+                        </div>
                         <div id="removeInputAttribute " class="form-group row">
                             @if(!$productDetails->isEmpty())
                                 @foreach($productDetails as $productDetail)
@@ -452,18 +456,11 @@
                             </div>
                         </div>
                         <div class="form-group">
-{{--                            <div class="form-group col-12 col-sm-12 pt-3">--}}
-{{--                                <label for="thumbnail">Ảnh đại diện:</label>--}}
-{{--                                <label class='__lk-fileInput'>--}}
-{{--                                    <span data-default='Choose file'>Choose file</span>--}}
-{{--                                    <input type="file" id="thumbnail" class="img-cfg"--}}
-{{--                                           name="thumbnail"--}}
-{{--                                           accept="image/*">--}}
-{{--                                </label>--}}
-{{--                            </div>--}}
                             <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="" width="60px" height="60px">
                         </div>
                     </div>
+                    <input type="text" hidden id="imgGallery" value="" name="imgGallery[]">
+                    <input type="text" hidden id="imgThumbnail" value="" name="imgThumbnail[]">
                     <div class="border-top form-group col-12 col-md-7 col-sm-8 ">
                         <div class="row justify-content-center">
                             <button type="submit" class="btn btn-success">Gửi</button>

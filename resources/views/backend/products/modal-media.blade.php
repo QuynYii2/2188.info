@@ -483,10 +483,6 @@
         });
     }
 
-    function changeTextOfModal() {
-        console.log(document.getElementById('imgGallery').value);
-    }
-
     function renderImg(whereRender) {
         switch (whereRender) {
             case 'thumbnail': {
