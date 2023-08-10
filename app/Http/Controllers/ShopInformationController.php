@@ -29,9 +29,9 @@ class ShopInformationController extends Controller
             ->where('user_id', '=', $id)
             ->first();
 
-            $shopInformation = ShopInfo::all();
+        $shopInformation = ShopInfo::all();
         $listVouchers = Voucher::where('user_id', '=', $id)->get();
-        return view('frontend/pages/shop-information/index', compact('listProduct', 'priceProductOfCategory', 'sellerInfo', 'countProductBySeller', 'listVouchers','shopInformation'));
+        return view('frontend/pages/shop-information/index', compact('listProduct', 'priceProductOfCategory', 'sellerInfo', 'countProductBySeller', 'listVouchers', 'shopInformation'));
 
     }
 
@@ -111,7 +111,7 @@ class ShopInformationController extends Controller
                 <div class="item-img">
                     <img src="' . asset('storage/' . $product['thumbnail']) . '" alt="">
                     <div class="button-view">
-                        <button>Quick view</button>
+                        <button class="quickView" data-value="' . $product['id'] . '">Quick view</button>
                     </div>
                     <div class="text">
                         <div class="text-sale">
@@ -122,6 +122,8 @@ class ShopInformationController extends Controller
                         </div>
                     </div>
                 </div>
+                <input type="text" id="productThumbnail' . $product['id'] . '" class="d-none" value="' . $product['thumbnail'] . '">
+                <input type="text" id="productGallery' . $product['id'] . '" class="d-none" value="' . $product['gallery'] . '">
                 <div class="item-body">
                     <div class="card-rating">
                         <i class="fa-solid fa-star" style="color: #fac325;"></i>
