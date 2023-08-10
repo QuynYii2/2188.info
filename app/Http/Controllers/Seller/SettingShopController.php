@@ -10,6 +10,7 @@ use App\Models\TransportMethod;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Mockery\Exception;
 
 class SettingShopController extends Controller
 {
@@ -29,42 +30,61 @@ class SettingShopController extends Controller
     public function profileShop()
     {
         $user = Auth::user();
-        $shop_infos  = ShopInfo::where('user_id' ,'=', Auth::user()->id)->orderBy('created_at', 'DESC')->first();
+        $shop_infos = ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first();
         // nếu $shop_infos tồn tại thì gọi update còn neeus ko có thì gọi view create
-        if ($shop_infos){
+        if ($shop_infos) {
             return view('backend/shop_profile/update', compact('user', 'shop_infos'));
         } else {
-            return view('backend/shop_profile/index',compact('user', 'shop_infos'));
+            return view('backend/shop_profile/index', compact('user', 'shop_infos'));
         }
 
     }
 
     public function updateProfileShop(Request $request)
     {
-        $user = Auth::user();
-        $shopinformation = ShopInfo::where('user_id' ,'=', Auth::user()->id)->orderBy('created_at', 'DESC')->first();
-        $shopinformation->user_id = Auth::user()->id;
-        $shopinformation->name = $request->input('name');
-        $shopinformation->country = $request->input('region');
-        $shopinformation->masothue = $request->input('masothue');
-        $shopinformation->product_name = $request->input('product_name');
-        $shopinformation->product_code = $request->input('product_code');
-        $shopinformation->product_key = $request->input('product_key');
-        $shopinformation->information = $request->input('information');
-        $shopinformation->business_license = $request->input('business_license');
-        $shopinformation->acreage = $request->input('acreage');
-        $shopinformation->industry_year = $request->input('industry_year');
-        $shopinformation->machine_number = $request->input('machine_number');
-        $shopinformation->marketing = $request->input('marketing');
-        $shopinformation->customers = $request->input('customers');
-        $shopinformation->inspection_staff = $request->input('inspection_staff');
-        $shopinformation->test_method = $request->input('test_method');
-        $shopinformation->annual_output = $request->input('annual_output');
-        $shopinformation->partner = $request->input('partner');
-        $shopinformation->save();
-        return redirect(route('profile.shop.index'));
+        try {
+            $user = Auth::user();
+            $shopinformation = ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first();
+            $shopinformation->user_id = Auth::user()->id;
+            $shopinformation->name = $request->input('name');
+            $shopinformation->country = $request->input('region');
+            $shopinformation->masothue = $request->input('rental_code');
+            $shopinformation->product_name = $request->input('product_name');
+            $shopinformation->product_code = $request->input('product_code');
+            $shopinformation->product_key = $request->input('product_key');
+            $shopinformation->information = $request->input('information');
+            $shopinformation->business_license = $request->input('business_license');
+            $shopinformation->acreage = $request->input('acreage');
+            $shopinformation->industry_year = $request->input('industry_year');
+            $shopinformation->machine_number = $request->input('machine_number');
+            $shopinformation->marketing = $request->input('marketing');
+            $shopinformation->customers = $request->input('customers');
+            $shopinformation->inspection_staff = $request->input('inspection_staff');
+            $shopinformation->test_method = $request->input('test_method');
+            $shopinformation->annual_output = $request->input('annual_output');
+            $shopinformation->partner = $request->input('partner');
+
+            if ($request->hasFile('image')) {
+                $thumbnail = $request->file('image');
+                $thumbnailPath = $thumbnail->store('images', 'public');
+                $user->image = $thumbnailPath;
+                $user->save();
+            }
+
+            $success = $shopinformation->save();
+            if ($success) {
+                alert()->success('Success', 'Success, Save success');
+                return redirect(route('profile.shop.index'));
+            }
+            alert()->error('Error', 'Error, save error');
+            return back();
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error, please try again');
+            return back();
+        }
 
     }
+
     public function saveProfileShop(Request $request)
     {
         $user = Auth::user();

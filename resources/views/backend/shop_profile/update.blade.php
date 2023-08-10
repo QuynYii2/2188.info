@@ -105,7 +105,6 @@
                     </div>
                     <div class="row form-group">
                         <label for="day" class="col-md-3 col-12 col-form-label">Mã số thuế</label>
-
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" name="rental_code"
                                    value="{{ $shop_infos->masothue ?? ''}}">
@@ -113,7 +112,6 @@
                     </div>
                     <div class="row form-group">
                         <label for="day" class="col-md-3 col-12 col-form-label">Tên sản phẩm đăng ký</label>
-
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" required name="product_name"
                                    value="{{ $shop_infos->product_name ?? '' }}">
@@ -127,13 +125,11 @@
                                    value="{{ $shop_infos->product_code ?? '' }}">
                         </div>
                     </div>
-
-
                     <div class="row form-group">
                         <label for="day" class="col-md-3 col-12 col-form-label">Diện tích sàn(㎡)</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control"  name="acreage"
+                            <input type="number" class="form-control" name="acreage"
                                    value="{{ $shop_infos->acreage ?? '' }}">
                         </div>
                     </div>
@@ -141,7 +137,7 @@
                         <label for="day" class="col-md-3 col-12 col-form-label">Dây chuyền sản xuất</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control"  name="machine_number"
+                            <input type="text" class="form-control" name="machine_number"
                                    value="{{ $shop_infos->machine_number ?? '' }}">
                         </div>
                     </div>
@@ -149,7 +145,7 @@
                         <label for="day" class="col-md-3 col-12 col-form-label">Tổng sản lượng hằng năm(đơn vị)</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control" required name="annual_output"
+                            <input type="number" class="form-control" required name="annual_output"
                                    value="{{ $shop_infos->annual_output ?? '' }}">
                         </div>
                     </div>
@@ -158,7 +154,7 @@
                         <label for="day" class="col-md-3 col-12 col-form-label">Năm trong ngành</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control" required name="industry_year"
+                            <input type="number" class="form-control" required name="industry_year"
                                    value="{{ $shop_infos->industry_year ?? '' }}">
                         </div>
                     </div>
@@ -174,7 +170,7 @@
                         <label for="day" class="col-md-3 col-12 col-form-label">Đối tác chuỗi cung ứng</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control"  name="partner"
+                            <input type="text" class="form-control" name="partner"
                                    value="{{ $shop_infos->partner ?? '' }}">
                         </div>
                     </div>
@@ -191,7 +187,7 @@
                         <label for="day" class="col-md-3 col-12 col-form-label">Phương pháp kiểm tra sản phẩm</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control"  name="test_method"
+                            <input type="text" class="form-control" name="test_method"
                                    value="{{ $shop_infos->test_method ?? '' }}">
                         </div>
                     </div>
@@ -199,7 +195,7 @@
                         <label for="day" class="col-md-3 col-12 col-form-label">Nhân viên kiểm tra </label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control"  name="inspection_staff"
+                            <input type="text" class="form-control" name="inspection_staff"
                                    value="{{ $shop_infos->inspection_staff ?? '' }}">
                         </div>
                     </div>
@@ -208,7 +204,8 @@
                         <label for="day" class="col-md-3 col-12 col-form-label">Ngành sản phẩm đăng ký</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control" required name="industry" value="{{ $user->industry ?? '' }}">
+                            <input type="text" class="form-control" required name="industry"
+                                   value="{{ $user->industry ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -223,7 +220,7 @@
                         <label for="day" class="col-md-3 col-12 col-form-label">Ảnh giấy phép kinh doanh</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="file" class="form-control" name="image" required accept="image/*">
+                            <input type="file" class="form-control" name="image" accept="image/*">
                             <img src="{{ asset('storage/' . $user->image) }}" alt="Ảnh giấy phép kinh doanh"
                                  height="100" width="100">
                         </div>
@@ -276,14 +273,14 @@
     <script>
         let desc = document.querySelectorAll('.description');
         for (let i = 0; i < desc.length; i++) {
-            CKEDITOR.replace( desc[i], {
+            CKEDITOR.replace(desc[i], {
                 filebrowserBrowseUrl: '{{ asset('ckfinder/ckfinder.html') }}',
                 filebrowserImageBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Images') }}',
                 filebrowserFlashBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Flash') }}',
                 filebrowserUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}',
                 filebrowserImageUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images') }}',
                 filebrowserFlashUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash') }}'
-            } );
+            });
         }
     </script>
 @endsection
