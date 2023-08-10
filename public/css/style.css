@@ -1772,7 +1772,6 @@ a {
   margin-bottom: 20px;
 }
 .category-item .swiper-slide a .img img {
-  padding: 20px;
   width: 180px;
   height: 180px;
   border-radius: 50%;
@@ -1925,8 +1924,14 @@ hr {
   margin-bottom: 30px;
 }
 .section .section-left--name {
-  font-size: 20px;
+  margin-top: 5px;
+  font-size: 17px;
   text-align: center;
+  height: 50px;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .section .product-banner img {
   width: 100%;
@@ -2073,10 +2078,14 @@ hr {
 .section .item:hover .card-bottom--right {
   display: block;
 }
+.section-left {
+  height: 40vh;
+  margin-top: 70px;
+}
 .section-left img {
   width: 100%;
   height: 100%;
-  border-radius: 10px;
+  object-fit: cover;
 }
 .section .brand-item {
   margin: 8px 0;
