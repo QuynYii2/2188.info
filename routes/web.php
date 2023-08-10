@@ -139,7 +139,8 @@ Route::post(
 
 Route::get('/location-nation', [AuthController::class, 'getListNation'])->name('location.nation.get');
 Route::get('/location-state/{id}', [AuthController::class, 'getListStateByNation'])->name('location.state.get');
-Route::get('/location-city/{id}', [AuthController::class, 'getListCityByState'])->name('location.city.get');
+Route::get('/location-city/{id}/{code}', [AuthController::class, 'getListCityByState'])->name('location.city.get');
+Route::get('/location-ward/{id}/{code}', [AuthController::class, 'getListWardByCity'])->name('location.ward.get');
 
 // End register member
 

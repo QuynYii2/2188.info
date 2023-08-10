@@ -40,7 +40,7 @@
                                         </select>
                                         <div class="overSelect"></div>
                                     </div>
-                                    <div id="checkboxes" class="mt-1  checkboxes" >
+                                    <div id="checkboxes" class="mt-1  checkboxes">
                                         @foreach($categories as $category)
                                             @if(!$category->parent_id)
                                                 <label class="ml-2" for="category-{{$category->id}}">
@@ -83,18 +83,20 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="countries-select">Chọn quốc gia:</label>
-                                <select class="form-control" id="countries-select" name="countries-select" onchange="getListState(this.value)">
+                                <select class="form-control" id="countries-select" name="countries-select"
+                                        onchange="getListState(this.value)">
                                 </select>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="cities-select">Chọn thành phố:</label>
-                                <select class="form-control" id="cities-select" name="cities-select" onchange="getListCity(this.value)">
+                                <select class="form-control" id="cities-select" name="cities-select"
+                                        onchange="getListCity(this.value)">
                                     <option value="">-- Chọn thành phố --</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="provinces-select">Chọn quận/huyện:</label>
-                                <select class="form-control" id="provinces-select" name="provinces-select" onchange="getListState(this.value)">
+                                <select class="form-control" id="provinces-select" name="provinces-select" onchange="getListWard(this.value)">
                                     <option value="">-- Chọn quận/huyện --</option>
                                 </select>
                             </div>
@@ -106,12 +108,12 @@
                             </div>
 
                         </div>
-{{--                        <div class="form-group row">--}}
-{{--                            <label class="col-sm-3 col-form-label">Địa chỉ</label>--}}
-{{--                            <div class="col-sm-9">--}}
-{{--                                <textarea type="text" class="form-control" name="address_detail" required></textarea>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
+                        {{--                        <div class="form-group row">--}}
+                        {{--                            <label class="col-sm-3 col-form-label">Địa chỉ</label>--}}
+                        {{--                            <div class="col-sm-9">--}}
+                        {{--                                <textarea type="text" class="form-control" name="address_detail" required></textarea>--}}
+                        {{--                            </div>--}}
+                        {{--                        </div>--}}
                         <button type="submit" class="btn btn-primary">Sign up</button>
                     </form>
                     <h2 id="result"></h2>
@@ -124,6 +126,7 @@
     </script>
     <script>
         var expanded = false;
+
         function showCheckboxes() {
             var checkboxes = document.getElementById("checkboxes");
             if (!expanded) {
@@ -157,47 +160,99 @@
         const ID_COUNTRY = 'countries-select'
         const ID_STATE = 'cities-select'
         const ID_CITY = 'provinces-select'
+        const ID_WARD = 'wards-select'
 
+        let country_code = ''
+        let city_code = ''
         getListNation();
 
         function getListNation() {
             let url = '{{ route('location.nation.get') }}'
             fetch(url)
-                .then( async function (res) {
+                .then(async function (res) {
                     const data = await res.json();
                     makeHTMLFromJson(data, ID_COUNTRY)
+
+                    autoSelectedOption(ID_STATE)
                 });
         }
 
         function getListState(id) {
             let url = '{{ route('location.state.get', ['id' => ':id']) }}';
             url = url.replace(':id', id);
+            country_code = id;
             fetch(url)
-                .then( async function (res) {
+                .then(async function (res) {
+                    clearDataOption();
                     const data = await res.json();
                     makeHTMLFromJson(data, ID_STATE)
+                    autoSelectedOption(ID_CITY)
                 });
         }
 
         function getListCity(id) {
-            let url = '{{ route('location.city.get', ['id' => ':id']) }}';
+            let url = '{{ route('location.city.get', ['id' => ':id', 'code' => ':code']) }}';
             url = url.replace(':id', id);
+            url = url.replace(':code', country_code);
             fetch(url)
-                .then( async function (res) {
+                .then(async function (res) {
                     const data = await res.json();
                     makeHTMLFromJson(data, ID_CITY)
+                    autoSelectedOption(ID_WARD)
+                });
+        }
+
+        function getListWard(id) {
+            let url = '{{ route('location.ward.get', ['id' => ':id', 'code' => ':code']) }}';
+            url = url.replace(':id', id);
+            url = url.replace(':code', country_code);
+            fetch(url)
+                .then(async function (res) {
+                    const data = await res.json();
+                    makeHTMLFromJson(data, ID_WARD)
                 });
         }
 
         function makeHTMLFromJson(data, id_where) {
             const selectElement = document.getElementById(id_where);
             selectElement.innerHTML = '';
+
+
             data.forEach(option => {
                 const optionElement = document.createElement('option');
-                optionElement.value = option.id;
+
+                optionElement.value = getValueForOption(option);
+
                 optionElement.textContent = option.name;
+
                 selectElement.appendChild(optionElement);
             })
+        }
+
+        function clearDataOption() {
+            document.getElementById(ID_STATE).innerHTML = '';
+            document.getElementById(ID_CITY).innerHTML = '';
+            document.getElementById(ID_WARD).innerHTML = '';
+        }
+
+        function autoSelectedOption(id_where) {
+            const optionSelect = document.getElementById(id_where);
+            if (optionSelect.options.length > 0) {
+                optionSelect.options[0].selected = true;
+            }
+        }
+
+        function getValueForOption(option) {
+            if (option.iso2) {
+                return option.iso2;
+            }
+            if (option.city_code) {
+                return option.city_code
+            }
+            if (option.state_code) {
+                return option.state_code
+            }
+            return option.id;
         }
 
     </script>
