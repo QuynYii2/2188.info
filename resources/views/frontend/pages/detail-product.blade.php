@@ -214,7 +214,17 @@
             display: flex;
             justify-content: space-between;
         }
-
+        #myButton {
+            width: 130px;
+            background: #fd6506;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 45px;
+            font-weight: 600;
+            color: white;
+            border: none;
+        }
     </style>
     <div class="container-fluid detail">
         <div class="grid second-nav">
@@ -609,7 +619,9 @@
                 @php
                     $shopInformation = \App\Models\ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first()
                 @endphp
-                @include('frontend.pages.shop-information.tabs_shop_info')
+                <p id="dots">Hồ sơ công ty</p>
+                <div id="more" style="display: none;">@include('frontend.pages.shop-information.tabs_shop_info')</div>
+                <button onclick="myFunction()" id="myButton">{{ __('home.Show More') }}</button>
             </div>
 
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
@@ -939,6 +951,24 @@
             <div class="swiper-button-prev"></div>
         </div>
     </section>
+{{--  Show more  --}}
+    <script>
+        function myFunction() {
+            var dots = document.getElementById("dots");
+            var moreText = document.getElementById("more");
+            var btnText = document.getElementById("myBtn");
+
+            if (moreText.style.display === "none") {
+                dots.style.display = "none";
+                btnText.innerHTML = "{{ __('home.Show Less') }}";
+                moreText.style.display = "block";
+            } else {
+                dots.style.display = "inline";
+                btnText.innerHTML = "{{ __('home.Show More') }}";
+                moreText.style.display = "none";
+            }
+        }
+    </script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
         var result = [];
