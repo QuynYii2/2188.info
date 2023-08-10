@@ -4,15 +4,18 @@ namespace App\Http\Controllers\Seller;
 
 use App\Enums\AttributeProductStatus;
 use App\Enums\AttributeStatus;
+use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\OrderStatus;
 use App\Enums\ProductStatus;
 use App\Enums\PromotionStatus;
+use App\Enums\RegisterMember;
 use App\Enums\VariationStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\TranslateController;
 use App\Models\Attribute;
 use App\Models\Category;
+use App\Models\MemberRegisterInfo;
 use App\Models\Product;
 use App\Models\ProductSale;
 use App\Models\Promotion;
@@ -93,9 +96,10 @@ class ProductController extends Controller
             'promotions'));
     }
 
-    public function toggleProduct($id){
+    public function toggleProduct($id)
+    {
         $product = Product::find($id);
-        if ($product->status == ProductStatus::ACTIVE){
+        if ($product->status == ProductStatus::ACTIVE) {
             $product->status = ProductStatus::INACTIVE;
         } else {
             $product->status = ProductStatus::ACTIVE;
@@ -180,6 +184,7 @@ class ProductController extends Controller
                 break;
             }
         }
+
         return view('backend/products/create', [
             'categories' => $categories,
             'attributes' => $attributes,
@@ -190,6 +195,39 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         try {
+            $maxProduct = Product::where([
+                ['user_id', Auth::user()->id],
+                ['status', '!=', ProductStatus::DELETED]
+            ])->get();
+            $countProduct = count($maxProduct);
+
+            $memberUser = DB::table('member_register_infos')
+                ->join('member_register_person_sources', 'member_register_infos.id', '=', 'member_register_person_sources.member_id')
+                ->where([['member_register_person_sources.email', '=', Auth::user()->email], ['member_register_infos.status', '=', MemberRegisterInfoStatus::ACTIVE]])
+                ->select('member_register_infos.*')
+                ->get();
+
+            $notMember = false;
+            if ($memberUser->isNotEmpty()) {
+                foreach ($memberUser as $memberItem) {
+                    if ($memberItem->member == RegisterMember::LOGISTIC || $memberItem->member == RegisterMember::BUYER || $memberItem->member == RegisterMember::TRUST) {
+                        $notMember = true;
+                    }
+                }
+            }
+
+            $isAdmin = (new HomeController())->checkAdmin();
+            if ($isAdmin == true){
+                $notMember = false;
+            }
+
+            if ($notMember == true) {
+                if ($countProduct > 8) {
+                    alert()->error('Error', 'Bạn đã tạo quá số lượng sản phẩm quy định! Vui lònh loại bớt sản phẩm hoặc nâng cấp nên gói tài khoản cao cấp hơn');
+                    return back();
+                }
+            }
+
             $nameValue = $request->input('name');
             $descriptionValue = $request->input('description');
             $shortDescriptionValue = $request->input('short_description');
@@ -224,13 +262,13 @@ class ProductController extends Controller
             $product->name_ko = $ld->translateText($nameValue, 'ko');
             $product->name_en = $ld->translateText($nameValue, 'en');
             $product->name_zh = $ld->translateText($nameValue, 'zh-CN');
-            
+
             $product->description_vi = $ld->translateText($descriptionValue, 'vi');
             $product->description_ja = $ld->translateText($descriptionValue, 'ja');
             $product->description_ko = $ld->translateText($descriptionValue, 'ko');
             $product->description_en = $ld->translateText($descriptionValue, 'en');
             $product->description_zh = $ld->translateText($descriptionValue, 'zh-CN');
-            
+
             $product->short_description_vi = $ld->translateText($shortDescriptionValue, 'vi');
             $product->short_description_ja = $ld->translateText($shortDescriptionValue, 'ja');
             $product->short_description_ko = $ld->translateText($shortDescriptionValue, 'ko');
@@ -380,9 +418,9 @@ class ProductController extends Controller
                 $product->feature = 0;
             }
 
-            if($quantity){
+            if ($quantity) {
                 $counts = count($quantity);
-                for ($i = 0; $i<$counts; $i++) {
+                for ($i = 0; $i < $counts; $i++) {
                     $newProductSale = null;
                     $newProductSale = [
                         'user_id' => $product->user_id,
@@ -671,19 +709,19 @@ class ProductController extends Controller
             'min' => $product->min,
             'origin' => $product->origin,
             'status' => ProductStatus::INACTIVE,
-            
+
             'name_vi' => $product->name_vi,
             'name_ja' => $product->name_ja,
             'name_ko' => $product->name_ko,
             'name_en' => $product->name_en,
             'name_zh' => $product->name_zh,
-            
+
             'description_vi' => $product->description_vi,
             'description_ja' => $product->description_ja,
             'description_ko' => $product->description_ko,
             'description_en' => $product->description_en,
             'description_zh' => $product->description_zh,
-            
+
             'short_description_vi' => $product->short_description_vi,
             'short_description_ja' => $product->short_description_ja,
             'short_description_ko' => $product->short_description_ko,
@@ -699,7 +737,7 @@ class ProductController extends Controller
         $sales = $request->input('sales');
 
         $counts = count($quantity);
-        for ($i = 0; $i<$counts; $i++){
+        for ($i = 0; $i < $counts; $i++) {
             $newProductSale = null;
             $newProductSale = [
                 'user_id' => $product->user_id,
