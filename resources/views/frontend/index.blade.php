@@ -227,8 +227,6 @@
                                                     <div class="text-new">
                                                         New
                                                     </div>
-
-
                                                 </div>
                                             </div>
                                         @endif
@@ -249,15 +247,11 @@
                                             </div>
                                             <div class="card-title">
                                                 @if(Auth::check())
-                                                    <a href="{{route('detail_product.show', $newProduct->id)}}">{{($newProduct->{'name' . $langDisplay->getLangDisplay()})}}</a>
+                                                    <a href="{{route('detail_product.show', $newProduct->id)}}">{{ ($newProduct->name) }}</a>
                                                 @else
-                                                    <a class="check_url">{{($newProduct->{'name' . $langDisplay->getLangDisplay()})}}</a>
+                                                    <a class="check_url">{{($newProduct->name)}}</a>
                                                 @endif
-
-
                                             </div>
-
-
                                             @if($newProduct->price)
                                                 <div class="card-price d-flex justify-content-between">
                                                     @if($newProduct->price != null)
@@ -318,8 +312,6 @@
                                                         <div class="text-new">
                                                             New
                                                         </div>
-
-
                                                     </div>
                                                 </div>
                                             @endif
@@ -336,12 +328,13 @@
                                                     $nameFeature = DB::table('users')->where('id', $product->user_id)->first();
                                                 @endphp
                                                 <div class="card-brand">
+                                                    {{($nameFeature->name)}}
                                                 </div>
                                                 <div class="card-title">
                                                     @if(Auth::check())
-                                                        <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->{'name' . $langDisplay->getLangDisplay()}) }}</a>
+                                                        <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
                                                     @else
-                                                        <a class="check_url">{{ ($product->{'name' . $langDisplay->getLangDisplay()}) }}</a>
+                                                        <a class="check_url">{{($product->name)}}</a>
                                                     @endif
                                                 </div>
                                                 @if($product->price)
@@ -482,8 +475,6 @@
                                                 <div class="text-new">
                                                     New
                                                 </div>
-
-
                                             </div>
                                         </div>
                                     @endif
@@ -502,8 +493,13 @@
                                         <div class="card-brand">
                                             {{($nameHot->name)}}
                                         </div>
-
-
+                                        <div class="card-title">
+                                            @if(Auth::check())
+                                                <a href="{{route('detail_product.show', $hotProduct->id)}}">{{ ($hotProduct->name) }}</a>
+                                            @else
+                                                <a class="check_url">{{($hotProduct->name)}}</a>
+                                            @endif
+                                        </div>
                                         @if($hotProduct->price)
                                             <div class="card-price d-flex justify-content-between">
                                                 @if($hotProduct->price != null)
@@ -544,168 +540,140 @@
                 <div class="swiper-button-prev"></div>
             </div>
         </section>
-        <section class="section pt-3 pb-3 container-fluid ">
-            <div class="row category-img">
-                <div class="col-md-3 col-xl-2">
-                    @php
-                        $listCate = DB::table('categories')->where('parent_id', null)->get();
-                    @endphp
-                    @for($i=0; $i<1; $i++)
-                        <div class="section-left">
+        <div class="section row container-fluid">
+            <div class="col-md-3 col-xl-2 pt-3 pb-3">
+                @php
+                    $listCate = DB::table('categories')->where('parent_id', null)->get();
+                @endphp
+                @for($i=0; $i<9; $i++)
+                    <div class="section-left">
+                        <a href="{{ route('category.show', $listCate[$i]->id) }}">
                             <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
                                  alt="">
-                        </div>
-                        <div class="section-left--name">
-                            {{$listCate[$i] -> name}}
-                        </div>
-                    @endfor
-                </div>
-                <div class="col-12 col-md-9 col-xl-8">
-                    @if($locale == 'vi')
-                        <div class="content ">Viet Nam
-                            <img class="flag-ct"
-                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
-                        </div>
-                    @elseif($locale == 'kr')
-                        <div class="content ">Korea
-                            <img class="flag-ct"
-                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png">
-                        </div>
-                    @elseif($locale == 'cn')
-                        <div class="content ">China
-                            <img class="flag-ct"
-                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
-                        </div>
-                    @else
-                        <div class="content ">Japan
-                            <img class="flag-ct"
-                                 src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
-                        </div>
-                    @endif
-                    <div class="swiper listProduct">
-                        <div class="swiper-wrapper">
-                            @php
-                                $products = \App\Models\Product::where([['location','=','vi'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
-                            @endphp
-                            @foreach($currentProducts as $product)
+                            <div class="section-left--name">
+                                {{$listCate[$i] -> name}}
+                            </div>
+                        </a>
+                    </div>
+                @endfor
+            </div>
+            <div class="col-12 col-md-9 col-xl-8">
+                <div class=" section">
+                    <div class="row category-img">
+                        @if($locale == 'vi')
+                            <div class="content ">Viet Nam
+                                <img class="flag-ct"
+                                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
+                            </div>
+                        @elseif($locale == 'kr')
+                            <div class="content ">Korea
+                                <img class="flag-ct"
+                                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png">
+                            </div>
+                        @elseif($locale == 'cn')
+                            <div class="content ">China
+                                <img class="flag-ct"
+                                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
+                            </div>
+                        @else
+                            <div class="content ">Japan
+                                <img class="flag-ct"
+                                     src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
+                            </div>
+                        @endif
+                        <div class="swiper listProduct">
+                            <div class="swiper-wrapper">
                                 @php
-                                    $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
+                                    $products = \App\Models\Product::where([['location','=','vi'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
                                 @endphp
-                                <div class="swiper-slide">
-                                    <div class="item">
-                                        @if($product->thumbnail)
-                                            <div class="item-img">
-                                                <img src="{{ asset('storage/' . $product->thumbnail) }}"
-                                                     alt="">
-                                                <div class="button-view">
-                                                    <button type="button" class="btn view_modal"
-                                                            data-toggle="modal"
-                                                            data-value="{{$product}}"
-                                                            data-id="{{$productDetail}}"
-                                                            data-target="#exampleModal">{{ __('home.Quick view') }}</button>
-                                                </div>
-                                                <div class="text">
-                                                    <div class="text-new">
-                                                        New
+                                @foreach($currentProducts as $product)
+                                    @php
+                                        $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
+                                    @endphp
+                                    <div class="swiper-slide">
+                                        <div class="item">
+                                            @if($product->thumbnail)
+                                                <div class="item-img">
+                                                    <img src="{{ asset('storage/' . $product->thumbnail) }}"
+                                                         alt="">
+                                                    <div class="button-view">
+                                                        <button type="button" class="btn view_modal"
+                                                                data-toggle="modal"
+                                                                data-value="{{$product}}"
+                                                                data-id="{{$productDetail}}"
+                                                                data-target="#exampleModal">{{ __('home.Quick view') }}</button>
+                                                    </div>
+                                                    <div class="text">
+                                                        <div class="text-new">
+                                                            New
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        @endif
-
-
-                                        <div class="item-body">
-                                            <div class="card-rating">
-                                                @for($i = 0; $i < 5; $i++)
-                                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                                @endfor
-                                                <span>(1)</span>
-                                            </div>
-                                            @php
-                                                $nameUser = DB::table('users')->where('id', $product->user_id)->first();
-                                            @endphp
-                                            <div class="card-brand">
-                                                {{($nameUser->name)}}
-                                            </div>
-                                            <div class="card-title">
-                                                @if(Auth::check())
-                                                    <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
-                                                @else
-                                                    <a class="check_url">{{($product->name)}}</a>
-                                                @endif
-                                            </div>
-                                            @if($product->price)
-                                                <div class="card-price d-flex justify-content-between">
-                                                    @if($product->price != null)
-                                                        <div class="price-sale">
-                                                            <strong>${{$product->price}}</strong>
-                                                        </div>
-                                                        <div class="price-cost">
-                                                            <strike>${{$product->old_price}}</strike>
-                                                        </div>
-                                                    @else
-                                                        <div class="price-sale">
-                                                            <strong>${{$product->old_price}}</strong>
-                                                        </div>
-                                                    @endif
-                                                </div>
                                             @endif
-                                            <div class="card-bottom d-flex justify-content-between">
-                                                <div class="card-bottom--left">
+
+
+                                            <div class="item-body">
+                                                <div class="card-rating">
+                                                    @for($i = 0; $i < 5; $i++)
+                                                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                                    @endfor
+                                                    <span>(1)</span>
+                                                </div>
+                                                @php
+                                                    $nameUser = DB::table('users')->where('id', $product->user_id)->first();
+                                                @endphp
+                                                <div class="card-brand">
+                                                    {{($nameUser->name)}}
+                                                </div>
+                                                <div class="card-title">
                                                     @if(Auth::check())
-                                                        <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
+                                                        <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
                                                     @else
-                                                        <a class="check_url">Choose Options</a>
+                                                        <a class="check_url">{{($product->name)}}</a>
                                                     @endif
                                                 </div>
-                                                <div class="card-bottom--right "
-                                                     id-product="{{$newProduct->id}}">
-                                                    <i class="item-icon fa-regular fa-heart"></i>
+                                                @if($product->price)
+                                                    <div class="card-price d-flex justify-content-between">
+                                                        @if($product->price != null)
+                                                            <div class="price-sale">
+                                                                <strong>${{$product->price}}</strong>
+                                                            </div>
+                                                            <div class="price-cost">
+                                                                <strike>${{$product->old_price}}</strike>
+                                                            </div>
+                                                        @else
+                                                            <div class="price-sale">
+                                                                <strong>${{$product->old_price}}</strong>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                @endif
+                                                <div class="card-bottom d-flex justify-content-between">
+                                                    <div class="card-bottom--left">
+                                                        @if(Auth::check())
+                                                            <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
+                                                        @else
+                                                            <a class="check_url">Choose Options</a>
+                                                        @endif
+                                                    </div>
+                                                    <div class="card-bottom--right "
+                                                         id-product="{{$newProduct->id}}">
+                                                        <i class="item-icon fa-regular fa-heart"></i>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
                         </div>
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
                     </div>
                 </div>
-                <div class="col-md-3 col-xl-2">
-                    @php
-                        $listCate = DB::table('categories')->where('parent_id', null)->get();
-                    @endphp
-                    @for($i=0; $i<1; $i++)
-                        <div class="section-left">
-                            <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
-                                 alt="">
-                        </div>
-                        <div class="section-left--name">
-                            {{$listCate[$i] -> name}}
-                        </div>
-                    @endfor
-                </div>
-            </div>
-        </section>
-        @foreach($arrayProducts as $keys => $arrayProduct)
-            @if($keys != $locale)
-                <section class=" category-img section pt-3 pb-3 container-fluid">
-                    <div class="row">
-                        <div class="col-md-3 col-xl-2">
-                            @php
-                                $listCate = DB::table('categories')->where('parent_id', null)->get();
-                            @endphp
-                            @for($i=0; $i<1; $i++)
-                                <div class="section-left">
-                                    <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
-                                         alt="">
-                                </div>
-                                <div class="section-left--name">
-                                    {{$listCate[$i] -> name}}
-                                </div>
-                            @endfor
-                        </div>
-                        <div class="col-12 col-md-9 col-xl-8">
+                @foreach($arrayProducts as $keys => $arrayProduct)
+                    @if($keys != $locale)
+                        <div class="category-img section pt-3 pb-3 container-fluid">
                             @if($keys == 'vi')
                                 <div class="content ">Viet Nam
                                     <img class="flag-ct"
@@ -813,31 +781,36 @@
                                 <div class="swiper-button-prev"></div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-xl-2">
-                            @php
-                                $listCate = DB::table('categories')->where('parent_id', null)->get();
-                            @endphp
-                            @for($i=0; $i<1; $i++)
-                                <div class="section-left">
-                                    <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
-                                         alt="">
-                                </div>
-                                <div class="section-left--name">
-                                    {{$listCate[$i] -> name}}
-                                </div>
-                            @endfor
-                        </div>
+                    @endif
+                @endforeach
+            </div>
+            <div class="col-md-3 col-xl-2 pt-3 pb-3">
+                @php
+                    $listCate = DB::table('categories')->where('parent_id', null)->get();
+                @endphp
+                @foreach($listCate as $cate => $cate_info)
+                    @if ($cate < 8)
+                        @continue
+                    @endif
+                    <div class="section-left">
+                        <a href="{{ route('category.show', $cate_info->id) }}">
+                            <img src="{{ asset('storage/' . $cate_info->thumbnail) }}"
+                                 alt="">
+                            <div class="section-left--name">
+                                {{$cate_info -> name}}
+                            </div>
+                        </a>
                     </div>
-                </section>
-            @endif
-        @endforeach
+                @endforeach
+            </div>
+        </div>
         <section class="section-Seven ">
             <div class="container-fluid">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum
                     interdum, nisi lorem egestas vitae scel
                     <span id="dots">...</span>
                     <span id="more">
-                            erisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor vitae massa.
+                        erisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor vitae massa.
                         Fusce luctus vestibulum augue ut aliquet. Nunc sagittis dictum nisi, sed ullamcorper ipsum dignissim ac.
                         In at libero sed nunc venenatis imperdiet sed ornare turpis. Donec vitae dui eget tellus gravida venenatis.
                         Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor porta.

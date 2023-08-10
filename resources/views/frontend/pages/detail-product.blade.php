@@ -619,9 +619,12 @@
                 @php
                     $shopInformation = \App\Models\ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first()
                 @endphp
-                <p id="dots">Hồ sơ công ty</p>
-                <div id="more" style="display: none;">@include('frontend.pages.shop-information.tabs_shop_info')</div>
-                <button onclick="myFunction()" id="myButton">{{ __('home.Show More') }}</button>
+                @if($shopInformation->isNotEmpty())
+                  <p id="dots">Hồ sơ công ty</p>
+                    @include('frontend.pages.shop-information.tabs_shop_info')
+                    <div id="more" style="display: none;">@include('frontend.pages.shop-information.tabs_shop_info')</div>
+                    <button onclick="myFunction()" id="myButton">{{ __('home.Show More') }}</button>
+                @endif
             </div>
 
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
