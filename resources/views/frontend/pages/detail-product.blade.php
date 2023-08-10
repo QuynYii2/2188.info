@@ -591,6 +591,7 @@
                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
                    aria-controls="profile" aria-selected="false">{{ __('home.company information') }}</a>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
                    aria-controls="contact" aria-selected="false">{{ __('home.review') }}</a>
@@ -606,7 +607,7 @@
             @endphp
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 @php
-                    $shopInformation = \App\Models\ShopInfo::all()
+                    $shopInformation = \App\Models\ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first()
                 @endphp
                 @include('frontend.pages.shop-information.tabs_shop_info')
             </div>
