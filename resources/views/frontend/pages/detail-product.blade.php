@@ -354,9 +354,7 @@
                             <a href="#">
                                 <div class="button-call"><i class="fa-solid fa-phone"></i> Call us</div>
                             </a>
-                            <div class="addtocard">
-                                <button><i class="fa-solid fa-cart-shopping"></i> Add to cart</button>
-                            </div>
+
                         </div>
                     </form>
                 </div>
@@ -410,7 +408,7 @@
                                         Nhãn hiệu đã đăng ký (1)
                             </div>
                             <div class="company-basicCapacity snipcss0-1-1-19">
-                                <a href="https://idock.en.alibaba.com/company_profile/feedback.html"
+                                <a href=""
                                    class="attr-item snipcss0-2-19-20" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-title snipcss0-3-20-21">
                                                 xếp hạng cửa hàng
@@ -505,7 +503,7 @@
                                 </div>
                             </a>
                             <div class="company-profile snipcss0-1-1-55">
-                                <a href="{{ route('shop.information.show', $name->id) }}""
+                                <a href="{{ route('shop.information.show', $name->id) }}"
                                    class="detail-next-btn detail-next-medium detail-next-btn-normal snipcss0-2-55-56">
                                     <span class="detail-next-btn-helper snipcss0-3-56-57">
                                        hồ sơ công ty
@@ -549,17 +547,12 @@
                 $user = DB::table('users')->first();
             @endphp
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                {{$user->name}} <br>
-                @if($user)
-                    {{$user->region}}<br>
-                @endif
-                @if($user)
-                    {{$user->industry}} <br>
-                @endif
-                @if($infos)
-                    {!! $infos->information!!}
-                @endif
+                @php
+                    $shopInformation = \App\Models\ShopInfo::all()
+                @endphp
+                @include('frontend.pages.shop-information.tabs_shop_info')
             </div>
+
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                 <div class="card mb-4">
                     <div class="card-body">
