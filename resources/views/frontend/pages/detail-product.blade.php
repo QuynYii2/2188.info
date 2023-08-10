@@ -354,9 +354,7 @@
                             <a href="#">
                                 <div class="button-call"><i class="fa-solid fa-phone"></i> Call us</div>
                             </a>
-                            <div class="addtocard">
-                                <button><i class="fa-solid fa-cart-shopping"></i> Add to cart</button>
-                            </div>
+
                         </div>
                     </form>
                 </div>
@@ -505,7 +503,7 @@
                                 </div>
                             </a>
                             <div class="company-profile snipcss0-1-1-55">
-                                <a href="{{ route('shop.information.show', $name->id) }}""
+                                <a href="{{ route('shop.information.show', $name->id) }}"
                                    class="detail-next-btn detail-next-medium detail-next-btn-normal snipcss0-2-55-56">
                                     <span class="detail-next-btn-helper snipcss0-3-56-57">
                                        hồ sơ công ty

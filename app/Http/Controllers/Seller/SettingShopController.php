@@ -63,6 +63,7 @@ class SettingShopController extends Controller
         $shopinformation->partner = $request->input('partner');
         $shopinformation->save();
         return redirect(route('profile.shop.index'));
+
     }
     public function saveProfileShop(Request $request)
     {

@@ -91,7 +91,7 @@
                                        class="col-md-3 col-12 col-form-label">Tên người bán</label>
                                 <div class="col-md-9 col-12">
                                     <input type="text" class="form-control" id="staticEmail" required name="name"
-                                           value="{{ $shopinformation->name ?? ''}}">
+                                           value="{{ $user->name ?? ''}}">
                                 </div>
                             </div>
                         </div>
@@ -108,7 +108,7 @@
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" name="rental_code"
-                                   value="{{ $shopinformation->masothue ?? ''}}">
+                                   value="{{ $shop_infos->masothue ?? ''}}">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -116,7 +116,7 @@
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" required name="product_name"
-                                   value="{{ $shopinformation->product_name ?? '' }}">
+                                   value="{{ $shop_infos->product_name ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -124,7 +124,7 @@
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" required name="product_code"
-                                   value="{{ $shopinformation->product_code ?? '' }}">
+                                   value="{{ $shop_infos->product_code ?? '' }}">
                         </div>
                     </div>
 
@@ -134,7 +134,7 @@
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control"  name="acreage"
-                                   value="{{ $shopinformation->acreage ?? '' }}">
+                                   value="{{ $shop_infos->acreage ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -142,7 +142,7 @@
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control"  name="machine_number"
-                                   value="{{ $shopinformation->machine_number ?? '' }}">
+                                   value="{{ $shop_infos->machine_number ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -150,7 +150,7 @@
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" required name="annual_output"
-                                   value="{{ $shopinformation->annual_output ?? '' }}">
+                                   value="{{ $shop_infos->annual_output ?? '' }}">
                         </div>
                     </div>
 
@@ -159,7 +159,7 @@
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" required name="industry_year"
-                                   value="{{ $shopinformation->industry_year ?? '' }}">
+                                   value="{{ $shop_infos->industry_year ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -167,7 +167,7 @@
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" required name="marketing"
-                                   value="{{ $shopinformation->marketing ?? '' }}">
+                                   value="{{ $shop_infos->marketing ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -175,7 +175,7 @@
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control"  name="partner"
-                                   value="{{ $shopinformation->partner ?? '' }}">
+                                   value="{{ $shop_infos->partner ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -183,7 +183,7 @@
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" required name="customers"
-                                   value="{{ $shopinformation->customers ?? '' }}">
+                                   value="{{ $shop_infos->customers ?? '' }}">
                         </div>
                     </div>
 
@@ -192,7 +192,7 @@
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control"  name="test_method"
-                                   value="{{ $shopinformation->test_method ?? '' }}">
+                                   value="{{ $shop_infos->test_method ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -200,7 +200,7 @@
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control"  name="inspection_staff"
-                                   value="{{ $shopinformation->inspection_staff ?? '' }}">
+                                   value="{{ $shop_infos->inspection_staff ?? '' }}">
                         </div>
                     </div>
 
@@ -215,7 +215,7 @@
                         <label for="short_description" class="col-md-3 col-12 col-form-label">Thông tin công ty</label>
                         <div class="col-md-9 col-12">
                             <textarea class="form-control description" name="information" rows="5">
-                                    {{$shopinformation->information ?? '' }}
+                                    {{$shop_infos->information ?? '' }}
                             </textarea>
                         </div>
                     </div>

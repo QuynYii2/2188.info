@@ -258,7 +258,7 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
 //Setting shop
     Route::get('/setting-shop', [SettingShopController::class, 'index'])->name('setting.shop.index');
     Route::get('/profile-shop', [SettingShopController::class, 'profileShop'])->name('profile.shop.index');
-    Route::post('/profile-shop/update/{id}', [SettingShopController::class, 'updateProfileShop'])->name('profile.shop.update');
+    Route::post('/profile-shop/update', [SettingShopController::class, 'updateProfileShop'])->name('profile.shop.update');
     Route::post('/profile-shop/store', [SettingShopController::class, 'saveProfileShop'])->name('profile.shop.store');
     Route::post('/setting-shop/pm', [SettingShopController::class, 'savePaymentMethod'])->name('setting.shop.payment.save');
     Route::post('/setting-shop/tm', [SettingShopController::class, 'saveTransportMethod'])->name('setting.shop.transport.save');
