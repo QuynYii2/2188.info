@@ -717,9 +717,10 @@ a {
 
       &-middle {
         .search-wrapper {
+          position: relative;
           margin: 0;
           height: 50px;
-          border-radius: 20px;
+          border-radius: 30px;
           background-color: white;
 
           input {
@@ -736,7 +737,7 @@ a {
           button {
             position: absolute;
             font-size: 30px;
-            right: -10px;
+            right: 0;
             float: right;
             border: 0;
             height: 100%;
@@ -841,6 +842,15 @@ a {
             color: white;
             cursor: pointer;
             padding: 0;
+          }
+          .button_login{
+              cursor: pointer;
+              padding: 0;
+              width: 100px;
+              background: white;
+              height: 40px;
+              border-radius: 10px;
+              margin: 5px;
           }
           .total_shop{
             position: absolute;
@@ -2300,6 +2310,14 @@ hr{
     margin-bottom: 30px;
   }
 
+  .section-left{
+
+  }
+  .section-left--name{
+    font-size: 20px;
+    text-align: center;
+  }
+
   .product-banner {
     img {
       width: 100%;
@@ -2716,7 +2734,7 @@ hr{
       background: $color-main;
       border-radius: 20px;
       cursor: pointer;
-      font-size: 19px;
+      font-size: 16px;
       line-height: 45px;
       font-weight: 600;
       color: white;
