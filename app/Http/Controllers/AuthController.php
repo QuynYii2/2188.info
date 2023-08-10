@@ -219,9 +219,28 @@ class AuthController extends Controller
         (new HomeController())->getLocale($request);
         $categories = Category::all();
         return view('frontend/pages/registerMember/show-register-member-info', compact(
-            'registerMember',
-            'categories'
+            'registerMember', 'categories'
         ));
+    }
+
+    public function getListNation()
+    {
+        $listNation = DB::table('countries')->get(['name', 'id']);
+        return response()->json($listNation);
+    }
+    public function getListStateByNation($id)
+    {
+        $listState = DB::table('states')
+            ->where([['country_id', '=', $id]])
+            ->get(['name', 'id']);
+        return response()->json($listState);
+    }
+    public function getListCityByState($id)
+    {
+        $listCity = DB::table('cities')
+            ->where([['state_id', '=', $id]])
+            ->get(['name', 'id']);
+        return response()->json($listCity);
     }
 
     /*Show form đăng kí thông tin người đăng kí*/

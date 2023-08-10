@@ -287,13 +287,13 @@
                                             </label>
                                         </div>
                                         <div class="">
-                                            <a class="btn btn-success addALlNavberBtn">
+                                            <a class="btn btn-success" onclick="selectAllAttribute({{$attribute->id}})">
                                                 SelectAll
                                             </a>
-                                            <a class="btn btn-success removeAllNavberBtn">
+                                            <a class="btn btn-success" onclick="removeAllAttribute({{$attribute->id}})">
                                                 Remove All
                                             </a>
-                                            <a class="btn btn-secondary hiddenNavberBtn">
+                                            <a class="btn btn-secondary" onclick="hiddenAttribute({{$attribute->id}})">
                                                 Hidden
                                             </a>
                                         </div>
@@ -810,25 +810,6 @@
             let attributeID = $(this).attr('data-value');
             var attribute = document.getElementById("attributeID_" + attributeID);
             attribute.classList.remove("d-none");
-            var listProperties = document.getElementsByClassName("checkbox" + attributeID);
-
-            $(document).on('click', '.addALlNavberBtn', function (event) {
-                for (let i = 0; i < listProperties.length; i++) {
-                    listProperties[i].click();
-                }
-                checkInput();
-            });
-
-            $(document).on('click', '.removeAllNavberBtn', function (event) {
-                for (let i = 0; i < listProperties.length; i++) {
-                    listProperties[i].checked = false;
-                }
-                document.getElementById('attribute_property' + attributeID).value = '';
-            });
-
-            $(document).on('click', '.hiddenNavberBtn', function (event) {
-                attribute.classList.add("d-none");
-            });
         });
 
         // Keyboard events
@@ -946,6 +927,29 @@
         $(document).ready(function () {
             create_custom_dropdowns();
         });
+
+        function selectAllAttribute(id) {
+            var listProperties = document.getElementsByClassName("checkbox" + id);
+
+            for (let i = 0; i < listProperties.length; i++) {
+                listProperties[i].click();
+            }
+            checkInput();
+        }
+
+        function removeAllAttribute(id) {
+            var listProperties = document.getElementsByClassName("checkbox" + id);
+
+            for (let i = 0; i < listProperties.length; i++) {
+                listProperties[i].checked = false;
+            }
+            document.getElementById('attribute_property' + id).value = '';
+        }
+
+        function hiddenAttribute(id) {
+            var attribute = document.getElementById("attributeID_" + id);
+            attribute.classList.add("d-none");
+        }
     </script>
     <script>
         let desc = document.querySelectorAll('.description');

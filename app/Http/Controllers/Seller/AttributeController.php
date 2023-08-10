@@ -59,7 +59,7 @@ class AttributeController extends Controller
                 alert()->success('Success', 'Attribute created successfully.');
                 return redirect(route('attributes.index'));
             } else {
-                alert()->error('Error', 'Attribute created erro!.');
+                alert()->error('Error', 'Attribute created error!.');
                 return redirect(route('attributes.index'));
             }
         } catch (\Exception $exception) {
