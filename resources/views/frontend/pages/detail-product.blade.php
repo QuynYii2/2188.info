@@ -155,6 +155,66 @@
         td.text-left {
             text-align: left;
         }
+
+        .card-central-logo.ilvietnam-1-1-2 {
+
+            display:flex ;
+            justify-content: center;
+            margin-top: -15px;
+        }
+
+        .ability.ilvietnam-1-1-17 {
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        .company-basicCapacity.ilvietnam-1-1-19 {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            overflow: hidden;
+            margin-bottom: 25px;
+            text-align: left;
+            font-size: 14px;
+        }
+        .attr-item {
+            width: 50%;
+            margin-top: 12px;
+        }
+        .company-productionServiceCapacity.service-2.ilvietnam-1-1-38 {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            position: relative;
+            margin-bottom: 20px;
+            border-top: 1px solid #ccc;
+        }
+        .attr-title.ilvietnam-2-38-39 {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 14px;
+            line-height: 16px;
+            margin-bottom: 15px;
+            position: relative;
+            margin-top: 25px;
+        }
+        .attr-item.ilvietnam-2-38-40 {
+            width: 100%;
+            margin-top: 0;
+        }
+        .detail-next-btn.detail-next-medium.detail-next-btn-normal.ilvietnam-2-55-56 {
+            border: 1px solid #000;
+            border-radius: 20px;
+            margin-top: 30px;
+            display: ruby-text;
+            text-align: center;
+        }
+
+        .company-profile.ilvietnam-1-1-55 {
+            display: flex;
+            justify-content: space-between;
+        }
+
     </style>
     <div class="container-fluid detail">
         <div class="grid second-nav">
@@ -360,158 +420,156 @@
                 </div>
                 <div class="detail-module">
                     <form action="">
-                        <div class="widget-supplier-card company-card-integrated company-card-integrated-lite has-ta origin gps-background snipcss0-0-0-1 snipcss-Kyhj9 style-v8cHz"
+                        <div class="widget-supplier-card company-card-integrated company-card-integrated-lite has-ta origin gps-background ilvietnam-0-0-1 snipcss-Kyhj9 style-v8cHz"
                              data-role="widget-supplier-card" data-aui="supplier-card" id="style-v8cHz">
-                            <div class="card-central-logo snipcss0-1-1-2">
+                            <div class="card-central-logo ilvietnam-1-1-2">
                                 <a href="" target="_blank" data-aui="ta-ordered"
-                                   rel="nofollow" class="snipcss0-2-2-3">
+                                   rel="nofollow" class="ilvietnam-2-2-3">
                                     <img src="https://img.alicdn.com/imgextra/i1/O1CN01AOhmtZ1HQ08UWY7sf_!!6000000000751-2-tps-266-54.png_240x240.jpg"
-                                         class="snipcss0-3-3-4 style-q27At" id="style-q27At">
+                                         class="ilvietnam-3-3-4 style-q27At" id="style-q27At">
                                 </a>
                             </div>
-                            <div class="company-name-container snipcss0-1-1-5">
-                                <a class="company-name company-name-lite-vb snipcss0-2-5-6"
+                            <div class="company-name-container ilvietnam-1-1-5">
+                                <a class="company-name company-name-lite-vb ilvietnam-2-5-6"
                                    href="{{ route('shop.information.show', $name->id) }}"
                                    target="_blank" title="Tên công ty"
                                    data-aui="company-name" data-domdot="id:3317">
                                     {{$name->name}}
                                 </a>
                             </div>
-                            <div class="company-brand snipcss0-1-1-7">
-                                <span class="snipcss0-2-7-8">
+                            <div class="company-brand ilvietnam-1-1-7">
+                                <span class="ilvietnam-2-7-8">
                                     nhà sản xuất
                                 </span>
                             </div>
-                            <div class="card-supplier card-icons-lite snipcss0-1-1-9">
-                                <span class="company-name-country snipcss0-2-9-10">
-                                    <i class="icbu-icon-flag icbu-icon-flag-cn snipcss0-3-10-11">
+                            <div class="card-supplier card-icons-lite ilvietnam-1-1-9">
+                                <span class="company-name-country ilvietnam-2-9-10">
+                                    <i class="icbu-icon-flag icbu-icon-flag-cn ilvietnam-3-10-11">
 
                                     </i>
-                                    <span class="register-country snipcss0-3-10-12">
+                                    <span class="register-country ilvietnam-3-10-12">
                                         CN
 
                                     </span>
                                 </span>
-                                <a class="verify-info snipcss0-2-9-13" data-aui="ggs-icon" rel="nofollow">
-                                    <span class="join-year snipcss0-3-13-14">
-                                        <span class="value snipcss0-4-14-15">&nbsp;&nbsp;&nbsp;14
+                                <a class="verify-info ilvietnam-2-9-13" data-aui="ggs-icon" rel="nofollow">
+                                    <span class="join-year ilvietnam-3-13-14">
+                                        <span class="value ilvietnam-4-14-15">&nbsp;&nbsp;&nbsp;14
                                         </span>
-                                        <span class="unit snipcss0-4-14-16">
+                                        <span class="unit ilvietnam-4-14-16">
                                             YRS
                                         </span>
                                     </span>
                                 </a>
                             </div>
-                            <div class="ability snipcss0-1-1-17">
+                            <div class="ability ilvietnam-1-1-17">
                                 <img src="https://img.alicdn.com/imgextra/i3/O1CN015NySK71aBmY1PTG9K_!!6000000003292-2-tps-28-28.png"
-                                     class="snipcss0-2-17-18">
+                                     class="ilvietnam-2-17-18">
                                         Nhãn hiệu đã đăng ký (1)
                             </div>
-                            <div class="company-basicCapacity snipcss0-1-1-19">
+                            <div class="company-basicCapacity ilvietnam-1-1-19">
                                 <a href=""
-                                   class="attr-item snipcss0-2-19-20" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-title snipcss0-3-20-21">
+                                   class="attr-item ilvietnam-2-19-20" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-title ilvietnam-3-20-21">
                                                 xếp hạng cửa hàng
                                     </div>
-                                    <div class="attr-content snipcss0-3-20-22" title="4,7(21)">
+                                    <div class="attr-content ilvietnam-3-20-22" title="4,7(21)">
                                                 4,7(21)
                                     </div>
                                 </a>
-                                <div class="attr-item snipcss0-2-19-23" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-title snipcss0-3-23-24">
+                                <div class="attr-item ilvietnam-2-19-23" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-title ilvietnam-3-23-24">
                                                 Tỷ lệ giao hàng đúng hạn
                                     </div>
-                                    <div class="attr-content snipcss0-3-23-25" title="95,6%">
+                                    <div class="attr-content ilvietnam-3-23-25" title="95,6%">
                                                 95,6%
                                     </div>
                                 </div>
-                                <div class="attr-item snipcss0-2-19-26" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-title snipcss0-3-26-27">
+                                <div class="attr-item ilvietnam-2-19-26" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-title ilvietnam-3-26-27">
                                                 Thời gian đáp ứng
                                     </div>
-                                    <div class="attr-content snipcss0-3-26-28" title="≤3h">
+                                    <div class="attr-content ilvietnam-3-26-28" title="≤3h">
                                                 ≤3h
                                     </div>
                                 </div>
-                                <div class="attr-item snipcss0-2-19-29" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-title snipcss0-3-29-30">
+                                <div class="attr-item ilvietnam-2-19-29" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-title ilvietnam-3-29-30">
                                                 doanh thu trực tuyến
                                     </div>
-                                    <div class="attr-content snipcss0-3-29-31" title="$480,000+">
+                                    <div class="attr-content ilvietnam-3-29-31" title="$480,000+">
                                                 $480,000+
                                     </div>
                                 </div>
-                                <div class="attr-item snipcss0-2-19-32" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-title snipcss0-3-32-33">
+                                <div class="attr-item ilvietnam-2-19-32" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-title ilvietnam-3-32-33">
                                                 Không gian sàn
                                     </div>
-                                    <div class="attr-content snipcss0-3-32-34" title="1000m²">
+                                    <div class="attr-content ilvietnam-3-32-34" title="1000m²">
                                                 1000m²
                                     </div>
                                 </div>
-                                <div class="attr-item snipcss0-2-19-35" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-title snipcss0-3-35-36">
+                                <div class="attr-item ilvietnam-2-19-35" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-title ilvietnam-3-35-36">
                                                 Nhân viên
                                     </div>
-                                    <div class="attr-content snipcss0-3-35-37" title="14">
+                                    <div class="attr-content ilvietnam-3-35-37" title="14">
                                                 14
                                     </div>
                                 </div>
                             </div>
-                            <div class="company-productionServiceCapacity service-2 snipcss0-1-1-38">
-                                <div class="attr-title snipcss0-2-38-39">
+                            <div class="company-productionServiceCapacity service-2 ilvietnam-1-1-38">
+                                <div class="attr-title ilvietnam-2-38-39">
                                             Dịch vụ
                                 </div>
-                                <div class="attr-item snipcss0-2-38-40" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-content snipcss0-3-40-41" title="tùy chỉnh nhỏ">
+                                <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-content ilvietnam-3-40-41" title="tùy chỉnh nhỏ">
                                                 tùy chỉnh nhỏ
                                     </div>
                                 </div>
-                                <div class="attr-item snipcss0-2-38-42" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-content snipcss0-3-42-43" title="Tùy chỉnh dựa trên thiết kế">
+                                <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-content ilvietnam-3-42-43" title="Tùy chỉnh dựa trên thiết kế">
                                                 Tùy chỉnh dựa trên thiết kế
                                     </div>
                                 </div>
                             </div>
-                            <div class="company-qualityAssuranceCapability service-3 snipcss0-1-1-44">
-                                <div class="attr-title snipcss0-2-44-45">
+                            <div class="company-productionServiceCapacity service-2 ilvietnam-1-1-38">
+                                <div class="attr-title ilvietnam-2-38-39">
                                             kiểm soát chất lượng
                                 </div>
-                                <div class="attr-item snipcss0-2-44-46" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-content snipcss0-3-46-47"
+                                <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-content ilvietnam-3-40-41"
                                          title="Nhận dạng truy xuất nguồn gốc nguyên liệu">
                                                 Nhận dạng truy xuất nguồn gốc nguyên liệu
                                     </div>
                                 </div>
-                                <div class="attr-item snipcss0-2-44-48" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-content snipcss0-3-48-49" title="Kiểm tra thành phẩm">
+                                <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-content ilvietnam-3-42-43" title="Kiểm tra thành phẩm">
                                                 Kiểm tra thành phẩm
                                     </div>
                                 </div>
                             </div>
+                            <div class="attr-title ilvietnam-2-38-39">
+                                Chứng chỉ
+                            </div>
                             <a href="{{ route('shop.information.show', $name->id) }}"
-                               class="company-qualificationCertificate service-4 snipcss0-1-1-50">
-                                <i class="detail-next-icon detail-next-icon-arrow-right detail-next-xxs snipcss0-2-50-51">
-                                </i>
-                                <div class="attr-title snipcss0-2-50-52">
-                                            chứng chỉ
-                                </div>
-                                <div class="attr-item snipcss0-2-50-53" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-content snipcss0-3-53-54">
+                               class="company-qualificationCertificate service-4 ilvietnam-1-1-50">
+                                <div class="attr-item ilvietnam-2-50-53" aria-haspopup="true" aria-expanded="false">
+                                    <div class="attr-content ilvietnam-3-53-54">
                                                 giấy chứng nhận
                                     </div>
                                 </div>
                             </a>
-                            <div class="company-profile snipcss0-1-1-55">
+                            <div class="company-profile ilvietnam-1-1-55">
                                 <a href="{{ route('shop.information.show', $name->id) }}"
-                                   class="detail-next-btn detail-next-medium detail-next-btn-normal snipcss0-2-55-56">
-                                    <span class="detail-next-btn-helper snipcss0-3-56-57">
-                                       hồ sơ công ty
+                                   class="detail-next-btn detail-next-medium detail-next-btn-normal ilvietnam-2-55-56 attr-item">
+                                    <span class="detail-next-btn-helper ilvietnam-3-56-57">
+                                       Hồ sơ công ty
                                     </span>
                                 </a>
                                 <a href="{{ route('shop.information.show', $name->id) }}"
-                                   class="detail-next-btn detail-next-medium detail-next-btn-secondary snipcss0-2-55-58">
-                                    <span class="detail-next-btn-helper snipcss0-3-58-59">
+                                   class="detail-next-btn detail-next-medium detail-next-btn-normal ilvietnam-2-55-56 attr-item">
+                                    <span class="detail-next-btn-helper ilvietnam-3-58-59">
                                                 Ghé thăm cửa hàng
                                     </span>
                                 </a>
