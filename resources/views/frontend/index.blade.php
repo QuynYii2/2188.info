@@ -172,8 +172,6 @@
                     @php
                         $listCate = DB::table('categories')->where('parent_id', null)->get();
                     @endphp
-
-
                     @foreach($listCate as $cate)
                         <div class="swiper-slide">
                             @if(Auth::check())
@@ -546,34 +544,44 @@
                 <div class="swiper-button-prev"></div>
             </div>
         </section>
-        <section class="section pt-3 pb-3 container-fluid">
-            @if($locale == 'vi')
-                <div class="content ">Viet Nam
-                    <img class="flag-ct"
-                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
-                </div>
-            @elseif($locale == 'kr')
-                <div class="content ">Korea
-                    <img class="flag-ct"
-                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png">
-                </div>
-            @elseif($locale == 'cn')
-                <div class="content ">China
-                    <img class="flag-ct"
-                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
-                </div>
-            @else
-                <div class="content ">Japan
-                    <img class="flag-ct"
-                         src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
-                </div>
-            @endif
-            <div class="row">
-                <div class="col-md-3 col-xl-2 section-left">
-                    <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/products-block-banner-left-2.jpg"
-                         alt="">
+        <section class="section pt-3 pb-3 container-fluid ">
+            <div class="row category-img">
+                <div class="col-md-3 col-xl-2">
+                    @php
+                        $listCate = DB::table('categories')->where('parent_id', null)->get();
+                    @endphp
+                    @for($i=0; $i<1; $i++)
+                        <div class="section-left">
+                            <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
+                                 alt="">
+                        </div>
+                        <div class="section-left--name">
+                            {{$listCate[$i] -> name}}
+                        </div>
+                    @endfor
                 </div>
                 <div class="col-12 col-md-9 col-xl-8">
+                    @if($locale == 'vi')
+                        <div class="content ">Viet Nam
+                            <img class="flag-ct"
+                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
+                        </div>
+                    @elseif($locale == 'kr')
+                        <div class="content ">Korea
+                            <img class="flag-ct"
+                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png">
+                        </div>
+                    @elseif($locale == 'cn')
+                        <div class="content ">China
+                            <img class="flag-ct"
+                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
+                        </div>
+                    @else
+                        <div class="content ">Japan
+                            <img class="flag-ct"
+                                 src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
+                        </div>
+                    @endif
                     <div class="swiper listProduct">
                         <div class="swiper-wrapper">
                             @php
@@ -663,103 +671,62 @@
                         <div class="swiper-button-prev"></div>
                     </div>
                 </div>
-                @php
-                    $listCurrentCategory = \App\Models\Category::where('country', $locale)->get();
-                @endphp
-
-
-                @if(!$listCurrentCategory->isEmpty())
-                    <div class="col-xl-2 category-right">
-                        @if(count($listCurrentCategory) == 0)
-                            <div class="brand-item d-flex justify-content-between">
-                                <div class="brand-item--all">
-                                    @if(Auth::check())
-                                        <a href="{{ route('category.show', $cate->id) }}">{{ __('home.View all categories') }}</a>
-                                    @else
-                                        <a class="check_url">View all categories</a>
-                                    @endif
-                                </div>
-                            </div>
-                        @else
-                            @if(count($listCurrentCategory) < 3)
-                                @foreach($listCurrentCategory as $child)
-                                    <div class="brand-item d-flex justify-content-between">
-                                        <div class="brand-item-text">
-                                            <div class="name">{{  ($child->name)}}</div>
-                                            @if(Auth::check())
-                                                <a href="{{ route('category.show', $child->id) }}">{{ __('home.shop now') }}</a>
-                                            @else
-                                                <a class="check_url">{{ __('home.shop now') }}</a>
-                                            @endif
-                                        </div>
-                                        <div class="brand-item-img">
-                                            <img src="{{ asset('storage/' .$child->thumbnail) }}"
-                                                 alt="">
-                                        </div>
-                                    </div>
-                                @endforeach
-                            @else
-                                @for($i = 0; $i < 3; $i++)
-                                    <div class="brand-item d-flex justify-content-between">
-                                        <div class="brand-item-text">
-                                            <div class="name">{{  ($listCurrentCategory[$i]->name)}}</div>
-                                            @if(Auth::check())
-                                                <a href="{{ route('category.show', $listCurrentCategory[$i]->id) }}">{{ __('home.shop now') }}</a>
-                                            @else
-                                                <a class="check_url">{{ __('home.shop now') }}</a>
-                                            @endif
-                                        </div>
-                                        <div class="brand-item-img">
-                                            <img src="{{ asset('storage/' .$listCurrentCategory[$i]->thumbnail) }}"
-                                                 alt="">
-                                        </div>
-                                    </div>
-                                @endfor
-                            @endif
-                            <div class="brand-item d-flex justify-content-between">
-                                <div class="brand-item--all">
-                                    @if(Auth::check())
-                                        <a href="{{ route('category.show', $listCurrentCategory[0]->id) }}">{{ __('home.View all categories') }}</a>
-                                    @else
-                                        <a class="check_url">View all categories</a>
-                                    @endif
-                                </div>
-                            </div>
-                        @endif
-                    </div>
-                @endif
+                <div class="col-md-3 col-xl-2">
+                    @php
+                        $listCate = DB::table('categories')->where('parent_id', null)->get();
+                    @endphp
+                    @for($i=0; $i<1; $i++)
+                        <div class="section-left">
+                            <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
+                                 alt="">
+                        </div>
+                        <div class="section-left--name">
+                            {{$listCate[$i] -> name}}
+                        </div>
+                    @endfor
+                </div>
             </div>
         </section>
         @foreach($arrayProducts as $keys => $arrayProduct)
             @if($keys != $locale)
-                <section class="section pt-3 pb-3 container-fluid">
-                    @if($keys == 'vi')
-                        <div class="content ">Viet Nam
-                            <img class="flag-ct"
-                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
-                        </div>
-                    @elseif($keys == 'kr')
-                        <div class="content ">Korea
-                            <img class="flag-ct"
-                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png">
-                        </div>
-                    @elseif($keys == 'cn')
-                        <div class="content ">China
-                            <img class="flag-ct"
-                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
-                        </div>
-                    @else
-                        <div class="content ">Japan
-                            <img class="flag-ct"
-                                 src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
-                        </div>
-                    @endif
+                <section class=" category-img section pt-3 pb-3 container-fluid">
                     <div class="row">
-                        <div class="col-md-3 col-xl-2 section-left">
-                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/products-block-banner-left-2.jpg"
-                                 alt="">
+                        <div class="col-md-3 col-xl-2">
+                            @php
+                                $listCate = DB::table('categories')->where('parent_id', null)->get();
+                            @endphp
+                            @for($i=0; $i<1; $i++)
+                                <div class="section-left">
+                                    <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
+                                         alt="">
+                                </div>
+                                <div class="section-left--name">
+                                    {{$listCate[$i] -> name}}
+                                </div>
+                            @endfor
                         </div>
                         <div class="col-12 col-md-9 col-xl-8">
+                            @if($keys == 'vi')
+                                <div class="content ">Viet Nam
+                                    <img class="flag-ct"
+                                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
+                                </div>
+                            @elseif($keys == 'kr')
+                                <div class="content ">Korea
+                                    <img class="flag-ct"
+                                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png">
+                                </div>
+                            @elseif($keys == 'cn')
+                                <div class="content ">China
+                                    <img class="flag-ct"
+                                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
+                                </div>
+                            @else
+                                <div class="content ">Japan
+                                    <img class="flag-ct"
+                                         src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
+                                </div>
+                            @endif
                             <div class="swiper listProduct">
                                 <div class="swiper-wrapper">
                                     @foreach($arrayProduct as $product)
@@ -846,71 +813,20 @@
                                 <div class="swiper-button-prev"></div>
                             </div>
                         </div>
-                        @php
-                            $listCurrentCategory = \App\Models\Category::where('country', $keys)->get();
-                        @endphp
-
-
-                        @if(!$listCurrentCategory->isEmpty())
-                            <div class="col-xl-2 category-right">
-                                @if(count($listCurrentCategory) == 0)
-                                    <div class="brand-item d-flex justify-content-between">
-                                        <div class="brand-item--all">
-                                            @if(Auth::check())
-                                                <a href="{{ route('category.show', $cate->id) }}">{{ __('home.View all categories') }}</a>
-                                            @else
-                                                <a class="check_url">View all categories</a>
-                                            @endif
-                                        </div>
-                                    </div>
-                                @else
-                                    @if(count($listCurrentCategory) < 3)
-                                        @foreach($listCurrentCategory as $child)
-                                            <div class="brand-item d-flex justify-content-between">
-                                                <div class="brand-item-text">
-                                                    <div class="name">{{  ($child->name)}}</div>
-                                                    @if(Auth::check())
-                                                        <a href="{{ route('category.show', $child->id) }}">{{ __('home.shop now') }}</a>
-                                                    @else
-                                                        <a class="check_url">{{ __('home.shop now') }}</a>
-                                                    @endif
-                                                </div>
-                                                <div class="brand-item-img">
-                                                    <img src="{{ asset('storage/' .$child->thumbnail) }}"
-                                                         alt="">
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    @else
-                                        @for($i = 0; $i < 3; $i++)
-                                            <div class="brand-item d-flex justify-content-between">
-                                                <div class="brand-item-text">
-                                                    <div class="name">{{  ($listCurrentCategory[$i]->name)}}</div>
-                                                    @if(Auth::check())
-                                                        <a href="{{ route('category.show', $listCurrentCategory[$i]->id) }}">{{ __('home.shop now') }}</a>
-                                                    @else
-                                                        <a class="check_url">{{ __('home.shop now') }}</a>
-                                                    @endif
-                                                </div>
-                                                <div class="brand-item-img">
-                                                    <img src="{{ asset('storage/' . $listCurrentCategory[$i]->thumbnail) }}"
-                                                         alt="">
-                                                </div>
-                                            </div>
-                                        @endfor
-                                    @endif
-                                    <div class="brand-item d-flex justify-content-between">
-                                        <div class="brand-item--all">
-                                            @if(Auth::check())
-                                                <a href="{{ route('category.show', $listCurrentCategory[0]->id) }}">{{ __('home.View all categories') }}</a>
-                                            @else
-                                                <a class="check_url">View all categories</a>
-                                            @endif
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
-                        @endif
+                        <div class="col-md-3 col-xl-2">
+                            @php
+                                $listCate = DB::table('categories')->where('parent_id', null)->get();
+                            @endphp
+                            @for($i=0; $i<1; $i++)
+                                <div class="section-left">
+                                    <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
+                                         alt="">
+                                </div>
+                                <div class="section-left--name">
+                                    {{$listCate[$i] -> name}}
+                                </div>
+                            @endfor
+                        </div>
                     </div>
                 </section>
             @endif

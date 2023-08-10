@@ -81,7 +81,7 @@
                                    style="box-shadow: none">
                             <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                             <div class="category-drop input-group-prepend">
-                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                <button class="btn-all btn-outline-secondary dropdown-toggle" type="button"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All
                                 </button>
                                 <div class="dropdown-menu">
@@ -283,12 +283,22 @@
                             <div class="closeShopMenu" onclick="closeShop()"></div>
                         @else
                             <div class="item">
-                                <button class="button" onclick="signIn()"><i class="item-icon fa-regular fa-user"></i>
-                                    <div class="item-text">B2B</div>
-                                </button>
-                                <button class="button" onclick="signIn()"><i class="item-icon fa-regular fa-user"></i>
-                                    <div class="item-text">B2C</div>
-                                </button>
+                                <div class="d-flex">
+                                    <button class="button_login" onclick="signIn()">
+                                        <div class="item-text">B2B</div>
+                                    </button>
+                                    <button class="button_login" onclick="signIn()">
+                                        <div class="item-text">B2C</div>
+                                    </button>
+                                </div>
+                                <div class="d-flex">
+                                    <button class="button_login" onclick="signIn()">
+                                        <div class="item-text">BB</div>
+                                    </button>
+                                    <button class="button_login" onclick="signIn()">
+                                        <div class="item-text">BB</div>
+                                    </button>
+                                </div>
                                 <div class="signMenu" id="signMenu">
                                     <div class="login">{{ __('home.LOGIN') }}</div>
                                     <div class="content">
@@ -621,7 +631,7 @@
             </div>
             <div onclick="closeMobile()" class="opacity_menu"></div>
             <div class="hd-mobile_menu" id="search">
-                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                <button class="btn-all btn-outline-secondary dropdown-toggle" type="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All
                 </button>
                 <div class="dropdown-menu">
