@@ -81,8 +81,7 @@
     <div class="container rounded mt-5 bg-white m-auto">
         <div class="row my-5">
             <div id="form-info" class="col-sm-12 col-12 border-bottom border-right">
-{{--                @if() @endif--}}
-                <form action="{{ route('profile.shop.store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('profile.shop.update') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row align-items-center justify-content-center">
 
@@ -92,7 +91,7 @@
                                        class="col-md-3 col-12 col-form-label">Tên người bán</label>
                                 <div class="col-md-9 col-12">
                                     <input type="text" class="form-control" id="staticEmail" required name="name"
-                                           value="{{ $sellerInfo->name ?? ''}}">
+                                           value="{{ $user->name ?? ''}}">
                                 </div>
                             </div>
                         </div>
@@ -106,18 +105,16 @@
                     </div>
                     <div class="row form-group">
                         <label for="day" class="col-md-3 col-12 col-form-label">Mã số thuế</label>
-
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" name="rental_code"
-                                   value="{{ $sellerInfo->masothue ?? ''}}">
+                                   value="{{ $shop_infos->masothue ?? ''}}">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label for="day" class="col-md-3 col-12 col-form-label">Tên sản phẩm đăng ký</label>
-
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" required name="product_name"
-                                   value="{{ $sellerInfo->product_name ?? '' }}">
+                                   value="{{ $shop_infos->product_name ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -125,33 +122,31 @@
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" required name="product_code"
-                                   value="{{ $sellerInfo->product_code ?? '' }}">
+                                   value="{{ $shop_infos->product_code ?? '' }}">
                         </div>
                     </div>
-
-
                     <div class="row form-group">
                         <label for="day" class="col-md-3 col-12 col-form-label">Diện tích sàn(㎡)</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control"  name="acreage"
-                                   value="{{ $shopinformation->acreage ?? '' }}">
+                            <input type="number" class="form-control" name="acreage"
+                                   value="{{ $shop_infos->acreage ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label for="day" class="col-md-3 col-12 col-form-label">Dây chuyền sản xuất</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control"  name="machine_number"
-                                   value="{{ $shopinformation->machine_number ?? '' }}">
+                            <input type="text" class="form-control" name="machine_number"
+                                   value="{{ $shop_infos->machine_number ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label for="day" class="col-md-3 col-12 col-form-label">Tổng sản lượng hằng năm(đơn vị)</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control" required name="annual_output"
-                                   value="{{ $shopinformation->annual_output ?? '' }}">
+                            <input type="number" class="form-control" required name="annual_output"
+                                   value="{{ $shop_infos->annual_output ?? '' }}">
                         </div>
                     </div>
 
@@ -159,8 +154,8 @@
                         <label for="day" class="col-md-3 col-12 col-form-label">Năm trong ngành</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control" required name="industry_year"
-                                   value="{{ $shopinformation->industry_year ?? '' }}">
+                            <input type="number" class="form-control" required name="industry_year"
+                                   value="{{ $shop_infos->industry_year ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -168,15 +163,15 @@
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" required name="marketing"
-                                   value="{{ $shopinformation->marketing ?? '' }}">
+                                   value="{{ $shop_infos->marketing ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label for="day" class="col-md-3 col-12 col-form-label">Đối tác chuỗi cung ứng</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control"  name="partner"
-                                   value="{{ $shopinformation->partner ?? '' }}">
+                            <input type="text" class="form-control" name="partner"
+                                   value="{{ $shop_infos->partner ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -184,7 +179,7 @@
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" required name="customers"
-                                   value="{{ $shopinformation->customers ?? '' }}">
+                                   value="{{ $shop_infos->customers ?? '' }}">
                         </div>
                     </div>
 
@@ -192,16 +187,16 @@
                         <label for="day" class="col-md-3 col-12 col-form-label">Phương pháp kiểm tra sản phẩm</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control"  name="test_method"
-                                   value="{{ $shopinformation->test_method ?? '' }}">
+                            <input type="text" class="form-control" name="test_method"
+                                   value="{{ $shop_infos->test_method ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label for="day" class="col-md-3 col-12 col-form-label">Nhân viên kiểm tra </label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control"  name="inspection_staff"
-                                   value="{{ $shopinformation->inspection_staff ?? '' }}">
+                            <input type="text" class="form-control" name="inspection_staff"
+                                   value="{{ $shop_infos->inspection_staff ?? '' }}">
                         </div>
                     </div>
 
@@ -209,14 +204,15 @@
                         <label for="day" class="col-md-3 col-12 col-form-label">Ngành sản phẩm đăng ký</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="text" class="form-control" required name="industry" value="{{ $user->industry ?? '' }}">
+                            <input type="text" class="form-control" required name="industry"
+                                   value="{{ $user->industry ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
                         <label for="short_description" class="col-md-3 col-12 col-form-label">Thông tin công ty</label>
                         <div class="col-md-9 col-12">
                             <textarea class="form-control description" name="information" rows="5">
-                                    {{$sellerInfo->information ?? '' }}
+                                    {{$shop_infos->information ?? '' }}
                             </textarea>
                         </div>
                     </div>
@@ -224,7 +220,7 @@
                         <label for="day" class="col-md-3 col-12 col-form-label">Ảnh giấy phép kinh doanh</label>
 
                         <div class="col-md-9 col-12">
-                            <input type="file" class="form-control" name="image" required accept="image/*">
+                            <input type="file" class="form-control" name="image" accept="image/*">
                             <img src="{{ asset('storage/' . $user->image) }}" alt="Ảnh giấy phép kinh doanh"
                                  height="100" width="100">
                         </div>
@@ -277,14 +273,14 @@
     <script>
         let desc = document.querySelectorAll('.description');
         for (let i = 0; i < desc.length; i++) {
-            CKEDITOR.replace( desc[i], {
+            CKEDITOR.replace(desc[i], {
                 filebrowserBrowseUrl: '{{ asset('ckfinder/ckfinder.html') }}',
                 filebrowserImageBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Images') }}',
                 filebrowserFlashBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Flash') }}',
                 filebrowserUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}',
                 filebrowserImageUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images') }}',
                 filebrowserFlashUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash') }}'
-            } );
+            });
         }
     </script>
 @endsection

@@ -190,7 +190,10 @@ class ShopInformationController extends Controller
             $shopinformation->machine_number = $request->input('machine_number');
             $shopinformation->marketing = $request->input('marketing');
             $shopinformation->customers = $request->input('customers');
-
+            $shopinformation->inspection_staff = $request->input('inspection_staff');
+            $shopinformation->test_method = $request->input('test_method');
+            $shopinformation->annual_output = $request->input('annual_output');
+            $shopinformation->partner = $request->input('partner');
             $Shop = $shopinformation->save();
         } catch (\Exception $exception) {
             return $exception;
@@ -226,9 +229,24 @@ class ShopInformationController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateProfileShop(Request $request, $id)
     {
-        //
+        $shopinformation = ShopInformation::findOrFail($id);
+        $shopinformation->user_id = Auth::user()->id;
+        $shopinformation->name = $request->input('name');
+        $shopinformation->country = $request->input('region');
+        $shopinformation->masothue = $request->input('masothue');
+        $shopinformation->product_name = $request->input('product_name');
+        $shopinformation->product_code = $request->input('product_code');
+        $shopinformation->product_key = $request->input('product_key');
+        $shopinformation->information = $request->input('information');
+        $shopinformation->business_license = $request->input('business_license');
+        $shopinformation->acreage = $request->input('acreage');
+        $shopinformation->industry_year = $request->input('industry_year');
+        $shopinformation->machine_number = $request->input('machine_number');
+        $shopinformation->marketing = $request->input('marketing');
+        $shopinformation->customers = $request->input('customers');
+
     }
 
     /**
