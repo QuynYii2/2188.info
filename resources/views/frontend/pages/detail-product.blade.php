@@ -619,12 +619,47 @@
                 @php
                     $shopInformation = \App\Models\ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first()
                 @endphp
-                @if($shopInformation->isNotEmpty())
-                  <p id="dots">Hồ sơ công ty</p>
-                    @include('frontend.pages.shop-information.tabs_shop_info')
-                    <div id="more" style="display: none;">@include('frontend.pages.shop-information.tabs_shop_info')</div>
-                    <button onclick="myFunction()" id="myButton">{{ __('home.Show More') }}</button>
-                @endif
+                <p id="dots">
+                <div class="title-information">
+                    <div class="title-information-container">Hồ sơ</div>
+                    <div class="title-information-download">
+                        <a href="">Tải xuống báo cáo</a></div>
+                </div>
+                <dl>
+                    <dt>
+                        <span>Tổng quan</span>
+                    </dt>
+                    <dd>
+                        <div>
+                            <div>
+                                <span>Ngày đăng ký công ty</span>
+                                <strong>{{ \Carbon\Carbon::parse($shopInformation->created_at)->format('d/m/Y') }}</strong>
+                            </div>
+                            <div>
+                                <span>Diện tích sàn(㎡)</span>
+                                <strong>{{$shopInformation->acreage}}</strong>
+                            </div>
+                            <div>
+                                <span>Doanh thu xuất khẩu hàng năm (USD)</span>
+                                <strong>1644968</strong>
+                            </div>
+                            <div>
+                                <span>Ngôn ngữ được chấp nhận</span>
+                                <strong>{{$shopInformation->country}}</strong>
+                            </div>
+                            <div>
+                                <span>Năm xuất khẩu</span>
+                                <strong>{{$shopInformation->industry_year}}</strong>
+                            </div>
+                            <div>
+                                <span>Năm trong ngành</span>
+                                <strong>{{$shopInformation->industry_year}}</strong>
+                            </div>
+                        </div>
+                    </dd></p>
+                </dl>
+                <div id="more" style="display: none;">@include('frontend.pages.shop-information.tabs_shop_info')</div>
+                <button onclick="myFunction()" id="myButton">Show More</button>
             </div>
 
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
