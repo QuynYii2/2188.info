@@ -1,5 +1,6 @@
-@foreach($shopInformation as $shopInfo)
-@endforeach
+{{--@foreach($shopInformationrmation as $shopInformation)--}}
+{{--@endforeach--}}
+
 
 <div class="title-information">
     <div class="title-information-container">Hồ sơ</div>
@@ -14,11 +15,11 @@
         <div>
             <div>
                 <span>Ngày đăng ký công ty</span>
-              <strong>{{ \Carbon\Carbon::parse($shopInfo->created_at)->format('d/m/Y') }}</strong>
+              <strong>{{ \Carbon\Carbon::parse($shopInformation->created_at)->format('d/m/Y') }}</strong>
             </div>
             <div>
                 <span>Diện tích sàn(㎡)</span>
-                <strong>{{$shopInfo->acreage}}</strong>
+                <strong>{{$shopInformation->acreage}}</strong>
             </div>
             <div>
                 <span>Doanh thu xuất khẩu hàng năm (USD)</span>
@@ -26,15 +27,15 @@
             </div>
             <div>
                 <span>Ngôn ngữ được chấp nhận</span>
-                <strong>{{$shopInfo->country}}</strong>
+                <strong>{{$shopInformation->country}}</strong>
             </div>
             <div>
                 <span>Năm xuất khẩu</span>
-                <strong>{{$shopInfo->industry_year}}</strong>
+                <strong>{{$shopInformation->industry_year}}</strong>
             </div>
             <div>
                 <span>Năm trong ngành</span>
-                <strong>{{$shopInfo->industry_year}}</strong>
+                <strong>{{$shopInformation->industry_year}}</strong>
             </div>
         </div>
     </dd>
@@ -42,22 +43,22 @@
         <span>Chứng nhận</span>
     </dt>
     <dd>
-        {{$shopInfo->business_license}}
+        {{$shopInformation->business_license}}
     </dd>
     <dt>Khả năng sản xuất</dt>
     <dd>
         <div>
             <div>
                 <span>Dây chuyền sản xuất</span>
-                <strong>{{$shopInfo->machine_number}}</strong>
+                <strong>{{$shopInformation->machine_number}}</strong>
             </div>
             <div>
                 <span>Tổng sản lượng hằng năm(đơn vị)</span>
-                <strong>{{$shopInfo->annual_output}}</strong>
+                <strong>{{$shopInformation->annual_output}}</strong>
             </div>
             <div>
                 <span>Máy móc sản xuất</span>
-                <strong>{{$shopInfo->machine_number}}</strong>
+                <strong>{{$shopInformation->machine_number}}</strong>
             </div>
         </div>
     </dd>
@@ -70,7 +71,7 @@
             </div>
             <div>
                 <span>Phương pháp kiểm tra sản phẩm</span>
-                <strong>{{$shopInfo->test_method}}</strong>
+                <strong>{{$shopInformation->test_method}}</strong>
             </div>
             <div>
                 <span>Kiểm soát chất lượng được thực hiện trên tất cả các dây chuyền sản xuất</span>
@@ -78,7 +79,7 @@
             </div>
             <div>
                 <span>Nhân viên kiểm tra QA/QC</span>
-                <strong>{{$shopInfo->inspection_staff}}</strong>
+                <strong>{{$shopInformation->inspection_staff}}</strong>
             </div>
         </div>
     </dd>
@@ -87,7 +88,7 @@
         <div>
             <div>
                 <span>Thị trường chính</span>
-                <strong>{{$shopInfo->marketing}}</strong>
+                <strong>{{$shopInformation->marketing}}</strong>
             </div>
             <div>
                 <span>Đối tác chuỗi cung ứng</span>
@@ -95,7 +96,7 @@
             </div>
             <div>
                 <span>Các loại khách hàng chính</span>
-                <strong>{{$shopInfo->customers}}t</strong>
+                <strong>{{$shopInformation->customers}}t</strong>
             </div>
         </div>
     </dd>
