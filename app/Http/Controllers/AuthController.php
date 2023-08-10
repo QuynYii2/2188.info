@@ -223,24 +223,32 @@ class AuthController extends Controller
         ));
     }
 
+
     public function getListNation()
     {
-        $listNation = DB::table('countries')->get(['name', 'id']);
+        $listNation = DB::table('countries')->get(['name', 'iso2']);
         return response()->json($listNation);
     }
     public function getListStateByNation($id)
     {
         $listState = DB::table('states')
-            ->where([['country_id', '=', $id]])
-            ->get(['name', 'id']);
+            ->where([['country_code', '=', $id]])
+            ->get(['name', 'state_code']);
         return response()->json($listState);
     }
-    public function getListCityByState($id)
+    public function getListCityByState($id, $code)
     {
         $listCity = DB::table('cities')
-            ->where([['state_id', '=', $id]])
-            ->get(['name', 'id']);
+            ->where([['state_code', '=', $id], ['country_code', '=', $code]])
+            ->get(['name', 'city_code']);
         return response()->json($listCity);
+    }
+    public function getListWardByCity($id, $code)
+    {
+        $listWard = DB::table('wards')
+            ->where([['city_code', '=', $id], ['country_code', '=', $code]])
+            ->get(['name', 'id']);
+        return response()->json($listWard);
     }
 
     /*Show form đăng kí thông tin người đăng kí*/
