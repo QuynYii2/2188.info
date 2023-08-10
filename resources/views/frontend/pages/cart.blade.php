@@ -64,14 +64,23 @@
                                                 $array = explode(',', $list);
                                             @endphp
                                             @foreach($array as $variable)
-                                                @php
-                                                    $arrayAttPro = explode('-', $variable);
-                                                    $att = \App\Models\Attribute::find($arrayAttPro[0]);
-                                                    $pro = \App\Models\Properties::find($arrayAttPro[1]);
-                                                @endphp
-                                                <div class="font-italic"><span class="text-secondary">
-                                                {{($att->name)}}
-                                            </span>: <span>{{($pro->name)}}</span></div>
+                                                @if($variable)
+                                                    @php
+                                                        $arrayAttPro = explode('-', $variable);
+                                                        if (count($arrayAttPro)>1){
+                                                            $att = \App\Models\Attribute::find($arrayAttPro[0]);
+                                                            $pro = \App\Models\Properties::find($arrayAttPro[1]);
+                                                        }
+                                                    @endphp
+                                                    @if(count($arrayAttPro)>1)
+                                                        <div class="font-italic">
+                                                            <span class="text-secondary">
+                                                            {{($att->name)}}
+                                                        </span>: <span>{{($pro->name)}}</span>
+                                                        </div>
+                                                    @endif
+                                                @endif
+
                                             @endforeach
                                             <a class="text-edit" href="#" data-toggle="modal"
                                                data-target="#exampleModal">

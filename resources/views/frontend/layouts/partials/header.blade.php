@@ -166,7 +166,7 @@
                                             }
                                         }
                                     @endphp
-                                    @if($isAdmin == true)
+                                    @if($isAdmin == true & $locale != 'vi')
                                         <div class="drop-item">
                                             <a href="{{ route('seller.products.home') }}">{{ __('home.Seller channel') }}</a>
                                         </div>
@@ -285,7 +285,7 @@
                             <div class="item">
                                 <div class="d-flex">
                                     <button class="button_login" onclick="signIn()">
-                                        <div class="item-text">B2B</div>
+                                        <div class="it  em-text">B2B</div>
                                     </button>
                                     <button class="button_login" onclick="signIn()">
                                         <div class="item-text">B2C</div>

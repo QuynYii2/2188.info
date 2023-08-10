@@ -550,7 +550,9 @@
                 @php
                     $shopInformation = \App\Models\ShopInfo::all()
                 @endphp
-                @include('frontend.pages.shop-information.tabs_shop_info')
+                @if($shopInformation->isNotEmpty())
+                    @include('frontend.pages.shop-information.tabs_shop_info')
+                @endif
             </div>
 
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
