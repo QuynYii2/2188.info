@@ -329,6 +329,8 @@ return [
     'Create A New Account' => 'Tạo tài khoản mới',
     'Sign up for membership' => 'Đăng kí hội viên',
     'Sign in' => 'Đăng nhập',
+    'Show Less' => 'Hiện ít hơn',
+
 
 
 
