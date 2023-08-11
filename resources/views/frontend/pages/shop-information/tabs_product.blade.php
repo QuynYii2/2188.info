@@ -344,6 +344,7 @@
 </script>
 <script>
     $(document).ready(function () {
+        console.log(22323232);
         $('.quickView').click(function () {
             $('#renderProductImage').removeClass('d-none');
             $('#renderListImage').empty()
