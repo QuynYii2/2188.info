@@ -33,6 +33,7 @@ use App\Http\Controllers\Seller\TopSellerConfigController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\StatisticShopController;
+use App\Http\Controllers\UpdateRankController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherController;
 use Illuminate\Support\Facades\Route;
@@ -81,6 +82,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/register/', [HomeController::class, 'register'])->name('register.show');
 Route::post('/file/img/store', [FileController::class, 'saveImgByUser'])->name('file.img.save');
 Route::get('/file/img/get', [FileController::class, 'getListImgByUser'])->name('file.img.get');
+
 
 // Start register member
 Route::get(
@@ -167,6 +169,9 @@ Route::get('/products-shop/{id}', [\App\Http\Controllers\Frontend\ProductControl
 Route::get('/products-shop-category/{category}/{shop}', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByCategoryAndShops'])->name('list.products.shop.category.show');
 
 Route::middleware(['auth'])->group(function () {
+    //View member
+    Route::get('/member-registered', [UpdateRankController::class, 'detail'])->name('member.registered.detail');
+    Route::post('/member-registered', [UpdateRankController::class, 'updateMember'])->name('member.registered.update');
     //
     Route::get('/info/', [ProfileController::class, 'info'])->name('profile.show');
 //    Route::get('/my-notification/', [\App\Http\Controllers\ProfileController::class, 'my_notification']);
