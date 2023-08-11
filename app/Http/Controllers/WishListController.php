@@ -15,6 +15,7 @@ class WishListController extends Controller
 
     public function wishListIndex()
     {
+
         $wishListItems = DB::table('wish_lists')->where('user_id', '=', Auth::user()->id)->get();
         $productIds = [];
         foreach ($wishListItems as $productId) {

@@ -1,9 +1,6 @@
 @extends('frontend.layouts.profile')
 
 @section('content')
-    @php
-
-    @endphp
     <div class="container">
         <h2>{{ __('home.Wishlist') }}</h2>
         <div class="row">
