@@ -327,7 +327,7 @@
                 <div class="swiper-button-prev"></div>
             </div>
         </section>
-        <div class="section row container-fluid">
+        <div class="section row margin-layout-index">
             <div class="col-md-3 col-xl-2 pt-3 pb-3">
                 @php
                     $listCate = DB::table('categories')->where('parent_id', null)->get();
@@ -551,11 +551,10 @@
             $(document).ready(function ($) {
                 $(".card-bottom--right").click(function () {
                     var idProduct = $(this).attr('id-product');
-                    console.log(idProduct)
-
+                    // console.log(idProduct)
 
                     $.ajax({
-                        url: '/wish-list-store/',
+                        url: '{{route('user.wish.lists')}}',
                         method: 'POST',
                         dataType: 'json',
                         data: {
@@ -566,7 +565,7 @@
                             alert('Sản phẩm đã được thêm vào danh sách yêu thích.')
                         },
                         error: function (exception) {
-                            console.log(exception)
+                            // console.log(exception)
                         }
                     });
                 });

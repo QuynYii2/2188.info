@@ -1,6 +1,3 @@
-{{--@foreach($shopInformationrmation as $shopInformation)--}}
-{{--@endforeach--}}
-
 
 <div class="title-information">
     <div class="title-information-container">Hồ sơ</div>

@@ -51,7 +51,7 @@
                 var idWishList = $(this).data('value');
                 console.log(idWishList)
                 $.ajax({
-                    url: "/wish-list-delete/" + idWishList,
+                    url: "{{route('wish.list.delete', ['id'=>':id'])}}",
                     method: 'POST',
                     dataType: 'json',
                     data: {

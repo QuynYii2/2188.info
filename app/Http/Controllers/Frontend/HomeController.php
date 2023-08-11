@@ -34,6 +34,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 
 class HomeController extends Controller
@@ -292,9 +293,15 @@ class HomeController extends Controller
                             $email = $companyArray[0];
                             $companyName = $companyArray[1];
                             $companyCode = $companyArray[2];
-                            $companyTEL = $companyArray[3];
-                            $companyFAX = $companyArray[4];
-                            $companyAddress = $companyArray[5];
+                            if (count($companyArray) > 3){
+                                $companyTEL = $companyArray[3];
+                            }
+                            if (count($companyArray) > 4){
+                                $companyFAX = $companyArray[4];
+                            }
+                            if (count($companyArray) > 5){
+                                $companyAddress = $companyArray[5];
+                            }
 
                             if (!$companyName) {
                                 $companyName = 'default';
@@ -325,6 +332,14 @@ class HomeController extends Controller
                                 $newUser->email_verified_at = now();
                                 $newUser->image = 'default image';
                                 $success = $newUser->save();
+
+                                $data = array('mail' => $email, 'name' => $email, 'password' => env('PASSWORD_DEFAULT', 123456));
+
+                                Mail::send('frontend/widgets/mailWelcome', $data, function ($message) use ($email) {
+                                    $message->to($email, 'Welcome mail!')->subject
+                                    ('Welcome mail');
+                                    $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
+                                });
 
                                 if ($success) {
                                     $exitUser = null;

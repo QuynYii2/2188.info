@@ -214,7 +214,8 @@
             display: flex;
             justify-content: space-between;
         }
-        #myButton {
+
+        .toggleBtn {
             width: 130px;
             background: #fd6506;
             border-radius: 20px;
@@ -224,6 +225,11 @@
             font-weight: 600;
             color: white;
             border: none;
+        }
+
+        .content {
+            max-height: 6em;
+            overflow: hidden;
         }
     </style>
     <div class="container-fluid detail">
@@ -609,7 +615,10 @@
         </ul>
         <div class="tab-content container-fluid" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                {!! $product->description!!}
+                <div class="content" id="content1">
+                    {!! $product->description!!}
+                </div>
+                <button id="toggleBtn1" class="toggleBtn" onclick="toggleContent('content1', 'toggleBtn1')">{{ __('home.Show More') }}</button>
             </div>
             @php
                 $infos = DB::table('shop_infos')->first();
@@ -619,48 +628,9 @@
                 @php
                     $shopInformation = \App\Models\ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first()
                 @endphp
-{{--                @if(!$shopInformation)--}}
-                <p id="less">
-                <div class="title-information">
-                    <div class="title-information-container">Hồ sơ</div>
-                    <div class="title-information-download">
-                        <a href="">Tải xuống báo cáo</a></div>
-                </div>
-                <dl>
-                    <dt>
-                        <span>Tổng quan</span>
-                    </dt>
-                    <dd>
-                        <div>
-                            <div>
-                                <span>Ngày đăng ký công ty</span>
-                                <strong>{{ \Carbon\Carbon::parse($shopInformation->created_at)->format('d/m/Y') }}</strong>
-                            </div>
-                            <div>
-                                <span>Diện tích sàn(㎡)</span>
-                                <strong>{{$shopInformation->acreage}}</strong>
-                            </div>
-                            <div>
-                                <span>Doanh thu xuất khẩu hàng năm (USD)</span>
-                                <strong>1644968</strong>
-                            </div>
-                            <div>
-                                <span>Ngôn ngữ được chấp nhận</span>
-                                <strong>{{$shopInformation->country}}</strong>
-                            </div>
-                            <div>
-                                <span>Năm xuất khẩu</span>
-                                <strong>{{$shopInformation->industry_year}}</strong>
-                            </div>
-                            <div>
-                                <span>Năm trong ngành</span>
-                                <strong>{{$shopInformation->industry_year}}</strong>
-                            </div>
-                        </div>
-                    </dd></p>
-                </dl>
-                <div id="more" style="display: none;">@include('frontend.pages.shop-information.tabs_shop_info')</div>
-                <button onclick="myFunctionDetail()" id="myButton">{{ __('home.Show More') }}</button>
+
+                <div class="content" id="content2">@include('frontend.pages.shop-information.tabs_shop_info')</div>
+                <button id="toggleBtn2" class="toggleBtn" onclick="toggleContent('content2', 'toggleBtn2')">{{ __('home.Show More') }}</button>
             </div>
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                 <div class="card mb-4">
@@ -989,23 +959,22 @@
             <div class="swiper-button-prev"></div>
         </div>
     </section>
-{{--  Show more  --}}
+    {{--  Show more  --}}
     <script>
-        function myFunctionDetail() {
-            var dots = document.getElementById("less");
-            var moreText = document.getElementById("more");
-            var btnText = document.getElementById("myButton");
+        function toggleContent(contentId, btnId) {
+            var content = document.getElementById(contentId);
+            var toggleBtn = document.getElementById(btnId);
 
-            if (moreText.style.display === "none") {
-                dots.style.display = "none";
-                btnText.innerHTML = "{{__('home.Show Less') }}";
-                moreText.style.display = "block";
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                toggleBtn.innerHTML = "{{ __('home.Show More') }}";
             } else {
-                dots.style.display = "inline";
-                btnText.innerHTML = "{{__('home.Show More') }}";
-                moreText.style.display = "none";
+                content.style.maxHeight = content.scrollHeight + "px";
+                toggleBtn.innerHTML = "{{ __('home.Show Less') }}";
             }
         }
+    </script>
+
     </script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>

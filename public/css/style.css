@@ -350,6 +350,12 @@ body {
   padding: 0 30px;
 }
 
+.margin-layout-index {
+  max-width: 100%;
+  padding-left: 7%;
+  padding-right: 7%;
+}
+
 .detail .product-name {
   color: gray;
   text-decoration: underline;
