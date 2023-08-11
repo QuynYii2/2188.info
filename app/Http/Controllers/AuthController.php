@@ -315,7 +315,7 @@ class AuthController extends Controller
             return back();
         } catch (\Exception $exception) {
             alert()->error('Error', 'Error, Please try again!');
-            dd($exception);
+
             return back();
         }
     }

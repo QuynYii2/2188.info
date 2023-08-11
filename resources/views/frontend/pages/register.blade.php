@@ -78,12 +78,12 @@
                 </div>
                 <div class="mt-3">
                     @php
-                        $locale = app()->getLocale();
+                        $locale = $_COOKIE['countryCode'];
                         if(!$locale){
-                            $locale == 'vi';
+                            $locale == 'vn';
                         }
                     @endphp
-                    @if($locale != 'vi')
+                    @if($locale != 'vn')
                         <nav>
                             <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                                 <a class="nav-item nav-link active link-tabs" id="nav-buyer-tab" data-toggle="tab"
@@ -103,29 +103,29 @@
                                     <div class="row">
                                         <input type="text" name="type_account" value="buyer" hidden="">
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="text" class="form-control" name="name" id="name-buyer"
+                                            <input required type="text" class="form-control" name="name" id="name-buyer" value="{{ old('name') }}"
                                                    placeholder="{{ __('home.input name') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="number" class="form-control" name="phone" id="phone-buyer"
+                                            <input required type="number" class="form-control" name="phone" id="phone-buyer" value="{{ old('phone') }}"
                                                    placeholder="{{ __('home.input phone') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="password" class="form-control" name="password"
+                                            <input required type="password" class="form-control" name="password" value="{{ old('password') }}"
                                                    id="password-buyer"
                                                    placeholder="{{ __('home.input password') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="email" class="form-control" name="email" id="email-buyer"
+                                            <input required type="email" class="form-control" name="email" id="email-buyer" value="{{ old('email') }}"
                                                    placeholder="{{ __('home.input email') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="text" class="form-control" name="address"
+                                            <input required type="text" class="form-control" name="address" value="{{ old('address') }}"
                                                    id="address-buyer"
                                                    placeholder="{{ __('home.input address') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="text" class="form-control" name="social_media"
+                                            <input required type="text" class="form-control" name="social_media" value="{{ old('social_media') }}"
                                                    placeholder="{{ __('home.input socialNetwork') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12" >
@@ -210,33 +210,33 @@
                                     <div class="row">
                                         <input type="text" name="type_account" value="seller" hidden>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="text" class="form-control" name="name" id="name-seller"
+                                            <input required type="text" class="form-control" name="name" id="name-seller" value="{{ old('name') }}"
                                                    placeholder="{{ __('home.input name') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="number" class="form-control" name="phone"
+                                            <input required type="number" class="form-control" name="phone" value="{{ old('phone') }}"
                                                    placeholder="{{ __('home.input phone') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="password" class="form-control" name="password"
+                                            <input required type="password" class="form-control" name="password" value="{{ old('password') }}"
                                                    placeholder="{{ __('home.input password') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="email" class="form-control" name="email" id="email-seller"
+                                            <input required type="email" class="form-control" name="email" id="email-seller" value="{{ old('email') }}"
                                                    placeholder="{{ __('home.input email') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="text" class="form-control" name="address"
+                                            <input required type="text" class="form-control" name="address" value="{{ old('address') }}"
                                                    placeholder="{{ __('home.input address') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="text" class="form-control" name="rental_code"
+                                            <input required type="text" class="form-control" name="rental_code" value="{{ old('rental_code') }}"
                                                    placeholder="{{ __('home.input taxCode') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
 
                                             <div class="custom-file">
-                                                <input required type="file" id="inputFile"
+                                                <input required type="file" id="inputFile" value="{{ old('image') }}"
                                                        name="image">
                                                 {{--                                            <label class="custom-file-label"--}}
                                                 {{--                                                   for="inputFile">{{ __('home.business license') }}</label>--}}
@@ -252,15 +252,15 @@
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="text" class="form-control" name="product_name"
+                                            <input required type="text" class="form-control" name="product_name" value="{{ old('product_name') }}"
                                                    placeholder="{{ __('home.input nameProduct') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input type="text" class="form-control" id="product_code"
+                                            <input type="text" class="form-control" id="product_code" value="{{ old('product_code') }}"
                                                    placeholder="{{ __('home.type product') }}" name="product_code">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="text" class="form-control" name="social_media"
+                                            <input required type="text" class="form-control" name="social_media" value="{{ old('social_media') }}"
                                                    placeholder="{{ __('home.input socialNetwork') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
@@ -348,29 +348,29 @@
                                 <div class="row">
                                     <input type="text" name="type_account" value="buyer" hidden="">
                                     <div class="form-group col-md-6 col-12">
-                                        <input required type="text" class="form-control" name="name" id="name-buyer"
+                                        <input required type="text" class="form-control" name="name" id="name-buyer"  value="{{ old('name') }}"
                                                placeholder="{{ __('home.input name') }}">
                                     </div>
                                     <div class="form-group col-md-6 col-12">
-                                        <input required type="number" class="form-control" name="phone" id="phone-buyer"
+                                        <input required type="number" class="form-control" name="phone" id="phone-buyer" value="{{ old('phone') }}"
                                                placeholder="{{ __('home.input phone') }}">
                                     </div>
                                     <div class="form-group col-md-6 col-12">
-                                        <input required type="password" class="form-control" name="password"
+                                        <input required type="password" class="form-control" name="password" value="{{ old('password') }}"
                                                id="password-buyer"
                                                placeholder="{{ __('home.input password') }}">
                                     </div>
                                     <div class="form-group col-md-6 col-12">
-                                        <input required type="email" class="form-control" name="email" id="email-buyer"
+                                        <input required type="email" class="form-control" name="email" id="email-buyer" value="{{ old('email') }}"
                                                placeholder="{{ __('home.input email') }}">
                                     </div>
                                     <div class="form-group col-md-6 col-12">
-                                        <input required type="text" class="form-control" name="address"
+                                        <input required type="text" class="form-control" name="address" value="{{ old('address') }}"
                                                id="address-buyer"
                                                placeholder="{{ __('home.input address') }}">
                                     </div>
                                     <div class="form-group col-md-6 col-12">
-                                        <input required type="text" class="form-control" name="social_media"
+                                        <input required type="text" class="form-control" name="social_media" value="{{ old('social_media') }}"
                                                placeholder="{{ __('home.input socialNetwork') }}">
                                     </div>
                                     <div class="form-group col-md-6 col-12" >

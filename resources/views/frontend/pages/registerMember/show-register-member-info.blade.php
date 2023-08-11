@@ -18,18 +18,18 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="companyName">Company Name</label>
-                                <input type="text" class="form-control" id="companyName" name="companyName" required>
+                                <input type="text" class="form-control" id="companyName" value="{{ old('companyName') }}" name="companyName" required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="codeBusiness">Code Business</label>
-                                <input type="text" class="form-control" id="codeBusiness" name="codeBusiness"
+                                <input type="text" class="form-control" id="codeBusiness" value="{{ old('codeBusiness') }}" name="codeBusiness"
                                        required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="phoneNumber">PhoneNumber</label>
-                                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
+                                <input type="number" class="form-control" id="phoneNumber" value="{{ old('phoneNumber') }}" name="phoneNumber" required>
                             </div>
                             <div class="form-group col-md-6 register-member">
                                 <label for="category">Category</label>
