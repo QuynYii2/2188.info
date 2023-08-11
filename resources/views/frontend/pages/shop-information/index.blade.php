@@ -337,6 +337,22 @@
     #style-8dPYj.style-8dPYj {
         background-image: url("https://down-ws-vn.img.susercontent.com/vn-11134210-7qukw-lhy85rv6ohola9_tn.webp");
     }
+    .toggleBtn {
+        width: 130px;
+        background: #fd6506;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 16px;
+        line-height: 45px;
+        font-weight: 600;
+        color: white;
+        border: none;
+    }
+
+    .content {
+        max-height: 6em;
+        overflow: hidden;
+    }
 
 </style>
 
@@ -537,7 +553,9 @@
                                 @php
                                     $shopInformation = \App\Models\ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first()
                                 @endphp
-                                @include('frontend.pages.shop-information.tabs_shop_info')
+{{--                                @include('frontend.pages.shop-information.tabs_shop_info')--}}
+                                <div class="content" id="content2">@include('frontend.pages.shop-information.tabs_shop_info')</div>
+                                <button id="toggleBtn2" class="toggleBtn" onclick="toggleContent('content2', 'toggleBtn2')">{{ __('home.Show More') }}</button>
                             </div>
                             <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="profile-tab">
                                 @include('frontend.pages.shop-information.tabs_product')
@@ -551,4 +569,18 @@
             </div>
         </div>
     </div>
+    <script>
+        function toggleContent(contentId, btnId) {
+            var content = document.getElementById(contentId);
+            var toggleBtn = document.getElementById(btnId);
+
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                toggleBtn.innerHTML = "{{ __('home.Show More') }}";
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                toggleBtn.innerHTML = "{{ __('home.Show Less') }}";
+            }
+        }
+    </script>
 @endsection
