@@ -670,8 +670,12 @@
                             if (Auth::check()){
                                 $isMember = \App\Models\MemberRegisterPersonSource::where([
                                     ['email', Auth::user()->email],
-                                    ['check', 1]
+                                    ['status', \App\Enums\MemberRegisterPersonSourceStatus::ACTIVE]
                                 ])->first();
+
+                                if (!$isMember){
+                                    $isMember = \App\Models\MemberRegisterInfo::where('user_id', Auth::user()->id);
+                                }
                             }
                         @endphp
                         @if($isMember)
