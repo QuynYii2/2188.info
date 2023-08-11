@@ -619,7 +619,8 @@
                 @php
                     $shopInformation = \App\Models\ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first()
                 @endphp
-                <p id="dots">
+{{--                @if(!$shopInformation)--}}
+                <p id="less">
                 <div class="title-information">
                     <div class="title-information-container">Hồ sơ</div>
                     <div class="title-information-download">
@@ -659,9 +660,8 @@
                     </dd></p>
                 </dl>
                 <div id="more" style="display: none;">@include('frontend.pages.shop-information.tabs_shop_info')</div>
-                <button onclick="myFunction()" id="myButton">Show More</button>
+                <button onclick="myFunctionDetail()" id="myButton">{{ __('home.Show More') }}</button>
             </div>
-
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                 <div class="card mb-4">
                     <div class="card-body">
@@ -991,18 +991,18 @@
     </section>
 {{--  Show more  --}}
     <script>
-        function myFunction() {
-            var dots = document.getElementById("dots");
+        function myFunctionDetail() {
+            var dots = document.getElementById("less");
             var moreText = document.getElementById("more");
-            var btnText = document.getElementById("myBtn");
+            var btnText = document.getElementById("myButton");
 
             if (moreText.style.display === "none") {
                 dots.style.display = "none";
-                btnText.innerHTML = "{{ __('home.Show Less') }}";
+                btnText.innerHTML = "{{__('home.Show Less') }}";
                 moreText.style.display = "block";
             } else {
                 dots.style.display = "inline";
-                btnText.innerHTML = "{{ __('home.Show More') }}";
+                btnText.innerHTML = "{{__('home.Show More') }}";
                 moreText.style.display = "none";
             }
         }

@@ -324,6 +324,8 @@ return [
     'Create A New Account' => '새 계정 생성',
     'Sign up for membership' => '회원가입',
     'Sign in' => '로그인',
+    'Show Less' => '간단히 보기',
+
 
 
 
