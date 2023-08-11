@@ -209,80 +209,8 @@
                     <div class="content">{{ __('home.New Products') }}</div>
                     <div class="swiper NewProducts">
                         <div class="swiper-wrapper">
-                            @foreach($newProducts as $newProduct)
-                                @php
-                                    $productDetail = \App\Models\Variation::where('product_id', $newProduct->id)->first();
-                                @endphp
-                                <div class="swiper-slide">
-                                    <div class="item">
-                                        @if($newProduct->thumbnail)
-                                            <div class="item-img">
-                                                <img src="{{ asset('storage/' . $newProduct->thumbnail) }}" alt="">
-                                                <div class="button-view">
-                                                    <button type="button" class="btn view_modal" data-toggle="modal"
-                                                            data-value="{{$newProduct}}" data-id="{{$productDetail}}"
-                                                            data-target="#exampleModal">{{ __('home.Quick view') }}</button>
-                                                </div>
-                                                <div class="text">
-                                                    <div class="text-new">
-                                                        New
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
-                                        <div class="item-body">
-                                            <div class="card-rating">
-                                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                                <span>(1)</span>
-                                            </div>
-                                            @php
-                                                $namenewProduct = DB::table('users')->where('id', $newProduct->user_id)->first();
-                                            @endphp
-                                            <div class="card-brand">
-                                                {{($namenewProduct->name)}}
-                                            </div>
-                                            <div class="card-title">
-                                                @if(Auth::check())
-                                                    <a href="{{route('detail_product.show', $newProduct->id)}}">{{ ($newProduct->name) }}</a>
-                                                @else
-                                                    <a class="check_url">{{($newProduct->name)}}</a>
-                                                @endif
-                                            </div>
-                                            @if($newProduct->price)
-                                                <div class="card-price d-flex justify-content-between">
-                                                    @if($newProduct->price != null)
-                                                        <div class="price-sale">
-                                                            <strong>${{$newProduct->price}}</strong>
-                                                        </div>
-                                                        <div class="price-cost">
-                                                            <strike>${{$newProduct->old_price}}</strike>
-                                                        </div>
-                                                    @else
-                                                        <div class="price-sale">
-                                                            <strong>${{$newProduct->old_price}}</strong>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endif
-                                            <div class="card-bottom d-flex justify-content-between">
-                                                <div class="card-bottom--left">
-                                                    @if(Auth::check())
-                                                        <a href="{{route('detail_product.show', $newProduct->id)}}">{{ __('home.Choose Options') }}</a>
-                                                    @else
-                                                        <a class="check_url">Choose Options</a>
-                                                    @endif
-                                                </div>
-                                                <div class="card-bottom--right" id-product="{{$newProduct->id}}">
-                                                    <i class="item-icon fa-regular fa-heart"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            @foreach($newProducts as $product)
+                                @include('frontend.pages.list-product')
                             @endforeach
                         </div>
                         <div class="swiper-button-next"></div>
@@ -295,79 +223,8 @@
                         <div class="swiper-wrapper">
                             @foreach($productFeatures as $productFeature)
                                 @foreach($productFeature as $product)
-                                    @php
-                                        $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
-                                    @endphp
-                                    <div class="swiper-slide">
-                                        <div class="item">
-                                            @if($product->thumbnail)
-                                                <div class="item-img">
-                                                    <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                                                    <div class="button-view">
-                                                        <button type="button" class="btn view_modal" data-toggle="modal"
-                                                                data-value="{{$product}}" data-id="{{$productDetail}}"
-                                                                data-target="#exampleModal">{{ __('home.Quick view') }}</button>
-                                                    </div>
-                                                    <div class="text">
-                                                        <div class="text-new">
-                                                            New
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endif
-                                            <div class="item-body">
-                                                <div class="card-rating">
-                                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                                    <span>(1)</span>
-                                                </div>
-                                                @php
-                                                    $nameFeature = DB::table('users')->where('id', $product->user_id)->first();
-                                                @endphp
-                                                <div class="card-brand">
-                                                    {{($nameFeature->name)}}
-                                                </div>
-                                                <div class="card-title">
-                                                    @if(Auth::check())
-                                                        <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
-                                                    @else
-                                                        <a class="check_url">{{($product->name)}}</a>
-                                                    @endif
-                                                </div>
-                                                @if($product->price)
-                                                    <div class="card-price d-flex justify-content-between">
-                                                        @if($product->price != null)
-                                                            <div class="price-sale">
-                                                                <strong>${{$product->price}}</strong>
-                                                            </div>
-                                                            <div class="price-cost">
-                                                                <strike>${{$product->old_price}}</strike>
-                                                            </div>
-                                                        @else
-                                                            <div class="price-sale">
-                                                                <strong>${{$product->old_price}}</strong>
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                @endif
-                                                <div class="card-bottom d-flex justify-content-between">
-                                                    <div class="card-bottom--left">
-                                                        @if(Auth::check())
-                                                            <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
-                                                        @else
-                                                            <a class="check_url">Choose Options</a>
-                                                        @endif
-                                                    </div>
-                                                    <div class="card-bottom--right " id-product="{{$newProduct->id}}">
-                                                        <i class="item-icon fa-regular fa-heart"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @include('frontend.pages.list-product')
+
                                 @endforeach
                             @endforeach
                         </div>
@@ -377,6 +234,8 @@
                 </div>
             </div>
         </section>
+
+        <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
         <div class="modal fade detail" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
@@ -451,88 +310,17 @@
                 </div>
             </div>
         </div>
-        <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
+
         <section class="section-Fifth section pt-3 pb-3 container-fluid">
             <div class="content"><i class="fa-solid fa-fire-flame-curved"></i>{{ __('home.Hot Deals') }}</div>
             <div class="swiper HotDeals">
                 <div class="swiper-wrapper">
                     @foreach($productHots as $productHot)
-                        @foreach($productHot as $hotProduct)
+                        @foreach($productHot as $product)
                             @php
-                                $productDetail = \App\Models\Variation::where('product_id', $hotProduct->id)->first();
+                                $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
                             @endphp
-                            <div class="swiper-slide">
-                                <div class="item">
-                                    @if($hotProduct->thumbnail)
-                                        <div class="item-img">
-                                            <img src="{{ asset('storage/' . $hotProduct->thumbnail) }}" alt="">
-                                            <div class="button-view">
-                                                <button type="button" class="btn view_modal" data-toggle="modal"
-                                                        data-value="{{$hotProduct}}" data-id="{{$productDetail}}"
-                                                        data-target="#exampleModal">{{ __('home.Quick view') }}</button>
-                                            </div>
-                                            <div class="text">
-                                                <div class="text-new">
-                                                    New
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-                                    <div class="item-body">
-                                        <div class="card-rating">
-                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                            <span>(1)</span>
-                                        </div>
-                                        @php
-                                            $nameHot = DB::table('users')->where('id', $hotProduct->user_id)->first();
-                                        @endphp
-                                        <div class="card-brand">
-                                            {{($nameHot->name)}}
-                                        </div>
-                                        <div class="card-title">
-                                            @if(Auth::check())
-                                                <a href="{{route('detail_product.show', $hotProduct->id)}}">{{ ($hotProduct->name) }}</a>
-                                            @else
-                                                <a class="check_url">{{($hotProduct->name)}}</a>
-                                            @endif
-                                        </div>
-                                        @if($hotProduct->price)
-                                            <div class="card-price d-flex justify-content-between">
-                                                @if($hotProduct->price != null)
-                                                    <div class="price-sale">
-                                                        <strong>${{$hotProduct->price}}</strong>
-                                                    </div>
-                                                    <div class="price-cost">
-                                                        <strike>${{$hotProduct->old_price}}</strike>
-                                                    </div>
-                                                @else
-                                                    <div class="price-sale">
-                                                        <strong>${{$hotProduct->old_price}}</strong>
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        @endif
-
-
-                                        <div class="card-bottom d-flex justify-content-between">
-                                            <div class="card-bottom--left">
-                                                @if(Auth::check())
-                                                    <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
-                                                @else
-                                                    <a class="check_url">{{ __('home.Choose Options') }}</a>
-                                                @endif
-                                            </div>
-                                            <div class="card-bottom--right " id-product="{{$newProduct->id}}">
-                                                <i class="item-icon fa-regular fa-heart"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @include('frontend.pages.list-product')
                         @endforeach
                     @endforeach
                 </div>
@@ -558,7 +346,7 @@
                 @endfor
             </div>
             <div class="col-12 col-md-9 col-xl-8">
-                <div class=" section">
+                <div class="category-img section pt-3 pb-3 container-fluid">
                     <div class="category-img">
                         @if($locale == 'vi')
                             <div class="content ">Viet Nam
@@ -587,83 +375,7 @@
                                     $products = \App\Models\Product::where([['location','=','vi'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
                                 @endphp
                                 @foreach($currentProducts as $product)
-                                    @php
-                                        $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
-                                    @endphp
-                                    <div class="swiper-slide">
-                                        <div class="item">
-                                            @if($product->thumbnail)
-                                                <div class="item-img">
-                                                    <img src="{{ asset('storage/' . $product->thumbnail) }}"
-                                                         alt="">
-                                                    <div class="button-view">
-                                                        <button type="button" class="btn view_modal"
-                                                                data-toggle="modal"
-                                                                data-value="{{$product}}"
-                                                                data-id="{{$productDetail}}"
-                                                                data-target="#exampleModal">{{ __('home.Quick view') }}</button>
-                                                    </div>
-                                                    <div class="text">
-                                                        <div class="text-new">
-                                                            New
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endif
-
-
-                                            <div class="item-body">
-                                                <div class="card-rating">
-                                                    @for($i = 0; $i < 5; $i++)
-                                                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                                    @endfor
-                                                    <span>(1)</span>
-                                                </div>
-                                                @php
-                                                    $nameUser = DB::table('users')->where('id', $product->user_id)->first();
-                                                @endphp
-                                                <div class="card-brand">
-                                                    {{($nameUser->name)}}
-                                                </div>
-                                                <div class="card-title">
-                                                    @if(Auth::check())
-                                                        <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
-                                                    @else
-                                                        <a class="check_url">{{($product->name)}}</a>
-                                                    @endif
-                                                </div>
-                                                @if($product->price)
-                                                    <div class="card-price d-flex justify-content-between">
-                                                        @if($product->price != null)
-                                                            <div class="price-sale">
-                                                                <strong>${{$product->price}}</strong>
-                                                            </div>
-                                                            <div class="price-cost">
-                                                                <strike>${{$product->old_price}}</strike>
-                                                            </div>
-                                                        @else
-                                                            <div class="price-sale">
-                                                                <strong>${{$product->old_price}}</strong>
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                @endif
-                                                <div class="card-bottom d-flex justify-content-between">
-                                                    <div class="card-bottom--left">
-                                                        @if(Auth::check())
-                                                            <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
-                                                        @else
-                                                            <a class="check_url">Choose Options</a>
-                                                        @endif
-                                                    </div>
-                                                    <div class="card-bottom--right "
-                                                         id-product="{{$newProduct->id}}">
-                                                        <i class="item-icon fa-regular fa-heart"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @include('frontend.pages.list-product')
                                 @endforeach
                             </div>
                             <div class="swiper-button-next"></div>
@@ -701,80 +413,7 @@
                                         @php
                                             $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
                                         @endphp
-                                        <div class="swiper-slide">
-                                            <div class="item">
-                                                @if($product->thumbnail)
-                                                    <div class="item-img">
-                                                        <img src="{{ asset('storage/' . $product->thumbnail) }}"
-                                                             alt="">
-                                                        <div class="button-view">
-                                                            <button type="button" class="btn view_modal"
-                                                                    data-toggle="modal"
-                                                                    data-value="{{$product}}"
-                                                                    data-id="{{$productDetail}}"
-                                                                    data-target="#exampleModal">{{ __('home.Quick view') }}</button>
-                                                        </div>
-                                                        <div class="text">
-                                                            <div class="text-new">
-                                                                New
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @endif
-
-
-                                                <div class="item-body">
-                                                    <div class="card-rating">
-                                                        @for($i = 0; $i < 5; $i++)
-                                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                                        @endfor
-                                                        <span>(1)</span>
-                                                    </div>
-                                                    @php
-                                                        $nameUser = DB::table('users')->where('id', $product->user_id)->first();
-                                                    @endphp
-                                                    <div class="card-brand">
-                                                        {{($nameUser->name)}}
-                                                    </div>
-                                                    <div class="card-title">
-                                                        @if(Auth::check())
-                                                            <a href="{{route('detail_product.show', $product->id)}}">{{($product->name)}}</a>
-                                                        @else
-                                                            <a class="check_url">{{($product->name)}}</a>
-                                                        @endif
-                                                    </div>
-                                                    @if($product->price)
-                                                        <div class="card-price d-flex justify-content-between">
-                                                            @if($product->price != null)
-                                                                <div class="price-sale">
-                                                                    <strong>${{$product->price}}</strong>
-                                                                </div>
-                                                                <div class="price-cost">
-                                                                    <strike>${{$product->old_price}}</strike>
-                                                                </div>
-                                                            @else
-                                                                <div class="price-sale">
-                                                                    <strong>${{$product->old_price}}</strong>
-                                                                </div>
-                                                            @endif
-                                                        </div>
-                                                    @endif
-                                                    <div class="card-bottom d-flex justify-content-between">
-                                                        <div class="card-bottom--left">
-                                                            @if(Auth::check())
-                                                                <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
-                                                            @else
-                                                                <a class="check_url">Choose Options</a>
-                                                            @endif
-                                                        </div>
-                                                        <div class="card-bottom--right "
-                                                             id-product="{{$newProduct->id}}">
-                                                            <i class="item-icon fa-regular fa-heart"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        @include('frontend.pages.list-product')
                                     @endforeach
                                 </div>
                                 <div class="swiper-button-next"></div>
@@ -782,6 +421,18 @@
                             </div>
                         </div>
                     @endif
+                    <div class="swiper listProduct">
+                        <div class="swiper-wrapper">
+                            @php
+                                $products = \App\Models\Product::where([['location','=','vi'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
+                            @endphp
+                            @foreach($currentProducts as $product)
+                                @include('frontend.pages.list-product')
+                            @endforeach
+                        </div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
                 @endforeach
             </div>
             <div class="col-md-3 col-xl-2 pt-3 pb-3">
@@ -893,31 +544,7 @@
             <input type="text" hidden="" id="inputUrl" value="{{asset('storage/')}}">
         </section>
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-        <script>
-            var url = document.getElementById('inputUrl');
-            $('.view_modal').on('click', function () {
-                var product = $(this).data('value');
-                var productDetail = $(this).data('id');
-                let urggg = document.getElementById('url').value;
-                $('#form_cart').attr('action', urggg + '/' + product['id']);
-                var modal_img = document.getElementById('img-modal')
-                modal_img.src = url.value + '/' + product['thumbnail'];
-                var modal_name = document.getElementById('productName-modal')
-                modal_name.innerText = product['name'];
-                var price_sale = document.getElementById('price-sale')
-                price_sale.innerText = product['price'];
-                var price_old = document.getElementById('price-old')
-                price_old.innerText = product['old_price'];
-                var description_text = document.getElementById('description-text')
-                description_text.innerHTML = productDetail['description'];
-                var qty = document.getElementById('qty')
-                qty.innerText = product['qty'];
-                var variable = document.getElementById('variable_id')
-                variable.value = productDetail['variation'];
-            })
 
-
-        </script>
         <script>
             let side_cate = document.getElementById('side-cate');
             let carousel_1 = document.getElementById('carousel__1');

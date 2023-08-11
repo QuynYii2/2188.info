@@ -168,12 +168,12 @@
                                         }
                                     @endphp
                                     @php
-                                        $locale = app()->getLocale();
+                                        $locale = $_COOKIE['countryCode'];
                                         if(!$locale){
-                                            $locale == 'vi';
+                                            $locale == 'vn';
                                         }
                                     @endphp
-                                    @if($isAdmin == true & $locale != 'vi')
+                                    @if($isAdmin == true & $locale != 'vn')
                                         <div class="drop-item">
                                             <a href="{{ route('seller.products.home') }}">{{ __('home.Seller channel') }}</a>
                                         </div>

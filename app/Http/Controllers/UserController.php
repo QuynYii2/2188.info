@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Mockery\Exception;
 
 class UserController extends Controller
@@ -30,13 +31,15 @@ class UserController extends Controller
     {
 
         $ipAddress = $request->ip();
+        $validator = Validator::make($request->all(), []);
         $geoIp = new GeoIP();
         $locale = $geoIp->get_country_from_ip('183.80.130.4');
 
         $existingUser = User::where('email', $request->email)->first();
         if ($existingUser) {
             toast('Địa chỉ email đã tồn tại.', 'error', 'top-right');
-            return back();
+            return redirect(route('register.show')) ->withErrors($validator)
+                ->withInput();
         }
 
         if ($request->type_account == 'seller') {
@@ -242,6 +245,7 @@ class UserController extends Controller
             return redirect(route('login'));
         } else {
             alert()->error('Error', 'Error, Please try again!!');
+            return back();
         }
 
     }

@@ -7,23 +7,10 @@
         async function getLocation() {
             if (navigator.geolocation) {
                 await navigator.geolocation.getCurrentPosition(showPosition);
-
-                async function setLocale() {
-                    let locale = localStorage.getItem('countryCode');
-                    const myUrl = '{{asset('/set-locale/')}}' + '/' + locale;
-                    fetch(myUrl, {
-                        method: 'GET',
-                        headers: {
-                            'content-type': 'application/json'
-                        },
-                    }).then(data => {
-                        console.log('success', data)
-                    }).catch(error => {
-                        console.error('Error:', error);
-                    });
-                }
-
-                await setLocale();
+                let locale = localStorage.getItem('countryCode');
+                let country = localStorage.getItem('location');
+                document.cookie = "countryCode=" + locale;
+                document.cookie = "country=" + country;
             } else {
                 alert("Geolocation is not supported by this browser.")
             }
@@ -143,9 +130,7 @@
         if (begin == -1) {
             begin = dc.indexOf(prefix);
             if (begin != 0) return null;
-        }
-        else
-        {
+        } else {
             begin += 2;
             var end = document.cookie.indexOf(";", begin);
             if (end == -1) {
