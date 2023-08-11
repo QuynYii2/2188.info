@@ -619,7 +619,7 @@
                 @php
                     $shopInformation = \App\Models\ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first()
                 @endphp
-                @if($shopInformation->isNotEmpty())
+                @if(!$shopInformation)
                   <p id="dots">Hồ sơ công ty</p>
                     @include('frontend.pages.shop-information.tabs_shop_info')
                     <div id="more" style="display: none;">@include('frontend.pages.shop-information.tabs_shop_info')</div>
