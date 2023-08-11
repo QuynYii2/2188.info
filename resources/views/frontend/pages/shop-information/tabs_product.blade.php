@@ -349,13 +349,13 @@
             $('#renderListImage').empty()
             let productID = $(this).data('value');
             let url = $('#urlImage').val();
-            //productThumbnail
-            //productGallery
+            console.log('111')
             let thumbnail = $('#productThumbnail' + productID).val()
             $('#productThumbnail').attr('src', url + '/' + thumbnail);
             let gallery = $('#productGallery' + productID).val()
             let arrayImage = gallery.split(',');
             let galleryImage = '';
+            console.log('222')
             let script = '<script>$(document).ready(function () {' +
                 '$(".imgGalleryItem").on("click", function () { ' +
                 '$("#productThumbnail").attr("src", $(this).attr("src"));' +
@@ -366,6 +366,7 @@
                 let listImage = `<li class="image-item"><img class="imgGalleryItem" alt="" src="${urlImage + arrayImage[i]}"></li>`
                 galleryImage = galleryImage + listImage;
             }
+            console.log('end')
             $('#renderListImage').append(galleryImage + script);
         })
     })
