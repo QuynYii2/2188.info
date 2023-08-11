@@ -53,6 +53,7 @@
 
 @php
     $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
+    $locale = app()->getLocale();
 @endphp
 <header class="header">
     <div class="header-pc halo-header">
