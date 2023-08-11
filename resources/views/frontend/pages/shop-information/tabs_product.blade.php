@@ -232,7 +232,7 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
     function responsiveTable(y) {
         let tabs = document.getElementsByClassName('product-map');
@@ -343,9 +343,9 @@
 
 </script>
 <script>
-    $(document).ready(function () {
-        console.log(22323232);
-        $('.quickView').click(function () {
+
+    $(document).ready(function ($) {
+        $(".quickView").click(function () {
             $('#renderProductImage').removeClass('d-none');
             $('#renderListImage').empty()
             let productID = $(this).data('value');
