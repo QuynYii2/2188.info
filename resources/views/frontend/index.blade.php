@@ -559,7 +559,7 @@
             </div>
             <div class="col-12 col-md-9 col-xl-8">
                 <div class=" section">
-                    <div class="row category-img">
+                    <div class="category-img">
                         @if($locale == 'vi')
                             <div class="content ">Viet Nam
                                 <img class="flag-ct"

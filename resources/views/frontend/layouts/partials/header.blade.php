@@ -166,6 +166,12 @@
                                             }
                                         }
                                     @endphp
+                                    @php
+                                        $locale = app()->getLocale();
+                                        if(!$locale){
+                                            $locale == 'vi';
+                                        }
+                                    @endphp
                                     @if($isAdmin == true & $locale != 'vi')
                                         <div class="drop-item">
                                             <a href="{{ route('seller.products.home') }}">{{ __('home.Seller channel') }}</a>

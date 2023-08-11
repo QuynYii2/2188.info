@@ -242,7 +242,6 @@ class UserController extends Controller
             return redirect(route('login'));
         } else {
             alert()->error('Error', 'Error, Please try again!!');
-            return back();
         }
 
     }
