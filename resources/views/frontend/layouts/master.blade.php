@@ -17,7 +17,7 @@
                             'content-type': 'application/json'
                         },
                     }).then(data => {
-                        console.log('success', data)
+                        // console.log('success', data)
                     }).catch(error => {
                         console.error('Error:', error);
                     });
@@ -56,7 +56,7 @@
                 });
         }
 
-        getLocation();
+        // getLocation();
 
     </script>
     <meta charset="utf-8">
@@ -170,7 +170,7 @@
         await fetch('{{env('URL_GET_ALL_USER')}}')
             .then(response => response.text())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 listUser = data;
             })
             .catch(error => {
@@ -197,7 +197,7 @@
             })
                 .then(response => response.text())
                 .then(data => {
-                    console.log(data)
+                    // console.log(data)
                 })
                 .catch(error => {
                     console.error('Error: ' + error);
