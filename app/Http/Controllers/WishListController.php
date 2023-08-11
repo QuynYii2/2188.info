@@ -40,7 +40,7 @@ class WishListController extends Controller
 
         $productId = $request->input('idProduct');
         $userId = Auth::user()->id;
-        $existingWishList = DB::table('Wish_Lists')
+        $existingWishList = DB::table('wish_lists')
             ->where('user_id', $userId)
             ->where('product_id', $productId)
             ->first();
