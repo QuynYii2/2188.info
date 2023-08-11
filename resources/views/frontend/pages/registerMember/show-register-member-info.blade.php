@@ -108,12 +108,6 @@
                             </div>
 
                         </div>
-                        {{--                        <div class="form-group row">--}}
-                        {{--                            <label class="col-sm-3 col-form-label">Địa chỉ</label>--}}
-                        {{--                            <div class="col-sm-9">--}}
-                        {{--                                <textarea type="text" class="form-control" name="address_detail" required></textarea>--}}
-                        {{--                            </div>--}}
-                        {{--                        </div>--}}
                         <button type="submit" class="btn btn-primary">Sign up</button>
                     </form>
                     <h2 id="result"></h2>
@@ -123,6 +117,16 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        $(document).ready(function () {
+            $('.inputCheckboxCategory').on('click', function () {
+                let count = document.querySelectorAll('.inputCheckboxCategory:checked').length
+                if (count > 3){
+                    $('.inputCheckboxCategory:checkbox:not(:checked)').prop('disabled', true);
+                } else {
+                    $('.inputCheckboxCategory:checkbox:not(:checked)').prop('disabled', false);
+                }
+            })
+        })
     </script>
     <script>
         var expanded = false;
@@ -134,7 +138,7 @@
                     var checkboxes = document.getElementById("checkboxes");
                     var div = document.getElementById('div-click');
                     if (checkboxes.contains(e.target) || div.contains(e.target)) {
-                        div.on('click', function () {
+                        $('#div-click').on('click', function () {
                             if (!expanded) {
                                 checkboxes.style.display = "block";
                                 expanded = true;
