@@ -84,7 +84,7 @@
                             <div class="form-group col-md-3">
                                 <label for="countries-select">Chọn quốc gia:</label>
                                 <select class="form-control" id="countries-select" name="countries-select"
-                                        onchange="getListState(this.value)">
+                                        onchange="getListState(this.value)" required>
                                 </select>
                             </div>
                             <div class="form-group col-md-3">
