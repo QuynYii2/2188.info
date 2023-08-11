@@ -136,6 +136,7 @@
 </script>
 <script>
     $(document).ready(function () {
+        console.log(11113);
         $('.quickView').click(function () {
             $('#renderProductImage').removeClass('d-none');
             $('#renderListImage').empty()
