@@ -941,7 +941,7 @@
 
 
                     $.ajax({
-                        url: '/wish-list-store/',
+                        url: '/wish-list-store',
                         method: 'POST',
                         dataType: 'json',
                         data: {
