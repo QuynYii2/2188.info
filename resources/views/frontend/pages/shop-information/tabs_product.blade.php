@@ -344,7 +344,7 @@
 </script>
 <script>
     $(document).ready(function () {
-        $('.quickView').on('click', function () {
+        $('.quickView').click(function () {
             $('#renderProductImage').removeClass('d-none');
             $('#renderListImage').empty()
             let productID = $(this).data('value');
