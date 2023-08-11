@@ -235,7 +235,6 @@
             </div>
         </section>
 
-        <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
         <div class="modal fade detail" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
@@ -310,7 +309,7 @@
                 </div>
             </div>
         </div>
-
+        <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
         <section class="section-Fifth section pt-3 pb-3 container-fluid">
             <div class="content"><i class="fa-solid fa-fire-flame-curved"></i>{{ __('home.Hot Deals') }}</div>
             <div class="swiper HotDeals">
@@ -421,18 +420,6 @@
                             </div>
                         </div>
                     @endif
-                    <div class="swiper listProduct">
-                        <div class="swiper-wrapper">
-                            @php
-                                $products = \App\Models\Product::where([['location','=','vi'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
-                            @endphp
-                            @foreach($currentProducts as $product)
-                                @include('frontend.pages.list-product')
-                            @endforeach
-                        </div>
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                    </div>
                 @endforeach
             </div>
             <div class="col-md-3 col-xl-2 pt-3 pb-3">
@@ -584,6 +571,31 @@
                     });
                 });
             });
+        </script>
+        <script>
+            var url = document.getElementById('inputUrl');
+            $('.view_modal').on('click', function () {
+                var product = $(this).data('value');
+                var productDetail = $(this).data('id');
+                let urggg = document.getElementById('url').value;
+                $('#form_cart').attr('action', urggg + '/' + product['id']);
+                var modal_img = document.getElementById('img-modal')
+                modal_img.src = url.value + '/' + product['thumbnail'];
+                var modal_name = document.getElementById('productName-modal')
+                modal_name.innerText = product['name'];
+                var price_sale = document.getElementById('price-sale')
+                price_sale.innerText = product['price'];
+                var price_old = document.getElementById('price-old')
+                price_old.innerText = product['old_price'];
+                var description_text = document.getElementById('description-text')
+                description_text.innerHTML = productDetail['description'];
+                var qty = document.getElementById('qty')
+                qty.innerText = product['qty'];
+                var variable = document.getElementById('variable_id')
+                variable.value = productDetail['variation'];
+            })
+
+
         </script>
 @endsection
 
