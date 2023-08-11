@@ -933,11 +933,10 @@
 
 
         </script>
-        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
         <script>
             $(document).ready(function ($) {
                 $(".card-bottom--right").click(function () {
-                    var idProduct = jQuery(this).attr('id-product');
+                    var idProduct = $(this).attr('id-product');
                     console.log(idProduct)
 
 
