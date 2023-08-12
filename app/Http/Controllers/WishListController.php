@@ -44,7 +44,6 @@ class WishListController extends Controller
             ])->get();
 
             if ($existingWishList) {
-                dd($existingWishList);
                 return response()->json(['message' => 'Sản phẩm này đã có trong danh sách yêu thích của bạn'], 200);
             }
 
