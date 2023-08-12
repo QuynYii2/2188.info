@@ -375,6 +375,13 @@
 
 </script>
 <script>
+    if (typeof jQuery == 'undefined') {
+        console.error('jQuery is not loaded.');
+    } else {
+        console.log('jQuery is loaded.');
+    }
+</script>
+<script>
 
     $(document).ready(function ($) {
         $(".quickView").click(function () {
