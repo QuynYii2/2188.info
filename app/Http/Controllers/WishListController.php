@@ -6,7 +6,7 @@ use App\Models\WishLists;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Models\Wishlist;
+use App\Models\WishListOLD;
 use App\Models\Product;
 
 
@@ -41,15 +41,15 @@ class WishListController extends Controller
             $productId = $request->input('idProduct');
             $userId = Auth::user()->id;
 
-            $existingWishList = WishList::where('user_id', $userId)
+            $existingWishList = WishListOLD::where('user_id', $userId)
                 ->where('product_id', $productId)
                 ->first();
-            dd($existingWishList);
+
             if ($existingWishList) {
                 return response()->json(['message' => 'Sản phẩm này đã có trong danh sách yêu thích của bạn'], 200);
             }
 
-            WishList::create([
+            WishListOLD::create([
                 'user_id' => $userId,
                 'product_id' => $productId,
             ]);
@@ -80,7 +80,7 @@ class WishListController extends Controller
 
     public function wishListSotfDelete(Request $id)
     {
-        $wishList = Wishlist::find($_POST['id']);
+        $wishList = WishListOLD::find($_POST['id']);
         if ($wishList) {
             $wishList->delete();
             return response()->json(['message' => 'sản pẩm đã được xóa'], 200);
