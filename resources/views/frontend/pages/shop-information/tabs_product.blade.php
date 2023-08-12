@@ -262,8 +262,15 @@
         </div>
     </div>
     <hr>
-
+    <button value="1111" class="test">Test click event</button>
 </div>
+<script>
+    $(document).ready(function ($) {
+        $('.test').click(function (){
+            console.log(1111666);
+        });
+    });
+</script>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
     function responsiveTable(y) {
