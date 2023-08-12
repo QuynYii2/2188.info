@@ -551,7 +551,7 @@
             $(document).ready(function ($) {
                 $(".card-bottom--right").click(function () {
                     var idProduct = $(this).attr('id-product');
-                    // console.log(idProduct)
+                    console.log(idProduct)
 
                     $.ajax({
                         url: '{{route('user.wish.lists')}}',
