@@ -384,8 +384,7 @@
 <script>
 
     $(document).ready(function ($) {
-        $(".text-new").click(function () {
-            debugger;
+        $(".quickView").click(function () {
 
             $('#renderProductImage').removeClass('d-none');
             $('#renderListImage').empty()
@@ -410,8 +409,8 @@
             }
             console.log('end')
             $('#renderListImage').append(galleryImage + script);
-        })
-    })
+        });
+    });
 </script>
 <script>
     let sortBy = '';
