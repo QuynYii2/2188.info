@@ -267,7 +267,29 @@
 <script>
     $(document).ready(function ($) {
         $('.test').click(function (){
-            console.log(1111666);
+            $('#renderProductImage').removeClass('d-none');
+            $('#renderListImage').empty()
+            let productID = $(this).data('value');
+            let url = $('#urlImage').val();
+            console.log('111')
+            let thumbnail = $('#productThumbnail' + productID).val()
+            $('#productThumbnail').attr('src', url + '/' + thumbnail);
+            let gallery = $('#productGallery' + productID).val()
+            let arrayImage = gallery.split(',');
+            let galleryImage = '';
+            console.log('222')
+            let script = '<script>$(document).ready(function () {' +
+                '$(".imgGalleryItem").on("click", function () { ' +
+                '$("#productThumbnail").attr("src", $(this).attr("src"));' +
+                '})' +
+                '})';
+            for (let i = 0; i < arrayImage.length; i++) {
+                let urlImage = url + '/';
+                let listImage = `<li class="image-item"><img class="imgGalleryItem" alt="" src="${urlImage + arrayImage[i]}"></li>`
+                galleryImage = galleryImage + listImage;
+            }
+            console.log('end')
+            $('#renderListImage').append(galleryImage + script);
         });
     });
 </script>
@@ -386,29 +408,7 @@
     $(document).ready(function ($) {
         $(".quickView").click(function () {
 
-            $('#renderProductImage').removeClass('d-none');
-            $('#renderListImage').empty()
-            let productID = $(this).data('value');
-            let url = $('#urlImage').val();
-            console.log('111')
-            let thumbnail = $('#productThumbnail' + productID).val()
-            $('#productThumbnail').attr('src', url + '/' + thumbnail);
-            let gallery = $('#productGallery' + productID).val()
-            let arrayImage = gallery.split(',');
-            let galleryImage = '';
-            console.log('222')
-            let script = '<script>$(document).ready(function () {' +
-                '$(".imgGalleryItem").on("click", function () { ' +
-                '$("#productThumbnail").attr("src", $(this).attr("src"));' +
-                '})' +
-                '})';
-            for (let i = 0; i < arrayImage.length; i++) {
-                let urlImage = url + '/';
-                let listImage = `<li class="image-item"><img class="imgGalleryItem" alt="" src="${urlImage + arrayImage[i]}"></li>`
-                galleryImage = galleryImage + listImage;
-            }
-            console.log('end')
-            $('#renderListImage').append(galleryImage + script);
+
         });
     });
 </script>
