@@ -111,7 +111,7 @@
                                             <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                                  alt="">
                                             <div class="button-view">
-                                                <button class="quickView" data-value="{{$product}}">Quick view</button>
+                                                <button class="quickView123" data-value="{{$product}}">Quick view 123</button>
                                             </div>
                                             <div class="text">
                                                 <div class="text-sale">
@@ -384,7 +384,7 @@
 <script>
 
     $(document).ready(function ($) {
-        $(".quickView").click(function () {
+        $(".quickView123").click(function () {
 
             $('#renderProductImage').removeClass('d-none');
             $('#renderListImage').empty()
