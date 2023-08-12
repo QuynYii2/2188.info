@@ -111,7 +111,7 @@
                                             <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                                  alt="">
                                             <div class="button-view 123">
-                                                <button class="quickView123" data-value="{{$product}}">Quick view</button>
+                                                <button class="quickView" data-value="{{$product}}">Quick view</button>
                                             </div>
                                             <div class="text">
                                                 <div class="text-sale">
@@ -173,78 +173,78 @@
                             @endforeach
                         </div>
                     </div>
-                    <div id="menu1" class="tab-pane fade"><br>
-                        @foreach($listProduct as $product)
-                            <div class="mt-3 category-list section">
-                                <div class="item row">
-                                    <div class="item-img col-md-3 col-5">
-                                        <img src="{{ asset('storage/' . $product->thumbnail) }}"
-                                             alt="">
-                                        <button class="quickView" data-value="{{$product}}">Quick view</button>
-                                        <div class="button-view">
-                                        </div>
-                                        <div class="text">
-                                            <div class="text-sale">
-                                                Sale
-                                            </div>
-                                            <div class="text-new">
-                                                New
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item-body col-md-9 col-7">
-                                        <div class="card-rating">
-                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                            <span>(1)</span>
-                                        </div>
-                                        @php
-                                            $namenewProduct = DB::table('users')->where('id', $product->user_id)->first();
-                                        @endphp
-                                        <div class="card-brand">
-                                            {{ ($namenewProduct->name) }}
-                                        </div>
-                                        <div class="card-title-list">
-                                            <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
-                                        </div>
-                                        <div class="card-price d-flex">
-                                            @if($product->price)
-                                                <div class="card-price d-flex justify-content-between">
-                                                    @if($product->price != null)
-                                                        <div class="price-sale">
-                                                            <strong>${{ ($product->price) }}</strong>
-                                                        </div>
-                                                        <div class="price-cost">
-                                                            <strike>${{ ($product->old_price) }}</strike>
-                                                        </div>
-                                                    @else
-                                                        <div class="price-sale">
-                                                            <strong>${{ ($product->old_price) }}</strong>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <div class="card-desc">
-                                            {{ $product->description }}
-                                        </div>
-                                        <div class="card-bottom d-flex mt-3">
-                                            <div class="card-bottom--left mr-4">
-                                                <a href="{{route('detail_product.show', $product->id)}}">Choose
-                                                    Options</a>
-                                            </div>
-                                            <div class="card-bottom--right">
-                                                <i class="item-icon fa-regular fa-heart"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
+{{--                    <div id="menu1" class="tab-pane fade"><br>--}}
+{{--                        @foreach($listProduct as $product)--}}
+{{--                            <div class="mt-3 category-list section">--}}
+{{--                                <div class="item row">--}}
+{{--                                    <div class="item-img col-md-3 col-5">--}}
+{{--                                        <img src="{{ asset('storage/' . $product->thumbnail) }}"--}}
+{{--                                             alt="">--}}
+{{--                                        <button class="quickView" data-value="{{$product}}">Quick view</button>--}}
+{{--                                        <div class="button-view">--}}
+{{--                                        </div>--}}
+{{--                                        <div class="text">--}}
+{{--                                            <div class="text-sale">--}}
+{{--                                                Sale--}}
+{{--                                            </div>--}}
+{{--                                            <div class="text-new">--}}
+{{--                                                New--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="item-body col-md-9 col-7">--}}
+{{--                                        <div class="card-rating">--}}
+{{--                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>--}}
+{{--                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>--}}
+{{--                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>--}}
+{{--                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>--}}
+{{--                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>--}}
+{{--                                            <span>(1)</span>--}}
+{{--                                        </div>--}}
+{{--                                        @php--}}
+{{--                                            $namenewProduct = DB::table('users')->where('id', $product->user_id)->first();--}}
+{{--                                        @endphp--}}
+{{--                                        <div class="card-brand">--}}
+{{--                                            {{ ($namenewProduct->name) }}--}}
+{{--                                        </div>--}}
+{{--                                        <div class="card-title-list">--}}
+{{--                                            <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="card-price d-flex">--}}
+{{--                                            @if($product->price)--}}
+{{--                                                <div class="card-price d-flex justify-content-between">--}}
+{{--                                                    @if($product->price != null)--}}
+{{--                                                        <div class="price-sale">--}}
+{{--                                                            <strong>${{ ($product->price) }}</strong>--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="price-cost">--}}
+{{--                                                            <strike>${{ ($product->old_price) }}</strike>--}}
+{{--                                                        </div>--}}
+{{--                                                    @else--}}
+{{--                                                        <div class="price-sale">--}}
+{{--                                                            <strong>${{ ($product->old_price) }}</strong>--}}
+{{--                                                        </div>--}}
+{{--                                                    @endif--}}
+{{--                                                </div>--}}
+{{--                                            @endif--}}
+{{--                                        </div>--}}
+{{--                                        <div class="card-desc">--}}
+{{--                                            {{ $product->description }}--}}
+{{--                                        </div>--}}
+{{--                                        <div class="card-bottom d-flex mt-3">--}}
+{{--                                            <div class="card-bottom--left mr-4">--}}
+{{--                                                <a href="{{route('detail_product.show', $product->id)}}">Choose--}}
+{{--                                                    Options</a>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="card-bottom--right">--}}
+{{--                                                <i class="item-icon fa-regular fa-heart"></i>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        @endforeach--}}
+{{--                    </div>--}}
                 </div>
                 <div id="renderProductImage" class="col-md-3 d-none">
                     <div class="product-gallery">
