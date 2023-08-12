@@ -384,7 +384,7 @@
 <script>
 
     $(document).ready(function ($) {
-        $(".quickView123").click(function () {
+        $(".quickView").click(function () {
 
             $('#renderProductImage').removeClass('d-none');
             $('#renderListImage').empty()
