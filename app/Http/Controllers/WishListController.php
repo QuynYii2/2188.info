@@ -44,7 +44,7 @@ class WishListController extends Controller
             $existingWishList = WishList::where('user_id', $userId)
                 ->where('product_id', $productId)
                 ->first();
-
+            dd($existingWishList);
             if ($existingWishList) {
                 return response()->json(['message' => 'Sản phẩm này đã có trong danh sách yêu thích của bạn'], 200);
             }
