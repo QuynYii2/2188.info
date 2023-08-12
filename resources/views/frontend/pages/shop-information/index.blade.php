@@ -560,6 +560,7 @@
                                     <button id="toggleBtn2" class="toggleBtn" onclick="toggleContent('content2', 'toggleBtn2')">{{ __('home.Show More') }}</button>
                                 @endif
                             </div>
+
                             <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="profile-tab">
                                 @include('frontend.pages.shop-information.tabs_product')
                             </div>
