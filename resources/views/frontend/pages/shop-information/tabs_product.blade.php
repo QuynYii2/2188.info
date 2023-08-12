@@ -377,8 +377,9 @@
 <script>
 
     $(document).ready(function ($) {
-        console.log(1111333);
         $(".quickView").click(function () {
+            console.log(1111333);
+
             $('#renderProductImage').removeClass('d-none');
             $('#renderListImage').empty()
             let productID = $(this).data('value');
