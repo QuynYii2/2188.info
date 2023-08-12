@@ -262,9 +262,23 @@
         </div>
     </div>
     <hr>
-    <button value="1111" class="test">Test click event</button>
-    <button value="2222" class="test">Test click event</button>
+    <div class="tes12">
+        <button value="1111" class="test">Test click event</button>
+        <button value="2222" class="test">Test click event</button>
+    </div>
 </div>
+<style>
+    .tes12 {
+        width: 100px;
+        height: 30px;
+    }
+    .test {
+        display: none;
+    }
+    .tes12:hover .test{
+        display: block;
+    }
+</style>
 <script>
     $(document).ready(function ($) {
         $('.test').click(function (){
