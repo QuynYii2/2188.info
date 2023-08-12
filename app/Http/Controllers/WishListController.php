@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\WishLists;
+use App\Models\WishList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -41,7 +41,7 @@ class WishListController extends Controller
             $productId = $request->input('idProduct');
             $userId = Auth::user()->id;
 
-            $existingWishList = WishListOLD::where('user_id', $userId)
+            $existingWishList = WishList::where('user_id', $userId)
                 ->where('product_id', $productId)
                 ->first();
 
@@ -49,7 +49,7 @@ class WishListController extends Controller
                 return response()->json(['message' => 'Sản phẩm này đã có trong danh sách yêu thích của bạn'], 200);
             }
 
-            WishListOLD::create([
+            WishList::create([
                 'user_id' => $userId,
                 'product_id' => $productId,
             ]);
