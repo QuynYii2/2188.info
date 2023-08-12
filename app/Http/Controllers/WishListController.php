@@ -23,9 +23,6 @@ class WishListController extends Controller
         }
         $productLists = Product::where('id', $productIds)->get();
         return view('frontend/pages/profile/wish-lists', compact('productLists','wishListItems'));
-//        $userId = Auth::id();
-//        $wishListItems = WishList::where('user_id', $userId)->get();
-//        return view('frontend.pages.profile.wish-lists', compact('wishListItems'));
     }
 
 
@@ -78,13 +75,15 @@ class WishListController extends Controller
         //
     }
 
-    public function wishListSoftDelete(Request $request, $id)
+    public function wishListSoftDelete(Request $id)
     {
-        $wishList = WishListOLD::findOrFail($id);
-
-        $wishList->delete();
-
-        return response()->json(['message' => 'Sản phẩm đã được xóa'], 200);
+        $wishList = WishListOLD::find($_POST['id']);
+        if ($wishList) {
+            $wishList->delete();
+            return response()->json(['message' => 'sản pẩm đã được xóa'], 200);
+        } else {
+            return response()->json(['message' => 'Không tìm thấy sản phẩm'], 404);
+        }
     }
 
 }
