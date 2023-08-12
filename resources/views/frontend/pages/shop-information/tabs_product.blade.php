@@ -111,7 +111,7 @@
                                             <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                                  alt="">
                                             <div class="button-view">
-                                                <button class="quickView123" data-value="{{$product}}">Quick view 123</button>
+                                                <button class="quickView" data-value="{{$product}}">Quick view</button>
                                             </div>
                                             <div class="text">
                                                 <div class="text-sale">
@@ -181,7 +181,7 @@
                                         <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                              alt="">
                                         <div class="button-view">
-                                            <button class="quickView" data-value="{{$product}}">Quick view 1333</button>
+                                            <button class="quickView123" data-value="{{$product}}">Quick view</button>
                                         </div>
                                         <div class="text">
                                             <div class="text-sale">
@@ -269,7 +269,7 @@
         $('.test').click(function (){
             console.log(1111666);
         });
-    });
+    })
 </script>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
@@ -384,7 +384,8 @@
 <script>
 
     $(document).ready(function ($) {
-        $(".quickView").click(function () {
+        $(".text-new").click(function () {
+            debugger;
 
             $('#renderProductImage').removeClass('d-none');
             $('#renderListImage').empty()
