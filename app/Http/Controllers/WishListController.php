@@ -37,22 +37,29 @@ class WishListController extends Controller
 
     public function wishListStore(Request $request)
     {
+        if (Auth::check()) {
+            $productId = $request->input('idProduct');
+            $userId = Auth::user()->id;
 
-        $productId = $_POST['idProduct'];
-        $userId = Auth::user()->id;
-        $existingWishList = DB::table('wish_lists')
-            ->where('user_id', $userId)
-            ->where('product_id', $productId)
-            ->first();
-        if ($existingWishList) {
-            return response()->json(['message' => 'Sản phẩm này đã có trong danh sách yêu thích của bạn'], 200);
+            $existingWishList = WishList::where('user_id', $userId)
+                ->where('product_id', $productId)
+                ->first();
+
+            if ($existingWishList) {
+                return response()->json(['message' => 'Sản phẩm này đã có trong danh sách yêu thích của bạn'], 200);
+            }
+
+            $newWishList = new WishList();
+            $newWishList->user_id = $userId;
+            $newWishList->product_id = $productId;
+            $newWishList->save();
+
+            return response()->json(['message' => 'Sản phẩm được thêm vào danh sách yêu thích thành công.'], 200);
+        } else {
+            return response()->json(['message' => 'Bạn cần đăng nhập để sử dụng tính năng này.'], 401);
         }
-        $newWishList = new WishList();
-        $newWishList->user_id = $userId;
-        $newWishList->product_id = $productId;
-        $newWishList->save();
-        return response()->json(['message' => 'Sản phẩm được thêm vào danh sách yêu thích thành công.'], 200);
     }
+
 
 
     public function show($id)
