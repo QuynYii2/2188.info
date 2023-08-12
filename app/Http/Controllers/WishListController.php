@@ -45,14 +45,14 @@ class WishListController extends Controller
 
             if ($existingWishList) {
                 return response()->json(['message' => 'Sản phẩm này đã có trong danh sách yêu thích của bạn'], 200);
+            } else {
+                WishList::create([
+                    'user_id' => $userId,
+                    'product_id' => $productId,
+                ]);
+
+                return response()->json(['message' => 'Sản phẩm được thêm vào danh sách yêu thích thành công.'], 200);
             }
-
-            WishList::create([
-                'user_id' => $userId,
-                'product_id' => $productId,
-            ]);
-
-            return response()->json(['message' => 'Sản phẩm được thêm vào danh sách yêu thích thành công.'], 200);
         } else {
             return response()->json(['message' => 'Bạn cần đăng nhập để sử dụng tính năng này.'], 401);
         }
