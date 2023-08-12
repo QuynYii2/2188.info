@@ -181,7 +181,7 @@
                                         <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                              alt="">
                                         <div class="button-view">
-                                            <button class="quickView" data-value="{{$product}}">Quick view</button>
+                                            <button class="quickView" data-value="{{$product}}">Quick view 1333</button>
                                         </div>
                                         <div class="text">
                                             <div class="text-sale">
