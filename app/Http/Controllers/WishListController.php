@@ -49,10 +49,10 @@ class WishListController extends Controller
                 return response()->json(['message' => 'Sản phẩm này đã có trong danh sách yêu thích của bạn'], 200);
             }
 
-            $newWishList = new WishList();
-            $newWishList->user_id = $userId;
-            $newWishList->product_id = $productId;
-            $newWishList->save();
+            WishList::create([
+                'user_id' => $userId,
+                'product_id' => $productId,
+            ]);
 
             return response()->json(['message' => 'Sản phẩm được thêm vào danh sách yêu thích thành công.'], 200);
         } else {
