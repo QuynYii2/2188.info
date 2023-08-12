@@ -43,6 +43,7 @@ class WishListController extends Controller
                 ->first();
 
             if ($existingWishList) {
+                exit();
                 return response()->json(['message' => 'Sản phẩm này đã có trong danh sách yêu thích của bạn'], 200);
             }
 
@@ -77,7 +78,7 @@ class WishListController extends Controller
 
     public function wishListSoftDelete(Request $id)
     {
-        $wishList = WishListOLD::find($_POST['id']);
+        $wishList = WishList::find($_POST['id']);
         if ($wishList) {
             $wishList->delete();
             return response()->json(['message' => 'sản pẩm đã được xóa'], 200);
