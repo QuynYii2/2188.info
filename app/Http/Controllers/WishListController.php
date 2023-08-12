@@ -78,14 +78,13 @@ class WishListController extends Controller
         //
     }
 
-    public function wishListSotfDelete(Request $id)
+    public function wishListSoftDelete(Request $request, $id)
     {
-        $wishList = WishListOLD::find($_POST['id']);
-        if ($wishList) {
-            $wishList->delete();
-            return response()->json(['message' => 'sản pẩm đã được xóa'], 200);
-        } else {
-            return response()->json(['message' => 'Không tìm thấy sản phẩm'], 404);
-        }
+        $wishList = WishListOLD::findOrFail($id);
+
+        $wishList->delete();
+
+        return response()->json(['message' => 'Sản phẩm đã được xóa'], 200);
     }
+
 }
