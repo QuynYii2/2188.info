@@ -110,7 +110,7 @@
                                         <div class="item-img">
                                             <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                                  alt="">
-                                            <div class="button-view">
+                                            <div class="button-view 123">
                                                 <button class="quickView" data-value="{{$product}}">Quick view</button>
                                             </div>
                                             <div class="text">
