@@ -38,7 +38,7 @@ class WishListController extends Controller
     public function wishListStore(Request $request)
     {
 
-        $productId = $request->input('idProduct');
+        $productId = $_POST['idProduct'];
         $userId = Auth::user()->id;
         $existingWishList = DB::table('wish_lists')
             ->where('user_id', $userId)
