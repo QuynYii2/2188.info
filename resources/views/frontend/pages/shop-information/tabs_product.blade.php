@@ -1,48 +1,31 @@
-<div id="body-content">
+<style>
+    .checkbox-sale {
+        font-size: 15px;
+    }
 
-    <div class="category-header align-items-center mt-4 mb-3 container-fluid d-flex justify-content-between">
-        <div class="category-header--left">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="">
-                    <input type="checkbox" value="" id="check_sale"
-                           onchange="checkSale(this)">{{ __('home.Products on sale') }}
-                </div>
-                <div class="">
-                    <div class="content">{{ __('home.PRICE') }}</div>
-                    <div class="category-price">
-                        <div class="wrapper">
-                            <div class="price-input d-flex">
-                                <div class="field">
-                                    <span>{{ __('home.Min') }}</span>
-                                    <input type="number" class="input-min" id="price-min" value="0">
-                                </div>
-                                <div class="separator">-</div>
-                                <div class="field">
-                                    <span>{{ __('home.Max') }}</span>
-                                    <input type="number" class="input-max" id="price-max"
-                                           value="{{ $priceProductOfCategory->maxPrice }}">
-                                </div>
-                            </div>
-                            <div class="slider">
-                                <div class="progress"></div>
-                            </div>
-                            <div class="range-input">
-                                <input type="range" class="range-min" min="0"
-                                       max="{{ $priceProductOfCategory->maxPrice }}" value="0" step="1">
-                                <input type="range" class="range-max" min="0"
-                                       max="{{ $priceProductOfCategory->maxPrice }}"
-                                       value="{{ $priceProductOfCategory->maxPrice }}" step="1">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="">
-                    <div class="content">{{ __('home.ORIGIN') }}</div>
-                    <input type="text" value="" id="search-origin"
-                           onchange="searchOrigin(this)">{{ __('home.Products by origin') }}
-                </div>
-            </div>
-        </div>
+    .category-header--left {
+        /* font-size: 18px; */
+        font-size: 15px;
+    }
+
+    .content-product {
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 37px;
+    }
+
+    .container-right {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .tab-content.col-md-9 {
+        padding-top: 0px;
+        max-width: 100%;
+    }
+</style>
+<div id="body-content">
+    <div class="container-right">
         <div class="category-header--right">
             <div class="show-item mr-4 align-items-center">
                 <span class="mr-3">{{ __('home.Show') }}</span>
@@ -67,9 +50,56 @@
         </div>
     </div>
     <hr>
-    <div class="category-body container-fluid">
-        <div class="card">
-            <div class="row">
+    <div class="category-header mt-4 mb-3 d-flex justify-content-between">
+        <div class="category-header--left col-xl-2">
+            <div class=" justify-content-between align-items-center">
+                <div class="checkbox-sale">
+                    <input type="checkbox" value="" id="check_sale"
+                           onchange="checkSale(this)">{{ __('home.Products on sale') }}
+                </div>
+                <hr>
+                <div class="">
+                    <div class="content-product">{{ __('home.PRICE') }}</div>
+                    <div class="category-price">
+                        <div class="wrapper">
+                            <div class="price-input d-flex">
+                                <div class="field">
+                                    <span>{{ __('home.Min') }}</span>
+                                    <input type="number" class="input-min" id="price-min" value="0">
+                                </div>
+                                <div class="separator">-</div>
+                                <div class="field">
+                                    <span>{{ __('home.Max') }}</span>
+                                    <input type="number" class="input-max" id="price-max"
+                                           value="{{ $priceProductOfCategory->maxPrice }}">
+                                </div>
+                            </div>
+                            <div class="slider">
+                                <div class="progress"></div>
+                            </div>
+
+                            <div class="range-input">
+                                <input type="range" class="range-min" min="0"
+                                       max="{{ $priceProductOfCategory->maxPrice }}" value="0" step="1">
+                                <input type="range" class="range-max" min="0"
+                                       max="{{ $priceProductOfCategory->maxPrice }}"
+                                       value="{{ $priceProductOfCategory->maxPrice }}" step="1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="">
+                    <div class="content-product">{{ __('home.ORIGIN') }}</div>
+                    <input type="text" value="" id="search-origin" onchange="searchOrigin(this)">
+                    <br>
+                    {{ __('home.Products by origin') }}
+                </div>
+            </div>
+        </div>
+        <div class="category-body container-fluid">
+            <div class="card">
+
                 <!-- Tab panes -->
                 <div class="tab-content col-md-9">
                     <div id="home" class="tab-pane active "><br>
@@ -231,6 +261,8 @@
             </div>
         </div>
     </div>
+    <hr>
+
 </div>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>

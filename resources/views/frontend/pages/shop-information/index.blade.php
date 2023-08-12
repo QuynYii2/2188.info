@@ -353,7 +353,9 @@
         max-height: 6em;
         overflow: hidden;
     }
-
+    .productView-description {
+        width: 100%;
+    }
 </style>
 
 @extends('frontend.layouts.master')
@@ -531,7 +533,7 @@
         </div>
         <div class="container-fluid">
             <div class="row">
-                <div class="row">
+
                     <div class="productView-description">
                         <ul class="nav nav-tabs container-fluid pt-4" id="myTab" role="tablist">
                             <li class="nav-item">
@@ -553,7 +555,6 @@
                                 @php
                                     $shopInformation = \App\Models\ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first()
                                 @endphp
-                                @dd($shopInformation)
                                 @if($shopInformation)
                                     <div class="content" id="content2">@include('frontend.pages.shop-information.tabs_shop_info')</div>
                                     <button id="toggleBtn2" class="toggleBtn" onclick="toggleContent('content2', 'toggleBtn2')">{{ __('home.Show More') }}</button>
@@ -567,7 +568,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+
             </div>
         </div>
     </div>
