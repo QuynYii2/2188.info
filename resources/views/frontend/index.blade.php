@@ -562,7 +562,7 @@
                             _token: '{{ csrf_token() }}'
                         },
                         success: function (response) {
-                            alert('Sản phẩm đã được thêm vào danh sách yêu thích.')
+                            alert(response.message);
                         },
                         error: function (exception) {
                             // console.log(exception)
