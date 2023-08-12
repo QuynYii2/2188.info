@@ -38,12 +38,13 @@ class WishListController extends Controller
             $productId = $request->input('idProduct');
             $userId = Auth::user()->id;
 
-            $existingWishList = WishList::where('user_id', $userId)
-                ->where('product_id', $productId)
-                ->first();
+            $existingWishList = WishList::where([
+                'user_id' => $userId,
+                'product_id' => $productId
+            ])->get();
 
             if ($existingWishList) {
-                exit();
+                dd($existingWishList);
                 return response()->json(['message' => 'Sản phẩm này đã có trong danh sách yêu thích của bạn'], 200);
             }
 
