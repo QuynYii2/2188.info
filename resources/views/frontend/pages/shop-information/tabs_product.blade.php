@@ -377,7 +377,7 @@
 <script>
 
     $(document).ready(function ($) {
-        $(".quickView").click(function () {
+        $(".text-new").click(function () {
             debugger;
 
             $('#renderProductImage').removeClass('d-none');
