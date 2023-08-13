@@ -551,7 +551,7 @@
             $(document).ready(function ($) {
                 $(".card-bottom--right").click(function () {
                     var idProduct = $(this).attr('id-product');
-                    // console.log(idProduct)
+                    console.log(idProduct)
 
                     $.ajax({
                         url: '{{route('user.wish.lists')}}',
@@ -562,7 +562,7 @@
                             _token: '{{ csrf_token() }}'
                         },
                         success: function (response) {
-                            alert('Sản phẩm đã được thêm vào danh sách yêu thích.')
+                            alert(response.message);
                         },
                         error: function (exception) {
                             // console.log(exception)

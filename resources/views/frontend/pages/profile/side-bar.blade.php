@@ -47,14 +47,17 @@
 
 @php
     $member = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
-    if ($member){
-         $memberRegister = \App\Models\MemberRegisterInfo::find($member->member_id);
+
+    if ($member) {
+        $memberRegister = \App\Models\MemberRegisterInfo::find($member->member_id);
+
+        if ($member->status == \App\Enums\MemberRegisterPersonSourceStatus::ACTIVE) {
+            $check = 'pass';
+        }
+    } else {
+        $check = 'not_found';
     }
 
-    $check = null;
-    if ($member->status == \App\Enums\MemberRegisterPersonSourceStatus::ACTIVE){
-        $check = 'pass';
-    }
 @endphp
 
 <div class="border-end bg-white pt-1 desktop-button" id="sidebar-wrapper">

@@ -111,7 +111,7 @@ class ShopInformationController extends Controller
                 <div class="item-img">
                     <img src="' . asset('storage/' . $product['thumbnail']) . '" alt="">
                     <div class="button-view">
-                        <button class="quickView" data-value="' . $product['id'] . '">Quick view</button>
+                        <button class="quickView123" data-value="' . $product['id'] . '">Quick view3</button>
                     </div>
                     <div class="text">
                         <div class="text-sale">
