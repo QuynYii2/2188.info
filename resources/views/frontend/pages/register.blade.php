@@ -82,6 +82,9 @@
                         if(!$locale){
                             $locale == 'vn';
                         }
+                        if ($locale=='null'){
+                            $locale == 'vn';
+                        }
                     @endphp
                     @if($locale != 'vn')
                         <nav>
@@ -98,45 +101,55 @@
                         <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
                             <div class="tab-pane fade active show" id="nav-buyer" role="tabpanel"
                                  aria-labelledby="nav-buyer-tab">
-                                <form action="{{ route('register.store') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('register.store') }}" method="POST"
+                                      enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">
                                         <input type="text" name="type_account" value="buyer" hidden="">
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="text" class="form-control" name="name" id="name-buyer" value="{{ old('name') }}"
+                                            <input required type="text" class="form-control" name="name" id="name-buyer"
+                                                   value="{{ old('name') }}"
                                                    placeholder="{{ __('home.input name') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="number" class="form-control" name="phone" id="phone-buyer" value="{{ old('phone') }}"
+                                            <input required type="number" class="form-control" name="phone"
+                                                   id="phone-buyer" value="{{ old('phone') }}"
                                                    placeholder="{{ __('home.input phone') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="password" class="form-control" name="password" value="{{ old('password') }}"
+                                            <input required type="password" class="form-control" name="password"
+                                                   value="{{ old('password') }}"
                                                    id="password-buyer"
                                                    placeholder="{{ __('home.input password') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="email" class="form-control" name="email" id="email-buyer" value="{{ old('email') }}"
+                                            <input required type="email" class="form-control" name="email"
+                                                   id="email-buyer" value="{{ old('email') }}"
                                                    placeholder="{{ __('home.input email') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="text" class="form-control" name="address" value="{{ old('address') }}"
+                                            <input required type="text" class="form-control" name="address"
+                                                   value="{{ old('address') }}"
                                                    id="address-buyer"
                                                    placeholder="{{ __('home.input address') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="text" class="form-control" name="social_media" value="{{ old('social_media') }}"
+                                            <input required type="text" class="form-control" name="social_media"
+                                                   value="{{ old('social_media') }}"
                                                    placeholder="{{ __('home.input socialNetwork') }}">
                                         </div>
-                                        <div class="form-group col-md-6 col-12" >
+                                        <div class="form-group col-md-6 col-12">
                                             <div class="multiselect position-relative">
-                                                <div  class="selectBox" id="div-click" onclick="showCheckboxes()">
+                                                <div class="selectBox" id="div-click" onclick="showCheckboxes()">
                                                     <select>
-                                                        <option >Please select the type of product you are interested in</option>
+                                                        <option>Please select the type of product you are interested
+                                                            in
+                                                        </option>
                                                     </select>
-                                                    <div  class="overSelect"></div>
+                                                    <div class="overSelect"></div>
                                                 </div>
-                                                <div id="checkboxes" class="mt-1 position-absolute bg-white p-2" style="left:0; right: 0; z-index: 1; height: 30vh; overflow-y: auto">
+                                                <div id="checkboxes" class="mt-1 position-absolute bg-white p-2"
+                                                     style="left:0; right: 0; z-index: 1; height: 30vh; overflow-y: auto">
                                                     @foreach($categories as $category)
                                                         <label class="ml-2" for="category-{{$category->id}}">
                                                             <input type="checkbox" id="category-{{$category->id}}"
@@ -147,7 +160,8 @@
                                                         </label>
                                                     @endforeach
                                                 </div>
-                                                <input type="hidden" name="product_interested" value="category-{{$category->id}}">
+                                                <input type="hidden" name="product_interested"
+                                                       value="category-{{$category->id}}">
                                             </div>
                                         </div>
 
@@ -205,32 +219,39 @@
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="nav-seller" role="tabpanel" aria-labelledby="nav-seller-tab">
-                                <form action="{{ route('register.store') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('register.store') }}" method="POST"
+                                      enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">
                                         <input type="text" name="type_account" value="seller" hidden>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="text" class="form-control" name="name" id="name-seller" value="{{ old('name') }}"
+                                            <input required type="text" class="form-control" name="name"
+                                                   id="name-seller" value="{{ old('name') }}"
                                                    placeholder="{{ __('home.input name') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="number" class="form-control" name="phone" value="{{ old('phone') }}"
+                                            <input required type="number" class="form-control" name="phone"
+                                                   value="{{ old('phone') }}"
                                                    placeholder="{{ __('home.input phone') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="password" class="form-control" name="password" value="{{ old('password') }}"
+                                            <input required type="password" class="form-control" name="password"
+                                                   value="{{ old('password') }}"
                                                    placeholder="{{ __('home.input password') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="email" class="form-control" name="email" id="email-seller" value="{{ old('email') }}"
+                                            <input required type="email" class="form-control" name="email"
+                                                   id="email-seller" value="{{ old('email') }}"
                                                    placeholder="{{ __('home.input email') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="text" class="form-control" name="address" value="{{ old('address') }}"
+                                            <input required type="text" class="form-control" name="address"
+                                                   value="{{ old('address') }}"
                                                    placeholder="{{ __('home.input address') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="text" class="form-control" name="rental_code" value="{{ old('rental_code') }}"
+                                            <input required type="text" class="form-control" name="rental_code"
+                                                   value="{{ old('rental_code') }}"
                                                    placeholder="{{ __('home.input taxCode') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
@@ -252,20 +273,24 @@
                                             </select>
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="text" class="form-control" name="product_name" value="{{ old('product_name') }}"
+                                            <input required type="text" class="form-control" name="product_name"
+                                                   value="{{ old('product_name') }}"
                                                    placeholder="{{ __('home.input nameProduct') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input type="text" class="form-control" id="product_code" value="{{ old('product_code') }}"
+                                            <input type="text" class="form-control" id="product_code"
+                                                   value="{{ old('product_code') }}"
                                                    placeholder="{{ __('home.type product') }}" name="product_code">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
-                                            <input required type="text" class="form-control" name="social_media" value="{{ old('social_media') }}"
+                                            <input required type="text" class="form-control" name="social_media"
+                                                   value="{{ old('social_media') }}"
                                                    placeholder="{{ __('home.input socialNetwork') }}">
                                         </div>
                                         <div class="form-group col-md-6 col-12">
                                             <div class="multiselect position-relative">
-                                                <div class="selectBox" id="div-clickPersell" onclick="showCheckboxesPersell()">
+                                                <div class="selectBox" id="div-clickPersell"
+                                                     onclick="showCheckboxesPersell()">
                                                     <select>
                                                         <option>Select the book you want to register here!</option>
                                                     </select>
@@ -348,40 +373,48 @@
                                 <div class="row">
                                     <input type="text" name="type_account" value="buyer" hidden="">
                                     <div class="form-group col-md-6 col-12">
-                                        <input required type="text" class="form-control" name="name" id="name-buyer"  value="{{ old('name') }}"
+                                        <input required type="text" class="form-control" name="name" id="name-buyer"
+                                               value="{{ old('name') }}"
                                                placeholder="{{ __('home.input name') }}">
                                     </div>
                                     <div class="form-group col-md-6 col-12">
-                                        <input required type="number" class="form-control" name="phone" id="phone-buyer" value="{{ old('phone') }}"
+                                        <input required type="number" class="form-control" name="phone" id="phone-buyer"
+                                               value="{{ old('phone') }}"
                                                placeholder="{{ __('home.input phone') }}">
                                     </div>
                                     <div class="form-group col-md-6 col-12">
-                                        <input required type="password" class="form-control" name="password" value="{{ old('password') }}"
+                                        <input required type="password" class="form-control" name="password"
+                                               value="{{ old('password') }}"
                                                id="password-buyer"
                                                placeholder="{{ __('home.input password') }}">
                                     </div>
                                     <div class="form-group col-md-6 col-12">
-                                        <input required type="email" class="form-control" name="email" id="email-buyer" value="{{ old('email') }}"
+                                        <input required type="email" class="form-control" name="email" id="email-buyer"
+                                               value="{{ old('email') }}"
                                                placeholder="{{ __('home.input email') }}">
                                     </div>
                                     <div class="form-group col-md-6 col-12">
-                                        <input required type="text" class="form-control" name="address" value="{{ old('address') }}"
+                                        <input required type="text" class="form-control" name="address"
+                                               value="{{ old('address') }}"
                                                id="address-buyer"
                                                placeholder="{{ __('home.input address') }}">
                                     </div>
                                     <div class="form-group col-md-6 col-12">
-                                        <input required type="text" class="form-control" name="social_media" value="{{ old('social_media') }}"
+                                        <input required type="text" class="form-control" name="social_media"
+                                               value="{{ old('social_media') }}"
                                                placeholder="{{ __('home.input socialNetwork') }}">
                                     </div>
-                                    <div class="form-group col-md-6 col-12" >
+                                    <div class="form-group col-md-6 col-12">
                                         <div class="multiselect position-relative">
-                                            <div  class="selectBox" id="div-click" onclick="showCheckboxes()">
+                                            <div class="selectBox" id="div-click" onclick="showCheckboxes()">
                                                 <select>
-                                                    <option >Please select the type of product you are interested in</option>
+                                                    <option>Please select the type of product you are interested in
+                                                    </option>
                                                 </select>
-                                                <div  class="overSelect"></div>
+                                                <div class="overSelect"></div>
                                             </div>
-                                            <div id="checkboxes" class="mt-1 position-absolute bg-white p-2" style="left:0; right: 0; z-index: 1; height: 30vh; overflow-y: auto">
+                                            <div id="checkboxes" class="mt-1 position-absolute bg-white p-2"
+                                                 style="left:0; right: 0; z-index: 1; height: 30vh; overflow-y: auto">
                                                 @foreach($categories as $category)
                                                     <label class="ml-2" for="category-{{$category->id}}">
                                                         <input type="checkbox" id="category-{{$category->id}}"
@@ -392,7 +425,8 @@
                                                     </label>
                                                 @endforeach
                                             </div>
-                                            <input type="hidden" name="product_interested" value="category-{{$category->id}}">
+                                            <input type="hidden" name="product_interested"
+                                                   value="category-{{$category->id}}">
                                         </div>
                                     </div>
 
