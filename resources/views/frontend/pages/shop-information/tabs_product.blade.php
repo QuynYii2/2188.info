@@ -1,58 +1,7 @@
-<style>
-    .checkbox-sale {
-        font-size: 15px;
-    }
-
-    .category-header--left {
-        /* font-size: 18px; */
-        font-size: 15px;
-    }
-
-    .content-product {
-        font-size: 20px;
-        font-weight: bold;
-        margin-top: 37px;
-    }
-
-    .container-right {
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    .tab-content.col-md-9 {
-        padding-top: 0px;
-        max-width: 100%;
-    }
-</style>
 <div id="body-content">
-    <div class="container-right">
-        <div class="category-header--right">
-            <div class="show-item mr-4 align-items-center">
-                <span class="mr-3">{{ __('home.Show') }}</span>
-                <select class="drop btn dropdown-toggle" id="count-per-page" aria-label="Default select example">
-                    <option selected value="10">{{ __('home.10 products per page') }}</option>
-                    <option value="20">{{ __('home.20 products per page') }}</option>
-                    <option value="30">{{ __('home.30 products per page') }}</option>
-                    <option value="40">{{ __('home.40 products per page') }}</option>
-                    <option value="50">{{ __('home.50 products per page') }}</option>
-                </select>
-            </div>
-            <div class="SortBy align-items-center mr-4">
-                <span class="mr-3">{{ __('home.Sort By') }}</span>
-                <select class="drop btn dropdown-toggle" id="sort-by" aria-label="Default select example">
-                    <option value="created_at desc" selected>{{ __('home.Newest Items') }}</option>
-                    <option value="name asc">{{ __('home.Name: A to Z') }}</option>
-                    <option value="name desc">{{ __('home.Name: Z to A') }}</option>
-                    <option value="price asc">{{ __('home.Price: Ascending') }}</option>
-                    <option value="price desc">{{ __('home.Price: Descending') }}</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <hr>
-    <div class="category-header mt-4 mb-3 d-flex justify-content-between">
-        <div class="category-header--left col-xl-2">
-            <div class=" justify-content-between align-items-center">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="category-header--left mr-3">
+            <div class="d-flex justify-content-between align-items-center">
                 <div class="checkbox-sale">
                     <input type="checkbox" value="" id="check_sale"
                            onchange="checkSale(this)">{{ __('home.Products on sale') }}
@@ -97,9 +46,32 @@
                 </div>
             </div>
         </div>
+        <div class="category-header--right">
+            <div class="show-item mr-4 align-items-center">
+                <span class="mr-3">{{ __('home.Show') }}</span>
+                <select class="drop btn dropdown-toggle" id="count-per-page" aria-label="Default select example">
+                    <option selected value="10">{{ __('home.10 products per page') }}</option>
+                    <option value="20">{{ __('home.20 products per page') }}</option>
+                    <option value="30">{{ __('home.30 products per page') }}</option>
+                    <option value="40">{{ __('home.40 products per page') }}</option>
+                    <option value="50">{{ __('home.50 products per page') }}</option>
+                </select>
+            </div>
+            <div class="SortBy align-items-center mr-4">
+                <span class="mr-3">{{ __('home.Sort By') }}</span>
+                <select class="drop btn dropdown-toggle" id="sort-by" aria-label="Default select example">
+                    <option value="created_at desc" selected>{{ __('home.Newest Items') }}</option>
+                    <option value="name asc">{{ __('home.Name: A to Z') }}</option>
+                    <option value="name desc">{{ __('home.Name: Z to A') }}</option>
+                    <option value="price asc">{{ __('home.Price: Ascending') }}</option>
+                    <option value="price desc">{{ __('home.Price: Descending') }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="category-header mt-4 mb-3 d-flex justify-content-between">
         <div class="category-body container-fluid">
-            <div class="card">
-
+            <div class="row">
                 <!-- Tab panes -->
                 <div class="tab-content col-md-9">
                     <div id="home" class="tab-pane active "><br>
@@ -262,15 +234,7 @@
         </div>
     </div>
     <hr>
-    <button value="1111" class="test">Test click event</button>
 </div>
-<script>
-    $(document).ready(function ($) {
-        $('.test').click(function (){
-            console.log(1111666);
-        });
-    })
-</script>
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script>
     function responsiveTable(y) {
@@ -381,38 +345,32 @@
     });
 
 </script>
-<script>
-
-    $(document).ready(function ($) {
-        $(".quickView123").click(function () {
-            debugger;
-
-            $('#renderProductImage').removeClass('d-none');
-            $('#renderListImage').empty()
-            let productID = $(this).data('value');
-            let url = $('#urlImage').val();
-            console.log('111')
-            let thumbnail = $('#productThumbnail' + productID).val()
-            $('#productThumbnail').attr('src', url + '/' + thumbnail);
-            let gallery = $('#productGallery' + productID).val()
-            let arrayImage = gallery.split(',');
-            let galleryImage = '';
-            console.log('222')
-            let script = '<script>$(document).ready(function () {' +
-                '$(".imgGalleryItem").on("click", function () { ' +
-                '$("#productThumbnail").attr("src", $(this).attr("src"));' +
-                '})' +
-                '})';
-            for (let i = 0; i < arrayImage.length; i++) {
-                let urlImage = url + '/';
-                let listImage = `<li class="image-item"><img class="imgGalleryItem" alt="" src="${urlImage + arrayImage[i]}"></li>`
-                galleryImage = galleryImage + listImage;
-            }
-            console.log('end')
-            $('#renderListImage').append(galleryImage + script);
-        })
-    })
-</script>
+{{--<script>--}}
+{{--    $(document).ready(function () {--}}
+{{--        $('.quickView').click(function () {--}}
+{{--            $('#renderProductImage').removeClass('d-none');--}}
+{{--            $('#renderListImage').empty()--}}
+{{--            let productID = $(this).data('value');--}}
+{{--            let url = $('#urlImage').val();--}}
+{{--            let thumbnail = $('#productThumbnail' + productID).val()--}}
+{{--            $('#productThumbnail').attr('src', url + '/' + thumbnail);--}}
+{{--            let gallery = $('#productGallery' + productID).val()--}}
+{{--            let arrayImage = gallery.split(',');--}}
+{{--            let galleryImage = '';--}}
+{{--            let script = '<script>$(document).ready(function () {' +--}}
+{{--                '$(".imgGalleryItem").on("click", function () { ' +--}}
+{{--                '$("#productThumbnail").attr("src", $(this).attr("src"));' +--}}
+{{--                '})' +--}}
+{{--                '})';--}}
+{{--            for (let i = 0; i < arrayImage.length; i++) {--}}
+{{--                let urlImage = url + '/';--}}
+{{--                let listImage = `<li class="image-item"><img class="imgGalleryItem" alt="" src="${urlImage + arrayImage[i]}"></li>`--}}
+{{--                galleryImage = galleryImage + listImage;--}}
+{{--            }--}}
+{{--            $('#renderListImage').append(galleryImage + script);--}}
+{{--        })--}}
+{{--    })--}}
+{{--</script>--}}
 <script>
     let sortBy = '';
     let countPerPage = '';
@@ -487,6 +445,29 @@
                 console.log(exception)
             }
         });
+    }
+
+    function clickImage(productID) {
+        $('#renderProductImage').removeClass('d-none');
+        $('#renderListImage').empty()
+        // let productID = $(this).data('value');
+        let url = $('#urlImage').val();
+        let thumbnail = $('#productThumbnail' + productID).val()
+        $('#productThumbnail').attr('src', url + '/' + thumbnail);
+        let gallery = $('#productGallery' + productID).val();
+        let arrayImage = gallery.split(',');
+        let galleryImage = '';
+        let script = '<script>$(document).ready(function () {' +
+            '$(".imgGalleryItem").on("click", function () { ' +
+            '$("#productThumbnail").attr("src", $(this).attr("src"));' +
+            '})' +
+            '})';
+        for (let i = 0; i < arrayImage.length; i++) {
+            let urlImage = url + '/';
+            let listImage = `<li class="image-item"><img class="imgGalleryItem" alt="" src="${urlImage + arrayImage[i]}"></li>`
+            galleryImage = galleryImage + listImage;
+        }
+        $('#renderListImage').append(galleryImage + script);
     }
 
     function handleSortBy() {

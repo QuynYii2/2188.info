@@ -553,20 +553,20 @@
                             <i class="fa-solid fa-headset"></i>
                             <span>{{ __('home.Help') }}</span>
                         </div>
-                        <div class="d-flex">
-                            <div class="header-bottom-left--item item-left--vi ">
-                                <a href="{{ route('language', ['locale' => 'vi']) }}"></a>
-                            </div>
-                            <div class="header-bottom-left--item item-left--cn">
-                                <a href="{{ route('language', ['locale' => 'cn']) }}"></a>
-                            </div>
-                            <div class="header-bottom-left--item item-left--kr">
-                                <a href="{{ route('language', ['locale' => 'kr']) }}"></a>
-                            </div>
-                            <div class="header-bottom-left--item item-left--jp">
-                                <a href="{{ route('language', ['locale' => 'jp']) }}"></a>
-                            </div>
-                        </div>
+{{--                        <div class="d-flex">--}}
+{{--                            <div class="header-bottom-left--item item-left--vi ">--}}
+{{--                                <a href="{{ route('language', ['locale' => 'vi']) }}"></a>--}}
+{{--                            </div>--}}
+{{--                            <div class="header-bottom-left--item item-left--cn">--}}
+{{--                                <a href="{{ route('language', ['locale' => 'cn']) }}"></a>--}}
+{{--                            </div>--}}
+{{--                            <div class="header-bottom-left--item item-left--kr">--}}
+{{--                                <a href="{{ route('language', ['locale' => 'kr']) }}"></a>--}}
+{{--                            </div>--}}
+{{--                            <div class="header-bottom-left--item item-left--jp">--}}
+{{--                                <a href="{{ route('language', ['locale' => 'jp']) }}"></a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                     </div>
                 </div>
             </div>
