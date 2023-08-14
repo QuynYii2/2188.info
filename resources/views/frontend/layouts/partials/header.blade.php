@@ -172,6 +172,9 @@
                                         if(!$locale){
                                             $locale == 'vn';
                                         }
+                                        if($locale == 'null'){
+                                            $locale == 'vn';
+                                        }
                                     @endphp
                                     @if($isAdmin == true & $locale != 'vn')
                                         <div class="drop-item">
