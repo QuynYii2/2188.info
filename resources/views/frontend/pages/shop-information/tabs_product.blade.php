@@ -1,14 +1,14 @@
 <div id="body-content">
-    <div class="d-flex justify-content-between align-items-center">
-        <div class="category-header--left mr-3">
+
+    <div class="category-header align-items-center mb-3 container-fluid d-flex justify-content-between">
+        <div class="category-header--left">
             <div class="d-flex justify-content-between align-items-center">
-                <div class="checkbox-sale">
-                    <input type="checkbox" value="" id="check_sale"
-                           onchange="checkSale(this)">{{ __('home.Products on sale') }}
-                </div>
-                <hr>
                 <div class="">
-                    <div class="content-product">{{ __('home.PRICE') }}</div>
+                    <input type="checkbox" value="" id="check_sale"
+                           onchange="checkSale(this)"> {{ __('home.Products on sale') }}
+                </div>
+                <div class="price-range">
+                    <div class="content text-align">{{ __('home.PRICE') }}</div>
                     <div class="category-price">
                         <div class="wrapper">
                             <div class="price-input d-flex">
@@ -26,7 +26,6 @@
                             <div class="slider">
                                 <div class="progress"></div>
                             </div>
-
                             <div class="range-input">
                                 <input type="range" class="range-min" min="0"
                                        max="{{ $priceProductOfCategory->maxPrice }}" value="0" step="1">
@@ -37,12 +36,10 @@
                         </div>
                     </div>
                 </div>
-                <hr>
-                <div class="">
-                    <div class="content-product">{{ __('home.ORIGIN') }}</div>
-                    <input type="text" value="" id="search-origin" onchange="searchOrigin(this)">
-                    <br>
-                    {{ __('home.Products by origin') }}
+                <div class="check-origin">
+                    <div class="content">{{ __('home.ORIGIN') }}</div>
+                    <input type="text" value="" id="search-origin"
+                           onchange="searchOrigin(this)"><br>{{ __('home.Products by origin') }}
                 </div>
             </div>
         </div>
@@ -69,8 +66,9 @@
             </div>
         </div>
     </div>
-    <div class="category-header mt-4 mb-3 d-flex justify-content-between">
-        <div class="category-body container-fluid">
+    <hr>
+    <div class="category-body container-fluid">
+        <div class="card">
             <div class="row">
                 <!-- Tab panes -->
                 <div class="tab-content col-md-9">
@@ -83,7 +81,7 @@
                                             <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                                  alt="">
                                             <div class="button-view">
-                                                <button class="quickView" data-value="{{$product}}">Quick view2</button>
+                                                <button class="quickView" data-value="{{$product}}">Quick view</button>
                                             </div>
                                             <div class="text">
                                                 <div class="text-sale">
@@ -233,9 +231,8 @@
             </div>
         </div>
     </div>
-    <hr>
 </div>
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function responsiveTable(y) {
         let tabs = document.getElementsByClassName('product-map');
@@ -345,32 +342,34 @@
     });
 
 </script>
-{{--<script>--}}
-{{--    $(document).ready(function () {--}}
-{{--        $('.quickView').click(function () {--}}
-{{--            $('#renderProductImage').removeClass('d-none');--}}
-{{--            $('#renderListImage').empty()--}}
-{{--            let productID = $(this).data('value');--}}
-{{--            let url = $('#urlImage').val();--}}
-{{--            let thumbnail = $('#productThumbnail' + productID).val()--}}
-{{--            $('#productThumbnail').attr('src', url + '/' + thumbnail);--}}
-{{--            let gallery = $('#productGallery' + productID).val()--}}
-{{--            let arrayImage = gallery.split(',');--}}
-{{--            let galleryImage = '';--}}
-{{--            let script = '<script>$(document).ready(function () {' +--}}
-{{--                '$(".imgGalleryItem").on("click", function () { ' +--}}
-{{--                '$("#productThumbnail").attr("src", $(this).attr("src"));' +--}}
-{{--                '})' +--}}
-{{--                '})';--}}
-{{--            for (let i = 0; i < arrayImage.length; i++) {--}}
-{{--                let urlImage = url + '/';--}}
-{{--                let listImage = `<li class="image-item"><img class="imgGalleryItem" alt="" src="${urlImage + arrayImage[i]}"></li>`--}}
-{{--                galleryImage = galleryImage + listImage;--}}
-{{--            }--}}
-{{--            $('#renderListImage').append(galleryImage + script);--}}
-{{--        })--}}
-{{--    })--}}
-{{--</script>--}}
+<script>
+    $(document).ready(function () {
+        $('.quickView').on('click', function () {
+            $('#renderProductImage').removeClass('d-none');
+            $('#renderListImage').empty()
+            let productID = $(this).data('value');
+            let url = $('#urlImage').val();
+            //productThumbnail
+            //productGallery
+            let thumbnail = $('#productThumbnail' + productID).val()
+            $('#productThumbnail').attr('src', url + '/' + thumbnail);
+            let gallery = $('#productGallery' + productID).val()
+            let arrayImage = gallery.split(',');
+            let galleryImage = '';
+            let script = '<script>$(document).ready(function () {' +
+                '$(".imgGalleryItem").on("click", function () { ' +
+                '$("#productThumbnail").attr("src", $(this).attr("src"));' +
+                '})' +
+                '})';
+            for (let i = 0; i < arrayImage.length; i++) {
+                let urlImage = url + '/';
+                let listImage = `<li class="image-item"><img class="imgGalleryItem" alt="" src="${urlImage + arrayImage[i]}"></li>`
+                galleryImage = galleryImage + listImage;
+            }
+            $('#renderListImage').append(galleryImage + script);
+        })
+    })
+</script>
 <script>
     let sortBy = '';
     let countPerPage = '';
@@ -445,29 +444,6 @@
                 console.log(exception)
             }
         });
-    }
-
-    function clickImage(productID) {
-        $('#renderProductImage').removeClass('d-none');
-        $('#renderListImage').empty()
-        // let productID = $(this).data('value');
-        let url = $('#urlImage').val();
-        let thumbnail = $('#productThumbnail' + productID).val()
-        $('#productThumbnail').attr('src', url + '/' + thumbnail);
-        let gallery = $('#productGallery' + productID).val();
-        let arrayImage = gallery.split(',');
-        let galleryImage = '';
-        let script = '<script>$(document).ready(function () {' +
-            '$(".imgGalleryItem").on("click", function () { ' +
-            '$("#productThumbnail").attr("src", $(this).attr("src"));' +
-            '})' +
-            '})';
-        for (let i = 0; i < arrayImage.length; i++) {
-            let urlImage = url + '/';
-            let listImage = `<li class="image-item"><img class="imgGalleryItem" alt="" src="${urlImage + arrayImage[i]}"></li>`
-            galleryImage = galleryImage + listImage;
-        }
-        $('#renderListImage').append(galleryImage + script);
     }
 
     function handleSortBy() {

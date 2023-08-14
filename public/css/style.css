@@ -1810,7 +1810,16 @@ a {
 }
 
 .category-header--left {
-  font-size: 18px;
+  font-size: 14px;
+}
+.category-header--left .price-range {
+  padding: 0 5%;
+}
+.category-header--left .price-range .text-align {
+  text-align: center;
+}
+.category-header--left .check-origin {
+  margin-right: 15px;
 }
 .category-header--left a {
   color: gray;

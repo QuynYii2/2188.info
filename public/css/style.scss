@@ -2180,7 +2180,16 @@ a {
 
 .category-header{
   &--left{
-    font-size: 18px;
+    font-size: 14px;
+    .price-range{
+      padding: 0 5%;
+      .text-align {
+        text-align: center;
+      }
+    }
+    .check-origin {
+      margin-right: 15px;
+    }
     a{
       color: gray;
     }
