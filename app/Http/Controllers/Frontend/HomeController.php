@@ -14,6 +14,7 @@ use App\Enums\StatisticStatus;
 use App\Enums\TopSellerConfigLocation;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\TranslateController;
 use App\Libraries\GeoIP;
 use App\Models\Banner;
 use App\Models\Category;
@@ -214,7 +215,6 @@ class HomeController extends Controller
     }
 
 
-
     public function notifiCreate($id, $content, $desc)
     {
         $noti = [
@@ -293,13 +293,13 @@ class HomeController extends Controller
                             $email = $companyArray[0];
                             $companyName = $companyArray[1];
                             $companyCode = $companyArray[2];
-                            if (count($companyArray) > 3){
+                            if (count($companyArray) > 3) {
                                 $companyTEL = $companyArray[3];
                             }
-                            if (count($companyArray) > 4){
+                            if (count($companyArray) > 4) {
                                 $companyFAX = $companyArray[4];
                             }
-                            if (count($companyArray) > 5){
+                            if (count($companyArray) > 5) {
                                 $companyAddress = $companyArray[5];
                             }
 
@@ -319,6 +319,11 @@ class HomeController extends Controller
                                 $companyAddress = 'default';
                             }
 
+                            $language = (new TranslateController())->detectLanguage($companyAddress);
+                            if ($language == '') {
+                                $language = 'vi';
+                            }
+
                             $oldUser = User::where('email', $email)->first();
                             if (!$oldUser) {
                                 $newUser = new User();
@@ -326,7 +331,7 @@ class HomeController extends Controller
                                 $newUser->email = $email;
                                 $newUser->phone = $companyTEL;
                                 $newUser->address = "default address";
-                                $newUser->region = "vi";
+                                $newUser->region = $language;
                                 $newUser->password = $passwordHash;
                                 $newUser->type_account = "seller";
                                 $newUser->email_verified_at = now();
