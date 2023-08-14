@@ -370,8 +370,8 @@ $color-main: #fd6506;
 }
 .margin-layout-index {
   max-width: 100%;
-  padding-left: 7%;
-  padding-right: 7%;
+  //padding-left: 7%;
+  //padding-right: 7%;
 }
 
 .detail{
@@ -2333,6 +2333,7 @@ hr{
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
+
   }
 
   .product-banner {

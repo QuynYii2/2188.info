@@ -327,24 +327,25 @@
                 <div class="swiper-button-prev"></div>
             </div>
         </section>
-        <div class="section row margin-layout-index">
-            <div class="col-md-3 col-xl-2 pt-3 pb-3">
-                @php
-                    $listCate = DB::table('categories')->where('parent_id', null)->get();
-                @endphp
-                @for($i=0; $i<9; $i++)
-                    <div class="section-left">
-                        <a href="{{ route('category.show', $listCate[$i]->id) }}">
-                            <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
-                                 alt="">
-                            <div class="section-left--name">
-                                {{$listCate[$i] -> name}}
-                            </div>
+        <div class="section margin-layout-index container-fluid">
+            <div class="row">
+                <div class="col-md-3 col-xl-2 pt-3 pb-3">
+                    @php
+                        $listCate = DB::table('categories')->where('parent_id', null)->get();
+                    @endphp
+                    @for($i=0; $i<8; $i++)
+                        <div class="section-left item-img">
+                            <a href="{{ route('category.show', $listCate[$i]->id) }}">
+                                <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
+                                     alt="">
+                                <div class="section-left--name">
+                                    {{$listCate[$i] -> name}}
+                                </div>
                         </a>
                     </div>
                 @endfor
             </div>
-            <div class="col-12 col-md-9 col-xl-8">
+                <div class="col-12 col-md-9 col-xl-8">
                 <div class="category-img section pt-3 pb-3 container-fluid">
                     <div class="category-img">
                         @if($locale == 'vi')
@@ -422,7 +423,7 @@
                     @endif
                 @endforeach
             </div>
-            <div class="col-md-3 col-xl-2 pt-3 pb-3">
+                <div class="col-md-3 col-xl-2 pt-3 pb-3">
                 @php
                     $listCate = DB::table('categories')->where('parent_id', null)->get();
                 @endphp
@@ -430,7 +431,7 @@
                     @if ($cate < 8)
                         @continue
                     @endif
-                    <div class="section-left">
+                    <div class="section-left item-img">
                         <a href="{{ route('category.show', $cate_info->id) }}">
                             <img src="{{ asset('storage/' . $cate_info->thumbnail) }}"
                                  alt="">
@@ -440,6 +441,7 @@
                         </a>
                     </div>
                 @endforeach
+            </div>
             </div>
         </div>
         <section class="section-Seven ">
