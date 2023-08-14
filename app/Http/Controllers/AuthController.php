@@ -198,7 +198,6 @@ class AuthController extends Controller
     }
 
     //Register member
-
     /*Show all hội viên*/
     public function processRegisterMember(Request $request)
     {
@@ -223,12 +222,12 @@ class AuthController extends Controller
         ));
     }
 
-
     public function getListNation()
     {
         $listNation = DB::table('countries')->get(['name', 'iso2']);
         return response()->json($listNation);
     }
+
     public function getListStateByNation($id)
     {
         $listState = DB::table('states')
@@ -236,6 +235,7 @@ class AuthController extends Controller
             ->get(['name', 'state_code']);
         return response()->json($listState);
     }
+
     public function getListCityByState($id, $code)
     {
         $listCity = DB::table('cities')
@@ -243,6 +243,7 @@ class AuthController extends Controller
             ->get(['name', 'city_code']);
         return response()->json($listCity);
     }
+
     public function getListWardByCity($id, $code)
     {
         $listWard = DB::table('wards')
@@ -275,9 +276,14 @@ class AuthController extends Controller
             $registerMember = $request->input('member');
 
             $arrayIds = $this->getArrayIds($request);
-            try {
-                $listIDs = implode(',', $arrayIds);
-            } catch (\Exception $exception) {
+            if ($arrayIds) {
+                try {
+                    $listIDs = implode(',', $arrayIds);
+                } catch (\Exception $exception) {
+                    alert()->error('Error', 'Error, Please choosing your apply!');
+                    return back();
+                }
+            } else {
                 alert()->error('Error', 'Error, Please choosing your apply!');
                 return back();
             }
@@ -344,8 +350,6 @@ class AuthController extends Controller
 
             $data = array('mail' => $email, 'name' => $email, 'code' => $code);
 
-            $this->sendMail($data, $email);
-
             $id = 0;
 
             $newID = (integer)$member;
@@ -390,7 +394,7 @@ class AuthController extends Controller
                 alert()->error('Error', 'Error, Email in member used!');
                 return back();
             }
-
+            $this->sendMail($data, $email);
             $this->createUser($fullName, $email, $phoneNumber, $password);
 
             $success = MemberRegisterPersonSource::create($create);
@@ -440,8 +444,6 @@ class AuthController extends Controller
 
             $data = array('mail' => $email, 'name' => $email, 'code' => $code);
 
-            $this->sendMail($data, $email);
-
             $id = 0;
 
             $memberBefore = MemberRegisterPersonSource::where('id', $personSource)->first();
@@ -475,7 +477,7 @@ class AuthController extends Controller
                 alert()->error('Error', 'Error, Email in member used!');
                 return back();
             }
-
+            $this->sendMail($data, $email);
             $this->createUser($fullName, $email, $phoneNumber, $password);
 
             $success = MemberRegisterPersonSource::create($create);
@@ -637,9 +639,8 @@ class AuthController extends Controller
                 }
             }
         }
-        if ($arrayIds == null) {
-            alert()->error('Error', 'Error, Please choosing your apply!');
-            return back();
+        if (!$arrayIds) {
+            return null;
         }
         return $arrayIds;
     }

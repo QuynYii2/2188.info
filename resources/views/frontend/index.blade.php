@@ -386,9 +386,9 @@
                     @if($keys != $locale)
                         <div class="category-img section pt-3 pb-3 container-fluid">
                             @if($keys == 'vi')
-                                <div class="content ">Viet Nam
+                                <div class="content ">Japan
                                     <img class="flag-ct"
-                                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
+                                         src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
                                 </div>
                             @elseif($keys == 'kr')
                                 <div class="content ">Korea
@@ -401,9 +401,9 @@
                                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
                                 </div>
                             @else
-                                <div class="content ">Japan
+                                <div class="content ">Viet Nam
                                     <img class="flag-ct"
-                                         src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
+                                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
                                 </div>
                             @endif
                             <div class="swiper listProduct">
