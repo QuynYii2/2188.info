@@ -95,6 +95,15 @@ class AuthController extends Controller
             return back();
         }
 
+        $locale = $this->getLocale($request);
+
+        if ($locale != 'en') {
+            if ($user->region != $locale) {
+                toast('Tài khoản của bạn không dành cho khu vực này. Vui lòng chọn khu vực khách phù hợp', 'error', 'top-right');
+                return back();
+            }
+        }
+
         if (Auth::attempt($credentials)) {
             $request->session()->put('login', $loginField);
             $login = $request->session()->get('login');
@@ -681,5 +690,16 @@ class AuthController extends Controller
             'role_id' => 2,
             'user_id' => $newUser->id
         ]);
+    }
+
+    private function getLocale(Request $request)
+    {
+        $ipAddress = $request->ip();
+        $geoIp = new GeoIP();
+        $locale = $geoIp->get_country_from_ip($ipAddress);
+        if ($locale !== null && is_array($locale)) {
+            $locale = $locale['countryCode'];
+        }
+        return $locale;
     }
 }

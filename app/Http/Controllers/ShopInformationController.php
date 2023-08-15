@@ -29,10 +29,9 @@ class ShopInformationController extends Controller
             ->where('user_id', '=', $id)
             ->first();
 
-        $shopInformation = ShopInfo::all();
+        $shopInformation = ShopInfo::where('user_id', $id)->first();
         $listVouchers = Voucher::where('user_id', '=', $id)->get();
         return view('frontend/pages/shop-information/index', compact('listProduct', 'priceProductOfCategory', 'sellerInfo', 'countProductBySeller', 'listVouchers', 'shopInformation'));
-
     }
 
 
