@@ -214,7 +214,6 @@ class HomeController extends Controller
     }
 
 
-
     public function notifiCreate($id, $content, $desc)
     {
         $noti = [
@@ -251,6 +250,32 @@ class HomeController extends Controller
             }
         }
         return $isAdmin;
+    }
+
+    public function checkSellerOrAdmin()
+    {
+        $user = Auth::user();
+        $isValid = false;
+        $roles = $user->roles;
+        $roleNames = $roles->pluck('name');
+        if ($roleNames->contains('seller') || $roleNames->contains('super_admin')) {
+            $isValid = true;
+        }
+        return $isValid;
+    }
+
+    public function checkMember()
+    {
+        $user = Auth::user();
+        $isMember = false;
+        $member = MemberRegisterPersonSource::where([
+            ['user_id', $user->id],
+            ['status', MemberRegisterPersonSourceStatus::ACTIVE]
+        ])->first();
+        if ($member) {
+            $isMember = true;
+        }
+        return $isMember;
     }
 
     public function createStatistic()
@@ -293,13 +318,13 @@ class HomeController extends Controller
                             $email = $companyArray[0];
                             $companyName = $companyArray[1];
                             $companyCode = $companyArray[2];
-                            if (count($companyArray) > 3){
+                            if (count($companyArray) > 3) {
                                 $companyTEL = $companyArray[3];
                             }
-                            if (count($companyArray) > 4){
+                            if (count($companyArray) > 4) {
                                 $companyFAX = $companyArray[4];
                             }
-                            if (count($companyArray) > 5){
+                            if (count($companyArray) > 5) {
                                 $companyAddress = $companyArray[5];
                             }
 
