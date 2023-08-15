@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Member;
 
 use App\Enums\MemberRegisterInfoStatus;
+use App\Enums\MemberRegisterPersonSourceStatus;
 use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\HomeController;
@@ -27,6 +28,15 @@ class RegisterMemberController extends Controller
         $memberCompanys = MemberRegisterInfo::where('status', MemberRegisterInfoStatus::ACTIVE)->get();
 //        $products = Product::where([['user_id', Auth::user()->id], ['status', ProductStatus::ACTIVE]])->get();
 //        return view('frontend/pages/member/index', compact('products', 'memberCompany'));
+        $member = MemberRegisterPersonSource::where('user_id', Auth::user()->id)->first();
+        $check = null;
+        if ($member) {
+            $check = 'pass';
+        }
+        if (!$check) {
+            toast('Vui lòng đăng kí thành hội viên', 'error', 'top-right');
+            return redirect(route('process.register.member'));
+        }
         return view('frontend/pages/member/index', compact('memberCompanys'));
 //        } else {
 //            return back();

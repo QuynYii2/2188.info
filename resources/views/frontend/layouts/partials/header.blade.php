@@ -361,10 +361,6 @@
                                     <a href="{{route('register.show')}}" class="register">
                                         <button type="submit">{{ __('home.Create A New Account') }}</button>
                                     </a>
-                                    <a href="{{ route('process.register.member') }}" class="register">
-                                        <button class="mt-3"
-                                                type="submit">{{ __('home.Sign up for membership') }}</button>
-                                    </a>
                                 </div>
                             </div>
                             <div class="close-signMenu" onclick="closesignIn()"></div>
