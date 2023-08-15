@@ -393,6 +393,8 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::get('/statistic-revenues', [StatisticController::class, 'getStatisticRevenue'])->name('admin.statistic.revenues');
     Route::get('/statistic-users', [StatisticController::class, 'getStatisticUser'])->name('admin.statistic.users');
     Route::get('/statistic-shop', [StatisticShopController::class, 'getStatisticShops'])->name('shop.statistic.index');
+    // Product Shop
+    Route::get('/list-products-shop', [\App\Http\Controllers\ProductController::class, 'getListProductShop'])->name('shop.list.products');
     // Register member
     Route::get('/products-register-member', [RegisterMemberController::class, 'index'])->name('products.register.member.index');
     Route::post('/products-register-member', [RegisterMemberController::class, 'saveProduct'])->name('products.register.member.create');

@@ -16,7 +16,9 @@
         height: 30px;
         position: relative;
         background-size: 30px;
-        background-repeat: no-repeat;}
+        background-repeat: no-repeat;
+    }
+
     .header-bottom-left--item.item-left--cn a:before {
         display: block;
         content: '';
@@ -36,7 +38,8 @@
         height: 30px;
         position: relative;
         background-size: 30px;
-        background-repeat: no-repeat;}
+        background-repeat: no-repeat;
+    }
 
     .header-bottom-left--item.item-left--jp a:before {
         display: block;
@@ -46,7 +49,8 @@
         height: 30px;
         position: relative;
         background-size: 30px;
-        background-repeat: no-repeat;}
+        background-repeat: no-repeat;
+    }
 
 </style>
 
@@ -91,14 +95,16 @@
                                         $listCate = DB::table('categories')->where('parent_id', null)->get();
                                     @endphp
                                     @foreach($listCate as $cate)
-                                        <a class="item-hd dropdown-item " href="">-- {{($cate->{'name' . $langDisplay->getLangDisplay()})}}</a>
+                                        <a class="item-hd dropdown-item "
+                                           href="">-- {{($cate->{'name' . $langDisplay->getLangDisplay()})}}</a>
                                         @if(!$listCate->isEmpty())
                                             <ul class="hd_dropdown--right row">
                                                 @php
                                                     $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
                                                 @endphp
                                                 @foreach($listChild as $child)
-                                                    <a class="dropdown-item" href="">––– {{($child->{'name' . $langDisplay->getLangDisplay()})}}</a>
+                                                    <a class="dropdown-item"
+                                                       href="">––– {{($child->{'name' . $langDisplay->getLangDisplay()})}}</a>
                                                 @endforeach
                                             </ul>
                                         @endif
@@ -188,15 +194,19 @@
                                                 ['check', 1]
                                             ])->first();
                                         }
+
+                                        $isValid = (new \App\Http\Controllers\Frontend\HomeController())->checkSellerOrAdmin();
                                     @endphp
                                     @if($isMember)
                                         <div class="drop-item">
                                             <a href="{{ route('products.register.member.index') }}">Quản lí sản phẩm</a>
                                         </div>
                                     @endif
-                                    <div class="drop-item">
-                                        <a href="{{route('product.index')}}">{{ __('home.Shop') }}</a>
-                                    </div>
+                                    @if($isValid==true)
+                                        <div class="drop-item">
+                                            <a href="{{route('shop.list.products')}}">{{ __('home.Shop') }}</a>
+                                        </div>
+                                    @endif
                                     <div class="drop-item">
                                         <button onclick="logout()" href="">{{ __('home.Log out') }}</button>
                                     </div>
@@ -485,7 +495,8 @@
                                                                                         </div>
                                                                                         <div class="card-bottom d-flex justify-content-between">
                                                                                             <div class="card-bottom--left">
-                                                                                                <a href="{{route('detail_product.show', $product->id)}}">Choose Options</a>
+                                                                                                <a href="{{route('detail_product.show', $product->id)}}">Choose
+                                                                                                    Options</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
@@ -552,20 +563,20 @@
                             <i class="fa-solid fa-headset"></i>
                             <span>{{ __('home.Help') }}</span>
                         </div>
-{{--                        <div class="d-flex">--}}
-{{--                            <div class="header-bottom-left--item item-left--vi ">--}}
-{{--                                <a href="{{ route('language', ['locale' => 'vi']) }}"></a>--}}
-{{--                            </div>--}}
-{{--                            <div class="header-bottom-left--item item-left--cn">--}}
-{{--                                <a href="{{ route('language', ['locale' => 'cn']) }}"></a>--}}
-{{--                            </div>--}}
-{{--                            <div class="header-bottom-left--item item-left--kr">--}}
-{{--                                <a href="{{ route('language', ['locale' => 'kr']) }}"></a>--}}
-{{--                            </div>--}}
-{{--                            <div class="header-bottom-left--item item-left--jp">--}}
-{{--                                <a href="{{ route('language', ['locale' => 'jp']) }}"></a>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
+                        {{--                        <div class="d-flex">--}}
+                        {{--                            <div class="header-bottom-left--item item-left--vi ">--}}
+                        {{--                                <a href="{{ route('language', ['locale' => 'vi']) }}"></a>--}}
+                        {{--                            </div>--}}
+                        {{--                            <div class="header-bottom-left--item item-left--cn">--}}
+                        {{--                                <a href="{{ route('language', ['locale' => 'cn']) }}"></a>--}}
+                        {{--                            </div>--}}
+                        {{--                            <div class="header-bottom-left--item item-left--kr">--}}
+                        {{--                                <a href="{{ route('language', ['locale' => 'kr']) }}"></a>--}}
+                        {{--                            </div>--}}
+                        {{--                            <div class="header-bottom-left--item item-left--jp">--}}
+                        {{--                                <a href="{{ route('language', ['locale' => 'jp']) }}"></a>--}}
+                        {{--                            </div>--}}
+                        {{--                        </div>--}}
                     </div>
                 </div>
             </div>

@@ -264,7 +264,7 @@ return [
     'Help'=>'Hỗ trợ',
     'upgrade'=>'Nâng cấp',
     'Seller channel'=>'kênh người bán',
-    'Shop'=>'Cửa hàng',
+    'Shop'=>'Gian hàng',
     'Log out'=>'Đăng xuất',
     'Category'=>'Danh mục',
     'About Us'=>'Về chúng tôi',
