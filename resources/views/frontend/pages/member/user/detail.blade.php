@@ -160,7 +160,8 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form method="POST" action="{{route('member.registered.update')}}">
                 @csrf
@@ -175,20 +176,22 @@
                         <div class="form-group">
                             <label for="inputMember">Member</label>
                             <select id="inputMember" name="member" class="form-control">
-                                @if($member->member == \App\Enums\RegisterMember::VENDOR)
-                                    <option value="{{\App\Enums\RegisterMember::POWER_VENDOR}}">{{\App\Enums\RegisterMember::POWER_VENDOR}}</option>
-                                    <option value="{{\App\Enums\RegisterMember::PRODUCTION}}">{{\App\Enums\RegisterMember::PRODUCTION}}</option>
-                                    <option value="{{\App\Enums\RegisterMember::POWER_PRODUCTION}}">{{\App\Enums\RegisterMember::POWER_PRODUCTION}}</option>
-                                @elseif($member->member == \App\Enums\RegisterMember::POWER_VENDOR)
-                                    <option value="{{\App\Enums\RegisterMember::PRODUCTION}}">{{\App\Enums\RegisterMember::PRODUCTION}}</option>
-                                    <option value="{{\App\Enums\RegisterMember::POWER_PRODUCTION}}">{{\App\Enums\RegisterMember::POWER_PRODUCTION}}</option>
-                                @elseif($member->member == \App\Enums\RegisterMember::PRODUCTION)
-                                    <option value="{{\App\Enums\RegisterMember::POWER_PRODUCTION}}">{{\App\Enums\RegisterMember::POWER_PRODUCTION}}</option>
-                                @else
-                                    <option value="{{\App\Enums\RegisterMember::VENDOR}}">{{\App\Enums\RegisterMember::VENDOR}}</option>
-                                    <option value="{{\App\Enums\RegisterMember::POWER_VENDOR}}">{{\App\Enums\RegisterMember::POWER_VENDOR}}</option>
-                                    <option value="{{\App\Enums\RegisterMember::PRODUCTION}}">{{\App\Enums\RegisterMember::PRODUCTION}}</option>
-                                    <option value="{{\App\Enums\RegisterMember::POWER_PRODUCTION}}">{{\App\Enums\RegisterMember::POWER_PRODUCTION}}</option>
+                                @if($member)
+                                    @if($member->member == \App\Enums\RegisterMember::VENDOR)
+                                        <option value="{{\App\Enums\RegisterMember::POWER_VENDOR}}">{{\App\Enums\RegisterMember::POWER_VENDOR}}</option>
+                                        <option value="{{\App\Enums\RegisterMember::PRODUCTION}}">{{\App\Enums\RegisterMember::PRODUCTION}}</option>
+                                        <option value="{{\App\Enums\RegisterMember::POWER_PRODUCTION}}">{{\App\Enums\RegisterMember::POWER_PRODUCTION}}</option>
+                                    @elseif($member->member == \App\Enums\RegisterMember::POWER_VENDOR)
+                                        <option value="{{\App\Enums\RegisterMember::PRODUCTION}}">{{\App\Enums\RegisterMember::PRODUCTION}}</option>
+                                        <option value="{{\App\Enums\RegisterMember::POWER_PRODUCTION}}">{{\App\Enums\RegisterMember::POWER_PRODUCTION}}</option>
+                                    @elseif($member->member == \App\Enums\RegisterMember::PRODUCTION)
+                                        <option value="{{\App\Enums\RegisterMember::POWER_PRODUCTION}}">{{\App\Enums\RegisterMember::POWER_PRODUCTION}}</option>
+                                    @else
+                                        <option value="{{\App\Enums\RegisterMember::VENDOR}}">{{\App\Enums\RegisterMember::VENDOR}}</option>
+                                        <option value="{{\App\Enums\RegisterMember::POWER_VENDOR}}">{{\App\Enums\RegisterMember::POWER_VENDOR}}</option>
+                                        <option value="{{\App\Enums\RegisterMember::PRODUCTION}}">{{\App\Enums\RegisterMember::PRODUCTION}}</option>
+                                        <option value="{{\App\Enums\RegisterMember::POWER_PRODUCTION}}">{{\App\Enums\RegisterMember::POWER_PRODUCTION}}</option>
+                                    @endif
                                 @endif
                             </select>
                         </div>

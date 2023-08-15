@@ -97,20 +97,22 @@ class AuthController extends Controller
 
         $locale = $this->getLocale($request);
 
-        $role_id = DB::table('role_user')->where('user_id', $user->id)->get();
+        if ($user) {
+            $role_id = DB::table('role_user')->where('user_id', $user->id)->get();
 
-        $isAdmin = false;
-        foreach ($role_id as $item) {
-            if ($item->role_id == 1) {
-                $isAdmin = true;
+            $isAdmin = false;
+            foreach ($role_id as $item) {
+                if ($item->role_id == 1) {
+                    $isAdmin = true;
+                }
             }
-        }
 
-        if ($isAdmin == false) {
-            if ($locale != 'en') {
-                if ($user->region != $locale) {
-                    toast('Tài khoản của bạn không dành cho khu vực này. Vui lòng chọn khu vực khách phù hợp', 'error', 'top-right');
-                    return back();
+            if ($isAdmin == false) {
+                if ($locale != 'en') {
+                    if ($user->region != $locale) {
+                        toast('Tài khoản của bạn không dành cho khu vực này. Vui lòng chọn khu vực khách phù hợp', 'error', 'top-right');
+                        return back();
+                    }
                 }
             }
         }

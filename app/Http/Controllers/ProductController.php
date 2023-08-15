@@ -119,6 +119,16 @@ class ProductController extends Controller
         return response($variable, 200);
     }
 
+    public function getListProductShop(Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $products = Product::where([
+            ['user_id', Auth::user()->id],
+            ['status', ProductStatus::ACTIVE]
+        ])->orderBy('id', 'desc')->get();
+        return view('frontend.pages.profile.my-shop', compact('products'));
+    }
+
     private function findProduct($key, $text)
     {
         if ($key === 1) {
@@ -127,7 +137,7 @@ class ProductController extends Controller
             $product = Product::where('slug', $text)->first();
         }
 
-        if ($product->status != ProductStatus::ACTIVE){
+        if ($product->status != ProductStatus::ACTIVE) {
             return 404;
         }
 
