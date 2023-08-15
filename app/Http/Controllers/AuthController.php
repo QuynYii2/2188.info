@@ -359,7 +359,7 @@ class AuthController extends Controller
 
             $data = array('mail' => $email, 'name' => $email, 'code' => $code);
 
-            $id = 0;
+            $id = Auth::user()->id;
 
             $newID = (integer)$member;
 
@@ -453,7 +453,7 @@ class AuthController extends Controller
 
             $data = array('mail' => $email, 'name' => $email, 'code' => $code);
 
-            $id = 0;
+            $id = Auth::user()->id;
 
             $memberBefore = MemberRegisterPersonSource::where('id', $personSource)->first();
 

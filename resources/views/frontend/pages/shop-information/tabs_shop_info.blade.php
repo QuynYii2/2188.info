@@ -1,3 +1,4 @@
+@if($shopInformation)
 <div class="title-information">
     <div class="title-information-container">Hồ sơ</div>
     <div class="title-information-download">
@@ -121,4 +122,4 @@
         </div>
     </dd>
 </dl>
-
+@endif

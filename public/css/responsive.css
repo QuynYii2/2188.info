@@ -674,10 +674,6 @@
   .section .item-img img {
     width: 100%;
   }
-  .section .item-img .button-view {
-    top: 40%;
-    right: 20%;
-  }
   .section .item-img .button-view a {
     padding: 8px 15px;
     border-radius: 50px;
