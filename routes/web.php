@@ -83,73 +83,13 @@ Route::get('/register/', [HomeController::class, 'register'])->name('register.sh
 Route::post('/file/img/store', [FileController::class, 'saveImgByUser'])->name('file.img.save');
 Route::get('/file/img/get', [FileController::class, 'getListImgByUser'])->name('file.img.get');
 
-
-// Start register member
-Route::get(
-    '/register-member',
-    [AuthController::class, 'processRegisterMember']
-)->name('process.register.member');
-Route::get(
-    '/register-member/{registerMember}',
-    [AuthController::class, 'showRegisterMember']
-)->name('show.register.member');
-Route::get(
-    '/register-member-info/{registerMember}',
-    [AuthController::class, 'showRegisterMemberInfo']
-)->name('show.register.member.info');
-Route::get(
-    '/register-member-person-source/{member_id}/{registerMember}',
-    [AuthController::class, 'showRegisterMemberPerson']
-)->name('show.register.member.person.source');
-Route::get(
-    '/verify-register-member-person-source/{email}',
-    [AuthController::class, 'processVerifyEmail']
-)->name('show.verify.register.member');
-Route::get(
-    '/register-member-person-source-represent/{person_id}/{registerMember}',
-    [AuthController::class, 'showRegisterMemberPersonRepresent']
-)->name('show.register.member.person.represent');
-Route::get(
-    '/payment-register-member/{registerMember}',
-    [AuthController::class, 'showPaymentMember']
-)->name('show.payment.member');
-Route::get(
-    '/payment-register-member-success/{registerMember}',
-    [AuthController::class, 'successRegisterMember']
-)->name('show.success.payment.member');
-//Route::get('/register-member/{registerMember}', [AuthController::class, 'showRegisterMember'])->name('show.register.member');
-Route::post(
-    '/register-member-info',
-    [AuthController::class, 'registerMemberInfo']
-)->name('register.member.info');
-Route::post(
-    '/register-member-source',
-    [AuthController::class, 'registerMemberPerson']
-)->name('register.member.source');
-Route::post(
-    '/verify-register-member-person-source',
-    [AuthController::class, 'verifyEmail']
-)->name('verify.register.member');
-Route::post(
-    '/register-member-person-source-represent',
-    [AuthController::class, 'registerMemberPersonRepresent']
-)->name('register.member.represent');
-Route::post(
-    '/payment-register-member',
-    [AuthController::class, 'paymentMember']
-)->name('payment.member');
-
-Route::get('/location-nation', [AuthController::class, 'getListNation'])->name('location.nation.get');
-Route::get('/location-state/{id}', [AuthController::class, 'getListStateByNation'])->name('location.state.get');
-Route::get('/location-city/{id}/{code}', [AuthController::class, 'getListCityByState'])->name('location.city.get');
-Route::get('/location-ward/{id}/{code}', [AuthController::class, 'getListWardByCity'])->name('location.ward.get');
-
-// End register member
-
 Route::middleware('auth.product')->group(function () {
     // Các tuyến đường sản phẩm ở đây
     Route::get('/product/{id}', 'ProductController@show')->name('product.show');
 });
+
+
+
 
 //
 Route::post('/insert-multil-user', [HomeController::class, 'createMultilNewUser'])->name('insert.multil.user');
@@ -169,6 +109,68 @@ Route::get('/products-shop/{id}', [\App\Http\Controllers\Frontend\ProductControl
 Route::get('/products-shop-category/{category}/{shop}', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByCategoryAndShops'])->name('list.products.shop.category.show');
 
 Route::middleware(['auth'])->group(function () {
+    // Start register member
+
+    Route::get(
+        '/register-member',
+        [AuthController::class, 'processRegisterMember']
+    )->name('process.register.member');
+    Route::get(
+        '/register-member/{registerMember}',
+        [AuthController::class, 'showRegisterMember']
+    )->name('show.register.member');
+    Route::get(
+        '/register-member-info/{registerMember}',
+        [AuthController::class, 'showRegisterMemberInfo']
+    )->name('show.register.member.info');
+    Route::get(
+        '/register-member-person-source/{member_id}/{registerMember}',
+        [AuthController::class, 'showRegisterMemberPerson']
+    )->name('show.register.member.person.source');
+    Route::get(
+        '/verify-register-member-person-source/{email}',
+        [AuthController::class, 'processVerifyEmail']
+    )->name('show.verify.register.member');
+    Route::get(
+        '/register-member-person-source-represent/{person_id}/{registerMember}',
+        [AuthController::class, 'showRegisterMemberPersonRepresent']
+    )->name('show.register.member.person.represent');
+    Route::get(
+        '/payment-register-member/{registerMember}',
+        [AuthController::class, 'showPaymentMember']
+    )->name('show.payment.member');
+    Route::get(
+        '/payment-register-member-success/{registerMember}',
+        [AuthController::class, 'successRegisterMember']
+    )->name('show.success.payment.member');
+//Route::get('/register-member/{registerMember}', [AuthController::class, 'showRegisterMember'])->name('show.register.member');
+    Route::post(
+        '/register-member-info',
+        [AuthController::class, 'registerMemberInfo']
+    )->name('register.member.info');
+    Route::post(
+        '/register-member-source',
+        [AuthController::class, 'registerMemberPerson']
+    )->name('register.member.source');
+    Route::post(
+        '/verify-register-member-person-source',
+        [AuthController::class, 'verifyEmail']
+    )->name('verify.register.member');
+    Route::post(
+        '/register-member-person-source-represent',
+        [AuthController::class, 'registerMemberPersonRepresent']
+    )->name('register.member.represent');
+    Route::post(
+        '/payment-register-member',
+        [AuthController::class, 'paymentMember']
+    )->name('payment.member');
+
+    Route::get('/location-nation', [AuthController::class, 'getListNation'])->name('location.nation.get');
+    Route::get('/location-state/{id}', [AuthController::class, 'getListStateByNation'])->name('location.state.get');
+    Route::get('/location-city/{id}/{code}', [AuthController::class, 'getListCityByState'])->name('location.city.get');
+    Route::get('/location-ward/{id}/{code}', [AuthController::class, 'getListWardByCity'])->name('location.ward.get');
+
+// End register member
     //View member
     Route::get('/member-registered', [UpdateRankController::class, 'detail'])->name('member.registered.detail');
     Route::post('/member-registered', [UpdateRankController::class, 'updateMember'])->name('member.registered.update');
