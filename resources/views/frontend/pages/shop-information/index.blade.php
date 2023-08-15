@@ -552,9 +552,6 @@
                         </ul>
                         <div class="tab-content container-fluid" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                @php
-                                    $shopInformation = \App\Models\ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first()
-                                @endphp
                                 @if($shopInformation)
                                     <div class="content" id="content2">@include('frontend.pages.shop-information.tabs_shop_info')</div>
                                     <button id="toggleBtn2" class="toggleBtn" onclick="toggleContent('content2', 'toggleBtn2')">{{ __('home.Show More') }}</button>
