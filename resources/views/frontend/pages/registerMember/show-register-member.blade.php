@@ -226,7 +226,7 @@
                             </div>
                             <p class="bg-success mt-3 full-width p-3 ml-3 mr-3"></p>
                         </div>
-                    @else
+                    @elseif($registerMember == \App\Enums\RegisterMember::POWER_PRODUCTION)
                         <div class="card border">
                             <h3 class="text-center">
                                 Đồng ý với điều khoản quy định của hội
@@ -286,6 +286,76 @@
                                 </div>
                                 <div class="col-md-6">
                                     <a href="{{route('show.register.member.info', \App\Enums\RegisterMember::POWER_PRODUCTION)}}"
+                                       id="register" class="d-none btn btn-success mr-3">
+                                        Đăng ký
+                                    </a>
+                                    <button id="register-btn" class="btn-hidden btn btn-secondary mr-3">
+                                        Đăng ký
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="bg-success mt-3 full-width p-3 ml-3 mr-3"></p>
+                        </div>
+                    @else
+                        <div class="card border">
+                            <h3 class="text-center">
+                                Đồng ý với điều khoản quy định của hội
+                                viên {{$registerMember}}
+                            </h3>
+                            <div class="row ml-3 mr-3">
+                                <div class="col-md-6 border">
+                                    <h5 class="text-center">Kiểm tra nội quy định phải đồng ý ở bên dưới</h5>
+                                    <div class="rules" onclick="validateAll()">
+                                        <p class="text-warning">
+                                            Đồng ý với quy định và điều khoản mà chúng tôi cung cấp
+                                        </p>
+                                        <input type="checkbox" id="rules" name="rules" required>
+                                        <label for="rules"> Trust</label><br>
+                                    </div>
+                                    <div class="getInfo" onclick="validateAll()">
+                                        <p class="text-warning">
+                                            Cho phép thu thập thông tin
+                                        </p>
+                                        <input type="checkbox" id="getInfo" name="getInfo" required>
+                                        <label for="getInfo"> Trust</label><br>
+                                    </div>
+                                    <div class="all" onclick="validate()">
+                                        <p class="text-warning">
+                                            Đồng ý tất cả
+                                        </p>
+                                        <input type="checkbox" id="all" name="all">
+                                        <label for="all"> All</label><br>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 border">
+                                    <h5 class="text-center">Chức năng chính dành riêng cho hội viên</h5>
+                                    <ol class="text-success">
+                                        <li>Quản lý xuất nhập kho của sản phẩm, quản lý tồn kho và quản lí kinh
+                                            doanh
+                                        </li>
+                                        <li>Quản lí sản phẩm giao dịch bằng điện tử và giao dịch điện tử</li>
+                                        <li>Gửi và nhận hàng hóa (quốc tế, trong nước, trên biển, hàng không, vận
+                                            chuyển đặc
+                                            biệt, giao hàng tận nơi …)
+                                        </li>
+                                    </ol>
+                                </div>
+                            </div>
+                            <input type="text" hidden="" id="price" name="price"
+                                   value="0">
+                            <p class="bg-success full-width p-3 ml-3 mr-3"></p>
+                            <div class="mt-3 mb-3">
+                                <h5 class="text-center">
+                                    Gia nhập hội viên {{$registerMember}}
+                                    <p class="text-danger text-center">Price:
+                                        $0</p>
+                                </h5>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col-md-6">
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{{route('show.register.member.info', $registerMember)}}"
                                        id="register" class="d-none btn btn-success mr-3">
                                     Đăng ký
                                     </a>
