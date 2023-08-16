@@ -13,8 +13,8 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th scope="col">Triển lãm trưng bày sản phẩm</th>
-                <th scope="col">Người giao dịch chỉ định</th>
+                <th scope="col">Gian hàng trưng bày sản phẩm</th>
+                <th scope="col">Danh sách đối tác</th>
                 <th scope="col">Người giao dịch mới</th>
                 <th scope="col">Văn bản nhận</th>
                 <th scope="col">Văn bản gửi</th>
@@ -69,9 +69,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-
-                                    </div>
                                 </div>
                             </td>
                         </tr>
@@ -102,6 +99,7 @@
                                                 @php
                                                     $firstProduct = $products[0];
                                                     $attributes = DB::table('product_attribute')->where([['product_id', $firstProduct->id], ['status', \App\Enums\AttributeProductStatus::ACTIVE]])->get();
+                                                    $price_sales = \App\Models\ProductSale::where('product_id', '=', $firstProduct->id)->get();
                                                 @endphp
                                                 <div class="d-flex justify-content-between mt-3">
                                                     <div class="">
@@ -110,7 +108,6 @@
                                                             {{ ($firstProduct->product_code) }}
                                                         </p>
                                                     </div>
-
                                                     <div class="">
                                                         <h5>Product Name</h5>
                                                         <p class="productName{{$loop->index+1}}">
@@ -229,7 +226,9 @@
                                                                 class="text-warning productName{{$loop->index+1}}">{{ ($firstProduct->name) }}</span>
                                                     </h5>
                                                 </div>
-
+                                                <button class="btn btn-primary partnerBtn"
+                                                        data-value="{{$firstProduct->id}}" data-count="100">Đối tác
+                                                </button>
                                                 <table class="table table-bordered">
                                                     <thead>
                                                     <tr>
@@ -240,21 +239,16 @@
                                                     </thead>
 
                                                     <tbody>
-                                                    <tr>
-                                                        <td>100</td>
-                                                        <td>300</td>
-                                                        <td>3 ngày kể từ ngày đặt hàng</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>300</td>
-                                                        <td>600</td>
-                                                        <td>6 ngày kể từ ngày đặt hàng</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>600</td>
-                                                        <td>3000</td>
-                                                        <td>9 ngày kể từ ngày đặt hàng</td>
-                                                    </tr>
+                                                    @if(!$price_sales->isEmpty())
+                                                        @foreach($price_sales as $price_sale)
+                                                            <tr>
+                                                                <td>{{$price_sale->quantity}}</td>
+                                                                <td>-{{$price_sale->sales}} %</td>
+                                                                <td>3 ngày kể từ ngày đặt hàng</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
+
                                                     </tbody>
                                                 </table>
 
@@ -271,25 +265,29 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr>
-                                                        <td>Product 1</td>
-                                                        <td>Red</td>
-                                                        <td>100</td>
-                                                        <td>20</td>
-                                                        <td>89234</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Product 2</td>
-                                                        <td>Blue</td>
-                                                        <td>100</td>
-                                                        <td>20</td>
-                                                        <td>89234</td>
-                                                    </tr>
+                                                    @php
+                                                        $cartsMember = \App\Models\Cart::where([
+                                                            ['user_id', Auth::user()->id],
+                                                            ['member', 1],
+                                                            ['product_id', $firstProduct->id]
+                                                        ])->get();
+                                                    @endphp
+                                                    @if(!$cartsMember->isEmpty())
+                                                        @foreach($cartsMember as $itemCart)
+                                                            <tr>
+                                                                <td>{{$itemCart->product->name}}</td>
+                                                                <td>Red</td>
+                                                                <td>{{$itemCart->quantity}}</td>
+                                                                <td>{{$itemCart->price}}</td>
+                                                                <td>{{$itemCart->price*$itemCart->quantity}}</td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
                                                     </tbody>
                                                 </table>
-                                                <button class="btn btn-success text-white float-right">Tiếp nhận đặt
+                                                <a href="{{route('parent.register.member.index', $memberCompany->id)}}" class="btn btn-success text-white float-right">Tiếp nhận đặt
                                                     hàng
-                                                </button>
+                                                </a>
                                             </div>
                                         @endif
                                     </div>
@@ -340,46 +338,6 @@
     <script>
         var renderInputAttribute = $('#renderProductMember');
 
-        {{--function renderProduct(id) {--}}
-        {{--    const data = {--}}
-        {{--        _token: '{{ csrf_token() }}',--}}
-        {{--        idProduct: id,--}}
-        {{--    };--}}
-        {{--    fetch('{{ route('products.register.member.create') }}', {--}}
-        {{--        method: 'POST',--}}
-        {{--        headers: {--}}
-        {{--            'content-type': 'application/json'--}}
-        {{--        },--}}
-        {{--        body: JSON.stringify(data),--}}
-        {{--    }).then(response => {--}}
-        {{--        if (response.status == 200) {--}}
-        {{--            console.log(response)--}}
-        {{--            $('#renderProductMember').remove();--}}
-        {{--            renderInputAttribute.append(response);--}}
-        {{--        }--}}
-        {{--    }).catch(error => console.log(error));--}}
-        {{--}--}}
-
-        {{--$('.thumbnailProduct').on('click', function () {--}}
-        {{--    let id = $(this).data('id');--}}
-        {{--    $.ajax({--}}
-        {{--        url: '{{ route('products.register.member.create') }}',--}}
-        {{--        type: 'POST',--}}
-        {{--        data: {--}}
-        {{--            _token: '{{ csrf_token() }}',--}}
-        {{--            'idProduct': id,--}}
-        {{--        },--}}
-        {{--        success: function (response) {--}}
-        {{--            console.log(response)--}}
-        {{--            $('#renderProductMember').remove();--}}
-        {{--            renderInputAttribute.append(response);--}}
-        {{--        },--}}
-        {{--        error: function (xhr, status, error) {--}}
-        {{--            renderInputAttribute.append('<h3>Error</h3>');--}}
-        {{--        }--}}
-        {{--    })--}}
-        {{--});--}}
-
         $('.thumbnailProduct').on('click', function () {
             let product = $(this).data('value');
             let number = $(this).parent().parent().data('id');
@@ -415,14 +373,12 @@
                     thumbnailGallerys.src = '{{asset('storage/')}}' + '/' + arrayGallery[0];
                 }
             }
-
         });
 
         $('.thumbnailProductGallery').on('click', function () {
             let imageUrl = $(this).attr('src');
             let productID = $(this).data('id');
             let idImg = '#imgProductMain' + productID
-            // $(`${idImg}`).attr("src", imageUrl);
             changeImage(idImg, imageUrl);
         });
 
@@ -430,6 +386,36 @@
             const sky = document.querySelector(id);
             sky.setAttribute('src', imageSrc);
         }
+
+        $(document).ready(function () {
+            const $document = $(document);
+
+            $document.on('click', '.partnerBtn', function () {
+                const product = $(this).data('value');
+                renderProduct(product);
+            });
+
+            function renderProduct(product) {
+                const requestData = {
+                    _token: '{{ csrf_token() }}',
+                    quantity: 100,
+                };
+
+                $.ajax({
+                    url: `/add-to-cart-register-member/${product}`,
+                    method: 'POST',
+                    data: requestData,
+                })
+                    .done(function (response) {
+                        console.log(response);
+                        alert('Success!');
+                        window.location.reload();
+                    })
+                    .fail(function (_, textStatus) {
+                        console.error('Request failed:', textStatus);
+                    });
+            }
+        });
 
     </script>
 @endsection

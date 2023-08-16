@@ -391,7 +391,9 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::get('/list-products-shop', [\App\Http\Controllers\ProductController::class, 'getListProductShop'])->name('shop.list.products');
     // Register member
     Route::get('/products-register-member', [RegisterMemberController::class, 'index'])->name('products.register.member.index');
+    Route::get('/parents-register-member/{id}', [RegisterMemberController::class, 'memberParent'])->name('parent.register.member.index');
     Route::post('/products-register-member', [RegisterMemberController::class, 'saveProduct'])->name('products.register.member.create');
+    Route::post('/add-to-cart-register-member/{product}', [CartController::class, 'addToCartApi'])->name('cart.api');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {
