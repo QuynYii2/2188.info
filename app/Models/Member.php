@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MemberRegisterInfo extends Model
+class Member extends Model
 {
     use HasFactory;
 
@@ -13,16 +13,7 @@ class MemberRegisterInfo extends Model
         'id',
         'user_id',
         'name',
-        'phone',
-        'fax',
-        'code_fax',
-        'category_id',
-        'code_business',
-        'number_business',
-        'type_business',
-        'member',
-        'member_id',
-        'address',
+        'price',
         'status',
     ];
 }
