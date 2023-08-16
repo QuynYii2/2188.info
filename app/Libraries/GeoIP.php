@@ -32,6 +32,6 @@ class GeoIP
                     return 'en';
             }
         }
-        return 'en';
+        return 'vi';
     }
 }
