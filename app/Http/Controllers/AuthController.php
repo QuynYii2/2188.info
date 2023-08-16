@@ -740,6 +740,15 @@ class AuthController extends Controller
             'role_id' => 2,
             'user_id' => $newUser->id
         ]);
+
+        $currentUser = Auth::user();
+        $seller = (new HomeController())->checkSellerOrAdmin();
+        if ($seller == false){
+            $roleUser = DB::table('role_user')->insert([
+                'role_id' => 2,
+                'user_id' => $currentUser->id
+            ]);
+        }
     }
 
     private function getLocale(Request $request)
