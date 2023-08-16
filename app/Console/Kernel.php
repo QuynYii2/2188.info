@@ -35,7 +35,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->call(function () {
             app()->make('App\Http\Controllers\Frontend\HomeController')->createMultilNewUser();
-        })->everyMinute();
+        })->daily();
     }
 
     /**
