@@ -3,8 +3,11 @@
 @php
     $config = \App\Models\ConfigProject::where('status', \App\Enums\ConfigProjectStatus::ACTIVE)->orderBy('created_at', 'desc')->limit(1)->get();
      $coin = null;
+
+     $checkBuyer = false;
      if (Auth::check()){
          $coin = \App\Models\Coin::where([['status', \App\Enums\CoinStatus::ACTIVE], ['user_id', Auth::user()->id]])->first();
+         $checkBuyer = Auth::user()->member == "BUYER";
      }
 @endphp
 <style>
@@ -86,10 +89,10 @@
                         <form class="search-wrapper">
                             <input type="text" placeholder="{{ __('home.placeholder search') }}"
                                    style="box-shadow: none">
-                            @php
-                            $checkBuyer = Auth::user()->member == "BUYER";
-                            @endphp
-                            <button type="submit"  onclick="<?php echo Auth::user()->member == "BUYER" ? 'showAlert()' : '' ?>" ><i class="fa-solid fa-magnifying-glass"></i></button>
+
+                            <button type="submit"
+                                    onclick="<?php echo $checkBuyer ? 'showAlert()' : '' ?>"><i
+                                        class="fa-solid fa-magnifying-glass"></i></button>
                             <div class="category-drop input-group-prepend">
                                 <button class="btn-all btn-outline-secondary dropdown-toggle" type="button"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All
@@ -129,7 +132,7 @@
                                     </div>
                                 </button>
                             </div>
-                            <div class="item">
+                            <div class="item" onclick="<?php echo $checkBuyer ? 'showAlert()' : '' ?>">
                                 <button class="button" onclick="">
                                     <i class="item-icon fa-solid fa-gift"></i>
                                     <div class="item-text">Mua sỉ</div>
@@ -935,7 +938,9 @@
 
     function showAlert() {
         event.preventDefault();
-        alert('Bạn phải nâng cấp quyền để thực hiện thao tác này.');
+        if (confirm('Bạn phải nâng cấp quyền để thực hiện thao tác này.')) {
+            console.log(123)
+        }
     }
 </script>
 

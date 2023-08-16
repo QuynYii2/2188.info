@@ -11,7 +11,7 @@
                     <div class="title">{{ __('home.sign up member') }}</div>
                 </div>
                 <div class="mt-5 row">
-                    @if(!$members->isEmpty())
+                    @if(!empty($members))
                         @foreach($members as $member)
                             <div class="col-md-3">
                                 <h5 class="text-center mt-2 mb-3 member-name">
