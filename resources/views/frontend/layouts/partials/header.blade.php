@@ -75,7 +75,6 @@
                                 </a>
                             </div>
                         @endif
-
                         @if(!$config->isEmpty())
                             <div class="header-address text-center col-xl-5">
                                 <a class="header-address--text" href="">Available 24/7 at</a>
@@ -87,7 +86,10 @@
                         <form class="search-wrapper">
                             <input type="text" placeholder="{{ __('home.placeholder search') }}"
                                    style="box-shadow: none">
-                            <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            @php
+                            $checkBuyer = Auth::user()->member == "BUYER";
+                            @endphp
+                            <button type="submit"  onclick="<?php echo Auth::user()->member == "BUYER" ? 'showAlert()' : '' ?>" ><i class="fa-solid fa-magnifying-glass"></i></button>
                             <div class="category-drop input-group-prepend">
                                 <button class="btn-all btn-outline-secondary dropdown-toggle" type="button"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All
@@ -929,6 +931,11 @@
 
         // Gửi form để thực hiện logout
         form.submit();
+    }
+
+    function showAlert() {
+        event.preventDefault();
+        alert('Bạn phải nâng cấp quyền để thực hiện thao tác này.');
     }
 </script>
 
