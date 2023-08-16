@@ -6,6 +6,7 @@ use App\Enums\CoinStatus;
 use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\MemberRegisterPersonSourceStatus;
 use App\Enums\MemberRegisterType;
+use App\Enums\MemberStatus;
 use App\Enums\PermissionUserStatus;
 use App\Enums\RegisterMember;
 use App\Enums\RegisterMemberPrice;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Libraries\GeoIP;
 use App\Models\Category;
 use App\Models\Coin;
+use App\Models\Member;
 use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
 use App\Models\Permission;
@@ -26,6 +28,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
+use function Symfony\Component\String\u;
 
 
 class AuthController extends Controller
@@ -224,14 +227,20 @@ class AuthController extends Controller
     public function processRegisterMember(Request $request)
     {
         (new HomeController())->getLocale($request);
-        return view('frontend/pages/registerMember/member-register');
+        $members = Member::where('status', MemberStatus::ACTIVE)->get();
+        return view('frontend/pages/registerMember/member-register', compact('members'));
     }
 
     /*Show form đồng ý điều khoản và điều kiện*/
     public function showRegisterMember($registerMember, Request $request)
     {
         (new HomeController())->getLocale($request);
-        return view('frontend/pages/registerMember/show-register-member', compact('registerMember'));
+        $member = Member::find($registerMember);
+        if (!$member || $member->status != MemberStatus::ACTIVE) {
+            alert()->error('Error', 'Error, Page not found');
+            return back();
+        }
+        return view('frontend/pages/registerMember/show-register-member', compact('registerMember', 'member'));
     }
 
     /*Show form đăng kí thông tin hội viên*/
@@ -239,8 +248,13 @@ class AuthController extends Controller
     {
         (new HomeController())->getLocale($request);
         $categories = Category::all();
+        $member = Member::find($registerMember);
+        if (!$member || $member->status != MemberStatus::ACTIVE) {
+            alert()->error('Error', 'Error, Page not found');
+            return back();
+        }
         return view('frontend/pages/registerMember/show-register-member-info', compact(
-            'registerMember', 'categories'
+            'registerMember', 'categories', 'member'
         ));
     }
 
@@ -288,6 +302,17 @@ class AuthController extends Controller
     public function registerMemberInfo(Request $request)
     {
         try {
+            $exitsMember = MemberRegisterInfo::where([
+                ['user_id', Auth::user()->id],
+                ['status', MemberRegisterInfoStatus::ACTIVE]
+            ])->first();
+            if ($exitsMember) {
+                alert()->error('Error', 'Error, Đã tồn tại hội viên, không thể thêm mới!');
+                return redirect(route('member.registered.detail'));
+            }
+
+            $memberID = $request->input('member_id');
+
             $address = $request->input('wards-select') . ', ' . $request->input('provinces-select') . ', ' . $request->input('cities-select') . ', ' . $request->input('countries-select');
             $companyName = $request->input('companyName');
             $numberBusiness = $request->input('numberBusiness');
@@ -310,7 +335,17 @@ class AuthController extends Controller
                 return back();
             }
 
-            $id = 0;
+            $id = Auth::user()->id;
+
+            if ($registerMember == RegisterMember::LOGISTIC || $registerMember == RegisterMember::TRUST) {
+                $status = MemberRegisterInfoStatus::ACTIVE;
+            } else {
+                $status = MemberRegisterInfoStatus::INACTIVE;
+            }
+
+            $user = Auth::user();
+            $user->member = $registerMember;
+            $user->save();
 
             $create = [
                 'user_id' => $id,
@@ -324,7 +359,8 @@ class AuthController extends Controller
                 'type_business' => 'default',
                 'member' => $registerMember,
                 'address' => $address,
-                'status' => MemberRegisterInfoStatus::INACTIVE
+                'member_id' => $memberID,
+                'status' => $status
             ];
 
             $success = MemberRegisterInfo::create($create);
@@ -343,7 +379,6 @@ class AuthController extends Controller
             return back();
         } catch (\Exception $exception) {
             alert()->error('Error', 'Error, Please try again!');
-
             return back();
         }
     }
@@ -417,7 +452,7 @@ class AuthController extends Controller
                 return back();
             }
             $this->sendMail($data, $email);
-            $this->createUser($fullName, $email, $phoneNumber, $password);
+            $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member);
 
             $success = MemberRegisterPersonSource::create($create);
             if ($success) {
@@ -469,6 +504,7 @@ class AuthController extends Controller
             $id = Auth::user()->id;
 
             $memberBefore = MemberRegisterPersonSource::where('id', $personSource)->first();
+            $memberAccount = MemberRegisterInfo::find($memberBefore->member_id);
 
             $create = [
                 'user_id' => $id,
@@ -500,7 +536,7 @@ class AuthController extends Controller
                 return back();
             }
             $this->sendMail($data, $email);
-            $this->createUser($fullName, $email, $phoneNumber, $password);
+            $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member);
 
             $success = MemberRegisterPersonSource::create($create);
             if ($success) {
@@ -676,7 +712,7 @@ class AuthController extends Controller
         });
     }
 
-    private function createUser($fullName, $email, $phoneNumber, $password)
+    private function createUser($fullName, $email, $phoneNumber, $password, $member)
     {
         $locale = app()->getLocale();
         if (!$locale) {
@@ -695,6 +731,7 @@ class AuthController extends Controller
         $user->password = $password;
         $user->type_account = 'seller';
         $user->region = $locale;
+        $user->member = $member;
         $user->image = 'Default';
         $user->save();
 
