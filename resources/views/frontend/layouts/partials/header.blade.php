@@ -52,6 +52,9 @@
         background-repeat: no-repeat;
     }
 
+    .none_decoration {
+        text-decoration: none !important;
+    }
 </style>
 
 
@@ -118,24 +121,25 @@
                             <div class="item">
                                 <button class="button" onclick="">
                                     <i class="item-icon fa-regular fa-heart"></i>
-                                    @php
-                                        $local = session('locale');
-                                        if ($local == null){
-                                            $local = 'vi';
-                                        }
-                                    @endphp
                                     <div class="item-text">
-                                        <a href="{{route('wish.list.index')}}"
-                                           style="color: #fff; text-decoration: none">{{ __('home.Wish Lists') }}</a>
+                                        <a href="https://shipgo.biz/vn/"
+                                           style="color: #fff; text-decoration: none">Mua lẻ</a>
                                     </div>
                                 </button>
                             </div>
                             <div class="item">
                                 <button class="button" onclick="">
                                     <i class="item-icon fa-solid fa-gift"></i>
-                                    <div class="item-text">{{ __('home.Gift Cards') }}</div>
+                                    <div class="item-text">Mua sỉ</div>
                                 </button>
                             </div>
+                            @php
+                                $local = session('locale');
+                                if ($local == null){
+                                    $local = 'vi';
+                                }
+                            @endphp
+
                             <div class="item user">
                                 <button class="button" onclick="signIn()"><i class="item-icon fa-regular fa-user"></i>
                                     <div class="item-text">{{Auth::user()->name}}</div>
@@ -143,7 +147,6 @@
                                 <div class="signMenu" id="signMenu">
                                     <div class="name">
                                         <a href="{{route('profile.show')}}">{{Auth::user()->name}}</a>
-                                        <br> <br>
                                         <a href="{{route('process.register.member')}}"
                                            class="">{{ __('home.Member registration') }}</a>
                                     </div>
@@ -152,17 +155,31 @@
                                             onclick="logout()">{{ __('home.Sign Out') }}</button>
                                 </div>
                                 <div class="hover-list">
-                                    <div class="drop-item">
-                                        <a href="{{route('profile.show')}}">{{ __('home.profile') }}</a>
-                                    </div>
+                                    <a href="{{route('profile.show')}}" class="none_decoration">
+                                        <div class="drop-item">
+                                            {{ __('home.profile') }}
+                                        </div>
+                                    </a>
                                     @if($coin)
                                         <div class="drop-item">
                                             <a href="">Coins: {{$coin->quantity}}</a>
                                         </div>
                                     @endif
-                                    <div class="drop-item">
-                                        <a href="{{route('buy.coin.show')}}">{{ __('home.buy coin') }}</a>
-                                    </div>
+                                    <a href="{{route('buy.coin.show')}}" class="none_decoration">
+                                        <div class="drop-item">
+                                            {{ __('home.buy coin') }}
+                                        </div>
+                                    </a>
+                                    <a href="{{route('wish.list.index')}}" class="none_decoration">
+                                        <div class="drop-item">
+                                            {{ __('home.Wish Lists') }}
+                                        </div>
+                                    </a>
+                                    <a href="!#" class="none_decoration">
+                                        <div class="drop-item">
+                                            {{ __('home.Gift Cards') }}
+                                        </div>
+                                    </a>
                                     @php
                                         $user = Auth::user()->id;
                                         $role_id = DB::table('role_user')->where('user_id', $user)->get();
@@ -207,8 +224,8 @@
                                             <a href="{{route('shop.list.products')}}">{{ __('home.Shop') }}</a>
                                         </div>
                                     @endif
-                                    <div class="drop-item">
-                                        <button onclick="logout()" href="">{{ __('home.Log out') }}</button>
+                                    <div class="drop-item -hand-pointer" onclick="logout()">
+                                        <button>{{ __('home.Log out') }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -303,22 +320,19 @@
                             <div class="closeShopMenu" onclick="closeShop()"></div>
                         @else
                             <div class="item">
-                                <div class="d-flex">
-                                    <button class="button_login" onclick="signIn()">
-                                        <div class="it  em-text">B2B</div>
-                                    </button>
-                                    <button class="button_login" onclick="signIn()">
-                                        <div class="item-text">B2C</div>
-                                    </button>
-                                </div>
-                                <div class="d-flex">
-                                    <button class="button_login" onclick="signIn()">
-                                        <div class="item-text">BB</div>
-                                    </button>
-                                    <button class="button_login" onclick="signIn()">
-                                        <div class="item-text">BB</div>
-                                    </button>
-                                </div>
+                                @if(!Auth::user())
+                                    <div class="d-flex">
+                                        <a href="{{ route('register.show') }}">
+                                            <button class="button_login">
+                                                <div class="it  em-text">Đăng ký</div>
+                                            </button>
+                                        </a>
+                                        <button class="button_login" onclick="signIn()">
+                                            <div class="item-text">Đăng nhập</div>
+                                        </button>
+                                    </div>
+                                @endif
+
                                 <div class="signMenu" id="signMenu">
                                     <div class="login">{{ __('home.LOGIN') }}</div>
                                     <div class="content">
