@@ -28,7 +28,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
-use function Symfony\Component\String\u;
 
 
 class AuthController extends Controller
@@ -227,7 +226,21 @@ class AuthController extends Controller
     public function processRegisterMember(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $members = Member::where('status', MemberStatus::ACTIVE)->get();
+        $members1 = Member::where([['status', '=', MemberStatus::ACTIVE], ['price', '!=', 0]])->get();
+
+        $index = 0;
+        foreach ($members1 as $key => $value) {
+            if (Auth::user()->member == $value->name) {
+                $index = $key  + 1;
+                break;
+            }
+        }
+
+        $members = [];
+        for ($i = $index; $i < sizeof($members1); $i++) {
+            array_push($members, $members1[$i]);
+        };
+
         return view('frontend/pages/registerMember/member-register', compact('members'));
     }
 
@@ -743,7 +756,7 @@ class AuthController extends Controller
 
         $currentUser = Auth::user();
         $seller = (new HomeController())->checkSellerOrAdmin();
-        if ($seller == false){
+        if ($seller == false) {
             $roleUser = DB::table('role_user')->insert([
                 'role_id' => 2,
                 'user_id' => $currentUser->id
