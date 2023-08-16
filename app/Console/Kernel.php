@@ -29,9 +29,9 @@ class Kernel extends ConsoleKernel
         // php artisan schedule:run
         $schedule->command('command:UpdateRank')->daily();
 
-        $schedule->call(function () {
-            UpdateRank::handle();
-        })->daily();
+//        $schedule->call(function () {
+//            UpdateRank::handle();
+//        })->daily();
 
         $schedule->call(function () {
             app()->make('App\Http\Controllers\Frontend\HomeController')->createMultilNewUser();
