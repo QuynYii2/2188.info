@@ -25,8 +25,9 @@ class DatabaseSeeder extends Seeder
 //            RoleUserSeeder::class,
 //            PermissionRoleSeeder::class,
 //            PermissionLevelUserSeeder::class,
-            PaymentMethodSeeder::class,
-            TransportMethodSeeder::class,
+//            PaymentMethodSeeder::class,
+//            TransportMethodSeeder::class,
+//            MemberSeeder::class
         ]);
 
     }

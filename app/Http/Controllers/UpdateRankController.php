@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\MemberRegisterInfoStatus;
 use App\Models\MemberRegisterInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UpdateRankController extends Controller
 {
-    public function detail(){
+    public function detail()
+    {
         $user = Auth::user();
-        $member = MemberRegisterInfo::where('user_id', $user->id)->first();
+        $member = MemberRegisterInfo::where([
+            ['user_id', $user->id],
+            ['status', MemberRegisterInfoStatus::ACTIVE]
+        ])->first();
         return view('frontend.pages.member.user.detail', compact('member'));
     }
 
@@ -19,7 +24,7 @@ class UpdateRankController extends Controller
         $user = Auth::user();
         try {
             $member = MemberRegisterInfo::where('user_id', $user->id)->first();
-            if (!$member){
+            if (!$member) {
                 alert()->error('Error', 'Error, Not found!');
                 return back();
             }

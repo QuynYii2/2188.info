@@ -11,164 +11,49 @@
                     <div class="title">{{ __('home.sign up member') }}</div>
                 </div>
                 <div class="mt-5 row">
-                    <div class="col-md-3">
-
-                    </div>
-                    <div class="col-md-3">
-                        <h5 class="text-center mt-2 mb-3 member-name">
-                            {{\App\Enums\RegisterMember::TRUST}}
-                        </h5>
-                        <div class="card">
-                            <div class="card-body">
-                                <h3 class="card-title text-danger text-center">
-                                    $0
-                                </h3>
-                                <h6 class="card-subtitle mb-2 text-muted">
-                                    Hội viên {{\App\Enums\RegisterMember::TRUST}}
-                                </h6>
-                                <h6 class="text-nowrap">
-                                    Xem chi tiết
-                                </h6>
-                                <ol class="text-success">
-                                    <li>Tìm các sản phẩm B2B</li>
-                                    <li>Quản lí và tìm kiếm giao dịch</li>
-                                    <li>Nhắn tin và quảng cáo sản phẩm</li>
-                                </ol>
-                                <a href="{{route('show.register.member', \App\Enums\RegisterMember::TRUST)}}"
-                                   class="btn btn-primary">Đăng kí ngay</a>
+                    @if(!$members->isEmpty())
+                        @foreach($members as $member)
+                            <div class="col-md-3">
+                                <h5 class="text-center mt-2 mb-3 member-name">
+                                    {{$member->name}}
+                                </h5>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 class="card-title text-danger text-center">
+                                            ${{$member->price}}
+                                        </h3>
+                                        <h6 class="card-subtitle mb-2 text-muted">
+                                            Hội viên {{$member->name}}
+                                        </h6>
+                                        <h6 class="text-nowrap">
+                                            Xem chi tiết
+                                        </h6>
+                                        <ol class="text-success">
+                                            @php
+                                                $listPermissionID = $member->permission_id;
+                                                $arrayPermissionID = null;
+                                                if ($listPermissionID){
+                                                    $arrayPermissionID = explode(',', $listPermissionID);
+                                                }
+                                            @endphp
+                                            @if($arrayPermissionID)
+                                                @foreach($arrayPermissionID as $permissionID)
+                                                    <li>
+                                                        @php
+                                                            $permission = \App\Models\Permission::find($permissionID);
+                                                        @endphp
+                                                        {{$permission->name}}
+                                                    </li>
+                                                @endforeach
+                                            @endif
+                                        </ol>
+                                        <a href="{{route('show.register.member', $member->id)}}"
+                                           class="btn btn-primary">Đăng kí ngay</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <h5 class="text-center mt-2 mb-3 member-name">
-                            {{\App\Enums\RegisterMember::LOGISTIC}}
-                        </h5>
-                        <div class="card">
-                            <div class="card-body">
-                                <h3 class="card-title text-danger text-center">
-                                    $0
-                                </h3>
-                                <h6 class="card-subtitle mb-2 text-muted">
-                                    Hội viên {{\App\Enums\RegisterMember::LOGISTIC}}
-                                </h6>
-                                <h6 class="text-nowrap">
-                                    Xem chi tiết
-                                </h6>
-                                <ol class="text-success">
-                                    <li>Tìm các sản phẩm B2B</li>
-                                    <li>Quản lí và tìm kiếm giao dịch</li>
-                                    <li>Nhắn tin và quảng cáo sản phẩm</li>
-                                </ol>
-                                <a href="{{route('show.register.member', \App\Enums\RegisterMember::LOGISTIC)}}"
-                                   class="btn btn-primary">Đăng kí ngay</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <h5 class="text-center mt-2 mb-3 member-name">
-                            {{\App\Enums\RegisterMember::VENDOR}}
-                        </h5>
-                        <div class="card">
-                            <div class="card-body">
-                                <h3 class="card-title text-danger text-center">
-                                    ${{\App\Enums\RegisterMemberPrice::VENDOR}}
-                                </h3>
-                                <h6 class="card-subtitle mb-2 text-muted text-nowrap">
-                                    Hội viên {{\App\Enums\RegisterMember::VENDOR}}
-                                </h6>
-                                <h6 class="text-nowrap">
-                                    Xem chi tiết
-                                </h6>
-                                <ol class="text-success">
-                                    <li>Tìm các sản phẩm B2B</li>
-                                    <li>Quản lí và tìm kiếm giao dịch</li>
-                                    <li>Nhắn tin và quảng cáo sản phẩm</li>
-                                </ol>
-                                <a href="{{route('show.register.member', \App\Enums\RegisterMember::VENDOR)}}"
-                                   class="btn btn-primary">Đăng kí ngay</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <h5 class="text-center mt-2 mb-3 member-name">
-                            {{\App\Enums\RegisterMember::POWER_VENDOR}}
-                        </h5>
-                        <div class="card">
-                            <div class="card-body">
-                                <h3 class="card-title text-danger text-center">
-                                    ${{\App\Enums\RegisterMemberPrice::POWER_VENDOR}}
-                                </h3>
-                                <h6 class="card-subtitle mb-2 text-muted">
-                                    Hội viên {{\App\Enums\RegisterMember::POWER_VENDOR}}
-                                </h6>
-                                <h6 class="text-nowrap">
-                                    Xem chi tiết
-                                </h6>
-                                <ol class="text-success">
-                                    <li>Tìm các sản phẩm B2B</li>
-                                    <li>Quản lí và tìm kiếm giao dịch</li>
-                                    <li>Nhắn tin và quảng cáo sản phẩm</li>
-                                </ol>
-                                <a href="{{route('show.register.member', \App\Enums\RegisterMember::POWER_VENDOR)}}"
-                                   class="btn btn-primary">Đăng kí ngay</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <h5 class="text-center mt-2 mb-3 member-name">
-                            {{\App\Enums\RegisterMember::PRODUCTION}}
-                        </h5>
-                        <div class="card">
-                            <div class="card-body">
-                                <h3 class="card-title text-danger text-center">
-                                    ${{\App\Enums\RegisterMemberPrice::PRODUCTION}}
-                                </h3>
-                                <h6 class="card-subtitle mb-2 text-muted">
-                                    Hội viên {{\App\Enums\RegisterMember::PRODUCTION}}
-                                </h6>
-                                <h6 class="text-nowrap">
-                                    Xem chi tiết
-                                </h6>
-                                <ol class="text-success">
-                                    <li>Tìm các sản phẩm B2B</li>
-                                    <li>Quản lí và tìm kiếm giao dịch</li>
-                                    <li>Nhắn tin và quảng cáo sản phẩm</li>
-                                </ol>
-                                <a href="{{route('show.register.member', \App\Enums\RegisterMember::PRODUCTION)}}"
-                                   class="btn btn-primary">Đăng kí ngay</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <h5 class="text-center mt-2 mb-3 member-name">
-                            {{\App\Enums\RegisterMember::POWER_PRODUCTION}}
-                        </h5>
-                        <div class="card">
-                            <div class="card-body">
-                                <h3 class="card-title text-danger text-center">
-                                    ${{\App\Enums\RegisterMemberPrice::POWER_PRODUCTION}}
-                                </h3>
-                                <h6 class="card-subtitle mb-2 text-muted">
-                                    Hội viên {{\App\Enums\RegisterMember::POWER_PRODUCTION}}
-                                </h6>
-                                <h6 class="text-nowrap">
-                                    Xem chi tiết
-                                </h6>
-                                <ol class="text-success">
-                                    <li>Tìm các sản phẩm B2B</li>
-                                    <li>Quản lí và tìm kiếm giao dịch</li>
-                                    <li>Nhắn tin và quảng cáo sản phẩm</li>
-                                </ol>
-                                <a href="{{route('show.register.member', \App\Enums\RegisterMember::POWER_PRODUCTION)}}"
-                                   class="btn btn-primary">Đăng kí ngay</a>
-                            </div>
-                        </div>
-                    </div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>
