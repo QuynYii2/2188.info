@@ -26,11 +26,16 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // php artisan schedule:run
         $schedule->command('command:UpdateRank')->daily();
 
+//        $schedule->call(function () {
+//            UpdateRank::handle();
+//        })->daily();
+
         $schedule->call(function () {
-            UpdateRank::handle();
-        })->daily();
+            app()->make('App\Http\Controllers\Frontend\HomeController')->createMultilNewUser();
+        })->everyMinute();
     }
 
     /**
