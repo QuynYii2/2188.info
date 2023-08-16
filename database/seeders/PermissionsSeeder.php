@@ -39,6 +39,8 @@ class PermissionsSeeder extends Seeder
 
         // Tạo các permission mẫu
         $permissionRegisterMember = [
+            ['name' => 'find B2C products'],
+            ['name' => 'buy B2C household'],
             ['name' => 'find products'],
             ['name' => 'find partners transaction'],
             ['name' => 'display capacity at the product display section'],

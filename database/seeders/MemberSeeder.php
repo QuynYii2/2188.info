@@ -17,6 +17,8 @@ class MemberSeeder extends Seeder
      */
     public function run()
     {
+        $permissionMember9 = Permission::where('name', 'find B2C products')->first();
+        $permissionMember10 = Permission::where('name', 'buy B2C household')->first();
         $permissionMember1 = Permission::where('name', 'find products')->first();
         $permissionMember2 = Permission::where('name', 'find partners transaction')->first();
         $permissionMember3 = Permission::where('name', 'display capacity at the product display section')->first();
@@ -26,13 +28,20 @@ class MemberSeeder extends Seeder
         $permissionMember7 = Permission::where('name', 'display accessories and supplies')->first();
         $permissionMember8 = Permission::where('name', 'put on dedicated display')->first();
 
-        $list1 = $permissionMember1->id . ',' . $permissionMember2->id . ',' . $permissionMember3->id;
+        $defaultPermission = $permissionMember9->id . ',' . $permissionMember10->id;
+        $list1 = $defaultPermission . ',' . $permissionMember1->id . ',' . $permissionMember2->id . ',' . $permissionMember3->id;
         $list2 = $list1 . ',' . $permissionMember4->id;
         $list3 = $list2 . ',' . $permissionMember5->id;
         $list4 = $list3 . ',' . $permissionMember6->id;
         $list5 = $list4 . ',' . $permissionMember7->id;
         $list6 = $list5 . ',' . $permissionMember8->id;
         $members = [
+            [
+                'user_id' => 1,
+                'name' => RegisterMember::BUYER,
+                'price' => 0,
+                'permission_id' => $defaultPermission,
+            ],
             [
                 'user_id' => 1,
                 'name' => RegisterMember::TRUST,
