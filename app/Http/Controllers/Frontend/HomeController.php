@@ -378,6 +378,7 @@ class HomeController extends Controller
                                 $newUser->type_account = "seller";
                                 $newUser->email_verified_at = now();
                                 $newUser->image = 'default image';
+                                $newUser->member = RegisterMember::LOGISTIC;
                                 $success = $newUser->save();
 
                                 $data = array('mail' => $email, 'name' => $email, 'password' => env('PASSWORD_DEFAULT', 123456));

@@ -207,17 +207,23 @@
                                                 $locale == 'vn';
                                             }
                                         @endphp
-                                        @if($isAdmin == true & $locale != 'vn')
+                                        @if($isAdmin == true || $locale != 'vn')
                                             <div class="drop-item">
                                                 <a href="{{ route('seller.products.home') }}">{{ __('home.Seller channel') }}</a>
                                             </div>
                                         @endif
                                         @php
                                             if (Auth::check()){
-                                                $isMember = \App\Models\MemberRegisterPersonSource::where([
-                                                    ['email', Auth::user()->email],
-                                                    ['check', 1]
+                                                $member = \App\Models\MemberRegisterInfo::where([
+                                                    ['user_id', Auth::user()->id],
+                                                    ['status', \App\Enums\MemberRegisterInfoStatus::ACTIVE]
                                                 ])->first();
+                                                $isMember = null;
+                                                if ($member){
+                                                    if ($member->member_id == 2){
+                                                        $isMember = true;
+                                                    }
+                                                }
                                             }
 
                                             $isValid = (new \App\Http\Controllers\Frontend\HomeController())->checkSellerOrAdmin();
