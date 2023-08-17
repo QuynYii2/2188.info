@@ -131,7 +131,7 @@
                         @if(Auth::check())
                             <div class="item">
                                 <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#exampleModal">
+                                        data-target="#modal-flag-header">
                                     <i class="item-icon fa-regular fa-heart"></i>
                                     <div class="item-text">
                                         Mua lẻ
@@ -880,7 +880,7 @@
     {{--    </div>--}}
 </header>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-flag-header" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
