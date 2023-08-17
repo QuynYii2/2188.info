@@ -48,6 +48,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 Route::get('/lang/{locale}', function ($locale) {
     session()->put('locale', $locale);
     return redirect()->back();
@@ -59,10 +61,11 @@ Route::post('/register', [UserController::class, 'store'])->name('register.store
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/login/', [AuthController::class, 'showLogin'])->name('login');
-Route::get('/login/{locale}', [AuthController::class, 'showLoginForm'])->name('login.local');
-Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
-//
+Route::prefix('/login')->group(function () {
+    Route::get('', [AuthController::class, 'showLogin'])->name('login');
+    Route::get('/{locale}', [AuthController::class, 'showLoginForm'])->name('login.local');
+    Route::post('', [AuthController::class, 'login'])->name('login.submit');
+});
 
 // Google Sign In
 Route::get('/login-google', [AuthController::class, 'getGoogleSignInUrl'])->name('login.google');
@@ -87,6 +90,7 @@ Route::middleware('auth.product')->group(function () {
     // Các tuyến đường sản phẩm ở đây
     Route::get('/product/{id}', 'ProductController@show')->name('product.show');
 });
+
 
 Route::get('/product-detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
 Route::get('/shop/information/{id}', [\App\Http\Controllers\ShopInformationController::class, 'index'])->name('shop.information.show');
@@ -158,6 +162,7 @@ Route::middleware(['auth'])->group(function () {
         '/payment-register-member',
         [AuthController::class, 'paymentMember']
     )->name('payment.member');
+
 
     Route::get('/location-nation', [AuthController::class, 'getListNation'])->name('location.nation.get');
     Route::get('/location-state/{id}', [AuthController::class, 'getListStateByNation'])->name('location.state.get');
