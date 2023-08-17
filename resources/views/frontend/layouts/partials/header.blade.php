@@ -11,6 +11,11 @@
      }
 @endphp
 <style>
+    .custom_flag {
+        width: 100px;
+        height: 66px;
+    }
+
     .header-bottom-left--item.item-left--vi a:before {
         display: block;
         content: '';
@@ -124,17 +129,17 @@
                     </div>
                     <div class="header-top-right col-xl-3 col-md-4 d-flex text-center justify-content-end">
                         @if(Auth::check())
-                            <a href="https://shipgo.biz/vn/">
-                                <div class="item">
-                                    <button class="button" onclick="">
-                                        <i class="item-icon fa-regular fa-heart"></i>
-                                        <div class="item-text">Mua lẻ
-                                        </div>
-                                    </button>
-                                </div>
-                            </a>
+                            <div class="item">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#exampleModal">
+                                    <i class="item-icon fa-regular fa-heart"></i>
+                                    <div class="item-text">
+                                        Mua lẻ
+                                    </div>
+                                </button>
+                            </div>
                             <div class="item" onclick="<?php echo $checkBuyer ? 'showAlert(1)' : '' ?>">
-                                <button class="button" onclick="">
+                                <button class="btn btn-primary" onclick="">
                                     <i class="item-icon fa-solid fa-gift"></i>
                                     <div class="item-text">Mua sỉ</div>
                                 </button>
@@ -147,7 +152,7 @@
                             @endphp
 
                             <div class="item user">
-                                <button class="button" onclick="signIn()"><i class="item-icon fa-regular fa-user"></i>
+                                <button class="btn btn-primary" onclick="signIn()"><i class="item-icon fa-regular fa-user"></i>
                                     <div class="item-text">{{Auth::user()->name}}</div>
                                 </button>
                                 <div class="signMenu" id="signMenu">
@@ -242,7 +247,7 @@
                             </div>
                             <div class="close-signMenu" onclick="closesignIn()"></div>
                             <div class="item item-shop">
-                                <button class="button" onclick="Shop()">
+                                <button class="btn btn-primary" onclick="Shop()">
                                     <i class="item-shop--icon fa-solid fa-cart-shopping"></i>
                                 </button>
                                 @php
@@ -868,6 +873,37 @@
     {{--        </div>--}}
     {{--    </div>--}}
 </header>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row justify-content-around">
+                    <a href="https://shipgo.biz/kr">
+                        <div class="custom_flag">
+                            <img class="w-100 h-100" src="{{ asset('flag/kr.svg') }}" alt="">
+                        </div>
+                    </a>
+                    <a href="https://shipgo.biz/en">
+                        <div class="custom_flag">
+                            <img class="w-100 h-100" src="{{ asset('flag/us.svg') }}" alt="">
+                        </div>
+                    </a>
+                    <a href="https://shipgo.biz/cn">
+                        <div class="custom_flag">
+                            <img class="w-100 h-100" src="{{ asset('flag/cn.svg') }}" alt="">
+                        </div>
+                    </a>
+                    <a href="https://shipgo.biz/vn">
+                        <div class="custom_flag">
+                            <img class="w-100 h-100" src="{{ asset('flag/vn.svg') }}" alt="">
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 {{--<script>--}}
