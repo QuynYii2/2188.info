@@ -188,4 +188,54 @@ class CartController extends Controller
         }
 
     }
+
+    public function addToCartApi(Request $request, $product)
+    {
+            $productID = $product;
+            $product = Product::find($productID);
+            if (!$product){
+                return response('not found', 404);
+            }
+            $valid = false;
+
+            $oldCarts = Cart::where([
+                ['user_id', '=', Auth::user()->id],
+                ['status', '=', CartStatus::WAIT_ORDER]
+            ])->get();
+
+            foreach ($oldCarts as $oldCart) {
+                if ($oldCart->product_id == $productID) {
+                    $valid = true;
+                    break;
+                }
+            }
+
+            if ($valid == true) {
+                $quantity = $request->input('quantity');
+                $oldCart = Cart::where([
+                    ['product_id', '=', $productID],
+                    ['status', '=', CartStatus::WAIT_ORDER]
+                ])->get();
+                $cart = $oldCart[0];
+                $cart->price = $product->price;
+                $cart->member = 1;
+                $cart->quantity = $cart->quantity + $quantity;
+                $cart->save();
+            } else {
+                $quantity = $request->input('quantity', 1);
+                if ($quantity < 1) {
+                    return response('error', 400);
+                }
+                $cart = [
+                    'user_id' => Auth::user()->id,
+                    'product_id' => $product->id,
+                    'price' => $product->price,
+                    'member' => 1,
+                    'quantity' => $quantity,
+                    'status' => CartStatus::WAIT_ORDER,
+                ];
+                Cart::create($cart);
+            }
+            return $cart;
+    }
 }

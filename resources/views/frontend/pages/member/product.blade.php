@@ -10,6 +10,9 @@
 
 @endphp
 @if($firstProduct)
+    @php
+        $price_sales = \App\Models\ProductSale::where('product_id', '=', $firstProduct->id)->get();
+    @endphp
     <div class="col-md-6 border">
         @php
             $attributes = DB::table('product_attribute')->where([['product_id', $firstProduct->id], ['status', \App\Enums\AttributeProductStatus::ACTIVE]])->get();
@@ -106,26 +109,20 @@
             <thead>
             <tr>
                 <th scope="col">Số lượng</th>
-                <th scope="col">Đơn giá</th>
+                <th scope="col">Giảm giá</th>
                 <th scope="col">Ngày dự kiến xuất kho</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>100</td>
-                <td>300</td>
-                <td>3 ngày kể từ ngày đặt hàng</td>
-            </tr>
-            <tr>
-                <td>300</td>
-                <td>600</td>
-                <td>6 ngày kể từ ngày đặt hàng</td>
-            </tr>
-            <tr>
-                <td>600</td>
-                <td>3000</td>
-                <td>9 ngày kể từ ngày đặt hàng</td>
-            </tr>
+            @if(!$price_sales->isEmpty())
+                @foreach($price_sales as $price_sale)
+                    <tr>
+                        <td>{{$price_sale->quantity}}</td>
+                        <td>-{{$price_sale->sales}} %</td>
+                        <td>3 ngày kể từ ngày đặt hàng</td>
+                    </tr>
+                @endforeach
+            @endif
             </tbody>
         </table>
         <p>đơn giá phía trên là điều kiện FOB/TT</p>

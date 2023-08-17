@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Member;
 
+use App\Enums\EvaluateProductStatus;
 use App\Enums\MemberRegisterInfoStatus;
+use App\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\MemberRegisterInfo;
@@ -10,6 +12,7 @@ use App\Models\MemberRegisterPersonSource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class RegisterMemberController extends Controller
 {
@@ -27,6 +30,19 @@ class RegisterMemberController extends Controller
             return redirect(route('process.register.member'));
         }
         return view('frontend/pages/member/index', compact('memberCompanys'));
+    }
+
+    public function memberParent(Request $request, $id)
+    {
+        (new HomeController())->getLocale($request);
+        $company = MemberRegisterInfo::find($id);
+        $carts = DB::table('carts')
+            ->join('products', 'products.id', '=', 'carts.product_id')
+            ->join('member_register_infos', 'member_register_infos.user_id', '=', 'carts.user_id')
+            ->where([['products.user_id', $company->user_id], ['carts.member', 1]])
+            ->select('carts.*', 'member_register_infos.name','member_register_infos.member','member_register_infos.address')
+            ->get();
+        return view('frontend.pages.member.member-partner', compact('company', 'carts'));
     }
 
     public function saveProduct(Request $request)
