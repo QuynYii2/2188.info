@@ -127,7 +127,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="header-top-right col-xl-3 col-md-4 d-flex text-center justify-content-end">
+                    <div class="header-top-right col-xl-3 col-md-4 d-flex text-center justify-content-around">
                         @if(Auth::check())
                             <div class="item">
                                 <button type="button" class="btn btn-primary" data-toggle="modal"
