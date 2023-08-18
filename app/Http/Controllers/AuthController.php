@@ -226,7 +226,7 @@ class AuthController extends Controller
     public function processRegisterMember(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $members1 = Member::where([['status', '=', MemberStatus::ACTIVE], ['price', '!=', 0]])->get();
+        $members1 = Member::where([['status', '=', MemberStatus::ACTIVE]])->get();
 
         $index = 0;
         foreach ($members1 as $key => $value) {
