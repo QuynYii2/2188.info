@@ -7,7 +7,9 @@
     <div class="item">
         @if($product->thumbnail)
             <div class="item-img">
+                <a href="{{route('detail_product.show', $product->id)}}">
                 <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
+                </a>
                 <div class="button-view">
                     <button type="button" class="btn view_modal" data-toggle="modal"
                             data-value="{{$product}}" data-id="{{$productDetail}}"
@@ -33,7 +35,9 @@
                 $nameSeller = DB::table('users')->where('id', $product->user_id)->first();
             @endphp
             <div class="card-brand">
+                <a href="{{route('shop.information.show', $nameSeller->id)}}">
                 {{($nameSeller->name)}}
+                </a>
             </div>
             <div class="card-title">
                 @if(Auth::check())
