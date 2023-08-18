@@ -557,7 +557,7 @@
                             </div>
 
                             <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="profile-tab">
-                                @include('frontend.pages.shop-information.tabs_product')
+                                @include('frontend.pages.shop-information.product-member')
                             </div>
                             <div class="tab-pane fade" id="vouchers" role="tabpanel" aria-labelledby="contact-tab">
                                 @include('frontend.pages.shop-information.tabs_voucher')
