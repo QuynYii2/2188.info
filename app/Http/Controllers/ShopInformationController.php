@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ProductStatus;
+use App\Models\MemberRegisterInfo;
 use App\Models\Product;
 use App\Models\ShopInfo;
 use App\Models\Voucher;
@@ -31,7 +32,8 @@ class ShopInformationController extends Controller
 
         $shopInformation = ShopInfo::where('user_id', $id)->first();
         $listVouchers = Voucher::where('user_id', '=', $id)->get();
-        return view('frontend/pages/shop-information/index', compact('listProduct', 'priceProductOfCategory', 'sellerInfo', 'countProductBySeller', 'listVouchers', 'shopInformation'));
+        $company = MemberRegisterInfo::where('user_id', $id)->first();
+        return view('frontend/pages/shop-information/index', compact('listProduct', 'company','priceProductOfCategory', 'sellerInfo', 'countProductBySeller', 'listVouchers', 'shopInformation'));
     }
 
 

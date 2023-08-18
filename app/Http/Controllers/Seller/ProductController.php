@@ -217,7 +217,7 @@ class ProductController extends Controller
             }
 
             $isAdmin = (new HomeController())->checkAdmin();
-            if ($isAdmin == true){
+            if ($isAdmin == true) {
                 $notMember = false;
             }
 
@@ -278,6 +278,8 @@ class ProductController extends Controller
 
             if ($request->input('giakhuyenmai')) {
                 $product->price = $request->input('giakhuyenmai');
+            } else {
+                $product->price = $request->input('giaban');
             }
 
             if ($request->input('min')) {
@@ -374,7 +376,12 @@ class ProductController extends Controller
             $product->slug = \Str::slug($request->input('name'));
 
             $product->old_price = $request->input('giaban');
-            $product->price = $request->input('giakhuyenmai');
+
+            if ($request->input('giakhuyenmai')) {
+                $product->price = $request->input('giakhuyenmai');
+            } else {
+                $product->price = $request->input('giaban');
+            }
 
             $product->qty = $request->input('qty');
 
