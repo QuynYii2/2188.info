@@ -5,9 +5,11 @@
      $coin = null;
 
      $checkBuyer = false;
+     $checkTrust = false;
      if (Auth::check()){
          $coin = \App\Models\Coin::where([['status', \App\Enums\CoinStatus::ACTIVE], ['user_id', Auth::user()->id]])->first();
-         $checkBuyer = Auth::user()->member == "BUYER";
+         $checkBuyer = Auth::user()->member == \App\Enums\RegisterMember::BUYER;
+         $checkTrust = Auth::user()->member == \App\Enums\RegisterMember::TRUST;
      }
 @endphp
 <style>
@@ -127,7 +129,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="header-top-right col-xl-3 col-md-4 d-flex text-center justify-content-end">
+                    <div class="header-top-right col-xl-3 col-md-4 d-flex text-center justify-content-around">
                         @if(Auth::check())
                             <div class="item">
                                 <button type="button" class="btn btn-primary" data-toggle="modal"
@@ -212,7 +214,7 @@
                                                 $locale == 'vn';
                                             }
                                         @endphp
-                                        @if($isAdmin == true || $locale != 'vn')
+                                        @if(($isAdmin == true || $locale != 'vn') && !$checkTrust)
                                             <div class="drop-item">
                                                 <a href="{{ route('seller.products.home') }}">{{ __('home.Seller channel') }}</a>
                                             </div>
@@ -239,7 +241,7 @@
                                                     phẩm</a>
                                             </div>
                                         @endif
-                                        @if($isValid==true)
+                                        @if(!$checkTrust && $isValid==true)
                                             <div class="drop-item">
                                                 <a href="{{route('shop.list.products')}}">{{ __('home.Shop') }}</a>
                                             </div>

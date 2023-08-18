@@ -205,6 +205,9 @@ class HomeController extends Controller
     public function getLangDisplay()
     {
         $locale = session()->get('locale');
+        if (!$locale) {
+            $locale = 'vi';
+        }
         $locations = ['vi', 'kr', 'jp', 'cn', 'en'];
         $lang = ['vi', 'ko', 'ja', 'zh', 'en'];
         $index = array_search($locale, $locations);
