@@ -1,6 +1,9 @@
 @extends('frontend.layouts.master')
 @section('title', 'Partner Register Members')
 @section('content')
+    @php
+        $mentor = \App\Models\User::find($company->user_id);
+    @endphp
     <div class="container-fluid">
         <h3 class="text-center">Danh sách đối tác</h3>
         <div class="border d-flex justify-content-between align-items-center bg-warning p-5">
@@ -45,7 +48,8 @@
             <a href="#" class="btn btn-primary">Tin nhắn đã nhận</a>
             <a href="#" class="btn btn-warning">Tin nhắn đã gửi</a>
             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Mua hàng</a>
-            <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">Đặt sỉ nước ngoài</a>
+            <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">Đặt sỉ nước
+                ngoài</a>
         </div>
         <table class="table table-bordered">
             <thead>
@@ -74,7 +78,7 @@
                             <tr>
                                 <td scope="row">{{$memberPartner->id}}</td>
                                 <td>
-                                    {{$memberPartner->address}}
+                                    {{$mentor->region}}
                                 </td>
                                 <td>{{$memberPartner->name}}</td>
                                 <td>{{$memberPartner->address}}</td>
@@ -93,7 +97,7 @@
                         <tr>
                             <td scope="row">{{$memberPartner->id}}</td>
                             <td>
-                                {{$memberPartner->address}}
+                                {{$mentor->region}}
                             </td>
                             <td>{{$memberPartner->name}}</td>
                             <td>{{$memberPartner->address}}</td>
@@ -102,9 +106,57 @@
                             <td>{{$memberItem->quantity}}</td>
                             <td>{{$memberPartner->member}}</td>
                             <td>
-                                <i class="fa-solid fa-trophy"></i>
-                                <i class="fa-solid fa-trophy"></i>
-                                <i class="fa-solid fa-trophy"></i>
+                                @php
+                                    $ranks = null;
+                                    $rankSetup = \App\Models\RankSetUpSeller::where('user_id', $mentor->id)->first();
+                                    if ($rankSetup){
+                                         $orderItems = DB::table('order_items')
+                                            ->join('orders', 'orders.id', '=', 'order_items.order_id')
+                                            ->join('products', 'products.id', '=', 'order_items.product_id')
+                                            ->where([
+                                                ['orders.user_id', '=', $user->id],
+                                                ['products.user_id', $mentor->id]
+                                            ])
+                                            ->select('order_items.*', 'products.user_id')
+                                            ->get();
+                                        $total = 0;
+                                        foreach ($orderItems as $orderItem) {
+                                            $total = $total + $orderItem->price * $orderItem->quantity;
+                                        }
+                                        $listRank = $rankSetup->setup;
+                                        $arrayRank = explode(',', $listRank);
+                                        for($i = 0; $i<4; $i++){
+                                             $detailRank = $arrayRank[$i];
+                                             $arrayDetailRank = explode(':', $detailRank);
+                                             $value = (int)$arrayDetailRank[1];
+                                             if ($total > $value) {
+                                                 $ranks = $arrayDetailRank[0];
+                                             }
+                                        }
+                                        $ranks = str_replace(' ', '', $ranks);
+                                    }
+                                @endphp
+                                @if($ranks == \App\Enums\RankSetupSeller::DIAMOND)
+                                    <i class="fa-solid fa-trophy"></i>
+                                    <i class="fa-solid fa-trophy"></i>
+                                    <i class="fa-solid fa-trophy"></i>
+                                    <i class="fa-solid fa-trophy"></i>
+                                    <i class="fa-solid fa-trophy"></i>
+                                @elseif($ranks == \App\Enums\RankSetupSeller::GOLD)
+                                    <i class="fa-solid fa-trophy"></i>
+                                    <i class="fa-solid fa-trophy"></i>
+                                    <i class="fa-solid fa-trophy"></i>
+                                    <i class="fa-solid fa-trophy"></i>
+                                @elseif($ranks == \App\Enums\RankSetupSeller::SILVER)
+                                    <i class="fa-solid fa-trophy"></i>
+                                    <i class="fa-solid fa-trophy"></i>
+                                    <i class="fa-solid fa-trophy"></i>
+                                @elseif($ranks == \App\Enums\RankSetupSeller::COPPER)
+                                    <i class="fa-solid fa-trophy"></i>
+                                    <i class="fa-solid fa-trophy"></i>
+                                @else
+                                    <i class="fa-solid fa-trophy"></i>
+                                @endif
                             </td>
                         </tr>
                     @endif
@@ -142,7 +194,8 @@
         </div>
     </div>
 
-    <div class="modal fade" id="exampleModalBuyBulk" role="dialog" aria-labelledby="exampleModalBuyBulk" aria-hidden="true">
+    <div class="modal fade" id="exampleModalBuyBulk" role="dialog" aria-labelledby="exampleModalBuyBulk"
+         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
