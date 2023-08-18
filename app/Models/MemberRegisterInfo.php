@@ -24,5 +24,6 @@ class MemberRegisterInfo extends Model
         'member_id',
         'address',
         'status',
+        'giay_phep_kinh_doanh',
     ];
 }
