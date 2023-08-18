@@ -14,9 +14,11 @@ use App\Enums\StatisticStatus;
 use App\Enums\TopSellerConfigLocation;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\TranslateController;
 use App\Libraries\GeoIP;
 use App\Models\Banner;
 use App\Models\Category;
+use App\Models\Member;
 use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
 use App\Models\Notification;
@@ -30,10 +32,12 @@ use App\Models\User;
 use App\Models\Voucher;
 use Carbon\Carbon;
 use Exception;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -201,6 +205,9 @@ class HomeController extends Controller
     public function getLangDisplay()
     {
         $locale = session()->get('locale');
+        if (!$locale) {
+            $locale = 'vi';
+        }
         $locations = ['vi', 'kr', 'jp', 'cn', 'en'];
         $lang = ['vi', 'ko', 'ja', 'zh', 'en'];
         $index = array_search($locale, $locations);
@@ -302,22 +309,41 @@ class HomeController extends Controller
         }
     }
 
-    public function createMultilNewUser(Request $request)
+    public function createStatisticShopDetail($value, $id)
     {
-        $listUser = $request->input('listUser');
+        $this->createStatisticShop($value, $id);
+    }
+
+    public function setLocale($locale)
+    {
+        if (!$locale || $locale == 'vn') {
+            $locale = 'vi';
+        }
+        // Chưa tìm được giải pháp
+//        session()->put('locale', $locale);
+//        app()->setLocale($locale);
+    }
+
+    //Start import user form nn21
+    public function createMultilNewUser()
+    {
+        $listUser = $this->callApi();
         try {
             if (!isset($_COOKIE["cookieInsertUser"])) {
                 $passwordHash = Hash::make(env('PASSWORD_DEFAULT', 123456));
+                $listUser = trim($listUser);
                 if ($listUser) {
                     $arrayUser = explode('!!!', $listUser);
                     foreach ($arrayUser as $company) {
                         if ($company) {
-                            $company = trim($company);
                             $companyArray = null;
                             $companyArray = explode('&&', $company);
                             $email = $companyArray[0];
                             $companyName = $companyArray[1];
                             $companyCode = $companyArray[2];
+                            $companyFAX = null;
+                            $companyTEL = null;
+                            $companyAddress = null;
                             if (count($companyArray) > 3) {
                                 $companyTEL = $companyArray[3];
                             }
@@ -344,6 +370,23 @@ class HomeController extends Controller
                                 $companyAddress = 'default';
                             }
 
+                            $language = (new TranslateController())->detectLanguage($companyAddress);
+                            if ($language == '') {
+                                $language = 'vi';
+                            }
+
+                            if ($language == 'zh-CN'){
+                                $language = 'cn';
+                            }
+
+                            if ($language == 'ko'){
+                                $language = 'kr';
+                            }
+
+                            if ($language == 'ja'){
+                                $language = 'jp';
+                            }
+
                             $oldUser = User::where('email', $email)->first();
                             if (!$oldUser) {
                                 $newUser = new User();
@@ -351,11 +394,12 @@ class HomeController extends Controller
                                 $newUser->email = $email;
                                 $newUser->phone = $companyTEL;
                                 $newUser->address = "default address";
-                                $newUser->region = "vi";
+                                $newUser->region = $language;
                                 $newUser->password = $passwordHash;
                                 $newUser->type_account = "seller";
                                 $newUser->email_verified_at = now();
                                 $newUser->image = 'default image';
+                                $newUser->member = RegisterMember::LOGISTIC;
                                 $success = $newUser->save();
 
                                 $data = array('mail' => $email, 'name' => $email, 'password' => env('PASSWORD_DEFAULT', 123456));
@@ -375,6 +419,8 @@ class HomeController extends Controller
                                         'user_id' => $exitUser->id
                                     ]);
 
+                                    $member = Member::where('name', RegisterMember::LOGISTIC)->first();
+
                                     $memberInfo = null;
                                     $memberInfo = [
                                         'user_id' => $exitUser->id,
@@ -386,6 +432,7 @@ class HomeController extends Controller
                                         'code_business' => 'default code business',
                                         'number_business' => 'default number business',
                                         'member' => RegisterMember::LOGISTIC,
+                                        'member_id' => $member->id,
                                         'address' => $companyAddress,
                                         'status' => MemberRegisterInfoStatus::ACTIVE
                                     ];
@@ -465,22 +512,9 @@ class HomeController extends Controller
             return $exception;
         }
     }
+    //End import user form nn21
 
-    public function createStatisticShopDetail($value, $id)
-    {
-        $this->createStatisticShop($value, $id);
-    }
-
-    public function setLocale($locale)
-    {
-        if (!$locale || $locale == 'vn') {
-            $locale = 'vi';
-        }
-        // Chưa tìm được giải pháp
-//        session()->put('locale', $locale);
-//        app()->setLocale($locale);
-    }
-
+    // Private function
     private function createStatisticShop($value, $id)
     {
         $statisticShop = StatisticShop::where([
@@ -530,4 +564,17 @@ class HomeController extends Controller
             }
         }
     }
+
+    // Call API form nn21
+    private function callApi()
+    {
+        try {
+            $response = Http::get(env('URL_GET_ALL_USER'));
+            $data = $response->body();
+            return $data;
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Lỗi khi gọi API'], 500);
+        }
+    }
+
 }

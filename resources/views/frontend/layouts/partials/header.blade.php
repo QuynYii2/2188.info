@@ -3,11 +3,21 @@
 @php
     $config = \App\Models\ConfigProject::where('status', \App\Enums\ConfigProjectStatus::ACTIVE)->orderBy('created_at', 'desc')->limit(1)->get();
      $coin = null;
+
+     $checkBuyer = false;
+     $checkTrust = false;
      if (Auth::check()){
          $coin = \App\Models\Coin::where([['status', \App\Enums\CoinStatus::ACTIVE], ['user_id', Auth::user()->id]])->first();
+         $checkBuyer = Auth::user()->member == \App\Enums\RegisterMember::BUYER;
+         $checkTrust = Auth::user()->member == \App\Enums\RegisterMember::TRUST;
      }
 @endphp
 <style>
+    .custom_flag {
+        width: 100px;
+        height: 66px;
+    }
+
     .header-bottom-left--item.item-left--vi a:before {
         display: block;
         content: '';
@@ -52,6 +62,9 @@
         background-repeat: no-repeat;
     }
 
+    .none_decoration {
+        text-decoration: none !important;
+    }
 </style>
 
 
@@ -72,7 +85,6 @@
                                 </a>
                             </div>
                         @endif
-
                         @if(!$config->isEmpty())
                             <div class="header-address text-center col-xl-5">
                                 <a class="header-address--text" href="">Available 24/7 at</a>
@@ -84,7 +96,11 @@
                         <form class="search-wrapper">
                             <input type="text" placeholder="{{ __('home.placeholder search') }}"
                                    style="box-shadow: none">
-                            <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+
+                            <button type="submit"
+                                    onclick="<?php echo $checkBuyer ? 'showAlert(1)' : (Auth::check() ? '' : 'showAlert(2)') ?>">
+                                <i
+                                        class="fa-solid fa-magnifying-glass"></i></button>
                             <div class="category-drop input-group-prepend">
                                 <button class="btn-all btn-outline-secondary dropdown-toggle" type="button"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All
@@ -113,37 +129,37 @@
                             </div>
                         </form>
                     </div>
-                    <div class="header-top-right col-xl-3 col-md-4 d-flex text-center justify-content-end">
+                    <div class="header-top-right col-xl-3 col-md-4 d-flex text-center justify-content-around">
                         @if(Auth::check())
                             <div class="item">
-                                <button class="button" onclick="">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#modal-flag-header">
                                     <i class="item-icon fa-regular fa-heart"></i>
-                                    @php
-                                        $local = session('locale');
-                                        if ($local == null){
-                                            $local = 'vi';
-                                        }
-                                    @endphp
                                     <div class="item-text">
-                                        <a href="{{route('wish.list.index')}}"
-                                           style="color: #fff; text-decoration: none">{{ __('home.Wish Lists') }}</a>
+                                        Mua lẻ
                                     </div>
                                 </button>
                             </div>
-                            <div class="item">
-                                <button class="button" onclick="">
+                            <div class="item" onclick="<?php echo $checkBuyer ? 'showAlert(1)' : '' ?>">
+                                <button class="btn btn-primary" onclick="">
                                     <i class="item-icon fa-solid fa-gift"></i>
-                                    <div class="item-text">{{ __('home.Gift Cards') }}</div>
+                                    <div class="item-text">Mua sỉ</div>
                                 </button>
                             </div>
+                            @php
+                                $local = session('locale');
+                                if ($local == null){
+                                    $local = 'vi';
+                                }
+                            @endphp
+
                             <div class="item user">
-                                <button class="button" onclick="signIn()"><i class="item-icon fa-regular fa-user"></i>
+                                <button class="btn btn-primary" onclick="signIn()"><i class="item-icon fa-regular fa-user"></i>
                                     <div class="item-text">{{Auth::user()->name}}</div>
                                 </button>
                                 <div class="signMenu" id="signMenu">
                                     <div class="name">
                                         <a href="{{route('profile.show')}}">{{Auth::user()->name}}</a>
-                                        <br> <br>
                                         <a href="{{route('process.register.member')}}"
                                            class="">{{ __('home.Member registration') }}</a>
                                     </div>
@@ -152,69 +168,94 @@
                                             onclick="logout()">{{ __('home.Sign Out') }}</button>
                                 </div>
                                 <div class="hover-list">
-                                    <div class="drop-item">
-                                        <a href="{{route('profile.show')}}">{{ __('home.profile') }}</a>
-                                    </div>
-                                    @if($coin)
+                                    <a href="{{route('profile.show')}}" class="none_decoration">
                                         <div class="drop-item">
-                                            <a href="">Coins: {{$coin->quantity}}</a>
+                                            {{ __('home.profile') }}
                                         </div>
-                                    @endif
-                                    <div class="drop-item">
-                                        <a href="{{route('buy.coin.show')}}">{{ __('home.buy coin') }}</a>
-                                    </div>
-                                    @php
-                                        $user = Auth::user()->id;
-                                        $role_id = DB::table('role_user')->where('user_id', $user)->get();
-                                        $isAdmin = false;
-                                        foreach ($role_id as $item) {
-                                            if ($item->role_id == 1 || 2) {
-                                                $isAdmin = true;
-                                            }
-                                        }
-                                    @endphp
-                                    @php
-                                        $locale = $_COOKIE['countryCode'];
-                                        if(!$locale){
-                                            $locale == 'vn';
-                                        }
-                                        if($locale == 'null'){
-                                            $locale == 'vn';
-                                        }
-                                    @endphp
-                                    @if($isAdmin == true & $locale != 'vn')
-                                        <div class="drop-item">
-                                            <a href="{{ route('seller.products.home') }}">{{ __('home.Seller channel') }}</a>
-                                        </div>
-                                    @endif
-                                    @php
-                                        if (Auth::check()){
-                                            $isMember = \App\Models\MemberRegisterPersonSource::where([
-                                                ['email', Auth::user()->email],
-                                                ['check', 1]
-                                            ])->first();
-                                        }
+                                    </a>
 
-                                        $isValid = (new \App\Http\Controllers\Frontend\HomeController())->checkSellerOrAdmin();
-                                    @endphp
-                                    @if($isMember)
-                                        <div class="drop-item">
-                                            <a href="{{ route('products.register.member.index') }}">Quản lí sản phẩm</a>
-                                        </div>
+                                    @if(!$checkBuyer)
+                                        @if($coin)
+                                            <div class="drop-item">
+                                                <a href="">Coins: {{$coin->quantity}}</a>
+                                            </div>
+                                        @endif
+                                        <a href="{{route('buy.coin.show')}}" class="none_decoration">
+                                            <div class="drop-item">
+                                                {{ __('home.buy coin') }}
+                                            </div>
+                                        </a>
+                                        <a href="{{route('wish.list.index')}}" class="none_decoration">
+                                            <div class="drop-item">
+                                                {{ __('home.Wish Lists') }}
+                                            </div>
+                                        </a>
+                                        <a href="!#" class="none_decoration">
+                                            <div class="drop-item">
+                                                {{ __('home.Gift Cards') }}
+                                            </div>
+                                        </a>
+                                        @php
+                                            $user = Auth::user()->id;
+                                            $role_id = DB::table('role_user')->where('user_id', $user)->get();
+                                            $isAdmin = false;
+                                            foreach ($role_id as $item) {
+                                                if ($item->role_id == 1 || $item->role_id == 2) {
+                                                    $isAdmin = true;
+                                                }
+                                            }
+                                        @endphp
+                                        @php
+                                            $locale = $_COOKIE['countryCode'];
+                                            if(!$locale){
+                                                $locale == 'vn';
+                                            }
+                                            if($locale == 'null'){
+                                                $locale == 'vn';
+                                            }
+                                        @endphp
+                                        @if(($isAdmin == true || $locale != 'vn') && !$checkTrust)
+                                            <div class="drop-item">
+                                                <a href="{{ route('seller.products.home') }}">{{ __('home.Seller channel') }}</a>
+                                            </div>
+                                        @endif
+                                        @php
+                                            if (Auth::check()){
+                                                $member = \App\Models\MemberRegisterInfo::where([
+                                                    ['user_id', Auth::user()->id],
+                                                    ['status', \App\Enums\MemberRegisterInfoStatus::ACTIVE]
+                                                ])->first();
+                                                $isMember = null;
+                                                if ($member){
+//                                                    if ($member->member_id == 2){
+                                                        $isMember = true;
+//                                                    }
+                                                }
+                                            }
+
+                                            $isValid = (new \App\Http\Controllers\Frontend\HomeController())->checkSellerOrAdmin();
+                                        @endphp
+                                        @if($isMember)
+                                            <div class="drop-item">
+                                                <a href="{{ route('stand.register.member.index', $member->id) }}">{{ __('home.Shop') }}</a>
+                                            </div>
+                                        @endif
+                                        @if(!$checkTrust && $isValid==true)
+                                            <div class="drop-item">
+                                                <a href="{{route('shop.list.products')}}">Quản lí sản
+                                                    phẩm</a>
+                                            </div>
+                                        @endif
                                     @endif
-                                    @if($isValid==true)
-                                        <div class="drop-item">
-                                            <a href="{{route('shop.list.products')}}">{{ __('home.Shop') }}</a>
-                                        </div>
-                                    @endif
-                                    <div class="drop-item">
-                                        <button onclick="logout()" href="">{{ __('home.Log out') }}</button>
+
+                                    <div class="drop-item -hand-pointer" onclick="logout()">
+                                        <button>{{ __('home.Log out') }}</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="close-signMenu" onclick="closesignIn()"></div>
                             <div class="item item-shop">
-                                <button class="button" onclick="Shop()">
+                                <button class="btn btn-primary" onclick="Shop()">
                                     <i class="item-shop--icon fa-solid fa-cart-shopping"></i>
                                 </button>
                                 @php
@@ -303,22 +344,19 @@
                             <div class="closeShopMenu" onclick="closeShop()"></div>
                         @else
                             <div class="item">
-                                <div class="d-flex">
-                                    <button class="button_login" onclick="signIn()">
-                                        <div class="it  em-text">B2B</div>
-                                    </button>
-                                    <button class="button_login" onclick="signIn()">
-                                        <div class="item-text">B2C</div>
-                                    </button>
-                                </div>
-                                <div class="d-flex">
-                                    <button class="button_login" onclick="signIn()">
-                                        <div class="item-text">BB</div>
-                                    </button>
-                                    <button class="button_login" onclick="signIn()">
-                                        <div class="item-text">BB</div>
-                                    </button>
-                                </div>
+                                @if(!Auth::user())
+                                    <div class="d-flex">
+                                        <a href="{{ route('register.show') }}">
+                                            <button class="button_login">
+                                                <div class="it  em-text">Đăng ký</div>
+                                            </button>
+                                        </a>
+                                        <button class="button_login" onclick="signIn()">
+                                            <div class="item-text">Đăng nhập</div>
+                                        </button>
+                                    </div>
+                                @endif
+
                                 <div class="signMenu" id="signMenu">
                                     <div class="login">{{ __('home.LOGIN') }}</div>
                                     <div class="content">
@@ -844,6 +882,37 @@
     {{--    </div>--}}
 </header>
 
+<div class="modal fade" id="modal-flag-header" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row justify-content-around">
+                    <a href="https://shipgo.biz/kr">
+                        <div class="custom_flag">
+                            <img class="w-100 h-100" src="{{ asset('flag/kr.svg') }}" alt="">
+                        </div>
+                    </a>
+                    <a href="https://shipgo.biz/en">
+                        <div class="custom_flag">
+                            <img class="w-100 h-100" src="{{ asset('flag/us.svg') }}" alt="">
+                        </div>
+                    </a>
+                    <a href="https://shipgo.biz/cn">
+                        <div class="custom_flag">
+                            <img class="w-100 h-100" src="{{ asset('flag/cn.svg') }}" alt="">
+                        </div>
+                    </a>
+                    <a href="https://shipgo.biz/vn">
+                        <div class="custom_flag">
+                            <img class="w-100 h-100" src="{{ asset('flag/vn.svg') }}" alt="">
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 {{--<script>--}}
 {{--    // variable to store our intervalID--}}
@@ -915,6 +984,23 @@
 
         // Gửi form để thực hiện logout
         form.submit();
+    }
+
+    function showAlert(role = 2) {
+        event.preventDefault();
+        switch (role) {
+            case 1:
+                if (confirm('Bạn phải nâng cấp quyền để thực hiện thao tác này.')) {
+                    return window.location.href = '{{ route('process.register.member') }}'
+                }
+                break;
+            case 2:
+                if (confirm('Bạn phải đăng nhập để thực hiện thao tác này.')) {
+                    return window.location.href = '{{ route('login') }}'
+                }
+                break;
+        }
+
     }
 </script>
 

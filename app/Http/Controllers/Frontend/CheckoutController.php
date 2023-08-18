@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Enums\CartStatus;
 use App\Enums\CoinStatus;
+use App\Enums\MemberPartnerStatus;
+use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\NotificationStatus;
 use App\Enums\OrderItemStatus;
 use App\Enums\OrderMethod;
@@ -14,6 +16,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\PaypalPaymentController;
 use App\Models\Cart;
 use App\Models\Coin;
+use App\Models\MemberPartner;
+use App\Models\MemberRegisterInfo;
 use App\Models\Notification;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -56,18 +60,24 @@ class CheckoutController extends Controller
 
     private function calcSoLuongSPTrongKho($carts)
     {
-        $product_id = $carts->product_id;
-        $quantity = $carts->quantity;
+        try {
+            $product_id = $carts->product_id;
+            $quantity = $carts->quantity;
 
-        $product = Product::where([['id', '=', $product_id]])->first();
-        $storage = StorageProduct::where([['id', '=', $product->storage_id]])->first();
+            $product = Product::where([['id', '=', $product_id]])->first();
+            $storage = StorageProduct::where([['id', '=', $product->storage_id]])->first();
 
-        $qtyCalc = $storage->quantity - $quantity;
-        $product->qty = $qtyCalc;
-        $storage->quantity = $qtyCalc;
+            if ($storage){
+                $qtyCalc = $storage->quantity - $quantity;
+                $product->qty = $qtyCalc;
+                $storage->quantity = $qtyCalc;
 
-        $product->save();
-        $storage->save();
+                $product->save();
+                $storage->save();
+            }
+        } catch (\Exception $exception) {
+            return $exception;
+        }
     }
 
     private function checkout(Request $request, $status, $orderMethod, $name, $email, $phone, $address, $idVoucher, $array)
@@ -79,6 +89,40 @@ class CheckoutController extends Controller
         $realTotalPrice = 0;
 
         foreach ($carts as $cart) {
+            if ($cart->member == 1) {
+                $productCart = Product::find($cart->product_id);
+                $memberProduct = MemberRegisterInfo::where([
+                    ['user_id', $productCart->user_id],
+                    ['status', MemberRegisterInfoStatus::ACTIVE]
+                ])->first();
+                if ($memberProduct) {
+                    $userCurrent = Auth::user();
+                    $memberCurrent = MemberRegisterInfo::where([
+                        ['user_id', $userCurrent->id],
+                        ['status', MemberRegisterInfoStatus::ACTIVE]
+                    ])->first();
+                    if ($memberCurrent) {
+                        $memberPartner = MemberPartner::where([
+                            ['company_id_source', $memberProduct->id],
+                            ['company_id_follow', $memberCurrent->id],
+                            ['status', MemberPartnerStatus::ACTIVE]
+                        ])->first();
+                        if ($memberPartner) {
+                            $memberPartner->price = $memberPartner->price + ($cart->price * $cart->quantity);
+                            $memberPartner->quantity = $memberPartner->quantity + 1;
+                            $memberPartner->save();
+                        } else {
+                            $item = [
+                                'company_id_source' => $memberProduct->id,
+                                'company_id_follow' => $memberCurrent->id,
+                                'quantity' => 1,
+                                'price' => ($cart->price * $cart->quantity),
+                            ];
+                            MemberPartner::create($item);
+                        }
+                    }
+                }
+            }
             $realTotalPrice = $realTotalPrice + ($cart->price * $cart->quantity);
         }
 
@@ -149,15 +193,26 @@ class CheckoutController extends Controller
                 ['product_id', $cart->product->id],
                 ['variation', $cart->values]
             ])->first();
-
-            $item = [
-                'order_id' => $orders[$number - 1]->id,
-                'product_id' => $cart->product->id,
-                'quantity' => $cart->quantity,
-                'price' => $productDetail->price,
-                'variable' => $productDetail->id,
-                'status' => OrderItemStatus::ACTIVE
-            ];
+            $item = null;
+            if ($productDetail) {
+                $item = [
+                    'order_id' => $orders[$number - 1]->id,
+                    'product_id' => $cart->product->id,
+                    'quantity' => $cart->quantity,
+                    'price' => $productDetail->price,
+                    'variable' => $productDetail->id,
+                    'status' => OrderItemStatus::ACTIVE
+                ];
+            } else {
+                $item = [
+                    'order_id' => $orders[$number - 1]->id,
+                    'product_id' => $cart->product->id,
+                    'quantity' => $cart->quantity,
+                    'price' => $cart->price,
+                    'variable' => 0,
+                    'status' => OrderItemStatus::ACTIVE
+                ];
+            }
             (new HomeController())->createStatisticShopDetail('orders', $cart->product->user_id);
             OrderItem::create($item);
 

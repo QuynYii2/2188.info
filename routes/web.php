@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Member\RegisterMemberController;
+use App\Http\Controllers\MemberPartnerController;
 use App\Http\Controllers\PaypalPaymentController;
 use App\Http\Controllers\PermissionRankController;
 use App\Http\Controllers\ProductInterestController;
@@ -48,6 +49,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 Route::get('/lang/{locale}', function ($locale) {
     session()->put('locale', $locale);
     return redirect()->back();
@@ -59,10 +62,11 @@ Route::post('/register', [UserController::class, 'store'])->name('register.store
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/login/', [AuthController::class, 'showLogin'])->name('login');
-Route::get('/login/{locale}', [AuthController::class, 'showLoginForm'])->name('login.local');
-Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
-//
+Route::prefix('/login')->group(function () {
+    Route::get('', [AuthController::class, 'showLogin'])->name('login');
+    Route::get('/{locale}', [AuthController::class, 'showLoginForm'])->name('login.local');
+    Route::post('', [AuthController::class, 'login'])->name('login.submit');
+});
 
 // Google Sign In
 Route::get('/login-google', [AuthController::class, 'getGoogleSignInUrl'])->name('login.google');
@@ -88,11 +92,6 @@ Route::middleware('auth.product')->group(function () {
     Route::get('/product/{id}', 'ProductController@show')->name('product.show');
 });
 
-
-
-
-//
-Route::post('/insert-multil-user', [HomeController::class, 'createMultilNewUser'])->name('insert.multil.user');
 
 Route::get('/product-detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
 Route::get('/shop/information/{id}', [\App\Http\Controllers\ShopInformationController::class, 'index'])->name('shop.information.show');
@@ -164,6 +163,7 @@ Route::middleware(['auth'])->group(function () {
         '/payment-register-member',
         [AuthController::class, 'paymentMember']
     )->name('payment.member');
+
 
     Route::get('/location-nation', [AuthController::class, 'getListNation'])->name('location.nation.get');
     Route::get('/location-state/{id}', [AuthController::class, 'getListStateByNation'])->name('location.state.get');
@@ -396,8 +396,13 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     // Product Shop
     Route::get('/list-products-shop', [\App\Http\Controllers\ProductController::class, 'getListProductShop'])->name('shop.list.products');
     // Register member
-    Route::get('/products-register-member', [RegisterMemberController::class, 'index'])->name('products.register.member.index');
+//    Route::get('/products-register-member', [RegisterMemberController::class, 'index'])->name('products.register.member.index');
+    Route::get('/stands-register-member/{id}', [RegisterMemberController::class, 'memberStand'])->name('stand.register.member.index');
+    Route::get('/parents-register-member', [RegisterMemberController::class, 'memberPartner'])->name('partner.register.member.index');
+    Route::get('/parents-register-member/{locale}', [RegisterMemberController::class, 'memberPartnerLocale'])->name('parent.register.member.locale');
     Route::post('/products-register-member', [RegisterMemberController::class, 'saveProduct'])->name('products.register.member.create');
+    Route::post('/add-to-cart-register-member/{product}', [CartController::class, 'addToCartApi'])->name('cart.api');
+    Route::post('/stands-register-member', [MemberPartnerController::class, 'store'])->name('stands.register.member');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {

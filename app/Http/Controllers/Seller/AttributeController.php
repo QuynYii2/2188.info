@@ -54,7 +54,6 @@ class AttributeController extends Controller
                 'slug' => $slug,
                 'user_id' => Auth::user()->id,
             ]);
-
             if ($attribute) {
                 alert()->success('Success', 'Attribute created successfully.');
                 return redirect(route('attributes.index'));

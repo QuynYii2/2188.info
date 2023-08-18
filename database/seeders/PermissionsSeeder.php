@@ -37,12 +37,30 @@ class PermissionsSeeder extends Seeder
             ['name' => 'view_all_blogs'],
         ];
 
-        // Lưu các permission vào bảng
-        foreach ($permissions as $permissionData) {
-            Permission::create($permissionData);
-        }
+        // Tạo các permission mẫu
+        $permissionRegisterMember = [
+            ['name' => 'find B2C products'],
+            ['name' => 'buy B2C household'],
+            ['name' => 'find products'],
+            ['name' => 'find partners transaction'],
+            ['name' => 'display capacity at the product display section'],
+            ['name' => 'send new product message'],
+            ['name' => 'send messages to promote new products'],
+            ['name' => 'provide order program'],
+            ['name' => 'display accessories and supplies'],
+            ['name' => 'put on dedicated display'],
+        ];
 
-        foreach ($permissions1 as $permissionData) {
+        // Lưu các permission vào bảng
+//        foreach ($permissions as $permissionData) {
+//            Permission::create($permissionData);
+//        }
+
+//        foreach ($permissions1 as $permissionData) {
+//            Permission::create($permissionData);
+//        }
+
+        foreach ($permissionRegisterMember as $permissionData) {
             Permission::create($permissionData);
         }
     }

@@ -14,7 +14,8 @@
                 <div class="container mt-5">
                     <form class="p-3" action="{{route('register.member.info')}}" method="post">
                         @csrf
-                        <input type="text" class="d-none" name="member" value="{{ ($registerMember) }}">
+                        <input type="text" class="d-none" name="member_id" value="{{ $member->id }}">
+                        <input type="text" class="d-none" name="member" value="{{ ($member->name) }}">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="companyName">Company Name</label>
