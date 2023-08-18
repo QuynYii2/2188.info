@@ -2,6 +2,91 @@
 
 @section('title', 'Register Member')
 
+<style>
+
+    .image-upload {
+        display: inline-block;
+        position: relative;
+        max-width: 205px;
+    }
+    .image-upload .image-edit {
+        position: absolute;
+        z-index: 1;
+    }
+
+    .image-upload .image-edit {
+        right: -13px;
+        top: 10px;
+    }
+    .image-upload .image-edit input {
+        display: none;
+    }
+    .image-upload .image-edit input + label {
+        display: inline-block;
+        width: 34px;
+        height: 34px;
+        margin-bottom: 0;
+        border-radius: 100%;
+        background: #ffffff;
+        border: 1px solid transparent;
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+        cursor: pointer;
+        font-weight: normal;
+        transition: all 0.2s ease-in-out;
+    }
+    .image-upload .image-edit input + label:hover {
+        background: #f1f1f1;
+        border-color: #d6d6d6;
+    }
+    .image-upload .image-edit input + label:after {
+        content: "\f040";
+        font-family: "FontAwesome";
+        color: #757575;
+        position: absolute;
+        top: 10px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        margin: auto;
+    }
+    .image-upload .preview {
+        width: 192px;
+        height: 192px;
+        position: relative;
+        border: 6px solid #f8f8f8;
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    .image-upload .preview > div {
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+
+    .preview > div,
+    .invalid-file {
+        display: none;
+    }
+
+    .error {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+        width: 100px;
+        height: 120px;
+        font-size: 1em;
+        text-transform: capitalize;
+        text-align: center;
+        color: #fff;
+        line-height: 1em;
+        text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+    }
+
+</style>
 @section('content')
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
@@ -12,7 +97,7 @@
                     <div class="title">Đăng kí thông tin</div>
                 </div>
                 <div class="container mt-5">
-                    <form class="p-3" action="{{route('register.member.info')}}" method="post">
+                    <form class="p-3" action="{{route('register.member.info')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <input type="text" class="d-none" name="member_id" value="{{ $member->id }}">
                         <input type="text" class="d-none" name="member" value="{{ ($member->name) }}">
@@ -106,6 +191,23 @@
                                 <select class="form-control" name="wards-select" id="wards-select">
                                     <option value="">-- Chọn phường/xã --</option>
                                 </select>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div class="image-upload">
+                                    <div class="image-edit">
+                                        <input type='file' name="giay_phep_kinh_doanh" id="coverUpload" class="imageUpload" data-preview="imagePreview" accept="image/*" />
+                                        <label for="coverUpload"></label>
+                                    </div>
+                                    <div class="preview">
+                                        <div id="imagePreview"></div>
+                                    </div>
+                                    <p class="error browser">
+                                        Your browser does not support
+                                        <a href="https://developer.mozilla.org/en/DOM/window.URL">URL</a> or
+                                        <a href="https://developer.mozilla.org/en/DOM/FileReader">FileReader</a>
+                                    </p>
+                                    <p class="error invalid-file"></p>
+                                </div>
                             </div>
 
                         </div>
@@ -259,6 +361,64 @@
             }
             return option.id;
         }
+
+    </script>
+
+    <script>
+        $(function () {
+            "use strict";
+
+            // Hide URL/FileReader API requirement message in capable browsers:
+            if (
+                window.createObjectURL ||
+                window.URL ||
+                window.webkitURL ||
+                window.FileReader
+            ) {
+                $(".browser").hide();
+                $(".preview").children().show();
+            }
+
+            function isDataURL(s) {
+                return !!s.match(isDataURL.regex);
+            }
+            isDataURL.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,[a-z0-9\!\$\&\'\,\(\)\*\+\,\;\=\-\.\_\~\:\@\/\?\%\s]*\s*$/i;
+
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    var preview = $(input).data("preview");
+                    var _invalid = $(input).parent().parent().find(".invalid-file");
+
+                    reader.onload = function (e) {
+                        if (isDataURL(e.target.result)) {
+                            _invalid.hide();
+                            $("#" + preview).css(
+                                "background-image",
+                                "url(" + e.target.result + ")"
+                            );
+                            $("#" + preview).hide();
+                            $("#" + preview).fadeIn(650);
+                        } else {
+                            $("#" + preview).hide();
+
+                            _invalid.html(
+                                '<div class="alert alert-danger"><strong>Error!</strong> Invalid image file.</div>'
+                            );
+                            _invalid.show();
+                        }
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $(".imageUpload").bind("change", function (e) {
+                e.preventDefault();
+
+                readURL(this);
+            });
+        });
 
     </script>
 @endsection
