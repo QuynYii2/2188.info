@@ -165,44 +165,7 @@
             <img src="https://cdn11.bigcommerce.com/s-cas40rmoh/product_images/uploaded_images/banner-custom-home-2.png"
                  alt="">
         </section>
-        <section class="section-Third section container-fluid">
-            <div class="content">{{ __('home.SHOP BY CATEGORIES') }}</div>
-            <div class="swiper Categories category-item">
-                <div class="swiper-wrapper">
-                    @php
-                        $listCate = DB::table('categories')->where('parent_id', null)->get();
-                    @endphp
-                    @foreach($listCate as $cate)
-                        <div class="swiper-slide">
-                            @if(Auth::check())
-                                <a href="{{ route('category.show', $cate->id) }}">
-                                    <div class="img">
-                                        <img src="{{ asset('storage/' . $cate->thumbnail) }}"
-                                             alt="">
-                                    </div>
-                                    <div class="text">
-                                        {{($cate->{'name' . $langDisplay->getLangDisplay()})}}
-                                    </div>
-                                </a>
-                            @else
-                                <a class="check_url">
-                                    <div class="img">
-                                        <img src="{{ asset('storage/' . $cate->thumbnail) }}"
-                                             alt="">
-                                    </div>
-                                    <div class="text">
-                                        {{($cate->{'name' . $langDisplay->getLangDisplay()})}}
-                                    </div>
-                                </a>
-                            @endif
-                        </div>
-                    @endforeach
-                </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-pagination"></div>
-            </div>
-        </section>
+
         <section class="section-Fourth section pt-3 pb-3 container-fluid">
             <div class="row">
                 <div class="col-md-6">
