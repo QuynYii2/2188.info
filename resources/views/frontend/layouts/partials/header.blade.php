@@ -235,7 +235,7 @@
                                         @endphp
                                         @if($isMember)
                                             <div class="drop-item">
-                                                <a href="{{ route('products.register.member.index') }}">Quản lí sản
+                                                <a href="{{ route('stand.register.member.index', $member->id) }}">Quản lí sản
                                                     phẩm</a>
                                             </div>
                                         @endif
