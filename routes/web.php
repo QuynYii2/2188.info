@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Member\RegisterMemberController;
+use App\Http\Controllers\MemberPartnerController;
 use App\Http\Controllers\PaypalPaymentController;
 use App\Http\Controllers\PermissionRankController;
 use App\Http\Controllers\ProductInterestController;
@@ -390,10 +391,13 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     // Product Shop
     Route::get('/list-products-shop', [\App\Http\Controllers\ProductController::class, 'getListProductShop'])->name('shop.list.products');
     // Register member
-    Route::get('/products-register-member', [RegisterMemberController::class, 'index'])->name('products.register.member.index');
-    Route::get('/parents-register-member/{id}', [RegisterMemberController::class, 'memberParent'])->name('parent.register.member.index');
+//    Route::get('/products-register-member', [RegisterMemberController::class, 'index'])->name('products.register.member.index');
+    Route::get('/stands-register-member/{id}', [RegisterMemberController::class, 'memberStand'])->name('stand.register.member.index');
+    Route::get('/parents-register-member', [RegisterMemberController::class, 'memberPartner'])->name('partner.register.member.index');
+    Route::get('/parents-register-member/{locale}', [RegisterMemberController::class, 'memberPartnerLocale'])->name('parent.register.member.locale');
     Route::post('/products-register-member', [RegisterMemberController::class, 'saveProduct'])->name('products.register.member.create');
     Route::post('/add-to-cart-register-member/{product}', [CartController::class, 'addToCartApi'])->name('cart.api');
+    Route::post('/stands-register-member', [MemberPartnerController::class, 'store'])->name('stands.register.member');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {

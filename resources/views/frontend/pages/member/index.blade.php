@@ -47,25 +47,66 @@
                     @endphp
                     @if(!$products->isEmpty())
                         <tr>
-                            <td colspan="7" class="text-center">
-                                <div class="row">
-                                    <div class="col-md-6 d-flex justify-content-between align-items-center">
-                                        <div class="mt-2">
-                                            <h5 class="mb-3">{{ ($memberCompany->code_business) }}</h5>
-                                            <div class=""> Doanh nghiệp ưu tú
-                                                <i class="fa-solid fa-trophy"></i>
-                                                <i class="fa-solid fa-trophy"></i>
-                                                <i class="fa-solid fa-trophy"></i>
+                            <td colspan="7 row border">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-6 border">
+                                            <div class="row">
+                                                <div class="col-md-12 border">
+                                                    <div class="mt-2">
+                                                        <h5 class="mb-3">{{ ($memberCompany->name) }}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 border">
+                                                    <div class="mt-2">
+                                                        <h5 class="mb-3">{{ ($memberCompany->code_business) }}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 border">
+                                                    <div class="mt-2">
+                                                        <h5 class="mb-3">Doanh nghiệp ưu
+                                                            tú: {{ ($memberCompany->member) }}</h5>
+                                                        <div class="">
+                                                            <i class="fa-solid fa-trophy"></i>
+                                                            <i class="fa-solid fa-trophy"></i>
+                                                            <i class="fa-solid fa-trophy"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 border">
+                                                    <div class="mt-2">
+                                                        <h5 class="mb-3">Phân loại hội
+                                                            viên: {{ ($memberCompany->member) }}</h5>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 border">
+                                                    <div class="mt-2">
+                                                        <h5 class="mb-3">Điểm đánh giá của khách hàng: </h5>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="mt-2">
-                                            <h5 class="mb-3">{{ ($memberCompany->name) }}</h5>
-                                            <div class="text-nowrap">Điểm trung bình đánh giá khách hàng
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-regular fa-star"></i>
+                                        <div class="col-md-6 border">
+                                            <div class="row">
+                                                <div class="col-md-12 border">
+                                                    <div class="mt-2">
+                                                        <h5 class="mb-3">Sản phẩm chỉ định</h5>
+                                                    </div>
+                                                </div>
+                                                @php
+                                                    $listCategory = $memberCompany->category_id;
+                                                    $arrayCategory = explode(',', $listCategory);
+                                                @endphp
+                                                @foreach($arrayCategory as $itemArrayCategory)
+                                                    @php
+                                                        $category = \App\Models\Category::find($itemArrayCategory);
+                                                    @endphp
+                                                    <div class="col-md-6 border">
+                                                        <div class="mt-2">
+                                                            <h5 class="mb-3">{{ ($category->name) }}</h5>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
@@ -226,7 +267,7 @@
                                                                 class="text-warning productName{{$loop->index+1}}">{{ ($firstProduct->name) }}</span>
                                                     </h5>
                                                 </div>
-                                                <button class="btn btn-primary partnerBtn"
+                                                <button class="btn btn-primary partnerBtn partnerBtn{{$loop->index+1}}"
                                                         data-value="{{$firstProduct->id}}" data-count="100">Đối tác
                                                 </button>
                                                 <table class="table table-bordered">
@@ -285,7 +326,8 @@
                                                     @endif
                                                     </tbody>
                                                 </table>
-                                                <a href="{{route('parent.register.member.index', $memberCompany->id)}}" class="btn btn-success text-white float-right">Tiếp nhận đặt
+                                                <a href="{{route('parent.register.member.index', $memberCompany->id)}}"
+                                                   class="btn btn-success text-white float-right">Tiếp nhận đặt
                                                     hàng
                                                 </a>
                                             </div>
@@ -344,15 +386,21 @@
             let productNames = document.getElementsByClassName('productName' + number);
             let productCodes = document.getElementsByClassName('productCode' + number);
             let imgProductMains = document.getElementsByClassName('imgProductMain' + number);
+            let productIdBtns = document.getElementsByClassName('partnerBtn' + number);
 
             let mainImg = document.getElementsByClassName('thumbnailProductMain');
-            for (let i = 0; i < productNames.length; i++) {
+            let i;
+
+            for (i = 0; i < productIdBtns.length; i++) {
+                productIdBtns[i].setAttribute('data-value', product['id']);
+            }
+            for (i = 0; i < productNames.length; i++) {
                 productNames[i].innerText = product['name'];
             }
-            for (let i = 0; i < productCodes.length; i++) {
+            for (i = 0; i < productCodes.length; i++) {
                 productCodes[i].innerText = product['product_code'];
             }
-            for (let i = 0; i < imgProductMains.length; i++) {
+            for (i = 0; i < imgProductMains.length; i++) {
                 imgProductMains[i].src = '{{asset('storage/')}}' + '/' + product['thumbnail'];
             }
 

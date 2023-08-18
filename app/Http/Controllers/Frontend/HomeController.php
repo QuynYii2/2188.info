@@ -14,6 +14,7 @@ use App\Enums\StatisticStatus;
 use App\Enums\TopSellerConfigLocation;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\TranslateController;
 use App\Libraries\GeoIP;
 use App\Models\Banner;
 use App\Models\Category;
@@ -366,6 +367,23 @@ class HomeController extends Controller
                                 $companyAddress = 'default';
                             }
 
+                            $language = (new TranslateController())->detectLanguage($companyAddress);
+                            if ($language == '') {
+                                $language = 'vi';
+                            }
+
+                            if ($language == 'zh-CN'){
+                                $language = 'cn';
+                            }
+
+                            if ($language == 'ko'){
+                                $language = 'kr';
+                            }
+
+                            if ($language == 'ja'){
+                                $language = 'jp';
+                            }
+
                             $oldUser = User::where('email', $email)->first();
                             if (!$oldUser) {
                                 $newUser = new User();
@@ -373,7 +391,7 @@ class HomeController extends Controller
                                 $newUser->email = $email;
                                 $newUser->phone = $companyTEL;
                                 $newUser->address = "default address";
-                                $newUser->region = "vi";
+                                $newUser->region = $language;
                                 $newUser->password = $passwordHash;
                                 $newUser->type_account = "seller";
                                 $newUser->email_verified_at = now();
