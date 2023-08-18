@@ -1007,19 +1007,21 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($listAtt as $key => $att)
-                            <tr>
-                                <th scope="row">{{ $key }}</th>
-
-                            @foreach($listProperties as $item)
-                                    @php
-                                        $pr = Properties::whereRaw('FIND_IN_SET(id, ?)', [$item])->get(['id', 'name']);
-                                    @endphp
-                                    @foreach($pr as $value)
-                                        <td>{{ $value->name }}</td>
-                                    @endforeach
-                                @endforeach
-                            </tr>
+                        @php
+                            $listKeys = array_keys($listAtt);
+                        @endphp
+                        @foreach ($listProperties[$listKeys[0]] as $num1)
+                            @foreach ($listProperties[$listKeys[1]] as $num2)
+                                @php
+                                    $pr1 = Properties::where('id', $num1)->first(['id', 'name']);
+                                    $pr2 = Properties::where('id', $num2)->first(['id', 'name']);
+                                @endphp
+                                <tr>
+                                    <td></td>
+                                    <td>{{ $pr1->name }}</td>
+                                    <td>{{ $pr2->name }}</td>
+                                </tr>
+                            @endforeach
                         @endforeach
                         </tbody>
                     </table>

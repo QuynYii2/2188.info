@@ -170,9 +170,8 @@ class ProductController extends Controller
             $id = $item->attribute_id;
             $att = Attribute::where('id', $id)->first(['id', 'name', 'name_vi', 'name_zh', 'name_en', 'name_ja', 'name_ko', ]);
             $listAtt[$id] = $att;
-            $listProperties[$id] = $item->value;
+            $listProperties[$id] = explode(',', $item->value);
         }
-
         $otherProduct = Product::where('id', '!=', $product->id)->limit(4)->get();
 
         $vouchers = Voucher::where([['status', VoucherStatus::ACTIVE], ['user_id', $product->user_id]])->get();
