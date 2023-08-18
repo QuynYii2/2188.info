@@ -166,138 +166,15 @@
                  alt="">
         </section>
 
-        <section class="section-Fourth section pt-3 pb-3 container-fluid">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="content">{{ __('home.New Products') }}</div>
-                    <div class="swiper NewProducts">
-                        <div class="swiper-wrapper">
-                            @foreach($newProducts as $product)
-                                @include('frontend.pages.list-product')
-                            @endforeach
-                        </div>
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="content">{{ __('home.Featured Products') }}</div>
-                    <div class="swiper FeaturedProducts">
-                        <div class="swiper-wrapper">
-                            @foreach($productFeatures as $productFeature)
-                                @foreach($productFeature as $product)
-                                    @include('frontend.pages.list-product')
 
-                                @endforeach
-                            @endforeach
-                        </div>
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div class="modal fade detail" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="grid product">
-                            <div class="column-xs-12 column-md-5">
-                                <div class="product-gallery">
-                                    <div class="product-image">
-                                        <img src="#" alt="" id="img-modal">
-                                    </div>
-                                    <ul class="image-list ">
-                                        {{-- <li class="image-item"><img src="{{ asset('storage/' . $product->thumbnail) }}"></li>--}}
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="column-xs-12 column-md-7">
-                                <form action="" method="post" id="form_cart">
-                                    @csrf
-                                    <div class="product-name" id="category-modal">Name seller</div>
-                                    <div class="product-title" id="productName-modal">name</div>
-                                    <div class="product-rating" id="product-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
-                                        <span>4.7(21)</span>
-                                    </div>
-                                    <div class="product-price d-flex" style="gap: 3rem">
-                                        <div class="price" id="price-sale">price sale</div>
-                                        <strike id="price-old">price old</strike>
-                                    </div>
-                                    <div class="description-text" id="description-text">
-                                    </div>
-                                    <div class="row">
-                                    </div>
-                                    <input id="variable_id" name="variable" hidden>
-                                    <div class="">
-                                        <input id="product_id" hidden value="">
-                                    </div>
-                                    <div class="count__wrapper count__wrapper--ml mt-3">
-                                        <span>Còn lại: </span>
-                                        <label for="qty" id="qty"></label>
-
-
-                                    </div>
-                                    <div class="d-flex buy justify-content-around">
-                                        <div>
-                                            <input type="number" class="input" value="1" min="1">
-                                            <div class="spinner">
-                                                <button type="button" class="up button">&rsaquo;</button>
-                                                <button type="button" class="down button">&lsaquo;</button>
-                                            </div>
-                                        </div>
-                                        <button class="add-to-cart" id="add-to-cart">Add To Cart</button>
-                                        <button class="share"><i class="fa-regular fa-heart"></i></button>
-                                        <button class="share"><i class="fa-solid fa-share-nodes"></i></button>
-                                    </div>
-                                    <div class="eyes"><i class="fa-regular fa-eye"></i> 19 customers are viewing this
-                                        product
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
-        <section class="section-Fifth section pt-3 pb-3 container-fluid">
-            <div class="content"><i class="fa-solid fa-fire-flame-curved"></i>{{ __('home.Hot Deals') }}</div>
-            <div class="swiper HotDeals">
-                <div class="swiper-wrapper">
-                    @foreach($productHots as $productHot)
-                        @foreach($productHot as $product)
-                            @php
-                                $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
-                            @endphp
-                            @include('frontend.pages.list-product')
-                        @endforeach
-                    @endforeach
-                </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-            </div>
-        </section>
-        <div class="section container-fluid">
+        <div class="section margin-layout-index container-fluid">
             <div class="row">
                 <div class="col-md-3 col-xl-2 pt-3 pb-3">
                     @php
                         $listCate = DB::table('categories')->where('parent_id', null)->get();
                     @endphp
-                    @for($i=0; $i<9; $i++)
-                        <div class="section-left">
+                    @for($i=0; $i<8; $i++)
+                        <div class="section-left item-img banner_categories">
                             <a href="{{ route('category.show', $listCate[$i]->id) }}">
                                 <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
                                      alt="">
@@ -309,6 +186,136 @@
                     @endfor
                 </div>
                 <div class="col-12 col-md-9 col-xl-8">
+                    <section class="section-Fourth section pt-3 pb-3 container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="content">{{ __('home.New Products') }}</div>
+                                <div class="swiper NewProducts row">
+                                    <div class="swiper-wrapper ">
+                                        @foreach($newProducts as $product)
+                                            <div class="col-6">
+                                                @include('frontend.pages.list-product')
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="content">{{ __('home.Featured Products') }}</div>
+                                <div class="swiper FeaturedProducts">
+                                    <div class="swiper-wrapper">
+                                        @foreach($productFeatures as $productFeature)
+                                            @foreach($productFeature as $product)
+                                                <div class="col-6">
+                                                @include('frontend.pages.list-product')
+                                                </div>
+                                            @endforeach
+                                        @endforeach
+                                    </div>
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div class="modal fade detail" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="grid product">
+                                        <div class="column-xs-12 column-md-5">
+                                            <div class="product-gallery">
+                                                <div class="product-image">
+                                                    <img src="#" alt="" id="img-modal">
+                                                </div>
+                                                <ul class="image-list ">
+                                                    {{-- <li class="image-item"><img src="{{ asset('storage/' . $product->thumbnail) }}"></li>--}}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="column-xs-12 column-md-7">
+                                            <form action="" method="post" id="form_cart">
+                                                @csrf
+                                                <div class="product-name" id="category-modal">Name seller</div>
+                                                <div class="product-title" id="productName-modal">name</div>
+                                                <div class="product-rating" id="product-rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star-half-o"></i>
+                                                    <span>4.7(21)</span>
+                                                </div>
+                                                <div class="product-price d-flex" style="gap: 3rem">
+                                                    <div class="price" id="price-sale">price sale</div>
+                                                    <strike id="price-old">price old</strike>
+                                                </div>
+                                                <div class="description-text" id="description-text">
+                                                </div>
+                                                <div class="row">
+                                                </div>
+                                                <input id="variable_id" name="variable" hidden>
+                                                <div class="">
+                                                    <input id="product_id" hidden value="">
+                                                </div>
+                                                <div class="count__wrapper count__wrapper--ml mt-3">
+                                                    <span>Còn lại: </span>
+                                                    <label for="qty" id="qty"></label>
+
+
+                                                </div>
+                                                <div class="d-flex buy justify-content-around">
+                                                    <div>
+                                                        <input type="number" class="input" value="1" min="1">
+                                                        <div class="spinner">
+                                                            <button type="button" class="up button">&rsaquo;</button>
+                                                            <button type="button" class="down button">&lsaquo;</button>
+                                                        </div>
+                                                    </div>
+                                                    <button class="add-to-cart" id="add-to-cart">Add To Cart</button>
+                                                    <button class="share"><i class="fa-regular fa-heart"></i></button>
+                                                    <button class="share"><i class="fa-solid fa-share-nodes"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="eyes"><i class="fa-regular fa-eye"></i> 19 customers are
+                                                    viewing this
+                                                    product
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
+                    <section class="section-Fifth section pt-3 pb-3 container-fluid">
+                        <div class="content"><i class="fa-solid fa-fire-flame-curved"></i>{{ __('home.Hot Deals') }}
+                        </div>
+                        <div class="swiper HotDeals">
+                            <div class="swiper-wrapper">
+                                @foreach($productHots as $productHot)
+                                    @foreach($productHot as $product)
+                                        @php
+                                            $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
+                                        @endphp
+                                        @include('frontend.pages.list-product')
+                                    @endforeach
+                                @endforeach
+                            </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+                    </section>
                     <div class="category-img section pt-3 pb-3 container-fluid">
                         <div class="category-img">
                             @if($locale == 'vi')
@@ -319,25 +326,63 @@
                             @elseif($locale == 'kr')
                                 <div class="content ">Korea
                                     <img class="flag-ct"
+                                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png">
+                            </div>
+                        @elseif($locale == 'cn')
+                            <div class="content ">China
+                                <img class="flag-ct"
+                                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
+                            </div>
+                        @else
+                            <div class="content ">Japan
+                                <img class="flag-ct"
+                                     src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
+                            </div>
+                        @endif
+                        <div class="swiper listProduct">
+                            <div class="swiper-wrapper">
+                                @php
+                                    $products = \App\Models\Product::where([['location','=','vi'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
+                                @endphp
+                                @foreach($currentProducts as $product)
+                                    @include('frontend.pages.list-product')
+                                @endforeach
+                            </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+                    </div>
+                </div>
+                @foreach($arrayProducts as $keys => $arrayProduct)
+                    @if($keys != $locale)
+                        <div class="category-img section pt-3 pb-3 container-fluid">
+                            @if($keys == 'vi')
+                                <div class="content ">Japan
+                                    <img class="flag-ct"
+                                         src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
+                                </div>
+                            @elseif($keys == 'kr')
+                                <div class="content ">Korea
+                                    <img class="flag-ct"
                                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png">
                                 </div>
-                            @elseif($locale == 'cn')
+                            @elseif($keys == 'cn')
                                 <div class="content ">China
                                     <img class="flag-ct"
                                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
                                 </div>
                             @else
-                                <div class="content ">Japan
+                                <div class="content ">Viet Nam
                                     <img class="flag-ct"
-                                         src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
+                                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
                                 </div>
                             @endif
                             <div class="swiper listProduct">
                                 <div class="swiper-wrapper">
-                                    @php
-                                        $products = \App\Models\Product::where([['location','=','vi'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
-                                    @endphp
-                                    @foreach($currentProducts as $product)
+                                    @foreach($arrayProduct as $product)
+                                        @php
+                                            $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
+                                        @endphp
                                         @include('frontend.pages.list-product')
                                     @endforeach
                                 </div>
@@ -345,66 +390,28 @@
                                 <div class="swiper-button-prev"></div>
                             </div>
                         </div>
-                    </div>
-                    @foreach($arrayProducts as $keys => $arrayProduct)
-                        @if($keys != $locale)
-                            <div class="category-img section pt-3 pb-3 container-fluid">
-                                @if($keys == 'vi')
-                                    <div class="content ">Japan
-                                        <img class="flag-ct"
-                                             src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
-                                    </div>
-                                @elseif($keys == 'kr')
-                                    <div class="content ">Korea
-                                        <img class="flag-ct"
-                                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png">
-                                    </div>
-                                @elseif($keys == 'cn')
-                                    <div class="content ">China
-                                        <img class="flag-ct"
-                                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
-                                    </div>
-                                @else
-                                    <div class="content ">Viet Nam
-                                        <img class="flag-ct"
-                                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
-                                    </div>
-                                @endif
-                                <div class="swiper listProduct">
-                                    <div class="swiper-wrapper">
-                                        @foreach($arrayProduct as $product)
-                                            @php
-                                                $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
-                                            @endphp
-                                            @include('frontend.pages.list-product')
-                                        @endforeach
-                                    </div>
-                                    <div class="swiper-button-next"></div>
-                                    <div class="swiper-button-prev"></div>
-                                </div>
-                            </div>
-                        @endif
-                    @endforeach
-                </div>
+                    @endif
+                @endforeach
+            </div>
                 <div class="col-md-3 col-xl-2 pt-3 pb-3">
-                    @php
-                        $listCate = DB::table('categories')->where('parent_id', null)->get();
-                    @endphp
-                    @foreach($listCate as $cate => $cate_info)
-                        @if ($cate < 8)
-                            @continue
-                        @endif
-                        <div class="section-left">
-                            <a href="{{ route('category.show', $cate_info->id) }}">
-                                <img src="{{ asset('storage/' . $cate_info->thumbnail) }}"
-                                     alt="">
-                                <div class="section-left--name">
-                                    {{$cate_info -> name}}
-                                </div>
-                            </a>
-                        </div>
-                    @endforeach
-                </div>
+                @php
+                    $listCate = DB::table('categories')->where('parent_id', null)->get();
+                @endphp
+                @foreach($listCate as $cate => $cate_info)
+                    @if ($cate < 8)
+                        @continue
+                    @endif
+                    <div class="section-left item-img banner_categories">
+                        <a href="{{ route('category.show', $cate_info->id) }}">
+                            <img src="{{ asset('storage/' . $cate_info->thumbnail) }}"
+                                 alt="">
+                            <div class="section-left--name">
+                                {{$cate_info -> name}}
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
             </div>
         </div>
         <section class="section-Seven ">
