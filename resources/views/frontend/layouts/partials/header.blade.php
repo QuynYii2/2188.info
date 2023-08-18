@@ -200,7 +200,7 @@
                                             $role_id = DB::table('role_user')->where('user_id', $user)->get();
                                             $isAdmin = false;
                                             foreach ($role_id as $item) {
-                                                if ($item->role_id == 1 || 2) {
+                                                if ($item->role_id == 1 || $item->role_id == 2) {
                                                     $isAdmin = true;
                                                 }
                                             }
@@ -227,9 +227,9 @@
                                                 ])->first();
                                                 $isMember = null;
                                                 if ($member){
-                                                    if ($member->member_id == 2){
+//                                                    if ($member->member_id == 2){
                                                         $isMember = true;
-                                                    }
+//                                                    }
                                                 }
                                             }
 
@@ -237,13 +237,13 @@
                                         @endphp
                                         @if($isMember)
                                             <div class="drop-item">
-                                                <a href="{{ route('stand.register.member.index', $member->id) }}">Quản lí sản
-                                                    phẩm</a>
+                                                <a href="{{ route('stand.register.member.index', $member->id) }}">{{ __('home.Shop') }}</a>
                                             </div>
                                         @endif
                                         @if(!$checkTrust && $isValid==true)
                                             <div class="drop-item">
-                                                <a href="{{route('shop.list.products')}}">{{ __('home.Shop') }}</a>
+                                                <a href="{{route('shop.list.products')}}">Quản lí sản
+                                                    phẩm</a>
                                             </div>
                                         @endif
                                     @endif
