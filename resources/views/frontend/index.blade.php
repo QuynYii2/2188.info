@@ -174,7 +174,7 @@
                         $listCate = DB::table('categories')->where('parent_id', null)->get();
                     @endphp
                     @for($i=0; $i<8; $i++)
-                        <div class="section-left item-img">
+                        <div class="section-left item-img banner_categories">
                             <a href="{{ route('category.show', $listCate[$i]->id) }}">
                                 <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
                                      alt="">
@@ -190,10 +190,12 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="content">{{ __('home.New Products') }}</div>
-                                <div class="swiper NewProducts">
+                                <div class="swiper NewProducts row">
                                     <div class="swiper-wrapper ">
                                         @foreach($newProducts as $product)
-                                            @include('frontend.pages.list-product')
+                                            <div class="col-6">
+                                                @include('frontend.pages.list-product')
+                                            </div>
                                         @endforeach
                                     </div>
                                     <div class="swiper-button-next"></div>
@@ -206,8 +208,9 @@
                                     <div class="swiper-wrapper">
                                         @foreach($productFeatures as $productFeature)
                                             @foreach($productFeature as $product)
+                                                <div class="col-6">
                                                 @include('frontend.pages.list-product')
-
+                                                </div>
                                             @endforeach
                                         @endforeach
                                     </div>
@@ -398,7 +401,7 @@
                     @if ($cate < 8)
                         @continue
                     @endif
-                    <div class="section-left item-img">
+                    <div class="section-left item-img banner_categories">
                         <a href="{{ route('category.show', $cate_info->id) }}">
                             <img src="{{ asset('storage/' . $cate_info->thumbnail) }}"
                                  alt="">

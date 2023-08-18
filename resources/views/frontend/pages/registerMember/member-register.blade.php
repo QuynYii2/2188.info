@@ -6,14 +6,14 @@
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <div class="start-page mb-3">
         <div class="background container-fluid pt-3 justify-content-center pb-3">
-            <div class="row card">
+            <div class="row card-container">
                 <div class="form-title text-center pt-2">
                     <div class="title">{{ __('home.sign up member') }}</div>
                 </div>
-                <div class="mt-5 row">
+                <div class="mt-5 m-5 row">
                     @if(!empty($members))
                         @foreach($members as $member)
-                            <div class="col-md-3">
+                            <div class="col-md-4 mb-5">
                                 <h5 class="text-center mt-2 mb-3 member-name">
                                     {{$member->name}}
                                 </h5>
@@ -47,8 +47,11 @@
                                                 @endforeach
                                             @endif
                                         </ol>
-                                        <a href="{{route('show.register.member', $member->id)}}"
-                                           class="btn btn-primary">Đăng kí ngay</a>
+                                        <div class="col-12 justify-content-center d-flex">
+                                            <a href="{{route('show.register.member', $member->id)}}"
+                                               class="btn btn-primary">Đăng kí ngay</a>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
