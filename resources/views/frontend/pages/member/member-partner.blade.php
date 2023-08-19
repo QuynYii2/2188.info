@@ -42,7 +42,7 @@
 
             </div>
         </div>
-        <div class="border d-flex justify-content-between align-items-center p-5">
+        <div class="border d-flex justify-content-between align-items-center p-3">
             <a href="{{route('stand.register.member.index', $company->id)}}" class="btn btn-primary">Gian hàng</a>
             <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">Danh sách đối tác</a>
             <a href="#" class="btn btn-primary">Tin nhắn đã nhận</a>

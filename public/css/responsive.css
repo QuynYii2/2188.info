@@ -17,11 +17,6 @@
     display: none;
   }
 }
-@media (min-width: 1700px) {
-  .container-fluid {
-    max-width: 1700px;
-  }
-}
 @media (max-width: 1280px) {
   .header .header-pc .header-bottom-left--item {
     margin: 0 7px;
