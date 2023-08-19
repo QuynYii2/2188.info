@@ -105,7 +105,10 @@ $color-main: #fd6506;
     }
   }
 }
-
+.item:hover{
+  border: 1px solid #0cbff1;
+  border-radius: 10px;
+}
 .item-voucher{
   .item{
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
