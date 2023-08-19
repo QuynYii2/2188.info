@@ -28,7 +28,12 @@
         background-size: 30px;
         background-repeat: no-repeat;
     }
-
+    .modal-dialog{
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     .header-bottom-left--item.item-left--cn a:before {
         display: block;
         content: '';
@@ -180,19 +185,9 @@
                                                 <a href="">Coins: {{$coin->quantity}}</a>
                                             </div>
                                         @endif
-                                        <a href="{{route('buy.coin.show')}}" class="none_decoration">
-                                            <div class="drop-item">
-                                                {{ __('home.buy coin') }}
-                                            </div>
-                                        </a>
                                         <a href="{{route('wish.list.index')}}" class="none_decoration">
                                             <div class="drop-item">
                                                 {{ __('home.Wish Lists') }}
-                                            </div>
-                                        </a>
-                                        <a href="!#" class="none_decoration">
-                                            <div class="drop-item">
-                                                {{ __('home.Gift Cards') }}
                                             </div>
                                         </a>
                                         @php
@@ -235,9 +230,13 @@
 
                                             $isValid = (new \App\Http\Controllers\Frontend\HomeController())->checkSellerOrAdmin();
                                         @endphp
-                                        @if($isMember)
+                                        @if($isMember && $member->member != \App\Enums\RegisterMember::TRUST)
                                             <div class="drop-item">
                                                 <a href="{{ route('stand.register.member.index', $member->id) }}">{{ __('home.Shop') }}</a>
+                                            </div>
+                                        @elseif($isMember && $member->member == \App\Enums\RegisterMember::TRUST)
+                                            <div class="drop-item">
+                                                <a href="{{ route('trust.register.member.index') }}">{{ __('home.Shop') }}</a>
                                             </div>
                                         @endif
                                         @if(!$checkTrust && $isValid==true)
@@ -884,27 +883,34 @@
 
 <div class="modal fade" id="modal-flag-header" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content p-4" style="width: auto">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Chọn quốc gia</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <div class="modal-body">
-                <div class="row justify-content-around">
+                <div class="d-flex justify-content-center">
                     <a href="https://shipgo.biz/kr">
                         <div class="custom_flag">
-                            <img class="w-100 h-100" src="{{ asset('flag/kr.svg') }}" alt="">
+                            <img class="w-70 h-70 p-2" style="border: 1px solid;" src="{{ asset('flag/kr.svg') }}" alt="">
                         </div>
                     </a>
                     <a href="https://shipgo.biz/en">
                         <div class="custom_flag">
-                            <img class="w-100 h-100" src="{{ asset('flag/us.svg') }}" alt="">
+                            <img class="w-70 h-70 p-2" style="border: 1px solid;" src="{{ asset('flag/us.svg') }}" alt="">
                         </div>
                     </a>
                     <a href="https://shipgo.biz/cn">
                         <div class="custom_flag">
-                            <img class="w-100 h-100" src="{{ asset('flag/cn.svg') }}" alt="">
+                            <img class="w-70 h-70 p-2" style="border: 1px solid;" src="{{ asset('flag/cn.svg') }}" alt="">
                         </div>
                     </a>
                     <a href="https://shipgo.biz/vn">
                         <div class="custom_flag">
-                            <img class="w-100 h-100" src="{{ asset('flag/vn.svg') }}" alt="">
+                            <img class="w-70 h-70 p-2" src="{{ asset('flag/vn.svg') }}" alt="">
                         </div>
                     </a>
                 </div>

@@ -2,7 +2,6 @@
 
 
 @section('title', 'Home page')
-
 @section('content')
     @php
         $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
@@ -59,7 +58,7 @@
                 <div class="section-First-left section-First-mobile col-12">
                     <span class="content">SHOP BY CATEGORIES</span>
                     <hr>
-                    <div class="list d-flex">
+                    <div class="list d-flex justify-content-center">
                         @php
                             $listCate = DB::table('categories')->where('parent_id', null)->get();
                         @endphp
@@ -437,7 +436,7 @@
                 <div class="content">
                     Why shop with us?
                 </div>
-                <div class="list d-flex">
+                <div class="list d-flex justify-content-center">
                     <div class="item">
                         <div class="item-img">
                             <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png"

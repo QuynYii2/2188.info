@@ -1,11 +1,8 @@
 @extends('frontend.layouts.master')
-@section('title', 'Partner Register Members')
+@section('title', 'Trust Register Members')
 @section('content')
-    @php
-        $mentor = \App\Models\User::find($company->user_id);
-    @endphp
     <div class="container-fluid">
-        <h3 class="text-center">Danh sách đối tác</h3>
+        <h3 class="text-center">Danh sách khách hàng</h3>
         <div class="border d-flex justify-content-between align-items-center bg-warning p-5">
             <h5>{{$company->name}}</h5>
             <div class="">
@@ -42,9 +39,8 @@
 
             </div>
         </div>
-        <div class="border d-flex justify-content-between align-items-center p-3">
-            <a href="{{route('stand.register.member.index', $company->id)}}" class="btn btn-primary">Gian hàng</a>
-            <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">Danh sách đối tác</a>
+        <div class="border d-flex justify-content-between align-items-center p-5">
+            <a href="{{route('trust.register.member.index')}}" class="btn btn-warning">Danh sách khách hàng</a>
             <a href="#" class="btn btn-primary">Tin nhắn đã nhận</a>
             <a href="#" class="btn btn-warning">Tin nhắn đã gửi</a>
             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Mua hàng</a>
@@ -60,62 +56,34 @@
                 <th scope="col">Khu vực</th>
                 <th scope="col">Ngày giao dịch</th>
                 <th scope="col">Giá trị giao dịch</th>
-                <th scope="col">Số lượng</th>
-                <th scope="col">Phân loại hội viên</th>
                 <th scope="col">Cấp bậc khách hàng</th>
             </tr>
             </thead>
             <tbody>
-            @if(!$memberList->isEmpty())
-                @foreach($memberList as $memberItem)
+            @if(!$companies->isEmpty())
+                @foreach($companies as $memberItem)
                     @php
-                        $memberPartner = \App\Models\MemberRegisterInfo::find($memberItem->company_id_follow);
-                        $user = \App\Models\User::find($memberPartner->user_id);
-                        $locale = session()->get('region');
+                        $user = \App\Models\User::find($memberItem->user_id);
                     @endphp
-                    @if($locale)
-                        @if($user->region == $locale)
-                            <tr>
-                                <td scope="row">{{$memberPartner->id}}</td>
-                                <td>
-                                    {{$mentor->region}}
-                                </td>
-                                <td>{{$memberPartner->name}}</td>
-                                <td>{{$memberPartner->address}}</td>
-                                <td>{{ \Carbon\Carbon::parse($memberItem->created_at)->format('d/m/Y') }}</td>
-                                <td>{{$memberItem->price * $memberItem->quantity}}</td>
-                                <td>{{$memberItem->quantity}}</td>
-                                <td>{{$memberPartner->member}}</td>
-                                <td>
-                                    <i class="fa-solid fa-trophy"></i>
-                                    <i class="fa-solid fa-trophy"></i>
-                                    <i class="fa-solid fa-trophy"></i>
-                                </td>
-                            </tr>
-                        @endif
-                    @else
+                    @if($user)
                         <tr>
-                            <td scope="row">{{$memberPartner->id}}</td>
-                            <td>
-                                {{$mentor->region}}
-                            </td>
-                            <td>{{$memberPartner->name}}</td>
-                            <td>{{$memberPartner->address}}</td>
+                            <td scope="row">{{$memberItem->id}}</td>
+                            <td>{{$user->region}}</td>
+                            <td>{{$memberItem->name}}</td>
+                            <td>{{$memberItem->address}}</td>
                             <td>{{ \Carbon\Carbon::parse($memberItem->created_at)->format('d/m/Y') }}</td>
                             <td>{{$memberItem->price * $memberItem->quantity}}</td>
-                            <td>{{$memberItem->quantity}}</td>
-                            <td>{{$memberPartner->member}}</td>
                             <td>
                                 @php
                                     $ranks = null;
-                                    $rankSetup = \App\Models\RankSetUpSeller::where('user_id', $mentor->id)->first();
+                                    $rankSetup = \App\Models\RankSetUpSeller::where('user_id', $user->id)->first();
                                     if ($rankSetup){
                                          $orderItems = DB::table('order_items')
                                             ->join('orders', 'orders.id', '=', 'order_items.order_id')
                                             ->join('products', 'products.id', '=', 'order_items.product_id')
                                             ->where([
                                                 ['orders.user_id', '=', $user->id],
-                                                ['products.user_id', $mentor->id]
+                                                ['products.user_id', $user->id]
                                             ])
                                             ->select('order_items.*', 'products.user_id')
                                             ->get();
@@ -206,13 +174,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="d-flex justify-content-between align-items-center">
-                        <a href="{{route('parent.register.member.locale', 'kr')}}">
+                        <a href="{{route('trust.register.member.locale', 'kr')}}">
                             <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt="">
                         </a>
-                        <a href="{{route('parent.register.member.locale', 'jp')}}">
+                        <a href="{{route('trust.register.member.locale', 'jp')}}">
                             <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt="">
                         </a>
-                        <a href="{{route('parent.register.member.locale', 'cn')}}">
+                        <a href="{{route('trust.register.member.locale', 'cn')}}">
                             <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt="">
                         </a>
                     </div>
@@ -223,6 +191,4 @@
             </div>
         </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @endsection
