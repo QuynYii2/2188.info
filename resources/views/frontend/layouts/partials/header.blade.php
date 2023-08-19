@@ -136,19 +136,19 @@
                     </div>
                     <div class="header-top-right col-xl-3 col-md-4 d-flex text-center justify-content-around">
                         @if(Auth::check())
-                            <div class="item">
-                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                            <div class="item button_seller align-center d-flex">
+                                <button type="button" class="full-width cursor-pointer" data-toggle="modal"
                                         data-target="#modal-flag-header">
-                                    <i class="item-icon fa-regular fa-heart"></i>
-                                    <div class="item-text">
+{{--                                    <i class="item-icon fa-regular fa-heart"></i>--}}
+                                    <div class="it em-text">
                                         Mua lẻ
                                     </div>
                                 </button>
                             </div>
-                            <div class="item" onclick="<?php echo $checkBuyer ? 'showAlert(1)' : '' ?>">
-                                <button class="btn btn-primary" onclick="">
-                                    <i class="item-icon fa-solid fa-gift"></i>
-                                    <div class="item-text">Mua sỉ</div>
+                            <div class="item button_seller align-center d-flex" onclick="<?php echo $checkBuyer ? 'showAlert(1)' : '' ?>">
+                                <button class="full-width cursor-pointer" onclick="">
+{{--                                    <i class="item-icon fa-solid fa-gift"></i>--}}
+                                    <div class="it em-text">Mua sỉ</div>
                                 </button>
                             </div>
                             @php

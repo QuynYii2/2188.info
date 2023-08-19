@@ -105,10 +105,37 @@ $color-main: #fd6506;
     }
   }
 }
-.item:hover{
-  border: 1px solid #0cbff1;
-  border-radius: 10px;
+.item-hover{
+  border: 1px solid #FFFFFF;
 }
+.item-hover:hover{
+  border: 1px solid #0cbff1 ;
+  border-radius: 4px;
+}
+.full-width{
+  width: 100%;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+.btn-primary:focus{
+  box-shadow: none;}
+.btn-primary{
+  box-shadow: none;
+}
+.it.em-text {
+  color: black;
+}
+.button_seller {
+  cursor: pointer;
+  padding: 0;
+  width: 101px;
+  background: white;
+  height: 40px;
+  border-radius: 10px;
+  margin: 5px;
+}
+
 .item-voucher{
   .item{
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
