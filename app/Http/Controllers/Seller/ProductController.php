@@ -223,7 +223,7 @@ class ProductController extends Controller
 
             if ($notMember == true) {
                 if ($countProduct > 8) {
-                    alert()->error('Error', 'Bạn đã tạo quá số lượng sản phẩm quy định! Vui lònh loại bớt sản phẩm hoặc nâng cấp nên gói tài khoản cao cấp hơn');
+                    alert()->error('Error', 'Bạn đã tạo quá số lượng sản phẩm quy định! Vui lòng loại bớt sản phẩm hoặc nâng cấp nên gói tài khoản cao cấp hơn');
                     return back();
                 }
             }

@@ -10,11 +10,13 @@ use App\Enums\PromotionStatus;
 use App\Enums\VariationStatus;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Models\Attribute;
 use App\Models\EvaluateProduct;
 use App\Models\Product;
 use App\Models\ProductInterested;
 use App\Models\ProductViewed;
 use App\Models\Promotion;
+use App\Models\Properties;
 use App\Models\Variation;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
@@ -27,6 +29,8 @@ class ProductController extends Controller
     {
         (new HomeController())->getLocale($request);
         $value = $this->findProduct(1, $id);
+
+
         return view('frontend/pages/detail-product', $value);
     }
 
@@ -158,6 +162,16 @@ class ProductController extends Controller
             ])->get();
         }
 
+
+        $product_att = DB::table('product_attribute')->where('product_id', '=', $text)->get();
+        $listAtt = [];
+        $listProperties = [];
+        foreach ($product_att as $item) {
+            $id = $item->attribute_id;
+            $att = Attribute::where('id', $id)->first(['id', 'name', 'name_vi', 'name_zh', 'name_en', 'name_ja', 'name_ko', ]);
+            $listAtt[$id] = $att;
+            $listProperties[$id] = explode(',', $item->value);
+        }
         $otherProduct = Product::where('id', '!=', $product->id)->limit(4)->get();
 
         $vouchers = Voucher::where([['status', VoucherStatus::ACTIVE], ['user_id', $product->user_id]])->get();
@@ -195,6 +209,9 @@ class ProductController extends Controller
             'attributes' => $attributes,
             'arrayVouchers' => $arrayVouchers,
             'arrayPromotions' => $arrayPromotions,
-            'variables' => $variables];
+            'variables' => $variables,
+            'listAtt' => $listAtt,
+            'listProperties' => $listProperties,
+        ];
     }
 }

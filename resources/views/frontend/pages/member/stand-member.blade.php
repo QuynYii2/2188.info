@@ -75,7 +75,10 @@
                 } else{
                     $products = \App\Models\Product::where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])->get();
                 }
-                $firstProduct = $products[0];
+                $firstProduct = null;
+                if (!$products->isEmpty()){
+                 $firstProduct = $products[0];
+                }
             @endphp
             <h3 class="text-center">Gian hàng hội viên {{$company->member}}</h3>
             <h3 class="text-left">Hội viên {{$company->member}}</h3>
@@ -319,44 +322,44 @@
                                             </tbody>
                                         </table>
 
-                                        <p>đơn giá phía trên là điều kiện FOB/TT</p>
-                                        <h5 class="text-center">Đặt hàng</h5>
-                                        <table class="table table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">Số sản phẩm</th>
-                                                <th scope="col">Màu sắc</th>
-                                                <th scope="col">Số lượng</th>
-                                                <th scope="col">Đơn giá</th>
-                                                <th scope="col">Thành tiền</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @php
-                                                $carts = DB::table('carts')
-                                                 ->join('products', 'products.id', '=', 'carts.product_id')
-                                                 ->where([['products.user_id', $company->user_id], ['carts.member', 1],['carts.status', \App\Enums\CartStatus::WAIT_ORDER]])
-                                                 ->select('carts.*')
-                                                 ->get();
-                                            @endphp
-                                            @if(!$carts->isEmpty())
-                                                @foreach($carts as $itemCart)
-                                                    <tr>
-                                                        <td>
-                                                            @php
-                                                                $cartProduct = \App\Models\Product::find($itemCart->product_id);
-                                                            @endphp
-                                                            {{$cartProduct->name}}
-                                                        </td>
-                                                        <td>Red</td>
-                                                        <td>{{$itemCart->quantity}}</td>
-                                                        <td>{{$itemCart->price}}</td>
-                                                        <td>{{$itemCart->price*$itemCart->quantity}}</td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-                                            </tbody>
-                                        </table>
+                            <p>đơn giá phía trên là điều kiện FOB/TT</p>
+                            <h5 class="text-center">Đặt hàng</h5>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Số sản phẩm</th>
+                                    <th scope="col">Màu sắc</th>
+                                    <th scope="col">Số lượng</th>
+                                    <th scope="col">Đơn giá</th>
+                                    <th scope="col">Thành tiền</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @php
+                                    $carts = DB::table('carts')
+                                     ->join('products', 'products.id', '=', 'carts.product_id')
+                                     ->where([['products.user_id', $company->user_id], ['carts.user_id', Auth::user()->id], ['carts.member', 1],['carts.status', \App\Enums\CartStatus::WAIT_ORDER]])
+                                     ->select('carts.*')
+                                     ->get();
+                                @endphp
+                                @if(!$carts->isEmpty())
+                                    @foreach($carts as $itemCart)
+                                        <tr>
+                                            <td>
+                                                @php
+                                                    $cartProduct = \App\Models\Product::find($itemCart->product_id);
+                                                @endphp
+                                                {{$cartProduct->name}}
+                                            </td>
+                                            <td>Red</td>
+                                            <td>{{$itemCart->quantity}}</td>
+                                            <td>{{$itemCart->price}}</td>
+                                            <td>{{$itemCart->price*$itemCart->quantity}}</td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                                </tbody>
+                            </table>
 
                                         @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
                                             <button class="btn btn-success partnerBtn float-right" id="partnerBtn"

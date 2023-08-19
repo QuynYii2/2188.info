@@ -335,6 +335,13 @@ class AuthController extends Controller
             $type = $request->input('type');
             $registerMember = $request->input('member');
 
+
+            if ($request->hasFile('giay_phep_kinh_doanh')) {
+                $gpkd = $request->file('giay_phep_kinh_doanh');
+                $gpkdPath = $gpkd->store('giay_phep_kinh_doanh', 'public');
+            } else {
+                $gpkdPath = '';
+            }
             $arrayIds = $this->getArrayIds($request);
             if ($arrayIds) {
                 try {
@@ -373,7 +380,8 @@ class AuthController extends Controller
                 'member' => $registerMember,
                 'address' => $address,
                 'member_id' => $memberID,
-                'status' => $status
+                'status' => $status,
+                'giay_phep_kinh_doanh' => $gpkdPath,
             ];
 
             $success = MemberRegisterInfo::create($create);

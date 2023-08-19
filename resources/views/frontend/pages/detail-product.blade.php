@@ -85,61 +85,68 @@
         .radio-toolbar input[type="radio"]:focus + label {
             border: 2px solid #444;
         }
+
         .radio-toolbar input[type="radio"]:checked + label {
             background-color: #f7f7f7;
             border-color: #ccc;
         }
+
         .table-title h3 {
             color: #fafafa;
             font-size: 30px;
             font-weight: 400;
-            font-style:normal;
+            font-style: normal;
             font-family: "Roboto", helvetica, arial, sans-serif;
             text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
         }
-        .modal-content{
+
+        .modal-content {
             width: 400px;
             margin: auto;
         }
-        .table-fill{
+
+        .table-fill {
             width: 100%;
         }
+
         th {
             background: #b1b5bd;
             border-right: 1px solid #343a45;
         }
+
         th:first-child {
-                border-top-left-radius:3px;
+            border-top-left-radius: 3px;
         }
 
         th:last-child {
-                border-top-right-radius:3px;
-                border-right:none;
+            border-top-right-radius: 3px;
+            border-right: none;
         }
 
         tr {
             border-top: 1px solid #C1C3D1;
             border-bottom-: 1px solid #C1C3D1;
-                color:#666B85;
-                font-size:16px;
-                font-weight:normal;
+            color: #666B85;
+            font-size: 16px;
+            font-weight: normal;
             text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
         }
+
         tr:first-child {
-                border-top:none;
+            border-top: none;
         }
 
         tr:last-child {
-                border-bottom:none;
+            border-bottom: none;
         }
 
         td {
-                background:#FFFFFF;
-                padding:20px;
-                text-align:left;
-                vertical-align:middle;
-                font-weight:300;
-                font-size:18px;
+            background: #FFFFFF;
+            padding: 20px;
+            text-align: left;
+            vertical-align: middle;
+            font-weight: 300;
+            font-size: 18px;
             text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
             border-right: 1px solid #C1C3D1;
         }
@@ -158,7 +165,7 @@
 
         .card-central-logo.ilvietnam-1-1-2 {
 
-            display:flex ;
+            display: flex;
             justify-content: center;
             margin-top: -15px;
         }
@@ -167,6 +174,7 @@
             margin-top: 15px;
             margin-bottom: 15px;
         }
+
         .company-basicCapacity.ilvietnam-1-1-19 {
             display: flex;
             justify-content: space-between;
@@ -176,10 +184,12 @@
             text-align: left;
             font-size: 14px;
         }
+
         .attr-item {
             width: 50%;
             margin-top: 12px;
         }
+
         .company-productionServiceCapacity.service-2.ilvietnam-1-1-38 {
             display: flex;
             justify-content: space-between;
@@ -188,6 +198,7 @@
             margin-bottom: 20px;
             border-top: 1px solid #ccc;
         }
+
         .attr-title.ilvietnam-2-38-39 {
             white-space: nowrap;
             overflow: hidden;
@@ -198,10 +209,12 @@
             position: relative;
             margin-top: 25px;
         }
+
         .attr-item.ilvietnam-2-38-40 {
             width: 100%;
             margin-top: 0;
         }
+
         .detail-next-btn.detail-next-medium.detail-next-btn-normal.ilvietnam-2-55-56 {
             border: 1px solid #000;
             border-radius: 20px;
@@ -232,6 +245,7 @@
             overflow: hidden;
         }
     </style>
+
     <div class="container-fluid detail">
         <div class="grid second-nav">
             <div class="column-xs-12">
@@ -277,7 +291,8 @@
             <div class="column-xs-12 column-md-5">
                 <form action="{{ route('cart.add', $product) }}" method="POST">
                     @csrf
-                    <div class="product-name"><a href="{{ route('shop.information.show', $name->id) }}">{{$name->name}}</a></div>
+                    <div class="product-name"><a
+                                href="{{ route('shop.information.show', $name->id) }}">{{$name->name}}</a></div>
                     <div class="product-title">{{($product->name)}}</div>
                     <div class="product-origin">Xuất xứ: {{$product->origin}}</div>
                     <div class="product-rating">
@@ -326,6 +341,9 @@
                             @endforeach
                         </div>
                         <a id="resetSelect" class="btn btn-dark mt-3 " style="color: white"> Reset select</a>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-show-att">
+                            Xem thuộc tính
+                        </button>
                     @endif
                     <div class="">
                         <input id="product_id" hidden value="{{$product->id}}">
@@ -335,7 +353,8 @@
 
                     </div>
                     <div class="count__wrapper count__wrapper--ml mt-3">
-                        <label for="qty">{{ __('home.remaining') }}<span id="productQuantity">{{$product->qty}}</span></label>
+                        <label for="qty">{{ __('home.remaining') }}<span
+                                    id="productQuantity">{{$product->qty}}</span></label>
                     </div><!-- Button to trigger modal -->
                     <!-- Button trigger modal -->
                     @php
@@ -345,7 +364,8 @@
                         Bảng giá sỉ
                     </a>
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -390,7 +410,8 @@
                             </div>
                         </div>
                         @if(!$attributes->isEmpty())
-                            <button type="submit" id="btnAddCard" class="add-to-cart">{{ __('home.Add To Cart') }}</button>
+                            <button type="submit" id="btnAddCard"
+                                    class="add-to-cart">{{ __('home.Add To Cart') }}</button>
                         @else
                             <button type="submit" class="add-to-cart">{{ __('home.Add To Cart') }}</button>
                         @endif
@@ -481,87 +502,87 @@
                             <div class="ability ilvietnam-1-1-17">
                                 <img src="https://img.alicdn.com/imgextra/i3/O1CN015NySK71aBmY1PTG9K_!!6000000003292-2-tps-28-28.png"
                                      class="ilvietnam-2-17-18">
-                                        Nhãn hiệu đã đăng ký (1)
+                                Nhãn hiệu đã đăng ký (1)
                             </div>
                             <div class="company-basicCapacity ilvietnam-1-1-19">
                                 <a href=""
                                    class="attr-item ilvietnam-2-19-20" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-title ilvietnam-3-20-21">
-                                                xếp hạng cửa hàng
+                                        xếp hạng cửa hàng
                                     </div>
                                     <div class="attr-content ilvietnam-3-20-22" title="4,7(21)">
-                                                4,7(21)
+                                        4,7(21)
                                     </div>
                                 </a>
                                 <div class="attr-item ilvietnam-2-19-23" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-title ilvietnam-3-23-24">
-                                                Tỷ lệ giao hàng đúng hạn
+                                        Tỷ lệ giao hàng đúng hạn
                                     </div>
                                     <div class="attr-content ilvietnam-3-23-25" title="95,6%">
-                                                95,6%
+                                        95,6%
                                     </div>
                                 </div>
                                 <div class="attr-item ilvietnam-2-19-26" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-title ilvietnam-3-26-27">
-                                                Thời gian đáp ứng
+                                        Thời gian đáp ứng
                                     </div>
                                     <div class="attr-content ilvietnam-3-26-28" title="≤3h">
-                                                ≤3h
+                                        ≤3h
                                     </div>
                                 </div>
                                 <div class="attr-item ilvietnam-2-19-29" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-title ilvietnam-3-29-30">
-                                                doanh thu trực tuyến
+                                        doanh thu trực tuyến
                                     </div>
                                     <div class="attr-content ilvietnam-3-29-31" title="$480,000+">
-                                                $480,000+
+                                        $480,000+
                                     </div>
                                 </div>
                                 <div class="attr-item ilvietnam-2-19-32" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-title ilvietnam-3-32-33">
-                                                Không gian sàn
+                                        Không gian sàn
                                     </div>
                                     <div class="attr-content ilvietnam-3-32-34" title="1000m²">
-                                                1000m²
+                                        1000m²
                                     </div>
                                 </div>
                                 <div class="attr-item ilvietnam-2-19-35" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-title ilvietnam-3-35-36">
-                                                Nhân viên
+                                        Nhân viên
                                     </div>
                                     <div class="attr-content ilvietnam-3-35-37" title="14">
-                                                14
+                                        14
                                     </div>
                                 </div>
                             </div>
                             <div class="company-productionServiceCapacity service-2 ilvietnam-1-1-38">
                                 <div class="attr-title ilvietnam-2-38-39">
-                                            Dịch vụ
+                                    Dịch vụ
                                 </div>
                                 <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-content ilvietnam-3-40-41" title="tùy chỉnh nhỏ">
-                                                tùy chỉnh nhỏ
+                                        tùy chỉnh nhỏ
                                     </div>
                                 </div>
                                 <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-content ilvietnam-3-42-43" title="Tùy chỉnh dựa trên thiết kế">
-                                                Tùy chỉnh dựa trên thiết kế
+                                        Tùy chỉnh dựa trên thiết kế
                                     </div>
                                 </div>
                             </div>
                             <div class="company-productionServiceCapacity service-2 ilvietnam-1-1-38">
                                 <div class="attr-title ilvietnam-2-38-39">
-                                            kiểm soát chất lượng
+                                    kiểm soát chất lượng
                                 </div>
                                 <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-content ilvietnam-3-40-41"
                                          title="Nhận dạng truy xuất nguồn gốc nguyên liệu">
-                                                Nhận dạng truy xuất nguồn gốc nguyên liệu
+                                        Nhận dạng truy xuất nguồn gốc nguyên liệu
                                     </div>
                                 </div>
                                 <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-content ilvietnam-3-42-43" title="Kiểm tra thành phẩm">
-                                                Kiểm tra thành phẩm
+                                        Kiểm tra thành phẩm
                                     </div>
                                 </div>
                             </div>
@@ -572,7 +593,7 @@
                                class="company-qualificationCertificate service-4 ilvietnam-1-1-50">
                                 <div class="attr-item ilvietnam-2-50-53" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-content ilvietnam-3-53-54">
-                                                giấy chứng nhận
+                                        giấy chứng nhận
                                     </div>
                                 </div>
                             </a>
@@ -618,7 +639,8 @@
                 <div class="content" id="content1">
                     {!! $product->description!!}
                 </div>
-                <button id="toggleBtn1" class="toggleBtn" onclick="toggleContent('content1', 'toggleBtn1')">{{ __('home.Show More') }}</button>
+                <button id="toggleBtn1" class="toggleBtn"
+                        onclick="toggleContent('content1', 'toggleBtn1')">{{ __('home.Show More') }}</button>
             </div>
             @php
                 $infos = DB::table('shop_infos')->first();
@@ -630,7 +652,8 @@
                 @endphp
 
                 <div class="content" id="content2">@include('frontend.pages.shop-information.tabs_shop_info')</div>
-                <button id="toggleBtn2" class="toggleBtn" onclick="toggleContent('content2', 'toggleBtn2')">{{ __('home.Show More') }}</button>
+                <button id="toggleBtn2" class="toggleBtn"
+                        onclick="toggleContent('content2', 'toggleBtn2')">{{ __('home.Show More') }}</button>
             </div>
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                 <div class="card mb-4">
@@ -649,56 +672,56 @@
                             }
                         @endphp
                         @if($isMember)
-                        <form method="post" action="{{route('create.evaluate')}}">
-                            @csrf
-                            <input type="text" class="form-control" id="product_id" name="product_id"
-                                   value="{{$product->id}}" hidden/>
-                            <div class="rating">
-                                <input type="radio" name="star_number" id="star1" value="1" hidden="">
-                                <label for="star1" onclick="starCheck(1)"><i id="icon-star-1"
-                                                                             class="fa fa-star"></i></label>
-                                <input type="radio" name="star_number" id="star2" value="2" hidden="">
-                                <label for="star2" onclick="starCheck(2)"><i id="icon-star-2"
-                                                                             class="fa fa-star"></i></label>
-                                <input type="radio" name="star_number" id="star3" value="3" hidden="">
-                                <label for="star3" onclick="starCheck(3)"><i id="icon-star-3"
-                                                                             class="fa fa-star"></i></label>
-                                <input type="radio" name="star_number" id="star4" value="4" hidden="">
-                                <label for="star4" onclick="starCheck(4)"><i id="icon-star-4"
-                                                                             class="fa fa-star"></i></label>
-                                <input type="radio" name="star_number" id="star5" value="5" hidden="">
-                                <label for="star5" onclick="starCheck(5)"><i id="icon-star-5"
-                                                                             class="fa fa-star"></i></label>
-                            </div>
-                            <input id="input-star" value="0" hidden="">
-                            <div id="text-message" class="text-danger d-none">Please select star rating
-                            </div>
-
-                            <div class="form-group row">
-                                <label for=""
-                                       class="col-sm-12 col-form-label">{{ __('home.your name') }}</label>
-                                <div class="col-sm-12">
-                                    <input onclick="checkStar()" type="text" class="form-control" id=""
-                                           name="username"
-                                           placeholder="{{ __('home.your name') }}" required/>
+                            <form method="post" action="{{route('create.evaluate')}}">
+                                @csrf
+                                <input type="text" class="form-control" id="product_id" name="product_id"
+                                       value="{{$product->id}}" hidden/>
+                                <div class="rating">
+                                    <input type="radio" name="star_number" id="star1" value="1" hidden="">
+                                    <label for="star1" onclick="starCheck(1)"><i id="icon-star-1"
+                                                                                 class="fa fa-star"></i></label>
+                                    <input type="radio" name="star_number" id="star2" value="2" hidden="">
+                                    <label for="star2" onclick="starCheck(2)"><i id="icon-star-2"
+                                                                                 class="fa fa-star"></i></label>
+                                    <input type="radio" name="star_number" id="star3" value="3" hidden="">
+                                    <label for="star3" onclick="starCheck(3)"><i id="icon-star-3"
+                                                                                 class="fa fa-star"></i></label>
+                                    <input type="radio" name="star_number" id="star4" value="4" hidden="">
+                                    <label for="star4" onclick="starCheck(4)"><i id="icon-star-4"
+                                                                                 class="fa fa-star"></i></label>
+                                    <input type="radio" name="star_number" id="star5" value="5" hidden="">
+                                    <label for="star5" onclick="starCheck(5)"><i id="icon-star-5"
+                                                                                 class="fa fa-star"></i></label>
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for=""
-                                       class="col-sm-12 col-form-label">{{ __('home.your review') }}</label>
-                                <div class="col-sm-12">
+                                <input id="input-star" value="0" hidden="">
+                                <div id="text-message" class="text-danger d-none">Please select star rating
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for=""
+                                           class="col-sm-12 col-form-label">{{ __('home.your name') }}</label>
+                                    <div class="col-sm-12">
+                                        <input onclick="checkStar()" type="text" class="form-control" id=""
+                                               name="username"
+                                               placeholder="{{ __('home.your name') }}" required/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for=""
+                                           class="col-sm-12 col-form-label">{{ __('home.your review') }}</label>
+                                    <div class="col-sm-12">
                                         <textarea onclick="checkStar()" class="form-control" id=""
                                                   name="content"
                                                   placeholder="{{ __('home.your review') }}"
                                                   rows="3" required></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group row">
-                                <button id="btn-submit" class="btn btn-primary btn-16" type="submit">
-                                    Submit
-                                </button>
-                            </div>
-                        </form>
+                                <div class="form-group row">
+                                    <button id="btn-submit" class="btn btn-primary btn-16" type="submit">
+                                        Submit
+                                    </button>
+                                </div>
+                            </form>
                         @endif
                     </div>
                 </div>
@@ -963,7 +986,54 @@
             <div class="swiper-button-prev"></div>
         </div>
     </section>
-    {{--  Show more  --}}
+
+    <div class="modal fade" id="modal-show-att" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            @foreach($listAtt as $att)
+                                <th scope="col">{{ $att->name }}</th>
+                            @endforeach
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @php
+                            $listKeys = array_keys($listAtt);
+                        @endphp
+                        @foreach ($listProperties[$listKeys[0]] as $num1)
+                            @foreach ($listProperties[$listKeys[1]] as $num2)
+                                @php
+                                    $pr1 = Properties::where('id', $num1)->first(['id', 'name']);
+                                    $pr2 = Properties::where('id', $num2)->first(['id', 'name']);
+                                @endphp
+                                <tr>
+                                    <td></td>
+                                    <td>{{ $pr1->name }}</td>
+                                    <td>{{ $pr2->name }}</td>
+                                </tr>
+                            @endforeach
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         function toggleContent(contentId, btnId) {
             var content = document.getElementById(contentId);
