@@ -6,7 +6,7 @@
     @endphp
     <div class="container-fluid">
         <h3 class="text-center">Danh sách đối tác</h3>
-        <div class="border d-flex justify-content-between align-items-center bg-warning p-5">
+        <div class="border d-flex justify-content-between align-items-center bg-warning p-2">
             <h5>{{$company->name}}</h5>
             <div class="">
                 <span>ID</span>: {{$company->id}}
@@ -25,23 +25,18 @@
             $listCategory = $company->category_id;
             $arrayCategory  = explode(',', $listCategory);
         @endphp
-        <div class="row">
-            <div class="col-md-4 border ml-3">
+        <div class="border mt-3">
                 <div class="row text-center">
                     @foreach($arrayCategory as $itemCategory)
                         @php
                             $category = \App\Models\Category::find($itemCategory);
                         @endphp
-                        <div class="col-md-6">
+                        <div class="col-md-2">
                             {{$category->name}}
                         </div>
                     @endforeach
                 </div>
             </div>
-            <div class="col-md-8 border mr-3">
-
-            </div>
-        </div>
         <div class="border d-flex justify-content-between align-items-center p-3">
             <a href="{{route('stand.register.member.index', $company->id)}}" class="btn btn-primary">Gian hàng</a>
             <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">Danh sách đối tác</a>

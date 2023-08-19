@@ -895,17 +895,17 @@
                 <div class="d-flex justify-content-center">
                     <a href="https://shipgo.biz/kr">
                         <div class="custom_flag">
-                            <img class="w-70 h-70 p-2" style="border: 1px solid;" src="{{ asset('flag/kr.svg') }}" alt="">
+                            <img class="w-70 h-70 p-2" src="{{ asset('flag/kr.svg') }}" alt="">
                         </div>
                     </a>
                     <a href="https://shipgo.biz/en">
                         <div class="custom_flag">
-                            <img class="w-70 h-70 p-2" style="border: 1px solid;" src="{{ asset('flag/us.svg') }}" alt="">
+                            <img class="w-70 h-70 p-2" src="{{ asset('flag/us.svg') }}" alt="">
                         </div>
                     </a>
                     <a href="https://shipgo.biz/cn">
                         <div class="custom_flag">
-                            <img class="w-70 h-70 p-2" style="border: 1px solid;" src="{{ asset('flag/cn.svg') }}" alt="">
+                            <img class="w-70 h-70 p-2" src="{{ asset('flag/cn.svg') }}" alt="">
                         </div>
                     </a>
                     <a href="https://shipgo.biz/vn">
