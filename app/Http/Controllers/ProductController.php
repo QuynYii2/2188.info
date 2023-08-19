@@ -29,7 +29,39 @@ class ProductController extends Controller
     {
         (new HomeController())->getLocale($request);
         $value = $this->findProduct(1, $id);
+        $productList = DB::table('product_attribute')->where([
+            ['product_id', $id],
+            ['status', 'ACTIVE']
+        ])->get();
+        $myArray = null;
+        if ($productList->isNotEmpty()) {
+            foreach ($productList as $item) {
+                $attribute = $item->attribute_id;
+                $properties = $item->value;
+                $arrayProperty = explode(',', $properties);
+                $array = null;
+                $list = null;
+                foreach ($arrayProperty as $property) {
+                    $list = $list . '-' . $property;
+                }
+                $list = $attribute . $list;
+                $myArray[] = $list;
+            }
+        }
 
+        $testArray = null;
+        if ($myArray) {
+            foreach ($myArray as $myItem) {
+                $key = explode("-", $myItem);
+                $demoArray = null;
+                for ($j = 1; $j < count($key); $j++) {
+                    $demoArray[] = $key[0] . '-' . $key[$j];
+                }
+                $testArray[] = $demoArray;
+            }
+        }
+
+        $newArray = $this->getArray($testArray);
 
         return view('frontend/pages/detail-product', $value);
     }
@@ -168,7 +200,7 @@ class ProductController extends Controller
         $listProperties = [];
         foreach ($product_att as $item) {
             $id = $item->attribute_id;
-            $att = Attribute::where('id', $id)->first(['id', 'name', 'name_vi', 'name_zh', 'name_en', 'name_ja', 'name_ko', ]);
+            $att = Attribute::where('id', $id)->first(['id', 'name', 'name_vi', 'name_zh', 'name_en', 'name_ja', 'name_ko',]);
             $listAtt[$id] = $att;
             $listProperties[$id] = explode(',', $item->value);
         }
@@ -212,5 +244,32 @@ class ProductController extends Controller
             'listAtt' => $listAtt,
             'listProperties' => $listProperties,
         ];
+    }
+
+    private function mergeArray($array1, $array2)
+    {
+        $arrayList = [];
+        for ($j = 0; $j < count($array1); $j++) {
+            for ($z = 0; $z < count($array2); $z++) {
+                $arrayList[] = $array1[$j] . "," . $array2[$z];
+            }
+        }
+        return $arrayList;
+    }
+
+    private function getArray($array)
+    {
+        if ($array) {
+            if (count($array) == 1) {
+                return $array;
+            }
+            $newArray = $array[0];
+            for ($i = 1; $i < count($array); $i++) {
+                $newArray = $this->mergeArray($newArray, $array[$i]);
+            }
+            return $newArray;
+        } else {
+            return null;
+        }
     }
 }
