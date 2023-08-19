@@ -88,13 +88,45 @@
         @endphp
         <h3 class="text-center">Gian hàng hội viên {{$company->member}}</h3>
         <h3 class="text-left">Hội viên {{$company->member}}</h3>
-        <div class="border d-flex justify-content-between align-items-center p-5">
+        <div class="border d-flex justify-content-between align-items-center p-3">
             <a href="{{route('stand.register.member.index', $company->id)}}" class="btn btn-primary">Gian hàng</a>
             <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">Danh sách đối tác</a>
             <a href="#" class="btn btn-primary">Tin nhắn đã nhận</a>
             <a href="#" class="btn btn-warning">Tin nhắn đã gửi</a>
             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Mua hàng</a>
             <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">Đặt sỉ nước ngoài</a>
+        </div>
+        <div class="modal fade" id="exampleModalBuyBulk" role="dialog" aria-labelledby="exampleModalBuyBulk"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Chọn quốc gia mua hàng</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{{route('parent.register.member.locale', 'kr')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/korea.png') }}"
+                                     alt="">
+                            </a>
+                            <a href="{{route('parent.register.member.locale', 'jp')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}"
+                                     alt="">
+                            </a>
+                            <a href="{{route('parent.register.member.locale', 'cn')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/china.webp') }}"
+                                     alt="">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -205,6 +237,7 @@
                             </p>
                         </div>
                     @endforeach
+
                 </div>
             </div>
             <div id="renderProductMember" class="row col-md-8">
@@ -216,7 +249,7 @@
                         @endphp
                         <div class="d-flex justify-content-between mt-3">
                             <div class="">
-                                <h5>Product Code</h5>
+                                <h5>Product Code22</h5>
                                 <p class="productCode" id="productCode">
                                     {{ ($firstProduct->product_code) }}
                                 </p>
