@@ -87,7 +87,10 @@
                 } else{
                     $products = \App\Models\Product::where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])->get();
                 }
-                $firstProduct = $products[0];
+                $firstProduct = null;
+                if (!$products->isEmpty()){
+                 $firstProduct = $products[0];
+                }
             @endphp
             <h3 class="text-center">Gian hàng hội viên {{$company->member}}</h3>
             <h3 class="text-left">Hội viên {{$company->member}}</h3>

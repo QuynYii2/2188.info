@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Member;
 use App\Enums\CartStatus;
 use App\Enums\MemberPartnerStatus;
 use App\Enums\MemberRegisterInfoStatus;
+use App\Enums\RegisterMember;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\MemberPartner;
@@ -37,6 +38,9 @@ class RegisterMemberController extends Controller
     {
         (new HomeController())->getLocale($request);
         $company = MemberRegisterInfo::find($id);
+        if ($company && $company->member == RegisterMember::TRUST) {
+            return back();
+        }
         return view('frontend.pages.member.stand-member', compact('company',));
     }
 
@@ -62,6 +66,9 @@ class RegisterMemberController extends Controller
             ['status', MemberPartnerStatus::ACTIVE]
         ])->get();
         session()->forget('region');
+        if ($company && $company->member == RegisterMember::TRUST) {
+            return back();
+        }
         return view('frontend.pages.member.member-partner', compact('company', 'memberList'));
     }
 
@@ -74,6 +81,9 @@ class RegisterMemberController extends Controller
         ])->get();
         session()->forget('region');
         session()->put('region', $locale);
+        if ($company && $company->member == RegisterMember::TRUST) {
+            return back();
+        }
         return view('frontend.pages.member.member-partner', compact('company', 'memberList'));
     }
 
