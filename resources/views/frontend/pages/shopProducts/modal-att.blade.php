@@ -27,7 +27,7 @@
                     @php
                         $listKeys = array_keys($listAtt);
                     @endphp
-                    @if ($listKeys)
+                    @if (sizeof($listKeys) > 2)
                         @foreach ($listProperties[$listKeys[0]] as $num1)
                             @foreach ($listProperties[$listKeys[1]] as $num2)
                                     @php
