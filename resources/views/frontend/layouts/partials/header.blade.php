@@ -145,12 +145,28 @@
                                     </div>
                                 </button>
                             </div>
-                            <div class="item button_seller align-center d-flex" onclick="<?php echo $checkBuyer ? 'showAlert(1)' : '' ?>">
-                                <button class="full-width cursor-pointer" onclick="">
-{{--                                    <i class="item-icon fa-solid fa-gift"></i>--}}
-                                    <div class="it em-text">Mua sỉ</div>
-                                </button>
-                            </div>
+                            @php
+                                $company = \App\Models\MemberRegisterInfo::where([
+                                    ['user_id', Auth::user()->id],
+                                    ['status', \App\Enums\MemberRegisterInfoStatus::ACTIVE]
+                                ])->first();
+                            @endphp
+
+                            @if($company && $company->member != \App\Enums\RegisterMember::TRUST)
+                                <div class="item button_seller align-center d-flex">
+                                    <button class="full-width cursor-pointer">
+                                        {{--                                    <i class="item-icon fa-solid fa-gift"></i>--}}
+                                        <div class="it em-text" data-toggle="modal" data-target="#modalBuyBulkLogistic">Mua sỉ</div>
+                                    </button>
+                                </div>
+                            @elseif($company && $company->member == \App\Enums\RegisterMember::TRUST)
+                                <div class="item button_seller align-center d-flex">
+                                    <button class="full-width cursor-pointer">
+                                        {{--                                    <i class="item-icon fa-solid fa-gift"></i>--}}
+                                        <div class="it em-text" data-toggle="modal" data-target="#modalBuyBulkTrust">Mua sỉ</div>
+                                    </button>
+                                </div>
+                            @endif
                             @php
                                 $local = session('locale');
                                 if ($local == null){
@@ -918,6 +934,69 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="modalBuyBulkLogistic" role="dialog" aria-labelledby="exampleModalBuyBulkLogistic"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content p-4" style="width: auto">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Chọn quốc gia mua
+                    hàng</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center align-items-center">
+                    <a href="{{route('parent.register.member.locale', 'kr')}}">
+                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                             src="{{ asset('images/korea.png') }}"
+                             alt="">
+                    </a>
+                    <a href="{{route('parent.register.member.locale', 'jp')}}">
+                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                             src="{{ asset('images/japan.webp') }}"
+                             alt="">
+                    </a>
+                    <a href="{{route('parent.register.member.locale', 'cn')}}">
+                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                             src="{{ asset('images/china.webp') }}"
+                             alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalBuyBulkTrust" role="dialog" aria-labelledby="exampleModalBuyBulkTrust"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Chọn quốc gia mua hàng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="{{route('trust.register.member.locale', 'kr')}}">
+                        <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt="">
+                    </a>
+                    <a href="{{route('trust.register.member.locale', 'jp')}}">
+                        <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt="">
+                    </a>
+                    <a href="{{route('trust.register.member.locale', 'cn')}}">
+                        <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 {{--<script>--}}
@@ -992,21 +1071,21 @@
         form.submit();
     }
 
-    function showAlert(role = 2) {
-        event.preventDefault();
-        switch (role) {
-            case 1:
-                if (confirm('Bạn phải nâng cấp quyền để thực hiện thao tác này.')) {
-                    return window.location.href = '{{ route('process.register.member') }}'
-                }
-                break;
-            case 2:
-                if (confirm('Bạn phải đăng nhập để thực hiện thao tác này.')) {
-                    return window.location.href = '{{ route('login') }}'
-                }
-                break;
-        }
+    {{--function showAlert(role = 2) {--}}
+    {{--    event.preventDefault();--}}
+    {{--    switch (role) {--}}
+    {{--        case 1:--}}
+    {{--            if (confirm('Bạn phải nâng cấp quyền để thực hiện thao tác này.')) {--}}
+    {{--                return window.location.href = '{{ route('process.register.member') }}'--}}
+    {{--            }--}}
+    {{--            break;--}}
+    {{--        case 2:--}}
+    {{--            if (confirm('Bạn phải đăng nhập để thực hiện thao tác này.')) {--}}
+    {{--                return window.location.href = '{{ route('login') }}'--}}
+    {{--            }--}}
+    {{--            break;--}}
+    {{--    }--}}
 
-    }
+    {{--}--}}
 </script>
 
