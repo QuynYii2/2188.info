@@ -343,7 +343,7 @@
                                 @php
                                     $carts = DB::table('carts')
                                      ->join('products', 'products.id', '=', 'carts.product_id')
-                                     ->where([['products.user_id', $company->user_id], ['carts.member', 1],['carts.status', \App\Enums\CartStatus::WAIT_ORDER]])
+                                     ->where([['products.user_id', $company->user_id], ['carts.user_id', Auth::user()->id], ['carts.member', 1],['carts.status', \App\Enums\CartStatus::WAIT_ORDER]])
                                      ->select('carts.*')
                                      ->get();
                                 @endphp
