@@ -12,40 +12,82 @@
                 </button>
             </div>
             <div class="modal-body">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        @foreach($listAtt as $att)
-                            <th scope="col">{{ $att->name }}</th>
-                        @endforeach
-                        <th scope="col">Giá gốc</th>
-                        <th scope="col">Giá khuyến mại</th>
-                    </tr>
-                    </thead>
+
+                @php
+                    $testArray = session()->get('testArray');
+                    if ($testArray){
+                     $testArray = $testArray[0];
+                    } else {
+                        $testArray = null;
+                    }
+                @endphp
+                <table>
                     <tbody>
-                    @php
-                        $listKeys = array_keys($listAtt);
-                    @endphp
-                    @if (sizeof($listKeys) > 2)
-                        @foreach ($listProperties[$listKeys[0]] as $num1)
-                            @foreach ($listProperties[$listKeys[1]] as $num2)
+                    @if($testArray)
+                        @if(count($testArray) == 1)
+                            @php
+                                $item = $testArray[0];
+                            @endphp
+                            @if(is_array($item))
+                                @if(count($item) == 1)
                                     @php
-                                        $pr1 = \App\Models\Properties::where('id', $num1)->first(['id', 'name']);
-                                        $pr2 = \App\Models\Properties::where('id', $num2)->first(['id', 'name']);
+                                        $attproArray =  explode('-', $item[0]);
+                                        $attribue = \App\Models\Attribute::find($attproArray[0]);
+                                        $property = \App\Models\Properties::find($attproArray[1]);
                                     @endphp
                                     <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td>{{ $pr1->name }}</td>
-                                        <td>{{ $pr2->name }}</td>
-                                        <td>1</td>
-                                        <td>1</td>
+                                        <td>{{$property->name}}</td>
                                     </tr>
+                                @else
+                                    <tr>
+                                        @foreach($item as $attpro)
+                                            @php
+                                                $attproArray =  explode('-', $attpro);
+                                                $attribute = \App\Models\Attribute::find($attproArray[0]);
+                                                $property = \App\Models\Properties::find($attproArray[1]);
+                                            @endphp
+                                            <td>{{$property->name}}</td>
+                                        @endforeach
+                                    </tr>
+                                @endif
+                            @else
+                                @php
+                                    $myArray =  explode(',', $item);
+                                @endphp
+                                <tr>
+                                    @foreach($myArray as $value)
+                                        @php
+                                            $attpro =  explode('-', $value);
+                                            $attribue = \App\Models\Attribute::find($attpro[0]);
+                                            $property = \App\Models\Properties::find($attpro[1]);
+                                        @endphp
+                                        <td>{{$property->name}}</td>
+                                    @endforeach
+                                </tr>
+                            @endif
+                        @else
+                            @foreach($testArray as $item)
+                                @php
+                                    $attributeProperty = explode(',', $item);
+                                @endphp
+                                <tr>
+                                    @foreach($attributeProperty as $attpro)
+                                        @php
+                                            $attproArray =  explode('-', $attpro);
+                                            $attribue = \App\Models\Attribute::find($attproArray[0]);
+                                            $property = \App\Models\Properties::find($attproArray[1]);
+                                        @endphp
+                                        <td>{{$property->name}}</td>
+                                    @endforeach
+                                </tr>
                             @endforeach
-                        @endforeach
+                            <br>
+                            <br>
+                        @endif
                     @endif
                     </tbody>
                 </table>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
