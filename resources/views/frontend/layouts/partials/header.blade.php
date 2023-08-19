@@ -180,19 +180,9 @@
                                                 <a href="">Coins: {{$coin->quantity}}</a>
                                             </div>
                                         @endif
-                                        <a href="{{route('buy.coin.show')}}" class="none_decoration">
-                                            <div class="drop-item">
-                                                {{ __('home.buy coin') }}
-                                            </div>
-                                        </a>
                                         <a href="{{route('wish.list.index')}}" class="none_decoration">
                                             <div class="drop-item">
                                                 {{ __('home.Wish Lists') }}
-                                            </div>
-                                        </a>
-                                        <a href="!#" class="none_decoration">
-                                            <div class="drop-item">
-                                                {{ __('home.Gift Cards') }}
                                             </div>
                                         </a>
                                         @php
@@ -235,9 +225,13 @@
 
                                             $isValid = (new \App\Http\Controllers\Frontend\HomeController())->checkSellerOrAdmin();
                                         @endphp
-                                        @if($isMember)
+                                        @if($isMember && $member->member != \App\Enums\RegisterMember::TRUST)
                                             <div class="drop-item">
                                                 <a href="{{ route('stand.register.member.index', $member->id) }}">{{ __('home.Shop') }}</a>
+                                            </div>
+                                        @elseif($isMember && $member->member == \App\Enums\RegisterMember::TRUST)
+                                            <div class="drop-item">
+                                                <a href="{{ route('trust.register.member.index') }}">{{ __('home.Shop') }}</a>
                                             </div>
                                         @endif
                                         @if(!$checkTrust && $isValid==true)
