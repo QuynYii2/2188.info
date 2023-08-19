@@ -106,9 +106,9 @@ body {
   margin: 0 200px;
 }
 
-.item:hover {
+.item-hover:hover {
   border: 1px solid #0cbff1;
-  border-radius: 10px;
+  border-radius: 4px;
 }
 
 .item-voucher .item {

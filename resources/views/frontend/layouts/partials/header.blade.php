@@ -134,7 +134,7 @@
                             <div class="item">
                                 <button type="button" class="btn btn-primary" data-toggle="modal"
                                         data-target="#modal-flag-header">
-                                    <i class="item-icon fa-regular fa-heart"></i>
+{{--                                    <i class="item-icon fa-regular fa-heart"></i>--}}
                                     <div class="item-text">
                                         Mua lẻ
                                     </div>
@@ -142,7 +142,7 @@
                             </div>
                             <div class="item" onclick="<?php echo $checkBuyer ? 'showAlert(1)' : '' ?>">
                                 <button class="btn btn-primary" onclick="">
-                                    <i class="item-icon fa-solid fa-gift"></i>
+{{--                                    <i class="item-icon fa-solid fa-gift"></i>--}}
                                     <div class="item-text">Mua sỉ</div>
                                 </button>
                             </div>

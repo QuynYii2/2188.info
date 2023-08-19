@@ -4,7 +4,7 @@
     $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
 @endphp
 <div class="swiper-slide">
-    <div class="item">
+    <div class="item item-hover">
         @if($product->thumbnail)
             <div class="item-img">
                 <a href="{{route('detail_product.show', $product->id)}}">
