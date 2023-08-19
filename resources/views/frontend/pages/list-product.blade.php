@@ -12,7 +12,7 @@
                 </a>
                 <div class="button-view">
                     <button type="button" class="btn view_modal" data-toggle="modal"
-                            data-value="{{$product}}" data-id="{{$productDetail}}"
+                            data-value="{{$product}}"
                             data-target="#exampleModal">{{ __('home.Quick view') }}</button>
                 </div>
                 <div class="text">
@@ -79,5 +79,4 @@
         </div>
     </div>
 </div>
-
 
