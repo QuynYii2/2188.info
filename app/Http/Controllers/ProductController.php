@@ -186,7 +186,6 @@ class ProductController extends Controller
             }
         }
 
-
         $promotions = Promotion::where([['status', PromotionStatus::ACTIVE], ['user_id', $product->user_id]])->get();
         $arrayPromotions = null;
         foreach ($promotions as $promotion) {

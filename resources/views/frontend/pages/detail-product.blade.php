@@ -101,8 +101,6 @@
         }
 
         .modal-content {
-            width: 400px;
-            margin: auto;
         }
 
         .table-fill {
@@ -341,9 +339,8 @@
                             @endforeach
                         </div>
                         <a id="resetSelect" class="btn btn-dark mt-3 " style="color: white"> Reset select</a>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-show-att">
-                            Xem thuộc tính
-                        </button>
+
+                        @include('frontend.pages.shopProducts.modal-att', ['name' => ''])
                     @endif
                     <div class="">
                         <input id="product_id" hidden value="{{$product->id}}">
@@ -925,12 +922,6 @@
                                     <div class="text-sale">
                                         Hot
                                     </div>
-                                    {{--                                            <div class="text-new">--}}
-                                    {{--                                                New--}}
-                                    {{--                                            </div>--}}
-                                    <!-- <div class="text-bundle">
-                                                Bundle
-                                            </div> -->
                                 </div>
                             </div>
                             <div class="item-body">
@@ -986,53 +977,6 @@
             <div class="swiper-button-prev"></div>
         </div>
     </section>
-
-    <div class="modal fade" id="modal-show-att" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col"></th>
-                            @foreach($listAtt as $att)
-                                <th scope="col">{{ $att->name }}</th>
-                            @endforeach
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @php
-                            $listKeys = array_keys($listAtt);
-                        @endphp
-                        @foreach ($listProperties[$listKeys[0]] as $num1)
-                            @foreach ($listProperties[$listKeys[1]] as $num2)
-                                @php
-                                    $pr1 = Properties::where('id', $num1)->first(['id', 'name']);
-                                    $pr2 = Properties::where('id', $num2)->first(['id', 'name']);
-                                @endphp
-                                <tr>
-                                    <td></td>
-                                    <td>{{ $pr1->name }}</td>
-                                    <td>{{ $pr2->name }}</td>
-                                </tr>
-                            @endforeach
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script>
         function toggleContent(contentId, btnId) {
