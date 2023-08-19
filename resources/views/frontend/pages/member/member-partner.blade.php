@@ -6,7 +6,7 @@
     @endphp
     <div class="container-fluid">
         <h3 class="text-center">Danh sách đối tác</h3>
-        <div class="border d-flex justify-content-between align-items-center bg-warning p-5">
+        <div class="border d-flex justify-content-between align-items-center bg-warning p-2">
             <h5>{{$company->name}}</h5>
             <div class="">
                 <span>ID</span>: {{$company->id}}
