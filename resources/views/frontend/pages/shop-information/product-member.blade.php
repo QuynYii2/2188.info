@@ -84,7 +84,10 @@
             } else{
                 $products = \App\Models\Product::where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])->get();
             }
-            $firstProduct = $products[0];
+            $firstProduct = null;
+            if (!$products->isEmpty()){
+                $firstProduct = $products[0];
+            }
         @endphp
         <h3 class="text-center">Gian hàng hội viên {{$company->member}}</h3>
         <h3 class="text-left">Hội viên {{$company->member}}</h3>
@@ -94,7 +97,8 @@
             <a href="#" class="btn btn-primary">Tin nhắn đã nhận</a>
             <a href="#" class="btn btn-warning">Tin nhắn đã gửi</a>
             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Mua hàng</a>
-            <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">Đặt sỉ nước ngoài</a>
+            <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">Đặt sỉ nước
+                ngoài</a>
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -236,7 +240,8 @@
                                 <div class="main-card">
                                     <div class="item-card">
                                         <div class="card-image">
-                                            <a id="linkProductImg" href="{{ asset('storage/' . $firstProduct->thumbnail) }}"
+                                            <a id="linkProductImg"
+                                               href="{{ asset('storage/' . $firstProduct->thumbnail) }}"
                                                data-fancybox="gallery"
                                                data-caption="{{$firstProduct->name}}">
                                                 <img data-id="{{$firstProduct->id}}"
@@ -393,13 +398,15 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="modal fade" id="exampleModalBuyBulk" role="dialog" aria-labelledby="exampleModalBuyBulk"
+                        <div class="modal fade" id="exampleModalBuyBulk" role="dialog"
+                             aria-labelledby="exampleModalBuyBulk"
                              aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -426,7 +433,8 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                                        </button>
                                     </div>
                                 </div>
                             </div>
