@@ -205,10 +205,6 @@ new Swiper(".HotDeals", {
             slidesPerView: 4,
             spaceBetween: 40,
         },
-        1500: {
-            slidesPerView: 5,
-            spaceBetween: 25,
-        },
     },
     mousewheel: true,
     keyboard: true,

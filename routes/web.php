@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Member\RegisterMemberController;
+use App\Http\Controllers\Member\TrustMemberController;
 use App\Http\Controllers\MemberPartnerController;
 use App\Http\Controllers\PaypalPaymentController;
 use App\Http\Controllers\PermissionRankController;
@@ -403,6 +404,9 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::post('/products-register-member', [RegisterMemberController::class, 'saveProduct'])->name('products.register.member.create');
     Route::post('/add-to-cart-register-member/{product}', [CartController::class, 'addToCartApi'])->name('cart.api');
     Route::post('/stands-register-member', [MemberPartnerController::class, 'store'])->name('stands.register.member');
+    //
+    Route::get('/trusts-register-member', [TrustMemberController::class, 'memberStand'])->name('trust.register.member.index');
+    Route::get('/trusts-register-member/{locale}', [TrustMemberController::class, 'memberPartnerLocale'])->name('trust.register.member.locale');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {

@@ -12,34 +12,22 @@
             --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
         }
 
-        .main-card {
-            padding: 2rem 1rem;
-            margin: 0 auto;
-            max-width: 68rem;
-            width: 100%;
-        }
-
-        .main .main-card {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-gap: 1rem;
-            justify-content: center;
-            align-items: center;
-        }
-
         .main .item-card {
-            background: var(--color-white);
-            box-shadow: var(--box-shadow);
-            color: var(--color-dark);
             border-radius: 2px;
         }
 
         .main .card-image {
-            background: var(--color-white);
             display: block;
             padding-top: 70%;
             position: relative;
             width: 100%;
+        }
+
+        .modal-dialog{
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .main .card-image img {
@@ -87,242 +75,252 @@
                 } else{
                     $products = \App\Models\Product::where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])->get();
                 }
-                $firstProduct = $products[0];
+                $firstProduct = null;
+                if (!$products->isEmpty()){
+                 $firstProduct = $products[0];
+                }
             @endphp
             <h3 class="text-center">Gian hàng hội viên {{$company->member}}</h3>
             <h3 class="text-left">Hội viên {{$company->member}}</h3>
-            <div class="border d-flex justify-content-between align-items-center p-5">
+            <div class="border d-flex justify-content-between align-items-center p-3">
                 <a href="{{route('stand.register.member.index', $company->id)}}" class="btn btn-primary">Gian hàng</a>
                 <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">Danh sách đối tác</a>
                 <a href="#" class="btn btn-primary">Tin nhắn đã nhận</a>
                 <a href="#" class="btn btn-warning">Tin nhắn đã gửi</a>
                 <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Mua hàng</a>
-                <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">Đặt sỉ nước ngoài</a>
+                <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">Đặt sỉ nước
+                    ngoài</a>
             </div>
-            <div class="row">
-                <div class="col-md-6">
+            <div class="row m-0">
+                <div class="col-md-6 border">
                     <div class="row">
+                        <div class="col-md-12 border">
+                            <div class="mt-2">
+                                <h5 class="mb-3">{{ ($company->name) }}</h5>
+                            </div>
+                        </div>
                         <div class="col-md-6 border">
-                            <div class="row">
-                                <div class="col-md-12 border">
-                                    <div class="mt-2">
-                                        <h5 class="mb-3">{{ ($company->name) }}</h5>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 border">
-                                    <div class="mt-2">
-                                        <h5 class="mb-3">{{ ($company->code_business) }}</h5>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 border">
-                                    <div class="mt-2">
-                                        <h5 class="mb-3">Doanh nghiệp ưu
-                                            tú: {{ ($company->member) }}</h5>
-                                        <div class="">
-                                            <i class="fa-solid fa-trophy"></i>
-                                            <i class="fa-solid fa-trophy"></i>
-                                            <i class="fa-solid fa-trophy"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 border">
-                                    <div class="mt-2">
-                                        <h5 class="mb-3">Phân loại hội
-                                            viên: {{ ($company->member) }}</h5>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 border">
-                                    <div class="mt-2">
-                                        <h5 class="mb-3">Điểm đánh giá của khách hàng: </h5>
-                                    </div>
+                            <div class="mt-2">
+                                <h5 class="mb-3">{{ ($company->code_business) }}</h5>
+                            </div>
+                        </div>
+                        <div class="col-md-6 border">
+                            <div class="mt-2">
+                                <h5 class="mb-3">Doanh nghiệp ưu
+                                    tú: {{ ($company->member) }}</h5>
+                                <div class="">
+                                    <i class="fa-solid fa-trophy"></i>
+                                    <i class="fa-solid fa-trophy"></i>
+                                    <i class="fa-solid fa-trophy"></i>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 border">
-                            <div class="row">
-                                <div class="col-md-12 border">
-                                    <div class="mt-2">
-                                        <h5 class="mb-3">Sản phẩm chỉ định</h5>
-                                    </div>
-                                </div>
-                                @php
-                                    $listCategory = $company->category_id;
-                                    $arrayCategory = explode(',', $listCategory);
-                                @endphp
-                                @foreach($arrayCategory as $itemArrayCategory)
-                                    @php
-                                        $category = \App\Models\Category::find($itemArrayCategory);
-                                    @endphp
-                                    <div class="col-md-6 border">
-                                        <div class="mt-2">
-                                            <h5 class="mb-3">{{ ($category->name) }}</h5>
-                                        </div>
-                                    </div>
-                                @endforeach
+                            <div class="mt-2">
+                                <h5 class="mb-3">Phân loại hội
+                                    viên: {{ ($company->member) }}</h5>
+                            </div>
+                        </div>
+                        <div class="col-md-6 border">
+                            <div class="mt-2">
+                                <h5 class="mb-3">Điểm đánh giá của khách hàng: </h5>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="d-flex">
+                <div class="col-md-6 border">
+                    <div class="row">
+                        <div class="col-md-12 border">
+                            <div class="mt-2">
+                                <h5 class="mb-3">Sản phẩm chỉ định</h5>
+                            </div>
+                        </div>
                         @php
-                            $newCompany = \App\Models\MemberRegisterInfo::where('user_id', Auth::user()->id)->first();
-                            $oldItem = null;
-                            if($newCompany){
-                                 $oldItem = \App\Models\MemberPartner::where([
-                                   ['company_id_source', $company->id],
-                                   ['company_id_follow', $newCompany->id],
-                                   ['status', \App\Enums\MemberPartnerStatus::ACTIVE],
-                                 ])->first();
-                            }
+                            $listCategory = $company->category_id;
+                            $arrayCategory = explode(',', $listCategory);
                         @endphp
-                        @if(!$oldItem)
-                            @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
-                                <form method="post" action="{{route('stands.register.member')}}">
-                                    @csrf
-                                    <input type="text" name="company_id_source" class="d-none" value="{{$company->id}}">
-                                    <input type="text" name="price" class="d-none" value="{{$firstProduct->price}}">
-                                    <button class="btn btn-primary" id="btnFollow" type="submit">
-                                        Follow
-                                    </button>
-                                </form>
-                            @endif
-                        @endif
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 border">
-                    <div class="row mt-3">
-                        @foreach($products as $product)
-                            <div class="col-md-3 mb-2 text-center">
-                                <img data-id="{{$product->id}}"
-                                     src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
-                                     class="thumbnailProduct" data-value="{{$product}}"
-                                     width="60px" height="60px">
-                                <p class="mt-2">
-                                    <a href="{{route('detail_product.show', $product->id)}}"
-                                       class="text-decoration-none">
-                                        {{ ($product->name) }}
-                                    </a>
-                                </p>
+                        @foreach($arrayCategory as $itemArrayCategory)
+                            @php
+                                $category = \App\Models\Category::find($itemArrayCategory);
+                            @endphp
+                            <div class="col-md-6 border">
+                                <div class="mt-2">
+                                    <h5 class="mb-3">{{ ($category->name) }}</h5>
+                                </div>
                             </div>
                         @endforeach
                     </div>
                 </div>
-                <div id="renderProductMember" class="row col-md-8">
-                    @if(!$products->isEmpty())
-                        <div class="col-md-6 border">
-                            @php
-                                $attributes = DB::table('product_attribute')->where([['product_id', $firstProduct->id], ['status', \App\Enums\AttributeProductStatus::ACTIVE]])->get();
-                                $price_sales = \App\Models\ProductSale::where('product_id', '=', $firstProduct->id)->get();
-                            @endphp
-                            <div class="d-flex justify-content-between mt-3">
-                                <div class="">
-                                    <h5>Product Code</h5>
-                                    <p class="productCode" id="productCode">
-                                        {{ ($firstProduct->product_code) }}
-                                    </p>
-                                </div>
-                                <div class="">
-                                    <h5>Product Name</h5>
-                                    <p class="productName" id="productName">
-                                        {{ ($firstProduct->name) }}
-                                    </p>
-                                </div>
-                            </div>
-                            @php
-                                $productGallery = $firstProduct->gallery;
-                            @endphp
-                            <div class="mb-3">
-                                <div class="main">
-                                    <div class="main-card">
-                                        <div class="item-card">
-                                            <div class="card-image">
-                                                <a id="linkProductImg" href="{{ asset('storage/' . $firstProduct->thumbnail) }}"
-                                                   data-fancybox="gallery"
-                                                   data-caption="{{$firstProduct->name}}">
-                                                    <img data-id="{{$firstProduct->id}}"
-                                                         id="imgProductMain"
-                                                         src="{{ asset('storage/' . $firstProduct->thumbnail) }}"
-                                                         class="thumbnailProductMain"
-                                                         data-value="{{$firstProduct}}" alt="">
-                                                </a>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex">
+                    @php
+                        $newCompany = \App\Models\MemberRegisterInfo::where('user_id', Auth::user()->id)->first();
+                        $oldItem = null;
+                        if($newCompany){
+                             $oldItem = \App\Models\MemberPartner::where([
+                               ['company_id_source', $company->id],
+                               ['company_id_follow', $newCompany->id],
+                               ['status', \App\Enums\MemberPartnerStatus::ACTIVE],
+                             ])->first();
+                        }
+                    @endphp
+                    @if(!$oldItem)
+                        @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
+                            <form method="post" action="{{route('stands.register.member')}}">
+                                @csrf
+                                <input type="text" name="company_id_source" class="d-none" value="{{$company->id}}">
+                                <input type="text" name="price" class="d-none" value="{{$firstProduct->price}}">
+                                <button class="btn btn-primary" id="btnFollow" type="submit">
+                                    Follow
+                                </button>
+                            </form>
+                        @endif
+                    @endif
+                </div>
+            </div>
+    </div>
+    <div class="border d-flex justify-content-center">
+        <div class=" mt-3">
+            @foreach($products as $product)
+                <button type="button" style="background-color: white" class="btn" data-toggle="modal"
+                        data-target="#exampleModal">
+                    <div class="text-center">
+                        <img data-id="{{$product->id}}"
+                             src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
+                             class="thumbnailProduct" data-value="{{$product}}"
+                             width="150px" height="150px">
+                        <p class="mt-2">
+                            <a href="#"
+                               class="text-decoration-none">
+                                {{ ($product->name) }}
+                            </a>
+                        </p>
+                    </div>
+                </button>
+            @endforeach
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="renderProductMember" class="row">
+                                @if(!$products->isEmpty())
+                                    <div class="col-md-6 border">
+                                        @php
+                                            $attributes = DB::table('product_attribute')->where([['product_id', $firstProduct->id], ['status', \App\Enums\AttributeProductStatus::ACTIVE]])->get();
+                                            $price_sales = \App\Models\ProductSale::where('product_id', '=', $firstProduct->id)->get();
+                                        @endphp
+                                        <div class="d-flex justify-content-between mt-3">
+                                            <div class="">
+                                                <h5>Product Code</h5>
+                                                <p class="productCode" id="productCode">
+                                                    {{ ($firstProduct->product_code) }}
+                                                </p>
+                                            </div>
+                                            <div class="">
+                                                <h5>Product Name</h5>
+                                                <p class="productName" id="productName">
+                                                    {{ ($firstProduct->name) }}
+                                                </p>
                                             </div>
                                         </div>
-                                        @if($productGallery)
-                                            @php
-                                                $arrayProductImgThumbnail = explode(',', $productGallery);
-                                            @endphp
-                                            @foreach($arrayProductImgThumbnail as $productImg)
-                                                <div class="item-card d-none">
+                                        @php
+                                            $productGallery = $firstProduct->gallery;
+                                        @endphp
+                                        <div class="mb-3">
+                                            <div class="main">
+                                                <div class="item-card">
                                                     <div class="card-image">
-                                                        <a href="{{ asset('storage/' . $productImg) }}"
+                                                        <a id="linkProductImg"
+                                                           href="{{ asset('storage/' . $firstProduct->thumbnail) }}"
                                                            data-fancybox="gallery"
                                                            data-caption="{{$firstProduct->name}}">
-                                                            <img src="{{ asset('storage/' . $productImg) }}"
-                                                                 class="thumbnailProductMain" alt="">
+                                                            <img data-id="{{$firstProduct->id}}"
+                                                                 id="imgProductMain"
+                                                                 src="{{ asset('storage/' . $firstProduct->thumbnail) }}"
+                                                                 class="thumbnailProductMain"
+                                                                 data-value="{{$firstProduct}}" alt="">
                                                         </a>
                                                     </div>
                                                 </div>
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                </div>
-                                <button class="btn btn-warning mt-2 float-right">Select</button>
-                            </div>
-
-                            <h6 class="text-center mt-2">Xem chi tiết các hình ảnh khác</h6>
-                            @if($productGallery)
-                                @php
-                                    $arrayProductImg = explode(',', $productGallery);
-                                @endphp
-                                <div class="row thumbnailSupGallery">
-                                    @foreach($arrayProductImg as $productImg)
-                                        <div class="col-md-3">
-                                            <img src="{{ asset('storage/' . $productImg) }}" alt=""
-                                                 class="thumbnailProductGallery thumbnailGallery{{$loop->index+1}}"
-                                                 data-id="{{$firstProduct->id}}"
-                                                 width="60px" height="60px">
+                                                @if($productGallery)
+                                                    @php
+                                                        $arrayProductImgThumbnail = explode(',', $productGallery);
+                                                    @endphp
+                                                    @foreach($arrayProductImgThumbnail as $productImg)
+                                                        <div class="item-card d-none">
+                                                            <div class="card-image">
+                                                                <a href="{{ asset('storage/' . $productImg) }}"
+                                                                   data-fancybox="gallery"
+                                                                   data-caption="{{$firstProduct->name}}">
+                                                                    <img src="{{ asset('storage/' . $productImg) }}"
+                                                                         class="thumbnailProductMain" alt="">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <button class="btn btn-warning mt-2 float-right">Select</button>
                                         </div>
-                                    @endforeach
-                                </div>
-                            @endif
-                            <div class=" mt-2 text-center">
-                                <h5 class="text-center">Xem video sản phẩm </h5>
-                            </div>
-                        </div>
-                        <div class="col-md-6 border">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h5>
-                                    Điều kiện đặt hàng
-                                </h5>
-                                <h5>Sản phẩm: <span
-                                            class="text-warning productName">{{ ($firstProduct->name) }}</span>
-                                </h5>
-                            </div>
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th scope="col">Số lượng</th>
-                                    <th scope="col">Đơn giá</th>
-                                    <th scope="col">Ngày dự kiến xuất kho</th>
-                                </tr>
-                                </thead>
 
-                                <tbody>
-                                @if(!$price_sales->isEmpty())
-                                    @foreach($price_sales as $price_sale)
-                                        <tr>
-                                            <td>{{$price_sale->quantity}}</td>
-                                            <td>-{{$price_sale->sales}} %</td>
-                                            <td>3 ngày kể từ ngày đặt hàng</td>
-                                        </tr>
-                                    @endforeach
-                                @endif
+                                        <h6 class="text-center mt-2">Xem chi tiết các hình ảnh khác</h6>
+                                        @if($productGallery)
+                                            @php
+                                                $arrayProductImg = explode(',', $productGallery);
+                                            @endphp
+                                            <div class="row thumbnailSupGallery">
+                                                @foreach($arrayProductImg as $productImg)
+                                                    <div class="col-md-3">
+                                                        <img src="{{ asset('storage/' . $productImg) }}" alt=""
+                                                             class="thumbnailProductGallery thumbnailGallery{{$loop->index+1}}"
+                                                             data-id="{{$firstProduct->id}}"
+                                                             width="60px" height="60px">
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                        <div class=" mt-2 text-center">
+                                            <h5 class="text-center">Xem video sản phẩm </h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 border">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h5>
+                                                Điều kiện đặt hàng
+                                            </h5>
+                                            <h5>Sản phẩm: <span
+                                                        class="text-warning productName">{{ ($firstProduct->name) }}</span>
+                                            </h5>
+                                        </div>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Số lượng</th>
+                                                <th scope="col">Đơn giá</th>
+                                                <th scope="col">Ngày dự kiến xuất kho</th>
+                                            </tr>
+                                            </thead>
 
-                                </tbody>
-                            </table>
+                                            <tbody>
+                                            @if(!$price_sales->isEmpty())
+                                                @foreach($price_sales as $price_sale)
+                                                    <tr>
+                                                        <td>{{$price_sale->quantity}}</td>
+                                                        <td>-{{$price_sale->sales}} %</td>
+                                                        <td>3 ngày kể từ ngày đặt hàng</td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+
+                                            </tbody>
+                                        </table>
 
                             <p>đơn giá phía trên là điều kiện FOB/TT</p>
                             <h5 class="text-center">Đặt hàng</h5>
@@ -340,7 +338,7 @@
                                 @php
                                     $carts = DB::table('carts')
                                      ->join('products', 'products.id', '=', 'carts.product_id')
-                                     ->where([['products.user_id', $company->user_id], ['carts.member', 1],['carts.status', \App\Enums\CartStatus::WAIT_ORDER]])
+                                     ->where([['products.user_id', $company->user_id], ['carts.user_id', Auth::user()->id], ['carts.member', 1],['carts.status', \App\Enums\CartStatus::WAIT_ORDER]])
                                      ->select('carts.*')
                                      ->get();
                                 @endphp
@@ -363,83 +361,94 @@
                                 </tbody>
                             </table>
 
-                            @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
-                                <button class="btn btn-success partnerBtn float-right" id="partnerBtn"
-                                        data-value="{{$firstProduct->id}}" data-count="100">Tiếp nhận đặt hàng
-                                </button>
-                            @endif
-
-                            <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModal"
-                                 aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Chọn quốc gia mua hàng</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
+                                        @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
+                                            <button class="btn btn-success partnerBtn float-right" id="partnerBtn"
+                                                    data-value="{{$firstProduct->id}}" data-count="100">Tiếp nhận đặt
+                                                hàng
                                             </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <a href="https://shipgo.biz/kr">
-                                                    <img width="80px" height="80px" src="{{ asset('images/korea.png') }}"
-                                                         alt="">
-                                                </a>
-                                                <a href="https://shipgo.biz/jp">
-                                                    <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}"
-                                                         alt="">
-                                                </a>
-                                                <a href="https://shipgo.biz/cn">
-                                                    <img width="80px" height="80px" src="{{ asset('images/china.webp') }}"
-                                                         alt="">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        </div>
+                                        @endif
                                     </div>
-                                </div>
-                            </div>
 
-                            <div class="modal fade" id="exampleModalBuyBulk" role="dialog" aria-labelledby="exampleModalBuyBulk"
-                                 aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Chọn quốc gia mua hàng</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                <a href="{{route('parent.register.member.locale', 'kr')}}">
-                                                    <img width="80px" height="80px" src="{{ asset('images/korea.png') }}"
-                                                         alt="">
-                                                </a>
-                                                <a href="{{route('parent.register.member.locale', 'jp')}}">
-                                                    <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}"
-                                                         alt="">
-                                                </a>
-                                                <a href="{{route('parent.register.member.locale', 'cn')}}">
-                                                    <img width="80px" height="80px" src="{{ asset('images/china.webp') }}"
-                                                         alt="">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endif
                             </div>
                         </div>
-
-                    @endif
+                    </div>
                 </div>
             </div>
-        @endif
+        </div>
+    </div>
+    @endif
+
+    <div class="modal fade" id="exampleModal" role="dialog"
+         aria-labelledby="exampleModal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Chọn quốc gia mua
+                        hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="https://shipgo.biz/kr">
+                            <img width="80px" height="80px"
+                                 src="{{ asset('images/korea.png') }}"
+                                 alt="">
+                        </a>
+                        <a href="https://shipgo.biz/jp">
+                            <img width="80px" height="80px"
+                                 src="{{ asset('images/japan.webp') }}"
+                                 alt="">
+                        </a>
+                        <a href="https://shipgo.biz/cn">
+                            <img width="80px" height="80px"
+                                 src="{{ asset('images/china.webp') }}"
+                                 alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalBuyBulk" role="dialog"
+         aria-labelledby="exampleModalBuyBulk"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content p-4" style="width: auto">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Chọn quốc gia mua
+                        hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <a href="{{route('parent.register.member.locale', 'kr')}}">
+                            <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                                 src="{{ asset('images/korea.png') }}"
+                                 alt="">
+                        </a>
+                        <a href="{{route('parent.register.member.locale', 'jp')}}">
+                            <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                                 src="{{ asset('images/japan.webp') }}"
+                                 alt="">
+                        </a>
+                        <a href="{{route('parent.register.member.locale', 'cn')}}">
+                            <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                                 src="{{ asset('images/china.webp') }}"
+                                 alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
