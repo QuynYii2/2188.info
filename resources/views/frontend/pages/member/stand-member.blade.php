@@ -23,7 +23,7 @@
             width: 100%;
         }
 
-        .modal-dialog{
+        .modal-dialog {
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -267,7 +267,10 @@
                                                     @endforeach
                                                 @endif
                                             </div>
-                                            <button class="btn btn-warning mt-2 float-right">Select</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#modal-show-att">
+                                                Xem thuộc tính
+                                            </button>
                                         </div>
 
                                         <h6 class="text-center mt-2">Xem chi tiết các hình ảnh khác</h6>
@@ -322,44 +325,44 @@
                                             </tbody>
                                         </table>
 
-                            <p>đơn giá phía trên là điều kiện FOB/TT</p>
-                            <h5 class="text-center">Đặt hàng</h5>
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th scope="col">Số sản phẩm</th>
-                                    <th scope="col">Màu sắc</th>
-                                    <th scope="col">Số lượng</th>
-                                    <th scope="col">Đơn giá</th>
-                                    <th scope="col">Thành tiền</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @php
-                                    $carts = DB::table('carts')
-                                     ->join('products', 'products.id', '=', 'carts.product_id')
-                                     ->where([['products.user_id', $company->user_id], ['carts.user_id', Auth::user()->id], ['carts.member', 1],['carts.status', \App\Enums\CartStatus::WAIT_ORDER]])
-                                     ->select('carts.*')
-                                     ->get();
-                                @endphp
-                                @if(!$carts->isEmpty())
-                                    @foreach($carts as $itemCart)
-                                        <tr>
-                                            <td>
-                                                @php
-                                                    $cartProduct = \App\Models\Product::find($itemCart->product_id);
-                                                @endphp
-                                                {{$cartProduct->name}}
-                                            </td>
-                                            <td>Red</td>
-                                            <td>{{$itemCart->quantity}}</td>
-                                            <td>{{$itemCart->price}}</td>
-                                            <td>{{$itemCart->price*$itemCart->quantity}}</td>
-                                        </tr>
-                                    @endforeach
-                                @endif
-                                </tbody>
-                            </table>
+                                        <p>đơn giá phía trên là điều kiện FOB/TT</p>
+                                        <h5 class="text-center">Đặt hàng</h5>
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Số sản phẩm</th>
+                                                <th scope="col">Màu sắc</th>
+                                                <th scope="col">Số lượng</th>
+                                                <th scope="col">Đơn giá</th>
+                                                <th scope="col">Thành tiền</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @php
+                                                $carts = DB::table('carts')
+                                                 ->join('products', 'products.id', '=', 'carts.product_id')
+                                                 ->where([['products.user_id', $company->user_id], ['carts.user_id', Auth::user()->id], ['carts.member', 1],['carts.status', \App\Enums\CartStatus::WAIT_ORDER]])
+                                                 ->select('carts.*')
+                                                 ->get();
+                                            @endphp
+                                            @if(!$carts->isEmpty())
+                                                @foreach($carts as $itemCart)
+                                                    <tr>
+                                                        <td>
+                                                            @php
+                                                                $cartProduct = \App\Models\Product::find($itemCart->product_id);
+                                                            @endphp
+                                                            {{$cartProduct->name}}
+                                                        </td>
+                                                        <td>Red</td>
+                                                        <td>{{$itemCart->quantity}}</td>
+                                                        <td>{{$itemCart->price}}</td>
+                                                        <td>{{$itemCart->price*$itemCart->quantity}}</td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                            </tbody>
+                                        </table>
 
                                         @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
                                             <button class="btn btn-success partnerBtn float-right" id="partnerBtn"
@@ -451,6 +454,24 @@
         </div>
     </div>
 
+
+
+    <div class="modal fade" id="modal-show-att" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="body-modal-aat"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         var renderInputAttribute = $('#renderProductMember');
@@ -525,5 +546,22 @@
                     });
             }
         });
+
+        callAtt(88);
+
+        function callAtt(id) {
+            let url = '{{ route('detail_product.data.modal', ['id' => ':id']) }}';
+            url = url.replace(':id', id);
+            $.ajax({
+                url: url,
+                method: 'GET',
+            })
+                .done(function (response) {
+                    document.getElementById('body-modal-aat').innerHTML = response;
+                })
+                .fail(function (_, textStatus) {
+                    console.error('Request failed:', textStatus);
+                });
+        }
     </script>
 @endsection

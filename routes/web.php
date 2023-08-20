@@ -95,6 +95,7 @@ Route::middleware('auth.product')->group(function () {
 
 
 Route::get('/product-detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
+Route::get('/product/att/{id}', [\App\Http\Controllers\ProductController::class, 'getDataToModalAtt'])->name('detail_product.data.modal');
 Route::get('/shop/information/{id}', [\App\Http\Controllers\ShopInformationController::class, 'index'])->name('shop.information.show');
 Route::get('/shop/product/{id}', [\App\Http\Controllers\ShopInformationController::class, 'index'])->name('shop.product.show');
 Route::post('/shop/product/filter/{id}', [\App\Http\Controllers\ShopInformationController::class, 'filterProductBySeller'])->name('shop.product.filter');

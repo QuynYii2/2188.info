@@ -25,10 +25,10 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    public function detail_product(Request $request, $id)
+
+    public function getDataToModalAtt($id)
     {
-        (new HomeController())->getLocale($request);
-        $value = $this->findProduct(1, $id);
+
         $productList = DB::table('product_attribute')->where([
             ['product_id', $id],
             ['status', 'ACTIVE']
@@ -36,6 +36,11 @@ class ProductController extends Controller
         $myArray = null;
         if ($productList->isNotEmpty()) {
             foreach ($productList as $item) {
+
+                $id = $item->attribute_id;
+                $att = Attribute::where('id', $id)->first(['id', 'name', 'name_vi', 'name_zh', 'name_en', 'name_ja', 'name_ko', ]);
+                $listAtt[$id] = $att;
+
                 $attribute = $item->attribute_id;
                 $properties = $item->value;
                 $arrayProperty = explode(',', $properties);
@@ -61,7 +66,15 @@ class ProductController extends Controller
             }
         }
 
-        $newArray = $this->getArray($testArray);
+
+        $testArray = $this->getArray($testArray);
+        return view('frontend.pages.member.modal-att', compact('testArray', 'listAtt'));
+    }
+    public function detail_product(Request $request, $id)
+    {
+        (new HomeController())->getLocale($request);
+        $value = $this->findProduct(1, $id);
+
 
         return view('frontend/pages/detail-product', $value);
     }
