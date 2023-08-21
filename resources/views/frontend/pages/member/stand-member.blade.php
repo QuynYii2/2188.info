@@ -170,7 +170,7 @@
                             <form method="post" action="{{route('stands.register.member')}}">
                                 @csrf
                                 <input type="text" name="company_id_source" class="d-none" value="{{$company->id}}">
-                                <input type="text" name="price" class="d-none" value="{{$firstProduct->price}}">
+                                <input type="text" name="price" class="d-none" value="{{$firstProduct->price ?? ''}}">
                                 <button class="btn btn-primary" id="btnFollow" type="submit">
                                     Follow
                                 </button>
@@ -454,8 +454,6 @@
         </div>
     </div>
 
-
-
     <div class="modal fade" id="modal-show-att" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -546,8 +544,6 @@
                     });
             }
         });
-
-        callAtt(88);
 
         function callAtt(id) {
             let url = '{{ route('detail_product.data.modal', ['id' => ':id']) }}';
