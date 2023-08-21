@@ -3166,6 +3166,13 @@ footer {
   overflow-y: auto;
 }
 
+.thumbnailSupGallery-img {
+  height: 100px;
+}
+.thumbnailSupGallery-img img {
+  height: 100%;
+}
+
 .standsMember-item img {
   width: 100%;
   height: 150px;
@@ -3178,6 +3185,12 @@ footer {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+#btnViewAttribute {
+  font-size: 14px;
+  margin-top: 10px;
+  border: 1px solid #f5f7f8;
 }
 
 /*# sourceMappingURL=style.css.map */

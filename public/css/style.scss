@@ -3764,7 +3764,12 @@ footer {
   }
 
 }
-
+.thumbnailSupGallery-img{
+  height: 100px;
+  img{
+    height: 100%;
+  }
+}
 .standsMember{
   &-item{
     img{
@@ -3781,4 +3786,9 @@ footer {
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+}
+#btnViewAttribute{
+  font-size: 14px;
+  margin-top: 10px;
+  border: 1px solid #f5f7f8;
 }
