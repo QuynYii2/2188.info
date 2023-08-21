@@ -183,7 +183,8 @@ class HomeController extends Controller
         $this->getLocale($request);
         $permissions = DB::table('permissions')->where([['name', '!=', 'view_all_products'], ['name', '!=', 'view_profile']])->get();
         $categories = Category::get()->toTree();
-        return view('frontend/pages/register', compact('permissions', 'categories'));
+        $members = Member::where('price', 0)->get();
+        return view('frontend/pages/register', compact('permissions', 'categories', 'members'));
     }
 
     public function getLocale(Request $request)
