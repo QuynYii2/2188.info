@@ -42,26 +42,4 @@ class TranslateController extends Controller
         }
         return '';
     }
-
-
-
-
-    function getCurrentCountryCode()
-    {
-        $currentLocale = app()->getLocale();
-
-        $localeToCountryMap = [
-            'kr' => 'ko',
-            'cn' => 'zh-CN',
-            'vi' => 'vi',
-            'jp' => 'ja'
-        ];
-
-        if (isset($localeToCountryMap[$currentLocale])) {
-            return $localeToCountryMap[$currentLocale];
-        } else {
-            return 'en';
-        }
-    }
-
 }
