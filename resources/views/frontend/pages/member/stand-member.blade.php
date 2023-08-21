@@ -183,8 +183,8 @@
     <div class="border d-flex justify-content-center">
         <div class=" mt-3">
             @foreach($products as $product)
-                <button type="button" style="background-color: white" class="btn" data-toggle="modal"
-                        data-target="#exampleModal">
+                <button type="button" style="background-color: white" class="btn thumbnailProduct" data-toggle="modal"
+                        data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}">
                     <div class="text-center">
                         <img data-id="{{$product->id}}"
                              src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
@@ -267,7 +267,8 @@
                                                     @endforeach
                                                 @endif
                                             </div>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            <button id="btnViewAttribute" data-id="{{$firstProduct->id}}" type="button"
+                                                    class="btn btn-primary" data-toggle="modal"
                                                     data-target="#modal-show-att">
                                                 Xem thuộc tính
                                             </button>
@@ -495,6 +496,12 @@
             // $('#partnerBtn').data('value', product['id']);
             let partnerBtn = document.getElementById('partnerBtn');
             partnerBtn.setAttribute('data-value', product['id']);
+
+            // let btnViewsAttribute = document.getElementById('btnViewAttribute');
+            // console.log('aaa')
+            // btnViewsAttribute.setAttribute('data-id', product['id']);
+
+            $('#btnViewAttribute').data('id', product['id']);
         });
 
         $('.thumbnailProductGallery').on('click', function () {
@@ -543,6 +550,14 @@
                         console.error('Request failed:', textStatus);
                     });
             }
+        });
+
+        $(document).ready(function () {
+            $('#btnViewAttribute').on('click', function () {
+                let id = $(this).data('id');
+                console.log(id)
+                callAtt(id);
+            })
         });
 
         function callAtt(id) {
