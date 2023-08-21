@@ -63,6 +63,7 @@ class AttributeController extends Controller
                 return redirect(route('attributes.index'));
             }
         } catch (\Exception $exception) {
+            dd($exception);
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
