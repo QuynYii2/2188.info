@@ -28,7 +28,7 @@ class ProductController extends Controller
 
     public function getDataToModalAtt($id)
     {
-
+        $productID = $id;
         $productList = DB::table('product_attribute')->where([
             ['product_id', $id],
             ['status', 'ACTIVE']
@@ -69,7 +69,7 @@ class ProductController extends Controller
 
 
         $testArray = $this->getArray($testArray);
-        return view('frontend.pages.member.modal-att', compact('testArray', 'listAtt'));
+        return view('frontend.pages.member.modal-att', compact('testArray', 'listAtt', 'productID'));
     }
 
     public function detail_product(Request $request, $id)

@@ -9,6 +9,7 @@
         @foreach($listAtt as $att)
             <th scope="col">{{ $att->name }}</th>
         @endforeach
+        <th scope="col">Price</th>
         <tbody>
         @if($testArray)
             @if(count($testArray) == 1)
@@ -21,10 +22,16 @@
                             $attproArray =  explode('-', $item[0]);
                             $attribue = \App\Models\Attribute::find($attproArray[0]);
                             $property = \App\Models\Properties::find($attproArray[1]);
+                            $productVariable =  \App\Models\Variation::where([
+                                ['product_id', $productID],
+                                ['variation', $item],
+                                ['status', \App\Enums\VariationStatus::ACTIVE]
+                            ])->first();
                         @endphp
                         <tr>
                             <td><input type="checkbox" name="select-att"></td>
                             <td>{{$property->name}}</td>
+                            <td>{{$productVariable->price}}</td>
                         </tr>
                     @else
                         <tr>
@@ -34,8 +41,14 @@
                                     $attproArray =  explode('-', $attpro);
                                     $attribute = \App\Models\Attribute::find($attproArray[0]);
                                     $property = \App\Models\Properties::find($attproArray[1]);
+                                    $productVariable =  \App\Models\Variation::where([
+                                        ['product_id', $productID],
+                                        ['variation', $attpro],
+                                        ['status', \App\Enums\VariationStatus::ACTIVE]
+                                    ])->first();
                                 @endphp
                                 <td>{{$property->name}}</td>
+                                <td>{{$productVariable->price}}</td>
                             @endforeach
                         </tr>
                     @endif
@@ -50,9 +63,15 @@
                                 $attpro =  explode('-', $value);
                                 $attribue = \App\Models\Attribute::find($attpro[0]);
                                 $property = \App\Models\Properties::find($attpro[1]);
+                                $productVariable =  \App\Models\Variation::where([
+                                        ['product_id', $productID],
+                                        ['variation', $item],
+                                        ['status', \App\Enums\VariationStatus::ACTIVE]
+                                ])->first();
                             @endphp
                             <td>{{$property->name}}</td>
                         @endforeach
+                        <td>{{$productVariable->price}}</td>
                     </tr>
                 @endif
 
@@ -68,9 +87,16 @@
                                 $attproArray =  explode('-', $attpro);
                                 $attribue = \App\Models\Attribute::find($attproArray[0]);
                                 $property = \App\Models\Properties::find($attproArray[1]);
+
+                                $productVariable =  \App\Models\Variation::where([
+                                        ['product_id', $productID],
+                                        ['variation', $item],
+                                        ['status', \App\Enums\VariationStatus::ACTIVE]
+                                ])->first();
                             @endphp
                             <td>{{$property->name}}</td>
                         @endforeach
+                        <td>{{$productVariable->price}}</td>
                     </tr>
                 @endforeach
             @endif
