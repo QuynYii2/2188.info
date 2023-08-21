@@ -231,7 +231,7 @@ class AuthController extends Controller
         $index = 0;
         foreach ($members1 as $key => $value) {
             if (Auth::user()->member == $value->name) {
-                $index = $key  + 1;
+                $index = $key + 1;
                 break;
             }
         }
@@ -315,14 +315,14 @@ class AuthController extends Controller
     public function registerMemberInfo(Request $request)
     {
         try {
-            $exitsMember = MemberRegisterInfo::where([
-                ['user_id', Auth::user()->id],
-                ['status', MemberRegisterInfoStatus::ACTIVE]
-            ])->first();
-            if ($exitsMember) {
-                alert()->error('Error', 'Error, Đã tồn tại hội viên, không thể thêm mới!');
-                return redirect(route('member.registered.detail'));
-            }
+//            $exitsMember = MemberRegisterInfo::where([
+//                ['user_id', Auth::user()->id],
+//                ['status', MemberRegisterInfoStatus::ACTIVE]
+//            ])->first();
+//            if ($exitsMember) {
+//                alert()->error('Error', 'Error, Đã tồn tại hội viên, không thể thêm mới!');
+//                return redirect(route('member.registered.detail'));
+//            }
 
             $memberID = $request->input('member_id');
 
@@ -355,7 +355,8 @@ class AuthController extends Controller
                 return back();
             }
 
-            $id = Auth::user()->id;
+//            $id = Auth::user()->id;
+            $id = 0;
 
             if ($registerMember == RegisterMember::LOGISTIC || $registerMember == RegisterMember::TRUST) {
                 $status = MemberRegisterInfoStatus::ACTIVE;
@@ -363,9 +364,9 @@ class AuthController extends Controller
                 $status = MemberRegisterInfoStatus::INACTIVE;
             }
 
-            $user = Auth::user();
-            $user->member = $registerMember;
-            $user->save();
+//            $user = Auth::user();
+//            $user->member = $registerMember;
+//            $user->save();
 
             $create = [
                 'user_id' => $id,
@@ -428,7 +429,8 @@ class AuthController extends Controller
 
             $data = array('mail' => $email, 'name' => $email, 'code' => $code);
 
-            $id = Auth::user()->id;
+//            $id = Auth::user()->id;
+            $id = 0;
 
             $newID = (integer)$member;
 
@@ -483,6 +485,7 @@ class AuthController extends Controller
             alert()->error('Error', 'Error, Create error!');
             return back();
         } catch (\Exception $exception) {
+            dd($exception);
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
@@ -522,7 +525,8 @@ class AuthController extends Controller
 
             $data = array('mail' => $email, 'name' => $email, 'code' => $code);
 
-            $id = Auth::user()->id;
+//            $id = Auth::user()->id;
+            $id = 0;
 
             $memberBefore = MemberRegisterPersonSource::where('id', $personSource)->first();
             $memberAccount = MemberRegisterInfo::find($memberBefore->member_id);
@@ -762,14 +766,14 @@ class AuthController extends Controller
             'user_id' => $newUser->id
         ]);
 
-        $currentUser = Auth::user();
-        $seller = (new HomeController())->checkSellerOrAdmin();
-        if ($seller == false) {
-            $roleUser = DB::table('role_user')->insert([
-                'role_id' => 2,
-                'user_id' => $currentUser->id
-            ]);
-        }
+//        $currentUser = Auth::user();
+//        $seller = (new HomeController())->checkSellerOrAdmin();
+//        if ($seller == false) {
+//            $roleUser = DB::table('role_user')->insert([
+//                'role_id' => 2,
+//                'user_id' => $currentUser->id
+//            ]);
+//        }
     }
 
     private function getLocale(Request $request)

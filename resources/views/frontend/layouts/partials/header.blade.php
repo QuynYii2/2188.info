@@ -28,12 +28,14 @@
         background-size: 30px;
         background-repeat: no-repeat;
     }
-    .modal-dialog{
+
+    .modal-dialog {
         height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
     }
+
     .header-bottom-left--item.item-left--cn a:before {
         display: block;
         content: '';
@@ -139,7 +141,7 @@
                             <div class="item button_seller align-center d-flex">
                                 <button type="button" class="full-width cursor-pointer" data-toggle="modal"
                                         data-target="#modal-flag-header">
-{{--                                    <i class="item-icon fa-regular fa-heart"></i>--}}
+                                    {{--                                    <i class="item-icon fa-regular fa-heart"></i>--}}
                                     <div class="it em-text">
                                         Mua lẻ
                                     </div>
@@ -156,14 +158,18 @@
                                 <div class="item button_seller align-center d-flex">
                                     <button class="full-width cursor-pointer">
                                         {{--                                    <i class="item-icon fa-solid fa-gift"></i>--}}
-                                        <div class="it em-text" data-toggle="modal" data-target="#modalBuyBulkLogistic">Mua sỉ</div>
+                                        <div class="it em-text" data-toggle="modal" data-target="#modalBuyBulkLogistic">
+                                            Mua sỉ
+                                        </div>
                                     </button>
                                 </div>
                             @elseif($company && $company->member == \App\Enums\RegisterMember::TRUST)
                                 <div class="item button_seller align-center d-flex">
                                     <button class="full-width cursor-pointer">
                                         {{--                                    <i class="item-icon fa-solid fa-gift"></i>--}}
-                                        <div class="it em-text" data-toggle="modal" data-target="#modalBuyBulkTrust">Mua sỉ</div>
+                                        <div class="it em-text" data-toggle="modal" data-target="#modalBuyBulkTrust">Mua
+                                            sỉ
+                                        </div>
                                     </button>
                                 </div>
                             @endif
@@ -175,7 +181,8 @@
                             @endphp
 
                             <div class="item user">
-                                <button class="btn btn-primary" onclick="signIn()"><i class="item-icon fa-regular fa-user"></i>
+                                <button class="btn btn-primary" onclick="signIn()"><i
+                                            class="item-icon fa-regular fa-user"></i>
                                     <div class="item-text">{{Auth::user()->name}}</div>
                                 </button>
                                 <div class="signMenu" id="signMenu">
@@ -232,15 +239,18 @@
                                         @endif
                                         @php
                                             if (Auth::check()){
-                                                $member = \App\Models\MemberRegisterInfo::where([
-                                                    ['user_id', Auth::user()->id],
-                                                    ['status', \App\Enums\MemberRegisterInfoStatus::ACTIVE]
-                                                ])->first();
-                                                $isMember = null;
-                                                if ($member){
+                                                $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                                                  $isMember = null;
+                                                if ($memberPerson){
+                                                    $member = \App\Models\MemberRegisterInfo::where([
+                                                        ['id', $memberPerson->member_id],
+                                                        ['status', \App\Enums\MemberRegisterInfoStatus::ACTIVE]
+                                                    ])->first();
+                                                    if ($member){
 //                                                    if ($member->member_id == 2){
                                                         $isMember = true;
 //                                                    }
+                                                    }
                                                 }
                                             }
 
