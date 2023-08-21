@@ -194,7 +194,7 @@
                             <a href="#"
                                class="text-decoration-none">
                                 {{ ($product->name) }}
-                            </a>
+                            </p>
                         </p>
                     </div>
                 </button>
@@ -267,7 +267,8 @@
                                                     @endforeach
                                                 @endif
                                             </div>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            <button id="btnViewAttribute" data-id="{{$firstProduct->id}}" type="button"
+                                                    class="btn btn-primary" data-toggle="modal"
                                                     data-target="#modal-show-att">
                                                 Xem thuộc tính
                                             </button>
@@ -495,6 +496,12 @@
             // $('#partnerBtn').data('value', product['id']);
             let partnerBtn = document.getElementById('partnerBtn');
             partnerBtn.setAttribute('data-value', product['id']);
+
+            // let btnViewsAttribute = document.getElementById('btnViewAttribute');
+            // console.log('aaa')
+            // btnViewsAttribute.setAttribute('data-id', product['id']);
+
+            $('#btnViewAttribute').data('id', product['id']);
         });
 
         $('.thumbnailProductGallery').on('click', function () {
@@ -543,6 +550,14 @@
                         console.error('Request failed:', textStatus);
                     });
             }
+        });
+
+        $(document).ready(function () {
+            $('#btnViewAttribute').on('click', function () {
+                let id = $(this).data('id');
+                console.log(id)
+                callAtt(id);
+            })
         });
 
         function callAtt(id) {
