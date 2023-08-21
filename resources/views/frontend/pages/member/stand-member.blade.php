@@ -11,7 +11,9 @@
             --color-dark: #333333;
             --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
         }
-
+        button:focus{
+            box-shadow: none;
+        }
         .main .item-card {
             border-radius: 2px;
         }
@@ -44,9 +46,8 @@
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            width: 200px;
+            width: 100%;
         }
-
     </style>
     <script>
         $('[data-fancybox="gallery"]').fancybox({
@@ -188,23 +189,23 @@
                 </div>
             </div>
     </div>
-    <div class="border d-flex justify-content-center">
-        <div class=" mt-3">
-            @foreach($products as $product)
-                <div type="button" style="background-color: white" class="btn thumbnailProduct" data-toggle="modal"
-                        data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}">
-                    <div class="">
-                        <img data-id="{{$product->id}}"
-                             src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
-                             class="thumbnailProduct" data-value="{{$product}}"
-                             width="150px" height="150px">
-                        <p class="mt-2 truncate-text">
-                            {{ ($product->name) }}
-                        </p>
-                    </div>
+    <div class="mt-3 d-flex justify-content-center">
+        @foreach($products as $product)
+            <button type="button" style="background-color: white" class="btn thumbnailProduct col-2" data-toggle="modal"
+                    data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}">
+                <div class="standsMember-item">
+                    <img data-id="{{$product->id}}"
+                         src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
+                         class="thumbnailProduct" data-value="{{$product}}"
+                         width="150px" height="150px">
+                    <p class="mt-2 truncate-text">
+                        {{ ($product->name) }}
+                    </p>
                 </div>
-            @endforeach
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            </button>
+        @endforeach
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -238,7 +239,7 @@
                                         @php
                                             $productGallery = $firstProduct->gallery;
                                         @endphp
-                                        <div class="mb-3">
+                                        <div class="mb-3" style="text-align: end">
                                             <div class="main">
                                                 <div class="item-card">
                                                     <div class="card-image">
@@ -273,7 +274,7 @@
                                                 @endif
                                             </div>
                                             <button id="btnViewAttribute" data-id="{{$firstProduct->id}}" type="button"
-                                                    class="btn btn-primary" data-toggle="modal"
+                                                    class="btn" data-toggle="modal"
                                                     data-target="#modal-show-att">
                                                 Xem thuộc tính
                                             </button>
@@ -286,11 +287,10 @@
                                             @endphp
                                             <div class="row thumbnailSupGallery">
                                                 @foreach($arrayProductImg as $productImg)
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-3 thumbnailSupGallery-img">
                                                         <img src="{{ asset('storage/' . $productImg) }}" alt=""
                                                              class="thumbnailProductGallery thumbnailGallery{{$loop->index+1}}"
-                                                             data-id="{{$firstProduct->id}}"
-                                                             width="60px" height="60px">
+                                                             data-id="{{$firstProduct->id}}">
                                                     </div>
                                                 @endforeach
                                             </div>
@@ -384,7 +384,6 @@
                     </div>
                 </div>
             </div>
-        </div>
     </div>
     @endif
 
