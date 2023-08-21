@@ -29,23 +29,27 @@
                             ])->first();
                         @endphp
                         <tr>
-                            <td><input type="checkbox" name="select-att"></td>
+                            <td><input class="checkBoxAttribute" type="checkbox" value="{{$productVariable->id}}"
+                                       name="select-att"></td>
                             <td>{{$property->name}}</td>
                             <td>{{$productVariable->price}}</td>
                         </tr>
                     @else
+                        @php
+                            $productVariable =  \App\Models\Variation::where([
+                                        ['product_id', $productID],
+                                        ['variation', $item],
+                                        ['status', \App\Enums\VariationStatus::ACTIVE]
+                                    ])->first();
+                        @endphp
                         <tr>
-                            <td><input type="checkbox" name="select-att"></td>
+                            <td><input class="checkBoxAttribute" type="checkbox" value="{{$productVariable->id}}"
+                                       name="select-att"></td>
                             @foreach($item as $attpro)
                                 @php
                                     $attproArray =  explode('-', $attpro);
                                     $attribute = \App\Models\Attribute::find($attproArray[0]);
                                     $property = \App\Models\Properties::find($attproArray[1]);
-                                    $productVariable =  \App\Models\Variation::where([
-                                        ['product_id', $productID],
-                                        ['variation', $attpro],
-                                        ['status', \App\Enums\VariationStatus::ACTIVE]
-                                    ])->first();
                                 @endphp
                                 <td>{{$property->name}}</td>
                                 <td>{{$productVariable->price}}</td>
@@ -55,19 +59,20 @@
                 @else
                     @php
                         $myArray =  explode(',', $item);
+                        $productVariable =  \App\Models\Variation::where([
+                                        ['product_id', $productID],
+                                        ['variation', $item],
+                                        ['status', \App\Enums\VariationStatus::ACTIVE]
+                                ])->first();
                     @endphp
                     <tr>
-                        <td><input type="checkbox" name="select-att"></td>
+                        <td><input class="checkBoxAttribute" type="checkbox" value="{{$productVariable->id}}"
+                                   name="select-att"></td>
                         @foreach($myArray as $value)
                             @php
                                 $attpro =  explode('-', $value);
                                 $attribue = \App\Models\Attribute::find($attpro[0]);
                                 $property = \App\Models\Properties::find($attpro[1]);
-                                $productVariable =  \App\Models\Variation::where([
-                                        ['product_id', $productID],
-                                        ['variation', $item],
-                                        ['status', \App\Enums\VariationStatus::ACTIVE]
-                                ])->first();
                             @endphp
                             <td>{{$property->name}}</td>
                         @endforeach
@@ -79,20 +84,20 @@
                 @foreach($testArray as $item)
                     @php
                         $attributeProperty = explode(',', $item);
+                        $productVariable =  \App\Models\Variation::where([
+                                        ['product_id', $productID],
+                                        ['variation', $item],
+                                        ['status', \App\Enums\VariationStatus::ACTIVE]
+                                ])->first();
                     @endphp
                     <tr>
-                        <td><input type="checkbox" name="select-att"></td>
+                        <td><input class="checkBoxAttribute" type="checkbox" value="{{$productVariable->id}}"
+                                   name="select-att" onclick="getCheckboxs()"></td>
                         @foreach($attributeProperty as $attpro)
                             @php
                                 $attproArray =  explode('-', $attpro);
                                 $attribue = \App\Models\Attribute::find($attproArray[0]);
                                 $property = \App\Models\Properties::find($attproArray[1]);
-
-                                $productVariable =  \App\Models\Variation::where([
-                                        ['product_id', $productID],
-                                        ['variation', $item],
-                                        ['status', \App\Enums\VariationStatus::ACTIVE]
-                                ])->first();
                             @endphp
                             <td>{{$property->name}}</td>
                         @endforeach
