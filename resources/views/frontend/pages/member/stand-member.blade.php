@@ -497,10 +497,6 @@
             let partnerBtn = document.getElementById('partnerBtn');
             partnerBtn.setAttribute('data-value', product['id']);
 
-            // let btnViewsAttribute = document.getElementById('btnViewAttribute');
-            // console.log('aaa')
-            // btnViewsAttribute.setAttribute('data-id', product['id']);
-
             $('#btnViewAttribute').data('id', product['id']);
         });
 
@@ -571,6 +567,7 @@
                     document.getElementById('body-modal-aat').innerHTML = response;
                 })
                 .fail(function (_, textStatus) {
+                    $('#body-modal-aat').empty();
                     console.error('Request failed:', textStatus);
                 });
         }

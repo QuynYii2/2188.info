@@ -34,11 +34,12 @@ class ProductController extends Controller
             ['status', 'ACTIVE']
         ])->get();
         $myArray = null;
-        if ($productList->isNotEmpty()) {
+        $listAtt = null;
+        if (!$productList->isEmpty()) {
             foreach ($productList as $item) {
 
                 $id = $item->attribute_id;
-                $att = Attribute::where('id', $id)->first(['id', 'name', 'name_vi', 'name_zh', 'name_en', 'name_ja', 'name_ko', ]);
+                $att = Attribute::where('id', $id)->first(['id', 'name', 'name_vi', 'name_zh', 'name_en', 'name_ja', 'name_ko',]);
                 $listAtt[$id] = $att;
 
                 $attribute = $item->attribute_id;
@@ -70,6 +71,7 @@ class ProductController extends Controller
         $testArray = $this->getArray($testArray);
         return view('frontend.pages.member.modal-att', compact('testArray', 'listAtt'));
     }
+
     public function detail_product(Request $request, $id)
     {
         (new HomeController())->getLocale($request);
