@@ -181,21 +181,21 @@
             </div>
     </div>
     <div class="border d-flex justify-content-center">
-        <div class="standsMember mt-3 row">
+        <div class=" mt-3">
             @foreach($products as $product)
-                <button type="button" style="background-color: white" class="btn standsMember-item col-md-2" data-toggle="modal"
+                <button type="button" style="background-color: white" class="btn" data-toggle="modal"
                         data-target="#exampleModal">
-                    <div class="text-center standsMember-img">
+                    <div class="text-center">
                         <img data-id="{{$product->id}}"
                              src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
                              class="thumbnailProduct" data-value="{{$product}}"
                              width="150px" height="150px">
-                    </div>
-                    <div class="mt-2 standsMember-text">
-                        <a href="#"
-                           class="text-decoration-none">
-                            {{ ($product->name) }}
-                        </a>
+                        <p class="mt-2">
+                            <a href="#"
+                               class="text-decoration-none">
+                                {{ ($product->name) }}
+                            </a>
+                        </p>
                     </div>
                 </button>
             @endforeach

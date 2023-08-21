@@ -155,6 +155,7 @@
       <path value="$PROJECT_DIR$/vendor/grpc/grpc" />
       <path value="$PROJECT_DIR$/vendor/tanmuhittin/laravel-google-translate" />
       <path value="$PROJECT_DIR$/vendor/patrickschur/language-detection" />
+      <path value="$PROJECT_DIR$/vendor/psr/clock" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1">
