@@ -39,6 +39,14 @@
             height: 100%;
             object-fit: cover;
         }
+
+        .truncate-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 200px;
+        }
+
     </style>
     <script>
         $('[data-fancybox="gallery"]').fancybox({
@@ -183,21 +191,18 @@
     <div class="border d-flex justify-content-center">
         <div class=" mt-3">
             @foreach($products as $product)
-                <button type="button" style="background-color: white" class="btn thumbnailProduct" data-toggle="modal"
+                <div type="button" style="background-color: white" class="btn thumbnailProduct" data-toggle="modal"
                         data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}">
-                    <div class="text-center">
+                    <div class="">
                         <img data-id="{{$product->id}}"
                              src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
                              class="thumbnailProduct" data-value="{{$product}}"
                              width="150px" height="150px">
-                        <p class="mt-2">
-                            <a href="#"
-                               class="text-decoration-none">
-                                {{ ($product->name) }}
-                            </a>
+                        <p class="mt-2 truncate-text">
+                            {{ ($product->name) }}
                         </p>
                     </div>
-                </button>
+                </div>
             @endforeach
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                  aria-hidden="true">
