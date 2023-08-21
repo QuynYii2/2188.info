@@ -183,8 +183,8 @@
     <div class="border d-flex justify-content-center">
         <div class=" mt-3">
             @foreach($products as $product)
-                <button type="button" style="background-color: white" class="btn" data-toggle="modal"
-                        data-target="#exampleModal">
+                <button type="button" style="background-color: white" class="btn thumbnailProduct" data-toggle="modal"
+                        data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}">
                     <div class="text-center">
                         <img data-id="{{$product->id}}"
                              src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
@@ -194,7 +194,7 @@
                             <a href="#"
                                class="text-decoration-none">
                                 {{ ($product->name) }}
-                            </p>
+                            </a>
                         </p>
                     </div>
                 </button>
