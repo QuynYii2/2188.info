@@ -25,6 +25,7 @@ class AttributeController extends Controller
 
     public function store(Request $request)
     {
+
         try {
             $request->validate([
                 'attribute_name' => 'required'
@@ -62,6 +63,7 @@ class AttributeController extends Controller
                 return redirect(route('attributes.index'));
             }
         } catch (\Exception $exception) {
+            dd($exception);
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
