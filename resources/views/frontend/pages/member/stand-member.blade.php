@@ -39,6 +39,14 @@
             height: 100%;
             object-fit: cover;
         }
+
+        .truncate-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 200px;
+        }
+
     </style>
     <script>
         $('[data-fancybox="gallery"]').fancybox({
@@ -170,7 +178,7 @@
                             <form method="post" action="{{route('stands.register.member')}}">
                                 @csrf
                                 <input type="text" name="company_id_source" class="d-none" value="{{$company->id}}">
-                                <input type="text" name="price" class="d-none" value="{{$firstProduct->price}}">
+                                <input type="text" name="price" class="d-none" value="{{$firstProduct->price ?? ''}}">
                                 <button class="btn btn-primary" id="btnFollow" type="submit">
                                     Follow
                                 </button>
@@ -185,18 +193,16 @@
             @foreach($products as $product)
                 <button type="button" style="background-color: white" class="btn thumbnailProduct col-2" data-toggle="modal"
                         data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}">
-                    <div class="text-center">
+                    <div class="">
                         <img data-id="{{$product->id}}"
                              src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
                              class="thumbnailProduct" data-value="{{$product}}"
                              width="150px" height="150px">
-                        <div class="mt-2">
-                            <a href="#">
-                                {{ ($product->name) }}
-                            </a>
-                        </div>
+                        <p class="mt-2 truncate-text">
+                            {{ ($product->name) }}
+                        </p>
                     </div>
-                </button>
+                </div>
             @endforeach
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                  aria-hidden="true">
