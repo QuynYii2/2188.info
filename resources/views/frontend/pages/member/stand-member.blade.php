@@ -183,8 +183,8 @@
     <div class="border d-flex justify-content-center">
         <div class=" mt-3">
             @foreach($products as $product)
-                <button type="button" style="background-color: white" class="btn" data-toggle="modal"
-                        data-target="#exampleModal">
+                <button type="button" style="background-color: white" class="btn thumbnailProduct" data-toggle="modal"
+                        data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}">
                     <div class="text-center">
                         <img data-id="{{$product->id}}"
                              src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
@@ -267,7 +267,8 @@
                                                     @endforeach
                                                 @endif
                                             </div>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            <button id="btnViewAttribute" data-id="{{$firstProduct->id}}" type="button"
+                                                    class="btn btn-primary" data-toggle="modal"
                                                     data-target="#modal-show-att">
                                                 Xem thuộc tính
                                             </button>
@@ -454,8 +455,6 @@
         </div>
     </div>
 
-
-
     <div class="modal fade" id="modal-show-att" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -497,6 +496,8 @@
             // $('#partnerBtn').data('value', product['id']);
             let partnerBtn = document.getElementById('partnerBtn');
             partnerBtn.setAttribute('data-value', product['id']);
+
+            $('#btnViewAttribute').data('id', product['id']);
         });
 
         $('.thumbnailProductGallery').on('click', function () {
@@ -547,7 +548,13 @@
             }
         });
 
-        callAtt(88);
+        $(document).ready(function () {
+            $('#btnViewAttribute').on('click', function () {
+                let id = $(this).data('id');
+                console.log(id)
+                callAtt(id);
+            })
+        });
 
         function callAtt(id) {
             let url = '{{ route('detail_product.data.modal', ['id' => ':id']) }}';
@@ -560,6 +567,7 @@
                     document.getElementById('body-modal-aat').innerHTML = response;
                 })
                 .fail(function (_, textStatus) {
+                    $('#body-modal-aat').empty();
                     console.error('Request failed:', textStatus);
                 });
         }
