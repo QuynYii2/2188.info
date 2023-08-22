@@ -189,9 +189,26 @@
                                     <div class="name">
                                         <a href="{{route('profile.show')}}">{{Auth::user()->name}}</a>
                                         <a href="{{route('process.register.member')}}"
-                                           class="">{{ __('home.Member registration') }}</a>
+                                           class="">Nâng cấp hội viên</a>
                                     </div>
                                     <hr>
+                                    @php
+                                        $exitMemberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                                        $exitsMember = null;
+                                        if ($exitMemberPerson) {
+                                            $exitsMember = \App\Models\MemberRegisterInfo::where([
+                                                ['id', $exitMemberPerson->member_id],
+                                                ['status', \App\Enums\MemberRegisterInfoStatus::INACTIVE]
+                                            ])->first();
+                                        }
+                                    @endphp
+                                    @if($exitsMember)
+                                        <div class="name">
+                                            <a href="#"
+                                               class="">Thanh toán hội viên</a>
+                                        </div>
+                                        <hr>
+                                    @endif
                                     <button class="signOut" href="#"
                                             onclick="logout()">{{ __('home.Sign Out') }}</button>
                                 </div>
@@ -271,6 +288,24 @@
                                                     phẩm</a>
                                             </div>
                                         @endif
+
+
+                                            @php
+                                                $exitMemberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                                                $exitsMember = null;
+                                                if ($exitMemberPerson) {
+                                                    $exitsMember = \App\Models\MemberRegisterInfo::where([
+                                                        ['id', $exitMemberPerson->member_id],
+                                                        ['status', \App\Enums\MemberRegisterInfoStatus::INACTIVE]
+                                                    ])->first();
+                                                }
+                                            @endphp
+                                            @if($exitsMember)
+                                                <div class="drop-item text-danger">
+                                                    <a href="{{route('show.payment.member', $exitsMember->member)}}"
+                                                       class="text-danger">Thanh toán hội viên</a>
+                                                </div>
+                                            @endif
                                     @endif
 
                                     <div class="drop-item -hand-pointer" onclick="logout()">

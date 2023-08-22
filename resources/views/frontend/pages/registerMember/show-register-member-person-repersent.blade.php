@@ -16,44 +16,76 @@
                 <div class="mt-5">
                     <form class="p-3" action="{{route('register.member.represent')}}" method="post">
                         @csrf
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="fullName">Full Name</label>
-                                <input type="text" class="form-control" id="fullName" name="fullName" required>
+                        @if($memberPerson)
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="fullName">Full Name</label>
+                                    <input type="text" class="form-control" id="fullName" name="fullName" value="{{$memberPerson->name}}" required>
+                                </div>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="phoneNumber">PhoneNumber</label>
+                                    <input type="text" class="form-control" id="phoneNumber" value="{{$memberPerson->phone}}" name="phoneNumber" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" value="{{$memberPerson->email}}" name="email" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="staff">Nhân viên</label>
+                                    <select id="staff" name="staff" class="form-control">
+                                        <option value="staff">Staff</option>
+                                        <option value="seo">SEO</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label for="passwordConfirm">Password Confirm</label>
-                                <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm"
-                                       required>
+                            <input type="text" class="form-control" name="person" value="{{ ($person) }}" hidden="">
+                            <div class="form-group">
+                                <label for="sns_account">SNS Account</label>
+                                <input type="text" class="form-control" id="sns_account" value="{{$memberPerson->sns_account}}" name="sns_account" required>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="phoneNumber">PhoneNumber</label>
-                                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
+                        @else
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="fullName">Full Name</label>
+                                    <input type="text" class="form-control" id="fullName" name="fullName" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="passwordConfirm">Password Confirm</label>
+                                    <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm"
+                                           required>
+                                </div>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="phoneNumber">PhoneNumber</label>
+                                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="staff">Nhân viên</label>
+                                    <select id="staff" name="staff" class="form-control">
+                                        <option value="staff">Staff</option>
+                                        <option value="seo">SEO</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label for="staff">Nhân viên</label>
-                                <select id="staff" name="staff" class="form-control">
-                                    <option value="staff">Staff</option>
-                                    <option value="seo">SEO</option>
-                                    <option value="other">Other</option>
-                                </select>
+                            <input type="text" class="form-control" name="person" value="{{ ($person) }}" hidden="">
+                            <div class="form-group">
+                                <label for="sns_account">SNS Account</label>
+                                <input type="text" class="form-control" id="sns_account" name="sns_account" required>
                             </div>
-                        </div>
-                        <input type="text" class="form-control" name="person" value="{{ ($person) }}" hidden="">
-                        <div class="form-group">
-                            <label for="sns_account">SNS Account</label>
-                            <input type="text" class="form-control" id="sns_account" name="sns_account" required>
-                        </div>
+                        @endif
                         <button type="submit" class="btn btn-primary">Sign up</button>
                     </form>
                 </div>
