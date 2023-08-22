@@ -187,12 +187,12 @@
                 <div class="col-12 col-md-9 col-xl-8">
                     <section class="section-Fourth section pt-3 pb-3 container-fluid">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-12 col-xl-12 col-xxl-6">
                                 <div class="content">{{ __('home.New Products') }}</div>
                                 <div class="swiper NewProducts row">
                                     <div class="swiper-wrapper ">
                                         @foreach($newProducts as $product)
-                                            <div class="col-6">
+                                            <div class="col-6 col-xxl-4">
                                                 @include('frontend.pages.list-product')
                                             </div>
                                         @endforeach
@@ -201,13 +201,13 @@
                                     <div class="swiper-button-prev"></div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-12 col-xl-12 col-xxl-6">
                                 <div class="content">{{ __('home.Featured Products') }}</div>
                                 <div class="swiper FeaturedProducts">
                                     <div class="swiper-wrapper">
                                         @foreach($productFeatures as $productFeature)
                                             @foreach($productFeature as $product)
-                                                <div class="col-6">
+                                                <div class="col-6 col-xxl-4">
                                                 @include('frontend.pages.list-product')
                                                 </div>
                                             @endforeach
@@ -222,21 +222,24 @@
 
                     <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
                     <section class="section-Fifth section pt-3 pb-3 container-fluid">
-                        <div class="content"><i class="fa-solid fa-fire-flame-curved"></i>{{ __('home.Hot Deals') }}
-                        </div>
-                        <div class="swiper HotDeals">
-                            <div class="swiper-wrapper">
-                                @foreach($productHots as $productHot)
-                                    @foreach($productHot as $product)
-                                        @php
-                                            $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
-                                        @endphp
-                                        @include('frontend.pages.list-product')
+                        <div class="col-xxl-6">
+                            <div class="content"><i class="fa-solid fa-fire-flame-curved"></i>{{ __('home.Hot Deals') }}</div>
+                            <div class="swiper HotDeals">
+                                <div class="swiper-wrapper ">
+                                    @foreach($productHots as $productHot)
+                                        @foreach($productHot as $product)
+                                            @php
+                                                $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
+                                            @endphp
+                                            <div class="col-xxl-4">
+                                                @include('frontend.pages.list-product')
+                                            </div>
+                                        @endforeach
                                     @endforeach
-                                @endforeach
+                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
                             </div>
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-button-prev"></div>
                         </div>
                     </section>
                     <div class="category-img section pt-3 pb-3 container-fluid">

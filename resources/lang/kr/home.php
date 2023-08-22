@@ -325,6 +325,12 @@ return [
     'Sign up for membership' => '회원가입',
     'Sign in' => '로그인',
     'Show Less' => '간단히 보기',
+    'sign up member' => '회원가입',
+    'VENDOR' => '점원',
+    'POWER VENDOR' => '전력 공급업체',
+    'PRODUCTION' => '생산',
+    'POWER PRODUCTION ' => '전력 생산',
+    'Member' =>'구성원',
 
 
 
