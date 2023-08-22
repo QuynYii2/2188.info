@@ -373,7 +373,7 @@ class AuthController extends Controller
 //            $id = Auth::user()->id;
             $id = 0;
 
-            if ($registerMember == RegisterMember::LOGISTIC || $registerMember == RegisterMember::TRUST) {
+            if ($registerMember == RegisterMember::LOGISTIC || $registerMember == RegisterMember::TRUST || $registerMember == RegisterMember::BUYER) {
                 $status = MemberRegisterInfoStatus::ACTIVE;
             } else {
                 $status = MemberRegisterInfoStatus::INACTIVE;
