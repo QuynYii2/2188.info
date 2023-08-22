@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Member;
 
-use App\Enums\MemberPartnerStatus;
 use App\Enums\MemberRegisterInfoStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\HomeController;
-use App\Models\MemberPartner;
 use App\Models\MemberRegisterInfo;
+use App\Models\MemberRegisterPersonSource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,18 +14,20 @@ class TrustMemberController extends Controller
 {
     public function memberStand(Request $request)
     {
+        $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
         (new HomeController())->getLocale($request);
         $company = MemberRegisterInfo::where([
-            ['user_id', Auth::user()->id],
+            ['id', $memberPerson->member_id],
             ['status', MemberRegisterInfoStatus::ACTIVE]
         ])->first();
         $companies = MemberRegisterInfo::where('category_id', $company->category_id)->get();
-        return view('frontend.pages.member.trust.member-trust', compact('companies','company'));
+        return view('frontend.pages.member.trust.member-trust', compact('companies', 'company'));
     }
 
     public function memberPartnerLocale($locale)
     {
-        $company = MemberRegisterInfo::where('user_id', Auth::user()->id)->first();
+        $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
         $companies = MemberRegisterInfo::where('category_id', $company->category_id)->get();
         return view('frontend.pages.member.trust.member-trust-locale', compact('company', 'companies', 'locale'));
     }
