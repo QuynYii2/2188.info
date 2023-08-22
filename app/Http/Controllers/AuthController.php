@@ -266,13 +266,15 @@ class AuthController extends Controller
             alert()->error('Error', 'Error, Page not found');
             return back();
         }
-        $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
         $exitsMember = null;
-        if ($exitMemberPerson) {
-            $exitsMember = MemberRegisterInfo::where([
-                ['id', $exitMemberPerson->member_id],
-                ['status', MemberRegisterInfoStatus::ACTIVE]
-            ])->first();
+        if (Auth::check()){
+            $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+            if ($exitMemberPerson) {
+                $exitsMember = MemberRegisterInfo::where([
+                    ['id', $exitMemberPerson->member_id],
+                    ['status', MemberRegisterInfoStatus::ACTIVE]
+                ])->first();
+            }
         }
         return view('frontend/pages/registerMember/show-register-member-info', compact(
             'registerMember', 'categories', 'member', 'exitsMember'
