@@ -11,9 +11,11 @@
             --color-dark: #333333;
             --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
         }
-        button:focus{
+
+        button:focus {
             box-shadow: none;
         }
+
         .main .item-card {
             border-radius: 2px;
         }
@@ -206,184 +208,201 @@
         @endforeach
     </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div id="renderProductMember" class="row">
-                                @if(!$products->isEmpty())
-                                    <div class="col-md-6 border">
-                                        @php
-                                            $attributes = DB::table('product_attribute')->where([['product_id', $firstProduct->id], ['status', \App\Enums\AttributeProductStatus::ACTIVE]])->get();
-                                            $price_sales = \App\Models\ProductSale::where('product_id', '=', $firstProduct->id)->get();
-                                        @endphp
-                                        <div class="d-flex justify-content-between mt-3">
-                                            <div class="">
-                                                <h5>Product Code</h5>
-                                                <p class="productCode" id="productCode">
-                                                    {{ ($firstProduct->product_code) }}
-                                                </p>
-                                            </div>
-                                            <div class="">
-                                                <h5>Product Name</h5>
-                                                <p class="productName" id="productName">
-                                                    {{ ($firstProduct->name) }}
-                                                </p>
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="renderProductMember" class="row">
+                        @if(!$products->isEmpty())
+                            <div class="col-md-6 border">
+                                @php
+                                    $attributes = DB::table('product_attribute')->where([['product_id', $firstProduct->id], ['status', \App\Enums\AttributeProductStatus::ACTIVE]])->get();
+                                    $price_sales = \App\Models\ProductSale::where('product_id', '=', $firstProduct->id)->get();
+                                @endphp
+                                <div class="d-flex justify-content-between mt-3">
+                                    <div class="">
+                                        <h5>Product Code</h5>
+                                        <p class="productCode" id="productCode">
+                                            {{ ($firstProduct->product_code) }}
+                                        </p>
+                                    </div>
+                                    <div class="">
+                                        <h5>Product Name</h5>
+                                        <p class="productName" id="productName">
+                                            {{ ($firstProduct->name) }}
+                                        </p>
+                                    </div>
+                                </div>
+                                @php
+                                    $productGallery = $firstProduct->gallery;
+                                @endphp
+                                <div class="mb-3" style="text-align: end">
+                                    <div class="main">
+                                        <div class="item-card">
+                                            <div class="card-image">
+                                                <a id="linkProductImg"
+                                                   href="{{ asset('storage/' . $firstProduct->thumbnail) }}"
+                                                   data-fancybox="gallery"
+                                                   data-caption="{{$firstProduct->name}}">
+                                                    <img data-id="{{$firstProduct->id}}"
+                                                         id="imgProductMain"
+                                                         src="{{ asset('storage/' . $firstProduct->thumbnail) }}"
+                                                         class="thumbnailProductMain"
+                                                         data-value="{{$firstProduct}}" alt="">
+                                                </a>
                                             </div>
                                         </div>
-                                        @php
-                                            $productGallery = $firstProduct->gallery;
-                                        @endphp
-                                        <div class="mb-3" style="text-align: end">
-                                            <div class="main">
-                                                <div class="item-card">
+                                        @if($productGallery)
+                                            @php
+                                                $arrayProductImgThumbnail = explode(',', $productGallery);
+                                            @endphp
+                                            @foreach($arrayProductImgThumbnail as $productImg)
+                                                <div class="item-card d-none">
                                                     <div class="card-image">
-                                                        <a id="linkProductImg"
-                                                           href="{{ asset('storage/' . $firstProduct->thumbnail) }}"
+                                                        <a href="{{ asset('storage/' . $productImg) }}"
                                                            data-fancybox="gallery"
                                                            data-caption="{{$firstProduct->name}}">
-                                                            <img data-id="{{$firstProduct->id}}"
-                                                                 id="imgProductMain"
-                                                                 src="{{ asset('storage/' . $firstProduct->thumbnail) }}"
-                                                                 class="thumbnailProductMain"
-                                                                 data-value="{{$firstProduct}}" alt="">
+                                                            <img src="{{ asset('storage/' . $productImg) }}"
+                                                                 class="thumbnailProductMain" alt="">
                                                         </a>
                                                     </div>
                                                 </div>
-                                                @if($productGallery)
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                    <button id="btnViewAttribute" data-id="{{$firstProduct->id}}" type="button"
+                                            class="btn" data-toggle="modal"
+                                            data-target="#modal-show-att">
+                                        Xem thuộc tính
+                                    </button>
+                                </div>
+
+                                <h6 class="text-center mt-2">Xem chi tiết các hình ảnh khác</h6>
+                                @if($productGallery)
+                                    @php
+                                        $arrayProductImg = explode(',', $productGallery);
+                                    @endphp
+                                    <div class="row thumbnailSupGallery">
+                                        @foreach($arrayProductImg as $productImg)
+                                            <div class="col-md-3 thumbnailSupGallery-img">
+                                                <img src="{{ asset('storage/' . $productImg) }}" alt=""
+                                                     class="thumbnailProductGallery thumbnailGallery{{$loop->index+1}}"
+                                                     data-id="{{$firstProduct->id}}">
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+                                <div class=" mt-2 text-center">
+                                    <h5 class="text-center">Xem video sản phẩm </h5>
+                                </div>
+                            </div>
+                            <div class="col-md-6 border">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5>
+                                        Điều kiện đặt hàng
+                                    </h5>
+                                    <h5>Sản phẩm: <span
+                                                class="text-warning productName">{{ ($firstProduct->name) }}</span>
+                                    </h5>
+                                </div>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Số lượng</th>
+                                        <th scope="col">Đơn giá</th>
+                                        <th scope="col">Ngày dự kiến xuất kho</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+                                    @if(!$price_sales->isEmpty())
+                                        @foreach($price_sales as $price_sale)
+                                            <tr>
+                                                <td>{{$price_sale->quantity}}</td>
+                                                <td>-{{$price_sale->sales}} %</td>
+                                                <td>3 ngày kể từ ngày đặt hàng</td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+
+                                    </tbody>
+                                </table>
+
+                                <p>đơn giá phía trên là điều kiện FOB/TT</p>
+                                <h5 class="text-center">Đặt hàng</h5>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Số sản phẩm</th>
+                                        <th scope="col">Thuộc tính</th>
+                                        <th scope="col">Số lượng</th>
+                                        <th scope="col">Đơn giá</th>
+                                        <th scope="col">Thành tiền</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @php
+                                        $carts = DB::table('carts')
+                                         ->join('products', 'products.id', '=', 'carts.product_id')
+                                         ->where([['products.user_id', $company->user_id], ['carts.user_id', Auth::user()->id], ['carts.member', 1],['carts.status', \App\Enums\CartStatus::WAIT_ORDER]])
+                                         ->select('carts.*')
+                                         ->get();
+                                    @endphp
+                                    @if(!$carts->isEmpty())
+                                        @foreach($carts as $itemCart)
+                                            <tr>
+                                                <td>
                                                     @php
-                                                        $arrayProductImgThumbnail = explode(',', $productGallery);
+                                                        $cartProduct = \App\Models\Product::find($itemCart->product_id);
                                                     @endphp
-                                                    @foreach($arrayProductImgThumbnail as $productImg)
-                                                        <div class="item-card d-none">
-                                                            <div class="card-image">
-                                                                <a href="{{ asset('storage/' . $productImg) }}"
-                                                                   data-fancybox="gallery"
-                                                                   data-caption="{{$firstProduct->name}}">
-                                                                    <img src="{{ asset('storage/' . $productImg) }}"
-                                                                         class="thumbnailProductMain" alt="">
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            <button id="btnViewAttribute" data-id="{{$firstProduct->id}}" type="button"
-                                                    class="btn" data-toggle="modal"
-                                                    data-target="#modal-show-att">
-                                                Xem thuộc tính
-                                            </button>
-                                        </div>
-
-                                        <h6 class="text-center mt-2">Xem chi tiết các hình ảnh khác</h6>
-                                        @if($productGallery)
-                                            @php
-                                                $arrayProductImg = explode(',', $productGallery);
-                                            @endphp
-                                            <div class="row thumbnailSupGallery">
-                                                @foreach($arrayProductImg as $productImg)
-                                                    <div class="col-md-3 thumbnailSupGallery-img">
-                                                        <img src="{{ asset('storage/' . $productImg) }}" alt=""
-                                                             class="thumbnailProductGallery thumbnailGallery{{$loop->index+1}}"
-                                                             data-id="{{$firstProduct->id}}">
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        @endif
-                                        <div class=" mt-2 text-center">
-                                            <h5 class="text-center">Xem video sản phẩm </h5>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 border">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <h5>
-                                                Điều kiện đặt hàng
-                                            </h5>
-                                            <h5>Sản phẩm: <span
-                                                        class="text-warning productName">{{ ($firstProduct->name) }}</span>
-                                            </h5>
-                                        </div>
-                                        <table class="table table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">Số lượng</th>
-                                                <th scope="col">Đơn giá</th>
-                                                <th scope="col">Ngày dự kiến xuất kho</th>
-                                            </tr>
-                                            </thead>
-
-                                            <tbody>
-                                            @if(!$price_sales->isEmpty())
-                                                @foreach($price_sales as $price_sale)
-                                                    <tr>
-                                                        <td>{{$price_sale->quantity}}</td>
-                                                        <td>-{{$price_sale->sales}} %</td>
-                                                        <td>3 ngày kể từ ngày đặt hàng</td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-
-                                            </tbody>
-                                        </table>
-
-                                        <p>đơn giá phía trên là điều kiện FOB/TT</p>
-                                        <h5 class="text-center">Đặt hàng</h5>
-                                        <table class="table table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">Số sản phẩm</th>
-                                                <th scope="col">Màu sắc</th>
-                                                <th scope="col">Số lượng</th>
-                                                <th scope="col">Đơn giá</th>
-                                                <th scope="col">Thành tiền</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @php
-                                                $carts = DB::table('carts')
-                                                 ->join('products', 'products.id', '=', 'carts.product_id')
-                                                 ->where([['products.user_id', $company->user_id], ['carts.user_id', Auth::user()->id], ['carts.member', 1],['carts.status', \App\Enums\CartStatus::WAIT_ORDER]])
-                                                 ->select('carts.*')
-                                                 ->get();
-                                            @endphp
-                                            @if(!$carts->isEmpty())
-                                                @foreach($carts as $itemCart)
-                                                    <tr>
-                                                        <td>
+                                                    {{$cartProduct->name}}
+                                                </td>
+                                                <td>
+                                                    @php
+                                                        $value = $itemCart->values;
+                                                    @endphp
+                                                    @if($value)
+                                                        @php
+                                                            $listItem = explode(',',$value);
+                                                        @endphp
+                                                        @foreach($listItem as $item)
                                                             @php
-                                                                $cartProduct = \App\Models\Product::find($itemCart->product_id);
+                                                                $attPro = explode('-', $item);
+                                                                $attribute = \App\Models\Attribute::find($attPro[0]);
+                                                                $property = \App\Models\Properties::find($attPro[1]);
                                                             @endphp
-                                                            {{$cartProduct->name}}
-                                                        </td>
-                                                        <td>Red</td>
-                                                        <td>{{$itemCart->quantity}}</td>
-                                                        <td>{{$itemCart->price}}</td>
-                                                        <td>{{$itemCart->price*$itemCart->quantity}}</td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-                                            </tbody>
-                                        </table>
+                                                            <p>{{$attribute->name}}:{{$property->name}}</p>
+                                                        @endforeach
+                                                    @endif
+                                                </td>
+                                                <td>{{$itemCart->quantity}}</td>
+                                                <td>{{$itemCart->price}}</td>
+                                                <td>{{$itemCart->price*$itemCart->quantity}}</td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                    </tbody>
+                                </table>
 
-                                        @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
-                                            <button class="btn btn-success partnerBtn float-right" id="partnerBtn"
-                                                    data-value="{{$firstProduct->id}}" data-count="100">Tiếp nhận đặt
-                                                hàng
-                                            </button>
-                                        @endif
-                                    </div>
-
+                                @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
+                                    <button class="btn btn-success partnerBtn float-right" id="partnerBtn"
+                                            data-value="{{$firstProduct->id}}" data-count="100">Tiếp nhận đặt
+                                        hàng
+                                    </button>
                                 @endif
                             </div>
-                        </div>
+
+                        @endif
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
     </div>
     @endif
 
@@ -470,7 +489,7 @@
                 <div id="body-modal-aat"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary">Lưu</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Lưu</button>
                 </div>
             </div>
         </div>
@@ -534,6 +553,7 @@
                 const requestData = {
                     _token: '{{ csrf_token() }}',
                     quantity: 100,
+                    value: localStorage.getItem('listID'),
                 };
 
                 $.ajax({
@@ -544,6 +564,7 @@
                     .done(function (response) {
                         console.log(response);
                         alert('Success!');
+                        localStorage.removeItem('listID')
                         window.location.reload();
                     })
                     .fail(function (_, textStatus) {
@@ -574,6 +595,21 @@
                     $('#body-modal-aat').empty();
                     console.error('Request failed:', textStatus);
                 });
+        }
+
+        var listItem = null;
+
+        function getCheckboxs() {
+            let checkboxs = document.getElementsByClassName('checkBoxAttribute');
+            var listIDs = [];
+            for (let i = 0; i < checkboxs.length; i++) {
+                if (checkboxs[i].checked == true) {
+                    let item = checkboxs[i].value;
+                    listIDs.push(parseInt(item));
+                }
+            }
+            listItem = listIDs;
+            localStorage.setItem('listID', listItem);
         }
     </script>
 @endsection

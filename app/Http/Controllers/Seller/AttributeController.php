@@ -25,6 +25,7 @@ class AttributeController extends Controller
 
     public function store(Request $request)
     {
+
         try {
             $request->validate([
                 'attribute_name' => 'required'

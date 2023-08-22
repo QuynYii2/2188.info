@@ -484,7 +484,7 @@
             isNew.value = 100;
             var renderInputAttribute = $('#renderInputAttribute');
             $.ajax({
-                url: '{{ route('attributes.store') }}',
+                url: '{{ route('product.v2.create.attribute') }}',
                 type: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',
@@ -492,13 +492,11 @@
                 },
                 // dataType: 'json',
                 success: function (response) {
-                    console.log(response)
-                    $('#removeInputAttribute').remove();
                     // var item = response;
                     renderInputAttribute.append(response);
                 },
                 error: function (xhr, status, error) {
-                    renderInputAttribute.append('<h3>Alooo</h3>');
+                    renderInputAttribute.append('<h3>Error</h3>');
                 }
             })
         })
