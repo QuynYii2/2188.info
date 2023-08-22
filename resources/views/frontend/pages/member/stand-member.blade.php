@@ -166,7 +166,8 @@
             <div class="col-md-6">
                 <div class="d-flex">
                     @php
-                        $newCompany = \App\Models\MemberRegisterInfo::where('user_id', Auth::user()->id)->first();
+                        $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                        $newCompany = \App\Models\MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
                         $oldItem = null;
                         if($newCompany){
                              $oldItem = \App\Models\MemberPartner::where([
