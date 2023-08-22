@@ -2,7 +2,8 @@
 @section('title', 'Partner Register Members')
 @section('content')
     @php
-        $mentor = \App\Models\User::find($company->user_id);
+        $memberPer = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->first();
+        $mentor = \App\Models\User::where('email', $memberPer->email)->first();
     @endphp
     <div class="container-fluid">
         <h3 class="text-center">Danh sách đối tác</h3>
@@ -26,17 +27,17 @@
             $arrayCategory  = explode(',', $listCategory);
         @endphp
         <div class="border mt-3">
-                <div class="row text-center">
-                    @foreach($arrayCategory as $itemCategory)
-                        @php
-                            $category = \App\Models\Category::find($itemCategory);
-                        @endphp
-                        <div class="col-md-2">
-                            {{$category->name}}
-                        </div>
-                    @endforeach
-                </div>
+            <div class="row text-center">
+                @foreach($arrayCategory as $itemCategory)
+                    @php
+                        $category = \App\Models\Category::find($itemCategory);
+                    @endphp
+                    <div class="col-md-2">
+                        {{$category->name}}
+                    </div>
+                @endforeach
             </div>
+        </div>
         <div class="border d-flex justify-content-between align-items-center p-3">
             <a href="{{route('stand.register.member.index', $company->id)}}" class="btn btn-primary">Gian hàng</a>
             <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">Danh sách đối tác</a>
@@ -65,7 +66,8 @@
                 @foreach($memberList as $memberItem)
                     @php
                         $memberPartner = \App\Models\MemberRegisterInfo::find($memberItem->company_id_follow);
-                        $user = \App\Models\User::find($memberPartner->user_id);
+                        $memberPersons = \App\Models\MemberRegisterPersonSource::where('member_id', $memberItem->company_id_follow)->first();
+                        $user = \App\Models\User::where('email', $memberPersons->email)->first();
                         $locale = session()->get('region');
                     @endphp
                     @if($locale)

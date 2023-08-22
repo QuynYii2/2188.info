@@ -60,7 +60,8 @@ class RegisterMemberController extends Controller
     public function memberPartner(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $company = MemberRegisterInfo::where('user_id', Auth::user()->id)->first();
+        $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
         $memberList = MemberPartner::where([
             ['company_id_source', $company->id],
             ['status', MemberPartnerStatus::ACTIVE]
@@ -74,7 +75,8 @@ class RegisterMemberController extends Controller
 
     public function memberPartnerLocale($locale)
     {
-        $company = MemberRegisterInfo::where('user_id', Auth::user()->id)->first();
+        $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
         $memberList = MemberPartner::where([
             ['company_id_source', $company->id],
             ['status', MemberPartnerStatus::ACTIVE]
