@@ -445,7 +445,7 @@
         <div class="header-bottom">
             <div class="container-fluid">
                 <div class="row align-items-center">
-                    <div class="col-xl-9 col-md-10 header-bottom-left d-flex align-items-center pl-0">
+                    <div class="col-xl-11 col-md-10 header-bottom-left d-flex align-items-center pl-0">
                         <div class="header-bottom-left--item header_bottom--one col-2 pl-0">
                             <div class="header_bottom--one--hd">
                                 <i class="fa-solid fa-bars"></i>
@@ -621,7 +621,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-md-2 header-bottom-right d-flex align-items-center justify-content-end">
+                    <div class="col-xl-1 col-md-2 header-bottom-right d-flex align-items-center justify-content-end">
                         <div class="help">
                             <i class="fa-solid fa-headset"></i>
                             <span>{{ __('home.Help') }}</span>
