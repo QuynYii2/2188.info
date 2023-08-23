@@ -48,7 +48,8 @@ class TopSellerConfigController extends Controller
                         $thumbnailPath = $thumbnail->store('thumbnails', 'public');
                         $config->thumbnail = $thumbnailPath;
                     }
-                    $url = $request->input('url_tag');
+                    $url = $request->input('url');
+                    $category = $request->input('category');
                     $local = $request->input('local');
                     $product = $request->input('product');
                     if ($name_custom) {
@@ -57,18 +58,30 @@ class TopSellerConfigController extends Controller
                         $products = Product::find($product);
                         $config->name_custom = $products->name;
                         $config->thumbnail = $products->thumbnail;
-                    } elseif ($url) {
-                        $urls = Category::find($url);
-                        $config->name_custom = $urls->name;
-                        $config->thumbnail = $urls->thumbnail;
+                    } elseif ($category) {
+                        $categorys = Category::find($category);
+                        $config->name_custom = $categorys->name;
+                        $config->thumbnail = $categorys->thumbnail;
                     }
-                    if (!$url) {
-                        $url = 0;
+
+                    if ($url) {
+                        $config->url = $url;
+                    } elseif ($product) {
+                        $products = Product::find($product);
+                        $config->url =  route('detail_product.show', $product->id);
+                        $config->thumbnail = $products->thumbnail;
+                    } elseif ($category) {
+                        $categorys = Category::find($category);
+                        $config->url =  route('category.show', $categorys->id);
+                        $config->thumbnail = $categorys->thumbnail;
+                    }
+                    if (!$category) {
+                        $category = 0;
                     }
                     if (!$product) {
                         $product = 0;
                     }
-                    $config->url = $url;
+                    $config->category = $category;
                     $config->local = $local;
                     $config->product = $product;
                     $config->user_id = Auth::user()->id;
