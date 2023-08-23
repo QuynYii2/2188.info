@@ -15,7 +15,9 @@ class MarketingBanner extends Migration
     {
         Schema::table('top_seller_configs', function (Blueprint $table) {
             $table->string('product')->default(0);
+            $table->string('category')->default(0);
             $table->string('name_custom');
+            $table->string('url')->change();
         });
     }
 
@@ -28,7 +30,10 @@ class MarketingBanner extends Migration
     {
         Schema::table('top_seller_configs', function (Blueprint $table) {
             $table->dropColumn('product');
+            $table->dropColumn('category');
             $table->dropColumn('name_custom');
+            $table->dropColumn('url');
+
         });
     }
 }

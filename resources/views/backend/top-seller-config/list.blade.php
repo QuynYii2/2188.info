@@ -37,16 +37,7 @@
                                Location: {{$config->local}}
                             </td>
                             <td class="">
-                                @php
-                                    if ($config->url != 0){
-                                        $category = \App\Models\Category::find($config->url);
-                                    }
-                                @endphp
-                                @if($config->url == 0)
-                                    Your Shop
-                                @else
-                                    Your category: {{$category->name}}
-                                @endif
+                                <a href="{{$config->url}}">link</a>
                             </td>
                             <td>
                                 <form method="post" action="{{route('seller.config.delete', $config->id)}}">

@@ -14,6 +14,7 @@ class TopSellerConfig extends Model
         'thumbnail',
         'url',
         'product',
-        'name_custom'
+        'name_custom',
+        'category'
     ];
 }

@@ -61,7 +61,7 @@
             @csrf
             <div class="form-group">
                 <label for="select_url">Select products</label>
-                <select class="form-control" name="url_tag" id="select_url">
+                <select class="form-control" name="category" id="category">
                     <option value="0">Shop</option>
                     @foreach($categories as $category)
                         <option value="{{$category->id}}">{{$category->name}}</option>
@@ -70,7 +70,7 @@
             </div>
             <div class="form-group">
                 <label for="local">Choosing location...</label>
-                <select class="form-control" name="local" id="local1" onchange="checkTien();">
+                <select class="form-control" name="local" id="local">
                     @foreach($options as $option)
                         <option value="{{$option}}">
                             {{$option}}
@@ -89,12 +89,16 @@
                 <input type="file" class="form-control-file" accept="image/*" id="thumbnail" name="thumbnail">
             </div>
             <div class="form-group">
-                <label for="money">Name...</label>
+                <label for="name">Name...</label>
                 <input type="text" name="name_custom"  class="form-control">
             </div>
             <div class="form-group">
+                <label for="url">Enter an https:// URL:</label>
+                <input type="url" name="url" id="url" class="form-control" placeholder="https://example.com" required />
+            </div>
+            <div class="form-group">
                 <label for="local">Choosing location...</label>
-                <select class="form-control" name="local" id="local2" onchange="checkTien();">
+                <select class="form-control" name="local" id="local2">
                     @foreach($options as $option)
                         <option value="{{$option}}">
                             {{$option}}

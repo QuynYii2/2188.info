@@ -170,17 +170,16 @@
             <div class="row">
                 <div class="col-md-3 col-xl-2 pt-3 pb-3">
                     @php
-                        $listCate = \Illuminate\Support\Facades\DB::table('top_seller_configs')->get();
+                        $listBanner = \Illuminate\Support\Facades\DB::table('top_seller_configs')->get();
                     @endphp
-                    @for($i=0; $i<count($listCate); $i++)
+                    @for($i=0; $i<count($listBanner); $i++)
                         @if($i % 2 != 0)
                             <div class="section-left item-img banner_categories">
-                                {{--                            <a href="{{ route('category.show', $listCate[$i]->id) }}">--}}
-                                <a href="#">
-                                    <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
+                                <a href="{{$listBanner[$i]->url}}">
+                                    <img src="{{ asset('storage/' . $listBanner[$i]->thumbnail) }}"
                                          alt="">
                                     <div class="section-left--name">
-                                        {{$listCate[$i] -> name_custom}}
+                                        {{$listBanner[$i]->name_custom}}
                                     </div>
                                 </a>
                             </div>
@@ -326,9 +325,8 @@
                     @for($i=0; $i<count($listCate); $i++)
                         @if($i % 2 == 0)
                             <div class="section-left item-img banner_categories">
-                                {{--                            <a href="{{ route('category.show', $listCate[$i]->id) }}">--}}
-                                <a href="#">
-                                    <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
+                                <a href="{{$listBanner[$i]->url}}">
+                                <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
                                          alt="">
                                     <div class="section-left--name">
                                         {{$listCate[$i] -> name_custom}}
