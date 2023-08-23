@@ -9,7 +9,6 @@ use App\Models\Product;
 use App\Models\Variation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -35,7 +34,7 @@ class CartController extends Controller
             $variable = $request->input('variable');
             $valid = false;
 
-            $productDetail = \App\Models\Variation::where([
+            $productDetail = Variation::where([
                 ['product_id', $productID],
                 ['variation', $variable]
             ])->first();
@@ -53,6 +52,8 @@ class CartController extends Controller
                 }
             }
 
+            $price = $request->input('price');
+
             if ($valid == true) {
                 $quantity = $request->input('quantity');
                 $oldCart = Cart::where([
@@ -61,6 +62,7 @@ class CartController extends Controller
                     ['status', '=', CartStatus::WAIT_ORDER]
                 ])->first();
                 $cart = $oldCart;
+                $cart->price = $price;
                 $cart->quantity = $cart->quantity + $quantity;
                 $success = $cart->save();
             } else {
@@ -71,7 +73,7 @@ class CartController extends Controller
                 $cart = [
                     'user_id' => Auth::user()->id,
                     'product_id' => $product->id,
-                    'price' => $product->price,
+                    'price' => $price,
                     'quantity' => $quantity,
                     'values' => $variable,
                     'status' => CartStatus::WAIT_ORDER,
@@ -216,7 +218,7 @@ class CartController extends Controller
         if ($valid == true) {
             if ($item) {
                 $item = explode(',', $item);
-                foreach ($item as $variable){
+                foreach ($item as $variable) {
                     $variation = Variation::find($variable);
                     $quantity = $request->input('quantity');
                     $oldCart = Cart::where([
@@ -234,7 +236,7 @@ class CartController extends Controller
         } else {
             if ($item) {
                 $item = explode(',', $item);
-                foreach ($item as $variable){
+                foreach ($item as $variable) {
                     $variation = Variation::find($variable);
                     $quantity = $request->input('quantity', 1);
                     if ($quantity < 1) {
@@ -244,7 +246,7 @@ class CartController extends Controller
                         'user_id' => Auth::user()->id,
                         'product_id' => $product->id,
                         'price' => $variation->price,
-                        'values'=> $variation->variation,
+                        'values' => $variation->variation,
                         'member' => 1,
                         'quantity' => $quantity,
                         'status' => CartStatus::WAIT_ORDER,
