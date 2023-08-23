@@ -3,6 +3,26 @@
 @section('content')
     <h5 class="text-center mt-3 mb-4">Create marketing</h5>
     <div class="card p-3">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-secondary mb-3" data-toggle="modal" data-target="#exampleModal">
+            Preview
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="max-width: 70vw">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Preview</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img style="width: 100%" src="{{asset('images/z4629273739159_20f1e3ae8cdfc03ea6413d0fe4affab5 (1).jpg')}}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
         <select class="form-select mb-4" aria-label="Default select example" id="selectMarketing">
             <option id="marketing_product" value="1">Product</option>
             <option id="marketing_category" value="2">Category</option>
@@ -33,10 +53,6 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="money" class="text-danger">Price</label>
-                    <input type="text" disabled class="form-control" id="money" value="100">
-                </div>
                 <input type="text" hidden class="form-control" id="moneyLocal" name="moneyLocal" value="100">
                 <button class="btn btn-primary" type="submit">Create</button>
         </form>
@@ -62,10 +78,6 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group">
-                <label for="money" class="text-danger">Price</label>
-                <input type="text" disabled class="form-control" id="money1" value="100">
-            </div>
             <input type="text" hidden class="form-control" id="moneyLocal1" name="moneyLocal" value="100">
             <button class="btn btn-primary" type="submit">Create</button>
         </form>
@@ -90,10 +102,6 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group">
-                <label for="money" class="text-danger">Price</label>
-                <input type="text" disabled class="form-control" id="money2" value="100">
-            </div>
             <input type="text" hidden class="form-control" id="moneyLocal2" name="moneyLocal" value="100">
             <button class="btn btn-primary" type="submit">Create</button>
         </form>
@@ -101,68 +109,6 @@
 @endsection
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-<script>
-    function checkTien() {
-        var local = document.getElementById("local").value;
-        var money = document.getElementById("money");
-        var moneyLocal = document.getElementById("moneyLocal");
-        if (local == 1) {
-            money.value = 100;
-            moneyLocal.value = 100;
-        } else if (local == 2) {
-            money.value = 80;
-            moneyLocal.value = 80;
-        } else if (local == 3) {
-            money.value = 60;
-            moneyLocal.value = 60;
-        } else if (local == 4) {
-            money.value = 30;
-            moneyLocal.value = 30;
-        } else {
-            money.value = 10;
-            moneyLocal.value = 10;
-        }
-        var local = document.getElementById("local1").value;
-        var money = document.getElementById("money1");
-        var moneyLocal = document.getElementById("moneyLocal1");
-        if (local == 1) {
-            money.value = 100;
-            moneyLocal.value = 100;
-        } else if (local == 2) {
-            money.value = 80;
-            moneyLocal.value = 80;
-        } else if (local == 3) {
-            money.value = 60;
-            moneyLocal.value = 60;
-        } else if (local == 4) {
-            money.value = 30;
-            moneyLocal.value = 30;
-        } else {
-            money.value = 10;
-            moneyLocal.value = 10;
-        }
-        var local = document.getElementById("local2").value;
-        var money = document.getElementById("money2");
-        var moneyLocal = document.getElementById("moneyLocal2");
-        if (local == 1) {
-            money.value = 100;
-            moneyLocal.value = 100;
-        } else if (local == 2) {
-            money.value = 80;
-            moneyLocal.value = 80;
-        } else if (local == 3) {
-            money.value = 60;
-            moneyLocal.value = 60;
-        } else if (local == 4) {
-            money.value = 30;
-            moneyLocal.value = 30;
-        } else {
-            money.value = 10;
-            moneyLocal.value = 10;
-        }
-    }
-    checkTien();
-</script>
 <script>
 
     $(document).ready(function () {
