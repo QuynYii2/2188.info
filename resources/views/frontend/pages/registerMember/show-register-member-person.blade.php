@@ -28,7 +28,7 @@
                                 <div class="form-group col-md-4">
                                     <label for="phoneNumber">PhoneNumber</label>
                                     <input type="text" class="form-control" id="phoneNumber"
-                                           value="{{$memberPersonSource->phone}}" name="phone" required>
+                                           value="{{$memberPersonSource->phone}}" name="phoneNumber" required>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="email">Email</label>

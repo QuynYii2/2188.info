@@ -266,13 +266,15 @@ class AuthController extends Controller
             alert()->error('Error', 'Error, Page not found');
             return back();
         }
-        $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
         $exitsMember = null;
-        if ($exitMemberPerson) {
-            $exitsMember = MemberRegisterInfo::where([
-                ['id', $exitMemberPerson->member_id],
-                ['status', MemberRegisterInfoStatus::ACTIVE]
-            ])->first();
+        if (Auth::check()){
+            $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+            if ($exitMemberPerson) {
+                $exitsMember = MemberRegisterInfo::where([
+                    ['id', $exitMemberPerson->member_id],
+                    ['status', MemberRegisterInfoStatus::ACTIVE]
+                ])->first();
+            }
         }
         return view('frontend/pages/registerMember/show-register-member-info', compact(
             'registerMember', 'categories', 'member', 'exitsMember'
@@ -313,7 +315,10 @@ class AuthController extends Controller
     public function showRegisterMemberPerson($member, $registerMember, Request $request)
     {
         (new HomeController())->getLocale($request);
-        $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        $exitMemberPerson = null;
+        if (Auth::check()){
+            $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        }
         $memberPersonSource = null;
         if ($exitMemberPerson && $exitMemberPerson->type == MemberRegisterType::REPRESENT) {
             $memberPersonSource = MemberRegisterPersonSource::find($exitMemberPerson->person);
@@ -379,7 +384,11 @@ class AuthController extends Controller
                 $status = MemberRegisterInfoStatus::INACTIVE;
             }
 
-            $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+            $exitMemberPerson = null;
+            if (Auth::check()){
+                $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+            }
+
             if ($exitMemberPerson) {
                 $exitsMember = MemberRegisterInfo::where([
                     ['id', $exitMemberPerson->member_id],
@@ -488,7 +497,11 @@ class AuthController extends Controller
             }
             //member
 
-            $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+            $exitMemberPerson = null;
+            if (Auth::check()){
+                $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+            }
+
             $memberPersonSource = null;
             if ($exitMemberPerson && $exitMemberPerson->type == MemberRegisterType::REPRESENT) {
                 $memberPersonSource = MemberRegisterPersonSource::find($exitMemberPerson->person);
@@ -520,6 +533,7 @@ class AuthController extends Controller
             ];
 
             if ($memberPersonSource) {
+                $user = User::where('email', $memberPersonSource->email)->first();
                 $memberPersonSource->user_id = $id;
                 $memberPersonSource->name = $fullName;
                 $memberPersonSource->phone = $phoneNumber;
@@ -529,7 +543,9 @@ class AuthController extends Controller
                 $memberPersonSource->price = $price;
                 $memberPersonSource->status = MemberRegisterPersonSourceStatus::INACTIVE;
                 if ($email == $memberPersonSource->email) {
+                    $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
                     $memberPersonSource->email = $email;
+                    $success = $memberPersonSource->save();
                     $register = MemberRegisterInfo::find($member);
                     alert()->success('Success', 'Success, Create success! Please continue next steps');
                     return redirect(route('show.register.member.person.represent', [
@@ -537,6 +553,7 @@ class AuthController extends Controller
                         'registerMember' => $register->member
                     ]));
                 } else {
+                    $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
                     $memberPersonSource->email = $email;
                     $user = User::where('email', Auth::user()->email)->first();
                     $user->email = $email;
@@ -571,6 +588,7 @@ class AuthController extends Controller
             alert()->error('Error', 'Error, Create error!');
             return back();
         } catch (\Exception $exception) {
+            dd($exception);
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
@@ -580,7 +598,10 @@ class AuthController extends Controller
     public function showRegisterMemberPersonRepresent($person, $registerMember, Request $request)
     {
         (new HomeController())->getLocale($request);
-        $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        $exitMemberPerson = null;
+        if (Auth::check()){
+            $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        }
         $memberPerson = null;
         if ($exitMemberPerson && $exitMemberPerson->type == MemberRegisterType::SOURCE) {
             $memberPerson = MemberRegisterPersonSource::where('person', $exitMemberPerson->id)->first();
@@ -642,7 +663,10 @@ class AuthController extends Controller
                 'status' => MemberRegisterPersonSourceStatus::INACTIVE
             ];
 
-            $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+            $exitMemberPerson = null;
+            if (Auth::check()){
+                $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+            }
             $memberPerson = null;
             if ($exitMemberPerson && $exitMemberPerson->type == MemberRegisterType::SOURCE) {
                 $memberPerson = MemberRegisterPersonSource::where('person', $exitMemberPerson->id)->first();
@@ -658,6 +682,7 @@ class AuthController extends Controller
             }
 
             if ($memberPerson) {
+                $user = User::where('email', $memberPerson->email)->first();
                 $memberPerson->user_id = $id;
                 $memberPerson->name = $fullName;
                 $memberPerson->phone = $phoneNumber;
@@ -666,11 +691,13 @@ class AuthController extends Controller
                 $memberPerson->price = $memberBefore->price;
                 $memberPerson->status = MemberRegisterPersonSourceStatus::INACTIVE;
                 if ($email == $memberPerson->email) {
+                    $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
                     $memberPerson->email = $email;
                     $success = $memberPerson->save();
                     alert()->success('Success', 'Success');
                     return redirect(route('home'));
                 } else {
+                    $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
                     $memberPerson->email = $email;
                     $user = User::where('email', Auth::user()->email)->first();
                     $user->email = $email;
@@ -918,5 +945,14 @@ class AuthController extends Controller
             $locale = $locale['countryCode'];
         }
         return $locale;
+    }
+
+    private function updateUser($user, $fullName, $email, $phoneNumber, $member)
+    {
+        $user->name = $fullName;
+        $user->email = $email;
+        $user->phone = $phoneNumber;
+        $user->member = $member;
+        $user->save();
     }
 }
