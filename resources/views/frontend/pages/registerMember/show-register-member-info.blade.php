@@ -291,25 +291,26 @@
                             @if($isValid == false)
                                 @if($exitsMember && $exitsMember->giay_phep_kinh_doanh)
                                     <img src="{{asset('storage/'.$exitsMember->giay_phep_kinh_doanh)}}" alt="">
-                                @endif
-                                <div class="form-group col-md-12">
-                                    <div class="image-upload">
-                                        <div class="image-edit">
-                                            <input type='file' name="giay_phep_kinh_doanh" id="coverUpload"
-                                                   class="imageUpload" data-preview="imagePreview" accept="image/*"/>
-                                            <label for="coverUpload"></label>
+                                @else
+                                    <div class="form-group col-md-12">
+                                        <div class="image-upload">
+                                            <div class="image-edit">
+                                                <input type='file' name="giay_phep_kinh_doanh" id="coverUpload"
+                                                       class="imageUpload" data-preview="imagePreview" accept="image/*"/>
+                                                <label for="coverUpload"></label>
+                                            </div>
+                                            <div class="preview">
+                                                <div id="imagePreview"></div>
+                                            </div>
+                                            <p class="error browser">
+                                                Your browser does not support
+                                                <a href="https://developer.mozilla.org/en/DOM/window.URL">URL</a> or
+                                                <a href="https://developer.mozilla.org/en/DOM/FileReader">FileReader</a>
+                                            </p>
+                                            <p class="error invalid-file"></p>
                                         </div>
-                                        <div class="preview">
-                                            <div id="imagePreview"></div>
-                                        </div>
-                                        <p class="error browser">
-                                            Your browser does not support
-                                            <a href="https://developer.mozilla.org/en/DOM/window.URL">URL</a> or
-                                            <a href="https://developer.mozilla.org/en/DOM/FileReader">FileReader</a>
-                                        </p>
-                                        <p class="error invalid-file"></p>
                                     </div>
-                                </div>
+                                @endif
                             @endif
                         </div>
                         <button type="submit" class="btn btn-primary">Sign up</button>
