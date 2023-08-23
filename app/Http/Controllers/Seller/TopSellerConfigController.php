@@ -11,6 +11,7 @@ use App\Http\Controllers\PaypalPaymentController;
 use App\Models\Category;
 use App\Models\Coin;
 use App\Models\Permission;
+use App\Models\Product;
 use App\Models\TopSellerConfig;
 use Auth;
 use DB;
@@ -38,6 +39,7 @@ class TopSellerConfigController extends Controller
         try {
             $coin = Coin::where([['user_id', \Illuminate\Support\Facades\Auth::user()->id], ['status', CoinStatus::ACTIVE]])->first();
             $price = $request->input('moneyLocal');
+            $name_custom = $request->input('name_custom');
             if ($coin != null) {
                 if ($coin->quantity >= $price * 9) {
                     $config = new TopSellerConfig();
@@ -48,8 +50,27 @@ class TopSellerConfigController extends Controller
                     }
                     $url = $request->input('url_tag');
                     $local = $request->input('local');
+                    $product = $request->input('product');
+                    if ($name_custom) {
+                        $config->name_custom = $name_custom;
+                    } elseif ($product) {
+                        $products = Product::find($product);
+                        $config->name_custom = $products->name;
+                        $config->thumbnail = $products->thumbnail;
+                    } elseif ($url) {
+                        $urls = Category::find($url);
+                        $config->name_custom = $urls->name;
+                        $config->thumbnail = $urls->thumbnail;
+                    }
+                    if (!$url) {
+                        $url = 0;
+                    }
+                    if (!$product) {
+                        $product = 0;
+                    }
                     $config->url = $url;
                     $config->local = $local;
+                    $config->product = $product;
                     $config->user_id = Auth::user()->id;
                     $coin->quantity = $coin->quantity - $price * 9;
                     $coin->save();
@@ -69,6 +90,7 @@ class TopSellerConfigController extends Controller
             return back();
         } catch (\Exception $exception) {
             alert()->error('Error', 'Please try again');
+            dd($exception);
             return back();
         }
     }

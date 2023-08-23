@@ -185,6 +185,29 @@ new Swiper(".FeaturedProducts", {
     mousewheel: true,
     keyboard: true,
 });
+new Swiper(".HotDeal", {
+    cssMode: true,
+    navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+    },
+    breakpoints: {
+        300: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+        },
+        900: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+        },
+        1280: {
+            slidesPerView: 5,
+            spaceBetween: 30,
+        },
+    },
+    mousewheel: true,
+    keyboard: true,
+});
 
 new Swiper(".HotDeals", {
     cssMode: true,

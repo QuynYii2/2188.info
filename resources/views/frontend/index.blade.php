@@ -170,18 +170,21 @@
             <div class="row">
                 <div class="col-md-3 col-xl-2 pt-3 pb-3">
                     @php
-                        $listCate = DB::table('categories')->where('parent_id', null)->get();
+                        $listCate = \Illuminate\Support\Facades\DB::table('top_seller_configs')->get();
                     @endphp
-                    @for($i=0; $i<8; $i++)
-                        <div class="section-left item-img banner_categories">
-                            <a href="{{ route('category.show', $listCate[$i]->id) }}">
-                                <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
-                                     alt="">
-                                <div class="section-left--name">
-                                    {{$listCate[$i] -> name}}
-                                </div>
-                            </a>
-                        </div>
+                    @for($i=0; $i<count($listCate); $i++)
+                        @if($i % 2 != 0)
+                            <div class="section-left item-img banner_categories">
+                                {{--                            <a href="{{ route('category.show', $listCate[$i]->id) }}">--}}
+                                <a href="#">
+                                    <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
+                                         alt="">
+                                    <div class="section-left--name">
+                                        {{$listCate[$i] -> name_custom}}
+                                    </div>
+                                </a>
+                            </div>
+                        @endif
                     @endfor
                 </div>
                 <div class="col-12 col-md-9 col-xl-8">
@@ -208,7 +211,7 @@
                                         @foreach($productFeatures as $productFeature)
                                             @foreach($productFeature as $product)
                                                 <div class="col-6">
-                                                @include('frontend.pages.list-product')
+                                                    @include('frontend.pages.list-product')
                                                 </div>
                                             @endforeach
                                         @endforeach
@@ -249,63 +252,25 @@
                             @elseif($locale == 'kr')
                                 <div class="content ">Korea
                                     <img class="flag-ct"
-                                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png">
-                            </div>
-                        @elseif($locale == 'cn')
-                            <div class="content ">China
-                                <img class="flag-ct"
-                                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
-                            </div>
-                        @else
-                            <div class="content ">Japan
-                                <img class="flag-ct"
-                                     src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
-                            </div>
-                        @endif
-                        <div class="swiper listProduct">
-                            <div class="swiper-wrapper">
-                                @php
-                                    $products = \App\Models\Product::where([['location','=','vi'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
-                                @endphp
-                                @foreach($products as $product)
-                                    @include('frontend.pages.list-product')
-                                @endforeach
-                            </div>
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-button-prev"></div>
-                        </div>
-                    </div>
-                </div>
-                @foreach($arrayProducts as $keys => $arrayProduct)
-                    @if($keys != $locale)
-                        <div class="category-img section pt-3 pb-3 container-fluid">
-                            @if($keys == 'vi')
-                                <div class="content ">Japan
-                                    <img class="flag-ct"
-                                         src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
-                                </div>
-                            @elseif($keys == 'kr')
-                                <div class="content ">Korea
-                                    <img class="flag-ct"
                                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png">
                                 </div>
-                            @elseif($keys == 'cn')
+                            @elseif($locale == 'cn')
                                 <div class="content ">China
                                     <img class="flag-ct"
                                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
                                 </div>
                             @else
-                                <div class="content ">Viet Nam
+                                <div class="content ">Japan
                                     <img class="flag-ct"
-                                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
+                                         src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
                                 </div>
                             @endif
                             <div class="swiper listProduct">
                                 <div class="swiper-wrapper">
-                                    @foreach($arrayProduct as $product)
-                                        @php
-                                            $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
-                                        @endphp
+                                    @php
+                                        $products = \App\Models\Product::where([['location','=','vi'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
+                                    @endphp
+                                    @foreach($products as $product)
                                         @include('frontend.pages.list-product')
                                     @endforeach
                                 </div>
@@ -313,28 +278,66 @@
                                 <div class="swiper-button-prev"></div>
                             </div>
                         </div>
-                    @endif
-                @endforeach
-            </div>
-                <div class="col-md-3 col-xl-2 pt-3 pb-3">
-                @php
-                    $listCate = DB::table('categories')->where('parent_id', null)->get();
-                @endphp
-                @foreach($listCate as $cate => $cate_info)
-                    @if ($cate < 8)
-                        @continue
-                    @endif
-                    <div class="section-left item-img banner_categories">
-                        <a href="{{ route('category.show', $cate_info->id) }}">
-                            <img src="{{ asset('storage/' . $cate_info->thumbnail) }}"
-                                 alt="">
-                            <div class="section-left--name">
-                                {{$cate_info -> name}}
-                            </div>
-                        </a>
                     </div>
-                @endforeach
-            </div>
+                    @foreach($arrayProducts as $keys => $arrayProduct)
+                        @if($keys != $locale)
+                            <div class="category-img section pt-3 pb-3 container-fluid">
+                                @if($keys == 'vi')
+                                    <div class="content ">Japan
+                                        <img class="flag-ct"
+                                             src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
+                                    </div>
+                                @elseif($keys == 'kr')
+                                    <div class="content ">Korea
+                                        <img class="flag-ct"
+                                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png">
+                                    </div>
+                                @elseif($keys == 'cn')
+                                    <div class="content ">China
+                                        <img class="flag-ct"
+                                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
+                                    </div>
+                                @else
+                                    <div class="content ">Viet Nam
+                                        <img class="flag-ct"
+                                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
+                                    </div>
+                                @endif
+                                <div class="swiper listProduct">
+                                    <div class="swiper-wrapper">
+                                        @foreach($arrayProduct as $product)
+                                            @php
+                                                $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
+                                            @endphp
+                                            @include('frontend.pages.list-product')
+                                        @endforeach
+                                    </div>
+                                    <div class="swiper-button-next"></div>
+                                    <div class="swiper-button-prev"></div>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+                <div class="col-md-3 col-xl-2 pt-3 pb-3">
+                    @php
+                        $listCate = \Illuminate\Support\Facades\DB::table('top_seller_configs')->get();
+                    @endphp
+                    @for($i=0; $i<count($listCate); $i++)
+                        @if($i % 2 == 0)
+                            <div class="section-left item-img banner_categories">
+                                {{--                            <a href="{{ route('category.show', $listCate[$i]->id) }}">--}}
+                                <a href="#">
+                                    <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
+                                         alt="">
+                                    <div class="section-left--name">
+                                        {{$listCate[$i] -> name_custom}}
+                                    </div>
+                                </a>
+                            </div>
+                        @endif
+                    @endfor
+                </div>
             </div>
         </div>
         <section class="section-Seven ">

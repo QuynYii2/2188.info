@@ -817,23 +817,8 @@
         </div>
     </div>
     <section class="section-Fifth section pt-3 pb-3 container-fluid">
-        <div class="content">{{ __('home.Related Products') }}</div>
-        <div class="swiper HotDeals">
-            <div class="swiper-wrapper">
-                @php
-                    $productMores = \App\Models\Product::where('category_id',$product->category_id)->get();
-                @endphp
-                @foreach($productMores as $product)
-                    @include('frontend.pages.list-product')
-                @endforeach
-            </div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-        </div>
-    </section>
-    <section class="section-Fifth section pt-3 pb-3 container-fluid">
         <div class="content">{{ __('home.Customers Also Viewed') }}</div>
-        <div class="swiper HotDeals">
+        <div class="swiper HotDeal">
             <div class="swiper-wrapper">
                 @php
                     $products = \App\Models\Product::where([['location','=','vi'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();

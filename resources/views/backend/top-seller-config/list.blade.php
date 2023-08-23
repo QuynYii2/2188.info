@@ -1,5 +1,10 @@
 @extends('backend.layouts.master')
 @section('title', 'List Top Seller')
+<style>
+    select{
+        max-width: 0;
+    }
+</style>
 @section('content')
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
@@ -25,7 +30,7 @@
                         <tr>
                             <td class="">{{$loop->index + 1}}</td>
                             <td>
-                                <img src="{{ asset('storage/'.$config->thumbnail) }}" class="img img-100"
+                                <img src="{{ asset('storage/'.$config->thumbnail) }}" style="width: 100px" class="img img-100"
                                      alt="Thumbnail">
                             </td>
                             <td>
