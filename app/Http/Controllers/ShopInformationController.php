@@ -7,6 +7,7 @@ use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
 use App\Models\Product;
 use App\Models\ShopInfo;
+use App\Models\User;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,8 @@ class ShopInformationController extends Controller
 
         $shopInformation = ShopInfo::where('user_id', $id)->first();
         $listVouchers = Voucher::where('user_id', '=', $id)->get();
-        $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        $user = User::find($id);
+        $memberPerson = MemberRegisterPersonSource::where('email', $user->email)->first();
         $company = null;
         if ($memberPerson) {
             $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
