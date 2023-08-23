@@ -61,11 +61,16 @@ class RegisterMemberController extends Controller
     {
         (new HomeController())->getLocale($request);
         $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
-        $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
-        $memberList = MemberPartner::where([
-            ['company_id_source', $company->id],
-            ['status', MemberPartnerStatus::ACTIVE]
-        ])->get();
+        $company = null;
+        $memberList = null;
+        if ($memberPerson) {
+            $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
+
+            $memberList = MemberPartner::where([
+                ['company_id_source', $company->id],
+                ['status', MemberPartnerStatus::ACTIVE]
+            ])->get();
+        }
         session()->forget('region');
         if ($company && $company->member == RegisterMember::TRUST) {
             return back();
@@ -76,11 +81,16 @@ class RegisterMemberController extends Controller
     public function memberPartnerLocale($locale)
     {
         $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
-        $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
-        $memberList = MemberPartner::where([
-            ['company_id_source', $company->id],
-            ['status', MemberPartnerStatus::ACTIVE]
-        ])->get();
+        $company = null;
+        $memberList = null;
+        if ($memberPerson) {
+            $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
+
+            $memberList = MemberPartner::where([
+                ['company_id_source', $company->id],
+                ['status', MemberPartnerStatus::ACTIVE]
+            ])->get();
+        }
         session()->forget('region');
         session()->put('region', $locale);
         if ($company && $company->member == RegisterMember::TRUST) {
