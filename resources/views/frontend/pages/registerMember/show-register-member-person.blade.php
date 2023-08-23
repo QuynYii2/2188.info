@@ -5,7 +5,7 @@
 @section('content')
     @php
 
-    @endphp
+            @endphp
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <div class="start-page mb-3">
         <div class="background container-fluid pt-3 justify-content-center pb-3">
@@ -16,45 +16,88 @@
                 <div class="mt-5">
                     <form class="p-3" action="{{route('register.member.source')}}" method="post">
                         @csrf
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="fullName">Full Name</label>
-                                <input type="text" class="form-control" id="fullName" name="fullName" required>
+                        @if($memberPersonSource)
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="fullName">Full Name</label>
+                                    <input type="text" class="form-control" id="fullName" name="fullName"
+                                           value="{{$memberPersonSource->name}}" required>
+                                </div>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="phoneNumber">PhoneNumber</label>
+                                    <input type="text" class="form-control" id="phoneNumber"
+                                           value="{{$memberPersonSource->phone}}" name="phoneNumber" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email"
+                                           value="{{$memberPersonSource->email}}" name="email" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="rank">Rank</label>
+                                    <select id="rank" name="rank" class="form-control">
+                                        <option value="staff">Staff</option>
+                                        <option value="seo">SEO</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label for="passwordConfirm">Password Confirm</label>
-                                <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm"
-                                       required>
+
+                            <input type="text" class="form-control" name="member" value="{{$member}}" hidden="">
+
+                            <div class="form-group">
+                                <label for="sns_account">SNS Account</label>
+                                <input type="text" class="form-control" id="sns_account"
+                                       value="{{$memberPersonSource->sns_account}}" name="sns_account" required>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="phoneNumber">PhoneNumber</label>
-                                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
+
+                            <button type="submit" class="btn btn-primary">Sign up</button>
+
+                        @else
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="fullName">Full Name</label>
+                                    <input type="text" class="form-control" id="fullName" name="fullName" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="passwordConfirm">Password Confirm</label>
+                                    <input type="password" class="form-control" id="passwordConfirm"
+                                           name="passwordConfirm"
+                                           required>
+                                </div>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="phoneNumber">PhoneNumber</label>
+                                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                                           required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="rank">Rank</label>
+                                    <select id="rank" name="rank" class="form-control">
+                                        <option value="staff">Staff</option>
+                                        <option value="seo">SEO</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label for="rank">Rank</label>
-                                <select id="rank" name="rank" class="form-control">
-                                    <option value="staff">Staff</option>
-                                    <option value="seo">SEO</option>
-                                    <option value="other">Other</option>
-                                </select>
+                            <input type="text" class="form-control" name="member" value="{{$member}}" hidden="">
+                            <div class="form-group">
+                                <label for="sns_account">SNS Account</label>
+                                <input type="text" class="form-control" id="sns_account" name="sns_account" required>
                             </div>
-                        </div>
-                        <input type="text" class="form-control" name="member" value="{{$member}}" hidden="">
-                        <div class="form-group">
-                            <label for="sns_account">SNS Account</label>
-                            <input type="text" class="form-control" id="sns_account" name="sns_account" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Sign up</button>
+                            <button type="submit" class="btn btn-primary">Sign up</button>
+                        @endif
                     </form>
                 </div>
             </div>

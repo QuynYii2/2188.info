@@ -9,6 +9,7 @@
         position: relative;
         max-width: 205px;
     }
+
     .image-upload .image-edit {
         position: absolute;
         z-index: 1;
@@ -18,9 +19,11 @@
         right: -13px;
         top: 10px;
     }
+
     .image-upload .image-edit input {
         display: none;
     }
+
     .image-upload .image-edit input + label {
         display: inline-block;
         width: 34px;
@@ -34,10 +37,12 @@
         font-weight: normal;
         transition: all 0.2s ease-in-out;
     }
+
     .image-upload .image-edit input + label:hover {
         background: #f1f1f1;
         border-color: #d6d6d6;
     }
+
     .image-upload .image-edit input + label:after {
         content: "\f040";
         font-family: "FontAwesome";
@@ -49,6 +54,7 @@
         text-align: center;
         margin: auto;
     }
+
     .image-upload .preview {
         width: 192px;
         height: 192px;
@@ -97,25 +103,32 @@
                     <div class="title">Đăng kí thông tin</div>
                 </div>
                 <div class="container mt-5">
-                    <form class="p-3" action="{{route('register.member.info')}}" method="post" enctype="multipart/form-data">
+                    <form class="p-3" action="{{route('register.member.info')}}" method="post"
+                          enctype="multipart/form-data">
                         @csrf
                         <input type="text" class="d-none" name="member_id" value="{{ $member->id }}">
                         <input type="text" class="d-none" name="member" value="{{ ($member->name) }}">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="companyName">Company Name</label>
-                                <input type="text" class="form-control" id="companyName" value="{{ old('companyName') }}" name="companyName" required>
+                                <input type="text" class="form-control" id="companyName"
+                                       value="{{ $exitsMember ? $exitsMember->name : old('companyName') }}"
+                                       name="companyName" required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="codeBusiness">Code Business</label>
-                                <input type="text" class="form-control" id="codeBusiness" value="{{ old('codeBusiness') }}" name="codeBusiness"
+                                <input type="text" class="form-control" id="codeBusiness"
+                                       value="{{ $exitsMember ? $exitsMember->code_business : old('codeBusiness') }}"
+                                       name="codeBusiness"
                                        required>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="phoneNumber">PhoneNumber</label>
-                                <input type="number" class="form-control" id="phoneNumber" value="{{ old('phoneNumber') }}" name="phoneNumber" required>
+                                <input type="number" class="form-control" id="phoneNumber"
+                                       value="{{ $exitsMember ? $exitsMember->phone : old('phoneNumber') }}"
+                                       name="phoneNumber" required>
                             </div>
                             <div class="form-group col-md-6 register-member">
                                 <label for="category">Category</label>
@@ -126,45 +139,121 @@
                                         </select>
                                         <div class="overSelect"></div>
                                     </div>
-                                    <div id="checkboxes" class="mt-1  checkboxes">
-                                        @foreach($categories as $category)
-                                            @if(!$category->parent_id)
-                                                <label class="ml-2" for="category-{{$category->id}}">
-                                                    <input type="checkbox" id="category-{{$category->id}}"
-                                                           name="category-{{$category->id}}"
-                                                           value="{{ ($category->id) }}"
-                                                           class="inputCheckboxCategory mr-2 p-3"/>
-                                                    <span class="labelCheckboxCategory">{{ ($category->name) }}</span>
-                                                </label>
-                                                @if(!$categories->isEmpty())
-                                                    @php
-                                                        $categories = DB::table('categories')->where('parent_id', $category->id)->get();
-                                                    @endphp
-                                                    @foreach($categories as $child)
-                                                        <label class="ml-4" for="category-{{$child->id}}">
-                                                            <input type="checkbox" id="category-{{$child->id}}"
-                                                                   name="category-{{$child->id}}"
-                                                                   value="{{$child->id}}"
-                                                                   class="inputCheckboxCategory mr-2 p-3"/>
-                                                            <span class="labelCheckboxCategory">{{ ($child->name) }}</span>
-                                                        </label>
+                                    @if($exitsMember)
+                                        @php
+                                            $listCategory = $exitsMember->category_id;
+                                            $arrayCategory = explode(',', $listCategory);
+                                        @endphp
+                                        <div id="checkboxes" class="mt-1  checkboxes">
+                                            @foreach($categories as $category)
+                                                @if(!$category->parent_id)
+                                                    @foreach($arrayCategory as $item)
                                                         @php
-                                                            $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
+                                                            $isChecked = false;
+                                                            if ($category->id == $item){
+                                                                $isChecked = true;
+                                                                break;
+                                                            }
                                                         @endphp
-                                                        @foreach($listChild2 as $child2)
-                                                            <label class="ml-5" for="category-{{$child2->id}}">
-                                                                <input type="checkbox" id="category-{{$child2->id}}"
-                                                                       name="category-{{$child2->id}}"
-                                                                       value="{{$child2->id}}"
-                                                                       class="inputCheckboxCategory mr-2 p-3"/>
-                                                                <span class="labelCheckboxCategory">{{ ($child2->name) }}</span>
-                                                            </label>
-                                                        @endforeach
                                                     @endforeach
+                                                    <label class="ml-2" for="category-{{$category->id}}">
+                                                        <input type="checkbox" id="category-{{$category->id}}"
+                                                               name="category-{{$category->id}}"
+                                                               value="{{ ($category->id) }}"
+                                                               {{ $isChecked ? 'checked' : '' }}
+                                                               class="inputCheckboxCategory mr-2 p-3"/>
+                                                        <span class="labelCheckboxCategory">{{ ($category->name) }}</span>
+                                                    </label>
+                                                    @if(!$categories->isEmpty())
+                                                        @php
+                                                            $categories = DB::table('categories')->where('parent_id', $category->id)->get();
+                                                        @endphp
+                                                        @foreach($categories as $child)
+                                                            @foreach($arrayCategory as $item)
+                                                                @php
+                                                                    $isChecked1 = false;
+                                                                    if ($child->id == $item){
+                                                                        $isChecked1 = true;
+                                                                        break;
+                                                                    }
+                                                                @endphp
+                                                            @endforeach
+                                                            <label class="ml-4" for="category-{{$child->id}}">
+                                                                <input type="checkbox" id="category-{{$child->id}}"
+                                                                       name="category-{{$child->id}}"
+                                                                       value="{{$child->id}}"
+                                                                       {{ $isChecked1 ? 'checked' : '' }}
+                                                                       class="inputCheckboxCategory mr-2 p-3"/>
+                                                                <span class="labelCheckboxCategory">{{ ($child->name) }}</span>
+                                                            </label>
+                                                            @php
+                                                                $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
+                                                            @endphp
+                                                            @foreach($listChild2 as $child2)
+                                                                @foreach($arrayCategory as $item)
+                                                                    @php
+                                                                        $isChecked2 = false;
+                                                                        if ($child2->id == $item){
+                                                                            $isChecked2 = true;
+                                                                            break;
+                                                                        }
+                                                                    @endphp
+                                                                @endforeach
+                                                                <label class="ml-5" for="category-{{$child2->id}}">
+                                                                    <input type="checkbox" id="category-{{$child2->id}}"
+                                                                           name="category-{{$child2->id}}"
+                                                                           value="{{$child2->id}}"
+                                                                           {{ $isChecked2 ? 'checked' : '' }}
+                                                                           class="inputCheckboxCategory mr-2 p-3"/>
+                                                                    <span class="labelCheckboxCategory">{{ ($child2->name) }}</span>
+                                                                </label>
+                                                            @endforeach
+                                                        @endforeach
+                                                    @endif
                                                 @endif
-                                            @endif
-                                        @endforeach
-                                    </div>
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        <div id="checkboxes" class="mt-1  checkboxes">
+                                            @foreach($categories as $category)
+                                                @if(!$category->parent_id)
+                                                    <label class="ml-2" for="category-{{$category->id}}">
+                                                        <input type="checkbox" id="category-{{$category->id}}"
+                                                               name="category-{{$category->id}}"
+                                                               value="{{ ($category->id) }}"
+                                                               class="inputCheckboxCategory mr-2 p-3"/>
+                                                        <span class="labelCheckboxCategory">{{ ($category->name) }}</span>
+                                                    </label>
+                                                    @if(!$categories->isEmpty())
+                                                        @php
+                                                            $categories = DB::table('categories')->where('parent_id', $category->id)->get();
+                                                        @endphp
+                                                        @foreach($categories as $child)
+                                                            <label class="ml-4" for="category-{{$child->id}}">
+                                                                <input type="checkbox" id="category-{{$child->id}}"
+                                                                       name="category-{{$child->id}}"
+                                                                       value="{{$child->id}}"
+                                                                       class="inputCheckboxCategory mr-2 p-3"/>
+                                                                <span class="labelCheckboxCategory">{{ ($child->name) }}</span>
+                                                            </label>
+                                                            @php
+                                                                $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
+                                                            @endphp
+                                                            @foreach($listChild2 as $child2)
+                                                                <label class="ml-5" for="category-{{$child2->id}}">
+                                                                    <input type="checkbox" id="category-{{$child2->id}}"
+                                                                           name="category-{{$child2->id}}"
+                                                                           value="{{$child2->id}}"
+                                                                           class="inputCheckboxCategory mr-2 p-3"/>
+                                                                    <span class="labelCheckboxCategory">{{ ($child2->name) }}</span>
+                                                                </label>
+                                                            @endforeach
+                                                        @endforeach
+                                                    @endif
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
@@ -182,7 +271,8 @@
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="provinces-select">Chọn quận/huyện:</label>
-                                <select class="form-control" id="provinces-select" name="provinces-select" onchange="getListWard(this.value)">
+                                <select class="form-control" id="provinces-select" name="provinces-select"
+                                        onchange="getListWard(this.value)">
                                     <option value="">-- Chọn quận/huyện --</option>
                                 </select>
                             </div>
@@ -192,24 +282,35 @@
                                     <option value="">-- Chọn phường/xã --</option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-12">
-                                <div class="image-upload">
-                                    <div class="image-edit">
-                                        <input type='file' name="giay_phep_kinh_doanh" id="coverUpload" class="imageUpload" data-preview="imagePreview" accept="image/*" />
-                                        <label for="coverUpload"></label>
+                            @php
+                                $isValid = false;
+                                if ($member->name == \App\Enums\RegisterMember::BUYER){
+                                    $isValid = true;
+                                }
+                            @endphp
+                            @if($isValid == false)
+                                @if($exitsMember && $exitsMember->giay_phep_kinh_doanh)
+                                    <img src="{{asset('storage/'.$exitsMember->giay_phep_kinh_doanh)}}" alt="">
+                                @endif
+                                <div class="form-group col-md-12">
+                                    <div class="image-upload">
+                                        <div class="image-edit">
+                                            <input type='file' name="giay_phep_kinh_doanh" id="coverUpload"
+                                                   class="imageUpload" data-preview="imagePreview" accept="image/*"/>
+                                            <label for="coverUpload"></label>
+                                        </div>
+                                        <div class="preview">
+                                            <div id="imagePreview"></div>
+                                        </div>
+                                        <p class="error browser">
+                                            Your browser does not support
+                                            <a href="https://developer.mozilla.org/en/DOM/window.URL">URL</a> or
+                                            <a href="https://developer.mozilla.org/en/DOM/FileReader">FileReader</a>
+                                        </p>
+                                        <p class="error invalid-file"></p>
                                     </div>
-                                    <div class="preview">
-                                        <div id="imagePreview"></div>
-                                    </div>
-                                    <p class="error browser">
-                                        Your browser does not support
-                                        <a href="https://developer.mozilla.org/en/DOM/window.URL">URL</a> or
-                                        <a href="https://developer.mozilla.org/en/DOM/FileReader">FileReader</a>
-                                    </p>
-                                    <p class="error invalid-file"></p>
                                 </div>
-                            </div>
-
+                            @endif
                         </div>
                         <button type="submit" class="btn btn-primary">Sign up</button>
                     </form>
@@ -223,7 +324,7 @@
         $(document).ready(function () {
             $('.inputCheckboxCategory').on('click', function () {
                 let count = document.querySelectorAll('.inputCheckboxCategory:checked').length
-                if (count > 3){
+                if (count > 3) {
                     $('.inputCheckboxCategory:checkbox:not(:checked)').prop('disabled', true);
                 } else {
                     $('.inputCheckboxCategory:checkbox:not(:checked)').prop('disabled', false);
@@ -382,6 +483,7 @@
             function isDataURL(s) {
                 return !!s.match(isDataURL.regex);
             }
+
             isDataURL.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,[a-z0-9\!\$\&\'\,\(\)\*\+\,\;\=\-\.\_\~\:\@\/\?\%\s]*\s*$/i;
 
             function readURL(input) {

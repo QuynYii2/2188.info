@@ -20,8 +20,9 @@
                     <div class="row p-5">
                         <br>
                         @php
+                            $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
                             $memberRegister = \App\Models\MemberRegisterInfo::where([
-                                ['user_id', Auth::user()->id],
+                                ['id', $memberPerson->member_id],
                                 ['member', $registerMember]])->orderBy('created_at', 'desc')->first();
                             $member = \App\Models\Member::find($memberRegister->member_id);
                         @endphp
@@ -56,7 +57,6 @@
                         </table>
                         @php
                             $memberRegisterSource = \App\Models\MemberRegisterPersonSource::where([
-                                ['user_id', Auth::user()->id],
                                 ['member_id', $memberRegister->id],
                                 ['type', \App\Enums\MemberRegisterType::SOURCE]])->orderBy('created_at', 'desc')->first();
                         @endphp
@@ -81,7 +81,6 @@
                         </table>
                         @php
                             $memberRegisterRepresent = \App\Models\MemberRegisterPersonSource::where([
-                                ['user_id', Auth::user()->id],
                                 ['person', $memberRegisterSource->id],
                                 ['type', \App\Enums\MemberRegisterType::REPRESENT]])->orderBy('created_at', 'desc')->first();
                         @endphp

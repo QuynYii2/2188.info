@@ -34,8 +34,11 @@ class ShopInformationController extends Controller
         $shopInformation = ShopInfo::where('user_id', $id)->first();
         $listVouchers = Voucher::where('user_id', '=', $id)->get();
         $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
-        $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
-        return view('frontend/pages/shop-information/index', compact('listProduct', 'company','priceProductOfCategory', 'sellerInfo', 'countProductBySeller', 'listVouchers', 'shopInformation'));
+        $company = null;
+        if ($memberPerson) {
+            $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
+        }
+        return view('frontend/pages/shop-information/index', compact('listProduct', 'company', 'priceProductOfCategory', 'sellerInfo', 'countProductBySeller', 'listVouchers', 'shopInformation'));
     }
 
 
