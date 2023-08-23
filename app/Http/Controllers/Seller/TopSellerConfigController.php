@@ -40,66 +40,57 @@ class TopSellerConfigController extends Controller
             $coin = Coin::where([['user_id', \Illuminate\Support\Facades\Auth::user()->id], ['status', CoinStatus::ACTIVE]])->first();
             $price = $request->input('moneyLocal');
             $name_custom = $request->input('name_custom');
-            if ($coin != null) {
-                if ($coin->quantity >= $price * 9) {
-                    $config = new TopSellerConfig();
-                    if ($request->hasFile('thumbnail')) {
-                        $thumbnail = $request->file('thumbnail');
-                        $thumbnailPath = $thumbnail->store('thumbnails', 'public');
-                        $config->thumbnail = $thumbnailPath;
-                    }
-                    $url = $request->input('url');
-                    $category = $request->input('category');
-                    $local = $request->input('local');
-                    $product = $request->input('product');
-                    if ($name_custom) {
-                        $config->name_custom = $name_custom;
-                    } elseif ($product) {
-                        $products = Product::find($product);
-                        $config->name_custom = $products->name;
-                        $config->thumbnail = $products->thumbnail;
-                    } elseif ($category) {
-                        $categorys = Category::find($category);
-                        $config->name_custom = $categorys->name;
-                        $config->thumbnail = $categorys->thumbnail;
-                    }
-
-                    if ($url) {
-                        $config->url = $url;
-                    } elseif ($product) {
-                        $products = Product::find($product);
-                        $config->url =  route('detail_product.show', $product->id);
-                        $config->thumbnail = $products->thumbnail;
-                    } elseif ($category) {
-                        $categorys = Category::find($category);
-                        $config->url =  route('category.show', $categorys->id);
-                        $config->thumbnail = $categorys->thumbnail;
-                    }
-                    if (!$category) {
-                        $category = 0;
-                    }
-                    if (!$product) {
-                        $product = 0;
-                    }
-                    $config->category = $category;
-                    $config->local = $local;
-                    $config->product = $product;
-                    $config->user_id = Auth::user()->id;
-                    $coin->quantity = $coin->quantity - $price * 9;
-                    $coin->save();
-                    $success = $config->save();
-                    if ($success) {
-                        alert()->success('Success', 'Create success!');
-                        return redirect(route('seller.config.show'));
-                    }
-                    alert()->error('Error', 'Create error!');
-                    return back();
-                } else {
-                    alert()->error('Error', 'Not enough coin!');
-                    return back();
-                }
+            $config = new TopSellerConfig();
+            if ($request->hasFile('thumbnail')) {
+                $thumbnail = $request->file('thumbnail');
+                $thumbnailPath = $thumbnail->store('thumbnails', 'public');
+                $config->thumbnail = $thumbnailPath;
             }
-            alert()->error('Error', 'Please buy coin to continue!');
+            $url = $request->input('url');
+            $category = $request->input('category');
+            $local = $request->input('local');
+            $product = $request->input('product');
+            if ($name_custom) {
+                $config->name_custom = $name_custom;
+            } elseif ($product) {
+                $products = Product::find($product);
+                $config->name_custom = $products->name;
+                $config->thumbnail = $products->thumbnail;
+            } elseif ($category) {
+                $categorys = Category::find($category);
+                $config->name_custom = $categorys->name;
+                $config->thumbnail = $categorys->thumbnail;
+            }
+
+            if ($url) {
+                $config->url = $url;
+            } elseif ($product) {
+                $products = Product::find($product);
+                $config->url =  route('detail_product.show', $product->id);
+                $config->thumbnail = $products->thumbnail;
+            } elseif ($category) {
+                $categorys = Category::find($category);
+                $config->url =  route('category.show', $categorys->id);
+                $config->thumbnail = $categorys->thumbnail;
+            }
+            if (!$category) {
+                $category = 0;
+            }
+            if (!$product) {
+                $product = 0;
+            }
+            $config->category = $category;
+            $config->local = $local;
+            $config->product = $product;
+            $config->user_id = Auth::user()->id;
+            $coin->quantity = $coin->quantity - $price * 9;
+            $coin->save();
+            $success = $config->save();
+            if ($success) {
+                alert()->success('Success', 'Create success!');
+                return redirect(route('seller.config.show'));
+            }
+            alert()->error('Error', 'Create error!');
             return back();
         } catch (\Exception $exception) {
             alert()->error('Error', 'Please try again');
