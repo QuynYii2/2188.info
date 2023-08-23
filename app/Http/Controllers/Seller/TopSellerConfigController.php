@@ -65,6 +65,7 @@ class TopSellerConfigController extends Controller
                 $config->url = $url;
             } elseif ($product) {
                 $products = Product::find($product);
+                dd($products);
                 $config->url =  route('detail_product.show', $product->id);
                 $config->thumbnail = $products->thumbnail;
             } elseif ($category) {
