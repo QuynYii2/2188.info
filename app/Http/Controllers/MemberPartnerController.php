@@ -15,7 +15,6 @@ class MemberPartnerController extends Controller
     {
         try {
             $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
-            dd($memberPerson);
             $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
             $oldItem = MemberPartner::where([
                 ['company_id_source', $request->input('company_id_source')],
