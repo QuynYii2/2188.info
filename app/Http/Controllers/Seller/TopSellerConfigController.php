@@ -37,7 +37,6 @@ class TopSellerConfigController extends Controller
     public function create(Request $request)
     {
         try {
-            $coin = Coin::where([['user_id', \Illuminate\Support\Facades\Auth::user()->id], ['status', CoinStatus::ACTIVE]])->first();
             $price = $request->input('moneyLocal');
             $name_custom = $request->input('name_custom');
             $config = new TopSellerConfig();
@@ -83,8 +82,8 @@ class TopSellerConfigController extends Controller
             $config->local = $local;
             $config->product = $product;
             $config->user_id = Auth::user()->id;
-            $coin->quantity = $coin->quantity - $price * 9;
-            $coin->save();
+//            $coin->quantity = $coin->quantity - $price * 9;
+//            $coin->save();
             $success = $config->save();
             if ($success) {
                 alert()->success('Success', 'Create success!');
