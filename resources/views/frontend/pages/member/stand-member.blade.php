@@ -98,7 +98,7 @@
                 <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">Danh sách đối tác</a>
                 <a href="#" class="btn btn-primary">Tin nhắn đã nhận</a>
                 <a href="#" class="btn btn-warning">Tin nhắn đã gửi</a>
-                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Mua hàng</a>
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalDemo">Mua hàng</a>
                 <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">Đặt sỉ nước
                     ngoài</a>
             </div>
@@ -407,13 +407,13 @@
     </div>
     @endif
 
-    <div class="modal fade" id="exampleModal" role="dialog"
-         aria-labelledby="exampleModal"
+    <div class="modal fade" id="exampleModalDemo" role="dialog"
+         aria-labelledby="exampleModalDemoLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Chọn quốc gia mua
+                    <h5 class="modal-title" id="exampleModalDemoLabel">Chọn quốc gia mua
                         hàng</h5>
                     <button type="button" class="close" data-dismiss="modal"
                             aria-label="Close">
