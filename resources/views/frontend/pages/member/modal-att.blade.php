@@ -42,10 +42,10 @@
                                         ['status', \App\Enums\VariationStatus::ACTIVE]
                                     ])->first();
                         @endphp
-                        <tr>
-                            <td><input class="checkBoxAttribute" type="checkbox" value="{{$productVariable->id}}"
-                                       name="select-att"></td>
-                            @foreach($item as $attpro)
+                        @foreach($item as $attpro)
+                            <tr>
+                                <td><input class="checkBoxAttribute" type="checkbox" value="{{$productVariable->id}}"
+                                           name="select-att"></td>
                                 @php
                                     $attproArray =  explode('-', $attpro);
                                     $attribute = \App\Models\Attribute::find($attproArray[0]);
@@ -53,8 +53,8 @@
                                 @endphp
                                 <td>{{$property->name}}</td>
                                 <td>{{$productVariable->price}}</td>
-                            @endforeach
-                        </tr>
+                            </tr>
+                        @endforeach
                     @endif
                 @else
                     @php
