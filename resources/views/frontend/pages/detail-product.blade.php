@@ -341,6 +341,7 @@
                     @endif
                     <div class="">
                         <input id="product_id" hidden value="{{$product->id}}">
+                        <input name="price" id="price" hidden value="{{$product->price}}">
                         @if(count($productDetails)>0)
                             <input name="variable" id="variable" hidden value="{{$productDetails[0]->variation}}">
                         @endif
@@ -892,6 +893,8 @@
             checkBtn();
         });
 
+        var price = document.getElementById('price')
+
         function checkBtn() {
             for (let i = 0; i < radio.length; i++) {
                 if (radio[i].checked == true) {
@@ -923,6 +926,7 @@
                 .then((response) => {
                     productThumbnail.src = urlImg + '/' + response['thumbnail'];
                     productPrice.innerText = response['price'];
+                    price.value = response['price'];
                     productOldPrice.innerText = response['old_price'];
                     productQuantity.innerText = response['quantity'];
                     variable.value = response['variation'];

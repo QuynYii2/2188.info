@@ -18,6 +18,7 @@ use App\Models\Cart;
 use App\Models\Coin;
 use App\Models\MemberPartner;
 use App\Models\MemberRegisterInfo;
+use App\Models\MemberRegisterPersonSource;
 use App\Models\Notification;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -67,7 +68,7 @@ class CheckoutController extends Controller
             $product = Product::where([['id', '=', $product_id]])->first();
             $storage = StorageProduct::where([['id', '=', $product->storage_id]])->first();
 
-            if ($storage){
+            if ($storage) {
                 $qtyCalc = $storage->quantity - $quantity;
                 $product->qty = $qtyCalc;
                 $storage->quantity = $qtyCalc;
@@ -91,14 +92,21 @@ class CheckoutController extends Controller
         foreach ($carts as $cart) {
             if ($cart->member == 1) {
                 $productCart = Product::find($cart->product_id);
-                $memberProduct = MemberRegisterInfo::where([
-                    ['user_id', $productCart->user_id],
-                    ['status', MemberRegisterInfoStatus::ACTIVE]
-                ])->first();
+                $user = User::find($productCart->user_id);
+                $memberPerson = MemberRegisterPersonSource::where('email', $user->email)->get();
+                $memberProduct = null;
+                if ($memberPerson) {
+                    $memberProduct = MemberRegisterInfo::where([
+                        ['id', $memberPerson->member_id],
+                        ['status', MemberRegisterInfoStatus::ACTIVE]
+                    ])->first();
+                }
                 if ($memberProduct) {
                     $userCurrent = Auth::user();
+                    $memberPersonCurrent = MemberRegisterPersonSource::where('email', $userCurrent->email)->get();
+                    $memberCurrent = null;
                     $memberCurrent = MemberRegisterInfo::where([
-                        ['user_id', $userCurrent->id],
+                        ['id', $memberPersonCurrent->member_id],
                         ['status', MemberRegisterInfoStatus::ACTIVE]
                     ])->first();
                     if ($memberCurrent) {
