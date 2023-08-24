@@ -50,6 +50,15 @@
             white-space: nowrap;
             width: 100%;
         }
+
+        .modal-content-css{
+            height: 85vh;
+            overflow-y: auto;
+        }
+        .btn:focus {
+                   outline: 0;
+                   box-shadow: none;
+               }
     </style>
     <script>
         $('[data-fancybox="gallery"]').fancybox({
@@ -201,9 +210,31 @@
                          src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
                          class="thumbnailProduct" data-value="{{$product}}"
                          width="150px" height="150px">
-                    <p class="mt-2 truncate-text">
-                        {{ ($product->name) }}
-                    </p>
+                    <div class="item-body">
+                        <div class="card-title">
+                            @if(Auth::check())
+                                <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
+                            @else
+                                <a class="check_url">{{($product->name)}}</a>
+                            @endif
+                        </div>
+                        @if($product->price)
+                            <div class="card-price d-flex justify-content-between">
+                                @if($product->price != null)
+                                    <div class="price-sale">
+                                        <strong>${{$product->price}}</strong>
+                                    </div>
+                                    <div class="price-cost">
+                                        <strike>${{$product->old_price}}</strike>
+                                    </div>
+                                @else
+                                    <div class="price-sale">
+                                        <strong>${{$product->old_price}}</strong>
+                                    </div>
+                                @endif
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </button>
         @endforeach
@@ -211,7 +242,7 @@
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content modal-content-css">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -411,7 +442,7 @@
          aria-labelledby="exampleModalDemoLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-content p-4" style="width: auto">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalDemoLabel">Chọn quốc gia mua
                         hàng</h5>
@@ -423,17 +454,17 @@
                 <div class="modal-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <a href="https://shipgo.biz/kr">
-                            <img width="80px" height="80px"
+                            <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
                                  src="{{ asset('images/korea.png') }}"
                                  alt="">
                         </a>
                         <a href="https://shipgo.biz/jp">
-                            <img width="80px" height="80px"
+                            <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
                                  src="{{ asset('images/japan.webp') }}"
                                  alt="">
                         </a>
                         <a href="https://shipgo.biz/cn">
-                            <img width="80px" height="80px"
+                            <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
                                  src="{{ asset('images/china.webp') }}"
                                  alt="">
                         </a>

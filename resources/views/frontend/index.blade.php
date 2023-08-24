@@ -195,7 +195,9 @@
                                     <div class="swiper-wrapper ">
                                         @foreach($newProducts as $product)
                                             <div class="col-6">
-                                                @include('frontend.pages.list-product')
+                                                <div class="swiper-slide">
+                                                    @include('frontend.pages.list-product')
+                                                </div>
                                             </div>
                                         @endforeach
                                     </div>
@@ -210,7 +212,9 @@
                                         @foreach($productFeatures as $productFeature)
                                             @foreach($productFeature as $product)
                                                 <div class="col-6">
-                                                    @include('frontend.pages.list-product')
+                                                    <div class="swiper-slide">
+                                                        @include('frontend.pages.list-product')
+                                                    </div>
                                                 </div>
                                             @endforeach
                                         @endforeach
@@ -230,10 +234,9 @@
                             <div class="swiper-wrapper">
                                 @foreach($productHots as $productHot)
                                     @foreach($productHot as $product)
-                                        @php
-                                            $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
-                                        @endphp
-                                        @include('frontend.pages.list-product')
+                                        <div class="swiper-slide">
+                                            @include('frontend.pages.list-product')
+                                        </div>
                                     @endforeach
                                 @endforeach
                             </div>
@@ -270,7 +273,9 @@
                                         $products = \App\Models\Product::where([['location','=','vi'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
                                     @endphp
                                     @foreach($products as $product)
-                                        @include('frontend.pages.list-product')
+                                        <div class="swiper-slide">
+                                            @include('frontend.pages.list-product')
+                                        </div>
                                     @endforeach
                                 </div>
                                 <div class="swiper-button-next"></div>
@@ -308,7 +313,9 @@
                                             @php
                                                 $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
                                             @endphp
-                                            @include('frontend.pages.list-product')
+                                            <div class="swiper-slide">
+                                                @include('frontend.pages.list-product')
+                                            </div>
                                         @endforeach
                                     </div>
                                     <div class="swiper-button-next"></div>
