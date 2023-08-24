@@ -105,12 +105,13 @@ class CategoryController extends Controller
         $listProduct = $query->orderBy('products.' . $sortArr[0], $sortArr[1])
             ->paginate($request->data['countPerPage']);
 
-        return response()->json($this->renderDataToHTML($listProduct));
+        return response()->json($this->renderDataToHTML($listProduct, $request));
     }
 
-    public function renderDataToHTML($listProduct)
+    public function renderDataToHTML($listProduct, $request)
     {
         $str = '';
+        $currency = (new HomeController())->getLocation($request);
         foreach ($listProduct as $product) {
             $str .= '<div class="col-xl-3 col-md-4 col-6 section">
             <div class="item">
@@ -144,11 +145,11 @@ class CategoryController extends Controller
                     </div>
                     <div class="card-price d-flex justify-content-between">
                         <div class="price-sale">
-                            <strong>' . $product['price'] . '</strong>
+                            <strong>' . number_format(convertCurrency('USD', $currency,$product['price']), 0, ',', '.') . $currency . '</strong>
                         </div>
                         <div class="price-cost">';
             if ($product['old_price'] != null) {
-                $str .= '<strike>' . $product['old_price'] . '</strike>';
+                $str .= '<strike>' . number_format(convertCurrency('USD', $currency,$product['old_price']), 0, ',', '.') . $currency  . '</strike>';
             }
             $str .= '</div>
                     </div>
