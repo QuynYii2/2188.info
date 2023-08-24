@@ -1,7 +1,6 @@
 @extends('frontend.layouts.master')
 
 @section('title', 'Register Member')
-
 @section('content')
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <div class="start-page mb-3">
@@ -63,5 +62,4 @@
     </div>
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script></script>
 

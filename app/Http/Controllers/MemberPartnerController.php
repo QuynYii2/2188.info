@@ -41,6 +41,7 @@ class MemberPartnerController extends Controller
             alert()->error('Error', 'Error!');
             return back();
         } catch (\Exception $exception) {
+            dd($exception);
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }

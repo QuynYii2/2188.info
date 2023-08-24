@@ -267,7 +267,7 @@ class AuthController extends Controller
             return back();
         }
         $exitsMember = null;
-        if (Auth::check()){
+        if (Auth::check()) {
             $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
             if ($exitMemberPerson) {
                 $exitsMember = MemberRegisterInfo::where([
@@ -316,7 +316,7 @@ class AuthController extends Controller
     {
         (new HomeController())->getLocale($request);
         $exitMemberPerson = null;
-        if (Auth::check()){
+        if (Auth::check()) {
             $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
         }
         $memberPersonSource = null;
@@ -385,7 +385,7 @@ class AuthController extends Controller
             }
 
             $exitMemberPerson = null;
-            if (Auth::check()){
+            if (Auth::check()) {
                 $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
             }
 
@@ -498,7 +498,7 @@ class AuthController extends Controller
             //member
 
             $exitMemberPerson = null;
-            if (Auth::check()){
+            if (Auth::check()) {
                 $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
             }
 
@@ -588,7 +588,6 @@ class AuthController extends Controller
             alert()->error('Error', 'Error, Create error!');
             return back();
         } catch (\Exception $exception) {
-            dd($exception);
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
@@ -599,7 +598,7 @@ class AuthController extends Controller
     {
         (new HomeController())->getLocale($request);
         $exitMemberPerson = null;
-        if (Auth::check()){
+        if (Auth::check()) {
             $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
         }
         $memberPerson = null;
@@ -664,7 +663,7 @@ class AuthController extends Controller
             ];
 
             $exitMemberPerson = null;
-            if (Auth::check()){
+            if (Auth::check()) {
                 $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
             }
             $memberPerson = null;
@@ -890,11 +889,11 @@ class AuthController extends Controller
 
     private function sendMail($data, $email)
     {
-        Mail::send('frontend/widgets/mailCode', $data, function ($message) use ($email) {
-            $message->to($email, 'Verify mail!')->subject
-            ('Verify mail');
-            $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
-        });
+//        Mail::send('frontend/widgets/mailCode', $data, function ($message) use ($email) {
+//            $message->to($email, 'Verify mail!')->subject
+//            ('Verify mail');
+//            $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
+//        });
     }
 
     private function createUser($fullName, $email, $phoneNumber, $password, $member)
@@ -921,10 +920,12 @@ class AuthController extends Controller
         $user->save();
 
         $newUser = User::where('email', $email)->first();
-        $roleUser = DB::table('role_user')->insert([
-            'role_id' => 2,
-            'user_id' => $newUser->id
-        ]);
+        if ($member != RegisterMember::BUYER) {
+            $roleUser = DB::table('role_user')->insert([
+                'role_id' => 2,
+                'user_id' => $newUser->id
+            ]);
+        }
 
 //        $currentUser = Auth::user();
 //        $seller = (new HomeController())->checkSellerOrAdmin();

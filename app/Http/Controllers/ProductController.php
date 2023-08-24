@@ -77,8 +77,8 @@ class ProductController extends Controller
         (new HomeController())->getLocale($request);
         $value = $this->findProduct(1, $id);
 
-
-        return view('frontend/pages/detail-product', $value);
+        $currency = (new \App\Http\Controllers\Frontend\HomeController())->getLocation($request);
+        return view('frontend/pages/detail-product', $value)->with('currency', $currency);
     }
 
     public function productViewed(Request $request)
@@ -177,7 +177,8 @@ class ProductController extends Controller
             ['user_id', Auth::user()->id],
             ['status', ProductStatus::ACTIVE]
         ])->orderBy('id', 'desc')->get();
-        return view('frontend.pages.profile.my-shop', compact('products'));
+        $currency = (new HomeController())->getLocation($request);
+        return view('frontend.pages.profile.my-shop', compact('products', 'currency'));
     }
 
     private function findProduct($key, $text)

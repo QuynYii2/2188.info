@@ -12,6 +12,9 @@ class TopSellerConfig extends Model
     protected $fillable = [
         'user_id',
         'thumbnail',
-        'url'
+        'url',
+        'product',
+        'name_custom',
+        'category'
     ];
 }

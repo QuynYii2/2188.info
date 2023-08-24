@@ -9,7 +9,6 @@ use App\Models\Product;
 use App\Models\Variation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -21,8 +20,8 @@ class CartController extends Controller
                 ['user_id', '=', Auth::user()->id],
                 ['status', '=', CartStatus::WAIT_ORDER]
             ])->get();
-
-            return view('frontend/pages/cart')->with('cartItems', $carts);
+            $currency = (new \App\Http\Controllers\Frontend\HomeController())->getLocation($request);
+            return view('frontend/pages/cart')->with('cartItems', $carts)->with('currency', $currency);
         } else {
             return view('frontend/pages/login');
         }
@@ -35,7 +34,7 @@ class CartController extends Controller
             $variable = $request->input('variable');
             $valid = false;
 
-            $productDetail = \App\Models\Variation::where([
+            $productDetail = Variation::where([
                 ['product_id', $productID],
                 ['variation', $variable]
             ])->first();
@@ -53,6 +52,8 @@ class CartController extends Controller
                 }
             }
 
+            $price = $request->input('price');
+
             if ($valid == true) {
                 $quantity = $request->input('quantity');
                 $oldCart = Cart::where([
@@ -61,6 +62,7 @@ class CartController extends Controller
                     ['status', '=', CartStatus::WAIT_ORDER]
                 ])->first();
                 $cart = $oldCart;
+                $cart->price = $price;
                 $cart->quantity = $cart->quantity + $quantity;
                 $success = $cart->save();
             } else {
@@ -71,7 +73,7 @@ class CartController extends Controller
                 $cart = [
                     'user_id' => Auth::user()->id,
                     'product_id' => $product->id,
-                    'price' => $product->price,
+                    'price' => $price,
                     'quantity' => $quantity,
                     'values' => $variable,
                     'status' => CartStatus::WAIT_ORDER,
@@ -213,30 +215,48 @@ class CartController extends Controller
 
         $item = $request->input('value');
 
+        if ($item) {
+            $listProduct = explode(',', json_decode($request->input('value')));
+            $listQuantity = explode(',', json_decode($request->input('quantity')));
+        }
+
         if ($valid == true) {
             if ($item) {
-                $item = explode(',', $item);
-                foreach ($item as $variable){
-                    $variation = Variation::find($variable);
-                    $quantity = $request->input('quantity');
+                for ($i = 0; $i < sizeof($listProduct); $i++) {
+                    $variation = Variation::find($listProduct[$i]);
+                    $quantity = $listQuantity[$i];
                     $oldCart = Cart::where([
                         ['product_id', '=', $productID],
                         ['values', '=', $variation->variation],
                         ['status', '=', CartStatus::WAIT_ORDER]
                     ])->get();
-                    $cart = $oldCart[0];
-                    $cart->price = $variation->price;
-                    $cart->member = 1;
-                    $cart->quantity = $cart->quantity + $quantity;
-                    $cart->save();
+                    if (sizeof($oldCart) == 0) {
+                        $oldCart = Cart::where([
+                            ['product_id', '=', $productID],
+                            ['values', '=', $variation->variation],
+                            ['status', '=', CartStatus::DELETED]
+                        ])->get();
+                        $cart = $oldCart[0];
+                        $cart->price = $variation->price;
+                        $cart->member = 1;
+                        $cart->status = CartStatus::WAIT_ORDER;
+                        $cart->quantity = $quantity;
+                        $cart->save();
+                    } else {
+                        $cart = $oldCart[0];
+                        $cart->price = $variation->price;
+                        $cart->member = 1;
+                        $cart->status = CartStatus::WAIT_ORDER;
+                        $cart->quantity = $cart->quantity + $quantity;
+                        $cart->save();
+                    }
                 }
             }
         } else {
             if ($item) {
-                $item = explode(',', $item);
-                foreach ($item as $variable){
-                    $variation = Variation::find($variable);
-                    $quantity = $request->input('quantity', 1);
+                for ($j = 0; $j < sizeof($listProduct); $j++) {
+                    $variation = Variation::find($listProduct[$j]);
+                    $quantity = $listQuantity[$j];
                     if ($quantity < 1) {
                         return response('error', 400);
                     }
@@ -244,7 +264,7 @@ class CartController extends Controller
                         'user_id' => Auth::user()->id,
                         'product_id' => $product->id,
                         'price' => $variation->price,
-                        'values'=> $variation->variation,
+                        'values' => $variation->variation,
                         'member' => 1,
                         'quantity' => $quantity,
                         'status' => CartStatus::WAIT_ORDER,

@@ -106,11 +106,11 @@ $color-main: #fd6506;
   }
 }
 .item-hover{
-  border: 1px solid #FFFFFF;
-}
-.item-hover:hover{
-  border: 1px solid #0cbff1 ;
+  border: 1px solid #f9f9f9;
   border-radius: 4px;
+  &:hover{
+    border: 1px solid $color-main ;
+  }
 }
 .full-width{
   width: 100%;
@@ -211,9 +211,11 @@ $color-main: #fd6506;
       background-color: #f5f5f5;
     }
     .img-product{
-      padding: 30px;
+      height: 120px;
       img{
+        height: 100%;
         width: 100%;
+        object-fit: cover;
       }
     }
     .text-secondary{
@@ -398,12 +400,6 @@ $color-main: #fd6506;
   padding: 0 30px;
 
 }
-.margin-layout-index {
-  max-width: 100%;
-  //padding-left: 7%;
-  //padding-right: 7%;
-}
-
 .detail{
   .product{
     &-name{
@@ -2163,6 +2159,97 @@ a {
   }
 }
 
+.standsMember-item{
+  border: 1px solid #e9e9e9;
+  .item-body {
+    padding: 10px;
+
+    .card-title {
+      a {
+        color: black!important;
+        height: 40px;
+        font-size: 15px!important;
+        -webkit-line-clamp: 2;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        &:hover{
+          color: black;
+        }
+      }
+      &:hover {
+        a{
+          text-decoration: underline;
+          color: #0a6cdc;
+        }
+
+      }
+    }
+
+    .card-price {
+      font-size: 17px;
+      margin: 10px 0;
+
+      .price-sale {
+        color: #e10600;
+      }
+
+      .price-cost {
+      }
+    }
+
+    .card-bottom {
+      &--left {
+        height: 40px;
+        border-radius: 20px 20px 20px 20px;
+        border: 1px solid black;
+        line-height: 34px;
+
+        & a {
+          padding: 0 15px;
+          font-weight: 600;
+          font-size: 15px!important;
+          color: black!important;
+        }
+
+        &:hover {
+          background-color: $color-main;
+          border: white;
+
+          a {
+            text-decoration: none;
+            color: white!important;
+          }
+        }
+      }
+
+      &--right {
+        display: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 45px;
+        background-color: #f5f5f5;
+
+        i {
+          font-size: 21px;
+        }
+
+        &:hover {
+          background-color: $color-main;
+          border: white;
+
+          i {
+            color: white;
+          }
+        }
+
+      }
+    }
+  }
+}
+
 .category-item {
   .swiper-slide {
     text-align: center;
@@ -2363,7 +2450,6 @@ hr{
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
-
   }
 
   .product-banner {
@@ -2376,7 +2462,6 @@ hr{
   }
 
   .item {
-    padding: 5px;
     background-color: white;
 
     &-img {
@@ -2394,9 +2479,9 @@ hr{
       .button-view {
         display: none;
         position: absolute;
-        top: 40%;
-        right: 20%;
-
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         button {
           padding: 8px 15px;
           border-radius: 50px;
@@ -2458,7 +2543,7 @@ hr{
     }
 
     &-body {
-      padding: 20px;
+      padding: 15px;
 
       .card-rating {
         span {
@@ -4036,6 +4121,7 @@ footer {
 }
 .thumbnailSupGallery-img{
   height: 100px;
+  margin-bottom: 20px;
   img{
     height: 100%;
   }

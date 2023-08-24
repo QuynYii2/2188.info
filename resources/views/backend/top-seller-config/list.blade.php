@@ -1,5 +1,10 @@
 @extends('backend.layouts.master')
 @section('title', 'List Top Seller')
+<style>
+    select{
+        max-width: 0;
+    }
+</style>
 @section('content')
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
@@ -25,23 +30,14 @@
                         <tr>
                             <td class="">{{$loop->index + 1}}</td>
                             <td>
-                                <img src="{{ asset('storage/'.$config->thumbnail) }}" class="img img-100"
+                                <img src="{{ asset('storage/'.$config->thumbnail) }}" style="width: 100px" class="img img-100"
                                      alt="Thumbnail">
                             </td>
                             <td>
                                Location: {{$config->local}}
                             </td>
                             <td class="">
-                                @php
-                                    if ($config->url != 0){
-                                        $category = \App\Models\Category::find($config->url);
-                                    }
-                                @endphp
-                                @if($config->url == 0)
-                                    Your Shop
-                                @else
-                                    Your category: {{$category->name}}
-                                @endif
+                                <a href="{{$config->url}}">link</a>
                             </td>
                             <td>
                                 <form method="post" action="{{route('seller.config.delete', $config->id)}}">

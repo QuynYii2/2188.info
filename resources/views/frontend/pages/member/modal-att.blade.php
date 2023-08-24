@@ -30,9 +30,10 @@
                         @endphp
                         <tr>
                             <td><input class="checkBoxAttribute" type="checkbox" value="{{$productVariable->id}}"
-                                       name="select-att"></td>
-                            <td>{{$property->name}}</td>
-                            <td>{{$productVariable->price}}</td>
+                                       name="select-att[]"></td>
+
+                            <td class="get-att-1" data-value="{{ $item[0] }}">{{$property->name}}</td>
+                            <td class="get-price">{{$productVariable->price}}</td>
                         </tr>
                     @else
                         @php
@@ -42,19 +43,20 @@
                                         ['status', \App\Enums\VariationStatus::ACTIVE]
                                     ])->first();
                         @endphp
-                        <tr>
-                            <td><input class="checkBoxAttribute" type="checkbox" value="{{$productVariable->id}}"
-                                       name="select-att"></td>
-                            @foreach($item as $attpro)
+                        @foreach($item as $key => $attpro)
+                            <tr>
+                                <td><input class="checkBoxAttribute" type="checkbox" value="{{$productVariable->id}}"
+                                           name="select-att[]"></td>
                                 @php
                                     $attproArray =  explode('-', $attpro);
                                     $attribute = \App\Models\Attribute::find($attproArray[0]);
                                     $property = \App\Models\Properties::find($attproArray[1]);
                                 @endphp
-                                <td>{{$property->name}}</td>
-                                <td>{{$productVariable->price}}</td>
-                            @endforeach
-                        </tr>
+
+                                <td class="get-att-{{ $key }}" data-value="{{ $attpro }}">{{$property->name}}</td>
+                                <td class="get-price">{{$productVariable->price}}</td>
+                            </tr>
+                        @endforeach
                     @endif
                 @else
                     @php
@@ -67,16 +69,16 @@
                     @endphp
                     <tr>
                         <td><input class="checkBoxAttribute" type="checkbox" value="{{$productVariable->id}}"
-                                   name="select-att"></td>
-                        @foreach($myArray as $value)
+                                   name="select-att[]"></td>
+                        @foreach($myArray as $key => $value)
                             @php
                                 $attpro =  explode('-', $value);
                                 $attribue = \App\Models\Attribute::find($attpro[0]);
                                 $property = \App\Models\Properties::find($attpro[1]);
                             @endphp
-                            <td>{{$property->name}}</td>
+                            <td class="get-att-{{ $key }}" data-value="{{ $value }}">{{$property->name}}</td>
                         @endforeach
-                        <td>{{$productVariable->price}}</td>
+                        <td class="get-price">{{$productVariable->price}}</td>
                     </tr>
                 @endif
 
@@ -92,16 +94,16 @@
                     @endphp
                     <tr>
                         <td><input class="checkBoxAttribute" type="checkbox" value="{{$productVariable->id}}"
-                                   name="select-att" onclick="getCheckboxs()"></td>
-                        @foreach($attributeProperty as $attpro)
+                                   name="select-att[]" onclick="getCheckboxs()"></td>
+                        @foreach($attributeProperty as $key => $attpro)
                             @php
                                 $attproArray =  explode('-', $attpro);
                                 $attribue = \App\Models\Attribute::find($attproArray[0]);
                                 $property = \App\Models\Properties::find($attproArray[1]);
                             @endphp
-                            <td>{{$property->name}}</td>
+                            <td class="get-att-{{ $key }}" data-value="{{ $attpro }}">{{$property->name}}</td>
                         @endforeach
-                        <td>{{$productVariable->price}}</td>
+                        <td class="get-price">{{$productVariable->price}}</td>
                     </tr>
                 @endforeach
             @endif

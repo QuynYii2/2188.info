@@ -300,10 +300,10 @@
                     </div>
                     <div class="product-price d-flex" style="gap: 3rem">
                         @if($product->price != null)
-                            <div id="productPrice" class="price">${{$product->price}}</div>
-                            <strike id="productOldPrice">${{$product->old_price}}</strike>
+                            <div id="productPrice" class="price">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</div>
+                            <strike id="productOldPrice">{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
                         @else
-                            <strike id="productOldPrice">${{$product->price}}</strike>
+                            <strike id="productOldPrice">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strike>
                         @endif
                     </div>
                     <div class="description-text">
@@ -341,6 +341,7 @@
                     @endif
                     <div class="">
                         <input id="product_id" hidden value="{{$product->id}}">
+                        <input name="price" id="price" hidden value="{{$product->price}}">
                         @if(count($productDetails)>0)
                             <input name="variable" id="variable" hidden value="{{$productDetails[0]->variation}}">
                         @endif
@@ -816,30 +817,18 @@
             </div>
         </div>
     </div>
-    <section class="section-Fifth section pt-3 pb-3 container-fluid">
-        <div class="content">{{ __('home.Related Products') }}</div>
-        <div class="swiper HotDeals">
-            <div class="swiper-wrapper">
-                @php
-                    $productMores = \App\Models\Product::where('category_id',$product->category_id)->get();
-                @endphp
-                @foreach($productMores as $product)
-                    @include('frontend.pages.list-product')
-                @endforeach
-            </div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-        </div>
-    </section>
+    <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
     <section class="section-Fifth section pt-3 pb-3 container-fluid">
         <div class="content">{{ __('home.Customers Also Viewed') }}</div>
-        <div class="swiper HotDeals">
+        <div class="swiper HotDeal">
             <div class="swiper-wrapper">
                 @php
                     $products = \App\Models\Product::where([['location','=','vi'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
                 @endphp
                 @foreach($products as $product)
-                    @include('frontend.pages.list-product')
+                    <div class="swiper-slide">
+                        @include('frontend.pages.list-product')
+                    </div>
                 @endforeach
             </div>
             <div class="swiper-button-next"></div>
@@ -907,6 +896,8 @@
             checkBtn();
         });
 
+        var price = document.getElementById('price')
+
         function checkBtn() {
             for (let i = 0; i < radio.length; i++) {
                 if (radio[i].checked == true) {
@@ -938,6 +929,7 @@
                 .then((response) => {
                     productThumbnail.src = urlImg + '/' + response['thumbnail'];
                     productPrice.innerText = response['price'];
+                    price.value = response['price'];
                     productOldPrice.innerText = response['old_price'];
                     productQuantity.innerText = response['quantity'];
                     variable.value = response['variation'];

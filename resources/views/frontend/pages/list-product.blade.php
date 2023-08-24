@@ -1,13 +1,18 @@
 <link rel="stylesheet" href="{{asset('css/style.css')}}">
 <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+
 @php
     $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
 @endphp
-<div class="swiper-slide">
-    <div class="item item-hover">
+<input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
+<div class="item item-hover">
         @if($product->thumbnail)
             <div class="item-img">
-                <a href="{{route('detail_product.show', $product->id)}}">
+                @if(\Illuminate\Support\Facades\Auth::check())
+                    <a href="{{route('detail_product.show', $product->id)}}">
+                @else
+                    <a href="#">
+                @endif
                 <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
                 </a>
                 <div class="button-view">
@@ -50,14 +55,14 @@
                 <div class="card-price d-flex justify-content-between">
                     @if($product->price != null)
                         <div class="price-sale">
-                            <strong>${{$product->price}}</strong>
+                            <strong> {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strong>
                         </div>
                         <div class="price-cost">
-                            <strike>${{$product->old_price}}</strike>
+                            <strike>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
                         </div>
                     @else
                         <div class="price-sale">
-                            <strong>${{$product->old_price}}</strong>
+                            <strong>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strong>
                         </div>
                     @endif
                 </div>
@@ -78,5 +83,3 @@
             </div>
         </div>
     </div>
-</div>
-

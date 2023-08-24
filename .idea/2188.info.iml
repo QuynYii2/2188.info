@@ -7,8 +7,17 @@
       <sourceFolder url="file://$MODULE_DIR$/database/seeders" isTestSource="false" packagePrefix="Database\Seeders\" />
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" packagePrefix="Tests\" />
-      <excludeFolder url="file://$MODULE_DIR$/storage/app" />
-      <excludeFolder url="file://$MODULE_DIR$/storage/framework" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/Feature" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/Unit" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/nette/finder" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/nette/caching" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/colinodell/json5" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/torann/geoip" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/pragmarx/coollection" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/pragmarx/ia-arr" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/pragmarx/countries" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/pragmarx/ia-str" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/pragmarx/ia-collection" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
