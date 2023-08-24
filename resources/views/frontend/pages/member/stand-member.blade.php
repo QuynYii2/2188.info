@@ -382,8 +382,12 @@
                                                     @endif
                                                 </td>
                                                 <td>{{$itemCart->quantity}}</td>
-                                                <td>{{$itemCart->price}}</td>
-                                                <td>{{$itemCart->price*$itemCart->quantity}}</td>
+                                                <td>
+                                                    {{ number_format(convertCurrency('USD', $currency,$itemCart->price), 0, ',', '.') }} {{$currency}}
+                                                </td>
+                                                <td>
+                                                    {{ number_format(convertCurrency('USD', $currency, $itemCart->price*$itemCart->quantity), 0, ',', '.') }} {{$currency}}
+                                                </td>
                                             </tr>
                                         @endforeach
                                     @endif

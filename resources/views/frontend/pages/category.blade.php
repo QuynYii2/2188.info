@@ -174,16 +174,10 @@
                                                 @if($product->price)
                                                     <div class="card-price d-flex justify-content-between">
                                                         @if($product->price != null)
-                                                            <div class="price-sale">
-                                                                <strong>${{$product->price}}</strong>
-                                                            </div>
-                                                            <div class="price-cost">
-                                                                <strike>${{$product->old_price}}</strike>
-                                                            </div>
+                                                            <div id="productPrice" class="price">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</div>
+                                                            <strike id="productOldPrice">{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
                                                         @else
-                                                            <div class="price-sale">
-                                                                <strong>${{$product->old_price}}</strong>
-                                                            </div>
+                                                            <strike id="productOldPrice">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strike>
                                                         @endif
                                                     </div>
                                                 @endif
@@ -244,16 +238,10 @@
                                             @if($product->price)
                                                 <div class="card-price d-flex justify-content-between">
                                                     @if($product->price != null)
-                                                        <div class="price-sale">
-                                                            <strong>${{$product->price}}</strong>
-                                                        </div>
-                                                        <div class="price-cost">
-                                                            <strike>${{$product->old_price}}</strike>
-                                                        </div>
+                                                        <div id="productPrice" class="price">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</div>
+                                                        <strike id="productOldPrice">{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
                                                     @else
-                                                        <div class="price-sale">
-                                                            <strong>${{$product->old_price}}</strong>
-                                                        </div>
+                                                        <strike id="productOldPrice">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strike>
                                                     @endif
                                                 </div>
                                             @endif

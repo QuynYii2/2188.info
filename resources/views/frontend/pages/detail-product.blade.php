@@ -300,10 +300,10 @@
                     </div>
                     <div class="product-price d-flex" style="gap: 3rem">
                         @if($product->price != null)
-                            <div id="productPrice" class="price">${{$product->price}}</div>
-                            <strike id="productOldPrice">${{$product->old_price}}</strike>
+                            <div id="productPrice" class="price">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</div>
+                            <strike id="productOldPrice">{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
                         @else
-                            <strike id="productOldPrice">${{$product->price}}</strike>
+                            <strike id="productOldPrice">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strike>
                         @endif
                     </div>
                     <div class="description-text">
