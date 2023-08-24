@@ -588,7 +588,6 @@ class AuthController extends Controller
             alert()->error('Error', 'Error, Create error!');
             return back();
         } catch (\Exception $exception) {
-            dd($exception);
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
@@ -890,11 +889,11 @@ class AuthController extends Controller
 
     private function sendMail($data, $email)
     {
-        Mail::send('frontend/widgets/mailCode', $data, function ($message) use ($email) {
-            $message->to($email, 'Verify mail!')->subject
-            ('Verify mail');
-            $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
-        });
+//        Mail::send('frontend/widgets/mailCode', $data, function ($message) use ($email) {
+//            $message->to($email, 'Verify mail!')->subject
+//            ('Verify mail');
+//            $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
+//        });
     }
 
     private function createUser($fullName, $email, $phoneNumber, $password, $member)
