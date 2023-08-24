@@ -138,6 +138,17 @@
                                 </div>
                                 <div class="orderSummary-body ">
                                     @foreach ($carts as $cartItem)
+                                        @php
+                                            $sales = \App\Models\ProductSale::where([
+                                                ['product_id', $cartItem->product->id],
+                                                ['quantity','<=', $cartItem->quantity]
+                                                ])->orderBy('sales', 'desc')->first();
+
+                                            $percent = null;
+                                            if ($sales){
+                                                $percent = $sales->sales;
+                                            }
+                                        @endphp
                                         <div class="mb-3 row">
                                             <div class="col-3 img">
                                                 <img src="{{ asset('storage/' . $cartItem->product->thumbnail) }}" >
@@ -145,9 +156,17 @@
                                             <div class="col-5 name d-flex">
                                                 {{ $cartItem->quantity }} x {{ ($cartItem->product->name) }}
                                             </div>
-                                            <div class="col-4 price d-flex" style="color:black">
-                                                <span>$ <span class="price-quantity" id="total-quantity-{{ $cartItem->id }}">{{ $cartItem->price*$cartItem->quantity }}</span></span>
-                                            </div>
+                                            <input hidden="" type="text" id="price-percent-{{ $cartItem->id }}"
+                                                   value="{{ $percent }}">
+                                            @if($percent)
+                                                <div class="col-4 price d-flex" style="color:black">
+                                                    <span>$ <span class="price-quantity" id="total-quantity-{{ $cartItem->id }}">{{ ($cartItem->price*$cartItem->quantity) - ($cartItem->price*$cartItem->quantity)*$percent/100 }}</span></span>
+                                                </div>
+                                            @else
+                                                <div class="col-4 price d-flex" style="color:black">
+                                                    <span>$ <span class="price-quantity" id="total-quantity-{{ $cartItem->id }}">{{ $cartItem->price*$cartItem->quantity }}</span></span>
+                                                </div>
+                                            @endif
                                         </div>
                                     @endforeach
                                 </div>

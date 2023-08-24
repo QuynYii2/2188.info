@@ -7,7 +7,11 @@
     <div class="item item-hover">
         @if($product->thumbnail)
             <div class="item-img">
-                <a href="{{route('detail_product.show', $product->id)}}">
+                @if(\Illuminate\Support\Facades\Auth::check())
+                    <a href="{{route('detail_product.show', $product->id)}}">
+                @else
+                    <a href="#">
+                @endif
                 <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
                 </a>
                 <div class="button-view">

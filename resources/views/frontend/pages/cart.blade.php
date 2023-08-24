@@ -52,7 +52,7 @@
                             <td>
                                 <div class="row mt-3">
                                     <div class="col-md-2 img-product">
-                                        <img class="img" src="{{ asset('storage/'.$cartItem->thumbnail) }}"
+                                        <img class="img" src="{{ asset('storage/'.$cartItem->product->thumbnail) }}"
                                              alt="" width="60px" height="60px">
                                     </div>
                                     <div class="col-md-10 float-left">
@@ -100,8 +100,10 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <div class="form-field" data-product-attribute="set-rectangle"
-                                                                 role="radiogroup" aria-labelledby="rectangle-group-label">
+                                                            <div class="form-field"
+                                                                 data-product-attribute="set-rectangle"
+                                                                 role="radiogroup"
+                                                                 aria-labelledby="rectangle-group-label">
                                                                 <label class="form-label form-label--alternate form-label--inlineSmall"
                                                                        id="rectangle-group-label">
                                                                     Size:
@@ -115,7 +117,8 @@
                                                                     <div class="form-option-wrapper">
                                                                         <input class="form-radio" type="radio"
                                                                                id="attribute_rectangle__189_374"
-                                                                               name="attribute[189]" value="374" required=""
+                                                                               name="attribute[189]" value="374"
+                                                                               required=""
                                                                                data-state="false">
                                                                         <label class="form-option unavailable"
                                                                                for="attribute_rectangle__189_374"
@@ -126,7 +129,8 @@
                                                                     <div class="form-option-wrapper">
                                                                         <input class="form-radio" type="radio"
                                                                                id="attribute_rectangle__189_375"
-                                                                               name="attribute[189]" value="375" required=""
+                                                                               name="attribute[189]" value="375"
+                                                                               required=""
                                                                                data-state="false">
                                                                         <label class="form-option unavailable"
                                                                                for="attribute_rectangle__189_375"
@@ -137,7 +141,8 @@
                                                                     <div class="form-option-wrapper">
                                                                         <input class="form-radio" type="radio"
                                                                                id="attribute_rectangle__189_376"
-                                                                               name="attribute[189]" value="376" checked=""
+                                                                               name="attribute[189]" value="376"
+                                                                               checked=""
                                                                                data-default="" required=""
                                                                                data-state="true">
                                                                         <label class="form-option"
@@ -174,7 +179,8 @@
                                            min="{{$cartItem->product->min}}"/>
                                 </form>
                             </td>
-{{--                            @dd($percent)--}}
+                            <input hidden="" type="text" id="price-percent-{{ $cartItem->id }}"
+                                   value="{{ $percent }}">
                             @if($percent)
                                 <td id="total-quantity-{{ $cartItem->id }}">{{ ($cartItem->price*$cartItem->quantity) - ($cartItem->price*$cartItem->quantity)*$percent/100 }}</td>
                             @else
@@ -201,7 +207,8 @@
                         <label for="inputPassword2">Enter your coupon code if you have one.</label>
                         <form class="d-flex align-items-center justify-content-between">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="inputPassword2" placeholder="Enter your coupon code">
+                                <input type="text" class="form-control" id="inputPassword2"
+                                       placeholder="Enter your coupon code">
                             </div>
                             <button type="submit" class="btn mb-2 submit">Apply</button>
                         </form>
@@ -211,7 +218,8 @@
                         <label for="inputPassword2">Enter your coupon code if you have one.</label>
                         <form class="d-flex align-items-center justify-content-between">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="inputPassword2" placeholder="Enter your coupon code">
+                                <input type="text" class="form-control" id="inputPassword2"
+                                       placeholder="Enter your coupon code">
                             </div>
                             <button type="submit" class="btn mb-2 submit">Apply</button>
                         </form>
@@ -390,6 +398,7 @@
             let quantity = document.getElementById('quantity-' + id).value;
             let totalQuantity = document.getElementById('total-quantity-' + id);
             let price = document.getElementById('price-' + id).innerText;
+            let percent = document.getElementById('price-percent-' + id).value;
             let link = document.getElementById('id-link').value;
 
             const data = {
@@ -404,7 +413,7 @@
                 body: JSON.stringify(data),
             }).then(response => {
                 if (response.status == 200) {
-                    totalQuantity.innerText = parseFloat(price) * parseFloat(quantity)
+                    totalQuantity.innerText = parseFloat(price) * parseFloat(quantity) - (parseFloat(price) * parseFloat(quantity)) * parseFloat(percent) / 100
 
                     getAllTotal();
                 }
