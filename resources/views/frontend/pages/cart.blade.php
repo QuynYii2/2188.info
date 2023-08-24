@@ -51,11 +51,11 @@
                         <tr>
                             <td>
                                 <div class="row mt-3">
-                                    <div class="col-md-2 img-product">
+                                    <div class="col-md-3 img-product">
                                         <img class="img" src="{{ asset('storage/'.$cartItem->product->thumbnail) }}"
                                              alt="" width="60px" height="60px">
                                     </div>
-                                    <div class="col-md-10 float-left">
+                                    <div class="col-md-9 float-left">
                                         <div class="text-secondary">{{($cartItem->product->category->name)}}</div>
                                         <a href="{{route('detail_product.show', $cartItem->product->id)}}">{{($cartItem->product->name)}}</a>
                                         @if($cartItem->values != 0)
@@ -168,7 +168,7 @@
                                 </div>
                             </td>
                             <td class="price" id="price-{{ $cartItem->id }}">{{ number_format(convertCurrency('USD', $currency,$cartItem->price), 0, ',', '.') }} {{$currency}}</td>
-                            <td class="quantity text-center">
+                            <td class="quantity">
                                 <form>
                                     <input type="text" id="id-cart" value="{{ $cartItem->id }}" hidden/>
                                     <input type="text" id="id-link" value="{{ asset('/') }}" hidden/>

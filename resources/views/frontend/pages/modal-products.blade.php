@@ -49,7 +49,7 @@
                             </div>
                             <div class="d-flex buy justify-content-around">
                                 <div>
-                                    <input type="number" name="quantity" class="input" value="1" min="1">
+                                    <input type="number" name="quantity" class="input" min="{{$product->min}}" value="{{$product->min}}" >
                                     <div class="spinner">
                                         <button type="button" class="up button">&rsaquo;</button>
                                         <button type="button" class="down button">&lsaquo;</button>

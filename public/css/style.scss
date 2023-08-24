@@ -211,9 +211,11 @@ $color-main: #fd6506;
       background-color: #f5f5f5;
     }
     .img-product{
-      padding: 30px;
+      height: 120px;
       img{
+        height: 100%;
         width: 100%;
+        object-fit: cover;
       }
     }
     .text-secondary{
