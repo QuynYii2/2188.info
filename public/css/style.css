@@ -2399,33 +2399,247 @@ figure.zoom img {
   background-color: #f5f5f5;
   padding: 40px 0;
 }
-.footer .footer-content {
-  margin-bottom: 30px;
+.footer .footer-list-container {
+  width: 15.625rem;
+  padding: 0.3125rem;
+  box-sizing: border-box;
 }
-.footer .footer-content--big {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 15px;
-}
-.footer .footer-list .footer-item {
-  text-align: left;
-  padding-left: 5%;
-}
-.footer .footer-list .footer-item .item-content {
+.footer .footer-list-container .list-container-content {
+  font-size: 0.75rem;
   font-weight: 700;
-  font-size: 17px;
-  margin-bottom: 20px;
+  color: rgba(0, 0, 0, 0.87);
+  margin-bottom: 1.25rem;
+  margin-top: 2.5rem;
 }
-.footer .footer-list .footer-item .item-small {
-  margin: 15px 0;
-  font-size: 16px;
+.footer .footer-list-container .list-item-content {
+  text-decoration: none;
+  display: block;
+  color: rgba(0, 0, 0, 0.65);
+  list-style-type: none;
+  margin: 0 0 1rem;
+  padding: 0;
 }
-.footer .footer-list .footer-item .item-small a {
-  color: #505050;
+.footer .footer-list-container .list-item-content .item-content-footer {
+  font-size: 0.75rem;
+  margin-bottom: 0.75rem;
+  align-content: center;
+  display: flex;
 }
-.footer .footer-list .footer-item .item-small i {
-  font-size: 25px;
-  margin-right: 10px;
+.footer .footer-list-container .footer-content-bill {
+  flex-wrap: wrap;
+  display: flex;
+}
+.footer .footer-list-container .footer-content-bill .item-content-bill {
+  width: 3.75rem;
+  height: 1.875rem;
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
+  padding: 0.25rem;
+  background-color: #fff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: 0.125rem;
+  justify-content: center;
+  align-items: center;
+}
+.footer .footer-list-container .footer-content-bill .item-content-bill ._2pbE-b {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+.footer .footer-list-container .item-content-link .item-content-link-info {
+  height: 1rem;
+  width: 1rem;
+  margin-right: 0.5rem;
+}
+.footer .footer-list-container:first-child:nth-last-child(6) {
+  width: 12.5rem;
+}
+.footer .footer-list-container:first-child:nth-last-child(6) ~ .footer-list-container {
+  width: 12.5rem;
+}
+.footer .footer-list-container:last-child {
+  width: 12.5rem;
+}
+.footer .footer-list {
+  display: flex;
+}
+.footer .item-content-link {
+  align-content: center;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.65);
+  overflow: hidden;
+}
+.footer .item-content-text {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.footer .footer-content-bill {
+  list-style-type: none;
+  padding: 0;
+  margin: 0 0 1rem;
+}
+.footer .pkg67p {
+  width: 100%;
+  margin-bottom: 1rem;
+  flex-direction: row;
+}
+.footer .ebQ6br {
+  height: 5rem;
+  width: 5rem;
+  margin-right: 0.75rem;
+  padding: 0.25rem;
+  background-color: #fff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+.footer .zLPzwH {
+  width: 4.75rem;
+  display: inline-block;
+  vertical-align: top;
+}
+.footer .W4jGm6 {
+  width: 4.25rem;
+  height: 1rem;
+  margin-bottom: 0.5rem;
+  padding: 0.25rem;
+  background-color: #fff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.footer .footer-region {
+  justify-content: space-between;
+  color: rgba(0, 0, 0, 0.54);
+  padding: 2.5rem 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap;
+  align-items: flex-start;
+  display: flex;
+}
+.footer .footer-region .PGHx77 {
+  flex-shrink: 0;
+  margin-right: 25px;
+}
+.footer .footer-region .footer-region-add {
+  line-height: 1.125rem;
+}
+.footer .footer-region ._9RQPzN {
+  justify-content: center;
+  flex-wrap: wrap;
+  display: flex;
+}
+.footer .footer-region .rtJ1VG {
+  flex: 1 0 auto;
+  text-align: right;
+}
+.footer .footer-region .HKksoM {
+  padding: 0 5px;
+}
+.footer .footer-region .WrjDUh {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.54);
+}
+.footer .HKksoM:not(:last-child) {
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+.footer .footer .footer-list {
+  margin: 0 -0.3125rem;
+  padding: 0.3125rem;
+  width: 100%;
+  min-width: 1200px;
+}
+.footer .footer-top {
+  width: 75rem;
+  margin: auto;
+}
+.footer .footer-container {
+  background-color: #fbfbfb;
+}
+.footer ._4FDN71 {
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.65);
+  padding: 2.625rem 0 2.3125rem;
+  background: #f5f5f5;
+}
+.footer .footer-bottom-container {
+  width: 75rem;
+  margin: 0 auto;
+}
+.footer .footer-bottom-list {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+.footer .Notarization {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 0;
+}
+.footer .footer-addres {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+.footer .ggg4D- {
+  margin-bottom: 1.5625rem;
+}
+.footer .footer-bottom-item {
+  padding: 0 1.5625rem;
+  border-right: 1px solid rgba(0, 0, 0, 0.09);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+.footer .footer-bottom-item:last-child {
+  border: 0;
+}
+.footer a {
+  background-color: initial;
+}
+.footer a {
+  text-decoration: none;
+}
+.footer ._44TnCg {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.8);
+  margin: 0 1.25rem;
+}
+.footer a:active, .footer a:hover {
+  outline: 0;
+}
+.footer .bottom-item {
+  text-decoration: none;
+  display: block;
+  color: rgba(0, 0, 0, 0.54);
+}
+.footer .footer-vn-background {
+  background-image: url(https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/3ce17addcf90b8cd3952b8ae0ffc1299.png);
+}
+.footer .footer-vn-vn_registered_red-png {
+  background-size: 551.6666666667% 477.7777777778%;
+  background-position: 14.3911439114% 99.4117647059%;
+}
+.footer .jeaJPZ {
+  width: 7.5rem;
+  height: 2.8125rem;
+}
+.footer .footer-vn-vn_no_fake_item-png {
+  background-size: 1379.1666666667% 447.9166666667%;
+  background-position: 1.6286644951% 92.2155688623%;
+}
+.footer .b1v1Th {
+  width: 3rem;
+  height: 3rem;
 }
 
 .MenuContainer {
@@ -3042,7 +3256,6 @@ img {
 
 footer {
   padding: 1rem 0;
-  text-align: center;
 }
 
 .product-image {
