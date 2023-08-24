@@ -39,6 +39,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+use PragmaRX\Countries\Package\Countries;
 
 
 class HomeController extends Controller
@@ -323,6 +324,20 @@ class HomeController extends Controller
         // Chưa tìm được giải pháp
 //        session()->put('locale', $locale);
 //        app()->setLocale($locale);
+    }
+
+    public function getLocation(Request $request)
+    {
+        $geoIp = new GeoIP();
+        $locale = $geoIp->getCode($request->ip());
+        $countries = new Countries();
+        $country = $countries->all()->pluck('name.common')->toArray();
+        $currencies = $countries->all()->pluck('currencies')->toArray();
+        $all = $countries->where('name.common', $locale)->first()->hydrate('currencies')->currencies;
+        foreach ($all as $items) {
+            $currency = $items->iso->code;
+        }
+        return $currency;
     }
 
     //Start import user form nn21
