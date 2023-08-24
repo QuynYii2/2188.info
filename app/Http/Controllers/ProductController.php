@@ -77,8 +77,8 @@ class ProductController extends Controller
         (new HomeController())->getLocale($request);
         $value = $this->findProduct(1, $id);
 
-
-        return view('frontend/pages/detail-product', $value);
+        $currency = (new \App\Http\Controllers\Frontend\HomeController())->getLocation($request);
+        return view('frontend/pages/detail-product', $value)->with('currency', $currency);
     }
 
     public function productViewed(Request $request)
