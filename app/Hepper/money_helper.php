@@ -1,25 +1,7 @@
 <?php
 
-use GeoIp2\Database\Reader;
 use \GuzzleHttp\Client;
 use Illuminate\Support\Facades\Cache;
-
-if (!function_exists('get_country_from_ip')) {
-    function get_country_from_ip($ip)
-    {
-        $apiKey = env('MAXMIND_API_KEY');
-        $database = storage_path('app/geoip/GeoLite2-Country.mmdb');
-
-        if (!file_exists($database)) {
-            throw new Exception('GeoIP database not found');
-        }
-
-        $reader = new Reader($database);
-        $record = $reader->country($ip);
-
-        return $record->country->isoCode;
-    }
-}
 
 if (!function_exists('convertCurrency')) {
     function convertCurrency($from, $to, $amount)

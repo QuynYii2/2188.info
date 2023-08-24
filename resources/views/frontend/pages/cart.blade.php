@@ -167,7 +167,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="price" id="price-{{ $cartItem->id }}">{{ $cartItem->price }}</td>
+                            <td class="price" id="price-{{ $cartItem->id }}">{{ number_format(convertCurrency('USD', $currency,$cartItem->price), 0, ',', '.') }} {{$currency}}</td>
                             <td class="quantity text-center">
                                 <form>
                                     <input type="text" id="id-cart" value="{{ $cartItem->id }}" hidden/>
@@ -182,9 +182,13 @@
                             <input hidden="" type="text" id="price-percent-{{ $cartItem->id }}"
                                    value="{{ $percent }}">
                             @if($percent)
-                                <td id="total-quantity-{{ $cartItem->id }}">{{ ($cartItem->price*$cartItem->quantity) - ($cartItem->price*$cartItem->quantity)*$percent/100 }}</td>
+                                <td id="total-quantity-{{ $cartItem->id }}">
+                                    {{ number_format(convertCurrency('USD', $currency,($cartItem->price*$cartItem->quantity) - ($cartItem->price*$cartItem->quantity)*$percent/100), 0, ',', '.') }} {{$currency}}
+                                </td>
                             @else
-                                <td id="total-quantity-{{ $cartItem->id }}">{{ $cartItem->price*$cartItem->quantity }}</td>
+                                <td id="total-quantity-{{ $cartItem->id }}">
+                                    {{ number_format(convertCurrency('USD', $currency,$cartItem->price*$cartItem->quantity), 0, ',', '.') }} {{$currency}}
+                                </td>
                             @endif
 
                             <td>

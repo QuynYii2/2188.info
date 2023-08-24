@@ -34,4 +34,14 @@ class GeoIP
         }
         return 'vi';
     }
+
+    public function getCode($ip)
+    {
+        $record = $this->reader->get($ip);
+        if ($record == null){
+            $record = $this->reader->get('183.80.130.4');
+        }
+        $countryCode = $record['country']['names']['en'];
+        return $countryCode;
+    }
 }
