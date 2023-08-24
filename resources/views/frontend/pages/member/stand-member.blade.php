@@ -539,14 +539,21 @@
 
             $document.on('click', '#partnerBtn', function () {
                 const product = $(this).data('value');
+
                 renderProduct(product);
             });
 
             function renderProduct(product) {
+                let listInputQuantity = document.querySelectorAll('.input-quantity');
+                let listQuantity = '';
+                listInputQuantity.forEach(input => {
+                    listQuantity += input.value + ',';
+                });
+                listQuantity = JSON.stringify(listQuantity.slice(0, -1));
                 const requestData = {
                     _token: '{{ csrf_token() }}',
-                    quantity: 100,
-                    value: localStorage.getItem('listID'),
+                    quantity: listQuantity,
+                    value: JSON.stringify(localStorage.getItem('listID')),
                 };
 
                 $.ajax({
@@ -635,6 +642,8 @@
                 let donGia = parseFloat(item.querySelector(classPrice).textContent);
                 let inputElement = document.createElement('input');
                 inputElement.type = 'number';
+                inputElement.classList.add('input-quantity');
+
                 inputElement.min = '0';
                 inputElement.value = '1';
 
