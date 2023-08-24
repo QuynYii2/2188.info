@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\ConfigProjectController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CoinController;
+use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\EvaluateProductController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\Frontend\AddressController;
@@ -155,6 +156,7 @@ Route::get('/location-state/{id}', [AuthController::class, 'getListStateByNation
 Route::get('/location-city/{id}/{code}', [AuthController::class, 'getListCityByState'])->name('location.city.get');
 Route::get('/location-ward/{id}/{code}', [AuthController::class, 'getListWardByCity'])->name('location.ward.get');
 
+Route::get('/convert-currency/{amount}', [CurrencyController::class, 'getCurrency'])->name('convert.getCurrency.get');
 
 Route::get('/product-detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
 Route::get('/product/att/{id}', [\App\Http\Controllers\ProductController::class, 'getDataToModalAtt'])->name('detail_product.data.modal');

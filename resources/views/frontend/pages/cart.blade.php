@@ -167,7 +167,8 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="price" id="price-{{ $cartItem->id }}">{{ number_format(convertCurrency('USD', $currency,$cartItem->price), 0, ',', '.') }} {{$currency}}</td>
+                            <td class="price"
+                                id="price-{{ $cartItem->id }}">{{ number_format(convertCurrency('USD', $currency,$cartItem->price), 0, ',', '.') }} {{$currency}}</td>
                             <td class="quantity">
                                 <form>
                                     <input type="text" id="id-cart" value="{{ $cartItem->id }}" hidden/>
@@ -279,7 +280,7 @@
                     </div>
                     <div class="grandtotal d-flex justify-content-between">
                         <span>Grand total: </span>
-                        <span>$ <span id="max-total"> {{ $cartItem->price*$cartItem->quantity }}</span></span>
+                        <span> <span id="max-total"> {{ $cartItem->price*$cartItem->quantity }}</span></span>
                     </div>
                     <a href="{{route('checkout.show')}}">
                         <button type="submit" class="btn mb-2 submit float-right submit-100"> Check out</button>
@@ -317,21 +318,39 @@
             }).catch(error => console.log(error));
         }
 
+        function parseCurrencyString(currencyString) {
+            return parseFloat(currencyString.replace(/[^\d.-]/g, '').replace('.', ''));
+        }
+
+        function formatCurrency(number) {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number);
+        }
+
         function getAllTotal() {
             let totalMax = document.getElementById('max-total');
-            var firstCells = document.querySelectorAll('#table-cart td:nth-child(4)');
-            var cellValues = [];
-            firstCells.forEach(function (singleCell) {
+            let firstCells = document.querySelectorAll('#table-cart td:nth-child(4)');
+            let cellValues = [];
+
+            firstCells.forEach(function(singleCell) {
                 cellValues.push(singleCell.innerText);
             });
-            let i, total = 0;
-            for (i = 0; i < cellValues.length; i++) {
-                total = parseFloat(total) + parseFloat(cellValues[i]);
+
+            let total = 0;
+
+            for (let i = 0; i < cellValues.length; i++) {
+                let price = parseCurrencyString(cellValues[i]);
+                total += price;
             }
+
+            total = formatCurrency(total);
+            console.log(total)
+            let newArray = total.split(' ₫');
+            total = newArray[0] + '.000' + ' VND'
             totalMax.innerText = total;
         }
 
         getAllTotal();
+
 
     </script>
 @endsection
