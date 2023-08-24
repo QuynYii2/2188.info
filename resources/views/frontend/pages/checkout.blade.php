@@ -42,7 +42,8 @@
                                         </label>
                                         <input type="text" id="address" name="address" placeholder="542 W. 15th Street"
                                                value="{{$user->address}}" required>
-                                        <input onclick="check();" class="input-m0" type="radio" id="address-order2" name="address-order">
+                                        <input onclick="check();" class="input-m0" type="radio" id="address-order2"
+                                               name="address-order">
                                         <span>{{ __('home.Use Different Address') }}</span><br>
                                         <select id="address2" name="address2" disabled class="form-control mt-2 mb-2"
                                                 onchange="check();">
@@ -85,7 +86,8 @@
                                     </div>
                                     <div class="col-12" id="choose-method-payment">
                                         <h4>{{ __('home.Payment Methods') }}</h4>
-                                        <input type="radio" class="input-m0" name="order_method" id="order-by-immediate" checked
+                                        <input type="radio" class="input-m0" name="order_method" id="order-by-immediate"
+                                               checked
                                                value="{{OrderMethod::IMMEDIATE}}"/><span
                                                 class="ml-1">{{ __(OrderMethod::IMMEDIATE) }}</span><br>
                                         <input type="radio" class="input-m0" name="order_method" id="order-by-card"
@@ -151,21 +153,34 @@
                                         @endphp
                                         <div class="mb-3 row">
                                             <div class="col-3 img">
-                                                <img src="{{ asset('storage/' . $cartItem->product->thumbnail) }}" >
+                                                <img src="{{ asset('storage/' . $cartItem->product->thumbnail) }}">
                                             </div>
                                             <div class="col-5 name d-flex">
                                                 {{ $cartItem->quantity }} x {{ ($cartItem->product->name) }}
                                             </div>
                                             <input hidden="" type="text" id="price-percent-{{ $cartItem->id }}"
                                                    value="{{ $percent }}">
+                                            @php
+                                                $currencyController = new \App\Http\Controllers\CurrencyController();
+                                            @endphp
                                             @if($percent)
+                                                @php
+                                                    $currencyValue = $currencyController->getCurrency(request(), ($cartItem->price*$cartItem->quantity) - ($cartItem->price*$cartItem->quantity)*$percent/100);
+                                                @endphp
                                                 <div class="col-4 price d-flex" style="color:black">
-                                                    <span>$ <span class="price-quantity" id="total-quantity-{{ $cartItem->id }}">{{ ($cartItem->price*$cartItem->quantity) - ($cartItem->price*$cartItem->quantity)*$percent/100 }}</span></span>
+                                                    <span>{{ $currencyValue }}</span>
                                                 </div>
+                                                <span class="price-quantity d-none"
+                                                      id="total-quantity-{{ $cartItem->id }}">{{ ($cartItem->price*$cartItem->quantity) - ($cartItem->price*$cartItem->quantity)*$percent/100 }}</span>
                                             @else
+                                                @php
+                                                    $currencyValue = $currencyController->getCurrency(request(), $cartItem->price*$cartItem->quantity);
+                                                @endphp
                                                 <div class="col-4 price d-flex" style="color:black">
-                                                    <span>$ <span class="price-quantity" id="total-quantity-{{ $cartItem->id }}">{{ $cartItem->price*$cartItem->quantity }}</span></span>
+                                                    <span>{{ $currencyValue }}</span>
                                                 </div>
+                                                <span class="price-quantity d-none"
+                                                      id="total-quantity-{{ $cartItem->id }}">{{ $cartItem->price*$cartItem->quantity }}</span>
                                             @endif
                                         </div>
                                     @endforeach
@@ -173,7 +188,7 @@
                                 <div class="orderSummary-footer" id="space-price">
                                     <div class="grandtotal d-flex justify-content-between">
                                         <span class="total">{{ __('home.Total Product Cost') }}: </span>
-                                        <span class="price">$ <span id="max-total"> {{ $cartItem->price*$cartItem->quantity }}</span></span>
+                                        <span id="max-total"> {{ $cartItem->price*$cartItem->quantity }}</span>
                                     </div>
                                     <div class="grandtotal d-flex justify-content-between">
                                         <span class="total">{{ __('home.Shipping Fee') }}: </span>
@@ -181,11 +196,11 @@
                                     </div>
                                     <div class="grandtotal d-flex justify-content-between">
                                         <span class="total">{{ __('home.Discount') }}: </span>
-                                        <span class="price" id="sale-price">$ <span>--</span></span>
+                                        <span class="price" id="sale-price"><span>--</span></span>
                                     </div>
                                     <div class="grandtotal d-flex justify-content-between">
                                         <span class="total">{{ __('home.Total Payment') }}:</span>
-                                        <span class="price" id="checkout-price">$ <span>9024000</span></span>
+                                        <span class="price" id="checkout-price">0</span>
                                     </div>
                                 </div>
 
@@ -218,6 +233,7 @@
                     let arrayPrice = [];
                     for (let i = 0; i < arrayProducts.length; i++) {
                         var url = document.getElementById('url').value;
+
                         function myfunction(id) {
                             fetch(url + '/' + id, {
                                 method: 'GET'
@@ -255,6 +271,14 @@
             })
         }
 
+        function parseCurrencyString(currencyString) {
+            return parseFloat(currencyString.replace(/[^\d.-]/g, '').replace('.', ''));
+        }
+
+        function formatCurrency(number) {
+            return new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(number);
+        }
+
         function getAllTotal() {
             let totalMax = document.getElementById('max-total');
             let totalPrice = document.getElementById('total-price');
@@ -274,11 +298,29 @@
                 total = parseFloat(total) + parseFloat(valuePrice[i].innerText);
             }
 
-            totalMax.innerText = total;
+            var value = '';
+
+            getCurrency(total);
+
+            async function getCurrency(total) {
+                let url = '{{asset('convert-currency')}}' + '/' + total;
+                const response = await fetch(url);
+                value = await response.text();
+                totalMax.innerText = value;
+            }
+
             salePrice.innerText = parseFloat(salePriceByRank.value) + parseFloat(salePriceByVoucher.value);
             let max = parseFloat(total) - parseFloat(salePrice.innerText)
 
-            checkOutPrice.innerHTML = max.toFixed(1);
+            getCurrencyMax(max);
+
+            async function getCurrencyMax(total) {
+                let url = '{{asset('convert-currency')}}' + '/' + total;
+                const response = await fetch(url);
+                value = await response.text();
+                checkOutPrice.innerHTML = value;
+            }
+
             let price = document.getElementById('price_id');
             price.value = checkOutPrice.innerHTML;
             let discount_price = document.getElementById('discount_price');

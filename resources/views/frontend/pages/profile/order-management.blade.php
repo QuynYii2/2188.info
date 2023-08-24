@@ -33,7 +33,7 @@
 @section('sub-content')
     @php
 
-    @endphp
+            @endphp
     @for($i = 0; $i< count($permissionUsers); $i++)
         @if($permissionUsers[$i]->name == 'manage_orders')
             <div class="row mt-2 bg-white rounded">
@@ -71,6 +71,9 @@
                             </a>
                         </div>
                     </nav>
+                    @php
+                        $currencyController = new \App\Http\Controllers\CurrencyController();
+                    @endphp
                     <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
                         <div class="tab-pane fade text-center active show" id="nav-1" role="tabpanel"
                              aria-labelledby="nav-contact-tab">
@@ -146,8 +149,11 @@
                                                                                     <td>
                                                                                         {{ ($order_item->quantity) }}
                                                                                     </td>
+                                                                                    @php
+                                                                                        $currencyValue = $currencyController->getCurrency(request(), $order_item->price);
+                                                                                    @endphp
                                                                                     <td>
-                                                                                        {{ ($order_item->price) }}
+                                                                                        {{ ($currencyValue) }}
                                                                                     </td>
                                                                                 </tr>
                                                                             @endforeach
@@ -181,10 +187,16 @@
                                                 {{ ($order->orders_method) }}
                                             </td>
                                             <td>
-                                                {{ ($order->shipping_price) }}
+                                                @php
+                                                    $currencyValue = $currencyController->getCurrency(request(), $order->shipping_price);
+                                                @endphp
+                                                {{ $currencyValue }}
                                             </td>
+                                            @php
+                                                $currencyValue = $currencyController->getCurrency(request(), $order->discount_price);
+                                            @endphp
                                             <td>
-                                                {{ ($order->discount_price) }}
+                                                {{ ($currencyValue) }}
                                             </td>
                                             <td>
                                                 @php
@@ -192,8 +204,11 @@
                                                 @endphp
                                                 {{count($quantity)}}
                                             </td>
+                                            @php
+                                                $currencyValue = $currencyController->getCurrency(request(), $order->total);
+                                            @endphp
                                             <td>
-                                                {{$order->total}}
+                                                {{$currencyValue}}
                                             </td>
                                             <td>
                                                 {{$order->status}}
@@ -278,6 +293,9 @@
                                                                                     <td>
                                                                                         {{ ($orderItem->quantity) }}
                                                                                     </td>
+                                                                                    @php
+                                                                                        $currencyValue = $currencyController->getCurrency(request(), $orderItem->price);
+                                                                                    @endphp
                                                                                     <td>
                                                                                         {{ ($orderItem->price) }}
                                                                                     </td>
@@ -312,11 +330,17 @@
                                             <td>
                                                 {{ ($order->orders_method) }}
                                             </td>
+                                            @php
+                                                $currencyValue = $currencyController->getCurrency(request(), $order->shipping_price);
+                                            @endphp
                                             <td>
-                                                {{ ($order->shipping_price) }}
+                                                {{ ($currencyValue) }}
                                             </td>
+                                            @php
+                                                $currencyValue = $currencyController->getCurrency(request(), $order->discount_price);
+                                            @endphp
                                             <td>
-                                                {{ ($order->discount_price) }}
+                                                {{ ($currencyValue) }}
                                             </td>
                                             <td>
                                                 @php
@@ -324,11 +348,14 @@
                                                 @endphp
                                                 {{count($quantity)}}
                                             </td>
+                                            @php
+                                                $currencyValue = $currencyController->getCurrency(request(), $order->total);
+                                            @endphp
                                             <td>
-                                                {{$order->total}}
+                                                {{$currencyValue}}
                                             </td>
                                             <td>
-                                                 {{$order->status}}
+                                                {{$order->status}}
                                             </td>
                                         </tr>
                                     @endforeach
@@ -445,11 +472,17 @@
                                             <td>
                                                 {{ ($order->orders_method) }}
                                             </td>
+                                            @php
+                                                $currencyValue = $currencyController->getCurrency(request(), $order->shipping_price);
+                                            @endphp
                                             <td>
-                                                {{ ($order->shipping_price) }}
+                                                {{ ($currencyValue) }}
                                             </td>
+                                            @php
+                                                $currencyValue = $currencyController->getCurrency(request(), $order->discount_price);
+                                            @endphp
                                             <td>
-                                                {{ ($order->discount_price) }}
+                                                {{ ($currencyValue) }}
                                             </td>
                                             <td>
                                                 @php
@@ -457,8 +490,11 @@
                                                 @endphp
                                                 {{count($quantity)}}
                                             </td>
+                                            @php
+                                                $currencyValue = $currencyController->getCurrency(request(), $order->total);
+                                            @endphp
                                             <td>
-                                                {{$order->total}}
+                                                {{$currencyValue}}
                                             </td>
                                             <td>
                                                 {{$order->status}}
@@ -543,8 +579,11 @@
                                                                                     <td>
                                                                                         {{ ($order_item3->quantity) }}
                                                                                     </td>
+                                                                                    @php
+                                                                                        $currencyValue = $currencyController->getCurrency(request(), $order_item5->price);
+                                                                                    @endphp
                                                                                     <td>
-                                                                                        {{ ($order_item3->price) }}
+                                                                                        {{ ($currencyValue) }}
                                                                                     </td>
                                                                                 </tr>
                                                                             @endforeach
@@ -577,11 +616,17 @@
                                             <td>
                                                 {{ ($order->orders_method) }}
                                             </td>
+                                            @php
+                                                $currencyValue = $currencyController->getCurrency(request(), $order->shipping_price);
+                                            @endphp
                                             <td>
-                                                {{ ($order->shipping_price) }}
+                                                {{ ($currencyValue) }}
                                             </td>
+                                            @php
+                                                $currencyValue = $currencyController->getCurrency(request(), $order->discount_price);
+                                            @endphp
                                             <td>
-                                                {{ ($order->discount_price) }}
+                                                {{ ($currencyValue) }}
                                             </td>
                                             <td>
                                                 @php
@@ -589,8 +634,11 @@
                                                 @endphp
                                                 {{count($quantity)}}
                                             </td>
+                                            @php
+                                                $currencyValue = $currencyController->getCurrency(request(), $order->total);
+                                            @endphp
                                             <td>
-                                                {{ ($order->total) }}
+                                                {{$currencyValue}}
                                             </td>
                                             <td>
                                                 {{ ($order->status) }}
@@ -675,8 +723,11 @@
                                                                                     <td>
                                                                                         {{ ($order_item4->quantity) }}
                                                                                     </td>
+                                                                                    @php
+                                                                                        $currencyValue = $currencyController->getCurrency(request(), $order_item5->price);
+                                                                                    @endphp
                                                                                     <td>
-                                                                                        {{ ($order_item4->price) }}
+                                                                                        {{ ($currencyValue) }}
                                                                                     </td>
                                                                                 </tr>
                                                                             @endforeach
@@ -709,11 +760,17 @@
                                             <td>
                                                 {{ ($order->orders_method) }}
                                             </td>
+                                            @php
+                                                $currencyValue = $currencyController->getCurrency(request(), $order->shipping_price);
+                                            @endphp
                                             <td>
-                                                {{ ($order->shipping_price) }}
+                                                {{ ($currencyValue) }}
                                             </td>
+                                            @php
+                                                $currencyValue = $currencyController->getCurrency(request(), $order->discount_price);
+                                            @endphp
                                             <td>
-                                                {{ ($order->discount_price) }}
+                                                {{ ($currencyValue) }}
                                             </td>
                                             <td>
                                                 @php
@@ -721,8 +778,11 @@
                                                 @endphp
                                                 {{count($quantity)}}
                                             </td>
+                                            @php
+                                                $currencyValue = $currencyController->getCurrency(request(), $order->total);
+                                            @endphp
                                             <td>
-                                                {{ ($order->total) }}
+                                                {{$currencyValue}}
                                             </td>
                                             <td>
                                                 {{ ($order->status) }}
@@ -808,8 +868,11 @@
                                                                                     <td>
                                                                                         {{ ($order_item5->quantity) }}
                                                                                     </td>
+                                                                                    @php
+                                                                                        $currencyValue = $currencyController->getCurrency(request(), $order_item5->price);
+                                                                                    @endphp
                                                                                     <td>
-                                                                                        {{ ($order_item5->price) }}
+                                                                                        {{ ($currencyValue) }}
                                                                                     </td>
                                                                                 </tr>
                                                                             @endforeach
@@ -842,11 +905,17 @@
                                             <td>
                                                 {{ ($order->orders_method) }}
                                             </td>
+                                            @php
+                                                $currencyValue = $currencyController->getCurrency(request(), $order->shipping_price);
+                                            @endphp
                                             <td>
-                                                {{ ($order->shipping_price) }}
+                                                {{ ($currencyValue) }}
                                             </td>
+                                            @php
+                                                $currencyValue = $currencyController->getCurrency(request(), $order->discount_price);
+                                            @endphp
                                             <td>
-                                                {{ ($order->discount_price) }}
+                                                {{ ($currencyValue) }}
                                             </td>
                                             <td>
                                                 @php
@@ -854,8 +923,11 @@
                                                 @endphp
                                                 {{count($quantity)}}
                                             </td>
+                                            @php
+                                                $currencyValue = $currencyController->getCurrency(request(), $order->total);
+                                            @endphp
                                             <td>
-                                                {{$order->total}}
+                                                {{$currencyValue}}
                                             </td>
                                             <td>
                                                 {{$order->status}}
