@@ -541,21 +541,6 @@
                                                                                     <div class="item-img">
                                                                                         <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                                                                              alt="">
-                                                                                        <div class="button-view">
-                                                                                            <button href="">{{ __('home.Quick view') }}
-                                                                                            </button>
-                                                                                        </div>
-                                                                                        <div class="text">
-                                                                                            <!-- <div class="text-sale">
-                                                                                                            Sale
-                                                                                                        </div>
-                                                                                                        <div class="text-new">
-                                                                                                            New
-                                                                                                        </div> -->
-                                                                                            <!-- <div class="text-bundle">
-                                                                                                            Bundle
-                                                                                                        </div> -->
-                                                                                        </div>
                                                                                     </div>
                                                                                     <div class="item-body">
                                                                                         <div class="card-rating">

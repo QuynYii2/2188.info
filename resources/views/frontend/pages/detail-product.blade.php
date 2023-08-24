@@ -300,10 +300,10 @@
                     </div>
                     <div class="product-price d-flex" style="gap: 3rem">
                         @if($product->price != null)
-                            <div id="productPrice" class="price">${{$product->price}}</div>
-                            <strike id="productOldPrice">${{$product->old_price}}</strike>
+                            <div id="productPrice" class="price">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</div>
+                            <strike id="productOldPrice">{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
                         @else
-                            <strike id="productOldPrice">${{$product->price}}</strike>
+                            <strike id="productOldPrice">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strike>
                         @endif
                     </div>
                     <div class="description-text">
@@ -817,6 +817,7 @@
             </div>
         </div>
     </div>
+    <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
     <section class="section-Fifth section pt-3 pb-3 container-fluid">
         <div class="content">{{ __('home.Customers Also Viewed') }}</div>
         <div class="swiper HotDeal">
@@ -825,7 +826,9 @@
                     $products = \App\Models\Product::where([['location','=','vi'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
                 @endphp
                 @foreach($products as $product)
-                    @include('frontend.pages.list-product')
+                    <div class="swiper-slide">
+                        @include('frontend.pages.list-product')
+                    </div>
                 @endforeach
             </div>
             <div class="swiper-button-next"></div>
