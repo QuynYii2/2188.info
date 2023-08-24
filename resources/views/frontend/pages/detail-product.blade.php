@@ -2,7 +2,6 @@
     use App\Models\Attribute;
     use App\Models\VoucherItem;
     use App\Models\Properties;use Illuminate\Support\Facades\Auth;
-
      (new \App\Http\Controllers\Frontend\HomeController())->createStatisticShopDetail('views', $product->user_id);
      $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
 @endphp
@@ -169,8 +168,7 @@
         }
 
         .ability.ilvietnam-1-1-17 {
-            margin-top: 15px;
-            margin-bottom: 15px;
+            margin: 10px 0;
         }
 
         .company-basicCapacity.ilvietnam-1-1-19 {
@@ -250,8 +248,7 @@
                 <nav>
                     <ol class="breadcrumb-list">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">{{ __('home.Home') }}</a></li>
-                        <li class="breadcrumb-item"><a href="#">{{ __('home.Household Plants') }}</a></li>
-                        <li class="breadcrumb-item active">{{ __('home.Bonsai') }}</li>
+                        <li class="breadcrumb-item"><a href="#">Chi tiết sản phẩm</a></li>
                     </ol>
                 </nav>
             </div>
@@ -320,7 +317,7 @@
                                 @endphp
                                 <div class="col-sm-6 col-6">
                                     <label>{{($att->{'name' . $langDisplay->getLangDisplay()})}}</label>
-                                    <div class="radio-toolbar mt-3">
+                                    <div class="radio-toolbar">
                                         @foreach($arrayAtt as $data)
                                             @php
                                                 $property = Properties::find($data);
@@ -336,8 +333,8 @@
                             @endforeach
                         </div>
                         <a id="resetSelect" class="btn btn-dark mt-3 " style="color: white"> Reset select</a>
-
                         @include('frontend.pages.shopProducts.modal-att', ['name' => ''])
+
                     @endif
                     <div class="">
                         <input id="product_id" hidden value="{{$product->id}}">
@@ -355,9 +352,11 @@
                     @php
                         $price_sales = \App\Models\ProductSale::where('product_id', '=', $product->id)->get();
                     @endphp
-                    <a class="p-2 btn-light" style="cursor: pointer" data-toggle="modal" data-target="#priceList">
-                        Bảng giá sỉ
-                    </a>
+                    @if(!$price_sales)
+                        <a class="p-2 btn-light" style="cursor: pointer" data-toggle="modal" data-target="#priceList">
+                            Bảng giá sỉ
+                        </a>
+                    @endif
                     <!-- Modal -->
                     <div class="modal fade" id="priceList" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">

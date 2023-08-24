@@ -766,7 +766,7 @@ a {
             border-radius: 40px;
           }
 
-          button {
+          .button-right {
             position: absolute;
             font-size: 30px;
             right: 0;
@@ -783,16 +783,21 @@ a {
           .category-drop {
             background-color: transparent;
             position: absolute;
-            left: 10%;
+            left: 0;
             top: 0;
             height: 100%;
-
+            border-radius: 40px;
             button {
               color: gray;
               font-size: 20px;
-
+              border-radius: 40px;
+              border: none;
+              background: white;
               &:focus {
                 box-shadow: none;
+              }
+              &:hover{
+                background: white;
               }
             }
 
@@ -1003,7 +1008,8 @@ a {
             }
             .social-buttons{
               .button{
-                width: 50px;
+                width: 30px;
+                margin: 10px;
               }
             }
             hr {
@@ -2463,7 +2469,6 @@ hr{
 
   .item {
     background-color: white;
-
     &-img {
       margin: auto;
       width: 100%;
@@ -2552,9 +2557,11 @@ hr{
       }
 
       .card-brand {
-        color: gray;
         font-size: 14px;
         margin: 5px 0;
+        a{
+          color: gray;
+        }
       }
 
       .card-title {
@@ -2722,7 +2729,7 @@ hr{
 }
 
 .text-success {
-  height: 250px;
+  height: 200px;
 }
 
 .category-list{
@@ -3766,13 +3773,12 @@ footer {
   }
   .image-list li {
     text-align: center;
-    width: 15%;
+    width: 20%;
     height: 100px;
   }
   .image-list img {
     width: 100%;
     height: 100%;
-    height: auto;
     transition: opacity 0.3s ease;
     cursor: pointer;
     border: 1px solid black;

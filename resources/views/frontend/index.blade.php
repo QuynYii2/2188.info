@@ -1,8 +1,11 @@
 @extends('frontend.layouts.master')
-
-
 @section('title', 'Home page')
 @section('content')
+    <style>
+        body{
+            background: #f5f5f5;
+        }
+    </style>
     @php
         $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
     @endphp
@@ -18,7 +21,6 @@
                         @php
                             $listCate = DB::table('categories')->where('parent_id', null)->get();
                             $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
-
                         @endphp
                         @if(count($listCate)>10)
                             @for($i =0; $i <10; $i ++)
@@ -84,8 +86,6 @@
                 <div class="section-First-middle col-xl-6 col-md-8 col-12">
                     <!-- Swiper -->
                     <div class="swiper mySwiper">
-
-
                         <div class="swiper-wrapper">
                             @if(!$banner)
                                 <div class="swiper-slide">
@@ -164,8 +164,6 @@
             <img src="https://cdn11.bigcommerce.com/s-cas40rmoh/product_images/uploaded_images/banner-custom-home-2.png"
                  alt="">
         </section>
-
-
         <div class="section margin-layout-index container-fluid">
             <div class="row">
                 <div class="col-md-3 col-xl-2 pt-3 pb-3">
@@ -371,8 +369,7 @@
                 <div class="list d-flex justify-content-center">
                     <div class="item">
                         <div class="item-img">
-                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png"
-                                 alt="">
+                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png" alt="">
                         </div>
                         <div class="item-content">
                             QUALITY AND SAVING
@@ -431,7 +428,6 @@
                     </div>
                 </div>
             </div>
-            <input type="text" hidden="" id="inputUrl" value="{{asset('storage/')}}">
         </section>
         @include('frontend.pages.modal-products')
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -441,15 +437,11 @@
             let carousel_1 = document.getElementById('carousel__1');
             let carousel_2 = document.getElementById('carousel__2');
 
-
             let h_car_1 = carousel_1.offsetHeight;
             let h_car_2 = carousel_2.offsetHeight;
 
-
             let heightB = h_car_1 !== 0 ? h_car_1 : h_car_2;
             side_cate.style.height = heightB + 'px';
-
-
         </script>
         <script>
             $(document).ready(function ($) {

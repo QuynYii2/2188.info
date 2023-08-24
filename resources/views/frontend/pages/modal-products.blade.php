@@ -49,7 +49,7 @@
                             </div>
                             <div class="d-flex buy justify-content-around">
                                 <div>
-                                    <input type="number" name="quantity" class="input" min="{{$product->min}}" value="{{$product->min}}" >
+                                    <input type="number" name="quantity" class="input" min="" value="" >
                                     <div class="spinner">
                                         <button type="button" class="up button">&rsaquo;</button>
                                         <button type="button" class="down button">&lsaquo;</button>
@@ -71,6 +71,7 @@
         </div>
     </div>
 </div>
+<input type="text" hidden="" id="inputUrl" value="{{asset('storage/')}}">
 <script>
     var url = document.getElementById('inputUrl');
     $('.view_modal').on('click', function () {
@@ -95,6 +96,4 @@
         var variable = document.getElementById('variable_id')
         variable.value = productDetail['variation'];
     })
-
-
 </script>
