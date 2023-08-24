@@ -20,8 +20,8 @@ class CartController extends Controller
                 ['user_id', '=', Auth::user()->id],
                 ['status', '=', CartStatus::WAIT_ORDER]
             ])->get();
-
-            return view('frontend/pages/cart')->with('cartItems', $carts);
+            $currency = (new \App\Http\Controllers\Frontend\HomeController())->getLocation($request);
+            return view('frontend/pages/cart')->with('cartItems', $carts)->with('currency', $currency);
         } else {
             return view('frontend/pages/login');
         }

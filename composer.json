@@ -22,7 +22,9 @@
         "socialiteproviders/manager": "^4.3",
         "spatie/simple-excel": "^3.2",
         "srmklive/paypal": "*",
-        "stichoza/google-translate-php": "^4.1"
+        "stichoza/google-translate-php": "^4.1",
+        "pragmarx/countries": "^0.8.2",
+        "torann/geoip": "^3.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
