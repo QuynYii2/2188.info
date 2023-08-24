@@ -177,7 +177,8 @@ class ProductController extends Controller
             ['user_id', Auth::user()->id],
             ['status', ProductStatus::ACTIVE]
         ])->orderBy('id', 'desc')->get();
-        return view('frontend.pages.profile.my-shop', compact('products'));
+        $currency = (new HomeController())->getLocation($request);
+        return view('frontend.pages.profile.my-shop', compact('products', 'currency'));
     }
 
     private function findProduct($key, $text)

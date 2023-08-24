@@ -363,7 +363,7 @@
                                                             <span>Black/ 55 inch</span>
                                                             <span><i class="fa-regular fa-pen-to-square"></i></span>
                                                         </div>
-                                                        <div class="text-price">$ {{ $cartItem->price }} </div>
+                                                        <div class="text-price">{{ (new \App\Http\Controllers\CurrencyController())->getCurrencyLocal($currency,$cartItem->price) }}</div>
                                                     </div>
                                                     <div class="col-1">
                                                         <form action="{{ route('cart.delete', $cartItem->id) }}"
