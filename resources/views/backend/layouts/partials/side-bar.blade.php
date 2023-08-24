@@ -79,10 +79,6 @@
                 </li>
             </ul>
         </li>
-        @if(!$check_ctv_shop)
-            @if($permissionUsers)
-                @for($i = 0; $i< count($permissionUsers); $i++)
-                    @if($permissionUsers[$i]->name == 'Nâng cấp thành top-seller' || sizeof($roleUsers) != 0)
                         <li>
                             <a class="sidebar item" href='#'><i class="fa-solid fa-tag"></i> Kênh Marketing</a>
                             <ul class='sub-items pl-3'>
@@ -113,10 +109,6 @@
                                 {{--                                </li>--}}
                             </ul>
                         </li>
-                        @break
-                    @endif
-                @endfor
-            @endif
             <li>
                 <a class="sidebar item" href='#'><i class="fa-solid fa-book"></i> Tài Chính</a>
                 <ul class='sub-items pl-3'>
@@ -261,7 +253,6 @@
             {{--                    </li>--}}
             {{--                </ul>--}}
             {{--            </li>--}}
-        @endif
     </ul>
 </div>
 

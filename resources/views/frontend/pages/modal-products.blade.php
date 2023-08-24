@@ -38,8 +38,7 @@
                             </div>
                             <div class="description-text" id="description-text">
                             </div>
-                            <div class="row">
-                            </div>
+                            <input id="input_price" name="price" type="text" class="d-none" value="0">
                             <input id="variable_id" name="variable" hidden>
                             <div class="">
                                 <input id="product_id" hidden value="">
@@ -47,12 +46,10 @@
                             <div class="count__wrapper count__wrapper--ml mt-3">
                                 <span>Còn lại: </span>
                                 <label for="qty" id="qty"></label>
-
-
                             </div>
                             <div class="d-flex buy justify-content-around">
                                 <div>
-                                    <input type="number" class="input" value="1" min="1">
+                                    <input type="number" name="quantity" class="input" min="{{$product->min}}" value="{{$product->min}}" >
                                     <div class="spinner">
                                         <button type="button" class="up button">&rsaquo;</button>
                                         <button type="button" class="down button">&lsaquo;</button>
@@ -87,12 +84,14 @@
         modal_name.innerText = product['name'];
         var price_sale = document.getElementById('price-sale')
         price_sale.innerText = product['price'];
+        var qty = document.getElementById('qty')
+        qty.innerText = product['qty'];
+        var input_price = document.getElementById('input_price')
+        input_price.value = product['price'];
         var price_old = document.getElementById('price-old')
         price_old.innerText = product['old_price'];
         var description_text = document.getElementById('description-text')
         description_text.innerHTML = productDetail['description'];
-        var qty = document.getElementById('qty')
-        qty.innerText = product['qty'];
         var variable = document.getElementById('variable_id')
         variable.value = productDetail['variation'];
     })

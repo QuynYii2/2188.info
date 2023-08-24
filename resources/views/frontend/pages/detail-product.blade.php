@@ -817,6 +817,7 @@
             </div>
         </div>
     </div>
+    <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
     <section class="section-Fifth section pt-3 pb-3 container-fluid">
         <div class="content">{{ __('home.Customers Also Viewed') }}</div>
         <div class="swiper HotDeal">
@@ -825,7 +826,9 @@
                     $products = \App\Models\Product::where([['location','=','vi'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
                 @endphp
                 @foreach($products as $product)
-                    @include('frontend.pages.list-product')
+                    <div class="swiper-slide">
+                        @include('frontend.pages.list-product')
+                    </div>
                 @endforeach
             </div>
             <div class="swiper-button-next"></div>

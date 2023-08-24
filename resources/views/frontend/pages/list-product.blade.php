@@ -1,10 +1,11 @@
 <link rel="stylesheet" href="{{asset('css/style.css')}}">
 <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+
 @php
     $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
 @endphp
-<div class="swiper-slide">
-    <div class="item item-hover">
+<input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
+<div class="item item-hover">
         @if($product->thumbnail)
             <div class="item-img">
                 @if(\Illuminate\Support\Facades\Auth::check())
@@ -82,5 +83,3 @@
             </div>
         </div>
     </div>
-</div>
-
