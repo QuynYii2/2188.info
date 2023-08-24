@@ -32,7 +32,7 @@
                             <td><input class="checkBoxAttribute" type="checkbox" value="{{$productVariable->id}}"
                                        name="select-att[]"></td>
 
-                            <td class="get-att-1">{{$property->name}}</td>
+                            <td class="get-att-1" data-value="{{ $item[0] }}">{{$property->name}}</td>
                             <td class="get-price">{{$productVariable->price}}</td>
                         </tr>
                     @else
@@ -53,7 +53,7 @@
                                     $property = \App\Models\Properties::find($attproArray[1]);
                                 @endphp
 
-                                <td class="get-att-{{ $key }}">{{$property->name}}</td>
+                                <td class="get-att-{{ $key }}" data-value="{{ $attpro }}">{{$property->name}}</td>
                                 <td class="get-price">{{$productVariable->price}}</td>
                             </tr>
                         @endforeach
@@ -76,7 +76,7 @@
                                 $attribue = \App\Models\Attribute::find($attpro[0]);
                                 $property = \App\Models\Properties::find($attpro[1]);
                             @endphp
-                            <td class="get-att-{{ $key }}">{{$property->name}}</td>
+                            <td class="get-att-{{ $key }}" data-value="{{ $value }}">{{$property->name}}</td>
                         @endforeach
                         <td class="get-price">{{$productVariable->price}}</td>
                     </tr>
@@ -101,7 +101,7 @@
                                 $attribue = \App\Models\Attribute::find($attproArray[0]);
                                 $property = \App\Models\Properties::find($attproArray[1]);
                             @endphp
-                            <td class="get-att-{{ $key }}">{{$property->name}}</td>
+                            <td class="get-att-{{ $key }}" data-value="{{ $attpro }}">{{$property->name}}</td>
                         @endforeach
                         <td class="get-price">{{$productVariable->price}}</td>
                     </tr>
