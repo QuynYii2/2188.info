@@ -100,19 +100,19 @@
                     @endforeach
                     <div class="MenuContainer"></div>
                     <hr>
-                    <input type="checkbox" value="" id="check_sale" onchange="checkSale(this)">{{ __('home.Products on sale') }}
+                    <input type="checkbox" class="mr-2" value="" id="check_sale" onchange="checkSale(this)">{{ __('home.Products on sale') }}
                     <hr>
                     <div class="content">{{ __('home.PRICE') }}</div>
                     <div class="category-price">
                         <div class="wrapper">
                             <div class="price-input d-flex">
                                 <div class="field">
-                                    <span>{{ __('home.Min') }}</span>
+                                    <div>{{ __('home.Min') }}</div>
                                     <input type="number" class="input-min" id="price-min" value="0">
                                 </div>
                                 <div class="separator">-</div>
                                 <div class="field">
-                                    <span>{{ __('home.Max') }}</span>
+                                    <div>{{ __('home.Max') }}</div>
                                     <input type="number" class="input-max" id="price-max" value="{{ $priceProductOfCategory->maxPrice }}">
                                 </div>
                             </div>

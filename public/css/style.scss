@@ -4007,6 +4007,18 @@ footer {
     height: 100%;
   }
 }
+
+.product-image{
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  img{
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+  }
+}
 @media (min-width: 62rem) {
   .product-image{
     width: 100%;

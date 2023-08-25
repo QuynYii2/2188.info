@@ -258,8 +258,8 @@
             $productDetails = \App\Models\Variation::where('product_id', $product->id)->get();
             $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
         @endphp
-        <div class="grid product">
-            <div class="column-xs-12 column-md-4">
+        <div class="row product">
+            <div class="col-12 col-md-4">
                 <div class="product-gallery">
                     <div class="product-image">
                         <img id="productThumbnail" class="active"
