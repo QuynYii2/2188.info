@@ -192,7 +192,7 @@
                                 <div class="swiper NewProducts row">
                                     <div class="swiper-wrapper ">
                                         @foreach($newProducts as $product)
-                                            <div class="col-6">
+                                            <div class="col-6 col-xxl-4">
                                                 <div class="swiper-slide">
                                                     @include('frontend.pages.list-product')
                                                 </div>
@@ -209,7 +209,7 @@
                                     <div class="swiper-wrapper">
                                         @foreach($productFeatures as $productFeature)
                                             @foreach($productFeature as $product)
-                                                <div class="col-6">
+                                                <div class="col-6 col-xxl-4">
                                                     <div class="swiper-slide">
                                                         @include('frontend.pages.list-product')
                                                     </div>
