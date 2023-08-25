@@ -14,5 +14,6 @@ class ProductSale extends Model
         'product_id',
         'quantity',
         'sales',
+        'days',
     ];
 }

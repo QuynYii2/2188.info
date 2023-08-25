@@ -379,8 +379,9 @@
                                             <td>-{{$price_sale->sales}} %</td>
                                             <td>3 ngày kể từ ngày đặt hàng</td>
                                         </tr>
-                                    @endforeach
-                                @endif
+                                        </thead>
+
+                                        <tbody id="tablebodyProductSale">
 
                                 </tbody>
                             </table>
@@ -524,8 +525,19 @@
             productNames[i].innerHTML = product['name']
         }
 
+            let productID = product['id'];
+            getProductSale(productID);
+
+            async function getProductSale(id) {
+                let url = '{{asset('get-products-sale')}}' + '/' + id;
+                const response = await fetch(url);
+                let value = await response.text();
+                $('#tablebodyProductSale').empty().append(value);
+            }
+
         let gallery = product['gallery']
         let arrayGallery = gallery.split(',');
+
 
         // $('#partnerBtn').data('value', product['id']);
         let partnerBtn = document.getElementById('partnerBtn');

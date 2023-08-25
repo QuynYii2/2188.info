@@ -157,6 +157,7 @@ Route::get('/location-city/{id}/{code}', [AuthController::class, 'getListCityByS
 Route::get('/location-ward/{id}/{code}', [AuthController::class, 'getListWardByCity'])->name('location.ward.get');
 
 Route::get('/convert-currency/{amount}', [CurrencyController::class, 'getCurrency'])->name('convert.getCurrency.get');
+Route::get('/get-products-sale/{id}', [\App\Http\Controllers\ProductController::class, 'getProductSale'])->name('get.products.sale');
 
 Route::get('/product-detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
 Route::get('/product/att/{id}', [\App\Http\Controllers\ProductController::class, 'getDataToModalAtt'])->name('detail_product.data.modal');

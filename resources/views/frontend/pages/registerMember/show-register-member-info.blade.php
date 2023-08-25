@@ -524,6 +524,17 @@
         });
 
     </script>
+    <script>
+        window.onbeforeunload = function (e) {
+            var y = window.event.clientY;
+            if (y < 0) {
+                return 'Window closed';
+            }
+            else {
+                return 'Window refreshed';
+            }
+        };
+    </script>
 @endsection
 
 
