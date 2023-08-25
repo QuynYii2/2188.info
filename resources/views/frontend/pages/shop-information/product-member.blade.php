@@ -385,20 +385,20 @@
                                 </tbody>
                             </table>
 
-                            <p>đơn giá phía trên là điều kiện FOB/TT</p>
-                            <h5 class="text-center">Đặt hàng</h5>
-                            <table class="table table-bordered" id="table-selected-att">
-                                <thead>
-                                <tr>
-                                    <th scope="col">Thuộc tính</th>
-                                    <th scope="col">Số lượng</th>
-                                    <th scope="col">Đơn giá</th>
-                                    <th scope="col">Thành tiền</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+                                    <p>đơn giá phía trên là điều kiện FOB/TT</p>
+                                    <h5 class="text-center">Đặt hàng</h5>
+                                    <table class="table table-bordered" id="table-selected-att">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Thuộc tính</th>
+                                            <th scope="col">Số lượng</th>
+                                            <th scope="col">Đơn giá</th>
+                                            <th scope="col">Thành tiền</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
 
                             @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
                                 <button class="btn btn-success partnerBtn float-right" id="partnerBtn"
@@ -489,27 +489,25 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal-show-att" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content" id="modal-select-att">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div id="body-modal-att"></div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="selectAttProduct()">
-                    Lưu
-                </button>
+    <div class="modal fade" id="modal-show-att" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="body-modal-att"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="selectAttProduct()">Lưu</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    var renderInputAttribute = $('#renderProductMember');
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var renderInputAttribute = $('#renderProductMember');
 
     $('.thumbnailProduct').on('click', function () {
         let product = $(this).data('value');
@@ -598,110 +596,145 @@
         })
     });
 
-    function callAtt(id) {
-        let url = '{{ route('detail_product.data.modal', ['id' => ':id']) }}';
-        url = url.replace(':id', id);
-        $.ajax({
-            url: url,
-            method: 'GET',
-        })
-            .done(function (response) {
-                document.getElementById('body-modal-att').innerHTML = response;
+        function callAtt(id) {
+            let url = '{{ route('detail_product.data.modal', ['id' => ':id']) }}';
+            url = url.replace(':id', id);
+            $.ajax({
+                url: url,
+                method: 'GET',
             })
-            .fail(function (_, textStatus) {
-                $('#body-modal-att').empty();
-            });
-    }
-
-    var listItem = null;
-
-    function getCheckboxs() {
-        let checkboxs = document.getElementsByClassName('checkBoxAttribute');
-        var listIDs = [];
-        for (let i = 0; i < checkboxs.length; i++) {
-            if (checkboxs[i].checked == true) {
-                let item = checkboxs[i].value;
-                listIDs.push(parseInt(item));
-            }
+                .done(function (response) {
+                    document.getElementById('body-modal-att').innerHTML = response;
+                })
+                .fail(function (_, textStatus) {
+                    $('#body-modal-att').empty();
+                    console.error('Request failed:', textStatus);
+                });
         }
-        listItem = listIDs;
-        localStorage.setItem('listID', listItem);
-    }
-</script>
 
-<script>
-    let listChecked = [];
-
-    function selectAttProduct() {
-        listChecked = [];
-        let listCheckbox = document.querySelectorAll('#body-modal-att tbody tr');
-        listCheckbox.forEach(row => {
-            let inputElement = row.querySelector('input.checkBoxAttribute');
-            if (inputElement && inputElement.checked) {
-                listChecked.push(row)
-            }
-        });
-        renderSelectAttToTable();
-    }
-
-    function renderSelectAttToTable() {
-        let table = document.querySelector('#table-selected-att tbody');
-        table.innerHTML = '';
-
-        listChecked.forEach(item => {
-            let row = document.createElement('tr');
-            let cellThuocTinh = document.createElement('td');
-            let cellSoLuong = document.createElement('td');
-            let cellDonGia = document.createElement('td');
-            let cellThanhTien = document.createElement('td');
-
-            let classAtt = '[class^="get-att-"]';
-            let classPrice = '.get-price';
-
-            let listAtt = item.querySelectorAll(classAtt);
-            let donGia = parseFloat(item.querySelector(classPrice).textContent);
-            let inputElement = document.createElement('input');
-            inputElement.type = 'number';
-            inputElement.classList.add('input-quantity');
-
-            inputElement.min = '0';
-            inputElement.value = '1';
-
-            let attTextContent = '';
-
-            let lengthListAtt = listAtt.length;
-            for (let i = 0; i < lengthListAtt; i++) {
-                attTextContent += listAtt[i].textContent;
-                if (listAtt[i + 1]) {
-                    attTextContent += ' - ';
+        function getCheckboxs() {
+            let checkboxs = document.getElementsByClassName('checkBoxAttribute');
+            var listIDs = [];
+            for (let i = 0; i < checkboxs.length; i++) {
+                if (checkboxs[i].checked == true) {
+                    let item = checkboxs[i].value;
+                    listIDs.push(parseInt(item));
                 }
             }
+            listItem = listIDs;
+            localStorage.setItem('listID', listItem);
+        }
+    </script>
+    <script>
+        let listChecked = [];
 
-            cellThuocTinh.textContent = attTextContent;
-            cellDonGia.textContent = donGia;
+        function selectAttProduct() {
+            listChecked = [];
+            let listCheckbox = document.querySelectorAll('#body-modal-att tbody tr');
+            listCheckbox.forEach(row => {
+                let inputElement = row.querySelector('input.checkBoxAttribute');
+                if (inputElement && inputElement.checked) {
+                    listChecked.push(row)
+                }
+            });
+            renderSelectAttToTable();
+        }
 
-            function updateTotal() {
-                let inputSoluong = parseFloat(inputElement.value);
-                let thanhTien = calcThanhTien(inputSoluong, donGia);
-                cellThanhTien.textContent = thanhTien.toFixed(2); // Display the total with 2 decimal places
+        function renderSelectAttToTable() {
+            let table = document.querySelector('#table-selected-att tbody');
+            table.innerHTML = '';
+
+            listChecked.forEach(item => {
+                let row = document.createElement('tr');
+                let cellThuocTinh = document.createElement('td');
+                let cellSoLuong = document.createElement('td');
+                let cellDonGia = document.createElement('td');
+                let cellThanhTien = document.createElement('td');
+
+                let classAtt = '[class^="get-att-"]';
+                let classPrice = '.get-price';
+
+                let listAtt = item.querySelectorAll(classAtt);
+                let donGia = parseFloat(item.querySelector(classPrice).textContent);
+                let inputElement = document.createElement('input');
+                inputElement.type = 'number';
+                inputElement.classList.add('input-quantity');
+
+                inputElement.min = '0';
+                inputElement.value = '1';
+
+                let attTextContent = '';
+
+                let lengthListAtt = listAtt.length;
+                for (let i = 0; i < lengthListAtt; i++) {
+                    attTextContent += listAtt[i].textContent;
+                    if (listAtt[i + 1]) {
+                        attTextContent += ' - ';
+                    }
+                }
+
+                cellThuocTinh.textContent = attTextContent;
+                cellDonGia.textContent = donGia;
+
+                function updateTotal() {
+                    let inputSoluong = parseFloat(inputElement.value);
+                    let thanhTien = calcThanhTien(inputSoluong, donGia);
+                    cellThanhTien.textContent = thanhTien.toFixed(2); // Display the total with 2 decimal places
+                }
+
+                // Calculate the total initially
+                updateTotal();
+
+                inputElement.addEventListener('change', updateTotal);
+
+                cellSoLuong.appendChild(inputElement);
+                row.appendChild(cellThuocTinh);
+                row.appendChild(cellSoLuong);
+                row.appendChild(cellDonGia);
+                row.appendChild(cellThanhTien);
+                table.appendChild(row);
+            });
+        }
+
+        function calcThanhTien(inputSoluong, inputDonGia) {
+            return inputSoluong * inputDonGia;
+        }
+
+        $(document).ready(function () {
+            const $document = $(document);
+
+            $document.on('click', '#partnerBtn', function () {
+                const product = $(this).data('value');
+
+                renderProduct(product);
+            });
+
+            function renderProduct(product) {
+                let listInputQuantity = document.querySelectorAll('.input-quantity');
+                let listQuantity = '';
+                listInputQuantity.forEach(input => {
+                    listQuantity += input.value + ',';
+                });
+                listQuantity = JSON.stringify(listQuantity.slice(0, -1));
+                const requestData = {
+                    _token: '{{ csrf_token() }}',
+                    quantity: listQuantity,
+                    value: JSON.stringify(localStorage.getItem('listID')),
+                };
+
+                $.ajax({
+                    url: `/add-to-cart-register-member/${product}`,
+                    method: 'POST',
+                    data: requestData,
+                })
+                    .done(function (response) {
+                        alert('Success!');
+                        localStorage.removeItem('listID')
+                        window.location.reload();
+                    })
+                    .fail(function (_, textStatus) {
+                    });
             }
-
-            // Calculate the total initially
-            updateTotal();
-
-            inputElement.addEventListener('change', updateTotal);
-
-            cellSoLuong.appendChild(inputElement);
-            row.appendChild(cellThuocTinh);
-            row.appendChild(cellSoLuong);
-            row.appendChild(cellDonGia);
-            row.appendChild(cellThanhTien);
-            table.appendChild(row);
         });
-    }
 
-    function calcThanhTien(inputSoluong, inputDonGia) {
-        return inputSoluong * inputDonGia;
-    }
-
-</script>
+    </script>
