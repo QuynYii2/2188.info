@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 class ShopInformationController extends Controller
 {
 
-    public function index($id)
+    public function index($id, Request $request)
     {
         $priceProductOfCategory = Product::selectRaw('MAX(price) AS maxPrice, MIN(price) AS minPrice')
             ->where([['products.status', '=', ProductStatus::ACTIVE], ['user_id', '=', $id]])
@@ -40,7 +40,8 @@ class ShopInformationController extends Controller
         if ($memberPerson) {
             $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
         }
-        return view('frontend/pages/shop-information/index', compact('listProduct', 'company', 'priceProductOfCategory', 'sellerInfo', 'countProductBySeller', 'listVouchers', 'shopInformation'));
+        $currency = (new \App\Http\Controllers\Frontend\HomeController())->getLocation($request);
+        return view('frontend/pages/shop-information/index', compact('listProduct', 'company', 'priceProductOfCategory', 'sellerInfo', 'countProductBySeller', 'listVouchers', 'shopInformation','currency'));
     }
 
 

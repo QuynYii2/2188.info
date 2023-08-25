@@ -8,7 +8,7 @@ body {
 }
 
 #mt-body {
-  margin-top: 170px;
+  margin-top: 195px;
 }
 
 #checkboxes {
@@ -2160,8 +2160,8 @@ hr {
   color: #0a6cdc;
 }
 .section .item-body .card-price {
-  font-size: 18px;
-  margin: 10px 0;
+  font-size: 17px;
+  margin: 0 0 10px 0;
 }
 .section .item-body .card-price .price-sale {
   color: #e10600;
@@ -3456,15 +3456,18 @@ footer {
 
 .thumbnailSupGallery-img {
   height: 100px;
-  margin-bottom: 20px;
+  margin-bottom: 1px;
+  width: 100%;
+  padding: 1px;
 }
 .thumbnailSupGallery-img img {
   height: 100%;
+  width: 100%;
 }
 
 .standsMember-item img {
   width: 100%;
-  height: 150px;
+  height: 200px;
   object-fit: cover;
 }
 .standsMember p {

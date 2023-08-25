@@ -41,7 +41,8 @@ class RegisterMemberController extends Controller
         if ($company && $company->member == RegisterMember::TRUST) {
             return back();
         }
-        return view('frontend.pages.member.stand-member', compact('company',));
+        $currency = (new \App\Http\Controllers\Frontend\HomeController())->getLocation($request);
+        return view('frontend.pages.member.stand-member', compact('company','currency'));
     }
 
     public function memberParent(Request $request, $id)
