@@ -290,22 +290,22 @@
                                         @endif
 
 
-                                            @php
-                                                $exitMemberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
-                                                $exitsMember = null;
-                                                if ($exitMemberPerson) {
-                                                    $exitsMember = \App\Models\MemberRegisterInfo::where([
-                                                        ['id', $exitMemberPerson->member_id],
-                                                        ['status', \App\Enums\MemberRegisterInfoStatus::INACTIVE]
-                                                    ])->first();
-                                                }
-                                            @endphp
-                                            @if($exitsMember)
-                                                <div class="drop-item text-danger">
-                                                    <a href="{{route('show.payment.member', $exitsMember->member)}}"
-                                                       class="text-danger">Thanh toán hội viên</a>
-                                                </div>
-                                            @endif
+                                        @php
+                                            $exitMemberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                                            $exitsMember = null;
+                                            if ($exitMemberPerson) {
+                                                $exitsMember = \App\Models\MemberRegisterInfo::where([
+                                                    ['id', $exitMemberPerson->member_id],
+                                                    ['status', \App\Enums\MemberRegisterInfoStatus::INACTIVE]
+                                                ])->first();
+                                            }
+                                        @endphp
+                                        @if($exitsMember)
+                                            <div class="drop-item text-danger">
+                                                <a href="{{route('show.payment.member', $exitsMember->member)}}"
+                                                   class="text-danger">Thanh toán hội viên</a>
+                                            </div>
+                                        @endif
                                     @endif
 
                                     <div class="drop-item -hand-pointer" onclick="logout()">
@@ -349,7 +349,8 @@
                                                 @endphp
                                                 <div class="shop-item row">
                                                     <div class="col-3 shop-item--img">
-                                                        <img src="{{ asset('storage/'.$cartItem->product->thumbnail) }}" alt="">
+                                                        <img src="{{ asset('storage/'.$cartItem->product->thumbnail) }}"
+                                                             alt="">
                                                     </div>
                                                     <div class="col-8 shop-item--text">
                                                         <div class="text-seller">
@@ -360,8 +361,121 @@
                                                                 x1</a>
                                                         </div>
                                                         <div class="text-properties">
-                                                            <span>Black/ 55 inch</span>
-                                                            <span><i class="fa-regular fa-pen-to-square"></i></span>
+                                                            @if($cartItem->values != 0)
+                                                                @php
+                                                                    $list = $cartItem->values;
+                                                                    $array = explode(',', $list);
+                                                                @endphp
+                                                                @foreach($array as $variable)
+                                                                    @if($variable)
+                                                                        @php
+                                                                            $arrayAttPro = explode('-', $variable);
+                                                                            if (count($arrayAttPro)>1){
+                                                                                $att = \App\Models\Attribute::find($arrayAttPro[0]);
+                                                                                $pro = \App\Models\Properties::find($arrayAttPro[1]);
+                                                                            }
+                                                                        @endphp
+                                                                        @if(count($arrayAttPro)>1)
+                                                                            <p>
+                                                                                <span>{{($att->name)}}/ {{($pro->name)}}</span>
+                                                                                <span><i class="fa-regular fa-pen-to-square"></i></span>
+                                                                            </p>
+                                                                        @endif
+                                                                    @endif
+
+                                                                @endforeach
+                                                                <a class="text-edit" href="#" data-toggle="modal"
+                                                                   data-target="#exampleModal">
+                                                                    <i class='fas fa-edit'></i>
+                                                                    Change
+                                                                </a>
+                                                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                                     aria-labelledby="exampleModalLabel"
+                                                                     aria-hidden="true">
+                                                                    <div class="modal-dialog">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title"
+                                                                                    id="exampleModalLabel">
+                                                                                    Edit {{($cartItem->product->name)}}</h5>
+                                                                                <button type="button" class="close"
+                                                                                        data-dismiss="modal"
+                                                                                        aria-label="Close">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div class="form-field"
+                                                                                     data-product-attribute="set-rectangle"
+                                                                                     role="radiogroup"
+                                                                                     aria-labelledby="rectangle-group-label">
+                                                                                    <label class="form-label form-label--alternate form-label--inlineSmall"
+                                                                                           id="rectangle-group-label">
+                                                                                        Size:
+                                                                                        <small>
+                                                                                            *
+                                                                                        </small>
+                                                                                        <span data-option-value=""></span>
+                                                                                    </label>
+
+                                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                                        <div class="form-option-wrapper">
+                                                                                            <input class="form-radio"
+                                                                                                   type="radio"
+                                                                                                   id="attribute_rectangle__189_374"
+                                                                                                   name="attribute[189]"
+                                                                                                   value="374"
+                                                                                                   required=""
+                                                                                                   data-state="false">
+                                                                                            <label class="form-option unavailable"
+                                                                                                   for="attribute_rectangle__189_374"
+                                                                                                   data-product-attribute-value="374">
+                                                                                                <span class="form-option-variant">32 inch</span>
+                                                                                            </label>
+                                                                                        </div>
+                                                                                        <div class="form-option-wrapper">
+                                                                                            <input class="form-radio"
+                                                                                                   type="radio"
+                                                                                                   id="attribute_rectangle__189_375"
+                                                                                                   name="attribute[189]"
+                                                                                                   value="375"
+                                                                                                   required=""
+                                                                                                   data-state="false">
+                                                                                            <label class="form-option unavailable"
+                                                                                                   for="attribute_rectangle__189_375"
+                                                                                                   data-product-attribute-value="375">
+                                                                                                <span class="form-option-variant">42 inch</span>
+                                                                                            </label>
+                                                                                        </div>
+                                                                                        <div class="form-option-wrapper">
+                                                                                            <input class="form-radio"
+                                                                                                   type="radio"
+                                                                                                   id="attribute_rectangle__189_376"
+                                                                                                   name="attribute[189]"
+                                                                                                   value="376"
+                                                                                                   checked=""
+                                                                                                   data-default=""
+                                                                                                   required=""
+                                                                                                   data-state="true">
+                                                                                            <label class="form-option"
+                                                                                                   for="attribute_rectangle__189_376"
+                                                                                                   data-product-attribute-value="376">
+                                                                                                <span class="form-option-variant">55 inch</span>
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer justify-content-center align-items-center">
+                                                                                <button type="button"
+                                                                                        class=" text-center btn btn-primary">
+                                                                                    Save
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
                                                         </div>
                                                         @php
                                                             $currencyController = new \App\Http\Controllers\CurrencyController();

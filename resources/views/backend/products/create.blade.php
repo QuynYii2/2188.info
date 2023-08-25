@@ -221,6 +221,9 @@
                                                     <input type="number" class="form-control form-price" name="sales[]" placeholder="Giảm %">
                                                 </div>
                                                 <div class="">
+                                                    <input type="number" class="form-control form-price" name="days[]" placeholder="Ngay gia hang du kien">
+                                                </div>
+                                                <div class="">
                                                     <button type="button" class="btn remove-form-field"><i class="fa-regular fa-trash-can"></i></button>
                                                 </div>
                                             </div>

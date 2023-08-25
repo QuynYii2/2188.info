@@ -51,14 +51,15 @@
             width: 100%;
         }
 
-        .modal-content-css{
+        .modal-content-css {
             height: 85vh;
             overflow-y: auto;
         }
+
         .btn:focus {
-                   outline: 0;
-                   box-shadow: none;
-               }
+            outline: 0;
+            box-shadow: none;
+        }
     </style>
     <script>
         $('[data-fancybox="gallery"]').fancybox({
@@ -351,17 +352,16 @@
                                     </tr>
                                     </thead>
 
-                                    <tbody>
+                                    <tbody id="tablebodyProductSale">
                                     @if(!$price_sales->isEmpty())
                                         @foreach($price_sales as $price_sale)
                                             <tr>
                                                 <td>{{$price_sale->quantity}}</td>
                                                 <td>-{{$price_sale->sales}} %</td>
-                                                <td>3 ngày kể từ ngày đặt hàng</td>
+                                                <td>{{$price_sale->days}} ngày kể từ ngày đặt hàng</td>
                                             </tr>
                                         @endforeach
                                     @endif
-
                                     </tbody>
                                 </table>
 
@@ -504,6 +504,16 @@
             let productNames = document.getElementsByClassName('productName');
             for (let i = 0; i < productNames.length; i++) {
                 productNames[i].innerHTML = product['name']
+            }
+
+            let productID = product['id'];
+            getProductSale(productID);
+
+            async function getProductSale(id) {
+                let url = '{{asset('get-products-sale')}}' + '/' + id;
+                const response = await fetch(url);
+                let value = await response.text();
+                $('#tablebodyProductSale').empty().append(value);
             }
 
             let gallery = product['gallery']

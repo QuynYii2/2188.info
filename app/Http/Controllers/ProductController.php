@@ -14,6 +14,7 @@ use App\Models\Attribute;
 use App\Models\EvaluateProduct;
 use App\Models\Product;
 use App\Models\ProductInterested;
+use App\Models\ProductSale;
 use App\Models\ProductViewed;
 use App\Models\Promotion;
 use App\Models\Properties;
@@ -179,6 +180,11 @@ class ProductController extends Controller
         ])->orderBy('id', 'desc')->get();
         $currency = (new HomeController())->getLocation($request);
         return view('frontend.pages.profile.my-shop', compact('products', 'currency'));
+    }
+
+    public function getProductSale($id){
+        $price_sales = ProductSale::where('product_id', $id)->get();
+        return view('frontend/pages/member/product-sales', compact('price_sales'));
     }
 
     private function findProduct($key, $text)
