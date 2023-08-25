@@ -172,6 +172,16 @@
                                     </button>
                                 </div>
                             @endif
+                            @elseif($company && $company->member == \App\Enums\RegisterMember::BUYER)
+                                <div class="item button_seller align-center d-flex">
+                                    <button class="full-width cursor-pointer">
+                                        {{--                                    <i class="item-icon fa-solid fa-gift"></i>--}}
+                                        <div class="it em-text" data-toggle="modal" data-target="#buyerModal">Mua
+                                            sỉ
+                                        </div>
+                                    </button>
+                                </div>
+                            @endif
                             @php
                                 $local = session('locale');
                                 if ($local == null){
@@ -991,6 +1001,27 @@
                              alt="">
                     </a>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="buyerModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Hướng dẫn nâng cấp</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Tính năng Đặt sỉ nước ngoài chỉ áp dụng cho hội viên doanh nghiệp (hội viên Tin cậy) trở lên</p>
+                <p>Vui lòng nâng cấp hội viên để sử dụng</p>
+                <a href="https://staging-b2b.2188.info/register-member">Đăng ký nâng cấp</a>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
