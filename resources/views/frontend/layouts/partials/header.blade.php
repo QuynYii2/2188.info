@@ -179,6 +179,7 @@
                                         </div>
                                     </button>
                                 </div>
+                            @endif
                             @php
                                 $local = session('locale');
                                 if ($local == null){
