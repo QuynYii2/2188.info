@@ -171,7 +171,7 @@
                                         </div>
                                     </button>
                                 </div>
-
+@dd($company->member)
                             @elseif($company && $company->member == \App\Enums\RegisterMember::BUYER)
                                 <div class="item button_seller align-center d-flex">
                                     <button class="full-width cursor-pointer">
