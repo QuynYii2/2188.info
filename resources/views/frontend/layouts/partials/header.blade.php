@@ -1016,10 +1016,10 @@
             <div class="modal-body">
                 <p>Tính năng Đặt sỉ nước ngoài chỉ áp dụng cho hội viên doanh nghiệp (hội viên Tin cậy) trở lên</p>
                 <p>Vui lòng nâng cấp hội viên để sử dụng</p>
-                <a href="https://staging-b2b.2188.info/register-member">Đăng ký nâng cấp</a>
+
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary"><a href="https://staging-b2b.2188.info/register-member">Đăng ký nâng cấp</a></button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
