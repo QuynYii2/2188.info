@@ -4,6 +4,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
     <style>
+        .size{
+            font-size: 17px;
+        }
         :root {
             --color-white: #ffffff;
             --color-black: #000000;
@@ -44,11 +47,8 @@
             object-fit: cover;
         }
 
-        .truncate-text {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            width: 100%;
+        .modal-header{
+            border: none;
         }
 
         .modal-content-css {
@@ -59,6 +59,10 @@
         .btn:focus {
             outline: 0;
             box-shadow: none;
+        }
+
+        .modal-header{
+            padding-bottom: 0;
         }
     </style>
     <script>
@@ -103,7 +107,7 @@
             @endphp
             <h3 class="text-center">Gian hàng hội viên {{$company->member}}</h3>
             <h3 class="text-left">Hội viên {{$company->member}}</h3>
-            <div class="border d-flex justify-content-between align-items-center p-3">
+            <div class="d-flex justify-content-between align-items-center p-3">
                 <a href="{{route('stand.register.member.index', $company->id)}}" class="btn btn-primary">Gian hàng</a>
                 <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">Danh sách đối tác</a>
                 <a href="#" class="btn btn-primary">Tin nhắn đã nhận</a>
@@ -120,33 +124,28 @@
                                 <h5 class="mb-3">{{ ($company->name) }}</h5>
                             </div>
                         </div>
-                        <div class="col-md-6 border">
-                            <div class="mt-2">
-                                <h5 class="mb-3">{{ ($company->code_business) }}</h5>
-                            </div>
-                        </div>
-                        <div class="col-md-6 border">
-                            <div class="mt-2">
-                                <h5 class="mb-3">Doanh nghiệp ưu
-                                    tú: {{ ($company->member) }}</h5>
-                                <div class="">
-                                    <i class="fa-solid fa-trophy"></i>
-                                    <i class="fa-solid fa-trophy"></i>
-                                    <i class="fa-solid fa-trophy"></i>
+                        <div class="row p-2">
+                                <div class="col-md-6">
+                                    <div class="mt-2">
+                                        <div class="mb-3 size"><b>Mã công ty: </b> {{ ($company->code_business) }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mt-2">
+                                        <div class="mb-3 size"><b>Doanh nghiệp ưu tú: </b> {{ ($company->member) }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mt-2">
+                                        <div class="mb-3 size"><b>Phân loại hội viên: </b> {{ ($company->member) }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mt-2">
+                                        <div class="mb-3 size"><b>Điểm đánh giá của khách hàng: </b></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6 border">
-                            <div class="mt-2">
-                                <h5 class="mb-3">Phân loại hội
-                                    viên: {{ ($company->member) }}</h5>
-                            </div>
-                        </div>
-                        <div class="col-md-6 border">
-                            <div class="mt-2">
-                                <h5 class="mb-3">Điểm đánh giá của khách hàng: </h5>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="col-md-6 border">
@@ -160,16 +159,20 @@
                             $listCategory = $company->category_id;
                             $arrayCategory = explode(',', $listCategory);
                         @endphp
-                        @foreach($arrayCategory as $itemArrayCategory)
-                            @php
-                                $category = \App\Models\Category::find($itemArrayCategory);
-                            @endphp
-                            <div class="col-md-6 border">
-                                <div class="mt-2">
-                                    <h5 class="mb-3">{{ ($category->name) }}</h5>
-                                </div>
+                        <div class="col-12">
+                            <div class="row">
+                                @foreach($arrayCategory as $itemArrayCategory)
+                                    @php
+                                        $category = \App\Models\Category::find($itemArrayCategory);
+                                    @endphp
+                                    <div class="col-md-6">
+                                        <div class="mt-2 d-flex">
+                                            <a href="{{route('category.show', $category->id)}}" class="mb-3 size">{{ ($category->name) }} <i class="fa-solid fa-angle-right"></i></a>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
-                        @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
@@ -206,13 +209,29 @@
         @foreach($products as $product)
             <button type="button" style="background-color: white" class="btn thumbnailProduct col-2" data-toggle="modal"
                     data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}">
-                <div class="standsMember-item">
+                <div class="standsMember-item section">
                     <img data-id="{{$product->id}}"
                          src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
                          class="thumbnailProduct" data-value="{{$product}}"
                          width="150px" height="150px">
                     <div class="item-body">
-                        <div class="card-title">
+                        <div class="card-rating text-left">
+                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                            <span>(1)</span>
+                        </div>
+                        @php
+                            $nameSeller = DB::table('users')->where('id', $product->user_id)->first();
+                        @endphp
+                        <div class="card-brand text-left">
+                            <a href="{{route('shop.information.show', $nameSeller->id)}}">
+                                {{($nameSeller->name)}}
+                            </a>
+                        </div>
+                        <div class="card-title text-left">
                             @if(Auth::check())
                                 <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
                             @else
@@ -220,21 +239,28 @@
                             @endif
                         </div>
                         @if($product->price)
-                            <div class="card-price d-flex justify-content-between">
+                            <div class="card-price text-left">
                                 @if($product->price != null)
                                     <div class="price-sale">
-                                        <strong>${{$product->price}}</strong>
+                                        <strong> {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strong>
                                     </div>
                                     <div class="price-cost">
-                                        <strike>${{$product->old_price}}</strike>
+                                        <strike>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
                                     </div>
                                 @else
                                     <div class="price-sale">
-                                        <strong>${{$product->old_price}}</strong>
+                                        <strong>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strong>
                                     </div>
                                 @endif
                             </div>
                         @endif
+                        <div class="card-bottom--left">
+                            @if(Auth::check())
+                                <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
+                            @else
+                                <a class="check_url">{{ __('home.Choose Options') }}</a>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </button>
@@ -252,12 +278,12 @@
                 <div class="modal-body">
                     <div id="renderProductMember" class="row">
                         @if(!$products->isEmpty())
-                            <div class="col-md-6 border">
+                            <div class="col-md-6">
                                 @php
                                     $attributes = DB::table('product_attribute')->where([['product_id', $firstProduct->id], ['status', \App\Enums\AttributeProductStatus::ACTIVE]])->get();
                                     $price_sales = \App\Models\ProductSale::where('product_id', '=', $firstProduct->id)->get();
                                 @endphp
-                                <div class="d-flex justify-content-between mt-3">
+                                <div class="d-flex justify-content-between">
                                     <div class="">
                                         <h5>Product Code</h5>
                                         <p class="productCode" id="productCode">
@@ -334,13 +360,10 @@
                                     <h5 class="text-center">Xem video sản phẩm </h5>
                                 </div>
                             </div>
-                            <div class="col-md-6 border">
+                            <div class="col-md-6">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h5>
                                         Điều kiện đặt hàng
-                                    </h5>
-                                    <h5>Sản phẩm: <span
-                                                class="text-warning productName">{{ ($firstProduct->name) }}</span>
                                     </h5>
                                 </div>
                                 <table class="table table-bordered">

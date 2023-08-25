@@ -182,62 +182,52 @@
                 </div>
                 <div class="footer-list-container">
                     <div class="list-container-content">
-                        CHĂM SÓC KHÁCH HÀNG
+                        VỀ SHOPEE
                     </div>
                     <ul class="list-item-content">
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Trung Tâm Trợ Giúp</span>
+                                <span class="item-content-text">Giới Thiệu Về Shopee Việt Nam</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Shopee Blog</span>
+                                <span class="item-content-text">Tuyển Dụng</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Shopee Mall</span>
+                                <span class="item-content-text">Điều Khoản Shopee</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Hướng Dẫn Mua Hàng</span>
+                                <span class="item-content-text">Chính Sách Bảo Mật</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Hướng Dẫn Bán Hàng</span>
+                                <span class="item-content-text">Chính Hãng</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Thanh Toán</span>
+                                <span class="item-content-text">Kênh Người Bán</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Shopee Xu</span>
+                                <span class="item-content-text">Flash Sales</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Vận Chuyển</span>
+                                <span class="item-content-text">Chương Trình Tiếp Thị Liên Kết Shopee</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Trả Hàng &amp; Hoàn Tiền</span>
-                            </a>
-                        </li>
-                        <li class="item-content-footer">
-                            <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Chăm Sóc Khách Hàng</span>
-                            </a>
-                        </li>
-                        <li class="item-content-footer">
-                            <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Chính Sách Bảo Hành</span>
+                                <span class="item-content-text">Liên Hệ Với Truyền Thông</span>
                             </a>
                         </li>
                     </ul>

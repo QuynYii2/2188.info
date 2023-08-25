@@ -6,7 +6,7 @@ $color-main: #fd6506;
   background-color: #f5f5f5;
 }
 #mt-body{
-  margin-top: 170px;
+  margin-top: 195px;
 }
 #checkboxes{
   z-index: 2;
@@ -766,7 +766,7 @@ a {
             border-radius: 40px;
           }
 
-          button {
+          .button-right {
             position: absolute;
             font-size: 30px;
             right: 0;
@@ -783,16 +783,21 @@ a {
           .category-drop {
             background-color: transparent;
             position: absolute;
-            left: 10%;
+            left: 0;
             top: 0;
             height: 100%;
-
+            border-radius: 40px;
             button {
               color: gray;
               font-size: 20px;
-
+              border-radius: 40px;
+              border: none;
+              background: white;
               &:focus {
                 box-shadow: none;
+              }
+              &:hover{
+                background: white;
               }
             }
 
@@ -1003,7 +1008,8 @@ a {
             }
             .social-buttons{
               .button{
-                width: 50px;
+                width: 30px;
+                margin: 10px;
               }
             }
             hr {
@@ -2161,6 +2167,7 @@ a {
 
 .standsMember-item{
   border: 1px solid #e9e9e9;
+  width: 100%;
   .item-body {
     padding: 10px;
 
@@ -2463,7 +2470,6 @@ hr{
 
   .item {
     background-color: white;
-
     &-img {
       margin: auto;
       width: 100%;
@@ -2552,9 +2558,11 @@ hr{
       }
 
       .card-brand {
-        color: gray;
         font-size: 14px;
         margin: 5px 0;
+        a{
+          color: gray;
+        }
       }
 
       .card-title {
@@ -2578,8 +2586,8 @@ hr{
       }
 
       .card-price {
-        font-size: 18px;
-        margin: 10px 0;
+        font-size: 17px;
+        margin: 0 0 10px 0;
 
         .price-sale {
           color: #e10600;
@@ -2722,7 +2730,7 @@ hr{
 }
 
 .text-success {
-  height: 250px;
+  height: 200px;
 }
 
 .category-list{
@@ -2980,12 +2988,34 @@ figure.zoom{
   }
 }
 
+.ability.ilvietnam-1-1-17 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.company-basicCapacity.ilvietnam-1-1-19 {
+  margin-bottom: 5px;
+}
+.attr-item {
+  margin-top: 5px;
+}
+.company-productionServiceCapacity.service-2.ilvietnam-1-1-38 {
+  margin-bottom: 0px;
+}
+.attr-title.ilvietnam-2-38-39 {
+  margin-bottom: 3px;
+  margin-top: 7px;
+}
+.detail-next-btn.detail-next-medium.detail-next-btn-normal.ilvietnam-2-55-56 {
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
 .footer {
   font-family: "DM Sans";
   background-color: #f5f5f5;
   padding: 40px 0;
   .footer-list-container {
-    width: 15.625rem;
+    width: 20%;
     padding: 0.3125rem;
     box-sizing: border-box;
     .list-container-content {
@@ -3153,7 +3183,7 @@ figure.zoom{
     }
   }
   .footer-top {
-    width: 75rem;
+    width: 80%;
     margin: auto;
   }
   .footer-container {
@@ -4036,13 +4066,12 @@ footer {
   }
   .image-list li {
     text-align: center;
-    width: 15%;
+    width: 20%;
     height: 100px;
   }
   .image-list img {
     width: 100%;
     height: 100%;
-    height: auto;
     transition: opacity 0.3s ease;
     cursor: pointer;
     border: 1px solid black;
@@ -4121,16 +4150,19 @@ footer {
 }
 .thumbnailSupGallery-img{
   height: 100px;
-  margin-bottom: 20px;
+  margin-bottom: 1px;
+  width: 100%;
+  padding: 1px;
   img{
     height: 100%;
+    width: 100%;
   }
 }
 .standsMember{
   &-item{
     img{
       width: 100%;
-      height: 150px;
+      height: 200px;
       object-fit: cover;
     }
   }

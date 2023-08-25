@@ -40,6 +40,7 @@
                 <div class="swiper-pagination"></div>
             </div>
         </section>
+        <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
         <div class="category-header align-items-center mt-4 mb-3 container-fluid d-flex justify-content-between">
             <div class="category-header--left">
                 <a href="{{route('home')}}">{{ __('home.Home') }}</a> / <a href="#">{{ __('home.Electronics') }}</a>
@@ -83,8 +84,7 @@
                     @foreach($listPayment as $payment)
                         <div class="OptionContainer">
                             <div class="OptionHead">
-                                <input type="checkbox" class="payment-checkbox"
-                                       value="{{ $payment->id }}">{{  (($payment->name))}}
+                                <input type="checkbox" class="payment-checkbox" value="{{ $payment->id }}">{{(($payment->name))}}
                             </div>
                         </div>
                     @endforeach
@@ -149,7 +149,9 @@
                                         <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                              alt="">
                                         <div class="button-view">
-                                            <button>Quick view</button>
+                                            <button type="button" class="btn view_modal" data-toggle="modal"
+                                                    data-value="{{$product}}"
+                                                    data-target="#exampleModal">{{ __('home.Quick view') }}</button>
                                         </div>
                                         <div class="text">
                                             <div class="text-sale">
@@ -212,7 +214,7 @@
         </div>
     </div>
     @include('frontend.pages.modal-products')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
         function responsiveTable(y) {
             let tabs = document.getElementsByClassName('product-map');
@@ -224,7 +226,6 @@
                 }
             }
         }
-
         var y = window.matchMedia("(max-width: 991px)")
         responsiveTable(y);
         y.addListener(responsiveTable)
