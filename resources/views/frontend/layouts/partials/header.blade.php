@@ -146,6 +146,13 @@
                                     </div>
                                 </button>
                             </div>
+                            <div class="item button_seller align-center d-flex">
+                                <button class="full-width cursor-pointer">
+                                    <div class="it em-text" data-toggle="modal" data-target="#buyerModal">Mua
+                                        sỉ
+                                    </div>
+                                </button>
+                            </div>
                             @php
                                 $company = \App\Models\MemberRegisterInfo::where([
                                     ['user_id', Auth::user()->id],
@@ -172,13 +179,7 @@
                                     </button>
                                 </div>
 
-                                <div class="item button_seller align-center d-flex">
-                                    <button class="full-width cursor-pointer">
-                                        <div class="it em-text" data-toggle="modal" data-target="#buyerModal">Mua
-                                            sỉ
-                                        </div>
-                                    </button>
-                                </div>
+
                             @endif
                             @php
                                 $local = session('locale');
