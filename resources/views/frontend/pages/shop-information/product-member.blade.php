@@ -180,7 +180,10 @@
             <div class="d-flex">
                 @php
                     $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
-                    $newCompany = \App\Models\MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
+                    $newCompany = null;
+                    if ($memberPerson){
+                     $newCompany = \App\Models\MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
+                    }
                     $oldItem = null;
                     if($newCompany){
                          $oldItem = \App\Models\MemberPartner::where([
