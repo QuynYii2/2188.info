@@ -172,7 +172,6 @@
                                     </button>
                                 </div>
 
-                            @elseif($company && $company->member == \App\Enums\RegisterMember::BUYER)
                                 <div class="item button_seller align-center d-flex">
                                     <button class="full-width cursor-pointer">
                                         <div class="it em-text" data-toggle="modal" data-target="#buyerModal">Mua
@@ -180,7 +179,6 @@
                                         </div>
                                     </button>
                                 </div>
-                            @endif
                             @php
                                 $local = session('locale');
                                 if ($local == null){
