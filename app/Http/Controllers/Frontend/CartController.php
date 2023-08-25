@@ -219,7 +219,6 @@ class CartController extends Controller
             $listProduct = explode(',', json_decode($request->input('value')));
             $listQuantity = explode(',', json_decode($request->input('quantity')));
         }
-
         if ($valid == true) {
             if ($item) {
                 for ($i = 0; $i < sizeof($listProduct); $i++) {

@@ -336,8 +336,6 @@
                             @endforeach
                         </div>
                         <a id="resetSelect" class="btn btn-dark mt-3 " style="color: white"> Reset select</a>
-
-                        @include('frontend.pages.shopProducts.modal-att', ['name' => ''])
                     @endif
                     <div class="">
                         <input id="product_id" hidden value="{{$product->id}}">

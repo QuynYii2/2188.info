@@ -336,10 +336,9 @@
 
                                     <p>đơn giá phía trên là điều kiện FOB/TT</p>
                                     <h5 class="text-center">Đặt hàng</h5>
-                                    <table class="table table-bordered">
+                                    <table class="table table-bordered" id="table-selected-att">
                                         <thead>
                                         <tr>
-                                            <th scope="col">Số sản phẩm</th>
                                             <th scope="col">Thuộc tính</th>
                                             <th scope="col">Số lượng</th>
                                             <th scope="col">Đơn giá</th>
@@ -347,46 +346,6 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @php
-                                            $carts = DB::table('carts')
-                                             ->join('products', 'products.id', '=', 'carts.product_id')
-                                             ->where([['products.user_id', $company->user_id], ['carts.user_id', Auth::user()->id], ['carts.member', 1],['carts.status', \App\Enums\CartStatus::WAIT_ORDER]])
-                                             ->select('carts.*')
-                                             ->get();
-                                        @endphp
-                                        @if(!$carts->isEmpty())
-                                            @foreach($carts as $itemCart)
-                                                <tr>
-                                                    <td>
-                                                        @php
-                                                            $cartProduct = \App\Models\Product::find($itemCart->product_id);
-                                                        @endphp
-                                                        {{$cartProduct->name}}
-                                                    </td>
-                                                    <td>
-                                                        @php
-                                                            $value = $itemCart->values;
-                                                        @endphp
-                                                        @if($value)
-                                                            @php
-                                                                $listItem = explode(',',$value);
-                                                            @endphp
-                                                            @foreach($listItem as $item)
-                                                                @php
-                                                                    $attPro = explode('-', $item);
-                                                                    $attribute = \App\Models\Attribute::find($attPro[0]);
-                                                                    $property = \App\Models\Properties::find($attPro[1]);
-                                                                @endphp
-                                                                <p>{{$attribute->name}}:{{$property->name}}</p>
-                                                            @endforeach
-                                                        @endif
-                                                    </td>
-                                                    <td>{{$itemCart->quantity}}</td>
-                                                    <td>{{$itemCart->price}}</td>
-                                                    <td>{{$itemCart->price*$itemCart->quantity}}</td>
-                                                </tr>
-                                            @endforeach
-                                        @endif
                                         </tbody>
                                     </table>
 
@@ -487,10 +446,10 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div id="body-modal-aat"></div>
+                <div id="body-modal-att"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Lưu</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="selectAttProduct()">Lưu</button>
                 </div>
             </div>
         </div>
@@ -588,11 +547,137 @@
                 method: 'GET',
             })
                 .done(function (response) {
-                    document.getElementById('body-modal-aat').innerHTML = response;
+                    document.getElementById('body-modal-att').innerHTML = response;
                 })
                 .fail(function (_, textStatus) {
-                    $('#body-modal-aat').empty();
+                    $('#body-modal-att').empty();
                     console.error('Request failed:', textStatus);
                 });
         }
+
+        function getCheckboxs() {
+            let checkboxs = document.getElementsByClassName('checkBoxAttribute');
+            var listIDs = [];
+            for (let i = 0; i < checkboxs.length; i++) {
+                if (checkboxs[i].checked == true) {
+                    let item = checkboxs[i].value;
+                    listIDs.push(parseInt(item));
+                }
+            }
+            listItem = listIDs;
+            localStorage.setItem('listID', listItem);
+        }
+    </script>
+    <script>
+        let listChecked = [];
+
+        function selectAttProduct() {
+            listChecked = [];
+            let listCheckbox = document.querySelectorAll('#body-modal-att tbody tr');
+            listCheckbox.forEach(row => {
+                let inputElement = row.querySelector('input.checkBoxAttribute');
+                if (inputElement && inputElement.checked) {
+                    listChecked.push(row)
+                }
+            });
+            renderSelectAttToTable();
+        }
+
+        function renderSelectAttToTable() {
+            let table = document.querySelector('#table-selected-att tbody');
+            table.innerHTML = '';
+
+            listChecked.forEach(item => {
+                let row = document.createElement('tr');
+                let cellThuocTinh = document.createElement('td');
+                let cellSoLuong = document.createElement('td');
+                let cellDonGia = document.createElement('td');
+                let cellThanhTien = document.createElement('td');
+
+                let classAtt = '[class^="get-att-"]';
+                let classPrice = '.get-price';
+
+                let listAtt = item.querySelectorAll(classAtt);
+                let donGia = parseFloat(item.querySelector(classPrice).textContent);
+                let inputElement = document.createElement('input');
+                inputElement.type = 'number';
+                inputElement.classList.add('input-quantity');
+
+                inputElement.min = '0';
+                inputElement.value = '1';
+
+                let attTextContent = '';
+
+                let lengthListAtt = listAtt.length;
+                for (let i = 0; i < lengthListAtt; i++) {
+                    attTextContent += listAtt[i].textContent;
+                    if (listAtt[i + 1]) {
+                        attTextContent += ' - ';
+                    }
+                }
+
+                cellThuocTinh.textContent = attTextContent;
+                cellDonGia.textContent = donGia;
+
+                function updateTotal() {
+                    let inputSoluong = parseFloat(inputElement.value);
+                    let thanhTien = calcThanhTien(inputSoluong, donGia);
+                    cellThanhTien.textContent = thanhTien.toFixed(2); // Display the total with 2 decimal places
+                }
+
+                // Calculate the total initially
+                updateTotal();
+
+                inputElement.addEventListener('change', updateTotal);
+
+                cellSoLuong.appendChild(inputElement);
+                row.appendChild(cellThuocTinh);
+                row.appendChild(cellSoLuong);
+                row.appendChild(cellDonGia);
+                row.appendChild(cellThanhTien);
+                table.appendChild(row);
+            });
+        }
+
+        function calcThanhTien(inputSoluong, inputDonGia) {
+            return inputSoluong * inputDonGia;
+        }
+
+        $(document).ready(function () {
+            const $document = $(document);
+
+            $document.on('click', '#partnerBtn', function () {
+                const product = $(this).data('value');
+
+                renderProduct(product);
+            });
+
+            function renderProduct(product) {
+                let listInputQuantity = document.querySelectorAll('.input-quantity');
+                let listQuantity = '';
+                listInputQuantity.forEach(input => {
+                    listQuantity += input.value + ',';
+                });
+                listQuantity = JSON.stringify(listQuantity.slice(0, -1));
+                const requestData = {
+                    _token: '{{ csrf_token() }}',
+                    quantity: listQuantity,
+                    value: JSON.stringify(localStorage.getItem('listID')),
+                };
+
+                $.ajax({
+                    url: `/add-to-cart-register-member/${product}`,
+                    method: 'POST',
+                    data: requestData,
+                })
+                    .done(function (response) {
+                        alert('Success!');
+                        localStorage.removeItem('listID')
+                        window.location.reload();
+                    })
+                    .fail(function (_, textStatus) {
+                    });
+            }
+        });
+
     </script>
