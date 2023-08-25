@@ -368,6 +368,7 @@ class ProductController extends Controller
 
             $quantity = $request->input('quantity');
             $sales = $request->input('sales');
+            $days = $request->input('days');
 
             $product->description = $descriptionValue;
             $product->short_description = $shortDescriptionValue;
@@ -434,6 +435,7 @@ class ProductController extends Controller
                         'product_id' => $product->id,
                         'quantity' => $quantity[$i],
                         'sales' => $sales[$i],
+                        'days' => $days[$i],
                     ];
                     ProductSale::create($newProductSale);
                 }
@@ -742,6 +744,7 @@ class ProductController extends Controller
 
         $quantity = $request->input('quantity');
         $sales = $request->input('sales');
+        $days = $request->input('days');
 
         $counts = count($quantity);
         for ($i = 0; $i < $counts; $i++) {
@@ -751,6 +754,7 @@ class ProductController extends Controller
                 'product_id' => $product->id,
                 'quantity' => $quantity[$i],
                 'sales' => $sales[$i],
+                'days' => $days[$i],
             ];
             ProductSale::create($newProductSale);
         }

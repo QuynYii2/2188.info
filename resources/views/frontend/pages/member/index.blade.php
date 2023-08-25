@@ -285,7 +285,7 @@
                                                             <tr>
                                                                 <td>{{$price_sale->quantity}}</td>
                                                                 <td>-{{$price_sale->sales}} %</td>
-                                                                <td>3 ngày kể từ ngày đặt hàng</td>
+                                                                <td>{{$price_sale->days}} ngày kể từ ngày đặt hàng</td>
                                                             </tr>
                                                         @endforeach
                                                     @endif
