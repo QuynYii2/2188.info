@@ -349,7 +349,7 @@
                                                 @endphp
                                                 <div class="shop-item row">
                                                     <div class="col-3 shop-item--img">
-                                                        <img src="{{ asset('storage/'.$cartItem->thumbnail) }}" alt="">
+                                                        <img src="{{ asset('storage/'.$cartItem->product->thumbnail) }}" alt="">
                                                     </div>
                                                     <div class="col-8 shop-item--text">
                                                         <div class="text-seller">
@@ -363,7 +363,11 @@
                                                             <span>Black/ 55 inch</span>
                                                             <span><i class="fa-regular fa-pen-to-square"></i></span>
                                                         </div>
-                                                        <div class="text-price">{{ (new \App\Http\Controllers\CurrencyController())->getCurrencyLocal($currency,$cartItem->price) }}</div>
+                                                        @php
+                                                            $currencyController = new \App\Http\Controllers\CurrencyController();
+                                                            $currencyValue = $currencyController->getCurrency(request(), $cartItem->price);
+                                                        @endphp
+                                                        <div class="text-price">{{ $currencyValue }}</div>
                                                     </div>
                                                     <div class="col-1">
                                                         <form action="{{ route('cart.delete', $cartItem->id) }}"
