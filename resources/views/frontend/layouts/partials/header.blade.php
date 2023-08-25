@@ -171,11 +171,10 @@
                                         </div>
                                     </button>
                                 </div>
-                            @endif
+
                             @elseif($company && $company->member == \App\Enums\RegisterMember::BUYER)
                                 <div class="item button_seller align-center d-flex">
                                     <button class="full-width cursor-pointer">
-                                        {{--                                    <i class="item-icon fa-solid fa-gift"></i>--}}
                                         <div class="it em-text" data-toggle="modal" data-target="#buyerModal">Mua
                                             sỉ
                                         </div>
