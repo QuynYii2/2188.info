@@ -2460,13 +2460,40 @@ figure.zoom img {
   height: 100%;
 }
 
+.ability.ilvietnam-1-1-17 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.company-basicCapacity.ilvietnam-1-1-19 {
+  margin-bottom: 5px;
+}
+
+.attr-item {
+  margin-top: 5px;
+}
+
+.company-productionServiceCapacity.service-2.ilvietnam-1-1-38 {
+  margin-bottom: 0px;
+}
+
+.attr-title.ilvietnam-2-38-39 {
+  margin-bottom: 3px;
+  margin-top: 7px;
+}
+
+.detail-next-btn.detail-next-medium.detail-next-btn-normal.ilvietnam-2-55-56 {
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
 .footer {
   font-family: "DM Sans";
   background-color: #f5f5f5;
   padding: 40px 0;
 }
 .footer .footer-list-container {
-  width: 15.625rem;
+  width: 20%;
   padding: 0.3125rem;
   box-sizing: border-box;
 }
@@ -2624,7 +2651,7 @@ figure.zoom img {
   min-width: 1200px;
 }
 .footer .footer-top {
-  width: 75rem;
+  width: 80%;
   margin: auto;
 }
 .footer .footer-container {

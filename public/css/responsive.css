@@ -401,6 +401,12 @@
   }
 }
 @media (max-width: 992px) {
+  .row .col-xxl-6 {
+    max-width: 100%;
+  }
+  .row .col-xxl-6 .col-xxl-4 {
+    max-width: 33.33%;
+  }
   .header .header-pc {
     display: none;
   }
@@ -421,6 +427,9 @@
   }
   .list-voucher .search .form-search .item-voucher .item img {
     width: 34%;
+  }
+  .body .section-First-mobile {
+    display: none !important;
   }
   .category-item .swiper-pagination {
     display: block;
@@ -799,6 +808,13 @@
   }
   .row .col-xxl-6 .col-xxl-4 {
     max-width: 100%;
+  }
+  .footer .footer-list-container .list-container-content {
+    font-size: 16px;
+  }
+  .footer .footer-list-container .list-item-content .item-content-footer {
+    font-size: 15px;
+    margin-bottom: 10px;
   }
 }
 @media (max-width: 1366px) {
