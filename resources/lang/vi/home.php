@@ -330,6 +330,12 @@ return [
     'Sign up for membership' => 'Đăng kí hội viên',
     'Sign in' => 'Đăng nhập',
     'Show Less' => 'Hiện ít hơn',
+    'sign up member' => 'Đăng ký thành viên',
+    'VENDOR' => 'VENDOR',
+    'POWER VENDOR' => 'POWER VENDOR',
+    'PRODUCTION' => 'PRODUCTION',
+    'POWER PRODUCTION ' => 'POWER PRODUCTION ',
+    'Member' =>'Hội viên',
 
 
 

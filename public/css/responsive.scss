@@ -129,7 +129,7 @@
         &-right{
           font-size: 16px;
           .help{
-            margin-right: 20px;
+            margin-right: 0;
             i{
               font-size: 20px;
               margin-right: 5px;
@@ -166,7 +166,7 @@
           display: none;
         }
         &-mobile{
-          display: block;
+          display: none;
         }
       &-left{
         padding: 10px;
@@ -570,9 +570,6 @@
     }
 
   }
-  //.col-md-6{
-  //
-  //}
   #mt-body{
     margin-top: 40px;
   }
@@ -1144,3 +1141,20 @@
   }
 }
 // Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1366px) {
+  .row {
+    //display: block !important;
+    .col-xxl-6{
+      max-width: 50%;
+      .col-xxl-4 {
+        max-width: 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: 1366px) {
+  .col-xxl-4 {
+    max-width: 33.33%;
+  }
+}
