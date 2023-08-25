@@ -393,18 +393,18 @@
 
                                                                 @endforeach
                                                                 <a class="text-edit" href="#" data-toggle="modal"
-                                                                   data-target="#exampleModal">
+                                                                   data-target="#exampleModalEditCart">
                                                                     <i class='fas fa-edit'></i>
                                                                     Change
                                                                 </a>
-                                                                <div class="modal fade" id="exampleModal" tabindex="-1"
-                                                                     aria-labelledby="exampleModalLabel"
+                                                                <div class="modal fade" id="exampleModalEditCart" tabindex="-1"
+                                                                     aria-labelledby="exampleModalEditCartLabel"
                                                                      aria-hidden="true">
                                                                     <div class="modal-dialog">
                                                                         <div class="modal-content">
                                                                             <div class="modal-header">
                                                                                 <h5 class="modal-title"
-                                                                                    id="exampleModalLabel">
+                                                                                    id="exampleModalEditCartLabel">
                                                                                     Edit {{($cartItem->product->name)}}</h5>
                                                                                 <button type="button" class="close"
                                                                                         data-dismiss="modal"
