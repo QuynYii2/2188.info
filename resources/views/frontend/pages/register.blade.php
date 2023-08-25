@@ -3,6 +3,11 @@
 @section('title', 'Register')
 
 @section('content')
+    <style>
+        body{
+            background: rgb(255, 235, 225);
+        }
+    </style>
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <div class="start-page mb-3">
         <div class="background container-fluid pt-3 justify-content-center pb-3">
