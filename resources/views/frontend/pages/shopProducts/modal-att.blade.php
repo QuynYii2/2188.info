@@ -1,6 +1,18 @@
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-show-att">
+
+@php
+    $testArray = session()->get('testArray');
+    if ($testArray){
+     $testArray = $testArray[0];
+    } else {
+        $testArray = null;
+    }
+@endphp
+
+@if($testArray)
+<button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#modal-show-att">
     Xem thuộc tính
 </button>
+@endif
 
 <div class="modal fade" id="modal-show-att" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -12,15 +24,6 @@
                 </button>
             </div>
             <div class="modal-body">
-
-                @php
-                    $testArray = session()->get('testArray');
-                    if ($testArray){
-                     $testArray = $testArray[0];
-                    } else {
-                        $testArray = null;
-                    }
-                @endphp
                 <table>
                     <tbody>
                     @if($testArray)

@@ -69,7 +69,6 @@
           rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
-
 </head>
 <div class="d-none">
     @if(Auth::check())
