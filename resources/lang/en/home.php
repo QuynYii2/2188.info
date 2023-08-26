@@ -335,7 +335,24 @@ return [
     'POWER VENDOR' => 'POWER VENDOR',
     'PRODUCTION' => 'PRODUCTION',
     'POWER PRODUCTION ' => 'POWER PRODUCTION ',
-    'Member' =>'Hội viên',
+    'Member' =>'Hội viên ',
+    'Member booth' => 'Gian hàng hội viên ',
+    'Booth' => 'Gian hàng',
+    'Partner List' => 'Danh sách đối tác',
+    'Message received' => 'Tin nhắn đã nhận',
+    'Message sent' => 'Tin nhắn đã gửi',
+    'Purchase' => 'Mua hàng',
+    'Foreign wholesale order' => 'Đặt sỉ nước ngoài',
+    'Company code' => 'Mã công ty',
+    'Elite enterprise' => 'Doanh nghiệp ưu tú',
+    'Membership classification' => 'Phân loại hội viên',
+    'Customer rating score' => 'Điểm đánh giá của khách hàng',
+    'Specified products' => 'Sản phẩm chỉ định',
+
+
+
+
+
 
 
 
