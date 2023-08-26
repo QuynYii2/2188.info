@@ -233,6 +233,7 @@
                                 @foreach($productHots as $productHot)
                                     @foreach($productHot as $product)
                                         <div class="swiper-slide">
+                                            @dd(env('KEY_CONVERT_CURRENCY'));
                                             @include('frontend.pages.list-product')
                                         </div>
                                     @endforeach
