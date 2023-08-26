@@ -44,12 +44,12 @@
                                     @if(Auth::check())
                                         <a href="{{ route('category.show', $cate->id) }}">
                                             {{-- <img class="icon_i" alt="">--}}
-                                            <div class="text">{{($cate->{'name' . $langDisplay->getLangDisplay()})}}</div>
+                                            <div class="text">{{($cate->{'name_' . $langDisplay->getLangDisplay()})}}</div>
                                         </a>
                                     @else
                                         <a class="check_url">
                                             {{-- <img class="icon_i" alt="">--}}
-                                            <div class="text">{{($cate->{'name' . $langDisplay->getLangDisplay()})}}</div>
+                                            <div class="text">{{($cate->{'name_' . $langDisplay->getLangDisplay()})}}</div>
                                         </a>
                                     @endif
                                 </div>
