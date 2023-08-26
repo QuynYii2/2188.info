@@ -597,7 +597,7 @@
 
             let productNames = document.getElementsByClassName('productName');
             for (let i = 0; i < productNames.length; i++) {
-                productNames[i].innerHTML = product['name']
+                productNames[i].innerHTML = productName
             }
 
             let productID = product['id'];
