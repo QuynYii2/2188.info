@@ -44,7 +44,10 @@
         </div>
         <div class="card-title">
             @if(Auth::check())
-                <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
+                <a href="{{route('detail_product.show', $product->id)}}">
+                    @dd($product);
+                    {{ ($product->name) }}
+                </a>
             @else
                 <a class="check_url">{{($product->name)}}</a>
             @endif
