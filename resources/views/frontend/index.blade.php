@@ -11,7 +11,6 @@
     @endphp
     <link rel="stylesheet" href="{{asset('css/frontend.css')}}">
     <!-- test nhanh -->
-    @dd(11111);
     <div class="body" id="body-content">
         <section class="section-First pt-3 pb-3 container-fluid">
             <div class="row m-0">
@@ -234,9 +233,7 @@
                                 @foreach($productHots as $productHot)
                                     @foreach($productHot as $product)
                                         <div class="swiper-slide">
-                                            @dd(1111);
-                                            @dd(env('KEY_CONVERT_CURRENCY'));
-{{--                                            @include('frontend.pages.list-product')--}}
+                                            @include('frontend.pages.list-product')
                                         </div>
                                     @endforeach
                                 @endforeach

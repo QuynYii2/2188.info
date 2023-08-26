@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Cache;
 if (!function_exists('convertCurrency')) {
     function convertCurrency($from, $to, $amount)
     {
-        dd(env('KEY_CONVERT_CURRENCY'));
         $fromCache = Cache::get('from');
         $toCache = Cache::get('to');
         if (Cache::has('exchange_rate') && $fromCache == $from && $toCache == $to) {
@@ -20,7 +19,6 @@ if (!function_exists('convertCurrency')) {
 
     function getExchangeRate($from, $to, $amount)
     {
-        dd(env('KEY_CONVERT_CURRENCY'));
         $client = new Client();
         $response = $client->request('GET', 'https://currency-conversion-and-exchange-rates.p.rapidapi.com/convert', [
             'query' => [
