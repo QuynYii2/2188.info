@@ -29,30 +29,30 @@
                                         <a href="{{ route('category.show', $listCate[$i]->id) }}">
                                             <div class="text">
                                                 @if(locationHelper() == 'kr')
-                                                    <div class="text">{{ $cate->name_ko }}</div>
+                                                    <div class="text">{{ $listCate[$i]->name_ko }}</div>
                                                 @elseif(locationHelper() == 'cn')
-                                                    <div class="text">{{$cate->name_zh}}</div>
+                                                    <div class="text">{{$listCate[$i]->name_zh}}</div>
                                                 @elseif(locationHelper() == 'jp')
-                                                    <div class="text">{{$cate->name_ja}}</div>
+                                                    <div class="text">{{$listCate[$i]->name_ja}}</div>
                                                 @elseif(locationHelper() == 'vi')
-                                                    <div class="text">{{$cate->name_vi}}</div>
+                                                    <div class="text">{{$listCate[$i]->name_vi}}</div>
                                                 @else
-                                                    <div class="text">{{$cate->en}}</div>
+                                                    <div class="text">{{$listCate[$i]->en}}</div>
                                                 @endif
                                             </div>
                                         </a>
                                     @else
                                         <a class="check_url">
                                             @if(locationHelper() == 'kr')
-                                                <div class="text">{{ $cate->name_ko }}</div>
+                                                <div class="text">{{ $listCate[$i]->name_ko }}</div>
                                             @elseif(locationHelper() == 'cn')
-                                                <div class="text">{{$cate->name_zh}}</div>
+                                                <div class="text">{{$listCate[$i]->name_zh}}</div>
                                             @elseif(locationHelper() == 'jp')
-                                                <div class="text">{{$cate->name_ja}}</div>
+                                                <div class="text">{{$listCate[$i]->name_ja}}</div>
                                             @elseif(locationHelper() == 'vi')
-                                                <div class="text">{{$cate->name_vi}}</div>
+                                                <div class="text">{{$listCate[$i]->name_vi}}</div>
                                             @else
-                                                <div class="text">{{$cate->en}}</div>
+                                                <div class="text">{{$listCate[$i]->en}}</div>
                                             @endif
                                         </a>
                                     @endif
