@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Cache;
 if (!function_exists('convertCurrency')) {
     function convertCurrency($from, $to, $amount)
     {
-        dd(env('KEY_CONVERT_CURRENCY'));
         $fromCache = Cache::get('from');
         $toCache = Cache::get('to');
         if (Cache::has('exchange_rate') && $fromCache == $from && $toCache == $to) {
@@ -20,19 +19,31 @@ if (!function_exists('convertCurrency')) {
 
     function getExchangeRate($from, $to, $amount)
     {
-        dd(env('KEY_CONVERT_CURRENCY'));
-        $client = new Client();
-        $response = $client->request('GET', 'https://currency-conversion-and-exchange-rates.p.rapidapi.com/convert', [
-            'query' => [
-                'to' => $to,
-                'from' => $from,
-                'amount' => $amount,
-            ],
+
+
+        $client = new \GuzzleHttp\Client();
+
+        $response = $client->request('GET', 'https://currency-conversion-and-exchange-rates.p.rapidapi.com/convert?from='.$from.'&to='.$to.'&amount='.$amount, [
             'headers' => [
-                'X-RapidAPI-Key' => env('KEY_CONVERT_CURRENCY'),
                 'X-RapidAPI-Host' => 'currency-conversion-and-exchange-rates.p.rapidapi.com',
+                'X-RapidAPI-Key' => '7b2135e174msh19d71786a52d326p108060jsn3bec55c24554',
             ],
         ]);
+
+//        echo $response->getBody();
+//
+//        $client = new Client();
+//        $response = $client->request('GET', 'https://currency-conversion-and-exchange-rates.p.rapidapi.com/convert', [
+//            'query' => [
+//                'to' => $to,
+//                'from' => $from,
+//                'amount' => $amount,
+//            ],
+//            'headers' => [
+//                'X-RapidAPI-Key' => '7b2135e174msh19d71786a52d326p108060jsn3bec55c24554',
+//                'X-RapidAPI-Host' => 'currency-conversion-and-exchange-rates.p.rapidapi.com',
+//            ],
+//        ]);
         $responseBody = $response->getBody()->getContents();
         $data = json_decode($responseBody, true);
         $rate = $data['info']['rate'];

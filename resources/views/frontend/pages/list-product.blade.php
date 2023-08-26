@@ -49,6 +49,7 @@
                 <a class="check_url">{{($product->name)}}</a>
             @endif
         </div>
+
         @if($product->price)
             <div class="card-price d-flex justify-content-between">
                 @if($product->price != null)
