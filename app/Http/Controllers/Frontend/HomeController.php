@@ -46,6 +46,7 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
+        dd('7b2135e174msh19d71786a52d326p108060jsn3bec55c24554');
         $this->getLocale($request);
         $locale = app()->getLocale();
         if ($locale == 'vn') {
