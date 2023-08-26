@@ -19,7 +19,6 @@ if (!function_exists('convertCurrency')) {
 
     function getExchangeRate($from, $to, $amount)
     {
-        dd(env('KEY_CONVERT_CURRENCY'));
         $client = new Client();
         $response = $client->request('GET', 'https://currency-conversion-and-exchange-rates.p.rapidapi.com/convert', [
             'query' => [
