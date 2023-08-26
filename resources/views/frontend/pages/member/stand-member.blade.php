@@ -230,12 +230,7 @@
     <div class="mt-3 d-flex justify-content-center">
         @foreach($products as $product)
             <button type="button" style="background-color: white" class="btn thumbnailProduct col-2" data-toggle="modal"
-                    data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}">
-                <div class="standsMember-item section">
-                    <img data-id="{{$product->id}}"
-                         src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
-                         class="thumbnailProduct" data-value="{{$product}}"
-                         data-name="
+                    data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}" data-name="
                          @if(locationHelper() == 'kr')
                                         {{ ($product->name_ko) }}
                                     @elseif(locationHelper() == 'cn')
@@ -247,7 +242,12 @@
                                     @else
                                         {{ ($product->name_en) }}
                                     @endif
-                         "
+                         ">
+                <div class="standsMember-item section">
+                    <img data-id="{{$product->id}}"
+                         src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
+                         class="thumbnailProduct" data-value="{{$product}}"
+
                          width="150px" height="150px">
                     <div class="item-body">
                         <div class="card-rating text-left">
