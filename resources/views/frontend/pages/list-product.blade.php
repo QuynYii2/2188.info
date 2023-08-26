@@ -45,7 +45,6 @@
         <div class="card-title">
             @if(Auth::check())
                 <a href="{{route('detail_product.show', $product->id)}}">
-                    @dd($product);
                     @dd($locale);
                     {{ ($product->name) }}
                 </a>
