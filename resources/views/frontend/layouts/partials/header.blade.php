@@ -617,7 +617,18 @@
                                             <div class="header_bottom--one--list--item">
                                                 <a class="item d-flex" href="{{ route('category.show', $cate->id) }}">
                                                     <i class="fa-solid fa-tv"></i>
-                                                    <div class="item-text">{{($cate->{'name' . $langDisplay->getLangDisplay()})}}</div>
+                                                    @if(locationHelper() == 'kr')
+                                                        <div class="item-text">{{($cate->name_ko}}</div>
+                                                    @elseif(locationHelper() == 'cn')
+                                                        <div class="item-text">{{($cate->name_zh}}</div>
+                                                    @elseif(locationHelper() == 'jp')
+                                                        <div class="item-text">{{($cate->name_ja}}</div>
+                                                    @elseif(locationHelper() == 'vi')
+                                                        <div class="item-text">{{($cate->name_vi}}</div>
+                                                    @else
+                                                        <div class="item-text">{{($cate->en}}</div>
+                                                    @endif
+
                                                     <i class="fa-solid fa-angle-right"></i>
                                                 </a>
                                                 @if(!$listCate->isEmpty())
