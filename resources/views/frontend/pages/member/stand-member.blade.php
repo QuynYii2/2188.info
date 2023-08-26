@@ -255,9 +255,33 @@
                         </div>
                         <div class="card-title text-left">
                             @if(Auth::check())
-                                <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
+                                <a href="{{route('detail_product.show', $product->id)}}">
+                                    @if(locationHelper() == 'kr')
+                                        {{ ($product->name_ko) }}
+                                    @elseif(locationHelper() == 'cn')
+                                        {{ ($product->name_zh) }}
+                                    @elseif(locationHelper() == 'jp')
+                                        {{ ($product->name_ja) }}
+                                    @elseif(locationHelper() == 'vi')
+                                        {{ ($product->name_vi) }}
+                                    @else
+                                        {{ ($product->name_en) }}
+                                    @endif
+                                </a>
                             @else
-                                <a class="check_url">{{($product->name)}}</a>
+                                <a class="check_url">
+                                    @if(locationHelper() == 'kr')
+                                        {{ ($product->name_ko) }}
+                                    @elseif(locationHelper() == 'cn')
+                                        {{ ($product->name_zh) }}
+                                    @elseif(locationHelper() == 'jp')
+                                        {{ ($product->name_ja) }}
+                                    @elseif(locationHelper() == 'vi')
+                                        {{ ($product->name_vi) }}
+                                    @else
+                                        {{ ($product->name_en) }}
+                                    @endif
+                                </a>
                             @endif
                         </div>
                         @if($product->price)
@@ -315,7 +339,17 @@
                                     <div class="">
                                         <h5>Product Name</h5>
                                         <p class="productName" id="productName">
-                                            {{ ($firstProduct->name) }}
+                                            @if(locationHelper() == 'kr')
+                                                {{ ($firstProduct->name_ko) }}
+                                            @elseif(locationHelper() == 'cn')
+                                                {{ ($firstProduct->name_zh) }}
+                                            @elseif(locationHelper() == 'jp')
+                                                {{ ($firstProduct->name_ja) }}
+                                            @elseif(locationHelper() == 'vi')
+                                                {{ ($firstProduct->name_vi) }}
+                                            @else
+                                                {{ ($firstProduct->name_en) }}
+                                            @endif
                                         </p>
                                     </div>
                                 </div>
