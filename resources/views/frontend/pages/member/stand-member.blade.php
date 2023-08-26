@@ -119,8 +119,18 @@
                 <div class="col-md-6 border">
                     <div class="row">
                         <div class="col-md-12 border">
-                            <div class="mt-2">
-                                <h5 class="mb-3">{{ ($company->name) }}</h5>
+                            <div class="mb-3">
+                                @if(locationHelper() == 'kr')
+                                    {{ ($company->name_ko) }}
+                                @elseif(locationHelper() == 'cn')
+                                    {{ ($company->name_zh) }}
+                                @elseif(locationHelper() == 'jp')
+                                    {{ ($company->name_ja) }}
+                                @elseif(locationHelper() == 'vi')
+                                    {{ ($company->name_vi) }}
+                                @else
+                                    {{ ($company->name_en) }}
+                                @endif
                             </div>
                         </div>
                         <div class="row p-2">
@@ -166,9 +176,20 @@
                                     @endphp
                                     <div class="col-md-6">
                                         <div class="mt-2 d-flex">
-                                            <a href="{{route('category.show', $category->id)}}"
-                                               class="mb-3 size">{{ ($category->name) }} <i
-                                                        class="fa-solid fa-angle-right"></i></a>
+                                            <a href="{{route('category.show', $category->id)}}" class="mb-3 size">
+                                                @if(locationHelper() == 'kr')
+                                                    {{ ($category->name_ko) }}
+                                                @elseif(locationHelper() == 'cn')
+                                                    {{ ($category->name_zh) }}
+                                                @elseif(locationHelper() == 'jp')
+                                                    {{ ($category->name_ja) }}
+                                                @elseif(locationHelper() == 'vi')
+                                                    {{ ($category->name_vi) }}
+                                                @else
+                                                    {{ ($category->name_en) }}
+                                                @endif
+                                                <i class="fa-solid fa-angle-right"></i>
+                                            </a>
                                         </div>
                                     </div>
                                 @endforeach
@@ -234,9 +255,33 @@
                         </div>
                         <div class="card-title text-left">
                             @if(Auth::check())
-                                <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
+                                <a href="{{route('detail_product.show', $product->id)}}">
+                                    @if(locationHelper() == 'kr')
+                                        {{ ($product->name_ko) }}
+                                    @elseif(locationHelper() == 'cn')
+                                        {{ ($product->name_zh) }}
+                                    @elseif(locationHelper() == 'jp')
+                                        {{ ($product->name_ja) }}
+                                    @elseif(locationHelper() == 'vi')
+                                        {{ ($product->name_vi) }}
+                                    @else
+                                        {{ ($product->name_en) }}
+                                    @endif
+                                </a>
                             @else
-                                <a class="check_url">{{($product->name)}}</a>
+                                <a class="check_url">
+                                    @if(locationHelper() == 'kr')
+                                        {{ ($product->name_ko) }}
+                                    @elseif(locationHelper() == 'cn')
+                                        {{ ($product->name_zh) }}
+                                    @elseif(locationHelper() == 'jp')
+                                        {{ ($product->name_ja) }}
+                                    @elseif(locationHelper() == 'vi')
+                                        {{ ($product->name_vi) }}
+                                    @else
+                                        {{ ($product->name_en) }}
+                                    @endif
+                                </a>
                             @endif
                         </div>
                         @if($product->price)
@@ -294,7 +339,17 @@
                                     <div class="">
                                         <h5>Product Name</h5>
                                         <p class="productName" id="productName">
-                                            {{ ($firstProduct->name) }}
+                                            @if(locationHelper() == 'kr')
+                                                {{ ($firstProduct->name_ko) }}
+                                            @elseif(locationHelper() == 'cn')
+                                                {{ ($firstProduct->name_zh) }}
+                                            @elseif(locationHelper() == 'jp')
+                                                {{ ($firstProduct->name_ja) }}
+                                            @elseif(locationHelper() == 'vi')
+                                                {{ ($firstProduct->name_vi) }}
+                                            @else
+                                                {{ ($firstProduct->name_en) }}
+                                            @endif
                                         </p>
                                     </div>
                                 </div>

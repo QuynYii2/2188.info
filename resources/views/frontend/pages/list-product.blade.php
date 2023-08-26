@@ -44,7 +44,19 @@
         </div>
         <div class="card-title">
             @if(Auth::check())
-                <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
+                <a href="{{route('detail_product.show', $product->id)}}">
+                    @if(locationHelper() == 'kr')
+                        {{ ($product->name_ko) }}
+                    @elseif(locationHelper() == 'cn')
+                        {{ ($product->name_zh) }}
+                    @elseif(locationHelper() == 'jp')
+                        {{ ($product->name_ja) }}
+                    @elseif(locationHelper() == 'vi')
+                        {{ ($product->name_vi) }}
+                    @else
+                        {{ ($product->name_en) }}
+                    @endif
+                </a>
             @else
                 <a class="check_url">{{($product->name)}}</a>
             @endif
