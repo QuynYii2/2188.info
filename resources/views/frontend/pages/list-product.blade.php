@@ -46,9 +46,7 @@
             @if(Auth::check())
                 <a href="{{route('detail_product.show', $product->id)}}">
                     @dd($product);
-                    @php
-                        dd(app()->getLocale());
-                    @endphp
+                    @dd($locale);
                     {{ ($product->name) }}
                 </a>
             @else
