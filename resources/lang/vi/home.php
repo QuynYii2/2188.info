@@ -348,6 +348,20 @@ return [
     'Membership classification' => 'Phân loại hội viên',
     'Customer rating score' => 'Điểm đánh giá của khách hàng',
     'Specified products' => 'Sản phẩm chỉ định',
+    'Watch product videos' => 'Xem video sản phẩm',
+    'Order conditions' => 'Điều kiện đặt hàng',
+    'Unit price' => 'Đơn giá',
+    'Ngày dự kiến xuất kho' => 'Ngày dự kiến xuất kho',
+    'ngày kể từ ngày đặt hàng' => 'ngày kể từ ngày đặt hàng',
+    'đơn giá phía trên là điều kiện FOB/TT' => 'đơn giá phía trên là điều kiện FOB/TT',
+    'Đặt hàng' => 'Đặt hàng',
+    'Thuộc tính' => 'Thuộc tính',
+    'Số lượng' => 'Số lượng',
+    'Thành tiền' => 'Thành tiền',
+    'Tiếp nhận đặt hàng' => 'Tiếp nhận đặt hàng',
+    'Chọn quốc gia mua hàng' => 'Chọn quốc gia mua hàng',
+    'Xem chi tiết các hình ảnh khác' => 'Xem chi tiết các hình ảnh khác',
+
 
 
 

@@ -343,6 +343,22 @@ return [
     'Membership classification' => '회원 구분',
     'Customer rating score' => '고객 평가 점수',
     'Specified products' => '특정상품',
+    'Watch product videos' => '제품 동영상 보기',
+    'Order conditions' => '주문 조건',
+    'Ngày dự kiến xuất kho' => '예상 배달 날짜',
+    'Unit price' => '단가',
+    'ngày kể từ ngày đặt hàng' => '주문일로부터 일',
+    'đơn giá phía trên là điều kiện FOB/TT' => '위 단가는 FOB/TT 조건입니다.',
+    'Đặt hàng' => '주문하다',
+    'Thuộc tính' => '속성',
+    'Số lượng' => '수량',
+    'Thành tiền' => '돈으로',
+    'Tiếp nhận đặt hàng' => '주문받기',
+    'Chọn quốc gia mua hàng' => '구매 국가 선택',
+    'Xem chi tiết các hình ảnh khác' => 'Xem chi tiết các hình ảnh khác',
+
+
+
 
 
 
