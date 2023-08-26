@@ -626,7 +626,7 @@
                                                     @elseif(locationHelper() == 'vi')
                                                         <div class="item-text">{{$cate->name_vi}}</div>
                                                     @else
-                                                        <div class="item-text">{{$cate->en}}</div>
+                                                        <div class="item-text">{{$cate->name_en}}</div>
                                                     @endif
 
                                                     <i class="fa-solid fa-angle-right"></i>
