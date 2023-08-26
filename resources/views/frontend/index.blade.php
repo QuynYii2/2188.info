@@ -37,7 +37,7 @@
                                                 @elseif(locationHelper() == 'vi')
                                                     <div class="text">{{$listCate[$i]->name_vi}}</div>
                                                 @else
-                                                    <div class="text">{{$listCate[$i]->en}}</div>
+                                                    <div class="text">{{$listCate[$i]->name_en}}</div>
                                                 @endif
                                             </div>
                                         </a>
@@ -52,7 +52,7 @@
                                             @elseif(locationHelper() == 'vi')
                                                 <div class="text">{{$listCate[$i]->name_vi}}</div>
                                             @else
-                                                <div class="text">{{$listCate[$i]->en}}</div>
+                                                <div class="text">{{$listCate[$i]->name_en}}</div>
                                             @endif
                                         </a>
                                     @endif
