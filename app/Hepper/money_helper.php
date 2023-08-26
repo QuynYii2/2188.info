@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Cache;
 if (!function_exists('convertCurrency')) {
     function convertCurrency($from, $to, $amount)
     {
+        dd(env('KEY_CONVERT_CURRENCY'));
         $fromCache = Cache::get('from');
         $toCache = Cache::get('to');
         if (Cache::has('exchange_rate') && $fromCache == $from && $toCache == $to) {
