@@ -46,7 +46,6 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        dd(env('KEY_CONVERT_CURRENCY'));
         $this->getLocale($request);
         $locale = app()->getLocale();
         if ($locale == 'vn') {
