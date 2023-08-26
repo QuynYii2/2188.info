@@ -51,7 +51,6 @@
         </div>
         @if($product->price)
             <div class="card-price d-flex justify-content-between">
-                @dd($product->price);
                 @if($product->price != null)
                     <div class="price-sale">
                         <strong> {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strong>
