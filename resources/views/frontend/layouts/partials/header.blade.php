@@ -639,18 +639,64 @@
                                                             @endphp
                                                             @foreach($listChild as $child)
                                                                 <div class="colum d-block">
-                                                                    <li>
-                                                                        <a class="colum-hd"
-                                                                           href="{{ route('category.show', $child->id) }}">{{($child->{'name' . $langDisplay->getLangDisplay()})}} </a>
-                                                                    </li>
+                                                                    @if(locationHelper() == 'kr')
+                                                                        <li>
+                                                                            <a class="colum-hd"
+                                                                               href="{{ route('category.show', $child->id) }}">{{$child->name_ko}} </a>
+                                                                        </li>
+                                                                    @elseif(locationHelper() == 'cn')
+                                                                        <li>
+                                                                            <a class="colum-hd"
+                                                                               href="{{ route('category.show', $child->id) }}">{{$child->name_zh}} </a>
+                                                                        </li>
+                                                                    @elseif(locationHelper() == 'jp')
+                                                                        <li>
+                                                                            <a class="colum-hd"
+                                                                               href="{{ route('category.show', $child->id) }}">{{$child->name_ja}} </a>
+                                                                        </li>
+                                                                    @elseif(locationHelper() == 'vi')
+                                                                        <li>
+                                                                            <a class="colum-hd"
+                                                                               href="{{ route('category.show', $child->id) }}">{{$child->name_vi}} </a>
+                                                                        </li>
+                                                                    @else
+                                                                        <li>
+                                                                            <a class="colum-hd"
+                                                                               href="{{ route('category.show', $child->id) }}">{{$child->name_en}} </a>
+                                                                        </li>
+                                                                    @endif
+
                                                                     @php
                                                                         $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
                                                                     @endphp
                                                                     @foreach($listChild2 as $child2)
-                                                                        <li>
-                                                                            <a class="colum-item"
-                                                                               href="{{ route('category.show', $child2->id) }}">{{($child2->{'name' . $langDisplay->getLangDisplay()})}}</a>
-                                                                        </li>
+                                                                            @if(locationHelper() == 'kr')
+                                                                                <li>
+                                                                                    <a class="colum-item"
+                                                                                       href="{{ route('category.show', $child2->id) }}">{{$child2->name_ko}}</a>
+                                                                                </li>
+                                                                            @elseif(locationHelper() == 'cn')
+                                                                                <li>
+                                                                                    <a class="colum-item"
+                                                                                       href="{{ route('category.show', $child2->id) }}">{{$child2->name_zh}}</a>
+                                                                                </li>
+                                                                            @elseif(locationHelper() == 'jp')
+                                                                                <li>
+                                                                                    <a class="colum-item"
+                                                                                       href="{{ route('category.show', $child2->id) }}">{{$child2->name_ja}}</a>
+                                                                                </li>
+                                                                            @elseif(locationHelper() == 'vi')
+                                                                                <li>
+                                                                                    <a class="colum-item"
+                                                                                       href="{{ route('category.show', $child2->id) }}">{{$child2->name_vi}}</a>
+                                                                                </li>
+                                                                            @else
+                                                                                <li>
+                                                                                    <a class="colum-item"
+                                                                                       href="{{ route('category.show', $child2->id) }}">{{$child2->name_en}}</a>
+                                                                                </li>
+                                                                            @endif
+
                                                                     @endforeach
                                                                 </div>
                                                             @endforeach
@@ -694,7 +740,19 @@
                                                                                             {{ ($nameUser->name) }}
                                                                                         </div>
                                                                                         <div class="card-title">
-                                                                                            <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
+                                                                                            <a href="{{route('detail_product.show', $product->id)}}">
+                                                                                                @if(locationHelper() == 'kr')
+                                                                                                    {{ ($product->name_ko) }}
+                                                                                                @elseif(locationHelper() == 'cn')
+                                                                                                    {{ ($product->name_zh) }}
+                                                                                                @elseif(locationHelper() == 'jp')
+                                                                                                    {{ ($product->name_ja) }}
+                                                                                                @elseif(locationHelper() == 'vi')
+                                                                                                    {{ ($product->name_vi) }}
+                                                                                                @else
+                                                                                                    {{ ($product->name_en) }}
+                                                                                                @endif
+                                                                                            </a>
                                                                                         </div>
                                                                                         <div class="card-price d-flex justify-content-between">
                                                                                             <!-- <div class="price">
