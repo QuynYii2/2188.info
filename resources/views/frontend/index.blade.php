@@ -27,13 +27,33 @@
                                 <div class="col-lg-6 item item-left text-center">
                                     @if(Auth::check())
                                         <a href="{{ route('category.show', $listCate[$i]->id) }}">
-                                            {{-- <img class="icon_i" alt="">--}}
-                                            <div class="text">{{($listCate[$i]->{'name_' . $langDisplay->getLangDisplay()})}}</div>
+                                            <div class="text">
+                                                @if(locationHelper() == 'kr')
+                                                    <div class="text">{{ $cate->name_ko }}</div>
+                                                @elseif(locationHelper() == 'cn')
+                                                    <div class="text">{{$cate->name_zh}}</div>
+                                                @elseif(locationHelper() == 'jp')
+                                                    <div class="text">{{$cate->name_ja}}</div>
+                                                @elseif(locationHelper() == 'vi')
+                                                    <div class="text">{{$cate->name_vi}}</div>
+                                                @else
+                                                    <div class="text">{{$cate->en}}</div>
+                                                @endif
+                                            </div>
                                         </a>
                                     @else
                                         <a class="check_url">
-                                            {{-- <img class="icon_i" alt="">--}}
-                                            <div class="text">{{($listCate[$i]->{'name_' . $langDisplay->getLangDisplay()})}}</div>
+                                            @if(locationHelper() == 'kr')
+                                                <div class="text">{{ $cate->name_ko }}</div>
+                                            @elseif(locationHelper() == 'cn')
+                                                <div class="text">{{$cate->name_zh}}</div>
+                                            @elseif(locationHelper() == 'jp')
+                                                <div class="text">{{$cate->name_ja}}</div>
+                                            @elseif(locationHelper() == 'vi')
+                                                <div class="text">{{$cate->name_vi}}</div>
+                                            @else
+                                                <div class="text">{{$cate->en}}</div>
+                                            @endif
                                         </a>
                                     @endif
                                 </div>
@@ -44,12 +64,12 @@
                                     @if(Auth::check())
                                         <a href="{{ route('category.show', $cate->id) }}">
                                             {{-- <img class="icon_i" alt="">--}}
-                                            <div class="text">{{($cate->{'name_' . $langDisplay->getLangDisplay()})}}</div>
+                                            <div class="text">{{($cate->{'name_' .$langDisplay->getLangDisplay()})}}</div>
                                         </a>
                                     @else
                                         <a class="check_url">
                                             {{-- <img class="icon_i" alt="">--}}
-                                            <div class="text">{{($cate->{'name_' . $langDisplay->getLangDisplay()})}}</div>
+                                            <div class="text">{{($cate->{'name_' .$langDisplay->getLangDisplay()})}}</div>
                                         </a>
                                     @endif
                                 </div>
