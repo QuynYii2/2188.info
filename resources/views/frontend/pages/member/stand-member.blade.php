@@ -235,6 +235,19 @@
                     <img data-id="{{$product->id}}"
                          src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
                          class="thumbnailProduct" data-value="{{$product}}"
+                         data-name="
+                         @if(locationHelper() == 'kr')
+                                        {{ ($product->name_ko) }}
+                                    @elseif(locationHelper() == 'cn')
+                                        {{ ($product->name_zh) }}
+                                    @elseif(locationHelper() == 'jp')
+                                        {{ ($product->name_ja) }}
+                                    @elseif(locationHelper() == 'vi')
+                                        {{ ($product->name_vi) }}
+                                    @else
+                                        {{ ($product->name_en) }}
+                                    @endif
+                         "
                          width="150px" height="150px">
                     <div class="item-body">
                         <div class="card-rating text-left">
@@ -572,6 +585,8 @@
 
         $('.thumbnailProduct').on('click', function () {
             let product = $(this).data('value');
+            let productName = $(this).data('name');
+            console.log(productName);
             let imageUrl = '{{ asset('storage/') }}';
             let imgMain = product['thumbnail'];
             imageUrl = imageUrl + '/' + imgMain;
