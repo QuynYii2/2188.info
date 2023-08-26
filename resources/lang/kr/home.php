@@ -330,7 +330,28 @@ return [
     'POWER VENDOR' => '전력 공급업체',
     'PRODUCTION' => '생산',
     'POWER PRODUCTION ' => '전력 생산',
-    'Member' =>'구성원',
+    'Member' =>'구성원 ',
+    'Member booth' => '회원부스 ',
+    'Booth' => '노점',
+    'Partner List' => '파트너 목록',
+    'Message received' => '메시지 받음',
+    'Message sent' => '메시지를 보냈습니다',
+    'Purchase' => '구입',
+    'Foreign wholesale order' => '해외도매주문',
+    'Company code' => '회사 코드',
+    'Elite enterprise' => '엘리트 기업',
+    'Membership classification' => '회원 구분',
+    'Customer rating score' => '고객 평가 점수',
+    'Specified products' => '특정상품',
+
+
+
+
+
+
+
+
+
 
 
 
