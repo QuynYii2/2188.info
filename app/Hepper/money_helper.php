@@ -30,20 +30,7 @@ if (!function_exists('convertCurrency')) {
             ],
         ]);
 
-//        echo $response->getBody();
-//
-//        $client = new Client();
-//        $response = $client->request('GET', 'https://currency-conversion-and-exchange-rates.p.rapidapi.com/convert', [
-//            'query' => [
-//                'to' => $to,
-//                'from' => $from,
-//                'amount' => $amount,
-//            ],
-//            'headers' => [
-//                'X-RapidAPI-Key' => '7b2135e174msh19d71786a52d326p108060jsn3bec55c24554',
-//                'X-RapidAPI-Host' => 'currency-conversion-and-exchange-rates.p.rapidapi.com',
-//            ],
-//        ]);
+
         $responseBody = $response->getBody()->getContents();
         $data = json_decode($responseBody, true);
         $rate = $data['info']['rate'];
