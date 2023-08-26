@@ -49,6 +49,29 @@
                 <a class="check_url">{{($product->name)}}</a>
             @endif
         </div>
+        @php
+            $client = new http\Client;
+    $request = new http\Client\Request;
+
+    $request->setRequestUrl('https://currency-conversion-and-exchange-rates.p.rapidapi.com/convert');
+    $request->setRequestMethod('GET');
+    $request->setQuery(new http\QueryString([
+        'from' => 'USD',
+        'to' => 'EUR',
+        'amount' => '750'
+    ]));
+
+    $request->setHeaders([
+        'X-RapidAPI-Key' => '7b2135e174msh19d71786a52d326p108060jsn3bec55c24554',
+        'X-RapidAPI-Host' => 'currency-conversion-and-exchange-rates.p.rapidapi.com'
+    ]);
+
+    $client->enqueue($request)->send();
+    $response = $client->getResponse();
+
+    echo $response->getBody();
+    exit()
+ @endphp
         @if($product->price)
             <div class="card-price d-flex justify-content-between">
                 @if($product->price != null)
