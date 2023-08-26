@@ -11,6 +11,7 @@
     @endphp
     <link rel="stylesheet" href="{{asset('css/frontend.css')}}">
     <!-- test nhanh -->
+    @dd(11111);
     <div class="body" id="body-content">
         <section class="section-First pt-3 pb-3 container-fluid">
             <div class="row m-0">
