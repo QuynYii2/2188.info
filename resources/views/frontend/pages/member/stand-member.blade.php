@@ -119,8 +119,18 @@
                 <div class="col-md-6 border">
                     <div class="row">
                         <div class="col-md-12 border">
-                            <div class="mt-2">
-                                <h5 class="mb-3">{{ ($company->name) }}</h5>
+                            <div class="mb-3">
+                                @if(locationHelper() == 'kr')
+                                    {{ ($company->name_ko) }}
+                                @elseif(locationHelper() == 'cn')
+                                    {{ ($company->name_zh) }}
+                                @elseif(locationHelper() == 'jp')
+                                    {{ ($company->name_ja) }}
+                                @elseif(locationHelper() == 'vi')
+                                    {{ ($company->name_vi) }}
+                                @else
+                                    {{ ($company->name_en) }}
+                                @endif
                             </div>
                         </div>
                         <div class="row p-2">
@@ -166,9 +176,20 @@
                                     @endphp
                                     <div class="col-md-6">
                                         <div class="mt-2 d-flex">
-                                            <a href="{{route('category.show', $category->id)}}"
-                                               class="mb-3 size">{{ ($category->name) }} <i
-                                                        class="fa-solid fa-angle-right"></i></a>
+                                            <a href="{{route('category.show', $category->id)}}" class="mb-3 size">
+                                                @if(locationHelper() == 'kr')
+                                                    {{ ($category->name_ko) }}
+                                                @elseif(locationHelper() == 'cn')
+                                                    {{ ($category->name_zh) }}
+                                                @elseif(locationHelper() == 'jp')
+                                                    {{ ($category->name_ja) }}
+                                                @elseif(locationHelper() == 'vi')
+                                                    {{ ($category->name_vi) }}
+                                                @else
+                                                    {{ ($category->name_en) }}
+                                                @endif
+                                                <i class="fa-solid fa-angle-right"></i>
+                                            </a>
                                         </div>
                                     </div>
                                 @endforeach
