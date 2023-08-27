@@ -361,6 +361,33 @@ return [
     'Tiếp nhận đặt hàng' => 'Tiếp nhận đặt hàng',
     'Chọn quốc gia mua hàng' => 'Chọn quốc gia mua hàng',
     'Xem chi tiết các hình ảnh khác' => 'Xem chi tiết các hình ảnh khác',
+    'Xem thuộc tính' => 'Xem thuộc tính',
+    'Product Code' => 'Mã sản phẩm',
+    'Membership upgrade' => 'Nâng cấp hội viên',
+    'Membership payment' => 'Thanh toán hội viên',
+    'Subscribers' => 'Người đăng ký',
+    'Representative' => 'Người đại diện',
+    'Nickname' => 'Biệt danh',
+    'Responsibility' => 'Phụ trách',
+    'Manager' => 'Trưởng phòng',
+    'Position' => 'Chức vụ',
+    'Add new products' => 'Thêm mới sản phẩm',
+    'social network id' => 'ID MXH',
+    'Retail' => 'Mua lẻ',
+    'Buy wholesale' => 'Mua sỉ',
+    'Số sản phẩm' => 'Số sản phẩm',
+    'Mua sỉ nước ngoài' => 'Mua sỉ nước ngoài',
+    'Shipping And Payment' => 'Vận chuyển và thanh toán',
+    'Partner' => 'Đối tác',
+    'Check out now' => 'Thanh toán ngay',
+    'View Cart' => 'Xem giỏ hàng',
+    'Grand Total' => 'Tổng cộng',
+    'Xem chi tiết' => 'Xem chi tiết',
+    'Sign up now' => 'Đăng kí ngay',
+
+
+
+
 
 
 

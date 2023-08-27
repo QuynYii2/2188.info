@@ -331,13 +331,13 @@
                                 @endphp
                                 <div class="d-flex justify-content-between">
                                     <div class="">
-                                        <h5>Product Code</h5>
+                                        <h5>{{ __('home.Product Code') }}</h5>
                                         <p class="productCode" id="productCode">
                                             {{ ($firstProduct->product_code) }}
                                         </p>
                                     </div>
                                     <div class="">
-                                        <h5>Product Name</h5>
+                                        <h5>{{ __('home.Product Name') }}</h5>
                                         <p class="productName" id="productName">
                                             @if(locationHelper() == 'kr')
                                                 {{ ($firstProduct->name_ko) }}
@@ -393,7 +393,7 @@
                                     <button id="btnViewAttribute" data-id="{{$firstProduct->id}}" type="button"
                                             class="btn" data-toggle="modal"
                                             data-target="#modal-show-att">
-                                        Xem thuộc tính
+                                        {{ __('home.Xem thuộc tính') }}
                                     </button>
                                 </div>
 

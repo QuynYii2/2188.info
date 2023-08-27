@@ -13,7 +13,7 @@
 @section('content')
 
     <div class="card-header d-flex justify-content-between align-items-center" style="padding: 15px;">
-        <h5 class="card-title">Thêm mới sản phẩm</h5>
+        <h5 class="card-title">{{ __('home.Add new products') }}</h5>
         @if (session('success_update_product'))
             <div class="alert alert-success">
                 {{ session('success_update_product') }}
@@ -32,25 +32,25 @@
 
             <div class="col-6 col-sm-6 mt-2 rm-pd-on-mobile">
                 <div class="form-group">
-                    <div class="name">Chức vụ</div>
+                    <div class="name">{{ __('home.Position') }}</div>
                     <select class="form-control" name="chuc_vu" id="chuc_vu">
-                        <option value="1">Đại diện</option>
-                        <option value="1">Trưởng phòng</option>
+                        <option value="1">{{ __('home.Representative') }}</option>
+                        <option value="1">{{ __('home.Manager') }}</option>
                     </select>
 
                 </div>
                 <div class="form-group">
-                    <div class="name">Họ tên</div>
+                    <div class="name">{{ __('home.full name') }}</div>
                     <input type="text" class="form-control" name="name" id="name"
                            placeholder="Nhập Họ tên" required>
                 </div>
                 <div class="form-group">
-                    <div class="name">Số điện thoại</div>
+                    <div class="name">{{ __('home.phone number') }}</div>
                     <input type="text" class="form-control" name="phone" id="phone"
                            placeholder="Nhập Số điện thoại" required>
                 </div>
                 <div class="form-group">
-                    <div class="name">ID MXH</div>
+                    <div class="name">{{ __('home.social network id') }}</div>
                     <input type="text" class="form-control" name="social_media" id="social_media"
                            placeholder="Nhập ID MXH" required>
                 </div>
@@ -60,24 +60,24 @@
             </div>
             <div class="col-6 col-sm-6 mt-2 rm-pd-on-mobile">
                 <div class="form-group">
-                    <div class="name">Phụ trách</div>
+                    <div class="name">{{ __('home.Responsibility') }}</div>
                     <select class="form-control" name="phu_trach" id="phu_trach">
-                        <option value="1">Người đại diện</option>
-                        <option value="1">Người đăng ký</option>
+                        <option value="1">{{ __('home.Representative') }}</option>
+                        <option value="1">{{ __('home.Subscribers') }}</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <div class="name">Biệt danh</div>
+                    <div class="name">{{ __('home.Nickname') }}</div>
                     <input type="text" class="form-control" name="nickname" id="nickname"
                            placeholder="Nhập Biệt danh" required>
                 </div>
                 <div class="form-group">
-                    <div class="name">Email</div>
+                    <div class="name">{{ __('home.email') }}</div>
                     <input type="text" class="form-control" name="email" id="email"
                            placeholder="Nhập Email" required>
                 </div>
                 <div class="form-group">
-                    <div class="name">Mật khẩu</div>
+                    <div class="name">{{ __('home.Password') }}</div>
                     <input type="password" class="form-control" name="password" id="password" placeholder="Nhập Mật khẩu"
                            required>
                 </div>

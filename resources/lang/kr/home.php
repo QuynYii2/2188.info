@@ -355,7 +355,30 @@ return [
     'Thành tiền' => '돈으로',
     'Tiếp nhận đặt hàng' => '주문받기',
     'Chọn quốc gia mua hàng' => '구매 국가 선택',
-    'Xem chi tiết các hình ảnh khác' => 'Xem chi tiết các hình ảnh khác',
+    'Xem chi tiết các hình ảnh khác' => '다른 사진 자세히 보기',
+    'Xem thuộc tính' => '속성 보기',
+    'Membership upgrade' => '멤버십 업그레이드',
+    'Product Code' => '제품 코드',
+    'Thanh toán hội viên' => '멤버십 결제',
+    'Subscribers' => '구독자',
+    'Representative' => '대표',
+    'Nickname' => '별명',
+    'Responsibility' => '책임',
+    'Manager' => '관리자',
+    'Position' => '위치',
+    'Add new products' => '새 제품 추가',
+    'social network id' => '소셜 네트워크 ID',
+    'Retail' => '소매',
+    'Buy wholesale' => '도매 구매',
+    'Số sản phẩm' => '제품 번호',
+    'Mua sỉ nước ngoài' => '해외에서 도매 구매',
+    'Shipping And Payment' => '배송 및 결제',
+    'Partner' => '파트너',
+    'Check out now' => '지금 확인하세요',
+    'View Cart' => '장바구니보기',
+    'Grand Total' => '총계',
+    'Xem chi tiết' => '자세히보다',
+    'Sign up now' => '지금 등록하세요',
 
 
 
@@ -384,4 +407,7 @@ return [
 
 
 
-];
+
+
+
+];;
