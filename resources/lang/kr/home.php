@@ -81,6 +81,9 @@ return [
     'delivered' => '배달',
     'canceled' => '취소 됨',
     'all' => '모든',
+    'Cancel' => '취소',
+    'Back' => 'T뒤쪽에',
+    'OrderID' =>'주문 아이디',
     'in progress' => '진행 중',
     'done' => '끝난',
     'add address' => '주소 추가',
@@ -343,6 +346,84 @@ return [
     'Membership classification' => '회원 구분',
     'Customer rating score' => '고객 평가 점수',
     'Specified products' => '특정상품',
+    'Watch product videos' => '제품 동영상 보기',
+    'Order conditions' => '주문 조건',
+    'Ngày dự kiến xuất kho' => '예상 배달 날짜',
+    'Unit price' => '단가',
+    'ngày kể từ ngày đặt hàng' => '주문일로부터 일',
+    'đơn giá phía trên là điều kiện FOB/TT' => '위 단가는 FOB/TT 조건입니다.',
+    'Đặt hàng' => '주문하다',
+    'Thuộc tính' => '속성',
+    'Số lượng' => '수량',
+    'Thành tiền' => '돈으로',
+    'Tiếp nhận đặt hàng' => '주문받기',
+    'Chọn quốc gia mua hàng' => '구매 국가 선택',
+    'Xem chi tiết các hình ảnh khác' => '다른 사진 자세히 보기',
+    'Xem thuộc tính' => '속성 보기',
+    'Membership upgrade' => '멤버십 업그레이드',
+    'Product Code' => '제품 코드',
+    'Thanh toán hội viên' => '멤버십 결제',
+    'Subscribers' => '구독자',
+    'Representative' => '대표',
+    'Nickname' => '별명',
+    'Responsibility' => '책임',
+    'Manager' => '관리자',
+    'Position' => '위치',
+    'Add new products' => '새 제품 추가',
+    'social network id' => '소셜 네트워크 ID',
+    'Retail' => '소매',
+    'Buy wholesale' => '도매 구매',
+    'Số sản phẩm' => '제품 번호',
+    'Mua sỉ nước ngoài' => '해외에서 도매 구매',
+    'Shipping And Payment' => '배송 및 결제',
+    'Partner' => '파트너',
+    'Check out now' => '지금 확인하세요',
+    'View Cart' => '장바구니보기',
+    'Grand Total' => '총계',
+    'Xem chi tiết' => '자세히보다',
+    'Sign up now' => '지금 등록하세요',
+    'Product Management' => '제품 관리',
+    'Agree to the terms and conditions of the member' => '회원약관에 동의합니다',
+    'Check the rules you must agree to below' => '아래에서 동의해야 하는 규칙을 확인하세요',
+    'Trust' => '신뢰하다',
+    'Agree to the terms and conditions that we provide' => '우리가 제공하는 이용 약관에 동의합니다',
+    'Permission to collect information' => '정보수집에 대한 허가',
+    'Agree all' => '모두 동의',
+    'Main function only for members' => '회원만을 위한 주요 기능',
+    'Join member' => '회원가입',
+    'Sign up for information' => '정보를 얻으려면 가입하세요',
+    'Company Name' => '회사 이름',
+    'Code Business' => '코드사업',
+    'Select the applicable category' => '해당 카테고리를 선택하세요.',
+    'Your browser does not support' => '귀하의 브라우저는 지원하지 않습니다',
+    'Select ward/commune' => '구/면을 선택하세요',
+    'Select district/district' => '구역/구역 선택',
+    'Choose the city' => '도시를 선택하세요',
+    'Select country' => '국가 선택',
+    'Rank' => '계급',
+    'Staff' => '직원',
+    'SNS Account' => 'SNS 계정',
+    'Other' => '다른',
+    'Register registrant information for members' => '회원등록정보를 등록합니다.',
+    'Confirm' => '확인하다',
+    'information verification' => '정보 확인',
+    'Verify Code' => '코드 확인',
+    'Payment Register Member' => '지불 등록 회원',
+    'Membership fee' => '회비',
+    'Fax' => '팩스',
+    'Status' => '상태',
+    'PAID' => '유급의',
+    'UNPAID' => '미지급',
+    'Account Member Source' => '계정 구성원 소스',
+    'Account Member Represent' => '계정 회원 대표',
+    'Membership benefits' => '멤버십 혜택',
+    'Review now' => '지금 검토',
+    'Find products' => '제품 찾기',
+    'Payment success' => '결제 성공',
+    'Messaging and product promotion' => '메시징 및 제품 홍보',
+    ' Back to home' => '홈으로',
+    'Manage and search transactions' => '거래 관리 및 검색',
+    'FileReader' => '파일리더',
 
 
 
@@ -368,4 +449,19 @@ return [
 
 
 
-];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+];;

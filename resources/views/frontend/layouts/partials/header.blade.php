@@ -142,44 +142,33 @@
                                         data-target="#modal-flag-header">
                                     {{--                                    <i class="item-icon fa-regular fa-heart"></i>--}}
                                     <div class="it em-text">
-                                        Mua lẻ
+                                        {{ __('home.Retail') }}
                                     </div>
                                 </button>
                             </div>
-                            <div class="item button_seller align-center d-flex">
-                                <button class="full-width cursor-pointer">
-                                    <div class="it em-text" data-toggle="modal" data-target="#buyerModal">Mua
-                                        sỉ
-                                    </div>
-                                </button>
-                            </div>
+
                             @php
                                 $company = \App\Models\MemberRegisterInfo::where([
                                     ['user_id', Auth::user()->id],
                                     ['status', \App\Enums\MemberRegisterInfoStatus::ACTIVE]
                                 ])->first();
                             @endphp
-
-                            @if($company && $company->member != \App\Enums\RegisterMember::TRUST)
+                            @if($company && $company->member != \App\Enums\RegisterMember::BUYER)
                                 <div class="item button_seller align-center d-flex">
                                     <button class="full-width cursor-pointer">
-                                        {{--                                    <i class="item-icon fa-solid fa-gift"></i>--}}
                                         <div class="it em-text" data-toggle="modal" data-target="#modalBuyBulkLogistic">
-                                            Mua sỉ
+                                            {{ __('home.Buy wholesale') }}
                                         </div>
                                     </button>
                                 </div>
-                            @elseif($company && $company->member == \App\Enums\RegisterMember::TRUST)
+                            @else
                                 <div class="item button_seller align-center d-flex">
                                     <button class="full-width cursor-pointer">
-                                        {{--                                    <i class="item-icon fa-solid fa-gift"></i>--}}
-                                        <div class="it em-text" data-toggle="modal" data-target="#modalBuyBulkTrust">Mua
-                                            sỉ
+                                        <div class="it em-text" data-toggle="modal" data-target="#modalBuyer">
+                                            {{ __('home.Buy wholesale') }}
                                         </div>
                                     </button>
                                 </div>
-
-
                             @endif
                             @php
                                 $local = session('locale');
@@ -197,7 +186,7 @@
                                     <div class="name">
                                         <a href="{{route('profile.show')}}">{{Auth::user()->name}}</a>
                                         <a href="{{route('process.register.member')}}"
-                                           class="">Nâng cấp hội viên</a>
+                                           class="">{{ __('home.Membership upgrade') }}</a>
                                     </div>
                                     <hr>
                                     @php
@@ -213,7 +202,7 @@
                                     @if($exitsMember)
                                         <div class="name">
                                             <a href="#"
-                                               class="">Thanh toán hội viên</a>
+                                               class="">{{ __('home.Membership payment') }}</a>
                                         </div>
                                         <hr>
                                     @endif
@@ -228,11 +217,11 @@
                                     </a>
 
                                     @if(!$checkBuyer)
-                                        @if($coin)
-                                            <div class="drop-item">
-                                                <a href="">Coins: {{$coin->quantity}}</a>
-                                            </div>
-                                        @endif
+{{--                                        @if($coin)--}}
+{{--                                            <div class="drop-item">--}}
+{{--                                                <a href="">Coins: {{$coin->quantity}}</a>--}}
+{{--                                            </div>--}}
+{{--                                        @endif--}}
                                         <a href="{{route('wish.list.index')}}" class="none_decoration">
                                             <div class="drop-item">
                                                 {{ __('home.Wish Lists') }}
@@ -292,8 +281,7 @@
                                         @endif
                                         @if(!$checkTrust && $isValid==true)
                                             <div class="drop-item">
-                                                <a href="{{route('shop.list.products')}}">Quản lí sản
-                                                    phẩm</a>
+                                                <a href="{{route('shop.list.products')}}">{{ __('home.Product Management') }}</a>
                                             </div>
                                         @endif
 
@@ -311,7 +299,7 @@
                                         @if($exitsMember)
                                             <div class="drop-item text-danger">
                                                 <a href="{{route('show.payment.member', $exitsMember->member)}}"
-                                                   class="text-danger">Thanh toán hội viên</a>
+                                                   class="text-danger">{{ __('home.Membership payment') }}</a>
                                             </div>
                                         @endif
                                     @endif
@@ -506,19 +494,19 @@
                                                 <div class="total mb-4">
                                                     <div class="subtotal"></div>
                                                     <div class="grandtotal d-flex justify-content-between ">
-                                                        <span>Grand Total:</span>
+                                                        <span>{{ __('home.Grand Total') }}:</span>
                                                         <span>$</span>
                                                     </div>
                                                 </div>
                                                 <div class="cart">
                                                     <a class="a-cart" href="{{ route('checkout.show') }}">
                                                         <div class="check_now">
-                                                            Check out now
+                                                            {{ __('home.Check out now') }}
                                                         </div>
                                                     </a>
                                                     <a class="a-card" href="{{ route('cart.index') }}">
                                                         <div class="view-card">
-                                                            View Cart
+                                                            {{ __('home.View Cart') }}
                                                         </div>
                                                     </a>
                                                 </div>
@@ -533,7 +521,7 @@
                                 @if(!Auth::user())
                                     <div class="d-flex">
                                         <button class="button_login" onclick="signIn()">
-                                            <div class="item-text">Đăng nhập</div>
+                                            <div class="item-text">{{ __('home.sign in') }}</div>
                                         </button>
                                     </div>
                                 @endif
@@ -767,8 +755,7 @@
                                                                                         </div>
                                                                                         <div class="card-bottom d-flex justify-content-between">
                                                                                             <div class="card-bottom--left">
-                                                                                                <a href="{{route('detail_product.show', $product->id)}}">Choose
-                                                                                                    Options</a>
+                                                                                                <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>

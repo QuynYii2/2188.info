@@ -50,8 +50,8 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th class="float-left">OrderID</th>
-                                    <th class="float-right">Total Price</th>
+                                    <th class="float-left">{{ __('home.OrderID') }}:</th>
+                                    <th class="float-right">{{ __('home.Total Product Cost') }}:</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -82,29 +82,29 @@
                                                                 @method('DELETE')
                                                                 <div class="row mb-5">
                                                                     <div class="col">
-                                                                        <label for="fname">Full name:</label>
+                                                                        <label for="fname">{{ __('home.full name') }}:</label>
                                                                         <input type="text"
                                                                                value="{{$order->fullname}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <label for="fname">Email:</label>
+                                                                        <label for="fname">{{ __('home.email') }}:</label>
                                                                         <input type="text" value="{{$order->email}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <label for="fname">Phone:</label>
+                                                                        <label for="fname">{{ __('home.phone number') }}:</label>
                                                                         <input type="text" value="{{$order->phone}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <label for="fname">Address:</label>
+                                                                        <label for="fname">{{ __('home.address') }}:</label>
                                                                         <input type="text"
                                                                                value="{{$order->address}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col mt-3">
-                                                                        <label for="fname">Total Price:</label>
+                                                                        <label for="fname">{{ __('home.Total Payment') }}:</label>
                                                                         <input type="text"
                                                                                value="${{$order->total}}"
                                                                                disabled>
@@ -114,17 +114,17 @@
                                                                     @if($order->status == \App\Enums\OrderStatus::PROCESSING  || $order->status == \App\Enums\OrderStatus::WAIT_PAYMENT)
                                                                         <button type="submit"
                                                                                 class="btn w-25 btn-danger">
-                                                                            Cancel
+                                                                            {{ __('home.Cancel') }}:
                                                                         </button>
                                                                     @else
                                                                         <button class="btn w-25 btn-danger"
                                                                                 disabled>
-                                                                            Cancel
+                                                                            {{ __('home.Cancel') }}:
                                                                         </button>
                                                                     @endif
                                                                     <button type="button"
                                                                             class="btn w-25 btn-secondary"
-                                                                            data-dismiss="modal">Back
+                                                                            data-dismiss="modal">{{ __('home.Back') }}:
                                                                     </button>
                                                                 </div>
                                                             </form>
@@ -155,8 +155,8 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th class="float-left">OrderID</th>
-                                    <th class="float-right">Total Price</th>
+                                    <th class="float-left">{{ __('home.OrderID') }}:</th>
+                                    <th class="float-right">{{ __('home.Total Product Cost') }}:</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -186,29 +186,29 @@
                                                                 @method('DELETE')
                                                                 <div class="row mb-5">
                                                                     <div class="col">
-                                                                        <label for="fname">Full name:</label>
+                                                                        <label for="fname">{{ __('home.full name') }}:</label>
                                                                         <input type="text"
                                                                                value="{{$order->fullname}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <label for="fname">Email:</label>
+                                                                        <label for="fname">{{ __('home.email') }}:</label>
                                                                         <input type="text" value="{{$order->email}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <label for="fname">Phone:</label>
+                                                                        <label for="fname">{{ __('home.phone number') }}:</label>
                                                                         <input type="text" value="{{$order->phone}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <label for="fname">Address:</label>
+                                                                        <label for="fname">{{ __('home.address') }}:</label>
                                                                         <input type="text"
                                                                                value="{{$order->address}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col mt-3">
-                                                                        <label for="fname">Total Price:</label>
+                                                                        <label for="fname">{{ __('home.Total Payment') }}:</label>
                                                                         <input type="text"
                                                                                value="${{$order->total}}"
                                                                                disabled>
@@ -217,11 +217,11 @@
                                                                 <div class="d-flex justify-content-around">
                                                                     <button type="submit"
                                                                             class="btn w-25 btn-danger">
-                                                                        Cancel
+                                                                        {{ __('home.Cancel') }}:
                                                                     </button>
                                                                     <button type="button"
                                                                             class="btn w-25 btn-secondary"
-                                                                            data-dismiss="modal">Back
+                                                                            data-dismiss="modal">{{ __('home.Back') }}:
                                                                     </button>
                                                                 </div>
                                                             </form>
@@ -252,8 +252,8 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th class="float-left">OrderID</th>
-                                    <th class="float-right">Total Price</th>
+                                    <th class="float-left">{{ __('home.OrderID') }}:</th>
+                                    <th class="float-right">{{ __('home.Total Product Cost') }}:</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -284,29 +284,29 @@
                                                                 @method('DELETE')
                                                                 <div class="row mb-5">
                                                                     <div class="col">
-                                                                        <label for="fname">Full name:</label>
+                                                                        <label for="fname">{{ __('home.full name') }}:</label>
                                                                         <input type="text"
                                                                                value="{{$order->fullname}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <label for="fname">Email:</label>
+                                                                        <label for="fname">{{ __('home.email') }}:</label>
                                                                         <input type="text" value="{{$order->email}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <label for="fname">Phone:</label>
+                                                                        <label for="fname">{{ __('home.phone number') }}:</label>
                                                                         <input type="text" value="{{$order->phone}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <label for="fname">Address:</label>
+                                                                        <label for="fname">{{ __('home.address') }}:</label>
                                                                         <input type="text"
                                                                                value="{{$order->address}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col mt-3">
-                                                                        <label for="fname">Total Price:</label>
+                                                                        <label for="fname">{{ __('home.Total Payment') }}:</label>
                                                                         <input type="text"
                                                                                value="${{$order->total}}"
                                                                                disabled>
@@ -316,18 +316,18 @@
                                                                     @if($order->status == \App\Enums\OrderStatus::PROCESSING)
                                                                         <button type="submit"
                                                                                 class="btn w-25 btn-danger">
-                                                                            Cancel
+                                                                            {{ __('home.Cancel') }}:
                                                                         </button>
                                                                     @else
                                                                         <button type="" class="btn w-25 btn-danger"
                                                                                 disabled>
-                                                                            Cancel
+                                                                            {{ __('home.Cancel') }}:
                                                                         </button>
                                                                     @endif
 
                                                                     <button type="button"
                                                                             class="btn w-25 btn-secondary"
-                                                                            data-dismiss="modal">Back
+                                                                            data-dismiss="modal">{{ __('home.Back') }}:
                                                                     </button>
                                                                 </div>
                                                             </form>
@@ -358,8 +358,8 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th class="float-left">OrderID</th>
-                                    <th class="float-right">Total Price</th>
+                                    <th class="float-left">{{ __('home.OrderID') }}:</th>
+                                    <th class="float-right">{{ __('home.Total Product Cost') }}:</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -386,29 +386,29 @@
                                                             <form id="delete-account-form">
                                                                 <div class="row mb-5">
                                                                     <div class="col">
-                                                                        <label for="fname">Full name:</label>
+                                                                        <label for="fname">{{ __('home.full name') }}:</label>
                                                                         <input type="text"
                                                                                value="{{$order->fullname}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <label for="fname">Email:</label>
+                                                                        <label for="fname">{{ __('home.email') }}:</label>
                                                                         <input type="text" value="{{$order->email}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <label for="fname">Phone:</label>
+                                                                        <label for="fname">{{ __('home.phone number') }}:</label>
                                                                         <input type="text" value="{{$order->phone}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <label for="fname">Address:</label>
+                                                                        <label for="fname">{{ __('home.address') }}:</label>
                                                                         <input type="text"
                                                                                value="{{$order->address}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col mt-3">
-                                                                        <label for="fname">Total Price:</label>
+                                                                        <label for="fname">{{ __('home.Total Payment') }}:</label>
                                                                         <input type="text"
                                                                                value="${{$order->total}}"
                                                                                disabled>
@@ -418,12 +418,12 @@
                                                                     <button type="submit"
                                                                             class="btn w-25 btn-danger"
                                                                             disabled>
-                                                                        Cancel
+                                                                        {{ __('home.Cancel') }}:
                                                                     </button>
 
                                                                     <button type="button"
                                                                             class="btn w-25 btn-secondary"
-                                                                            data-dismiss="modal">Back
+                                                                            data-dismiss="modal">{{ __('home.Back') }}:
                                                                     </button>
                                                                 </div>
                                                             </form>
@@ -454,8 +454,8 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th class="float-left">OrderID</th>
-                                    <th class="float-right">Total Price</th>
+                                    <th class="float-left">{{ __('home.OrderID') }}:</th>
+                                    <th class="float-right">{{ __('home.Total Product Cost') }}:</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -482,29 +482,29 @@
                                                             <form id="delete-account-form">
                                                                 <div class="row mb-5">
                                                                     <div class="col">
-                                                                        <label for="fname">Full name:</label>
+                                                                        <label for="fname">{{ __('home.full name') }}:</label>
                                                                         <input type="text"
                                                                                value="{{$order->fullname}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <label for="fname">Email:</label>
+                                                                        <label for="fname">{{ __('home.email') }}:</label>
                                                                         <input type="text" value="{{$order->email}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <label for="fname">Phone:</label>
+                                                                        <label for="fname">{{ __('home.phone number') }}:</label>
                                                                         <input type="text" value="{{$order->phone}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <label for="fname">Address:</label>
+                                                                        <label for="fname">{{ __('home.address') }}:</label>
                                                                         <input type="text"
                                                                                value="{{$order->address}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col mt-3">
-                                                                        <label for="fname">Total Price:</label>
+                                                                        <label for="fname">{{ __('home.Total Payment') }}:</label>
                                                                         <input type="text"
                                                                                value="${{$order->total}}"
                                                                                disabled>
@@ -514,11 +514,11 @@
                                                                     <button type="submit"
                                                                             class="btn w-25 btn-danger"
                                                                             disabled>
-                                                                        Cancel
+                                                                        {{ __('home.Cancel') }}:
                                                                     </button>
                                                                     <button type="button"
                                                                             class="btn w-25 btn-secondary"
-                                                                            data-dismiss="modal">Back
+                                                                            data-dismiss="modal">{{ __('home.Back') }}:
                                                                     </button>
                                                                 </div>
                                                             </form>
@@ -549,8 +549,8 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th class="float-left">OrderID</th>
-                                    <th class="float-right">Total Price</th>
+                                    <th class="float-left">{{ __('home.OrderID') }}:</th>
+                                    <th class="float-right">{{ __('home.Total Product Cost') }}:</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -577,29 +577,29 @@
                                                             <form id="delete-account-form">
                                                                 <div class="row mb-5">
                                                                     <div class="col">
-                                                                        <label for="fname">Full name:</label>
+                                                                        <label for="fname">{{ __('home.full name') }}:</label>
                                                                         <input type="text"
                                                                                value="{{$order->fullname}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <label for="fname">Email:</label>
+                                                                        <label for="fname">{{ __('home.email') }}:</label>
                                                                         <input type="text" value="{{$order->email}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <label for="fname">Phone:</label>
+                                                                        <label for="fname">{{ __('home.phone number') }}:</label>
                                                                         <input type="text" value="{{$order->phone}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col">
-                                                                        <label for="fname">Address:</label>
+                                                                        <label for="fname">{{ __('home.address') }}:</label>
                                                                         <input type="text"
                                                                                value="{{$order->address}}"
                                                                                disabled>
                                                                     </div>
                                                                     <div class="col mt-3">
-                                                                        <label for="fname">Total Price:</label>
+                                                                        <label for="fname">{{ __('home.Total Payment') }}:</label>
                                                                         <input type="text"
                                                                                value="${{$order->total}}"
                                                                                disabled>
@@ -609,11 +609,11 @@
                                                                     <button type="submit"
                                                                             class="btn w-25 btn-danger"
                                                                             disabled>
-                                                                        Cancel
+                                                                        {{ __('home.Cancel') }}:
                                                                     </button>
                                                                     <button type="button"
                                                                             class="btn w-25 btn-secondary"
-                                                                            data-dismiss="modal">Back
+                                                                            data-dismiss="modal">{{ __('home.Back') }}:
                                                                     </button>
                                                                 </div>
                                                             </form>

@@ -19,36 +19,35 @@
                 <div class="mt-5">
                     <div class="card border">
                         <h3 class="text-center">
-                            Đồng ý với điều khoản quy định của hội
-                            viên {{$member->name}}
+                            {{ __('home.Agree to the terms and conditions of the member') }} {{$member->name}}
                         </h3>
                         <div class="row ml-3 mr-3">
                             <div class="col-md-6 border">
-                                <h5 class="text-center">Kiểm tra nội quy định phải đồng ý ở bên dưới</h5>
+                                <h5 class="text-center">{{ __('home.Check the rules you must agree to below') }}</h5>
                                 <div class="rules" onclick="validateAll()">
                                     <p class="text-warning">
-                                        Đồng ý với quy định và điều khoản mà chúng tôi cung cấp
+                                        {{ __('home.Agree to the terms and conditions that we provide') }}
                                     </p>
                                     <input type="checkbox" id="rules" name="rules" required>
-                                    <label for="rules"> Trust</label><br>
+                                    <label for="rules"> {{ __('home.Trust') }}</label><br>
                                 </div>
                                 <div class="getInfo" onclick="validateAll()">
                                     <p class="text-warning">
-                                        Cho phép thu thập thông tin
+                                        {{ __('home.Permission to collect information') }}
                                     </p>
                                     <input type="checkbox" id="getInfo" name="getInfo" required>
-                                    <label for="getInfo"> Trust</label><br>
+                                    <label for="getInfo"> {{ __('home.Trust') }}</label><br>
                                 </div>
                                 <div class="all" onclick="validate()">
                                     <p class="text-warning">
-                                        Đồng ý tất cả
+                                        {{ __('home.Agree all') }}
                                     </p>
                                     <input type="checkbox" id="all" name="all">
-                                    <label for="all"> All</label><br>
+                                    <label for="all"> {{ __('home.all') }}</label><br>
                                 </div>
                             </div>
                             <div class="col-md-6 border">
-                                <h5 class="text-center">Chức năng chính dành riêng cho hội viên</h5>
+                                <h5 class="text-center">{{ __('home.Main function only for members') }}</h5>
                                 @php
                                     $listPermissionID = $member->permission_id;
                                     $arrayPermissionID = null;
@@ -63,7 +62,18 @@
                                                 @php
                                                     $permission = \App\Models\Permission::find($permissionID);
                                                 @endphp
-                                                {{$permission->name}}
+
+                                                @if(locationHelper() == 'kr')
+                                                    <div class="item-text">{{ $permission->name_ko }}</div>
+                                                @elseif(locationHelper() == 'cn')
+                                                    <div class="item-text">{{$permission->name_zh}}</div>
+                                                @elseif(locationHelper() == 'jp')
+                                                    <div class="item-text">{$permission->name_ja}}</div>
+                                                @elseif(locationHelper() == 'vi')
+                                                    <div class="item-text">{{$permission->name_vi}}</div>
+                                                @else
+                                                    <div class="item-text">{{$permission->name_en}}</div>
+                                                @endif
                                             </li>
                                         @endforeach
                                     @endif
@@ -75,8 +85,8 @@
                         <p class="bg-success full-width p-3 ml-3 mr-3"></p>
                         <div class="mt-3 mb-3">
                             <h5 class="text-center">
-                                Gia nhập hội viên {{$member->name}}
-                                <p class="text-danger text-center">Price:
+                                {{ __('home.Join member') }} {{$member->name}}
+                                <p class="text-danger text-center">{{ __('home.Price') }}:
                                     ${{$member->price}}</p>
                             </h5>
                         </div>
@@ -86,10 +96,10 @@
                             <div class="col-md-6">
                                 <a href="{{route('show.register.member.info', $member->id)}}"
                                    id="register" class="d-none btn btn-success mr-3">
-                                    Đăng ký
+                                    {{ __('home.sign up') }}
                                 </a>
                                 <button id="register-btn" class="btn-hidden btn btn-secondary mr-3">
-                                    Đăng ký
+                                    {{ __('home.sign up') }}
                                 </button>
                             </div>
                         </div>

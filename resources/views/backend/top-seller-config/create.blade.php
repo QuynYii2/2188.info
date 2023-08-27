@@ -25,8 +25,8 @@
         </div>
         <select class="form-select mb-4" aria-label="Default select example" id="selectMarketing">
             <option id="marketing_product" value="1">Product</option>
-{{--            <option id="marketing_category" value="2">Category</option>--}}
-{{--            <option id="marketing_custom" value="3">Custom</option>--}}
+            <option id="marketing_category" value="2">Category</option>
+            <option id="marketing_custom" value="3">Custom</option>
         </select>
         <form id="marketing_product_form" class="marketing_product" action="{{route('seller.config.create')}}"
               method="post" enctype="multipart/form-data">

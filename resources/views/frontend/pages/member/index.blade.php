@@ -255,27 +255,27 @@
                                                     </div>
                                                 </div>
                                                 <div class=" mt-2 text-center">
-                                                    <h5 class="text-center">Xem video sản phẩm </h5>
+                                                    <h5 class="text-center">{{ __('home.Watch product videos') }} </h5>
                                                 </div>
                                             </div>
                                             <div class="col-md-6 border">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <h5>
-                                                        Điều kiện đặt hàng
+                                                        {{ __('home.Order conditions') }}
                                                     </h5>
-                                                    <h5>Sản phẩm: <span
+                                                    <h5>{{ __('home.Product Name') }}: <span
                                                                 class="text-warning productName{{$loop->index+1}}">{{ ($firstProduct->name) }}</span>
                                                     </h5>
                                                 </div>
                                                 <button class="btn btn-primary partnerBtn partnerBtn{{$loop->index+1}}"
-                                                        data-value="{{$firstProduct->id}}" data-count="100">Đối tác
+                                                        data-value="{{$firstProduct->id}}" data-count="100">{{ __('home.Partner') }}
                                                 </button>
                                                 <table class="table table-bordered">
                                                     <thead>
                                                     <tr>
-                                                        <th scope="col">Số lượng</th>
-                                                        <th scope="col">Đơn giá</th>
-                                                        <th scope="col">Ngày dự kiến xuất kho</th>
+                                                        <th scope="col">{{ __('home.quantity') }}</th>
+                                                        <th scope="col">{{ __('home.Unit price') }}</th>
+                                                        <th scope="col">{{ __('home.Ngày dự kiến xuất kho') }}</th>
                                                     </tr>
                                                     </thead>
 
@@ -285,7 +285,7 @@
                                                             <tr>
                                                                 <td>{{$price_sale->quantity}}</td>
                                                                 <td>-{{$price_sale->sales}} %</td>
-                                                                <td>{{$price_sale->days}} ngày kể từ ngày đặt hàng</td>
+                                                                <td>{{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
                                                             </tr>
                                                         @endforeach
                                                     @endif
@@ -293,16 +293,16 @@
                                                     </tbody>
                                                 </table>
 
-                                                <p>đơn giá phía trên là điều kiện FOB/TT</p>
-                                                <h5 class="text-center">Đặt hàng</h5>
+                                                <p>{{ __('home.đơn giá phía trên là điều kiện FOB/TT') }}</p>
+                                                <h5 class="text-center">{{ __('home.Đặt hàng') }}</h5>
                                                 <table class="table table-bordered">
                                                     <thead>
                                                     <tr>
-                                                        <th scope="col">Số sản phẩm</th>
-                                                        <th scope="col">Màu sắc</th>
-                                                        <th scope="col">Số lượng</th>
-                                                        <th scope="col">Đơn giá</th>
-                                                        <th scope="col">Thành tiền</th>
+                                                        <th scope="col">{{ __('home.Số sản phẩm') }}</th>
+                                                        <th scope="col">{{ __('home.color') }}</th>
+                                                        <th scope="col">{{ __('home.quantity') }}</th>
+                                                        <th scope="col">{{ __('home.Unit price') }}</th>
+                                                        <th scope="col">{{ __('home.Thành tiền') }}</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -327,15 +327,14 @@
                                                     </tbody>
                                                 </table>
                                                 <a href="{{route('parent.register.member.index', $memberCompany->id)}}"
-                                                   class="btn btn-success text-white float-right">Tiếp nhận đặt
-                                                    hàng
+                                                   class="btn btn-success text-white float-right">{{ __('home.Tiếp nhận đặt hàng') }}
                                                 </a>
                                             </div>
                                         @endif
                                     </div>
                                 </div>
                             </td>
-                            <td>Mua sỉ nước ngoài</td>
+                            <td>{{ __('home.Mua sỉ nước ngoài') }}</td>
                         </tr>
                     @endif
                 @endforeach
@@ -343,7 +342,7 @@
             </tbody>
         </table>
         <div class="text-center mb-3">
-            <h3 class="text-center">Shipping And Payment</h3>
+            <h3 class="text-center">{{ __('home.Shipping And Payment') }}</h3>
             <img src="http://2188.info/images/img/payment-method.png">
         </div>
     </div>

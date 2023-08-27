@@ -344,13 +344,13 @@
                                 @endphp
                                 <div class="d-flex justify-content-between">
                                     <div class="">
-                                        <h5>Product Code</h5>
+                                        <h5>{{ __('home.Product Code') }}</h5>
                                         <p class="productCode" id="productCode">
                                             {{ ($firstProduct->product_code) }}
                                         </p>
                                     </div>
                                     <div class="">
-                                        <h5>Product Name</h5>
+                                        <h5>{{ __('home.Product Name') }}</h5>
                                         <p class="productName" id="productName">
                                             @if(locationHelper() == 'kr')
                                                 {{ ($firstProduct->name_ko) }}
@@ -406,11 +406,11 @@
                                     <button id="btnViewAttribute" data-id="{{$firstProduct->id}}" type="button"
                                             class="btn" data-toggle="modal"
                                             data-target="#modal-show-att">
-                                        Xem thuộc tính
+                                        {{ __('home.Xem thuộc tính') }}
                                     </button>
                                 </div>
 
-                                <h6 class="text-center mt-2">Xem chi tiết các hình ảnh khác</h6>
+                                <h6 class="text-center mt-2">{{ __('home.Xem chi tiết các hình ảnh khác') }}</h6>
                                 @if($productGallery)
                                     @php
                                         $arrayProductImg = explode(',', $productGallery);
@@ -426,21 +426,21 @@
                                     </div>
                                 @endif
                                 <div class=" mt-2 text-center">
-                                    <h5 class="text-center">Xem video sản phẩm </h5>
+                                    <h5 class="text-center">{{ __('home.Watch product videos') }} </h5>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h5>
-                                        Điều kiện đặt hàng
+                                        {{ __('home.Order conditions') }}
                                     </h5>
                                 </div>
                                 <table class="table table-bordered">
                                     <thead>
                                     <tr>
-                                        <th scope="col">Số lượng</th>
-                                        <th scope="col">Đơn giá</th>
-                                        <th scope="col">Ngày dự kiến xuất kho</th>
+                                        <th scope="col">{{ __('home.quantity') }}</th>
+                                        <th scope="col">{{ __('home.Unit price') }}</th>
+                                        <th scope="col">{{ __('home.Ngày dự kiến xuất kho') }}</th>
                                     </tr>
                                     </thead>
 
@@ -450,22 +450,22 @@
                                             <tr>
                                                 <td>{{$price_sale->quantity}}</td>
                                                 <td>-{{$price_sale->sales}} %</td>
-                                                <td>{{$price_sale->days}} ngày kể từ ngày đặt hàng</td>
+                                                <td>{{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
                                             </tr>
                                         @endforeach
                                     @endif
                                     </tbody>
                                 </table>
 
-                                <p>đơn giá phía trên là điều kiện FOB/TT</p>
-                                <h5 class="text-center">Đặt hàng</h5>
+                                <p>{{ __('home.đơn giá phía trên là điều kiện FOB/TT') }}</p>
+                                <h5 class="text-center">{{ __('home.Đặt hàng') }}</h5>
                                 <table class="table table-bordered" id="table-selected-att">
                                     <thead>
                                     <tr>
-                                        <th scope="col">Thuộc tính</th>
-                                        <th scope="col">Số lượng</th>
-                                        <th scope="col">Đơn giá</th>
-                                        <th scope="col">Thành tiền</th>
+                                        <th scope="col">{{ __('home.Thuộc tính') }}</th>
+                                        <th scope="col">{{ __('home.Số lượng') }}</th>
+                                        <th scope="col">{{ __('home.Unit price') }}</th>
+                                        <th scope="col">{{ __('home.Thành tiền') }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -474,8 +474,7 @@
 
                                 @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
                                     <button class="btn btn-success partnerBtn float-right" id="partnerBtn"
-                                            data-value="{{ $firstProduct->id }}" data-count="100">Tiếp nhận đặt
-                                        hàng
+                                            data-value="{{ $firstProduct->id }}" data-count="100">{{ __('home.Tiếp nhận đặt hàng') }}
                                     </button>
                                 @endif
                             </div>
@@ -495,8 +494,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content p-4" style="width: auto">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalDemoLabel">Chọn quốc gia mua
-                        hàng</h5>
+                    <h5 class="modal-title" id="exampleModalDemoLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
                     <button type="button" class="close" data-dismiss="modal"
                             aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -531,8 +529,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content p-4" style="width: auto">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Chọn quốc gia mua
-                        hàng</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
                     <button type="button" class="close" data-dismiss="modal"
                             aria-label="Close">
                         <span aria-hidden="true">&times;</span>
