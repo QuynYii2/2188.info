@@ -230,11 +230,24 @@
     <div class="mt-3 d-flex justify-content-center">
         @foreach($products as $product)
             <button type="button" style="background-color: white" class="btn thumbnailProduct col-2" data-toggle="modal"
-                    data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}">
+                    data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}" data-name="
+                         @if(locationHelper() == 'kr')
+                                        {{ ($product->name_ko) }}
+                                    @elseif(locationHelper() == 'cn')
+                                        {{ ($product->name_zh) }}
+                                    @elseif(locationHelper() == 'jp')
+                                        {{ ($product->name_ja) }}
+                                    @elseif(locationHelper() == 'vi')
+                                        {{ ($product->name_vi) }}
+                                    @else
+                                        {{ ($product->name_en) }}
+                                    @endif
+                         ">
                 <div class="standsMember-item section">
                     <img data-id="{{$product->id}}"
                          src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
                          class="thumbnailProduct" data-value="{{$product}}"
+
                          width="150px" height="150px">
                     <div class="item-body">
                         <div class="card-rating text-left">
@@ -569,6 +582,8 @@
 
         $('.thumbnailProduct').on('click', function () {
             let product = $(this).data('value');
+            let productName = $(this).data('name');
+            console.log(productName);
             let imageUrl = '{{ asset('storage/') }}';
             let imgMain = product['thumbnail'];
             imageUrl = imageUrl + '/' + imgMain;
@@ -579,7 +594,7 @@
 
             let productNames = document.getElementsByClassName('productName');
             for (let i = 0; i < productNames.length; i++) {
-                productNames[i].innerHTML = product['name']
+                productNames[i].innerHTML = productName
             }
 
             let productID = product['id'];
