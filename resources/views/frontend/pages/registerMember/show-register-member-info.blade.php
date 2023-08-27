@@ -100,7 +100,7 @@
         <div class="background container-fluid pt-3 justify-content-center pb-3">
             <div class="row card border">
                 <div class="form-title text-center pt-2">
-                    <div class="title">Đăng kí thông tin</div>
+                    <div class="title">{{ __('home.Sign up for information') }}</div>
                 </div>
                 <div class="container mt-5">
                     <form class="p-3" action="{{route('register.member.info')}}" method="post"
@@ -110,13 +110,13 @@
                         <input type="text" class="d-none" name="member" value="{{ ($member->name) }}">
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="companyName">Company Name</label>
+                                <label for="companyName">{{ __('home.Company Name') }}</label>
                                 <input type="text" class="form-control" id="companyName"
                                        value="{{ $exitsMember ? $exitsMember->name : old('companyName') }}"
                                        name="companyName" required>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="codeBusiness">Code Business</label>
+                                <label for="codeBusiness">{{ __('home.Code Business') }}</label>
                                 <input type="text" class="form-control" id="codeBusiness"
                                        value="{{ $exitsMember ? $exitsMember->code_business : old('codeBusiness') }}"
                                        name="codeBusiness"
@@ -125,17 +125,17 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="phoneNumber">PhoneNumber</label>
+                                <label for="phoneNumber">{{ __('home.phone number') }}</label>
                                 <input type="number" class="form-control" id="phoneNumber"
                                        value="{{ $exitsMember ? $exitsMember->phone : old('phoneNumber') }}"
                                        name="phoneNumber" required>
                             </div>
                             <div class="form-group col-md-6 register-member">
-                                <label for="category">Category</label>
+                                <label for="category">{{ __('home.Category') }}</label>
                                 <div class="multiselect" style="position: relative">
                                     <div class="selectBox" id="div-click" onclick="showCheckboxes()">
                                         <select>
-                                            <option>Chọn category áp dụng</option>
+                                            <option>{{ __('home.Select the applicable category') }}</option>
                                         </select>
                                         <div class="overSelect"></div>
                                     </div>
@@ -162,7 +162,18 @@
                                                                value="{{ ($category->id) }}"
                                                                {{ $isChecked ? 'checked' : '' }}
                                                                class="inputCheckboxCategory mr-2 p-3"/>
-                                                        <span class="labelCheckboxCategory">{{ ($category->name) }}</span>
+                                                        <span class="labelCheckboxCategory">
+                                                            @if(locationHelper() == 'kr')
+                                                                <div class="item-text">{{ $category->name_ko }}</div>
+                                                            @elseif(locationHelper() == 'cn')
+                                                                <div class="item-text">{{$category->name_zh}}</div>
+                                                            @elseif(locationHelper() == 'jp')
+                                                                <div class="item-text">{{$category->name_ja}}</div>
+                                                            @elseif(locationHelper() == 'vi')
+                                                                <div class="item-text">{{$category->name_vi}}</div>
+                                                            @else
+                                                                <div class="item-text">{{$category->name_en}}</div>
+                                                            @endif</span>
                                                     </label>
                                                     @if(!$categories->isEmpty())
                                                         @php
@@ -184,7 +195,17 @@
                                                                        value="{{$child->id}}"
                                                                        {{ $isChecked1 ? 'checked' : '' }}
                                                                        class="inputCheckboxCategory mr-2 p-3"/>
-                                                                <span class="labelCheckboxCategory">{{ ($child->name) }}</span>
+                                                                <span class="labelCheckboxCategory">@if(locationHelper() == 'kr')
+                                                                        <div class="item-text">{{ $child->name_ko }}</div>
+                                                                    @elseif(locationHelper() == 'cn')
+                                                                        <div class="item-text">{{$child->name_zh}}</div>
+                                                                    @elseif(locationHelper() == 'jp')
+                                                                        <div class="item-text">{{$child->name_ja}}</div>
+                                                                    @elseif(locationHelper() == 'vi')
+                                                                        <div class="item-text">{{$child->name_vi}}</div>
+                                                                    @else
+                                                                        <div class="item-text">{{$child->name_en}}</div>
+                                                                    @endif</span>
                                                             </label>
                                                             @php
                                                                 $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
@@ -205,7 +226,17 @@
                                                                            value="{{$child2->id}}"
                                                                            {{ $isChecked2 ? 'checked' : '' }}
                                                                            class="inputCheckboxCategory mr-2 p-3"/>
-                                                                    <span class="labelCheckboxCategory">{{ ($child2->name) }}</span>
+                                                                    <span class="labelCheckboxCategory">@if(locationHelper() == 'kr')
+                                                                            <div class="item-text">{{ $child2->name_ko }}</div>
+                                                                        @elseif(locationHelper() == 'cn')
+                                                                            <div class="item-text">{{$child2->name_zh}}</div>
+                                                                        @elseif(locationHelper() == 'jp')
+                                                                            <div class="item-text">{{$child2->name_ja}}</div>
+                                                                        @elseif(locationHelper() == 'vi')
+                                                                            <div class="item-text">{{$child2->name_vi}}</div>
+                                                                        @else
+                                                                            <div class="item-text">{{$child2->name_en}}</div>
+                                                                        @endif</span>
                                                                 </label>
                                                             @endforeach
                                                         @endforeach
@@ -222,7 +253,19 @@
                                                                name="category-{{$category->id}}"
                                                                value="{{ ($category->id) }}"
                                                                class="inputCheckboxCategory mr-2 p-3"/>
-                                                        <span class="labelCheckboxCategory">{{ ($category->name) }}</span>
+                                                        <span class="labelCheckboxCategory">
+                                                            @if(locationHelper() == 'kr')
+                                                                <div class="item-text">{{ $category->name_ko }}</div>
+                                                            @elseif(locationHelper() == 'cn')
+                                                                <div class="item-text">{{$category->name_zh}}</div>
+                                                            @elseif(locationHelper() == 'jp')
+                                                                <div class="item-text">{{$category->name_ja}}</div>
+                                                            @elseif(locationHelper() == 'vi')
+                                                                <div class="item-text">{{$category->name_vi}}</div>
+                                                            @else
+                                                                <div class="item-text">{{$category->name_en}}</div>
+                                                            @endif
+                                                        </span>
                                                     </label>
                                                     @if(!$categories->isEmpty())
                                                         @php
@@ -234,7 +277,19 @@
                                                                        name="category-{{$child->id}}"
                                                                        value="{{$child->id}}"
                                                                        class="inputCheckboxCategory mr-2 p-3"/>
-                                                                <span class="labelCheckboxCategory">{{ ($child->name) }}</span>
+                                                                <span class="labelCheckboxCategory">
+                                                                    @if(locationHelper() == 'kr')
+                                                                        <div class="item-text">{{ $child->name_ko }}</div>
+                                                                    @elseif(locationHelper() == 'cn')
+                                                                        <div class="item-text">{{$child->name_zh}}</div>
+                                                                    @elseif(locationHelper() == 'jp')
+                                                                        <div class="item-text">{{$child->name_ja}}</div>
+                                                                    @elseif(locationHelper() == 'vi')
+                                                                        <div class="item-text">{{$child->name_vi}}</div>
+                                                                    @else
+                                                                        <div class="item-text">{{$child->name_en}}</div>
+                                                                    @endif
+                                                                </span>
                                                             </label>
                                                             @php
                                                                 $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
@@ -245,7 +300,17 @@
                                                                            name="category-{{$child2->id}}"
                                                                            value="{{$child2->id}}"
                                                                            class="inputCheckboxCategory mr-2 p-3"/>
-                                                                    <span class="labelCheckboxCategory">{{ ($child2->name) }}</span>
+                                                                    <span class="labelCheckboxCategory">@if(locationHelper() == 'kr')
+                                                                            <div class="item-text">{{ $child2->name_ko }}</div>
+                                                                        @elseif(locationHelper() == 'cn')
+                                                                            <div class="item-text">{{$child2->name_zh}}</div>
+                                                                        @elseif(locationHelper() == 'jp')
+                                                                            <div class="item-text">{{$child2->name_ja}}</div>
+                                                                        @elseif(locationHelper() == 'vi')
+                                                                            <div class="item-text">{{$child2->name_vi}}</div>
+                                                                        @else
+                                                                            <div class="item-text">{{$child2->name_en}}</div>
+                                                                        @endif</span>
                                                                 </label>
                                                             @endforeach
                                                         @endforeach
@@ -257,29 +322,29 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="countries-select">Chọn quốc gia:</label>
+                                <label for="countries-select">{{ __('home.Select country') }}</label>
                                 <select class="form-control" id="countries-select" name="countries-select"
                                         onchange="getListState(this.value)" required>
                                 </select>
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="cities-select">Chọn thành phố:</label>
+                                <label for="cities-select">{{ __('home.Choose the city') }}</label>
                                 <select class="form-control" id="cities-select" name="cities-select"
                                         onchange="getListCity(this.value)">
-                                    <option value="">-- Chọn thành phố --</option>
+                                    <option value="">-- {{ __('home.Choose the city') }} --</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="provinces-select">Chọn quận/huyện:</label>
+                                <label for="provinces-select">{{ __('home.Select district/district') }}</label>
                                 <select class="form-control" id="provinces-select" name="provinces-select"
                                         onchange="getListWard(this.value)">
-                                    <option value="">-- Chọn quận/huyện --</option>
+                                    <option value="">-- {{ __('home.Select district/district') }} --</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="wards-select">Chọn phường/xã:</label>
+                                <label for="wards-select">{{ __('home.Select ward/commune') }}</label>
                                 <select class="form-control" name="wards-select" id="wards-select">
-                                    <option value="">-- Chọn phường/xã --</option>
+                                    <option value="">-- {{ __('home.Select ward/commune') }} --</option>
                                 </select>
                             </div>
                             @php
@@ -303,9 +368,9 @@
                                                 <div id="imagePreview"></div>
                                             </div>
                                             <p class="error browser">
-                                                Your browser does not support
+                                                {{ __('home.Your browser does not support') }}
                                                 <a href="https://developer.mozilla.org/en/DOM/window.URL">URL</a> or
-                                                <a href="https://developer.mozilla.org/en/DOM/FileReader">FileReader</a>
+                                                <a href="https://developer.mozilla.org/en/DOM/FileReader">{{ __('home.FileReader') }}</a>
                                             </p>
                                             <p class="error invalid-file"></p>
                                         </div>
@@ -313,7 +378,7 @@
                                 @endif
                             @endif
                         </div>
-                        <button type="submit" class="btn btn-primary">Sign up</button>
+                        <button type="submit" class="btn btn-primary">{{ __('home.sign up') }}</button>
                     </form>
                     <h2 id="result"></h2>
                 </div>

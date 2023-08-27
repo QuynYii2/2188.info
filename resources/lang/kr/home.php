@@ -81,6 +81,9 @@ return [
     'delivered' => '배달',
     'canceled' => '취소 됨',
     'all' => '모든',
+    'Cancel' => '취소',
+    'Back' => 'T뒤쪽에',
+    'OrderID' =>'주문 아이디',
     'in progress' => '진행 중',
     'done' => '끝난',
     'add address' => '주소 추가',
@@ -379,6 +382,57 @@ return [
     'Grand Total' => '총계',
     'Xem chi tiết' => '자세히보다',
     'Sign up now' => '지금 등록하세요',
+    'Product Management' => '제품 관리',
+    'Agree to the terms and conditions of the member' => '회원약관에 동의합니다',
+    'Check the rules you must agree to below' => '아래에서 동의해야 하는 규칙을 확인하세요',
+    'Trust' => '신뢰하다',
+    'Agree to the terms and conditions that we provide' => '우리가 제공하는 이용 약관에 동의합니다',
+    'Permission to collect information' => '정보수집에 대한 허가',
+    'Agree all' => '모두 동의',
+    'Main function only for members' => '회원만을 위한 주요 기능',
+    'Join member' => '회원가입',
+    'Sign up for information' => '정보를 얻으려면 가입하세요',
+    'Company Name' => '회사 이름',
+    'Code Business' => '코드사업',
+    'Select the applicable category' => '해당 카테고리를 선택하세요.',
+    'Your browser does not support' => '귀하의 브라우저는 지원하지 않습니다',
+    'Select ward/commune' => '구/면을 선택하세요',
+    'Select district/district' => '구역/구역 선택',
+    'Choose the city' => '도시를 선택하세요',
+    'Select country' => '국가 선택',
+    'Rank' => '계급',
+    'Staff' => '직원',
+    'SNS Account' => 'SNS 계정',
+    'Other' => '다른',
+    'Register registrant information for members' => '회원등록정보를 등록합니다.',
+    'Confirm' => '확인하다',
+    'information verification' => '정보 확인',
+    'Verify Code' => '코드 확인',
+    'Payment Register Member' => '지불 등록 회원',
+    'Membership fee' => '회비',
+    'Fax' => '팩스',
+    'Status' => '상태',
+    'PAID' => '유급의',
+    'UNPAID' => '미지급',
+    'Account Member Source' => '계정 구성원 소스',
+    'Account Member Represent' => '계정 회원 대표',
+    'Membership benefits' => '멤버십 혜택',
+    'Review now' => '지금 검토',
+    'Find products' => '제품 찾기',
+    'Payment success' => '결제 성공',
+    'Messaging and product promotion' => '메시징 및 제품 홍보',
+    ' Back to home' => '홈으로',
+    'Manage and search transactions' => '거래 관리 및 검색',
+    'FileReader' => '파일리더',
+
+
+
+
+
+
+
+
+
 
 
 

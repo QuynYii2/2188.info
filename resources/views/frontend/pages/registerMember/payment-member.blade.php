@@ -11,10 +11,10 @@
         <div class="background container-fluid pt-3 justify-content-center pb-3">
             <div class="row card">
                 <div class="form-title text-center pt-2">
-                    <div class="title">Payment Register Member</div>
+                    <div class="title">{{ __('home.Payment Register Member') }}</div>
                 </div>
                 <h3 class="text-center">
-                    Phí gia nhập hội viên {{$registerMember}}
+                    {{ __('home.Membership fee') }} {{$registerMember}}
                 </h3>
                 <div class="mt-5">
                     <div class="row p-5">
@@ -26,16 +26,16 @@
                                 ['member', $registerMember]])->orderBy('created_at', 'desc')->first();
                             $member = \App\Models\Member::find($memberRegister->member_id);
                         @endphp
-                        <h5>Info</h5>
+                        <h5>{{ __('home.account information') }}</h5>
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th scope="col">Full Name</th>
-                                <th scope="col">Phone Number</th>
-                                <th scope="col">Fax</th>
-                                <th scope="col">Company</th>
-                                <th scope="col">Address</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">{{ __('home.full name') }}</th>
+                                <th scope="col">{{ __('home.phone number') }}</th>
+                                <th scope="col">{{ __('home.Fax') }}</th>
+                                <th scope="col">{{ __('home.Company Name') }}</th>
+                                <th scope="col">{{ __('home.address') }}</th>
+                                <th scope="col">{{ __('home.Status') }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -47,9 +47,9 @@
                                 <td>{{ ($memberRegister->address) }}</td>
                                 <td>
                                     @if($memberRegister->status == \App\Enums\MemberRegisterInfoStatus::ACTIVE)
-                                        <span class="text-success">PAID</span>
+                                        <span class="text-success">{{ __('home.PAID') }}</span>
                                     @else
-                                        <span class="text-danger">UNPAID</span>
+                                        <span class="text-danger">{{ __('home.UNPAID') }}</span>
                                     @endif
                                 </td>
                             </tr>
@@ -60,14 +60,14 @@
                                 ['member_id', $memberRegister->id],
                                 ['type', \App\Enums\MemberRegisterType::SOURCE]])->orderBy('created_at', 'desc')->first();
                         @endphp
-                        <h5>Account Member Source</h5>
+                        <h5>{{ __('home.Account Member Source') }}</h5>
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th scope="col">Full Name</th>
-                                <th scope="col">Phone Number</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">{{ __('home.full name') }}</th>
+                                <th scope="col">{{ __('home.phone number') }}</th>
+                                <th scope="col">{{ __('home.email') }}</th>
+                                <th scope="col">{{ __('home.Status') }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -84,14 +84,14 @@
                                 ['person', $memberRegisterSource->id],
                                 ['type', \App\Enums\MemberRegisterType::REPRESENT]])->orderBy('created_at', 'desc')->first();
                         @endphp
-                        <h5>Account Member Represent</h5>
+                        <h5>{{ __('home.Account Member Represent') }}</h5>
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th scope="col">Full Name</th>
-                                <th scope="col">Phone Number</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Status</th>
+                                <th scope="col">{{ __('home.full name') }}</th>
+                                <th scope="col">{{ __('home.phone number') }}</th>
+                                <th scope="col">{{ __('home.email') }}</th>
+                                <th scope="col">{{ __('home.Status') }}</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -104,7 +104,7 @@
                             </tbody>
                         </table>
                         <div class="col-md-6 border">
-                            <h5 class="text-center">Quyền lợi hội viên</h5>
+                            <h5 class="text-center">{{ __('home.Membership benefits') }}</h5>
                             @php
                                 $listPermissionID = $member->permission_id;
                                 $arrayPermissionID = null;
@@ -130,8 +130,8 @@
                                 @csrf
                                 <input hidden="" type="text" name="member_id" value="{{$memberRegister->id}}">
                                 <input hidden="" type="text" name="role" value="{{ ($registerMember) }}">
-                                <h5 class="text-center">Mức giá</h5>
-                                PRICE:
+                                <h5 class="text-center">{{ __('home.Price') }}</h5>
+                                {{ __('home.Price') }}:
                                 <span class="text-danger" style="font-weight: 600; font-size: 36px">
                                     $ {{$member->price}}
                                 </span>
@@ -140,12 +140,12 @@
                                 <div class="float-right mt-5">
                                     @if($memberRegister->status == \App\Enums\MemberRegisterInfoStatus::INACTIVE)
                                         <button type="submit" class="btn btn-warning">
-                                            Payment now
+                                            {{ __('home.Pay Now') }}
                                         </button>
                                     @else
                                         <a href="{{route('show.success.payment.member', $registerMember)}}"
                                            class="btn btn-success">
-                                            Review now
+                                            {{ __('home.Review now') }}
                                         </a>
                                     @endif
                                 </div>

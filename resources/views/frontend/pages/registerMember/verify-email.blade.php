@@ -11,23 +11,23 @@
         <div class="background container-fluid pt-3 justify-content-center pb-3">
             <div class="row card border">
                 <div class="form-title text-center pt-2">
-                    <div class="title">Xac thuc thông tin</div>
+                    <div class="title">{{ __('home.information verification') }}</div>
                 </div>
                 <div class="mt-5">
                     <form class="p-3" action="{{route('verify.register.member')}}" method="post">
                         @csrf
                         <div class="form-row">
                             <div class="form-group col-md-4">
-                                <label for="email">Email</label>
+                                <label for="email">{{ __('home.email') }}</label>
                                 <input type="text" class="form-control" id="email" name="email" disabled required value="{{ ($email) }}">
                             </div>
                             <input type="text" class="form-control" name="processEmail" hidden="" value="{{ ($email) }}" required>
                             <div class="form-group col-md-4">
-                                <label for="code">Verify Code</label>
+                                <label for="code">{{ __('home.Verify Code') }}</label>
                                 <input type="text" class="form-control" id="code" name="code" required>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">{{ __('home.submit') }}</button>
                     </form>
                 </div>
             </div>

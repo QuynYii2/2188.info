@@ -217,11 +217,11 @@
                                     </a>
 
                                     @if(!$checkBuyer)
-                                        @if($coin)
-                                            <div class="drop-item">
-                                                <a href="">Coins: {{$coin->quantity}}</a>
-                                            </div>
-                                        @endif
+{{--                                        @if($coin)--}}
+{{--                                            <div class="drop-item">--}}
+{{--                                                <a href="">Coins: {{$coin->quantity}}</a>--}}
+{{--                                            </div>--}}
+{{--                                        @endif--}}
                                         <a href="{{route('wish.list.index')}}" class="none_decoration">
                                             <div class="drop-item">
                                                 {{ __('home.Wish Lists') }}
@@ -281,8 +281,7 @@
                                         @endif
                                         @if(!$checkTrust && $isValid==true)
                                             <div class="drop-item">
-                                                <a href="{{route('shop.list.products')}}">Quản lí sản
-                                                    phẩm</a>
+                                                <a href="{{route('shop.list.products')}}">{{ __('home.Product Management') }}</a>
                                             </div>
                                         @endif
 
@@ -756,8 +755,7 @@
                                                                                         </div>
                                                                                         <div class="card-bottom d-flex justify-content-between">
                                                                                             <div class="card-bottom--left">
-                                                                                                <a href="{{route('detail_product.show', $product->id)}}">Choose
-                                                                                                    Options</a>
+                                                                                                <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
