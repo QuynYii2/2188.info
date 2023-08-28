@@ -52,13 +52,13 @@ class PermissionsSeeder extends Seeder
         ];
 
         // Lưu các permission vào bảng
-//        foreach ($permissions as $permissionData) {
-//            Permission::create($permissionData);
-//        }
+        foreach ($permissions as $permissionData) {
+            Permission::create($permissionData);
+        }
 
-//        foreach ($permissions1 as $permissionData) {
-//            Permission::create($permissionData);
-//        }
+        foreach ($permissions1 as $permissionData) {
+            Permission::create($permissionData);
+        }
 
         foreach ($permissionRegisterMember as $permissionData) {
             Permission::create($permissionData);

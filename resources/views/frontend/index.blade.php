@@ -197,7 +197,10 @@
                                     <img src="{{ asset('storage/' . $listBanner[$i]->thumbnail) }}"
                                          alt="">
                                     <div class="section-left--name">
-                                        {{$listBanner[$i]->name_custom}}
+                                        @php
+                                            $ld = new \App\Http\Controllers\TranslateController();
+                                            $category->name_vi = $ld->translateText($listBanner[$i]->name_custom, locationHelper());
+                                        @endphp
                                     </div>
                                 </a>
                             </div>
@@ -355,7 +358,10 @@
                                 <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
                                          alt="">
                                     <div class="section-left--name">
-                                        {{$listCate[$i] -> name_custom}}
+                                        @php
+                                            $ld = new \App\Http\Controllers\TranslateController();
+                                            $category->name_vi = $ld->translateText($listCate[$i]->name_custom, locationHelper());
+                                        @endphp
                                     </div>
                                 </a>
                             </div>
