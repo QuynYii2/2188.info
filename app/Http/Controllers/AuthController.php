@@ -122,6 +122,8 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->put('login', $loginField);
             $login = $request->session()->get('login');
+            $token = md5(uniqid());
+            User::where('id', Auth::id())->update(['token' => $token]);
             return redirect()->route('home');
         } else {
             toast('Tên đăng nhập hoặc mật khẩu không chính xác', 'error', 'top-right');
@@ -588,6 +590,7 @@ class AuthController extends Controller
             alert()->error('Error', 'Error, Create error!');
             return back();
         } catch (\Exception $exception) {
+            dd($exception);
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
