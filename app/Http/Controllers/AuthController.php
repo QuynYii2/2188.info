@@ -146,7 +146,7 @@ class AuthController extends Controller
         try {
             $ipAddress = $request->ip();
             $geoIp = new GeoIP();
-            $locale = $geoIp->get_country_from_ip('183.80.130.4');
+            $locale = 'kr';
 
             $googleUser = Socialite::driver('google')->stateless()->user();
 
@@ -900,7 +900,7 @@ class AuthController extends Controller
     {
         $locale = app()->getLocale();
         if (!$locale) {
-            $locale = 'vi';
+            $locale = 'kr';
         }
         $user = new User;
         $user->name = $fullName;
@@ -941,7 +941,7 @@ class AuthController extends Controller
     {
         $ipAddress = $request->ip();
         $geoIp = new GeoIP();
-        $locale = $geoIp->get_country_from_ip($ipAddress);
+        $locale = 'kr';
         if ($locale !== null && is_array($locale)) {
             $locale = $locale['countryCode'];
         }
