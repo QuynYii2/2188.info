@@ -192,7 +192,7 @@ class HomeController extends Controller
     {
         if ($request->session()->has('locale')) {
             $locale = $request->session()->get('locale');
-            app()->setLocale($request->session()->get('locale'));
+            app()->setLocale('kr');
         } else {
             $ipAddress = $request->ip();
             $geoIp = new GeoIP();
@@ -201,7 +201,7 @@ class HomeController extends Controller
                 $locale = $locale['countryCode'];
             }
         }
-        app()->setLocale($locale);
+        app()->setLocale('kr');
     }
 
     public function getLangDisplay()
