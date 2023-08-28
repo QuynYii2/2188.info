@@ -76,7 +76,7 @@
 @endsection
 <script>
 
-   var conn = new WebSocket('ws://127.0.0.1:8800/?token={{ auth()->user()->token }}');
+   var conn = new WebSocket('ws://137.59.106.221:8800/?token={{ auth()->user()->token }}');
 
    var from_user_id = "{{ Auth::user()->id }}";
 
