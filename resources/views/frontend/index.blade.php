@@ -199,8 +199,9 @@
                                     <div class="section-left--name">
                                         @php
                                             $ld = new \App\Http\Controllers\TranslateController();
-                                            $category->name_vi = $ld->translateText($listBanner[$i]->name_custom, locationHelper());
+//                                            $category->name_vi = $ld->translateText($listBanner[$i]->name_custom, locationHelper());
                                         @endphp
+                                        {{ $listBanner[$i]->name_custom }}
                                     </div>
                                 </a>
                             </div>
