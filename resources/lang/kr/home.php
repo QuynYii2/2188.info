@@ -424,6 +424,15 @@ return [
     ' Back to home' => '홈으로',
     'Manage and search transactions' => '거래 관리 및 검색',
     'FileReader' => '파일리더',
+    'The Foreign Wholesale Order feature is only available to corporate members (Trusted members) and above' => '해외도매주문 기능은 기업회원(Trusted 회원) 이상만 이용 가능합니다.',
+    'Upgrade Instructions' => '업그레이드 지침',
+    'Please upgrade your membership to use' => '이용하려면 멤버십을 업그레이드하세요.',
+    'Close' => '닫다',
+    'Create your account and enjoy a new shopping experience.' => '계정을 만들고 새로운 쇼핑 경험을 즐겨보세요.',
+    'Follow' => '따르다',
+
+
+    //v
 
 
 
