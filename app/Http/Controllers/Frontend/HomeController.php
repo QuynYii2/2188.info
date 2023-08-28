@@ -322,8 +322,8 @@ class HomeController extends Controller
             $locale = 'vi';
         }
         // Chưa tìm được giải pháp
-//        session()->put('locale', $locale);
-//        app()->setLocale($locale);
+        session()->put('locale', $locale);
+        app()->setLocale($locale);
     }
 
     public function getLocation(Request $request)
