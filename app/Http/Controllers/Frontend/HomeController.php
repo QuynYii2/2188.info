@@ -330,6 +330,7 @@ class HomeController extends Controller
     {
         $geoIp = new GeoIP();
         $locale = $geoIp->getCode($request->ip());
+        dd($locale);
         $countries = new Countries();
         $country = $countries->all()->pluck('name.common')->toArray();
         $currencies = $countries->all()->pluck('currencies')->toArray();
