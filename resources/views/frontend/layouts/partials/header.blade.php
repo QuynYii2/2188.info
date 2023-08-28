@@ -142,7 +142,6 @@
                             <div class="item button_seller align-center d-flex">
                                 <button type="button" class="full-width cursor-pointer" data-toggle="modal"
                                         data-target="#modal-flag-header">
-                                    {{--                                    <i class="item-icon fa-regular fa-heart"></i>--}}
                                     <div class="it em-text">
                                         {{ __('home.Retail') }}
                                     </div>
@@ -157,16 +156,18 @@
                             @endphp
                             @if($company && $company->member != \App\Enums\RegisterMember::BUYER)
                                 <div class="item button_seller align-center d-flex">
-                                    <button class="full-width cursor-pointer">
-                                        <div class="it em-text" data-toggle="modal" data-target="#modalBuyBulkLogistic">
-                                            {{ __('home.Buy wholesale') }}
-                                        </div>
-                                    </button>
+                                        <button type="button" class="full-width cursor-pointer" data-toggle="modal"
+                                                data-target="#modalBuyBulkLogistic">
+                                            <div class="it em-text">
+                                                {{ __('home.Buy wholesale') }}
+                                            </div>
+                                        </button>
                                 </div>
                             @else
                                 <div class="item button_seller align-center d-flex">
-                                    <button class="full-width cursor-pointer">
-                                        <div class="it em-text" data-toggle="modal" data-target="#modalBuyer">
+                                    <button type="button" class="full-width cursor-pointer" data-toggle="modal"
+                                            data-target="#modalBuyBulkLogistic">
+                                        <div class="it em-text">
                                             {{ __('home.Buy wholesale') }}
                                         </div>
                                     </button>
@@ -1022,12 +1023,12 @@
                             <div class="cart">
                                 <div class="check_now">
                                     <a href="{{ route('checkout.show') }}">
-                                        Check out now
+                                        {{ __('home.Check out now') }}
                                     </a>
                                 </div>
                                 <div class="view-card">
                                     <a href="{{ route('cart.index') }}">
-                                        View Cart
+                                        {{ __('home.View Cart') }}
                                     </a>
                                 </div>
                             </div>
@@ -1041,7 +1042,7 @@
                         </button>
                     </div>
                     <div class="signMenuM" id="signMenuM">
-                        <div class="login">LOGIN</div>
+                        <div class="login">{{ __('home.LOGIN') }}</div>
                         <div class="content">
                             If you are already registered, please log in.
                         </div>
@@ -1087,13 +1088,13 @@
                         </form>
                         <hr>
                         <div class="content">
-                            Create your account and enjoy a new shopping experience.
+                            {{ __('home.Create your account and enjoy a new shopping experience.') }}
                         </div>
                         <a href="{{route('register.show')}}" class="register">
-                            <button type="submit">Create A New Account</button>
+                            <button type="submit">{{ __('home.Create A New Account') }}</button>
                         </a>
                         <a href="#" class="register">
-                            <button class="mt-3" type="submit">Đăng kí hội viên</button>
+                            <button class="mt-3" type="submit">{{ __('home.Sign up for membership') }}</button>
                         </a>
                     </div>
                     <div class="close-signMenuM" onclick="closesignInM()"></div>
@@ -1116,7 +1117,7 @@
     <div class="modal-dialog">
         <div class="modal-content p-4" style="width: auto">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Chọn quốc gia</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Select country') }}</h5>
                 <button type="button" class="close" data-dismiss="modal"
                         aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -1154,8 +1155,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content p-4" style="width: auto">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Chọn quốc gia mua
-                    hàng</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
                 <button type="button" class="close" data-dismiss="modal"
                         aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -1187,20 +1187,19 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Hướng dẫn nâng cấp</h5>
+                <h5 class="modal-title">{{ __('home.Upgrade Instructions') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Tính năng Đặt sỉ nước ngoài chỉ áp dụng cho hội viên doanh nghiệp (hội viên Tin cậy) trở lên</p>
-                <p>Vui lòng nâng cấp hội viên để sử dụng</p>
+                <p>{{ __('home.The Foreign Wholesale Order feature is only available to corporate members (Trusted members) and above') }}</p>
+                <p>{{ __('home.Please upgrade your membership to use') }}</p>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary"><a href="https://staging-b2b.2188.info/register-member">Đăng
-                        ký nâng cấp</a></button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary"><a href="https://staging-b2b.2188.info/register-member">{{ __('home.Sign up to upgrade') }}</a></button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}</button>
             </div>
         </div>
     </div>
@@ -1210,7 +1209,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Chọn quốc gia mua hàng</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1229,7 +1228,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{ __('home.Close') }}</button>
             </div>
         </div>
     </div>

@@ -54,12 +54,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/lang/{locale}', function ($locale) {
-    session()->put('locale', $locale);
+Route::get('/lang/kr', function ($locale) {
+    session()->put('locale', 'kr');
     return redirect()->back();
 })->name('language');
 
-Route::get('/set-locale/{locale}', [HomeController::class, 'setLocale'])->name('app.set.locale');
+Route::get('/set-locale/kr', [HomeController::class, 'setLocale'])->name('app.set.locale');
 
 Route::post('/register', [UserController::class, 'store'])->name('register.store');
 
