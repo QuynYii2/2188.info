@@ -199,9 +199,8 @@
                                     <div class="section-left--name">
                                         @php
                                             $ld = new \App\Http\Controllers\TranslateController();
-//                                            $category->name_vi = $ld->translateText($listBanner[$i]->name_custom, locationHelper());
+                                            $ld->translateText($listBanner[$i]->name_custom, locationHelper());
                                         @endphp
-                                        {{ $listBanner[$i]->name_custom }}
                                     </div>
                                 </a>
                             </div>
@@ -361,7 +360,7 @@
                                     <div class="section-left--name">
                                         @php
                                             $ld = new \App\Http\Controllers\TranslateController();
-                                            $category->name_vi = $ld->translateText($listCate[$i]->name_custom, locationHelper());
+                                            echo $ld->translateText($listCate[$i]->name_custom, locationHelper());
                                         @endphp
                                     </div>
                                 </a>
