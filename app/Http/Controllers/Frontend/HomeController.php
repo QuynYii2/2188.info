@@ -48,7 +48,6 @@ class HomeController extends Controller
     {
         $this->getLocale($request);
         $locale = app()->getLocale();
-        dd($locale);
         if ($locale == 'vn') {
             $locale = 'vi';
         }
@@ -331,7 +330,6 @@ class HomeController extends Controller
     {
         $geoIp = new GeoIP();
         $locale = $geoIp->getCode($request->ip());
-        dd($locale);
         $countries = new Countries();
         $country = $countries->all()->pluck('name.common')->toArray();
         $currencies = $countries->all()->pluck('currencies')->toArray();
