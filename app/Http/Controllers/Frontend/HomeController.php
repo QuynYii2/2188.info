@@ -208,7 +208,7 @@ class HomeController extends Controller
     {
         $locale = 'kr';
         if (!$locale) {
-            $locale = 'vi';
+            $locale = 'kr';
         }
         $locations = ['vi', 'kr', 'jp', 'cn', 'en'];
         $lang = ['vi', 'ko', 'ja', 'zh', 'en'];
@@ -322,8 +322,8 @@ class HomeController extends Controller
             $locale = 'vi';
         }
         // Chưa tìm được giải pháp
-        session()->put('locale', $locale);
-        app()->setLocale($locale);
+//        session()->put('locale', $locale);
+//        app()->setLocale($locale);
     }
 
     public function getLocation(Request $request)
