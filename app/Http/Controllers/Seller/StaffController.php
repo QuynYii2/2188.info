@@ -56,7 +56,7 @@ class StaffController extends Controller
 
         $ipAddress = $request->ip();
         $geoIp = new GeoIP();
-        $locale = $geoIp->get_country_from_ip('183.80.130.4');
+        $locale = 'kr';
 
         $existingUser = User::where('email', $request->email)->first();
         if ($existingUser) {

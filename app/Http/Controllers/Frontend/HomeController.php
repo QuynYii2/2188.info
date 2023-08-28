@@ -196,7 +196,7 @@ class HomeController extends Controller
         } else {
             $ipAddress = $request->ip();
             $geoIp = new GeoIP();
-            $locale = $geoIp->get_country_from_ip($ipAddress);
+            $locale = 'kr';
             if ($locale !== null && is_array($locale)) {
                 $locale = $locale['countryCode'];
             }
@@ -329,7 +329,7 @@ class HomeController extends Controller
     public function getLocation(Request $request)
     {
         $geoIp = new GeoIP();
-        $locale = 'KR';
+        $locale = $geoIp->getCode($request->ip());
         $countries = new Countries();
         $country = $countries->all()->pluck('name.common')->toArray();
         $currencies = $countries->all()->pluck('currencies')->toArray();
