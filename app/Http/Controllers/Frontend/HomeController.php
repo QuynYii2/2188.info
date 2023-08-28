@@ -328,6 +328,7 @@ class HomeController extends Controller
 
     public function getLocation(Request $request)
     {
+        dd(1);
         $geoIp = new GeoIP();
         $locale = $geoIp->getCode($request->ip());
         dd($locale);
