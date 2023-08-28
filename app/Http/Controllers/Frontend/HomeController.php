@@ -48,6 +48,7 @@ class HomeController extends Controller
     {
         $this->getLocale($request);
         $locale = app()->getLocale();
+        dd($locale);
         if ($locale == 'vn') {
             $locale = 'vi';
         }
