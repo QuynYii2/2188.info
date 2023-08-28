@@ -32,7 +32,7 @@ class GeoIP
                     return 'en';
             }
         }
-        return 'kr';
+        return 'KR';
     }
 
     public function getCode($ip)
