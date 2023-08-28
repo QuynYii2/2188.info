@@ -14,47 +14,10 @@
                         @foreach($members as $member)
                             <div class="col-md-4 mb-5">
                                 <h5 class="text-center mt-2 mb-3 member-name">
-
-                                    @if(locationHelper() == 'kr')
-                                        <div class="item-text">
-                                            @if($member->name_ko == null)
-                                                {{$member->name}}
-                                            @else
-                                                {{ $member->name_ko }}
-                                            @endif
-                                            </div>
-                                    @elseif(locationHelper() == 'cn')
-                                        <div class="item-text">
-                                            @if($member->name_zh == null)
-                                                {{$member->name}}
-                                            @else
-                                                {{ $member->name_zh }}
-                                            @endif
-                                        </div>
-                                    @elseif(locationHelper() == 'jp')
-                                        <div class="item-text">
-                                            @if($member->name_ja == null)
-                                                {{$member->name}}
-                                            @else
-                                                {{ $member->name_ja }}
-                                            @endif</div>
-                                    @elseif(locationHelper() == 'vi')
-                                        <div class="item-text">
-                                            @if($member->name_vi == null)
-                                                {{$member->name}}
-                                            @else
-                                                {{ $member->name_vi }}
-                                            @endif
-                                        </div>
-                                    @else
-                                        <div class="item-text">
-                                            @if($member->name_en == null)
-                                                {{$member->name}}
-                                            @else
-                                                {{ $member->name_en }}
-                                            @endif
-                                        </div>
-                                    @endif
+                                    @php
+                                        $ld = new \App\Http\Controllers\TranslateController();
+                                    @endphp
+                                    {{ $ld->translateText($member->name, locationPermissionHelper()) }}
                                 </h5>
                                 <div class="card">
                                     <div class="card-body">
@@ -62,46 +25,10 @@
                                             ${{$member->price}}
                                         </h3>
                                         <h6 class="card-subtitle mb-2 text-muted">
-                                            {{ __('home.Member') }} @if(locationHelper() == 'kr')
-                                                <div class="item-text">
-                                                    @if($member->name_ko == null)
-                                                        {{$member->name}}
-                                                    @else
-                                                        {{ $member->name_ko }}
-                                                    @endif
-                                                </div>
-                                            @elseif(locationHelper() == 'cn')
-                                                <div class="item-text">
-                                                    @if($member->name_zh == null)
-                                                        {{$member->name}}
-                                                    @else
-                                                        {{ $member->name_zh }}
-                                                    @endif
-                                                </div>
-                                            @elseif(locationHelper() == 'jp')
-                                                <div class="item-text">
-                                                    @if($member->name_ja == null)
-                                                        {{$member->name}}
-                                                    @else
-                                                        {{ $member->name_ja }}
-                                                    @endif</div>
-                                            @elseif(locationHelper() == 'vi')
-                                                <div class="item-text">
-                                                    @if($member->name_vi == null)
-                                                        {{$member->name}}
-                                                    @else
-                                                        {{ $member->name_vi }}
-                                                    @endif
-                                                </div>
-                                            @else
-                                                <div class="item-text">
-                                                    @if($member->name_en == null)
-                                                        {{$member->name}}
-                                                    @else
-                                                        {{ $member->name_en }}
-                                                    @endif
-                                                </div>
-                                            @endif
+                                            {{ __('home.Member') }} @php
+                                                $ld = new \App\Http\Controllers\TranslateController();
+                                            @endphp
+                                            {{ $ld->translateText($member->name, locationPermissionHelper()) }}
                                         </h6>
                                         <h6 class="text-nowrap">
                                             {{ __('home.Xem chi tiết') }}
@@ -120,46 +47,10 @@
                                                         @php
                                                             $permission = \App\Models\Permission::find($permissionID);
                                                         @endphp
-                                                        @if(locationHelper() == 'kr')
-                                                            <div class="item-text">
-                                                                @if($permission->name_ko == null)
-                                                                    {{$permission->name}}
-                                                                @else
-                                                                    {{ $permission->name_ko }}
-                                                                @endif
-                                                            </div>
-                                                        @elseif(locationHelper() == 'cn')
-                                                            <div class="item-text">
-                                                                @if($permission->name_zh == null)
-                                                                    {{$permission->name}}
-                                                                @else
-                                                                    {{ $permission->name_zh }}
-                                                                @endif
-                                                            </div>
-                                                        @elseif(locationHelper() == 'jp')
-                                                            <div class="item-text">
-                                                                @if($permission->name_ja == null)
-                                                                    {{$permission->name}}
-                                                                @else
-                                                                    {{ $permission->name_ja }}
-                                                                @endif</div>
-                                                        @elseif(locationHelper() == 'vi')
-                                                            <div class="item-text">
-                                                                @if($permission->name_vi == null)
-                                                                    {{$permission->name}}
-                                                                @else
-                                                                    {{ $permission->name_vi }}
-                                                                @endif
-                                                            </div>
-                                                        @else
-                                                            <div class="item-text">
-                                                                @if($permission->name_en == null)
-                                                                    {{$permission->name}}
-                                                                @else
-                                                                    {{ $permission->name_en }}
-                                                                @endif
-                                                            </div>
-                                                        @endif
+                                                        @php
+                                                            $ld = new \App\Http\Controllers\TranslateController();
+                                                        @endphp
+                                                        {{ $ld->translateText($permission->name, locationPermissionHelper()) }}
                                                     </li>
                                                 @endforeach
                                             @endif

@@ -434,7 +434,6 @@ return [
     'Upgrade Instructions' => 'Hướng dẫn nâng cấp',
     'Please upgrade your membership to use' => 'Vui lòng nâng cấp hội viên để sử dụng',
     'Sign up to upgrade' => 'Đăng ký để nâng cấp',
-    'Sign up to upgrade' => '업그레이드하려면 가입하세요',
     'Close' => 'Đóng',
     'Create your account and enjoy a new shopping experience.' => 'Tạo tài khoản của bạn và tận hưởng trải nghiệm mua sắm mới.',
     'Follow' => 'Theo dõi',
