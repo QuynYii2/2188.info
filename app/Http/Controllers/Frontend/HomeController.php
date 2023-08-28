@@ -329,7 +329,7 @@ class HomeController extends Controller
     public function getLocation(Request $request)
     {
         $geoIp = new GeoIP();
-        $locale = 'kr';
+        $locale = 'KR';
         $countries = new Countries();
         $country = $countries->all()->pluck('name.common')->toArray();
         $currencies = $countries->all()->pluck('currencies')->toArray();
