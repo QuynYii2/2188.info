@@ -197,7 +197,13 @@
                                     <img src="{{ asset('storage/' . $listBanner[$i]->thumbnail) }}"
                                          alt="">
                                     <div class="section-left--name">
-                                        {{$listBanner[$i]->name_custom}}
+                                        @php
+                                            $ld = new \App\Http\Controllers\TranslateController();
+
+                                            $category->name_vi = $ld->translateText($listBanner[$i]->name_custom, locationHelper());
+//                                            {{$listBanner[$i]->name_custom}}
+                                        @endphp
+
                                     </div>
                                 </a>
                             </div>
