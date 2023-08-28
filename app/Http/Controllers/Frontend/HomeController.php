@@ -318,9 +318,8 @@ class HomeController extends Controller
 
     public function setLocale($locale)
     {
-        if (!$locale || $locale == 'vn') {
-            $locale = 'vi';
-        }
+        $locale = 'kr';
+        return $locale;
         // Chưa tìm được giải pháp
 //        session()->put('locale', $locale);
 //        app()->setLocale($locale);

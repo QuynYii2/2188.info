@@ -65,6 +65,7 @@ class AuthController extends Controller
 
     public function showLoginForm($locale)
     {
+        $locale = 'kr';
         app()->setLocale($locale);
         if (Auth::check()) {
             return redirect()->route('home');
