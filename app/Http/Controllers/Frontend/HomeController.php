@@ -337,7 +337,7 @@ class HomeController extends Controller
 //        foreach ($all as $items) {
 //            $currency = $items->iso->code;
 //        }
-        $currency = 'kr';
+        $currency = 'KRW';
         return $currency;
     }
 
