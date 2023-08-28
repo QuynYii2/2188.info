@@ -428,6 +428,13 @@ return [
     'Payment success' => 'Thanh toán thành công',
     ' Back to home' => 'Về trang chủ',
     'FileReader' => 'Trình đọc tệp',
+    'The Foreign Wholesale Order feature is only available to corporate members (Trusted members) and above' => 'Tính năng Đặt sỉ nước ngoài chỉ áp dụng cho hội viên doanh nghiệp (hội viên Tin cậy) trở lên',
+    'Upgrade Instructions' => 'Hướng dẫn nâng cấp',
+    'Please upgrade your membership to use' => 'Vui lòng nâng cấp hội viên để sử dụng',
+    'Sign up to upgrade' => 'Đăng ký để nâng cấp',
+    'Close' => 'Đóng',
+    'Create your account and enjoy a new shopping experience.' => 'Tạo tài khoản của bạn và tận hưởng trải nghiệm mua sắm mới.',
+    'Follow' => 'Theo dõi',
 
 
 
