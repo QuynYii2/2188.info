@@ -7,7 +7,7 @@ if (!function_exists('location')) {
         return $locale;
     }
     function locationPermissionHelper() {
-        $locale = app()->getLocale();
+        $locale = 'kr';
         if ($locale == 'kr') {
             $locationPermission = 'ko';
         }
