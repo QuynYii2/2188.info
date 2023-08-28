@@ -47,7 +47,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $this->getLocale($request);
-        $locale = 'kr';
+        $locale = app()->getLocale();
         if ($locale == 'vn') {
             $locale = 'vi';
         }
@@ -196,7 +196,7 @@ class HomeController extends Controller
         } else {
             $ipAddress = $request->ip();
             $geoIp = new GeoIP();
-            $locale = 'kr';
+            $locale = $geoIp->get_country_from_ip($ipAddress);
             if ($locale !== null && is_array($locale)) {
                 $locale = $locale['countryCode'];
             }

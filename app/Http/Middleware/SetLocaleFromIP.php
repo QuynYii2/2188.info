@@ -18,8 +18,8 @@ class SetLocaleFromIP
     public function handle(Request $request, Closure $next)
     {
         $ipAddress = $request->ip();
-//        $locale = $this->getLocaleFromIP($ipAddress);
-        $locale = 'kr';
+        $locale = $this->getLocaleFromIP($ipAddress);
+
         app()->setLocale($locale);
 
         return $next($request);
@@ -29,8 +29,7 @@ class SetLocaleFromIP
     {
         $reader = new Reader(storage_path('app/geoip/GeoLite2-Country.mmdb'));
             $country = $reader->get_country_from_ip($ipAddress);
-//        $countryCode = $country['country']['iso_code'];
-        $countryCode = 'KR';
+        $countryCode = $country['country']['iso_code'];
 
         switch ($countryCode) {
             case 'KR':
@@ -40,7 +39,7 @@ class SetLocaleFromIP
             case 'CN':
                 return 'zh-CN';
             default:
-                return 'kr';
+                return 'vi';
         }
     }
 }
