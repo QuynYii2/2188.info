@@ -51,7 +51,10 @@ class User extends Authenticatable
         'gender',
         'nickname',
         'date_of_birth',
-        'image'
+        'image',
+        'token',
+        'state',
+        'connection_id',
     ];
 
     /**

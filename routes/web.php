@@ -22,6 +22,7 @@ use App\Http\Controllers\ProductInterestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\RevenusController;
+use App\Http\Controllers\SampleController;
 use App\Http\Controllers\Seller\AttributeController;
 use App\Http\Controllers\Seller\CategoryController;
 use App\Http\Controllers\Seller\ExportFileController;
@@ -176,7 +177,7 @@ Route::get('/products-shop-category/{category}/{shop}', [\App\Http\Controllers\F
 
 Route::middleware(['auth'])->group(function () {
 
-
+    Route::get('/chat-message', [SampleController::class, 'chat'])->name('chat.message.show');
 // End register member
     //View member
     Route::get('/member-registered', [UpdateRankController::class, 'detail'])->name('member.registered.detail');
