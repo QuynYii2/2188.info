@@ -4,7 +4,7 @@
 
 @section('content')
     <style>
-        body{
+        body {
             background: rgb(255, 235, 225);
         }
     </style>
@@ -28,10 +28,10 @@
                                             ${{$member->price}}
                                         </h3>
                                         <h6 class="card-subtitle mb-2 text-muted">
-                                            Hội viên {{$member->name}}
+                                            {{ __('home.Member') }} {{$member->name}}
                                         </h6>
                                         <h6 class="text-nowrap">
-                                            Xem chi tiết
+                                            {{ __('home.Xem chi tiết') }}
                                         </h6>
                                         <ol class="text-success">
                                             @php
@@ -40,21 +40,24 @@
                                                 if ($listPermissionID){
                                                     $arrayPermissionID = explode(',', $listPermissionID);
                                                 }
+                                                            $ld = new \App\Http\Controllers\TranslateController();
+
                                             @endphp
                                             @if($arrayPermissionID)
                                                 @foreach($arrayPermissionID as $permissionID)
                                                     <li>
                                                         @php
                                                             $permission = \App\Models\Permission::find($permissionID);
+
                                                         @endphp
-                                                        {{$permission->name}}
+                                                        {{$ld->translateText($permission->name, locationPermissionHelper())}}
                                                     </li>
                                                 @endforeach
                                             @endif
                                         </ol>
                                         <div class="col-12 justify-content-center d-flex">
                                             <a href="{{route('show.register.member', $member->id)}}"
-                                               class="btn btn-primary">Đăng kí ngay</a>
+                                               class="btn btn-primary">{{ __('home.Sign up now') }}</a>
                                         </div>
 
                                     </div>

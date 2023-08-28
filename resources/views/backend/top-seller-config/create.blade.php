@@ -31,18 +31,18 @@
         <form id="marketing_product_form" class="marketing_product" action="{{route('seller.config.create')}}"
               method="post" enctype="multipart/form-data">
             @csrf
-                <div class="form-group">
-                    <label for="select_url">Select products</label>
-                    <select class="form-control" name="product" id="select_url">
-                        <option value="0">Shop</option>
-                        @php
-                            $products = \Illuminate\Support\Facades\DB::table('products')->get();
-                        @endphp
-                        @foreach($products as $product)
-                            <option value="{{$product->id}}">{{$product->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
+{{--                <div class="form-group">--}}
+{{--                    <label for="select_url">Select products</label>--}}
+{{--                    <select class="form-control" name="product" id="select_url">--}}
+{{--                        <option value="0">Shop</option>--}}
+{{--                        @php--}}
+{{--                            $products = \Illuminate\Support\Facades\DB::table('products')->get();--}}
+{{--                        @endphp--}}
+{{--                        @foreach($products as $product)--}}
+{{--                            <option value="{{$product->id}}">{{$product->name}}</option>--}}
+{{--                        @endforeach--}}
+{{--                    </select>--}}
+{{--                </div>--}}
                 <div class="form-group">
                     <label for="local">Choosing location...</label>
                     <select class="form-control" name="local" id="local" onchange="checkTien();">
@@ -53,6 +53,32 @@
                         @endforeach
                     </select>
                 </div>
+            <div class="list-product_show">
+                @php
+                    $products = \Illuminate\Support\Facades\DB::table('products')->get();
+                @endphp
+                @foreach($products as $product)
+                    <div class="col-xs-4 col-sm-3 col-md-2 nopad text-center">
+                        <label class="image-checkbox">
+                            <a class="check_url">
+                                <img src="{{ asset('storage/'.$product->thumbnail) }}" style="width: 100px" class="img img-100"></a>
+
+                            @if(Auth::check())
+                                <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
+                            @else
+                                <a class="check_url">{{($product->name)}}</a>
+                            @endif
+                            <input type="checkbox" name="image[]" value="" />
+                            <i class="fa fa-check hidden"></i>
+                        </label>
+                    </div>
+                @endforeach
+
+                <div class="container">
+                    <h3>Bootstrap image checkbox(multiple)</h3>
+
+                </div>
+            </div>
                 <input type="text" hidden class="form-control" id="moneyLocal" name="moneyLocal" value="100">
                 <button class="btn btn-primary" type="submit">Create</button>
         </form>
@@ -141,4 +167,22 @@
                 break;
         }
     }
+
+    $(".image-checkbox").each(function () {
+        if ($(this).find('input[type="checkbox"]').first().attr("checked")) {
+            $(this).addClass('image-checkbox-checked');
+        }
+        else {
+            $(this).removeClass('image-checkbox-checked');
+        }
+    });
+
+    // sync the state to the input
+    $(".image-checkbox").on("click", function (e) {
+        $(this).toggleClass('image-checkbox-checked');
+        var $checkbox = $(this).find('input[type="checkbox"]');
+        $checkbox.prop("checked",!$checkbox.prop("checked"))
+
+        e.preventDefault();
+    });
 </script>

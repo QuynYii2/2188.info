@@ -81,6 +81,8 @@ return [
     'delivered' => 'Đã giao',
     'canceled' => 'Đã hủy',
     'all' => 'Tất cả',
+    'Cancel' => 'Hủy bỏ',
+    'Back' => 'Trở lại',
     'in progress' => 'Đang tiến hành',
     'done' => 'Đã xong',
     'add address' => 'Thêm địa chỉ',
@@ -140,6 +142,7 @@ return [
     'warranty' => 'Bảo hành',
     'warranty 1 month' => 'Bảo hành 1 tháng',
     'reputable brand' => 'Thương hiệu uy tín',
+    'Status' => 'Trạng thái',
 
     //thu cũ đổi mới, trợ giá 1.000.000, giá cũ, giá mới, xem ngay
     'exchange old for new' => 'Thu cũ đổi mới',
@@ -244,8 +247,8 @@ return [
     'profile' => 'Trang cá nhân',
     'Payment Methods' => 'Phương thức thanh toán',
     'order' => 'Đơn hàng',
-
-    'was new product' => 'Sản phẩm mới thêm',
+    'OrderID' =>'Mã đơn hàng',
+        'was new product' => 'Sản phẩm mới thêm',
     'view card' => 'Xem giỏ hàng',
 
 
@@ -335,7 +338,113 @@ return [
     'POWER VENDOR' => 'POWER VENDOR',
     'PRODUCTION' => 'PRODUCTION',
     'POWER PRODUCTION ' => 'POWER PRODUCTION ',
-    'Member' =>'Hội viên',
+    'Member' =>'Hội viên ',
+    'Member booth' => 'Gian hàng hội viên ',
+    'Booth' => 'Gian hàng',
+    'Partner List' => 'Danh sách đối tác',
+    'Message received' => 'Tin nhắn đã nhận',
+    'Message sent' => 'Tin nhắn đã gửi',
+    'Purchase' => 'Mua hàng',
+    'Foreign wholesale order' => 'Đặt sỉ nước ngoài',
+    'Company code' => 'Mã công ty',
+    'Elite enterprise' => 'Doanh nghiệp ưu tú',
+    'Membership classification' => 'Phân loại hội viên',
+    'Customer rating score' => 'Điểm đánh giá của khách hàng',
+    'Specified products' => 'Sản phẩm chỉ định',
+    'Watch product videos' => 'Xem video sản phẩm',
+    'Order conditions' => 'Điều kiện đặt hàng',
+    'Unit price' => 'Đơn giá',
+    'Ngày dự kiến xuất kho' => 'Ngày dự kiến xuất kho',
+    'ngày kể từ ngày đặt hàng' => 'ngày kể từ ngày đặt hàng',
+    'đơn giá phía trên là điều kiện FOB/TT' => 'đơn giá phía trên là điều kiện FOB/TT',
+    'Đặt hàng' => 'Đặt hàng',
+    'Thuộc tính' => 'Thuộc tính',
+    'Số lượng' => 'Số lượng',
+    'Thành tiền' => 'Thành tiền',
+    'Tiếp nhận đặt hàng' => 'Tiếp nhận đặt hàng',
+    'Chọn quốc gia mua hàng' => 'Chọn quốc gia mua hàng',
+    'Xem chi tiết các hình ảnh khác' => 'Xem chi tiết các hình ảnh khác',
+    'Xem thuộc tính' => 'Xem thuộc tính',
+    'Product Code' => 'Mã sản phẩm',
+    'Membership upgrade' => 'Nâng cấp hội viên',
+    'Membership payment' => 'Thanh toán hội viên',
+    'Subscribers' => 'Người đăng ký',
+    'Representative' => 'Người đại diện',
+    'Nickname' => 'Biệt danh',
+    'Responsibility' => 'Phụ trách',
+    'Manager' => 'Trưởng phòng',
+    'Position' => 'Chức vụ',
+    'Add new products' => 'Thêm mới sản phẩm',
+    'social network id' => 'ID MXH',
+    'Retail' => 'Mua lẻ',
+    'Buy wholesale' => 'Mua sỉ',
+    'Số sản phẩm' => 'Số sản phẩm',
+    'Mua sỉ nước ngoài' => 'Mua sỉ nước ngoài',
+    'Shipping And Payment' => 'Vận chuyển và thanh toán',
+    'Partner' => 'Đối tác',
+    'Check out now' => 'Thanh toán ngay',
+    'View Cart' => 'Xem giỏ hàng',
+    'Grand Total' => 'Tổng cộng',
+    'Xem chi tiết' => 'Xem chi tiết',
+    'Sign up now' => 'Đăng kí ngay',
+    'Product Management' => 'Quản lí sản phẩm',
+    'Agree to the terms and conditions of the member' => 'Đồng ý với điều khoản quy định của hội viên',
+    'Check the rules you must agree to below' => 'Kiểm tra nội quy định phải đồng ý ở bên dưới',
+    'Agree to the terms and conditions that we provide' => 'Đồng ý với quy định và điều khoản mà chúng tôi cung cấp',
+    'Trust' => 'Tin cậy',
+    'Permission to collect information' => 'Cho phép thu thập thông tin',
+    'Agree all' => ' Đồng ý tất cả',
+    'Main function only for members' => 'Chức năng chính dành riêng cho hội viên',
+    'Join member' => 'Gia nhập hội viên',
+    'Sign up for information' => 'Đăng kí thông tin',
+    'Company Name' => 'Tên công ty',
+    'Code Business' => 'Mã Kinh Doanh',
+    'Select the applicable category' => 'Chọn category áp dụng',
+    'Your browser does not support' => 'Trình duyệt của bạn không hỗ trợ',
+    'Select ward/commune' => 'Chọn phường/xã',
+    'Select district/district' => 'Chọn quận/huyện',
+    'Choose the city' => 'Chọn thành phố',
+    'Select country' => 'Chọn quốc gia',
+    'Rank' => 'Thứ hạng',
+    'Staff' => 'Nhân viên',
+    'SNS Account' => 'Tài khoản SNS',
+    'Other' => 'Khác',
+    'Register registrant information for members' => 'Đăng kí thông tin người đăng kí cho hội viên',
+    'Confirm' => 'Xác nhận',
+    'information verification' => 'xác thực thông tin',
+    'Verify Code' => 'Mã xác minh',
+    'Payment Register Member' => 'Đăng ký thanh toán Thành viên',
+    'Membership fee' => 'Phí gia nhập hội viên',
+    'Fax' => 'Số fax',
+    'PAID' => 'TRẢ',
+    'UNPAID' => 'CHƯA TRẢ',
+    'Account Member Source' => 'Nguồn thành viên tài khoản',
+    'Account Member Represent' => 'Tài khoản Thành viên đại diện',
+    'Membership benefits' => 'Quyền lợi hội viên',
+    'Review now' => 'Xem lại ngay bây giờ',
+    'Find products' => 'Tìm các sản phẩm',
+    'Manage and search transactions' => 'Quản lí và tìm kiếm giao dịch',
+    'Messaging and product promotion' => 'Nhắn tin và quảng cáo sản phẩm',
+    'Payment success' => 'Thanh toán thành công',
+    ' Back to home' => 'Về trang chủ',
+    'FileReader' => 'Trình đọc tệp',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

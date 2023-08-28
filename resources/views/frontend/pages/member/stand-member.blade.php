@@ -105,54 +105,63 @@
                  $firstProduct = $products[0];
                 }
             @endphp
-            <h3 class="text-center">Gian hàng hội viên {{$company->member}}</h3>
-            <h3 class="text-left">Hội viên {{$company->member}}</h3>
+            <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
+            <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
             <div class="d-flex justify-content-between align-items-center p-3">
-                <a href="{{route('stand.register.member.index', $company->id)}}" class="btn btn-primary">Gian hàng</a>
-                <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">Danh sách đối tác</a>
-                <a href="#" class="btn btn-primary">Tin nhắn đã nhận</a>
-                <a href="#" class="btn btn-warning">Tin nhắn đã gửi</a>
-                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalDemo">Mua hàng</a>
-                <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">Đặt sỉ nước
-                    ngoài</a>
+                <a href="{{route('stand.register.member.index', $company->id)}}" class="btn btn-primary">{{ __('home.Booth') }}</a>
+                <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">{{ __('home.Partner List') }}</a>
+                <a href="#" class="btn btn-primary">{{ __('home.Message received') }}</a>
+                <a href="#" class="btn btn-warning">{{ __('home.Message sent') }}</a>
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
+                <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
             </div>
             <div class="row m-0">
                 <div class="col-md-6 border">
                     <div class="row">
                         <div class="col-md-12 border">
-                            <div class="mt-2">
-                                <h5 class="mb-3">{{ ($company->name) }}</h5>
+                            <div class="mb-3">
+                                @if(locationHelper() == 'kr')
+                                    {{ ($company->name_ko) }}
+                                @elseif(locationHelper() == 'cn')
+                                    {{ ($company->name_zh) }}
+                                @elseif(locationHelper() == 'jp')
+                                    {{ ($company->name_ja) }}
+                                @elseif(locationHelper() == 'vi')
+                                    {{ ($company->name_vi) }}
+                                @else
+                                    {{ ($company->name_en) }}
+                                @endif
                             </div>
                         </div>
                         <div class="row p-2">
-                                <div class="col-md-6">
-                                    <div class="mt-2">
-                                        <div class="mb-3 size"><b>Mã công ty: </b> {{ ($company->code_business) }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mt-2">
-                                        <div class="mb-3 size"><b>Doanh nghiệp ưu tú: </b> {{ ($company->member) }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mt-2">
-                                        <div class="mb-3 size"><b>Phân loại hội viên: </b> {{ ($company->member) }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mt-2">
-                                        <div class="mb-3 size"><b>Điểm đánh giá của khách hàng: </b></div>
-                                    </div>
+                            <div class="col-md-6">
+                                <div class="mt-2">
+                                    <div class="mb-3 size"><b>{{ __('home.Company code') }}: </b> {{ ($company->code_business) }}</div>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="mt-2">
+                                    <div class="mb-3 size"><b>{{ __('home.Elite enterprise') }}: </b> {{ ($company->member) }}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mt-2">
+                                    <div class="mb-3 size"><b>{{ __('home.Membership classification') }}: </b> {{ ($company->member) }}</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mt-2">
+                                    <div class="mb-3 size"><b>{{ __('home.Customer rating score') }}: </b></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6 border">
                     <div class="row">
                         <div class="col-md-12 border">
                             <div class="mt-2">
-                                <h5 class="mb-3">Sản phẩm chỉ định</h5>
+                                <h5 class="mb-3">{{ __('home.Specified products') }}</h5>
                             </div>
                         </div>
                         @php
@@ -167,7 +176,20 @@
                                     @endphp
                                     <div class="col-md-6">
                                         <div class="mt-2 d-flex">
-                                            <a href="{{route('category.show', $category->id)}}" class="mb-3 size">{{ ($category->name) }} <i class="fa-solid fa-angle-right"></i></a>
+                                            <a href="{{route('category.show', $category->id)}}" class="mb-3 size">
+                                                @if(locationHelper() == 'kr')
+                                                    {{ ($category->name_ko) }}
+                                                @elseif(locationHelper() == 'cn')
+                                                    {{ ($category->name_zh) }}
+                                                @elseif(locationHelper() == 'jp')
+                                                    {{ ($category->name_ja) }}
+                                                @elseif(locationHelper() == 'vi')
+                                                    {{ ($category->name_vi) }}
+                                                @else
+                                                    {{ ($category->name_en) }}
+                                                @endif
+                                                <i class="fa-solid fa-angle-right"></i>
+                                            </a>
                                         </div>
                                     </div>
                                 @endforeach
@@ -208,11 +230,24 @@
     <div class="mt-3 d-flex justify-content-center">
         @foreach($products as $product)
             <button type="button" style="background-color: white" class="btn thumbnailProduct col-2" data-toggle="modal"
-                    data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}">
+                    data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}" data-name="
+                         @if(locationHelper() == 'kr')
+                                        {{ ($product->name_ko) }}
+                                    @elseif(locationHelper() == 'cn')
+                                        {{ ($product->name_zh) }}
+                                    @elseif(locationHelper() == 'jp')
+                                        {{ ($product->name_ja) }}
+                                    @elseif(locationHelper() == 'vi')
+                                        {{ ($product->name_vi) }}
+                                    @else
+                                        {{ ($product->name_en) }}
+                                    @endif
+                         ">
                 <div class="standsMember-item section">
                     <img data-id="{{$product->id}}"
                          src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
                          class="thumbnailProduct" data-value="{{$product}}"
+
                          width="150px" height="150px">
                     <div class="item-body">
                         <div class="card-rating text-left">
@@ -233,9 +268,33 @@
                         </div>
                         <div class="card-title text-left">
                             @if(Auth::check())
-                                <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
+                                <a href="{{route('detail_product.show', $product->id)}}">
+                                    @if(locationHelper() == 'kr')
+                                        {{ ($product->name_ko) }}
+                                    @elseif(locationHelper() == 'cn')
+                                        {{ ($product->name_zh) }}
+                                    @elseif(locationHelper() == 'jp')
+                                        {{ ($product->name_ja) }}
+                                    @elseif(locationHelper() == 'vi')
+                                        {{ ($product->name_vi) }}
+                                    @else
+                                        {{ ($product->name_en) }}
+                                    @endif
+                                </a>
                             @else
-                                <a class="check_url">{{($product->name)}}</a>
+                                <a class="check_url">
+                                    @if(locationHelper() == 'kr')
+                                        {{ ($product->name_ko) }}
+                                    @elseif(locationHelper() == 'cn')
+                                        {{ ($product->name_zh) }}
+                                    @elseif(locationHelper() == 'jp')
+                                        {{ ($product->name_ja) }}
+                                    @elseif(locationHelper() == 'vi')
+                                        {{ ($product->name_vi) }}
+                                    @else
+                                        {{ ($product->name_en) }}
+                                    @endif
+                                </a>
                             @endif
                         </div>
                         @if($product->price)
@@ -285,15 +344,25 @@
                                 @endphp
                                 <div class="d-flex justify-content-between">
                                     <div class="">
-                                        <h5>Product Code</h5>
+                                        <h5>{{ __('home.Product Code') }}</h5>
                                         <p class="productCode" id="productCode">
                                             {{ ($firstProduct->product_code) }}
                                         </p>
                                     </div>
                                     <div class="">
-                                        <h5>Product Name</h5>
+                                        <h5>{{ __('home.Product Name') }}</h5>
                                         <p class="productName" id="productName">
-                                            {{ ($firstProduct->name) }}
+                                            @if(locationHelper() == 'kr')
+                                                {{ ($firstProduct->name_ko) }}
+                                            @elseif(locationHelper() == 'cn')
+                                                {{ ($firstProduct->name_zh) }}
+                                            @elseif(locationHelper() == 'jp')
+                                                {{ ($firstProduct->name_ja) }}
+                                            @elseif(locationHelper() == 'vi')
+                                                {{ ($firstProduct->name_vi) }}
+                                            @else
+                                                {{ ($firstProduct->name_en) }}
+                                            @endif
                                         </p>
                                     </div>
                                 </div>
@@ -337,11 +406,11 @@
                                     <button id="btnViewAttribute" data-id="{{$firstProduct->id}}" type="button"
                                             class="btn" data-toggle="modal"
                                             data-target="#modal-show-att">
-                                        Xem thuộc tính
+                                        {{ __('home.Xem thuộc tính') }}
                                     </button>
                                 </div>
 
-                                <h6 class="text-center mt-2">Xem chi tiết các hình ảnh khác</h6>
+                                <h6 class="text-center mt-2">{{ __('home.Xem chi tiết các hình ảnh khác') }}</h6>
                                 @if($productGallery)
                                     @php
                                         $arrayProductImg = explode(',', $productGallery);
@@ -357,21 +426,21 @@
                                     </div>
                                 @endif
                                 <div class=" mt-2 text-center">
-                                    <h5 class="text-center">Xem video sản phẩm </h5>
+                                    <h5 class="text-center">{{ __('home.Watch product videos') }} </h5>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h5>
-                                        Điều kiện đặt hàng
+                                        {{ __('home.Order conditions') }}
                                     </h5>
                                 </div>
                                 <table class="table table-bordered">
                                     <thead>
                                     <tr>
-                                        <th scope="col">Số lượng</th>
-                                        <th scope="col">Đơn giá</th>
-                                        <th scope="col">Ngày dự kiến xuất kho</th>
+                                        <th scope="col">{{ __('home.quantity') }}</th>
+                                        <th scope="col">{{ __('home.Unit price') }}</th>
+                                        <th scope="col">{{ __('home.Ngày dự kiến xuất kho') }}</th>
                                     </tr>
                                     </thead>
 
@@ -381,22 +450,22 @@
                                             <tr>
                                                 <td>{{$price_sale->quantity}}</td>
                                                 <td>-{{$price_sale->sales}} %</td>
-                                                <td>{{$price_sale->days}} ngày kể từ ngày đặt hàng</td>
+                                                <td>{{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
                                             </tr>
                                         @endforeach
                                     @endif
                                     </tbody>
                                 </table>
 
-                                <p>đơn giá phía trên là điều kiện FOB/TT</p>
-                                <h5 class="text-center">Đặt hàng</h5>
+                                <p>{{ __('home.đơn giá phía trên là điều kiện FOB/TT') }}</p>
+                                <h5 class="text-center">{{ __('home.Đặt hàng') }}</h5>
                                 <table class="table table-bordered" id="table-selected-att">
                                     <thead>
                                     <tr>
-                                        <th scope="col">Thuộc tính</th>
-                                        <th scope="col">Số lượng</th>
-                                        <th scope="col">Đơn giá</th>
-                                        <th scope="col">Thành tiền</th>
+                                        <th scope="col">{{ __('home.Thuộc tính') }}</th>
+                                        <th scope="col">{{ __('home.Số lượng') }}</th>
+                                        <th scope="col">{{ __('home.Unit price') }}</th>
+                                        <th scope="col">{{ __('home.Thành tiền') }}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -405,8 +474,7 @@
 
                                 @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
                                     <button class="btn btn-success partnerBtn float-right" id="partnerBtn"
-                                            data-value="{{ $firstProduct->id }}" data-count="100">Tiếp nhận đặt
-                                        hàng
+                                            data-value="{{ $firstProduct->id }}" data-count="100">{{ __('home.Tiếp nhận đặt hàng') }}
                                     </button>
                                 @endif
                             </div>
@@ -426,8 +494,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content p-4" style="width: auto">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalDemoLabel">Chọn quốc gia mua
-                        hàng</h5>
+                    <h5 class="modal-title" id="exampleModalDemoLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
                     <button type="button" class="close" data-dismiss="modal"
                             aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -462,8 +529,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content p-4" style="width: auto">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Chọn quốc gia mua
-                        hàng</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
                     <button type="button" class="close" data-dismiss="modal"
                             aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -516,6 +582,8 @@
 
         $('.thumbnailProduct').on('click', function () {
             let product = $(this).data('value');
+            let productName = $(this).data('name');
+            console.log(productName);
             let imageUrl = '{{ asset('storage/') }}';
             let imgMain = product['thumbnail'];
             imageUrl = imageUrl + '/' + imgMain;
@@ -526,7 +594,7 @@
 
             let productNames = document.getElementsByClassName('productName');
             for (let i = 0; i < productNames.length; i++) {
-                productNames[i].innerHTML = product['name']
+                productNames[i].innerHTML = productName
             }
 
             let productID = product['id'];

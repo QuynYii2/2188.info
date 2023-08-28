@@ -11,10 +11,10 @@
         <div class="background container-fluid pt-3 justify-content-center pb-3">
             <div class="row card">
                 <div class="form-title text-center pt-2">
-                    <div class="title">Payment Register Member</div>
+                    <div class="title">{{ __('home.Payment Register Member') }}</div>
                 </div>
                 <h3 class="text-center">
-                    Gia nhập hội viên
+                    {{ __('home.Join member') }}
                 </h3>
                 <div class="mt-5">
                     <div class="row p-5">
@@ -23,16 +23,16 @@
                             $memberRegister = \App\Models\MemberRegisterInfo::where('id', $registerMember)->first();
                         @endphp
                         @if($memberRegister)
-                            <h5>Info</h5>
+                            <h5>{{ __('home.account information') }}</h5>
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <th scope="col">Full Name</th>
-                                    <th scope="col">Phone Number</th>
-                                    <th scope="col">Fax</th>
-                                    <th scope="col">Company</th>
-                                    <th scope="col">Address</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">{{ __('home.full name') }}</th>
+                                    <th scope="col">{{ __('home.phone number') }}</th>
+                                    <th scope="col">{{ __('home.Fax') }}</th>
+                                    <th scope="col">{{ __('home.Company Name') }}</th>
+                                    <th scope="col">{{ __('home.address') }}</th>
+                                    <th scope="col">{{ __('home.Status') }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -44,9 +44,9 @@
                                     <td>{{ ($memberRegister->address) }}</td>
                                     <td>
                                         @if($memberRegister->status == \App\Enums\MemberRegisterInfoStatus::ACTIVE)
-                                            <span class="text-success">PAID</span>
+                                            <span class="text-success">{{ __('home.PAID') }}</span>
                                         @else
-                                            <span class="text-danger">UNPAID</span>
+                                            <span class="text-danger">{{ __('home.UNPAID') }}</span>
                                         @endif
                                     </td>
                                 </tr>
@@ -57,14 +57,14 @@
                                     ['member_id', $registerMember],
                                     ['type', \App\Enums\MemberRegisterType::SOURCE]])->orderBy('created_at', 'desc')->first();
                             @endphp
-                            <h5>Account Member Source</h5>
+                            <h5>{{ __('home.Account Member Source') }}</h5>
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <th scope="col">Full Name</th>
-                                    <th scope="col">Phone Number</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">{{ __('home.full name') }}</th>
+                                    <th scope="col">{{ __('home.phone number') }}</th>
+                                    <th scope="col">{{ __('home.email') }}</th>
+                                    <th scope="col">{{ __('home.Status') }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -81,14 +81,14 @@
                                     ['person', $memberRegisterSource->id],
                                     ['type', \App\Enums\MemberRegisterType::REPRESENT]])->orderBy('created_at', 'desc')->first();
                             @endphp
-                            <h5>Account Member Represent</h5>
+                            <h5>{{ __('home.Account Member Represent') }}</h5>
                             <table class="table table-bordered">
                                 <thead>
                                 <tr>
-                                    <th scope="col">Full Name</th>
-                                    <th scope="col">Phone Number</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">{{ __('home.full name') }}</th>
+                                    <th scope="col">{{ __('home.phone number') }}</th>
+                                    <th scope="col">{{ __('home.email') }}</th>
+                                    <th scope="col">{{ __('home.Status') }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -101,48 +101,48 @@
                                 </tbody>
                             </table>
                             <div class="col-md-6 border">
-                                <h5 class="text-center">Quyền lợi hội viên</h5>
+                                <h5 class="text-center">{{ __('home.Membership benefits') }}</h5>
                                 <ol class="text-success">
-                                    <li>Tìm các sản phẩm</li>
-                                    <li>Quản lí và tìm kiếm giao dịch</li>
-                                    <li>Nhắn tin và quảng cáo sản phẩm</li>
+                                    <li>{{ __('home.Find products') }}</li>
+                                    <li>{{ __('home.Manage and search transactions') }}</li>
+                                    <li>{{ __('home.Messaging and product promotion') }}</li>
                                 </ol>
                             </div>
                             <div class="col-md-6 border">
-                                <h5 class="text-center">Mức giá</h5>
+                                <h5 class="text-center">{{ __('home.Price') }}</h5>
                                 @if($registerMember == \App\Enums\RegisterMember::VENDOR)
-                                    PRICE:
+                                    {{ __('home.Price') }}:
                                     <span class="text-danger" style="font-weight: 600; font-size: 36px">
                                     $ {{\App\Enums\RegisterMemberPrice::VENDOR}}
                                 </span>
                                     <input hidden="" type="text" name="price"
                                            value="{{\App\Enums\RegisterMemberPrice::VENDOR}}">
                                 @elseif($registerMember == \App\Enums\RegisterMember::POWER_VENDOR)
-                                    PRICE:
+                                    {{ __('home.Price') }}:
                                     <span class="text-danger" style="font-weight: 600; font-size: 36px">
                                     $ {{\App\Enums\RegisterMemberPrice::POWER_VENDOR}}
                                 </span>
                                     <input hidden="" type="text" name="price"
                                            value="{{\App\Enums\RegisterMemberPrice::POWER_VENDOR}}">
                                 @elseif($registerMember == \App\Enums\RegisterMember::PRODUCTION)
-                                    PRICE:
+                                    {{ __('home.Price') }}:
                                     <span class="text-danger" style="font-weight: 600; font-size: 36px">
                                     $ {{\App\Enums\RegisterMemberPrice::PRODUCTION}}
                                 </span>
                                     <input hidden="" type="text" name="price"
                                            value="{{\App\Enums\RegisterMemberPrice::PRODUCTION}}">
                                 @else
-                                    PRICE:
+                                    {{ __('home.Price') }}:
                                     <span class="text-danger" style="font-weight: 600; font-size: 36px">
                                     $ {{\App\Enums\RegisterMemberPrice::POWER_PRODUCTION}}
                                 </span>
                                     <input hidden="" type="text" name="price"
                                            value="{{\App\Enums\RegisterMemberPrice::POWER_PRODUCTION}}">
                                 @endif
-                                <p class="text-success small">Thanh toan thanh cong</p>
+                                <p class="text-success small">{{ __('home.Payment success') }}</p>
                                 <div class="float-right mt-5">
                                     <a href="{{route('home')}}" class="btn btn-success">
-                                        Back to home
+                                        {{ __('home. Back to home') }}
                                     </a>
                                 </div>
                             </div>

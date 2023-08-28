@@ -103,16 +103,15 @@
              $firstProduct = $products[0];
             }
         @endphp
-        <h3 class="text-center">Gian hàng hội viên {{$company->member}}</h3>
-        <h3 class="text-left">Hội viên {{$company->member}}</h3>
+        <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
+        <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
         <div class="d-flex justify-content-between align-items-center p-3">
-            <a href="{{route('stand.register.member.index', $company->id)}}" class="btn btn-primary">Gian hàng</a>
-            <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">Danh sách đối tác</a>
-            <a href="#" class="btn btn-primary">Tin nhắn đã nhận</a>
-            <a href="#" class="btn btn-warning">Tin nhắn đã gửi</a>
-            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalDemo">Mua hàng</a>
-            <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">Đặt sỉ nước
-                ngoài</a>
+            <a href="{{route('stand.register.member.index', $company->id)}}" class="btn btn-primary">{{ __('home.Booth') }}</a>
+            <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">{{ __('home.Partner List') }}</a>
+            <a href="#" class="btn btn-primary">{{ __('home.Message received') }}</a>
+            <a href="#" class="btn btn-warning">{{ __('home.Message sent') }}</a>
+            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
+            <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
         </div>
         <div class="row m-0">
             <div class="col-md-6 border">
@@ -125,22 +124,22 @@
                     <div class="row p-2">
                         <div class="col-md-6">
                             <div class="mt-2">
-                                <div class="mb-3 size"><b>Mã công ty: </b> {{ ($company->code_business) }}</div>
+                                <div class="mb-3 size"><b>{{ __('home.Company code') }}: </b> {{ ($company->code_business) }}</div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mt-2">
-                                <div class="mb-3 size"><b>Doanh nghiệp ưu tú: </b> {{ ($company->member) }}</div>
+                                <div class="mb-3 size"><b>{{ __('home.Elite enterprise') }}: </b> {{ ($company->member) }}</div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mt-2">
-                                <div class="mb-3 size"><b>Phân loại hội viên: </b> {{ ($company->member) }}</div>
+                                <div class="mb-3 size"><b>{{ __('home.Membership classification') }}: </b> {{ ($company->member) }}</div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mt-2">
-                                <div class="mb-3 size"><b>Điểm đánh giá của khách hàng: </b></div>
+                                <div class="mb-3 size"><b>{{ __('home.Customer rating score') }}: </b></div>
                             </div>
                         </div>
                     </div>
@@ -150,7 +149,7 @@
                 <div class="row">
                     <div class="col-md-12 border">
                         <div class="mt-2">
-                            <h5 class="mb-3">Sản phẩm chỉ định</h5>
+                            <h5 class="mb-3">{{ __('home.Specified products') }}</h5>
                         </div>
                     </div>
                     @php

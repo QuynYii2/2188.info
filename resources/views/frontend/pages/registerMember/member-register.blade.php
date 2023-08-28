@@ -22,10 +22,10 @@
                                             ${{$member->price}}
                                         </h3>
                                         <h6 class="card-subtitle mb-2 text-muted">
-                                            Hội viên {{$member->name}}
+                                            {{ __('home.Member') }} {{$member->name}}
                                         </h6>
                                         <h6 class="text-nowrap">
-                                            Xem chi tiết
+                                            {{ __('home.Xem chi tiết') }}
                                         </h6>
                                         <ol class="text-success">
                                             @php
@@ -48,7 +48,7 @@
                                         </ol>
                                         <div class="col-12 justify-content-center d-flex">
                                             <a href="{{route('show.register.member', $member->id)}}"
-                                               class="btn btn-primary">Đăng kí ngay</a>
+                                               class="btn btn-primary">{{ __('home.Sign up now') }}</a>
                                         </div>
 
                                     </div>
