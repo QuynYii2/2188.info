@@ -8,6 +8,7 @@ use App\Enums\MessageStatus;
 use App\Models\Chat;
 use App\Models\ChatRequest;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
@@ -63,7 +64,7 @@ class SocketController extends Controller implements MessageComponentInterface
 
             $data['id'] = $user_id[0]->id;
 
-            $data['state'] =  AccountStatus::OFFLINE;
+            $data['state'] = AccountStatus::OFFLINE;
 
             $updated_at = $user_id[0]->updated_at;
 
@@ -96,9 +97,9 @@ class SocketController extends Controller implements MessageComponentInterface
 
             $image_name = time() . '.jpg';
 
-            file_put_contents(public_path('images/') . $image_name, $msg);
+            file_put_contents(public_path('images/chat/') . $image_name, $msg);
 
-            $send_data['image_link'] = $image_name;
+            $send_data['image'] = $image_name;
 
             foreach ($this->clients as $client) {
                 if ($client->resourceId == $conn->resourceId) {
@@ -170,7 +171,7 @@ class SocketController extends Controller implements MessageComponentInterface
                         $sub_data[] = array(
                             'name' => $row['name'],
                             'id' => $row['id'],
-                            'state' => $row['state'],
+                            'status' => $row['status'],
                             'image' => $row['image']
                         );
                     }
@@ -228,7 +229,7 @@ class SocketController extends Controller implements MessageComponentInterface
                     ->where('status', '!=', ChatRequestStatus::APPROVED)
                     ->where(function ($query) use ($data) {
                         $query->where('from_user_id', $data->user_id)->orWhere('to_user_id', $data->user_id);
-                    })->orderBy('id', 'ASC')->get();
+                    })->orderBy('id', 'desc')->get();
 
                 /*
                 SELECT id, from_user_id, to_user_id, status FROM chat_requests
@@ -262,7 +263,7 @@ class SocketController extends Controller implements MessageComponentInterface
                         'to_user_id' => $row->to_user_id,
                         'name' => $user_data->name,
                         'notification_type' => $notification_type,
-                        'state' => $row->state,
+                        'status' => $row->status,
                         'image' => $user_data->image
                     );
                 }
@@ -310,12 +311,6 @@ class SocketController extends Controller implements MessageComponentInterface
                     ->where('status', ChatRequestStatus::APPROVED)
                     ->get();
 
-                /*
-                SELECT from_user id, to_user_id FROM chat_requests
-                WHERE (from_user_id = $data->from_user_id OR to_user_id = $data->from_user_id)
-                AND status = 'Approve'
-                */
-
                 $sub_data = array();
 
                 foreach ($user_id_data as $user_id_row) {
@@ -330,9 +325,9 @@ class SocketController extends Controller implements MessageComponentInterface
                     $user_data = User::select('id', 'name', 'image', 'state', 'updated_at')->where('id', $user_id)->first();
 
                     if (date('Y-m-d') == date('Y-m-d', strtotime($user_data->updated_at))) {
-                        $last_seen = 'Last Seen At ' . date('H:i', strtotime($user_data->updated_at));
+                        $last_seen = 'Last Seen At ' . date('H:i', strtotime(Carbon::parse($user_data->updated_at)->addHours(7)));
                     } else {
-                        $last_seen = 'Last Seen At ' . date('d/m/Y H:i', strtotime($user_data->updated_at));
+                        $last_seen = 'Last Seen At ' . date('d/m/Y H:i', strtotime(Carbon::parse($user_data->updated_at)->addHours(7)));
                     }
 
                     $sub_data[] = array(

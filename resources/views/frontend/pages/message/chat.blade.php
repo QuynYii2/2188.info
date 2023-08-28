@@ -76,16 +76,13 @@
 @endsection
 <script>
 
-   var conn = new WebSocket('ws://127.0.0.1:8000/?token={{ auth()->user()->token }}');
+   var conn = new WebSocket('ws://127.0.0.1:8800/?token={{ auth()->user()->token }}');
 
    var from_user_id = "{{ Auth::user()->id }}";
 
    var to_user_id = "";
 
    conn.onopen = function(e){
-
-      console.log("Connection established!");
-
       load_unconnected_user(from_user_id);
 
       load_unread_notification(from_user_id);
@@ -98,11 +95,11 @@
 
       var data = JSON.parse(e.data);
 
-      if(data.image_link)
+      if(data.image)
       {
          //Display Code for uploaded Image
 
-         document.getElementById('message_area').innerHTML = `<img src="{{ asset('images/`+data.image_link+`') }}" class="img-thumbnail img-fluid" />`;
+         document.getElementById('message_area').innerHTML = `<img src="{{ asset('images/chat/`+data.image+`') }}" class="img-thumbnail img-fluid" />`;
       }
 
       if(data.status)
@@ -113,13 +110,13 @@
          {
             if(online_status_icon[count].id == 'status_'+data.id)
             {
-               if(data.status == 'Online')
+               if(data.status == 'ONLINE')
                {
                   online_status_icon[count].classList.add('text-success');
 
                   online_status_icon[count].classList.remove('text-danger');
 
-                  document.getElementById('last_seen_'+data.id+'').innerHTML = 'Online';
+                  document.getElementById('last_seen_'+data.id+'').innerHTML = 'ONLINE';
                }
                else
                {
@@ -143,21 +140,21 @@
 
             for(var count = 0; count < data.data.length; count++)
             {
-               var user_image = '';
+               var image = '';
 
-               if(data.data[count].user_image != '')
+               if(data.data[count].image != '')
                {
-                  user_image = `<img src="{{ asset('images/') }}/`+data.data[count].user_image+`" width="40" class="rounded-circle" />`;
+                  image = `<img src="{{ asset('storage/avatar/') }}/`+data.data[count].image+`" width="40" class="rounded-circle" />`;
                }
                else
                {
-                  user_image = `<img src="{{ asset('images/no-image.jpg') }}" width="40" class="rounded-circle" />`
+                  image = `<img src="{{ asset('storage/avatar/no-image.jpg') }}" width="40" class="rounded-circle" />`
                }
 
                html += `
 				<li class="list-group-item">
 					<div class="row">
-						<div class="col col-9">`+user_image+`&nbsp;`+data.data[count].name+`</div>
+						<div class="col col-9">`+image+`&nbsp;`+data.data[count].name+`</div>
 						<div class="col col-3">
 							<button type="button" name="send_request" class="btn btn-primary btn-sm float-end" onclick="send_request(this, `+from_user_id+`, `+data.data[count].id+`)"><i class="fas fa-paper-plane"></i></button>
 						</div>
@@ -194,26 +191,27 @@
 
          for(var count = 0; count < data.data.length; count++)
          {
-            var user_image = '';
+            var image = '';
 
-            if(data.data[count].user_image != '')
+            if(data.data[count].image != '')
             {
-               user_image = `<img src="{{ asset('images/') }}/`+data.data[count].user_image+`" width="40" class="rounded-circle" />`;
+               image = `<img src="{{ asset('storage/avatar/') }}/`+data.data[count].image+`" width="40" class="rounded-circle" />`;
             }
             else
             {
-               user_image = `<img src="{{ asset('images/no-image.jpg') }}" width="40" class="rounded-circle" />`;
+               image = `<img src="{{ asset('storage/avatar/no-image.jpg') }}" width="40" class="rounded-circle" />`;
             }
 
             html += `
 			<li class="list-group-item">
 				<div class="row">
-					<div class="col col-8">`+user_image+`&nbsp;`+data.data[count].name+`</div>
+					<div class="col col-8">`+image+`&nbsp;`+data.data[count].name+`</div>
 					<div class="col col-4">
 			`;
             if(data.data[count].notification_type == 'Send Request')
             {
-               if(data.data[count].status == 'Pending')
+               console.log(data.data[count])
+               if(data.data[count].status == '{{\App\Enums\ChatRequestStatus::PENDING}}')
                {
                   html += '<button type="button" name="send_request" class="btn btn-warning btn-sm float-end">Request Send</button>';
                }
@@ -224,10 +222,10 @@
             }
             else
             {
-               if(data.data[count].status == 'Pending')
+               if(data.data[count].status == '{{\App\Enums\ChatRequestStatus::PENDING}}')
                {
-                  html += '<button type="button" class="btn btn-danger btn-sm float-end" onclick="process_chat_request('+data.data[count].id+', '+data.data[count].from_user_id+', '+data.data[count].to_user_id+', `Reject`)"><i class="fas fa-times"></i></button>&nbsp;';
-                  html += '<button type="button" class="btn btn-success btn-sm float-end" onclick="process_chat_request('+data.data[count].id+', '+data.data[count].from_user_id+', '+data.data[count].to_user_id+', `Approve`)"><i class="fas fa-check"></i></button>';
+                  html += '<button type="button" class="btn btn-danger btn-sm float-end" onclick="process_chat_request('+data.data[count].id+', '+data.data[count].from_user_id+', '+data.data[count].to_user_id+', `{{\App\Enums\ChatRequestStatus::REFUSE}}`)"><i class="fas fa-times"></i></button>&nbsp;';
+                  html += '<button type="button" class="btn btn-success btn-sm float-end" onclick="process_chat_request('+data.data[count].id+', '+data.data[count].from_user_id+', '+data.data[count].to_user_id+', `{{\App\Enums\ChatRequestStatus::APPROVED}}`)"><i class="fas fa-check"></i></button>';
                }
                else
                {
@@ -267,11 +265,11 @@
 
                var last_seen = '';
 
-               if(data.data[count].user_status == 'Online')
+               if(data.data[count].state == 'ONLINE')
                {
                   html += '<span class="text-success online_status_icon" id="status_'+data.data[count].id+'"><i class="fas fa-circle"></i></span>';
 
-                  last_seen = 'Online';
+                  last_seen = 'ONLINE';
                }
                else
                {
@@ -280,21 +278,21 @@
                   last_seen = data.data[count].last_seen;
                }
 
-               var user_image = '';
+               var image = '';
 
-               if(data.data[count].user_image != '')
+               if(data.data[count].image != '')
                {
-                  user_image = `<img src="{{ asset('images/') }}/`+data.data[count].user_image+`" width="35" class="rounded-circle" />`;
+                  image = `<img src="{{ asset('storage/avatar/') }}/`+data.data[count].image+`" width="35" class="rounded-circle" />`;
                }
                else
                {
-                  user_image = `<img src="{{ asset('images/no-image.jpg') }}" width="35" class="rounded-circle" />`;
+                  image = `<img src="{{ asset('storage/avatar/no-image.jpg') }}" width="35" class="rounded-circle" />`;
                }
 
 
 
                html += `
-						&nbsp; `+user_image+`&nbsp;<b>`+data.data[count].name+`</b>
+						&nbsp; `+image+`&nbsp;<b>`+data.data[count].name+`</b>
 						<div class="text-right"><small class="text-muted last_seen" id="last_seen_`+data.data[count].id+`">`+last_seen+`</small></div>
 					</div>
 					<span class="user_unread_message" data-id="`+data.data[count].id+`" id="user_unread_message_`+data.data[count].id+`"></span>
@@ -323,19 +321,19 @@
 
             var icon_style = '';
 
-            if(data.message_status == 'Not Send')
+            if(data.message_status == '{{\App\Enums\MessageStatus::UNSEEN}}')
             {
                icon_style = '<span id="chat_status_'+data.chat_message_id+'" class="float-end"><i class="fas fa-check text-muted"></i></span>';
             }
-            if(data.message_status == 'Send')
+            if(data.message_status == '{{\App\Enums\MessageStatus::SEEN}}')
             {
                icon_style = '<span id="chat_status_'+data.chat_message_id+'" class="float-end"><i class="fas fa-check-double text-muted"></i></span>';
             }
 
-            if(data.message_status == 'Read')
-            {
-               icon_style = '<span class="text-primary float-end" id="chat_status_'+data.chat_message_id+'"><i class="fas fa-check-double"></i></span>';
-            }
+            {{--if(data.message_status == '{{\App\Enums\MessageStatus::SEEN}}')--}}
+            {{--{--}}
+            {{--   icon_style = '<span class="text-primary float-end" id="chat_status_'+data.chat_message_id+'"><i class="fas fa-check-double"></i></span>';--}}
+            {{--}--}}
 
             html += `
 			<div class="row">
@@ -358,7 +356,7 @@
 				</div>
 				`;
 
-               update_message_status(data.chat_message_id, from_user_id, to_user_id, 'Read');
+               update_message_status(data.chat_message_id, from_user_id, to_user_id, '{{\App\Enums\MessageStatus::SEEN}}');
             }
             else
             {
@@ -404,20 +402,20 @@
             {
                var icon_style = '';
 
-               if(data.chat_history[count].message_status == 'Not Send')
+               if(data.chat_history[count].message_status == '{{\App\Enums\MessageStatus::UNSEEN}}')
                {
                   icon_style = '<span id="chat_status_'+data.chat_history[count].id+'" class="float-end"><i class="fas fa-check text-muted"></i></span>';
                }
 
-               if(data.chat_history[count].message_status == 'Send')
+               if(data.chat_history[count].message_status == '{{\App\Enums\MessageStatus::SEEN}}')
                {
                   icon_style = '<span id="chat_status_'+data.chat_history[count].id+'" class="float-end"><i class="fas fa-check-double text-muted"></i></span>';
                }
 
-               if(data.chat_history[count].message_status == 'Read')
-               {
-                  icon_style = '<span class="text-primary float-end" id="chat_status_'+data.chat_history[count].id+'"><i class="fas fa-check-double"></i></span>';
-               }
+               {{--if(data.chat_history[count].message_status == '{{\App\Enums\MessageStatus::SEEN}}')--}}
+               {{--{--}}
+               {{--   icon_style = '<span class="text-primary float-end" id="chat_status_'+data.chat_history[count].id+'"><i class="fas fa-check-double"></i></span>';--}}
+               {{--}--}}
 
                html +=`
 				<div class="row">
@@ -432,9 +430,9 @@
             }
             else
             {
-               if(data.chat_history[count].message_status != 'Read')
+               if(data.chat_history[count].message_status != '{{\App\Enums\MessageStatus::SEEN}}')
                {
-                  update_message_status(data.chat_history[count].id, data.chat_history[count].from_user_id, data.chat_history[count].to_user_id, 'Read');
+                  update_message_status(data.chat_history[count].id, data.chat_history[count].from_user_id, data.chat_history[count].to_user_id, '{{\App\Enums\MessageStatus::SEEN}}');
                }
 
                html += `
@@ -465,7 +463,7 @@
 
          if(chat_status_element)
          {
-            if(data.update_message_status == 'Read')
+            if(data.update_message_status == '{{\App\Enums\MessageStatus::SEEN}}')
             {
                chat_status_element.innerHTML = '<i class="fas fa-check-double text-primary"></i>';
             }

@@ -13,6 +13,8 @@ final class MessageStatus extends Enum
 {
     const SEEN = 'SEEN';
     const UNSEEN = 'UNSEEN';
+    const SEND = 'SEEN';
+    const NOT_SEND = 'NOT SEND';
     const HIDDEN = 'HIDDEN';
     const DELETED = 'DELETED';
 }
