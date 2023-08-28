@@ -64,6 +64,7 @@ class HomeController extends Controller
 
         if (array_key_exists($locale, $currencies)) {
             $currency = $currencies[$locale];
+            dd($currency);
         }
 
 
