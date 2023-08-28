@@ -18,7 +18,7 @@ class GeoIP
     {
         $record = $this->reader->get($ip);
         if ($record) {
-            $countryCode = $record['country']['iso_code'];
+            $countryCode = 'KR';
             switch ($countryCode) {
                 case 'KR':
                     return 'kr';
