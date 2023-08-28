@@ -41,8 +41,7 @@ class GeoIP
         if ($record == null){
             $record = $this->reader->get('183.80.130.4');
         }
-        $countryCode = $record['country']['names']['en'];
-        dd($countryCode);
+        $countryCode = 'kr';
         return $countryCode;
     }
 }
