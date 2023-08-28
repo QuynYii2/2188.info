@@ -32,7 +32,7 @@ class GeoIP
                     return 'en';
             }
         }
-        return 'kr';
+        return 'vi';
     }
 
     public function getCode($ip)
@@ -41,7 +41,7 @@ class GeoIP
         if ($record == null){
             $record = $this->reader->get('183.80.130.4');
         }
-        $countryCode = 'kr';
+        $countryCode = $record['country']['names']['en'];
         return $countryCode;
     }
 }
