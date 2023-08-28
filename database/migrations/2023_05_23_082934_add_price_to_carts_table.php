@@ -14,7 +14,7 @@ class AddPriceToCartsTable extends Migration
     public function up()
     {
         Schema::table('carts', function (Blueprint $table) {
-            $table->integer('price')->change();
+            $table->integer('price');
         });
     }
 

@@ -15,6 +15,7 @@ class WebSocketServer extends Command
      *
      * @var string
      */
+    // php artisan websocket:init
     protected $signature = 'websocket:init';
 
     /**
