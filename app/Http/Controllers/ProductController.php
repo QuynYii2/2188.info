@@ -182,9 +182,10 @@ class ProductController extends Controller
         return view('frontend.pages.profile.my-shop', compact('products', 'currency'));
     }
 
-    public function getProductSale($id){
+    public function getProductSale(Request $request, $id){
         $price_sales = ProductSale::where('product_id', $id)->get();
-        return view('frontend/pages/member/product-sales', compact('price_sales'));
+        $currency = (new \App\Http\Controllers\Frontend\HomeController())->getLocation($request);
+        return view('frontend/pages/member/product-sales', compact('price_sales', 'currency'));
     }
 
     private function findProduct($key, $text)

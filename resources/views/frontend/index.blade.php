@@ -376,14 +376,10 @@
         </div>
         <section class="section-Seven ">
             <div class="container-fluid">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum
-                    interdum, nisi lorem egestas vitae scel
+                <p>{{ __('home.If you are looking for a website to buy and sell online is a great choice for you.') }}
                     <span id="dots">...</span>
                     <span id="more">
-                        erisque enim ligula venenatis dolor. Maecenas nisl est, ultrices nec congue eget, auctor vitae massa.
-                        Fusce luctus vestibulum augue ut aliquet. Nunc sagittis dictum nisi, sed ullamcorper ipsum dignissim ac.
-                        In at libero sed nunc venenatis imperdiet sed ornare turpis. Donec vitae dui eget tellus gravida venenatis.
-                        Integer fringilla congue eros non fermentum. Sed dapibus pulvinar nibh tempor porta.
+                        {{ __('home.long description') }}
                     </span>
                 </p>
                 <button onclick="myFunction()" id="myBtn">{{ __('home.Show More') }}</button>
@@ -395,7 +391,7 @@
                  alt="">
             <div class="section-content">
                 <div class="content">
-                    Why shop with us?
+                    {{ __('home. Why shop with us?') }}
                 </div>
                 <div class="list d-flex justify-content-center">
                     <div class="item">
@@ -403,10 +399,10 @@
                             <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png" alt="">
                         </div>
                         <div class="item-content">
-                            QUALITY AND SAVING
+                            {{ __('home.QUALITY AND SAVING') }}
                         </div>
                         <div class="item-text">
-                            Comprehensive quality control and affordable prices
+                            {{ __('home.Comprehensive quality control and affordable prices') }}
                         </div>
                     </div>
                     <div class="item">
@@ -415,10 +411,10 @@
                                  alt="">
                         </div>
                         <div class="item-content">
-                            QUALITY AND SAVING
+                            {{ __('home.QUALITY AND SAVING') }}
                         </div>
                         <div class="item-text">
-                            Comprehensive quality control and affordable prices
+                            {{ __('home.Comprehensive quality control and affordable prices') }}
                         </div>
                     </div>
                     <div class="item">
@@ -427,10 +423,10 @@
                                  alt="">
                         </div>
                         <div class="item-content">
-                            QUALITY AND SAVING
+                            {{ __('home.QUALITY AND SAVING') }}
                         </div>
                         <div class="item-text">
-                            Comprehensive quality control and affordable prices
+                            {{ __('home.Comprehensive quality control and affordable prices') }}
                         </div>
                     </div>
                     <div class="item">
@@ -439,10 +435,10 @@
                                  alt="">
                         </div>
                         <div class="item-content">
-                            QUALITY AND SAVING
+                            {{ __('home.QUALITY AND SAVING') }}
                         </div>
                         <div class="item-text">
-                            Comprehensive quality control and affordable prices
+                            {{ __('home.Comprehensive quality control and affordable prices') }}
                         </div>
                     </div>
                     <div class="item">
@@ -451,10 +447,10 @@
                                  alt="">
                         </div>
                         <div class="item-content">
-                            QUALITY AND SAVING
+                            {{ __('home.QUALITY AND SAVING') }}
                         </div>
                         <div class="item-text">
-                            Comprehensive quality control and affordable prices
+                            {{ __('home.Comprehensive quality control and affordable prices') }}
                         </div>
                     </div>
                 </div>

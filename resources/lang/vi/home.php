@@ -487,6 +487,16 @@ return [
     'TERM OF SERVICE' => 'Quy chế hoạt động',
     'SHIPPING POLICY' => 'Chính sách vận chuyển',
     'VIOLATION' => 'CHÍNH SÁCH TRẢ HÀNG VÀ HOÀN TIỀN',
+    'If you are looking for a website to buy and sell online is a great choice for you.' => 'Nếu bạn đang tìm kiếm một trang web để mua và bán hàng trực tuyến là một sự lựa chọn tuyệt vời dành cho bạn.',
+    'long description' => 'Trang thương mại điện tử cho phép người mua và người bán tương tác và trao đổi dễ dàng thông tin về sản phẩm và chương trình khuyến mãi của shop.
+                    Do đó, việc mua bán trở nên nhanh chóng và đơn giản hơn. Bạn có thể trò chuyện trực tiếp với nhà bán hàng để hỏi trực tiếp về mặt hàng cần mua.
+                    Còn nếu bạn muốn tìm mua những dòng sản phẩm chính hãng, uy tín, đây chính là sự lựa chọn lí tưởng dành cho bạn.
+                    Để bạn có thể dễ dàng khi tìm hiểu và sử dụng sản phẩm, 2188 Blog - trang blog thông tin chính thức của 2188 - sẽ giúp bạn có thể tìm được cho mình các kiến thức về xu hướng thời trang,
+                    review công nghệ, mẹo làm đẹp, tin tức tiêu dùng và deal giá tốt bất ngờ.',
+    ' Why shop with us?' => 'Tại sao mua sắm với chúng tôi?',
+    'QUALITY AND SAVING' => 'CHẤT LƯỢNG VÀ TIẾT KIỆM',
+    'Comprehensive quality control and affordable prices' => 'Kiểm soát chất lượng toàn diện và giá cả phải chăng',
+
 
 
 
