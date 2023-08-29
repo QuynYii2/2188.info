@@ -299,6 +299,9 @@
                         </div>
                         @if($product->price)
                             <div class="card-price text-left">
+                                @php
+                                    $prises = $product->old_price;
+                                @endphp
                                 @if($product->price != null)
                                     <div class="price-sale">
                                         <strong> {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strong>
@@ -447,9 +450,14 @@
                                     <tbody id="tablebodyProductSale">
                                     @if(!$price_sales->isEmpty())
                                         @foreach($price_sales as $price_sale)
+                                            @php
+                                                $quantity = $price_sale->quantity;
+                                                $discount = $price_sale->sales;
+                                                $prises = $product->old_price;
+                                            @endphp
                                             <tr>
                                                 <td>{{$price_sale->quantity}}</td>
-                                                <td>-{{$price_sale->sales}} %</td>
+                                                <td>{{($prises - ($prises * $discount / 100)) * $quantity}}</td>
                                                 <td>{{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
                                             </tr>
                                         @endforeach
