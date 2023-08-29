@@ -74,7 +74,7 @@
 @endsection
 <script>
 
-    const url = 'wss://staging-b2b.2188.info?token';
+    const url = 'ws://localhost:8090/?token';
 
     var conn = new WebSocket(url + '={{ auth()->user()->token }}');
 
