@@ -110,74 +110,41 @@
                             <td>
                                 <div class="d-flex">
                                     @php
-                                        $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                                        $user = \Illuminate\Support\Facades\Auth::user();
+                                        $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', $user->email)->first();
                                         $newCompany = \App\Models\MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
-                                        $oldItem = null;
-                                        if($newCompany){
-                                             $oldItem = \App\Models\MemberPartner::where([
-                                               ['company_id_source', $company->id],
-                                               ['company_id_follow', $newCompany->id],
-                                               ['status', \App\Enums\MemberPartnerStatus::ACTIVE],
-                                             ])->first();
-                                        }
+                                         $exitsPartner  = \App\Models\MemberPartner::where([
+                                                // cong ty dang huong den tai url
+                                                ['company_id_source', $memberPartner->id],
+                                                // cong ty dang login
+                                                ['company_id_follow', $newCompany->id],
+                                                ['status', \App\Enums\MemberPartnerStatus::ACTIVE],
+                                            ])->first();
                                     @endphp
-                                    @if(!$oldItem)
-                                        @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
+                                    @if($newCompany->id != $memberPartner->id)
+                                        @if($newCompany && $newCompany->member != \App\Enums\RegisterMember::BUYER && !$exitsPartner)
                                             <form method="post" action="{{route('stands.register.member')}}">
                                                 @csrf
-                                                <input type="text" name="company_id_source" class="d-none" value="{{$company->id}}">
-                                                <input type="text" name="price" class="d-none" value="{{$firstProduct->price ?? ''}}">
+                                                <input type="text" name="company_id_source"
+                                                       value="{{$memberPartner->id}} "
+                                                       hidden>
                                                 <button class="btn btn-primary" id="btnFollow" type="submit">
                                                     Follow
                                                 </button>
                                             </form>
+                                        @else
+                                            <form method="post"
+                                                  action="{{ route('stands.unregister.member', $memberPartner->id) }}" }>
+                                                @csrf
+                                                <input type="text" name="company_id_source"
+                                                       value="{{ $memberPartner->id }}" hidden>
+                                                <button class="btn btn-danger" id="btnUnfollow" type="submit">
+                                                    Unfollow
+                                                </button>
+                                            </form>
                                         @endif
-                                    @else
-                                        <form method="post" action="{{ route('stands.unregister.member', $company->id) }}">
-                                            @csrf
-                                            <input type="text" name="company_id_source" class="d-none" value="{{ $company->id }}">
-                                            <button class="btn btn-danger" id="btnUnfollow" type="submit">
-                                                Unfollow
-                                            </button>
-                                        </form>
                                     @endif
                                 </div>
-{{--                                <div class="d-flex">--}}
-{{--                                    @php--}}
-{{--                                        $user = \Illuminate\Support\Facades\Auth::user();--}}
-{{--                                        $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', $user->email)->first();--}}
-{{--                                        $newCompany = \App\Models\MemberRegisterInfo::where('id', $memberPerson->member_id)->first();--}}
-{{--                                         $exitsPartner  = \App\Models\MemberPartner::where([--}}
-{{--                                                ['company_id_source', $company->id],--}}
-{{--                                                ['company_id_follow', $newCompany->id],--}}
-{{--                                                ['status', \App\Enums\MemberPartnerStatus::ACTIVE],--}}
-{{--                                            ])->first();--}}
-{{--                                    @endphp--}}
-{{--                                    @dd($newCompany)--}}
-
-{{--                                    @if($id != $user->id)--}}
-{{--                                        @if($newCompany && $newCompany->member != \App\Enums\RegisterMember::BUYER && empty($exitsPartner))--}}
-{{--                                            <form method="post" action="{{route('stands.register.member')}}">--}}
-{{--                                                @csrf--}}
-{{--                                                <input type="text" name="company_id_source" value="{{$company->id}} " hidden>--}}
-{{--                                                <input type="text" name="price" value="{{$firstProduct->price ?? ''}}" hidden>--}}
-{{--                                                <button class="btn btn-primary" id="btnFollow" type="submit">--}}
-{{--                                                    Follow--}}
-{{--                                                </button>--}}
-{{--                                            </form>--}}
-{{--                                        @else--}}
-{{--                                            <form method="post" action="{{ route('stands.unregister.member', $company->id) }}"}>--}}
-{{--                                                @csrf--}}
-{{--                                                <input type="text" name="company_id_source"--}}
-{{--                                                       value="{{ $company->id }}" hidden>--}}
-{{--                                                <button class="btn btn-danger" id="btnUnfollow" type="submit">--}}
-{{--                                                    Unfollow--}}
-{{--                                                </button>--}}
-{{--                                            </form>--}}
-{{--                                        @endif--}}
-{{--                                    @endif--}}
-
-{{--                                </div>--}}
                             </td>
                             <td>
                                 @php

@@ -16,28 +16,31 @@ class MemberPartnerController extends Controller
         try {
             $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
             $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
-            $oldItem = MemberPartner::where([
+            $existingItem = MemberPartner::where([
                 ['company_id_source', $request->input('company_id_source')],
                 ['company_id_follow', $company->id],
-                ['status', MemberPartnerStatus::ACTIVE],
             ])->first();
-            if ($oldItem) {
-                $oldItem->quantity = $oldItem->quantity + 1;
-                $oldItem->price = $oldItem->price + $request->input('price');
-                $success = $oldItem->save();
-            } else {
-                $item = [
-                    'company_id_source' => $request->input('company_id_source'),
-                    'company_id_follow' => $company->id,
-                    'quantity' => 1,
-                    'price' => 0,
-                ];
-                $success = MemberPartner::create($item);
+            $success = null;
+            if ($memberPerson->member_id != $request->input('company_id_source')) {
+                if ($existingItem) {
+                    $existingItem->status = MemberPartnerStatus::ACTIVE;
+                    $success = $existingItem->save();
+                } else {
+                    $item = [
+                        'company_id_source' => $request->input('company_id_source'),
+                        'company_id_follow' => $company->id,
+                        'quantity' => 1,
+                        'price' => 0,
+                        'status' => MemberPartnerStatus::ACTIVE,
+                    ];
+                    $success = MemberPartner::create($item);
+                }
             }
             if ($success) {
                 alert()->success('Success', 'Success!');
                 return back();
             }
+
             alert()->error('Error', 'Error!');
             return back();
         } catch (\Exception $exception) {
@@ -45,7 +48,9 @@ class MemberPartnerController extends Controller
             return back();
         }
     }
-    public function delete(Request $request, $id) {
+
+    public function delete(Request $request)
+    {
         try {
             $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
             $company = MemberRegisterInfo::find($memberPerson->member_id);
@@ -54,7 +59,7 @@ class MemberPartnerController extends Controller
                 ['company_id_source', $request->input('company_id_source')],
                 ['company_id_follow', $company->id],
                 ['status', MemberPartnerStatus::ACTIVE],
-            ])->delete();
+            ])->update(['status' => MemberPartnerStatus::INACTIVE]);
 
             if ($affectedRows > 0) {
                 alert()->success('Success', 'Success!');
@@ -67,26 +72,5 @@ class MemberPartnerController extends Controller
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
-//        try {
-//            $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
-//            $company = MemberRegisterInfo::find($memberPerson->member_id)->first();
-//
-//            $affectedRows = MemberPartner::where([
-//                ['company_id_source', $_POST['company_id_source']],
-//                ['company_id_follow', $company->id],
-//                ['status', MemberPartnerStatus::ACTIVE],
-//            ])->update(['status' => MemberPartnerStatus::INACTIVE]); // Cập nhật trạng thái
-//            if ($affectedRows > 0) {
-//                alert()->success('Success', 'Unfollowed successfully!');
-//                return back();
-//            } else {
-//                alert()->error('Error', 'Unfollow failed!');
-//                return back();
-//            }
-//        } catch (\Exception $exception) {
-//            alert()->error('Error', 'Error, Please try again!');
-//            return back();
-//        }
     }
-
 }
