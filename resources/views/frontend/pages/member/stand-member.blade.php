@@ -211,19 +211,29 @@
                                ['status', \App\Enums\MemberPartnerStatus::ACTIVE],
                              ])->first();
                         }
-                    @endphp
-                    @if(!$oldItem)
-                        @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
-                            <form method="post" action="{{route('stands.register.member')}}">
+                        @endphp
+
+                        @if(!$oldItem)
+                            @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
+                                <form method="post" action="{{route('stands.register.member')}}">
+                                    @csrf
+                                    <input type="text" name="company_id_source" class="d-none" value="{{$company->id}}">
+                                    <input type="text" name="price" class="d-none" value="{{$firstProduct->price ?? ''}}">
+                                    <button class="btn btn-primary" id="btnFollow" type="submit">
+                                        Follow
+                                    </button>
+                                </form>
+                            @endif
+                        @else
+                            <form method="post" action="{{ route('stands.unregister.member') }}">
                                 @csrf
-                                <input type="text" name="company_id_source" class="d-none" value="{{$company->id}}">
-                                <input type="text" name="price" class="d-none" value="{{$firstProduct->price ?? ''}}">
-                                <button class="btn btn-primary" id="btnFollow" type="submit">
-                                    Follow
+                                <input type="text" name="company_id_source" class="d-none" value="{{ $company->id }}">
+                                <button class="btn btn-danger" id="btnUnfollow" type="submit">
+                                    Unfollow
                                 </button>
                             </form>
                         @endif
-                    @endif
+
                 </div>
             </div>
     </div>

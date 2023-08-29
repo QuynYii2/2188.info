@@ -411,6 +411,7 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::post('/products-register-member', [RegisterMemberController::class, 'saveProduct'])->name('products.register.member.create');
     Route::post('/add-to-cart-register-member/{product}', [CartController::class, 'addToCartApi'])->name('cart.api');
     Route::post('/stands-register-member', [MemberPartnerController::class, 'store'])->name('stands.register.member');
+    Route::post('/stands-unregister-member/{id}', [MemberPartnerController::class, 'delete'])->name('stands.unregister.member');
     //
     Route::get('/trusts-register-member', [TrustMemberController::class, 'memberStand'])->name('trust.register.member.index');
     Route::get('/trusts-register-member/{locale}', [TrustMemberController::class, 'memberPartnerLocale'])->name('trust.register.member.locale');
