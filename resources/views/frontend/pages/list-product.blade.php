@@ -58,7 +58,7 @@
                     @endif
                 </a>
             @else
-                <a class="check_url">{{($product->name)}}</a>
+                <a class="check_url">{{($product->name_ko)}}</a>
             @endif
         </div>
 

@@ -33,6 +33,7 @@ if (!function_exists('convertCurrency')) {
 
         $responseBody = $response->getBody()->getContents();
         $data = json_decode($responseBody, true);
+//        dd($data['info']['rate']);
         $rate = $data['info']['rate'];
         $time = 300; //5 minute
         Cache::flush();

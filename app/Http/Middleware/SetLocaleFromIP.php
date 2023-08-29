@@ -39,7 +39,7 @@ class SetLocaleFromIP
             case 'CN':
                 return 'zh-CN';
             default:
-                return 'vi';
+                return 'kr';
         }
     }
 }
