@@ -18,7 +18,7 @@ class SetDefaultLocale
     public function handle(Request $request, Closure $next)
     {
         if (!Session::has('locale')) {
-            Session::put('locale', 'vi');
+            Session::put('locale', 'kr');
         }
 
         return $next($request);

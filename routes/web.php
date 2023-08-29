@@ -22,6 +22,7 @@ use App\Http\Controllers\ProductInterestController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\RevenusController;
+use App\Http\Controllers\SampleController;
 use App\Http\Controllers\Seller\AttributeController;
 use App\Http\Controllers\Seller\CategoryController;
 use App\Http\Controllers\Seller\ExportFileController;
@@ -54,12 +55,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/lang/{locale}', function ($locale) {
-    session()->put('locale', $locale);
+Route::get('/lang/kr', function ($locale) {
+    session()->put('locale', 'kr');
     return redirect()->back();
 })->name('language');
 
-Route::get('/set-locale/{locale}', [HomeController::class, 'setLocale'])->name('app.set.locale');
+Route::get('/set-locale/kr', [HomeController::class, 'setLocale'])->name('app.set.locale');
 
 Route::post('/register', [UserController::class, 'store'])->name('register.store');
 
@@ -177,6 +178,7 @@ Route::get('/products-shop-category/{category}/{shop}', [\App\Http\Controllers\F
 
 Route::middleware(['auth'])->group(callback: function () {
 
+    Route::get('/chat-message', [SampleController::class, 'chat'])->name('chat.message.show');
     //Setup marketing
     Route::get('/setup-marketing/', [\App\Http\Controllers\SetupMarketingController::class, 'index'])->name('setup-marketing.show');
     Route::get('/setup-marketing/create', [\App\Http\Controllers\SetupMarketingController::class, 'create'])->name('create-setup-marketing');

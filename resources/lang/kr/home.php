@@ -424,6 +424,17 @@ return [
     ' Back to home' => '홈으로',
     'Manage and search transactions' => '거래 관리 및 검색',
     'FileReader' => '파일리더',
+    'The Foreign Wholesale Order feature is only available to corporate members (Trusted members) and above' => '해외도매는 기업전용 (성실회원 이상) 가능합니다.',
+    'Upgrade Instructions' => '등업안내',
+    'Please upgrade your membership to use' => '회원등업후 이용 가능합니다.',
+    'Close' => '닫기',
+    'Create your account and enjoy a new shopping experience.' => '계정을 만들고 새로운 쇼핑 경험을 즐겨보십시오.',
+    'Follow' => '팔로우',
+
+
+
+
+];
 
 
 
@@ -464,4 +475,3 @@ return [
 
 
 
-];;

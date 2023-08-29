@@ -2267,6 +2267,10 @@ hr {
   border-radius: 0.25rem;
 }
 
+.text-success {
+  height: 250px;
+}
+
 .category-list .item-body {
   padding: 10px;
 }
@@ -3363,18 +3367,6 @@ footer {
   margin: 0;
 }
 
-.product-image img {
-  width: 100%;
-  object-fit: cover;
-  height: 100%;
-}
-
-.product-image {
-  width: 100%;
-  height: 70vh;
-  display: flex;
-  align-items: center;
-}
 .product-image img {
   width: 100%;
   object-fit: cover;

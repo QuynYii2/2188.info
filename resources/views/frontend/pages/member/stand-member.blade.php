@@ -211,19 +211,19 @@
                                ['status', \App\Enums\MemberPartnerStatus::ACTIVE],
                              ])->first();
                         }
-                    @endphp
-                    @if(!$oldItem)
-                        @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
-                            <form method="post" action="{{route('stands.register.member')}}">
-                                @csrf
-                                <input type="text" name="company_id_source" class="d-none" value="{{$company->id}}">
-                                <input type="text" name="price" class="d-none" value="{{$firstProduct->price ?? ''}}">
-                                <button class="btn btn-primary" id="btnFollow" type="submit">
-                                    Follow
-                                </button>
-                            </form>
+                        @endphp
+                        @if(!$oldItem)
+                            @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
+                                <form method="post" action="{{route('stands.register.member')}}" hidden>
+                                    @csrf
+                                    <input type="text" name="company_id_source" class="d-none" value="{{$company->id}}">
+                                    <input type="text" name="price" class="d-none" value="{{$firstProduct->price ?? ''}}">
+                                    <button class="btn btn-primary" id="btnFollow" type="submit">
+                                        Follow
+                                    </button>
+                                </form>
+                            @endif
                         @endif
-                    @endif
                 </div>
             </div>
     </div>

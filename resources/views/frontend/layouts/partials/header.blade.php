@@ -104,11 +104,13 @@
                             <input type="text" placeholder="{{ __('home.placeholder search') }}"
                                    style="box-shadow: none">
 
-                            <button class="button-right" type="submit" onclick="<?php echo $checkBuyer ? 'showAlert(1)' : (Auth::check() ? '' : 'showAlert(2)') ?>">
+                            <button class="button-right" type="submit"
+                                    onclick="<?php echo $checkBuyer ? 'showAlert(1)' : (Auth::check() ? '' : 'showAlert(2)') ?>">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
                             <div class="category-drop input-group-prepend">
-                                <button class="btn-all btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button class="btn-all btn-outline-secondary dropdown-toggle" type="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     All
                                 </button>
                                 <div class="dropdown-menu">
@@ -140,7 +142,6 @@
                             <div class="item button_seller align-center d-flex">
                                 <button type="button" class="full-width cursor-pointer" data-toggle="modal"
                                         data-target="#modal-flag-header">
-                                    {{--                                    <i class="item-icon fa-regular fa-heart"></i>--}}
                                     <div class="it em-text">
                                         {{ __('home.Retail') }}
                                     </div>
@@ -155,16 +156,18 @@
                             @endphp
                             @if($company && $company->member != \App\Enums\RegisterMember::BUYER)
                                 <div class="item button_seller align-center d-flex">
-                                    <button class="full-width cursor-pointer">
-                                        <div class="it em-text" data-toggle="modal" data-target="#modalBuyBulkLogistic">
-                                            {{ __('home.Buy wholesale') }}
-                                        </div>
-                                    </button>
+                                        <button type="button" class="full-width cursor-pointer" data-toggle="modal"
+                                                data-target="#modalBuyBulkLogistic">
+                                            <div class="it em-text">
+                                                {{ __('home.Buy wholesale') }}
+                                            </div>
+                                        </button>
                                 </div>
                             @else
                                 <div class="item button_seller align-center d-flex">
-                                    <button class="full-width cursor-pointer">
-                                        <div class="it em-text" data-toggle="modal" data-target="#modalBuyer">
+                                    <button type="button" class="full-width cursor-pointer" data-toggle="modal"
+                                            data-target="#modalBuyBulkLogistic">
+                                        <div class="it em-text">
                                             {{ __('home.Buy wholesale') }}
                                         </div>
                                     </button>
@@ -217,11 +220,11 @@
                                     </a>
 
                                     @if(!$checkBuyer)
-{{--                                        @if($coin)--}}
-{{--                                            <div class="drop-item">--}}
-{{--                                                <a href="">Coins: {{$coin->quantity}}</a>--}}
-{{--                                            </div>--}}
-{{--                                        @endif--}}
+                                        {{--                                        @if($coin)--}}
+                                        {{--                                            <div class="drop-item">--}}
+                                        {{--                                                <a href="">Coins: {{$coin->quantity}}</a>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        @endif--}}
                                         <a href="{{route('wish.list.index')}}" class="none_decoration">
                                             <div class="drop-item">
                                                 {{ __('home.Wish Lists') }}
@@ -304,6 +307,10 @@
                                         @endif
                                     @endif
 
+                                    <div class="drop-item -hand-pointer">
+                                        <a href="{{route('chat.message.show')}}" >Tin nhắn</a>
+                                    </div>
+
                                     <div class="drop-item -hand-pointer" onclick="logout()">
                                         <button>{{ __('home.Log out') }}</button>
                                     </div>
@@ -385,7 +392,8 @@
                                                                     <i class='fas fa-edit'></i>
                                                                     Change
                                                                 </a>
-                                                                <div class="modal fade" id="exampleModalEditCart" tabindex="-1"
+                                                                <div class="modal fade" id="exampleModalEditCart"
+                                                                     tabindex="-1"
                                                                      aria-labelledby="exampleModalEditCartLabel"
                                                                      aria-hidden="true">
                                                                     <div class="modal-dialog">
@@ -566,7 +574,9 @@
                                                     data-toggle="tooltip"
                                                     data-placement="top" title="Kakao Talk">
                                                 <a href="{{ route('login.kakaotalk') }}">
-                                                    <img class="custom-icon" src="data:image/png;base64,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" alt=""></a>
+                                                    <img class="custom-icon"
+                                                         src="data:image/png;base64,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"
+                                                         alt=""></a>
                                             </button>
                                         </div>
                                     </form>
@@ -658,32 +668,32 @@
                                                                         $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
                                                                     @endphp
                                                                     @foreach($listChild2 as $child2)
-                                                                            @if(locationHelper() == 'kr')
-                                                                                <li>
-                                                                                    <a class="colum-item"
-                                                                                       href="{{ route('category.show', $child2->id) }}">{{$child2->name_ko}}</a>
-                                                                                </li>
-                                                                            @elseif(locationHelper() == 'cn')
-                                                                                <li>
-                                                                                    <a class="colum-item"
-                                                                                       href="{{ route('category.show', $child2->id) }}">{{$child2->name_zh}}</a>
-                                                                                </li>
-                                                                            @elseif(locationHelper() == 'jp')
-                                                                                <li>
-                                                                                    <a class="colum-item"
-                                                                                       href="{{ route('category.show', $child2->id) }}">{{$child2->name_ja}}</a>
-                                                                                </li>
-                                                                            @elseif(locationHelper() == 'vi')
-                                                                                <li>
-                                                                                    <a class="colum-item"
-                                                                                       href="{{ route('category.show', $child2->id) }}">{{$child2->name_vi}}</a>
-                                                                                </li>
-                                                                            @else
-                                                                                <li>
-                                                                                    <a class="colum-item"
-                                                                                       href="{{ route('category.show', $child2->id) }}">{{$child2->name_en}}</a>
-                                                                                </li>
-                                                                            @endif
+                                                                        @if(locationHelper() == 'kr')
+                                                                            <li>
+                                                                                <a class="colum-item"
+                                                                                   href="{{ route('category.show', $child2->id) }}">{{$child2->name_ko}}</a>
+                                                                            </li>
+                                                                        @elseif(locationHelper() == 'cn')
+                                                                            <li>
+                                                                                <a class="colum-item"
+                                                                                   href="{{ route('category.show', $child2->id) }}">{{$child2->name_zh}}</a>
+                                                                            </li>
+                                                                        @elseif(locationHelper() == 'jp')
+                                                                            <li>
+                                                                                <a class="colum-item"
+                                                                                   href="{{ route('category.show', $child2->id) }}">{{$child2->name_ja}}</a>
+                                                                            </li>
+                                                                        @elseif(locationHelper() == 'vi')
+                                                                            <li>
+                                                                                <a class="colum-item"
+                                                                                   href="{{ route('category.show', $child2->id) }}">{{$child2->name_vi}}</a>
+                                                                            </li>
+                                                                        @else
+                                                                            <li>
+                                                                                <a class="colum-item"
+                                                                                   href="{{ route('category.show', $child2->id) }}">{{$child2->name_en}}</a>
+                                                                            </li>
+                                                                        @endif
 
                                                                     @endforeach
                                                                 </div>
@@ -1013,12 +1023,12 @@
                             <div class="cart">
                                 <div class="check_now">
                                     <a href="{{ route('checkout.show') }}">
-                                        Check out now
+                                        {{ __('home.Check out now') }}
                                     </a>
                                 </div>
                                 <div class="view-card">
                                     <a href="{{ route('cart.index') }}">
-                                        View Cart
+                                        {{ __('home.View Cart') }}
                                     </a>
                                 </div>
                             </div>
@@ -1032,7 +1042,7 @@
                         </button>
                     </div>
                     <div class="signMenuM" id="signMenuM">
-                        <div class="login">LOGIN</div>
+                        <div class="login">{{ __('home.LOGIN') }}</div>
                         <div class="content">
                             If you are already registered, please log in.
                         </div>
@@ -1078,13 +1088,13 @@
                         </form>
                         <hr>
                         <div class="content">
-                            Create your account and enjoy a new shopping experience.
+                            {{ __('home.Create your account and enjoy a new shopping experience.') }}
                         </div>
                         <a href="{{route('register.show')}}" class="register">
-                            <button type="submit">Create A New Account</button>
+                            <button type="submit">{{ __('home.Create A New Account') }}</button>
                         </a>
                         <a href="#" class="register">
-                            <button class="mt-3" type="submit">Đăng kí hội viên</button>
+                            <button class="mt-3" type="submit">{{ __('home.Sign up for membership') }}</button>
                         </a>
                     </div>
                     <div class="close-signMenuM" onclick="closesignInM()"></div>
@@ -1107,7 +1117,7 @@
     <div class="modal-dialog">
         <div class="modal-content p-4" style="width: auto">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Chọn quốc gia</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Select country') }}</h5>
                 <button type="button" class="close" data-dismiss="modal"
                         aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -1145,8 +1155,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content p-4" style="width: auto">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Chọn quốc gia mua
-                    hàng</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
                 <button type="button" class="close" data-dismiss="modal"
                         aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -1178,19 +1187,19 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Hướng dẫn nâng cấp</h5>
+                <h5 class="modal-title">{{ __('home.Upgrade Instructions') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Tính năng Đặt sỉ nước ngoài chỉ áp dụng cho hội viên doanh nghiệp (hội viên Tin cậy) trở lên</p>
-                <p>Vui lòng nâng cấp hội viên để sử dụng</p>
+                <p>{{ __('home.The Foreign Wholesale Order feature is only available to corporate members (Trusted members) and above') }}</p>
+                <p>{{ __('home.Please upgrade your membership to use') }}</p>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary"><a href="https://staging-b2b.2188.info/register-member">Đăng ký nâng cấp</a></button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary"><a href="https://staging-b2b.2188.info/register-member">{{ __('home.Sign up to upgrade') }}</a></button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}</button>
             </div>
         </div>
     </div>
@@ -1200,7 +1209,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Chọn quốc gia mua hàng</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -1219,7 +1228,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{ __('home.Close') }}</button>
             </div>
         </div>
     </div>

@@ -41,7 +41,7 @@ class ShopInformationController extends Controller
             $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
         }
         $currency = (new \App\Http\Controllers\Frontend\HomeController())->getLocation($request);
-        return view('frontend/pages/shop-information/index', compact('listProduct', 'company', 'priceProductOfCategory', 'sellerInfo', 'countProductBySeller', 'listVouchers', 'shopInformation','currency'));
+        return view('frontend/pages/shop-information/index', compact('listProduct', 'company', 'priceProductOfCategory', 'sellerInfo', 'countProductBySeller', 'listVouchers', 'shopInformation','currency' , 'id'));
     }
 
 

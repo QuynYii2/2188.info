@@ -21,13 +21,13 @@ class DatabaseSeeder extends Seeder
 //            CategorySeeder::class,
 //            ProductSeeder::class,
 //            RolesTableSeeder::class,
-            PermissionsSeeder::class,
+//            PermissionsSeeder::class,
 //            RoleUserSeeder::class,
 //            PermissionRoleSeeder::class,
 //            PermissionLevelUserSeeder::class,
 //            PaymentMethodSeeder::class,
 //            TransportMethodSeeder::class,
-            MemberSeeder::class
+//            MemberSeeder::class
         ]);
 
     }

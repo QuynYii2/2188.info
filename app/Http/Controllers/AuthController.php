@@ -122,6 +122,8 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->put('login', $loginField);
             $login = $request->session()->get('login');
+            $token = md5(uniqid());
+            User::where('id', Auth::id())->update(['token' => $token]);
             return redirect()->route('home');
         } else {
             toast('Tên đăng nhập hoặc mật khẩu không chính xác', 'error', 'top-right');
@@ -146,7 +148,7 @@ class AuthController extends Controller
         try {
             $ipAddress = $request->ip();
             $geoIp = new GeoIP();
-            $locale = $geoIp->get_country_from_ip('183.80.130.4');
+            $locale = 'kr';
 
             $googleUser = Socialite::driver('google')->stateless()->user();
 
@@ -588,6 +590,7 @@ class AuthController extends Controller
             alert()->error('Error', 'Error, Create error!');
             return back();
         } catch (\Exception $exception) {
+            dd($exception);
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
@@ -889,18 +892,18 @@ class AuthController extends Controller
 
     private function sendMail($data, $email)
     {
-//        Mail::send('frontend/widgets/mailCode', $data, function ($message) use ($email) {
-//            $message->to($email, 'Verify mail!')->subject
-//            ('Verify mail');
-//            $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
-//        });
+        Mail::send('frontend/widgets/mailCode', $data, function ($message) use ($email) {
+            $message->to($email, 'Verify mail!')->subject
+            ('Verify mail');
+            $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
+        });
     }
 
     private function createUser($fullName, $email, $phoneNumber, $password, $member)
     {
         $locale = app()->getLocale();
         if (!$locale) {
-            $locale = 'vi';
+            $locale = 'kr';
         }
         $user = new User;
         $user->name = $fullName;
@@ -941,7 +944,7 @@ class AuthController extends Controller
     {
         $ipAddress = $request->ip();
         $geoIp = new GeoIP();
-        $locale = $geoIp->get_country_from_ip($ipAddress);
+        $locale = 'kr';
         if ($locale !== null && is_array($locale)) {
             $locale = $locale['countryCode'];
         }

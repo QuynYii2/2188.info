@@ -16,32 +16,59 @@ class MemberPartnerController extends Controller
         try {
             $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
             $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
-            $oldItem = MemberPartner::where([
+            $existingItem = MemberPartner::where([
                 ['company_id_source', $request->input('company_id_source')],
                 ['company_id_follow', $company->id],
-                ['status', MemberPartnerStatus::ACTIVE],
             ])->first();
-            if ($oldItem) {
-                $oldItem->quantity = $oldItem->quantity + 1;
-                $oldItem->price = $oldItem->price + $request->input('price');
-                $success = $oldItem->save();
-            } else {
-                $item = [
-                    'company_id_source' => $request->input('company_id_source'),
-                    'company_id_follow' => $company->id,
-                    'quantity' => 1,
-                    'price' => 0,
-                ];
-                $success = MemberPartner::create($item);
+            $success = null;
+            if ($memberPerson->member_id != $request->input('company_id_source')) {
+                if ($existingItem) {
+                    $existingItem->status = MemberPartnerStatus::ACTIVE;
+                    $success = $existingItem->save();
+                } else {
+                    $item = [
+                        'company_id_source' => $request->input('company_id_source'),
+                        'company_id_follow' => $company->id,
+                        'quantity' => 1,
+                        'price' => 0,
+                        'status' => MemberPartnerStatus::ACTIVE,
+                    ];
+                    $success = MemberPartner::create($item);
+                }
             }
             if ($success) {
                 alert()->success('Success', 'Success!');
                 return back();
             }
+
             alert()->error('Error', 'Error!');
             return back();
         } catch (\Exception $exception) {
-            dd($exception);
+            alert()->error('Error', 'Error, Please try again!');
+            return back();
+        }
+    }
+
+    public function delete(Request $request)
+    {
+        try {
+            $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+            $company = MemberRegisterInfo::find($memberPerson->member_id);
+
+            $affectedRows = MemberPartner::where([
+                ['company_id_source', $request->input('company_id_source')],
+                ['company_id_follow', $company->id],
+                ['status', MemberPartnerStatus::ACTIVE],
+            ])->update(['status' => MemberPartnerStatus::INACTIVE]);
+
+            if ($affectedRows > 0) {
+                alert()->success('Success', 'Success!');
+                return back();
+            } else {
+                alert()->error('Error', 'Error!');
+                return back();
+            }
+        } catch (\Exception $exception) {
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }

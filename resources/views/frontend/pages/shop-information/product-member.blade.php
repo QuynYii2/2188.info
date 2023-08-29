@@ -198,214 +198,178 @@
         <div class="col-md-6">
             <div class="d-flex">
                 @php
-                    $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                    $user = \Illuminate\Support\Facades\Auth::user();
+                    $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', $user->email)->first();
                     $newCompany = \App\Models\MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
-                    $oldItem = null;
-                    if($newCompany){
-                         $oldItem = \App\Models\MemberPartner::where([
-                           ['company_id_source', $company->id],
-                           ['company_id_follow', $newCompany->id],
-                           ['status', \App\Enums\MemberPartnerStatus::ACTIVE],
-                         ])->first();
-                    }
+                     $exitsPartner  = \App\Models\MemberPartner::where([
+                            ['company_id_source', $company->id],
+                            ['company_id_follow', $newCompany->id],
+                            ['status', \App\Enums\MemberPartnerStatus::ACTIVE],
+                        ])->first();
                 @endphp
-                @if(!$oldItem)
-                    @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
+                @if($id != $user->id)
+                    @if($newCompany && $newCompany->member != \App\Enums\RegisterMember::BUYER && empty($exitsPartner))
                         <form method="post" action="{{route('stands.register.member')}}">
                             @csrf
-                            <input type="text" name="company_id_source" class="d-none" value="{{$company->id}}">
-                            <input type="text" name="price" class="d-none" value="{{$firstProduct->price ?? ''}}">
+                            <input type="text" name="company_id_source" value="{{$company->id}} " hidden>
+                            <input type="text" name="price" value="{{$firstProduct->price ?? ''}}" hidden>
                             <button class="btn btn-primary" id="btnFollow" type="submit">
                                 Follow
                             </button>
                         </form>
+                    @else
+                        <form method="post" action="{{ route('stands.unregister.member', $company->id) }}"}>
+                            @csrf
+                            <input type="text" name="company_id_source"
+                                   value="{{ $company->id }}" hidden>
+                            <button class="btn btn-danger" id="btnUnfollow" type="submit">
+                                Unfollow
+                            </button>
+                        </form>
                     @endif
                 @endif
-            </div>
-        </div>
-</div>
-<div class="mt-3 d-flex justify-content-center">
-    @foreach($products as $product)
-        <button type="button" style="background-color: white" class="btn thumbnailProduct col-2" data-toggle="modal"
-                data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}" data-name="
-                         @if(locationHelper() == 'kr')
-                                        {{ ($product->name_ko) }}
-                                    @elseif(locationHelper() == 'cn')
-                                        {{ ($product->name_zh) }}
-                                    @elseif(locationHelper() == 'jp')
-                                        {{ ($product->name_ja) }}
-                                    @elseif(locationHelper() == 'vi')
-                                        {{ ($product->name_vi) }}
-                                    @else
-                                        {{ ($product->name_en) }}
-                                    @endif
-                         ">
-            <div class="standsMember-item section">
-                <img data-id="{{$product->id}}"
-                     src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
-                     class="thumbnailProduct" data-value="{{$product}}"
 
-                     width="150px" height="150px">
-                <div class="item-body">
-                    <div class="card-rating text-left">
-                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                        <span>(1)</span>
-                    </div>
-                    @php
-                        $nameSeller = DB::table('users')->where('id', $product->user_id)->first();
-                    @endphp
-                    <div class="card-brand text-left">
-                        <a href="{{route('shop.information.show', $nameSeller->id)}}">
-                            {{($nameSeller->name)}}
-                        </a>
-                    </div>
-                    <div class="card-title text-left">
-                        @if(Auth::check())
-                            <a href="{{route('detail_product.show', $product->id)}}">
-                                @if(locationHelper() == 'kr')
-                                    {{ ($product->name_ko) }}
-                                @elseif(locationHelper() == 'cn')
-                                    {{ ($product->name_zh) }}
-                                @elseif(locationHelper() == 'jp')
-                                    {{ ($product->name_ja) }}
-                                @elseif(locationHelper() == 'vi')
-                                    {{ ($product->name_vi) }}
-                                @else
-                                    {{ ($product->name_en) }}
-                                @endif
-                            </a>
-                        @else
-                            <a class="check_url">
-                                @if(locationHelper() == 'kr')
-                                    {{ ($product->name_ko) }}
-                                @elseif(locationHelper() == 'cn')
-                                    {{ ($product->name_zh) }}
-                                @elseif(locationHelper() == 'jp')
-                                    {{ ($product->name_ja) }}
-                                @elseif(locationHelper() == 'vi')
-                                    {{ ($product->name_vi) }}
-                                @else
-                                    {{ ($product->name_en) }}
-                                @endif
-                            </a>
-                        @endif
-                    </div>
-                    @if($product->price)
-                        <div class="card-price text-left">
-                            @if($product->price != null)
-                                <div class="price-sale">
-                                    <strong> {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strong>
-                                </div>
-                                <div class="price-cost">
-                                    <strike>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
-                                </div>
-                            @else
-                                <div class="price-sale">
-                                    <strong>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strong>
-                                </div>
-                            @endif
-                        </div>
-                    @endif
-                    <div class="card-bottom--left">
-                        @if(Auth::check())
-                            <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
-                        @else
-                            <a class="check_url">{{ __('home.Choose Options') }}</a>
-                        @endif
-                    </div>
-                </div>
             </div>
-        </button>
-    @endforeach
-</div>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content modal-content-css">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div id="renderProductMember" class="row">
-                    @if(!$products->isEmpty())
-                        <div class="col-md-6">
-                            @php
-                                $attributes = DB::table('product_attribute')->where([['product_id', $firstProduct->id], ['status', \App\Enums\AttributeProductStatus::ACTIVE]])->get();
-                                $price_sales = \App\Models\ProductSale::where('product_id', '=', $firstProduct->id)->get();
-                            @endphp
-                            <div class="d-flex justify-content-between">
-                                <div class="">
-                                    <h5>{{ __('home.Product Code') }}</h5>
-                                    <p class="productCode" id="productCode">
-                                        {{ ($firstProduct->product_code) }}
-                                    </p>
+
+        </div>
+        <div class="row">
+            @foreach($products as $product)
+                <div class="col-md-2">
+                    <button type="button" style="background-color: white" class="btn thumbnailProduct col-12"
+                            data-toggle="modal"
+                            data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}">
+                        <div class="standsMember-item section">
+                            <img data-id="{{$product->id}}"
+                                 src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
+                                 class="thumbnailProduct" data-value="{{$product}}"
+                                 width="150px" height="150px">
+                            <div class="item-body">
+                                <div class="card-rating text-left">
+                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                    <span>(1)</span>
                                 </div>
-                                <div class="">
-                                    <h5>{{ __('home.Product Name') }}</h5>
-                                    <p class="productName" id="productName">
-                                        @if(locationHelper() == 'kr')
-                                            {{ ($firstProduct->name_ko) }}
-                                        @elseif(locationHelper() == 'cn')
-                                            {{ ($firstProduct->name_zh) }}
-                                        @elseif(locationHelper() == 'jp')
-                                            {{ ($firstProduct->name_ja) }}
-                                        @elseif(locationHelper() == 'vi')
-                                            {{ ($firstProduct->name_vi) }}
+                                @php
+                                    $nameSeller = DB::table('users')->where('id', $product->user_id)->first();
+                                @endphp
+                                <div class="card-brand text-left">
+                                    <a href="{{route('shop.information.show', $nameSeller->id)}}">
+                                        {{($nameSeller->name)}}
+                                    </a>
+                                </div>
+                                <div class="card-title text-left">
+                                    @if(Auth::check())
+                                        <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
+                                    @else
+                                        <a class="check_url">{{($product->name)}}</a>
+                                    @endif
+                                </div>
+                                @if($product->price)
+                                    <div class="card-price text-left">
+                                        @if($product->price != null)
+                                            <div class="price-sale">
+                                                <strong> {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strong>
+                                            </div>
+                                            <div class="price-cost">
+                                                <strike>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
+                                            </div>
                                         @else
-                                            {{ ($firstProduct->name_en) }}
+                                            <div class="price-sale">
+                                                <strong>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strong>
+                                            </div>
                                         @endif
-                                    </p>
+                                    </div>
+                                @endif
+                                <div class="card-bottom--left">
+                                    @if(Auth::check())
+                                        <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
+                                    @else
+                                        <a class="check_url">{{ __('home.Choose Options') }}</a>
+                                    @endif
                                 </div>
                             </div>
-                            @php
-                                $productGallery = $firstProduct->gallery;
-                            @endphp
-                            <div class="mb-3" style="text-align: end">
-                                <div class="main">
-                                    <div class="item-card">
-                                        <div class="card-image">
-                                            <a id="linkProductImg"
-                                               href="{{ asset('storage/' . $firstProduct->thumbnail) }}"
-                                               data-fancybox="gallery"
-                                               data-caption="{{$firstProduct->name}}">
-                                                <img data-id="{{$firstProduct->id}}"
-                                                     id="imgProductMain"
-                                                     src="{{ asset('storage/' . $firstProduct->thumbnail) }}"
-                                                     class="thumbnailProductMain"
-                                                     data-value="{{$firstProduct}}" alt="">
-                                            </a>
+                        </div>
+                    </button>
+                </div>
+            @endforeach
+        </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content modal-content-css">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="renderProductMember" class="row">
+                            @if(!$products->isEmpty())
+                                <div class="col-md-6">
+                                    @php
+                                        $attributes = DB::table('product_attribute')->where([['product_id', $firstProduct->id], ['status', \App\Enums\AttributeProductStatus::ACTIVE]])->get();
+                                        $price_sales = \App\Models\ProductSale::where('product_id', '=', $firstProduct->id)->get();
+                                    @endphp
+                                    <div class="d-flex justify-content-between">
+                                        <div class="">
+                                            <h5>Product Code</h5>
+                                            <p class="productCode" id="productCode">
+                                                {{ ($firstProduct->product_code) }}
+                                            </p>
+                                        </div>
+                                        <div class="">
+                                            <h5>Product Name</h5>
+                                            <p class="productName" id="productName">
+                                                {{ ($firstProduct->name) }}
+                                            </p>
                                         </div>
                                     </div>
-                                    @if($productGallery)
-                                        @php
-                                            $arrayProductImgThumbnail = explode(',', $productGallery);
-                                        @endphp
-                                        @foreach($arrayProductImgThumbnail as $productImg)
-                                            <div class="item-card d-none">
+                                    @php
+                                        $productGallery = $firstProduct->gallery;
+                                    @endphp
+                                    <div class="mb-3" style="text-align: end">
+                                        <div class="main">
+                                            <div class="item-card">
                                                 <div class="card-image">
-                                                    <a href="{{ asset('storage/' . $productImg) }}"
+                                                    <a id="linkProductImg"
+                                                       href="{{ asset('storage/' . $firstProduct->thumbnail) }}"
                                                        data-fancybox="gallery"
                                                        data-caption="{{$firstProduct->name}}">
-                                                        <img src="{{ asset('storage/' . $productImg) }}"
-                                                             class="thumbnailProductMain" alt="">
+                                                        <img data-id="{{$firstProduct->id}}"
+                                                             id="imgProductMain"
+                                                             src="{{ asset('storage/' . $firstProduct->thumbnail) }}"
+                                                             class="thumbnailProductMain"
+                                                             data-value="{{$firstProduct}}" alt="">
                                                     </a>
                                                 </div>
                                             </div>
-                                        @endforeach
-                                    @endif
-                                </div>
-                                <button id="btnViewAttribute" data-id="{{$firstProduct->id}}" type="button"
-                                        class="btn" data-toggle="modal"
-                                        data-target="#modal-show-att">
-                                    {{ __('home.Xem thuộc tính') }}
-                                </button>
-                            </div>
+                                            @if($productGallery)
+                                                @php
+                                                    $arrayProductImgThumbnail = explode(',', $productGallery);
+                                                @endphp
+                                                @foreach($arrayProductImgThumbnail as $productImg)
+                                                    <div class="item-card d-none">
+                                                        <div class="card-image">
+                                                            <a href="{{ asset('storage/' . $productImg) }}"
+                                                               data-fancybox="gallery"
+                                                               data-caption="{{$firstProduct->name}}">
+                                                                <img src="{{ asset('storage/' . $productImg) }}"
+                                                                     class="thumbnailProductMain" alt="">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                        <button id="btnViewAttribute" data-id="{{$firstProduct->id}}" type="button"
+                                                class="btn" data-toggle="modal"
+                                                data-target="#modal-show-att">
+                                            Xem thuộc tính
+                                        </button>
+                                    </div>
 
                             <h6 class="text-center mt-2">{{ __('home.Xem chi tiết các hình ảnh khác') }}</h6>
                             @if($productGallery)

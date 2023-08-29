@@ -47,7 +47,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $this->getLocale($request);
-        $locale = app()->getLocale();
+        $locale = 'kr';
         if ($locale == 'vn') {
             $locale = 'vi';
         }
@@ -192,7 +192,7 @@ class HomeController extends Controller
     {
         if ($request->session()->has('locale')) {
             $locale = $request->session()->get('locale');
-            app()->setLocale($request->session()->get('locale'));
+            app()->setLocale('kr');
         } else {
             $ipAddress = $request->ip();
             $geoIp = new GeoIP();
@@ -201,14 +201,14 @@ class HomeController extends Controller
                 $locale = $locale['countryCode'];
             }
         }
-        app()->setLocale($locale);
+        app()->setLocale('kr');
     }
 
     public function getLangDisplay()
     {
-        $locale = session()->get('locale');
+        $locale = 'kr';
         if (!$locale) {
-            $locale = 'vi';
+            $locale = 'kr';
         }
         $locations = ['vi', 'kr', 'jp', 'cn', 'en'];
         $lang = ['vi', 'ko', 'ja', 'zh', 'en'];
@@ -331,12 +331,13 @@ class HomeController extends Controller
         $geoIp = new GeoIP();
         $locale = $geoIp->getCode($request->ip());
         $countries = new Countries();
-        $country = $countries->all()->pluck('name.common')->toArray();
-        $currencies = $countries->all()->pluck('currencies')->toArray();
-        $all = $countries->where('name.common', $locale)->first()->hydrate('currencies')->currencies;
-        foreach ($all as $items) {
-            $currency = $items->iso->code;
-        }
+//        $country = $countries->all()->pluck('name.common')->toArray();
+//        $currencies = $countries->all()->pluck('currencies')->toArray();
+//        $all = $countries->where('name.common', $locale)->first()->hydrate('currencies')->currencies;
+//        foreach ($all as $items) {
+//            $currency = $items->iso->code;
+//        }
+        $currency = 'KRW';
         return $currency;
     }
 
