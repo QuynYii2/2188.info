@@ -166,7 +166,7 @@
                             @else
                                 <div class="item button_seller align-center d-flex">
                                     <button type="button" class="full-width cursor-pointer" data-toggle="modal"
-                                            data-target="#modalBuyBulkLogistic">
+                                            data-target="#buyerModal">
                                         <div class="it em-text">
                                             {{ __('home.Buy wholesale') }}
                                         </div>
@@ -1209,7 +1209,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary"><a href="https://staging-b2b.2188.info/register-member">{{ __('home.Sign up to upgrade') }}</a></button>
+                <button type="button" class="btn btn-primary"><a href="{{route('process.register.member')}}">{{ __('home.Sign up to upgrade') }}</a></button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}</button>
             </div>
         </div>
