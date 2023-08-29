@@ -430,6 +430,19 @@ return [
     'Close' => '닫기',
     'Create your account and enjoy a new shopping experience.' => '계정을 만들고 새로운 쇼핑 경험을 즐겨보십시오.',
     'Follow' => '팔로우',
+    // ban dich moi
+    'Membership Level' => '회원 등급',
+    'Customer code' => '고객 코드',
+    'Nation' => '국가',
+    'Area' => '영역',
+    'Day trading' => '데이 트레이딩',
+    'Transaction value' => '거래가치',
+    'Customer level' => '고객 수준',
+    'Unfollow' => '언팔로우',
+
+
+
+
 
 
 
