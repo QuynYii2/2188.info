@@ -188,18 +188,19 @@
             <div class="row">
                 <div class="col-md-3 col-xl-2 pt-3 pb-3">
                     @php
-                        $listBanner = \Illuminate\Support\Facades\DB::table('top_seller_configs')->get();
+                        $listCate = \App\Models\TopSellerConfig::all();
+                        $detailMarketing = \App\Models\SetupMarketing::all();
                     @endphp
-                    @for($i=0; $i<count($listBanner); $i++)
-                        @if($i % 2 != 0)
+                    @for($i=0; $i<count($detailMarketing); $i++)
+                        @if($i % 2 == 0)
                             <div class="section-left item-img banner_categories">
-                                <a href="{{$listBanner[$i]->url}}">
-                                    <img src="{{ asset('storage/' . $listBanner[$i]->thumbnail) }}"
+                                <a href="{{ route('detail-marketing.show', $detailMarketing[$i]->id) }}">
+                                    <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
                                          alt="">
                                     <div class="section-left--name">
                                         @php
                                             $ld = new \App\Http\Controllers\TranslateController();
-                                            $titleMarketing = $ld->translateText($listBanner[$i]->name_custom, locationPermissionHelper());
+                                            $titleMarketing = $ld->translateText($listCate[$i]->name_custom, locationPermissionHelper());
                                         @endphp
                                         {{ $titleMarketing }}
                                     </div>
@@ -350,12 +351,13 @@
                 </div>
                 <div class="col-md-3 col-xl-2 pt-3 pb-3">
                     @php
-                        $listCate = \Illuminate\Support\Facades\DB::table('top_seller_configs')->get();
+                        $listCate = \App\Models\TopSellerConfig::all();
+                        $detailMarketing = \App\Models\SetupMarketing::all();
                     @endphp
-                    @for($i=0; $i<count($listCate); $i++)
+                    @for($i=0; $i<count($detailMarketing); $i++)
                         @if($i % 2 == 0)
                             <div class="section-left item-img banner_categories">
-                                <a href="{{$listBanner[$i]->url}}">
+                                <a href="{{ route('detail-marketing.show', $detailMarketing[$i]->id) }}">
                                 <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
                                          alt="">
                                     <div class="section-left--name">

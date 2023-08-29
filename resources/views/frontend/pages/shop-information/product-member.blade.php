@@ -1,10 +1,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 <style>
-    .size {
+    .size{
         font-size: 17px;
     }
-
     :root {
         --color-white: #ffffff;
         --color-black: #000000;
@@ -45,7 +44,7 @@
         object-fit: cover;
     }
 
-    .modal-header {
+    .modal-header{
         border: none;
     }
 
@@ -59,7 +58,7 @@
         box-shadow: none;
     }
 
-    .modal-header {
+    .modal-header{
         padding-bottom: 0;
     }
 </style>
@@ -106,7 +105,7 @@
         <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
         <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
         <div class="d-flex justify-content-between align-items-center p-3">
-            <a href="{{route('stand.register.member.index', $company->id)}}" class="btn btn-primary">{{ __('home.Booth') }}</a>
+            <a href="{{route('seller.config.show', $company->id)}}" class="btn btn-primary">{{ __('home.Booth') }}</a>
             <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">{{ __('home.Partner List') }}</a>
             <a href="#" class="btn btn-primary">{{ __('home.Message received') }}</a>
             <a href="#" class="btn btn-warning">{{ __('home.Message sent') }}</a>
@@ -117,8 +116,18 @@
             <div class="col-md-6 border">
                 <div class="row">
                     <div class="col-md-12 border">
-                        <div class="mt-2">
-                            <h5 class="mb-3">{{ ($company->name) }}</h5>
+                        <div class="mb-3">
+                            @if(locationHelper() == 'kr')
+                                {{ ($company->name_ko) }}
+                            @elseif(locationHelper() == 'cn')
+                                {{ ($company->name_zh) }}
+                            @elseif(locationHelper() == 'jp')
+                                {{ ($company->name_ja) }}
+                            @elseif(locationHelper() == 'vi')
+                                {{ ($company->name_vi) }}
+                            @else
+                                {{ ($company->name_en) }}
+                            @endif
                         </div>
                     </div>
                     <div class="row p-2">
@@ -164,9 +173,20 @@
                                 @endphp
                                 <div class="col-md-6">
                                     <div class="mt-2 d-flex">
-                                        <a href="{{route('category.show', $category->id)}}"
-                                           class="mb-3 size">{{ ($category->name) }} <i
-                                                    class="fa-solid fa-angle-right"></i></a>
+                                        <a href="{{route('category.show', $category->id)}}" class="mb-3 size">
+                                            @if(locationHelper() == 'kr')
+                                                {{ ($category->name_ko) }}
+                                            @elseif(locationHelper() == 'cn')
+                                                {{ ($category->name_zh) }}
+                                            @elseif(locationHelper() == 'jp')
+                                                {{ ($category->name_ja) }}
+                                            @elseif(locationHelper() == 'vi')
+                                                {{ ($category->name_vi) }}
+                                            @else
+                                                {{ ($category->name_en) }}
+                                            @endif
+                                            <i class="fa-solid fa-angle-right"></i>
+                                        </a>
                                     </div>
                                 </div>
                             @endforeach
@@ -351,165 +371,171 @@
                                         </button>
                                     </div>
 
-                                    <h6 class="text-center mt-2">Xem chi tiết các hình ảnh khác</h6>
-                                    @if($productGallery)
-                                        @php
-                                            $arrayProductImg = explode(',', $productGallery);
-                                        @endphp
-                                        <div class="row thumbnailSupGallery">
-                                            @foreach($arrayProductImg as $productImg)
-                                                <div class="col-md-3 thumbnailSupGallery-img">
-                                                    <img src="{{ asset('storage/' . $productImg) }}" alt=""
-                                                         class="thumbnailProductGallery thumbnailGallery{{$loop->index+1}}"
-                                                         data-id="{{$firstProduct->id}}">
-                                                </div>
-                                            @endforeach
+                            <h6 class="text-center mt-2">{{ __('home.Xem chi tiết các hình ảnh khác') }}</h6>
+                            @if($productGallery)
+                                @php
+                                    $arrayProductImg = explode(',', $productGallery);
+                                @endphp
+                                <div class="row thumbnailSupGallery">
+                                    @foreach($arrayProductImg as $productImg)
+                                        <div class="col-md-3 thumbnailSupGallery-img">
+                                            <img src="{{ asset('storage/' . $productImg) }}" alt=""
+                                                 class="thumbnailProductGallery thumbnailGallery{{$loop->index+1}}"
+                                                 data-id="{{$firstProduct->id}}">
                                         </div>
-                                    @endif
-                                    <div class=" mt-2 text-center">
-                                        <h5 class="text-center">Xem video sản phẩm </h5>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <h5>
-                                            Điều kiện đặt hàng
-                                        </h5>
-                                    </div>
-                                    <table class="table table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">Số lượng</th>
-                                            <th scope="col">Đơn giá</th>
-                                            <th scope="col">Ngày dự kiến xuất kho</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="tablebodyProductSale">
-
-                                        </tbody>
-                                    </table>
-
-                                    <p>đơn giá phía trên là điều kiện FOB/TT</p>
-                                    <h5 class="text-center">Đặt hàng</h5>
-                                    <table class="table table-bordered" id="table-selected-att">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">Thuộc tính</th>
-                                            <th scope="col">Số lượng</th>
-                                            <th scope="col">Đơn giá</th>
-                                            <th scope="col">Thành tiền</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
-
-                                    @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
-                                        <button class="btn btn-success partnerBtn float-right" id="partnerBtn"
-                                                data-value="{{ $firstProduct->id }}" data-count="100">Tiếp nhận đặt
-                                            hàng
-                                        </button>
-                                    @endif
+                                    @endforeach
                                 </div>
                             @endif
+                            <div class=" mt-2 text-center">
+                                <h5 class="text-center">{{ __('home.Watch product videos') }} </h5>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5>
+                                    {{ __('home.Order conditions') }}
+                                </h5>
+                            </div>
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th scope="col">{{ __('home.quantity') }}</th>
+                                    <th scope="col">{{ __('home.Unit price') }}</th>
+                                    <th scope="col">{{ __('home.Ngày dự kiến xuất kho') }}</th>
+                                </tr>
+                                </thead>
 
-        <div class="modal fade" id="exampleModalDemo" role="dialog"
-             aria-labelledby="exampleModalDemoLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content p-4" style="width: auto">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalDemoLabel">Chọn quốc gia mua
-                            hàng</h5>
-                        <button type="button" class="close" data-dismiss="modal"
-                                aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <a href="https://shipgo.biz/kr">
-                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
-                                     src="{{ asset('images/korea.png') }}"
-                                     alt="">
-                            </a>
-                            <a href="https://shipgo.biz/jp">
-                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
-                                     src="{{ asset('images/japan.webp') }}"
-                                     alt="">
-                            </a>
-                            <a href="https://shipgo.biz/cn">
-                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
-                                     src="{{ asset('images/china.webp') }}"
-                                     alt="">
-                            </a>
+                                <tbody id="tablebodyProductSale">
+                                @if(!$price_sales->isEmpty())
+                                    @foreach($price_sales as $price_sale)
+                                        <tr>
+                                            <td>{{$price_sale->quantity}}</td>
+                                            <td>-{{$price_sale->sales}} %</td>
+                                            <td>{{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                                </tbody>
+                            </table>
+
+                            <p>{{ __('home.đơn giá phía trên là điều kiện FOB/TT') }}</p>
+                            <h5 class="text-center">{{ __('home.Đặt hàng') }}</h5>
+                            <table class="table table-bordered" id="table-selected-att">
+                                <thead>
+                                <tr>
+                                    <th scope="col">{{ __('home.Thuộc tính') }}</th>
+                                    <th scope="col">{{ __('home.Số lượng') }}</th>
+                                    <th scope="col">{{ __('home.Unit price') }}</th>
+                                    <th scope="col">{{ __('home.Thành tiền') }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                            @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
+                                <button class="btn btn-success partnerBtn float-right" id="partnerBtn"
+                                        data-value="{{ $firstProduct->id }}" data-count="100">{{ __('home.Tiếp nhận đặt hàng') }}
+                                </button>
+                            @endif
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="modal fade" id="exampleModalBuyBulk" role="dialog"
-             aria-labelledby="exampleModalBuyBulk"
-             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content p-4" style="width: auto">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Chọn quốc gia mua
-                            hàng</h5>
-                        <button type="button" class="close" data-dismiss="modal"
-                                aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="d-flex justify-content-center align-items-center">
-                            <a href="{{route('parent.register.member.locale', 'kr')}}">
-                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
-                                     src="{{ asset('images/korea.png') }}"
-                                     alt="">
-                            </a>
-                            <a href="{{route('parent.register.member.locale', 'jp')}}">
-                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
-                                     src="{{ asset('images/japan.webp') }}"
-                                     alt="">
-                            </a>
-                            <a href="{{route('parent.register.member.locale', 'cn')}}">
-                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
-                                     src="{{ asset('images/china.webp') }}"
-                                     alt="">
-                            </a>
-                        </div>
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>
+    </div>
+</div>
+</div>
+@endif
 
-        <div class="modal fade" id="modal-show-att" tabindex="-1" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div id="body-modal-att"></div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="selectAttProduct()">
-                            Lưu
-                        </button>
-                    </div>
+<div class="modal fade" id="exampleModalDemo" role="dialog"
+     aria-labelledby="exampleModalDemoLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content p-4" style="width: auto">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalDemoLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <a href="https://shipgo.biz/kr">
+                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                             src="{{ asset('images/korea.png') }}"
+                             alt="">
+                    </a>
+                    <a href="https://shipgo.biz/jp">
+                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                             src="{{ asset('images/japan.webp') }}"
+                             alt="">
+                    </a>
+                    <a href="https://shipgo.biz/cn">
+                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                             src="{{ asset('images/china.webp') }}"
+                             alt="">
+                    </a>
                 </div>
             </div>
         </div>
-    @endif
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModalBuyBulk" role="dialog"
+     aria-labelledby="exampleModalBuyBulk"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content p-4" style="width: auto">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center align-items-center">
+                    <a href="{{route('parent.register.member.locale', 'kr')}}">
+                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                             src="{{ asset('images/korea.png') }}"
+                             alt="">
+                    </a>
+                    <a href="{{route('parent.register.member.locale', 'jp')}}">
+                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                             src="{{ asset('images/japan.webp') }}"
+                             alt="">
+                    </a>
+                    <a href="{{route('parent.register.member.locale', 'cn')}}">
+                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                             src="{{ asset('images/china.webp') }}"
+                             alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-show-att" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="modal-select-att">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="body-modal-att"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="selectAttProduct()">
+                    Lưu
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -517,6 +543,8 @@
 
     $('.thumbnailProduct').on('click', function () {
         let product = $(this).data('value');
+        let productName = $(this).data('name');
+        console.log(productName);
         let imageUrl = '{{ asset('storage/') }}';
         let imgMain = product['thumbnail'];
         imageUrl = imageUrl + '/' + imgMain;
@@ -527,7 +555,7 @@
 
         let productNames = document.getElementsByClassName('productName');
         for (let i = 0; i < productNames.length; i++) {
-            productNames[i].innerHTML = product['name']
+            productNames[i].innerHTML = productName
         }
 
         let productID = product['id'];
@@ -542,7 +570,6 @@
 
         let gallery = product['gallery']
         let arrayGallery = gallery.split(',');
-
 
         // $('#partnerBtn').data('value', product['id']);
         let partnerBtn = document.getElementById('partnerBtn');
@@ -625,9 +652,10 @@
             })
             .fail(function (_, textStatus) {
                 $('#body-modal-att').empty();
-                console.error('Request failed:', textStatus);
             });
     }
+
+    var listItem = null;
 
     function getCheckboxs() {
         let checkboxs = document.getElementsByClassName('checkBoxAttribute');
@@ -642,6 +670,7 @@
         localStorage.setItem('listID', listItem);
     }
 </script>
+
 <script>
     let listChecked = [];
 
@@ -716,42 +745,5 @@
     function calcThanhTien(inputSoluong, inputDonGia) {
         return inputSoluong * inputDonGia;
     }
-
-    $(document).ready(function () {
-        const $document = $(document);
-
-        $document.on('click', '#partnerBtn', function () {
-            const product = $(this).data('value');
-
-            renderProduct(product);
-        });
-
-        function renderProduct(product) {
-            let listInputQuantity = document.querySelectorAll('.input-quantity');
-            let listQuantity = '';
-            listInputQuantity.forEach(input => {
-                listQuantity += input.value + ',';
-            });
-            listQuantity = JSON.stringify(listQuantity.slice(0, -1));
-            const requestData = {
-                _token: '{{ csrf_token() }}',
-                quantity: listQuantity,
-                value: JSON.stringify(localStorage.getItem('listID')),
-            };
-
-            $.ajax({
-                url: `/add-to-cart-register-member/${product}`,
-                method: 'POST',
-                data: requestData,
-            })
-                .done(function (response) {
-                    alert('Success!');
-                    localStorage.removeItem('listID')
-                    window.location.reload();
-                })
-                .fail(function (_, textStatus) {
-                });
-        }
-    });
 
 </script>

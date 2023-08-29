@@ -798,9 +798,6 @@
   .body .section-Eight .list .item-img {
     margin-bottom: 20px;
   }
-  .text-success {
-    height: 300px;
-  }
 }
 @media (min-width: 1366px) {
   .row .col-xxl-6 {

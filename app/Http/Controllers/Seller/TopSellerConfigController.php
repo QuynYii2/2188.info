@@ -37,53 +37,29 @@ class TopSellerConfigController extends Controller
     public function create(Request $request)
     {
         try {
-            $price = $request->input('moneyLocal');
-            $name_custom = $request->input('name_custom');
+            $arrayProduct = $request->input('arrayProduct');
+            $listProduct = implode(',', $arrayProduct);
+
             $config = new TopSellerConfig();
-            if ($request->hasFile('thumbnail')) {
-                $thumbnail = $request->file('thumbnail');
-                $thumbnailPath = $thumbnail->store('thumbnails', 'public');
-                $config->thumbnail = $thumbnailPath;
-            }
-            $url = $request->input('url');
+
             $category = $request->input('category');
             $local = $request->input('local');
-            $product = $request->input('product');
-            if ($name_custom) {
-                $config->name_custom = $name_custom;
-            } elseif ($product) {
-                $products = Product::find($product);
-                $config->name_custom = $products->name;
-                $config->thumbnail = $products->thumbnail;
-            } elseif ($category) {
-                $categorys = Category::find($category);
-                $config->name_custom = $categorys->name;
-                $config->thumbnail = $categorys->thumbnail;
-            }
 
-            if ($url) {
-                $config->url = $url;
-            } elseif ($product) {
-                $products = Product::find($product);
-                $config->url =  route('detail_product.show', $products->id);
-                $config->thumbnail = $products->thumbnail;
-            } elseif ($category) {
-                $categorys = Category::find($category);
-                $config->url =  route('category.show', $categorys->id);
-                $config->thumbnail = $categorys->thumbnail;
-            }
             if (!$category) {
                 $category = 0;
             }
-            if (!$product) {
-                $product = 0;
-            }
+            // Lay ra prodcut dau tien trong mang
+            $product = Product::find($arrayProduct[0]);
+
+            $config->url = '#';
+            $config->name_custom = '#';
+            // gan thumbnail product vao day
+            $config->thumbnail = $product->thumbnail;
             $config->category = $category;
             $config->local = $local;
-            $config->product = $product;
+            $config->product = $listProduct;
             $config->user_id = Auth::user()->id;
-//            $coin->quantity = $coin->quantity - $price * 9;
-//            $coin->save();
+
             $success = $config->save();
             if ($success) {
                 alert()->success('Success', 'Create success!');
@@ -93,7 +69,6 @@ class TopSellerConfigController extends Controller
             return back();
         } catch (\Exception $exception) {
             alert()->error('Error', 'Please try again');
-            dd($exception);
             return back();
         }
     }

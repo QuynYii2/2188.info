@@ -34,6 +34,7 @@ use App\Http\Controllers\Seller\SettingShopController;
 use App\Http\Controllers\Seller\StaffController;
 use App\Http\Controllers\Seller\StorageController;
 use App\Http\Controllers\Seller\TopSellerConfigController;
+use App\Http\Controllers\SetupMarketingController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\StatisticShopController;
@@ -175,9 +176,18 @@ Route::get('/products/location/{locale}', [\App\Http\Controllers\ProductControll
 Route::get('/products-shop/{id}', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByShops'])->name('list.products.shop.show');
 Route::get('/products-shop-category/{category}/{shop}', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByCategoryAndShops'])->name('list.products.shop.category.show');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(callback: function () {
 
     Route::get('/chat-message', [SampleController::class, 'chat'])->name('chat.message.show');
+    //Setup marketing
+    Route::get('/setup-marketing/', [\App\Http\Controllers\SetupMarketingController::class, 'index'])->name('setup-marketing.show');
+    Route::get('/setup-marketing/create', [\App\Http\Controllers\SetupMarketingController::class, 'create'])->name('create-setup-marketing');
+    Route::post('/setup-marketing/create', [\App\Http\Controllers\SetupMarketingController::class, 'store'])->name('store-setup-marketing');
+    Route::delete('/setup-marketing/create/{id}', [\App\Http\Controllers\SetupMarketingController::class, 'delete'])->name('setup-marketing.delete');
+
+    //Detail marketing
+    Route::get('/detail-marketing/{id}',[\App\Http\Controllers\DetailMarketingController::class, 'index'])->name('detail-marketing.show');
+
 // End register member
     //View member
     Route::get('/member-registered', [UpdateRankController::class, 'detail'])->name('member.registered.detail');
@@ -411,7 +421,6 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::post('/products-register-member', [RegisterMemberController::class, 'saveProduct'])->name('products.register.member.create');
     Route::post('/add-to-cart-register-member/{product}', [CartController::class, 'addToCartApi'])->name('cart.api');
     Route::post('/stands-register-member', [MemberPartnerController::class, 'store'])->name('stands.register.member');
-    Route::post('/stands-unregister-member/{id}', [MemberPartnerController::class, 'delete'])->name('stands.unregister.member');
     //
     Route::get('/trusts-register-member', [TrustMemberController::class, 'memberStand'])->name('trust.register.member.index');
     Route::get('/trusts-register-member/{locale}', [TrustMemberController::class, 'memberPartnerLocale'])->name('trust.register.member.locale');

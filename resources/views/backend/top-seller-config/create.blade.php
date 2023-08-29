@@ -4,8 +4,7 @@
     <h5 class="text-center mt-3 mb-4">Create marketing</h5>
     <div class="card p-3">
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-secondary mb-3" data-toggle="modal" data-target="#exampleModal">
-            Preview
+        <button type="button" class="btn btn-secondary mb-3" data-toggle="modal" data-target="#exampleModal">Preview
         </button>
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -18,127 +17,96 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <img style="width: 100%" src="{{asset('images/z4629273739159_20f1e3ae8cdfc03ea6413d0fe4affab5 (1).jpg')}}" alt="">
+                        <img style="width: 100%"
+                             src="{{asset('images/z4629273739159_20f1e3ae8cdfc03ea6413d0fe4affab5 (1).jpg')}}" alt="">
                     </div>
                 </div>
             </div>
         </div>
         <select class="form-select mb-4" aria-label="Default select example" id="selectMarketing">
             <option id="marketing_product" value="1">Product</option>
-            <option id="marketing_category" value="2">Category</option>
-            <option id="marketing_custom" value="3">Custom</option>
         </select>
+
         <form id="marketing_product_form" class="marketing_product" action="{{route('seller.config.create')}}"
               method="post" enctype="multipart/form-data">
             @csrf
-{{--                <div class="form-group">--}}
-{{--                    <label for="select_url">Select products</label>--}}
-{{--                    <select class="form-control" name="product" id="select_url">--}}
-{{--                        <option value="0">Shop</option>--}}
-{{--                        @php--}}
-{{--                            $products = \Illuminate\Support\Facades\DB::table('products')->get();--}}
-{{--                        @endphp--}}
-{{--                        @foreach($products as $product)--}}
-{{--                            <option value="{{$product->id}}">{{$product->name}}</option>--}}
-{{--                        @endforeach--}}
-{{--                    </select>--}}
-{{--                </div>--}}
-                <div class="form-group">
-                    <label for="local">Choosing location...</label>
-                    <select class="form-control" name="local" id="local" onchange="checkTien();">
-                        @foreach($options as $option)
-                            <option value="{{$option}}">
-                                {{$option}}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+            <div class="form-group">
+                <label for="local">Choosing location...</label>
+                <select class="form-control" name="local" id="local">
+                    @php
+                        $locations = \App\Models\SetupMarketing::all();
+                    @endphp
+                    @foreach($locations as $location)
+                        <option value="{{$location->id}}">
+                            {{$location->stt}} - {{$location->name}}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            {{--            <div class="form-group">--}}
+            {{--                <label for="local">Choosing location...</label>--}}
+            {{--                <select class="form-control" name="local" id="local" onchange="checkTien();">--}}
+            {{--                    @foreach($options as $option)--}}
+            {{--                        <option value="{{$option}}">--}}
+            {{--                            {{$option}}--}}
+            {{--                        </option>--}}
+            {{--                    @endforeach--}}
+            {{--                </select>--}}
+            {{--            </div>--}}
+            {{--            <div class="form-group">--}}
+            {{--                <label for="money" class="text-danger">Price</label>--}}
+            {{--                <input type="text" disabled class="form-control" id="money" value="100">--}}
+            {{--            </div>--}}
+            <input type="text" hidden class="form-control" id="moneyLocal" name="moneyLocal" value="100">
+            <label for="select_url">Select products</label>
             <div class="list-product_show">
                 @php
                     $products = \Illuminate\Support\Facades\DB::table('products')->get();
                 @endphp
                 @foreach($products as $product)
-                    <div class="col-xs-4 col-sm-3 col-md-2 nopad text-center">
-                        <label class="image-checkbox">
-                            <a class="check_url">
-                                <img src="{{ asset('storage/'.$product->thumbnail) }}" style="width: 100px" class="img img-100"></a>
-
-                            @if(Auth::check())
-                                <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
-                            @else
-                                <a class="check_url">{{($product->name)}}</a>
-                            @endif
-                            <input type="checkbox" name="image[]" value="" />
-                            <i class="fa fa-check hidden"></i>
+                    <div class=" ">
+                        <label class="image-checkbox d-flex align-items-center">
+                            <input class="inputCheckbox" type="checkbox" name="arrayProduct[]" value="{{$product->id}}"/>
+                            <div class="check_url">
+                                <img src="{{ asset('storage/'.$product->thumbnail) }}" class="img img-100">
+                            </div>
+                            <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
                         </label>
                     </div>
                 @endforeach
-
-                <div class="container">
-                    <h3>Bootstrap image checkbox(multiple)</h3>
-
-                </div>
             </div>
-                <input type="text" hidden class="form-control" id="moneyLocal" name="moneyLocal" value="100">
-                <button class="btn btn-primary" type="submit">Create</button>
-        </form>
-        <form id="marketing_category_form" class="marketing_category d-none " action="{{route('seller.config.create')}}"
-              method="post" enctype="multipart/form-data">
-            @csrf
-            <div class="form-group">
-                <label for="select_url">Select products</label>
-                <select class="form-control" name="category" id="category">
-                    <option value="0">Shop</option>
-                    @foreach($categories as $category)
-                        <option value="{{$category->id}}">{{$category->name}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="local">Choosing location...</label>
-                <select class="form-control" name="local" id="local">
-                    @foreach($options as $option)
-                        <option value="{{$option}}">
-                            {{$option}}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            <input type="text" hidden class="form-control" id="moneyLocal1" name="moneyLocal" value="100">
-            <button class="btn btn-primary" type="submit">Create</button>
-        </form>
-        <form id="marketing_custom_form" class="marketing_custom d-none" action="{{route('seller.config.create')}}"
-              method="post" enctype="multipart/form-data">
-            @csrf
-            <div class="form-group">
-                <label for="thumbnail">Choosing banner...</label>
-                <input type="file" class="form-control-file" accept="image/*" id="thumbnail" name="thumbnail">
-            </div>
-            <div class="form-group">
-                <label for="name">Name...</label>
-                <input type="text" name="name_custom"  class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="url">Enter an https:// URL:</label>
-                <input type="url" name="url" id="url" class="form-control" placeholder="https://example.com" required />
-            </div>
-            <div class="form-group">
-                <label for="local">Choosing location...</label>
-                <select class="form-control" name="local" id="local2">
-                    @foreach($options as $option)
-                        <option value="{{$option}}">
-                            {{$option}}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-            <input type="text" hidden class="form-control" id="moneyLocal2" name="moneyLocal" value="100">
+            <input type="text" hidden class="form-control" id="moneyLocal" name="moneyLocal" value="100">
             <button class="btn btn-primary" type="submit">Create</button>
         </form>
     </div>
 @endsection
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script>
+    function checkTien() {
+        var local = document.getElementById("local").value;
+        var money = document.getElementById("money");
+        var moneyLocal = document.getElementById("moneyLocal");
+        if (local == 1) {
+            money.value = 100;
+            moneyLocal.value = 100;
+        } else if (local == 2) {
+            money.value = 80;
+            moneyLocal.value = 80;
+        } else if (local == 3) {
+            money.value = 60;
+            moneyLocal.value = 60;
+        } else if (local == 4) {
+            money.value = 30;
+            moneyLocal.value = 30;
+        } else {
+            money.value = 10;
+            moneyLocal.value = 10;
+        }
+    }
+
+    checkTien();
+</script>
 <script>
 
     $(document).ready(function () {
@@ -171,8 +139,7 @@
     $(".image-checkbox").each(function () {
         if ($(this).find('input[type="checkbox"]').first().attr("checked")) {
             $(this).addClass('image-checkbox-checked');
-        }
-        else {
+        } else {
             $(this).removeClass('image-checkbox-checked');
         }
     });
@@ -181,7 +148,7 @@
     $(".image-checkbox").on("click", function (e) {
         $(this).toggleClass('image-checkbox-checked');
         var $checkbox = $(this).find('input[type="checkbox"]');
-        $checkbox.prop("checked",!$checkbox.prop("checked"))
+        $checkbox.prop("checked", !$checkbox.prop("checked"))
 
         e.preventDefault();
     });
