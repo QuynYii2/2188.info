@@ -192,7 +192,7 @@
                         $detailMarketing = \App\Models\SetupMarketing::all();
                     @endphp
                     @for($i=0; $i<count($detailMarketing); $i++)
-                        @if($i % 2 == 0)
+                        @if($i % 2 != 0)
                             <div class="section-left item-img banner_categories">
                                 <a href="{{ route('detail-marketing.show', $detailMarketing[$i]->id) }}">
                                     <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
