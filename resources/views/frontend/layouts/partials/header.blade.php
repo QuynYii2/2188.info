@@ -94,7 +94,7 @@
                         @endif
                         @if(!$config->isEmpty())
                             <div class="header-address text-center col-xl-5">
-                                <a class="header-address--text" href="">Available 24/7 at</a>
+                                <a class="header-address--text" href="">{{ __('home.Available 24/7 at') }}</a>
                                 <a class="header-address--phone" href="">{{$config[0]->phone}}</a>
                             </div>
                         @endif
@@ -111,10 +111,10 @@
                             <div class="category-drop input-group-prepend">
                                 <button class="btn-all btn-outline-secondary dropdown-toggle" type="button"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    All
+                                    {{ __('home.all') }}
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">All</a>
+                                    <a class="dropdown-item" href="#">{{ __('home.all') }}</a>
                                     @php
                                         $listCate = DB::table('categories')->where('parent_id', null)->get();
                                     @endphp
@@ -308,7 +308,7 @@
                                     @endif
 
                                     <div class="drop-item -hand-pointer">
-                                        <a href="{{route('chat.message.show')}}" >Tin nhắn</a>
+                                        <a href="{{route('chat.message.show')}}" >{{ __('home.Message') }}</a>
                                     </div>
 
                                     <div class="drop-item -hand-pointer" onclick="logout()">
@@ -335,7 +335,7 @@
                                 <div class="shop-menu" id="closeShop">
                                     <div class="d-flex pb-4">
                                         <span class="cart mr-4">{{ __('home.REVIEW YOUR CART') }}</span>
-                                        <span>{{count($cartViews)}} item</span>
+                                        <span>{{count($cartViews)}} {{ __('home.item') }}</span>
                                     </div>
                                     <div class="shop-list">
                                         @php
@@ -360,7 +360,18 @@
                                                             {{ ($cartItem->product->user->name) }}
                                                         </div>
                                                         <div class="text-name">
-                                                            <a href="{{route('detail_product.show', $cartItem->product->id)}}">{{ ($cartItem->product->name) }}
+                                                            <a href="{{route('detail_product.show', $cartItem->product->id)}}">
+                                                                @if(locationHelper() == 'kr')
+                                                                    <div class="item-text">{{ $cartItem->product->name_ko }}</div>
+                                                                @elseif(locationHelper() == 'cn')
+                                                                    <div class="item-text">{{$cartItem->product->name_zh}}</div>
+                                                                @elseif(locationHelper() == 'jp')
+                                                                    <div class="item-text">{{$cartItem->product->name_ja}}</div>
+                                                                @elseif(locationHelper() == 'vi')
+                                                                    <div class="item-text">{{$cartItem->product->name_vi}}</div>
+                                                                @else
+                                                                    <div class="item-text">{{$cartItem->product->name_en}}</div>
+                                                                @endif
                                                                 x1</a>
                                                         </div>
                                                         <div class="text-properties">
@@ -390,7 +401,7 @@
                                                                 <a class="text-edit" href="#" data-toggle="modal"
                                                                    data-target="#exampleModalEditCart">
                                                                     <i class='fas fa-edit'></i>
-                                                                    Change
+                                                                    {{ __('home.Change') }}
                                                                 </a>
                                                                 <div class="modal fade" id="exampleModalEditCart"
                                                                      tabindex="-1"
@@ -415,7 +426,7 @@
                                                                                      aria-labelledby="rectangle-group-label">
                                                                                     <label class="form-label form-label--alternate form-label--inlineSmall"
                                                                                            id="rectangle-group-label">
-                                                                                        Size:
+                                                                                        {{ __('home.Size') }}:
                                                                                         <small>
                                                                                             *
                                                                                         </small>

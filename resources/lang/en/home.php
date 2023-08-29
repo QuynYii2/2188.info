@@ -1,30 +1,30 @@
 <?php
 
 return [
-    'welcome' => 'Xin Chào',
-    'about' => 'Giới thiệu',
-    'contact' => 'Liên hệ',
-    'search' => 'Tìm kiếm',
-    'placeholder search' => 'Tìm kiếm sản phẩm',
-    'sign in' => 'Đăng nhập',
-    'sign up' => 'Đăng ký',
-    'seller' => 'Người bán',
-    'buyer' => 'Người mua',
-    'category' => 'Danh mục sản phẩm',
+    'welcome' => 'Welcome',
+    'about' => 'About us',
+    'contact' => 'Contact',
+    'search' => 'Search',
+    'placeholder search' => 'Search for product',
+    'sign in' => 'Log in',
+    'sign up' => 'Register',
+    'seller' => 'Seller',
+    'buyer' => 'Buyer',
+    'category' => 'Category',
 
-    'input name' => 'Nhập vào tên...',
-    'input phone' => 'Nhập vào số điện thoại...',
-    'input password' => 'Nhập vào mật khẩu...',
-    'input email' => 'Nhập vào email...',
-    'input address' => 'Nhập vào địa chỉ...',
-    'input taxCode' => 'Nhập vào mã số thuế...',
-    'input category' => 'Chọn danh mục sản phẩm...',
-    'input nameProduct' => 'Nhập vào tên sản phẩm...',
-    'input socialNetwork' => 'Nhập vào id mạng xã hội...',
-    'input username' => 'Nhập vào tên đăng nhập...',
-    'or use a social network' => 'Hoặc sử dụng mạng xã hội',
-    'business license' => 'Tải lên giấy phép kinh doanh',
-    'wait a review' => 'Nội dung đang chờ xét duyệt!',
+    'input name' => 'Input name...',
+    'input phone' => 'Input phone number...',
+    'input password' => 'Input password...',
+    'input email' => 'Input email address...',
+    'input address' => 'Input address...',
+    'input taxCode' => 'Input Tax code...',
+    'input category' => 'Select category...',
+    'input nameProduct' => 'Input product name...',
+    'input socialNetwork' => 'Input SNS ID...',
+    'input username' => 'Input Username...',
+    'or use a social network' => 'or use a social network ID',
+    'business license' => 'Upload business license',
+    'wait a review' => 'Nội dung đang chờ xét d0uyệt!',
 
     //thông tin tài khoản, thông báo của tôi, quản lý đơn hàng, quản lý đổi trả, sổ địa chỉ, thông tin thanh toán, đánh giá sản phẩm, sản phẩm bạn đã xem, sản phẩm yêu thích, sản phẩm mua sau, nhận xét của tôi, chia sẻ có lời, hợp đồng bảo hiểm, mua trước trả sau, mã giảm giá, quản lý xu của tôi, bookcare của tôi
     'account information' => 'Thông tin tài khoản',
@@ -40,20 +40,20 @@ return [
     'my review' => 'Nhận xét của tôi',
     'share with profit' => 'Chia sẻ có lời',
     'insurance contract' => 'Hợp đồng bảo hiểm',
-    'buy first pay later' => 'Mua trước trả sau',
-    'discount code' => 'Mã giảm giá',
-    'my coin management' => 'Quản lý xu của tôi',
-    'my bookcare' => 'Bookcare của tôi',
+    'buy first pay later' => 'Buy first pay later',
+    'discount code' => 'Discount code',
+    'my coin management' => 'My coin',
+    'my bookcare' => 'My Bookcare',
     'voucher management'=>'Quản lý mã giảm giá',
     'product multilviews'=>'Lượt xem cao nhất',
     'category interest'=>'Danh mục quan tâm',
 
     //thông tin cá nhân, họ và tên, nickname, ngày sinh, giới tính, quốc tịch, số điện thoại và email, số điện thoại, địa chỉ email, bảo mật, đổi mật khẩu, thiết lập mã pin, liên kết mạng xã hội, lưu thay đổi, địa chỉ
-    'personal information' => 'Thông tin cá nhân',
-    'full name' => 'Họ và tên',
+    'personal information' => 'Personal info',
+    'full name' => 'Full name',
     'nickname' => 'Nickname',
-    'date of birth' => 'Ngày sinh',
-    'gender' => 'Giới tính',
+    'date of birth' => 'Date of birth',
+    'gender' => 'Gender',
     'nationality' => 'Quốc tịch',
     'phone number and email' => 'Số điện thoại và email',
     'phone number' => 'Số điện thoại',
@@ -443,6 +443,69 @@ return [
     'Transaction value' => 'Giá trị giao dịch',
     'Customer level' => 'Cấp bậc khách hàng',
     'Unfollow' => 'Hủy theo dõi',
+    'Online 4 minutes ago' => 'Online 4 phút trước',
+    'chat' => 'Trò chuyện',
+    '4.9 (387k reviews)' => '4.9 (387k đánh giá)',
+    'Chat response rate' => 'Tỉ lệ phản hồi Chat',
+    '99% (within hours)' => '99% (trong vài giờ)',
+    'join' => 'Tham gia',
+    '6 years ago' => '6 năm trước',
+    'Shop Information' => 'Thông tin Shop',
+    'All products' => 'Tất cả sản phẩm',
+    'Voucher Shop' => 'Voucher Shop',
+    'Available 24/7 at' => 'Có sẵn 24/7 tại',
+    'Message' => 'Tin nhắn',
+    'item' => 'Sản phẩm',
+    'Change' => 'Thay đổi',
+    'Size' => 'Kích cỡ',
+    'CUSTOMER CARE' => 'CHĂM SÓC KHÁCH HÀNG',
+    'Help Center' => 'Trung Tâm Trợ Giúp',
+    'Shopping guide' => 'Hướng Dẫn Mua Hàng',
+    'Sales Guide' => 'Hướng Dẫn Bán Hàng',
+    'Coin' => 'Đồng xu',
+    'Ship' => 'Vận Chuyển',
+    'Returns & Refund' => 'Trả Hàng & Hoàn Tiền',
+    'Customer care' => 'Chăm Sóc Khách Hàng',
+    'Warranty Policy' => 'Chính Sách Bảo Hành',
+    'ABOUT 2188' => 'VỀ 2188',
+    'About 2188 Vietnam' => 'Giới Thiệu Về 2188 Việt Nam',
+    'Recruitment' => 'Tuyển Dụng',
+    'Terms 2188' => 'Điều Khoản 2188',
+    'Privacy Policy' => 'Chính Sách Bảo Mật',
+    'Genuine' => 'Chính Hãng',
+    'Flash Sales' => 'Flash Sales',
+    'Ambassador Programme' => 'Chương Trình Tiếp Thị Liên Kết',
+    'Media Contact' => 'Liên Hệ Với Truyền Thông',
+    'PAYMENT' => 'THANH TOÁN',
+    'LOGISTICS' => 'ĐƠN VỊ VẬN CHUYỂN',
+    'FOLLOW US' => 'THEO DÕI CHÚNG TÔI TRÊN',
+    'APP DOWNLOAD' => 'TẢI ỨNG DỤNG',
+    '© 2023. All Rights Reserved.' => '© 2023. Tất cả các quyền được bảo lưu.',
+    'Country & Region' => 'Quốc gia & Khu vực',
+    'TERM OF SERVICE' => 'Quy chế hoạt động',
+    'SHIPPING POLICY' => 'Chính sách vận chuyển',
+    'VIOLATION' => 'CHÍNH SÁCH TRẢ HÀNG VÀ HOÀN TIỀN',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
