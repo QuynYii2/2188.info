@@ -78,6 +78,8 @@
 
     var conn = new WebSocket(url + '={{ auth()->user()->token }}');
 
+    console.log(conn);
+
     var from_user_id = "{{ Auth::user()->id }}";
 
     var to_user_id = "";
