@@ -437,6 +437,15 @@ return [
     'Close' => 'Đóng',
     'Create your account and enjoy a new shopping experience.' => 'Tạo tài khoản của bạn và tận hưởng trải nghiệm mua sắm mới.',
     'Follow' => 'Theo dõi',
+    'Membership Level' => 'Cấp bậc hội viên',
+    'Customer code' => 'Mã khách hàng',
+    'Nation' => 'Quốc gia',
+    'Area' => 'Khu vực',
+    'Day trading' => 'Ngày giao dịch',
+    'Transaction value' => 'Giá trị giao dịch',
+    'Customer level' => 'Cấp bậc khách hàng',
+    'Unfollow' => 'Hủy theo dõi',
+
 
 
 
