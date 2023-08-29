@@ -206,9 +206,9 @@ class HomeController extends Controller
 
     public function getLangDisplay()
     {
-        $locale = 'kr';
+        $locale = 'vi';
         if (!$locale) {
-            $locale = 'kr';
+            $locale = 'vi';
         }
         $locations = ['vi', 'kr', 'jp', 'cn', 'en'];
         $lang = ['vi', 'ko', 'ja', 'zh', 'en'];
