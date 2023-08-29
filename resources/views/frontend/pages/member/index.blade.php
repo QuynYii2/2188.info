@@ -64,8 +64,7 @@
                                                 </div>
                                                 <div class="col-md-6 border">
                                                     <div class="mt-2">
-                                                        <h5 class="mb-3">Doanh nghiệp ưu
-                                                            tú: {{ ($memberCompany->member) }}</h5>
+                                                        <h5 class="mb-3">{{ __('home.Elite enterprise') }}: {{ ($memberCompany->member) }}</h5>
                                                         <div class="">
                                                             <i class="fa-solid fa-trophy"></i>
                                                             <i class="fa-solid fa-trophy"></i>
@@ -75,8 +74,7 @@
                                                 </div>
                                                 <div class="col-md-6 border">
                                                     <div class="mt-2">
-                                                        <h5 class="mb-3">Phân loại hội
-                                                            viên: {{ ($memberCompany->member) }}</h5>
+                                                        <h5 class="mb-3">Phân loại hội viên: {{ ($memberCompany->member) }}</h5>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 border">

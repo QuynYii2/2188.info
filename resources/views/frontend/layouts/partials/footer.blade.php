@@ -6,235 +6,126 @@
 
         @endphp
 <footer class="footer">
-    {{--    <div class="footer-content text-center">--}}
-    {{--        <div class="footer-content--big">--}}
-    {{--            {{ __('home.SUBSCRIBE TO OUR NEWSLETTER') }}--}}
-    {{--        </div>--}}
-    {{--        <div class="footer-content--small">--}}
-    {{--            {{ __('home.Get the latest updates on new products and upcoming sales') }}--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
-    {{--    <div class="footer-list">--}}
-    {{--        <div class="row">--}}
-    {{--            <div class="footer-item col-xl-2 col-md-4">--}}
-    {{--                <div class="item-content">--}}
-    {{--                    {{ __('home.CATEGORIES') }}--}}
-    {{--                </div>--}}
-    {{--                @php--}}
-    {{--                    $listCate = DB::table('categories')->where('parent_id', null)->get();--}}
-    {{--                @endphp--}}
-    {{--                @if(count($listCate)<6)--}}
-    {{--                    @foreach($listCate as $cate)--}}
-    {{--                        <div class="item-small">--}}
-    {{--                            <a href="{{ route('category.show', $cate->id) }}">{{ ($cate->name) }}</a>--}}
-    {{--                        </div>--}}
-    {{--                    @endforeach--}}
-    {{--                @else--}}
-    {{--                    @for($i=0; $i<6; $i++)--}}
-    {{--                        <div class="item-small">--}}
-    {{--                            <a href="{{ route('category.show', $listCate[$i]->id) }}">{{ ($listCate[$i]->name) }}</a>--}}
-    {{--                        </div>--}}
-    {{--                    @endfor--}}
-    {{--                @endif--}}
-    {{--            </div>--}}
-    {{--            <div class="footer-item col-xl-2 col-md-4">--}}
-    {{--                <div class="item-content">--}}
-    {{--                    {{ __('home.BRANDS') }}--}}
-    {{--                </div>--}}
-    {{--                <div class="item-small">--}}
-    {{--                    <a href="#">Benjamin Button</a>--}}
-    {{--                </div>--}}
-    {{--                <div class="item-small">--}}
-    {{--                    <a href="#">Arm & Hammer</a>--}}
-    {{--                </div>--}}
-    {{--                <div class="item-small">--}}
-    {{--                    <a href="#">BisTech</a>--}}
-    {{--                </div>--}}
-    {{--                <div class="item-small">--}}
-    {{--                    <a href="#">Sagaform</a>--}}
-    {{--                </div>--}}
-    {{--                <div class="item-small">--}}
-    {{--                    <a href="#">OFS</a>--}}
-    {{--                </div>--}}
-    {{--            </div>--}}
-    {{--            <div class="footer-item col-xl-2 col-md-4">--}}
-    {{--                <div class="item-content">--}}
-    {{--                    {{ __('home.FURTHER INFO') }}.--}}
-    {{--                </div>--}}
-    {{--                <div class="item-small">--}}
-    {{--                    <a href="#">About us</a>--}}
-    {{--                </div>--}}
-    {{--                <div class="item-small">--}}
-    {{--                    <a href="#">Theme Styles</a>--}}
-    {{--                </div>--}}
-    {{--                <div class="item-small">--}}
-    {{--                    <a href="#">Contact us</a>--}}
-    {{--                </div>--}}
-    {{--                <div class="item-small">--}}
-    {{--                    <a href="#">Gift Certificates</a>--}}
-    {{--                </div>--}}
-    {{--                <div class="item-small">--}}
-    {{--                    <a href="#">Blog</a>--}}
-    {{--                </div>--}}
-    {{--            </div>--}}
-    {{--            <div class="footer-item col-xl-2 col-md-4">--}}
-    {{--                <div class="item-content">--}}
-    {{--                    {{ __('home.CUSTOMER SERVICE') }}--}}
-    {{--                </div>--}}
-    {{--                <div class="item-small">--}}
-    {{--                    <a href="#">Help & FAQs</a>--}}
-    {{--                </div>--}}
-    {{--                <div class="item-small">--}}
-    {{--                    <a href="#">Terms of Conditions</a>--}}
-    {{--                </div>--}}
-    {{--                <div class="item-small">--}}
-    {{--                    <a href="#">Privacy Policy</a>--}}
-    {{--                </div>--}}
-    {{--                <div class="item-small">--}}
-    {{--                    <a href="#">Online Returns Policy</a>--}}
-    {{--                </div>--}}
-    {{--                <div class="item-small">--}}
-    {{--                    <a href="#">Rewards Program</a>--}}
-    {{--                </div>--}}
-    {{--            </div>--}}
-    {{--            @if(!$config->isEmpty())--}}
-    {{--            <div class="footer-item col-xl-3 col-md-4">--}}
-    {{--                <div class="item-content">--}}
-    {{--                    STORE INFO--}}
-    {{--                </div>--}}
-    {{--                <div class="item-small">--}}
-    {{--                    <a href="#"><i class="fa-solid fa-location-dot"></i> {{$config[0]->address}}</a>--}}
-    {{--                </div>--}}
-    {{--                <div class="item-small">--}}
-    {{--                    <a href="#"><i class="fa-solid fa-phone"></i> {{$config[0]->phone}}</a>--}}
-    {{--                </div>--}}
-    {{--                <div class="item-small">--}}
-    {{--                    <a href="#"><i class="fa-regular fa-envelope"></i> {{$config[0]->email}}</a>--}}
-    {{--                </div>--}}
-    {{--            </div>--}}
-    {{--            @endif--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
     <div class="footer-container">
         <div class="footer-top">
             <div class="footer-list">
                 <div class="footer-list-container">
                     <div class="list-container-content">
-                        CHĂM SÓC KHÁCH HÀNG
+                        {{ __('home.CUSTOMER CARE') }}
                     </div>
                     <ul class="list-item-content">
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Trung Tâm Trợ Giúp</span>
+                                <span class="item-content-text">{{ __('home.Help Center') }}</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Shopee Blog</span>
+                                <span class="item-content-text">2188 Blog</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Shopee Mall</span>
+                                <span class="item-content-text">2188 Mall</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Hướng Dẫn Mua Hàng</span>
+                                <span class="item-content-text">{{ __('home.Shopping guide') }}</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Hướng Dẫn Bán Hàng</span>
+                                <span class="item-content-text">{{ __('home.Sales Guide') }}</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Thanh Toán</span>
+                                <span class="item-content-text">{{ __('home.Payment') }}</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Shopee Xu</span>
+                                <span class="item-content-text">{{ __('home.Coin') }}</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Vận Chuyển</span>
+                                <span class="item-content-text">{{ __('home.Ship') }}</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Trả Hàng &amp; Hoàn Tiền</span>
+                                <span class="item-content-text">{{ __('home.Returns & Refund') }}</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Chăm Sóc Khách Hàng</span>
+                                <span class="item-content-text">{{ __('home.Customer care') }}</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Chính Sách Bảo Hành</span>
+                                <span class="item-content-text">{{ __('home.Warranty Policy') }}</span>
                             </a>
                         </li>
                     </ul>
                 </div>
                 <div class="footer-list-container">
                     <div class="list-container-content">
-                        VỀ SHOPEE
+                        {{ __('home.ABOUT 2188') }}
                     </div>
                     <ul class="list-item-content">
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Giới Thiệu Về Shopee Việt Nam</span>
+                                <span class="item-content-text">{{ __('home.About 2188 Vietnam') }}</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Tuyển Dụng</span>
+                                <span class="item-content-text">{{ __('home.Recruitment') }}</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Điều Khoản Shopee</span>
+                                <span class="item-content-text">{{ __('home.Terms 2188') }}</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Chính Sách Bảo Mật</span>
+                                <span class="item-content-text">{{ __('home.Company Name') }}</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Chính Hãng</span>
+                                <span class="item-content-text">{{ __('home.Genuine') }}</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Kênh Người Bán</span>
+                                <span class="item-content-text">{{ __('home.Seller channel') }}</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Flash Sales</span>
+                                <span class="item-content-text">{{ __('home.Flash Sales') }}</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Chương Trình Tiếp Thị Liên Kết Shopee</span>
+                                <span class="item-content-text">{{ __('home.Ambassador Programme') }}</span>
                             </a>
                         </li>
                         <li class="item-content-footer">
                             <a href="#" class="item-content-link" title="" target="_blank" rel="noopener noreferrer">
-                                <span class="item-content-text">Liên Hệ Với Truyền Thông</span>
+                                <span class="item-content-text">{{ __('home.Media Contact') }}</span>
                             </a>
                         </li>
                     </ul>
                 </div>
                 <div class="footer-list-container">
                     <div class="list-container-content">
-                        THANH TOÁN
+                        {{ __('home.PAYMENT') }}
                     </div>
                     <ul class="footer-content-bill">
                         <li class="item-content-bill">
@@ -279,7 +170,7 @@
                         </li>
                     </ul>
                     <div class="list-container-content wTATIi">
-                        ĐƠN VỊ VẬN CHUYỂN
+                        {{ __('home.LOGISTICS') }}
                     </div>
                     <ul class="footer-content-bill">
                         <li class="item-content-bill">
@@ -341,7 +232,7 @@
                 </div>
                 <div class="footer-list-container">
                     <div class="list-container-content">
-                        THEO DÕI CHÚNG TÔI TRÊN
+                        {{ __('home.FOLLOW US') }}
                     </div>
                     <ul class="list-item-content">
                         <li class="item-content-footer">
@@ -366,7 +257,7 @@
                 </div>
                 <div class="footer-list-container">
                     <div class="list-container-content">
-                        TẢI ỨNG DỤNG SHOPEE NGAY THÔI
+                        {{ __('home.APP DOWNLOAD') }}
                     </div>
                     <div class="pkg67p">
                         <a href="#" target="_blank" rel="noopener noreferrer">
@@ -388,11 +279,11 @@
             </div>
             <div class="footer-region">
                 <div class="PGHx77 footer-region-add">
-                    © 2023 Shopee. Tất cả các quyền được bảo lưu.
+                    {{ __('home.© 2023. All Rights Reserved.') }}
                 </div>
                 <div class="_9RQPzN">
                     <div class="rtJ1VG footer-region-add">
-                        Quốc gia &amp; Khu vực:
+                        {{ __('home.Country & Region') }}:
                     </div>
                     <div class="HKksoM">
                         <a href="#" class="footer-region-add WrjDUh">
@@ -406,7 +297,7 @@
                     </div>
                     <div class="HKksoM">
                         <a href="#" class="footer-region-add WrjDUh">
-                            Đài Loan
+                            Taiwan
                         </a>
                     </div>
                     <div class="HKksoM">
@@ -421,7 +312,7 @@
                     </div>
                     <div class="HKksoM">
                         <a href="#" class="footer-region-add WrjDUh">
-                            Việt Nam
+                            Vietnam
                         </a>
                     </div>
                     <div class="HKksoM">
@@ -458,22 +349,22 @@
                 <div class="footer-bottom-list">
                     <div class="footer-bottom-item">
                         <a class="bottom-item" href="#">
-                            <span>Chính sách bảo mật</span>
+                            <span>{{ __('home.Privacy Policy') }}</span>
                         </a>
                     </div>
                     <div class="footer-bottom-item">
                         <a class="bottom-item" href="#">
-                            <span>Quy chế hoạt động</span>
+                            <span>{{ __('home.TERM OF SERVICE') }}</span>
                         </a>
                     </div>
                     <div class="footer-bottom-item">
                         <a class="bottom-item" href="#">
-                            <span>Chính sách vận chuyển</span>
+                            <span>{{ __('home.SHIPPING POLICY') }}</span>
                         </a>
                     </div>
                     <div class="footer-bottom-item">
                         <a class="bottom-item" href="#">
-                            <span>CHÍNH SÁCH TRẢ HÀNG VÀ HOÀN TIỀN</span>
+                            <span>{{ __('home.VIOLATION') }}</span>
                         </a>
                     </div>
                 </div>
@@ -491,20 +382,18 @@
                         </div>
                     </a>
                 </div>
-                <div class="footer-addres ggg4D-">
-                    Công ty TNHH Shopee
-                </div>
+
                 <div class="footer-addres">
-                    Địa chỉ: Tầng 4-5-6, Tòa nhà Capital Place, số 29 đường Liễu Giai, Phường Ngọc Khánh, Quận Ba Đình, Thành phố Hà Nội, Việt Nam. Tổng đài hỗ trợ: 19001221 - Email: cskh@hotro.shopee.vn
+{{--                    Địa chỉ: Tầng 4-5-6, Tòa nhà Capital Place, số 29 đường Liễu Giai, Phường Ngọc Khánh, Quận Ba Đình, Thành phố Hà Nội, Việt Nam. Tổng đài hỗ trợ: 19001221 - Email: cskh@hotro.shopee.vn--}}
                 </div>
-                <div class="footer-addres">
-                    Chịu Trách Nhiệm Quản Lý Nội Dung: Nguyễn Đức Trí -  Điện thoại liên hệ: 024 73081221 (ext 4678)
-                </div>
-                <div class="footer-addres">
-                    Mã số doanh nghiệp: 0106773786 do Sở Kế hoạch &amp; Đầu tư TP Hà Nội cấp lần đầu ngày 10/02/2015
-                </div>
-                <div class="footer-addres">
-                    © 2015 - Bản quyền thuộc về Công ty TNHH Shopee
+{{--                <div class="footer-addres">--}}
+{{--                    Chịu Trách Nhiệm Quản Lý Nội Dung: Nguyễn Đức Trí -  Điện thoại liên hệ: 024 73081221 (ext 4678)--}}
+{{--                </div>--}}
+{{--                <div class="footer-addres">--}}
+{{--                    Mã số doanh nghiệp: 0106773786 do Sở Kế hoạch &amp; Đầu tư TP Hà Nội cấp lần đầu ngày 10/02/2015--}}
+{{--                </div>--}}
+{{--                <div class="footer-addres">--}}
+{{--                    © 2015 - Bản quyền thuộc về Công ty TNHH Shopee--}}
                 </div>
             </div>
         </div>

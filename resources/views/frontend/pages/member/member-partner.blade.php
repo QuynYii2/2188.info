@@ -6,20 +6,20 @@
         $mentor = \App\Models\User::where('email', $memberPer->email)->first();
     @endphp
     <div class="container-fluid">
-        <h3 class="text-center">Danh sách đối tác</h3>
+        <h3 class="text-center">{{ __('home.Partner List') }}</h3>
         <div class="border d-flex justify-content-between align-items-center bg-warning p-2">
             <h5>{{$company->name}}</h5>
             <div class="">
                 <span>ID</span>: {{$company->id}}
             </div>
             <div class="">
-                <span>Phân loại hội viên</span>: {{$company->member}}
+                <span>{{ __('home.Membership classification') }}</span>: {{$company->member}}
             </div>
             <div class="">
-                <span>Cấp bậc hội viên</span>: {{$company->member}}
+                <span>{{ __('home.Membership Level') }}</span>: {{$company->member}}
             </div>
             <div class="">
-                <span>Đánh giá của khách hàng</span>
+                <span>{{ __('home.customer rating') }}</span>
             </div>
         </div>
         @php
@@ -33,33 +33,42 @@
                         $category = \App\Models\Category::find($itemCategory);
                     @endphp
                     <div class="col-md-2">
-                        {{$category->name}}
+                        @if(locationHelper() == 'kr')
+                            <div class="item-text">{{ $category->name_ko }}</div>
+                        @elseif(locationHelper() == 'cn')
+                            <div class="item-text">{{$category->name_zh}}</div>
+                        @elseif(locationHelper() == 'jp')
+                            <div class="item-text">{{$category->name_ja}}</div>
+                        @elseif(locationHelper() == 'vi')
+                            <div class="item-text">{{$category->name_vi}}</div>
+                        @else
+                            <div class="item-text">{{$category->name_en}}</div>
+                        @endif
                     </div>
                 @endforeach
             </div>
         </div>
         <div class="border d-flex justify-content-between align-items-center p-3">
-            <a href="{{route('stand.register.member.index', $company->id)}}" class="btn btn-primary">Gian hàng</a>
-            <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">Danh sách đối tác</a>
-            <a href="#" class="btn btn-primary">Tin nhắn đã nhận</a>
-            <a href="#" class="btn btn-warning">Tin nhắn đã gửi</a>
-            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Mua hàng</a>
-            <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">Đặt sỉ nước
-                ngoài</a>
+            <a href="{{route('stand.register.member.index', $company->id)}}" class="btn btn-primary">{{ __('home.Shop') }}</a>
+            <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">{{ __('home.Partner List') }}</a>
+            <a href="#" class="btn btn-primary">{{ __('home.Message received') }}</a>
+            <a href="#" class="btn btn-warning">{{ __('home.Message sent') }}</a>
+            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">{{ __('home.Purchase') }}</a>
+            <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
         </div>
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th scope="col">Mã khách hàng</th>
-                <th scope="col">Quốc gia</th>
-                <th scope="col">Tên công ty</th>
-                <th scope="col">Khu vực</th>
-                <th scope="col">Ngày giao dịch</th>
-                <th scope="col">Giá trị giao dịch</th>
-                <th scope="col">Số lượng</th>
-                <th scope="col">Phân loại hội viên</th>
-                <th scope="col">Trạng thái</th>
-                <th scope="col">Cấp bậc khách hàng</th>
+                <th scope="col">{{ __('home.Customer code') }}</th>
+                <th scope="col">{{ __('home.Nation') }}</th>
+                <th scope="col">{{ __('home.Company Name') }}</th>
+                <th scope="col">{{ __('home.Area') }}</th>
+                <th scope="col">{{ __('home.Day trading') }}</th>
+                <th scope="col">{{ __('home.Transaction value') }}</th>
+                <th scope="col">{{ __('home.quantity') }}</th>
+                <th scope="col">{{ __('home.Membership classification') }}</th>
+                <th scope="col">{{ __('home.Status') }}</th>
+                <th scope="col">{{ __('home.Customer level') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -129,7 +138,7 @@
                                                        value="{{$memberPartner->id}} "
                                                        hidden>
                                                 <button class="btn btn-primary" id="btnFollow" type="submit">
-                                                    Follow
+                                                    {{ __('home.Follow') }}
                                                 </button>
                                             </form>
                                         @else
@@ -139,7 +148,7 @@
                                                 <input type="text" name="company_id_source"
                                                        value="{{ $memberPartner->id }}" hidden>
                                                 <button class="btn btn-danger" id="btnUnfollow" type="submit">
-                                                    Unfollow
+                                                    {{ __('home.Unfollow') }}
                                                 </button>
                                             </form>
                                         @endif
@@ -210,7 +219,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Chọn quốc gia mua hàng</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -240,7 +249,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Chọn quốc gia mua hàng</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

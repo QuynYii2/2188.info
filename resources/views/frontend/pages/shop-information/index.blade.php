@@ -404,7 +404,7 @@
                             </h1>
                             <div class="section-seller-overview-horizontal__portrait-status">
                                 <div class="section-seller-overview-horizontal__active-time">
-                                    Online 4 phút trước
+                                    {{ __('home.Online 4 minutes ago') }}
                                 </div>
                             </div>
                         </div>
@@ -419,7 +419,7 @@
                   </polygon>
                 </svg>
               </span>
-                                theo dõi
+                                {{ __('home.Follow') }}
                             </button>
                         </a>
                         <a argettype="chatButton" class="section-seller-overview-horizontal__button">
@@ -432,7 +432,7 @@
                   </g>
                 </svg>
               </span>
-                                chat
+                                {{ __('home.chat') }}
                             </button>
                         </a>
                     </div>
@@ -449,7 +449,7 @@
                     </div>
                     <div class="section-seller-overview__item-text">
                         <div class="section-seller-overview__item-text-name">
-                            Sản phẩm:&nbsp;
+                            {{ __('home.Product Name') }}:&nbsp;
                         </div>
                         <div class="section-seller-overview__item-text-value">
                             {{ ($countProductBySeller->countProduct) }}
@@ -468,10 +468,10 @@
                     </div>
                     <div class="section-seller-overview__item-text">
                         <div class="section-seller-overview__item-text-name">
-                            đánh giá:&nbsp;
+                            {{ __('home.review') }}:&nbsp;
                         </div>
                         <div class="section-seller-overview__item-text-value">
-                            4.9 (387k đánh giá)
+                            {{ __('home.4.9 (387k reviews)') }}
                         </div>
                     </div>
                 </div>
@@ -487,10 +487,10 @@
                             </svg>
                         </div>
                         <div class="section-seller-overview__item-text-name">
-                            Tỉ lệ phản hồi Chat:&nbsp;
+                            {{ __('home.Chat response rate') }}:&nbsp;
                         </div>
                         <div class="section-seller-overview__item-text-value">
-                            99% (trong vài giờ)
+                            {{ __('home.99% (within hours)') }}
                             <div class="section-seller-overview__inline-icon section-seller-overview__inline-icon--help">
                                 <svg width="10" height="10">
                                     <g fill="currentColor" fill-rule="nonzero" color="currentColor" stroke-width="0">
@@ -521,10 +521,10 @@
                     </div>
                     <div class="section-seller-overview__item-text">
                         <div class="section-seller-overview__item-text-name">
-                            tham gia:&nbsp;
+                            {{ __('home.join') }}:&nbsp;
                         </div>
                         <div class="section-seller-overview__item-text-value">
-                            6 năm trước
+                            {{ __('home.6 years ago') }}
                         </div>
                     </div>
                 </div>
@@ -543,11 +543,11 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#product" role="tab"
-                                   aria-controls="profile" aria-selected="false">Tất cả sản phẩm</a>
+                                   aria-controls="profile" aria-selected="false">{{ __('home.All products') }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#vouchers" role="tab"
-                                   aria-controls="contact" aria-selected="false">Voucher Shop</a>
+                                   aria-controls="contact" aria-selected="false">{{ __('home.Voucher Shop') }}</a>
                             </li>
                         </ul>
                         <div class="tab-content container-fluid" id="myTabContent">
