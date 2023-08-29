@@ -47,7 +47,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $this->getLocale($request);
-        $locale = 'vi';
+        $locale = 'vn';
         if ($locale == 'vn') {
             $locale = 'vi';
         }
