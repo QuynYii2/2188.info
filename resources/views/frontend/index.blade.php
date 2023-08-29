@@ -200,7 +200,7 @@
                                     <div class="section-left--name">
                                         @php
                                             $ld = new \App\Http\Controllers\TranslateController();
-                                            $titleMarketing = $ld->translateText($listBanner[$i]->name_custom, locationPermissionHelper());
+                                            $titleMarketing = $ld->translateText($listCate[$i]->name_custom, locationPermissionHelper());
                                         @endphp
                                         {{ $titleMarketing }}
                                     </div>
