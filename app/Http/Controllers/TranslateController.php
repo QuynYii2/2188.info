@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Google\Cloud\Core\Exception\BadRequestException;
 use LanguageDetection\Language;
+use PHPUnit\Exception;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class TranslateController extends Controller

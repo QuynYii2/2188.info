@@ -14,6 +14,7 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Thumbnail</th>
                         <th scope="col">Location</th>
                         <th scope="col">Name</th>
                         <th scope="col">Operation</th>
@@ -24,13 +25,25 @@
                         @foreach($setups as $setup)
                             <tr>
                                 <th scope="row">{{$loop->index + 1}}</th>
+                                <th>
+                                    <img width="100" height="100"
+                                         src="{{ asset('storage/'.$setup->thumbnail) }}"
+                                         class="woocommerce-placeholder wp-post-image" alt="Placeholder"
+                                         decoding="async"
+                                         loading="lazy">
+                                </th>
                                 <td>{{$setup->stt}}</td>
                                 <td>{{$setup->name}}</td>
-                                <td>
+                                <td class="d-flex align-items-baseline" data-colname="Image">
+                                    <a href="{{route('setup-marketing.edit', $setup->id)}}" style="color: black">
+                                        <i class="fa-regular fa-pen-to-square"></i>
+                                    </a>
                                     <form method="post" action="{{route('setup-marketing.delete', $setup->id)}}">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-danger" type="submit">Delete</button>
+                                        <button class="btn">
+                                            <i class="fa-solid fa-trash-can" style="color: red"></i>
+                                        </button>
                                     </form>
                                 </td>
                             </tr>

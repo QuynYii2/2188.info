@@ -184,6 +184,8 @@ Route::middleware(['auth'])->group(callback: function () {
     Route::get('/setup-marketing/create', [\App\Http\Controllers\SetupMarketingController::class, 'create'])->name('create-setup-marketing');
     Route::post('/setup-marketing/create', [\App\Http\Controllers\SetupMarketingController::class, 'store'])->name('store-setup-marketing');
     Route::delete('/setup-marketing/create/{id}', [\App\Http\Controllers\SetupMarketingController::class, 'delete'])->name('setup-marketing.delete');
+    Route::get('/setup-marketing/edit/{id}', [\App\Http\Controllers\SetupMarketingController::class, 'edit'])->name('setup-marketing.edit');
+    Route::post('/setup-marketing/update/{id}', [\App\Http\Controllers\SetupMarketingController::class, 'update'])->name('setup-marketing.update');
 
     //Detail marketing
     Route::get('/detail-marketing/{id}',[\App\Http\Controllers\DetailMarketingController::class, 'index'])->name('detail-marketing.show');
