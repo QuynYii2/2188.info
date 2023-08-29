@@ -18,7 +18,7 @@ class GeoIP
     {
         $record = $this->reader->get($ip);
         if ($record) {
-            $countryCode = 'KRW';
+            $countryCode = 'VN';
             switch ($countryCode) {
                 case 'KR':
                     return 'kr';
@@ -32,7 +32,7 @@ class GeoIP
                     return 'en';
             }
         }
-        return 'kr';
+        return 'vi';
     }
 
     public function getCode($ip)
@@ -41,7 +41,7 @@ class GeoIP
         if ($record == null){
             $record = $this->reader->get('183.80.130.4');
         }
-        $countryCode = 'kr';
+        $countryCode = 'vi';
         return $countryCode;
     }
 }
