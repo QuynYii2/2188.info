@@ -15,8 +15,8 @@ class WebSocketServer extends Command
      *
      * @var string
      */
-    // php artisan websocket:init
-    protected $signature = 'websocket:init';
+    // php artisan websocket:init 8090
+    protected $signature = 'websocket:init {port}';
 
     /**
      * The console command description.
@@ -42,14 +42,17 @@ class WebSocketServer extends Command
      */
     public function handle()
     {
+        $port = $this->argument('port');
         $server = IoServer::factory(
             new HttpServer(
                 new WsServer(
                     new SocketController()
                 )
             ),
-            8800
+            $port
         );
+
+        $this->info("WebSocket server started on port $port");
 
         $server->run();
     }

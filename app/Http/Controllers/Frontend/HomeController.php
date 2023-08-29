@@ -208,7 +208,7 @@ class HomeController extends Controller
     {
         $locale = 'kr';
         if (!$locale) {
-            $locale = 'kr';
+            $locale = 'vi';
         }
         $locations = ['vi', 'kr', 'jp', 'cn', 'en'];
         $lang = ['vi', 'ko', 'ja', 'zh', 'en'];
