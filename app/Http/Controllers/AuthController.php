@@ -98,6 +98,7 @@ class AuthController extends Controller
         }
 
         $locale = $this->getLocale($request);
+        dd($locale, $user->region);
 
         if ($user) {
             $role_id = DB::table('role_user')->where('user_id', $user->id)->get();
