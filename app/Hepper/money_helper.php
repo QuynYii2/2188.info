@@ -26,6 +26,7 @@ if (!function_exists('convertCurrency')) {
                 $item->save();
             } else {
                 $rate = $item->rate;
+                $item->save();
             }
         } else {
             $rate = getExchangeRate($from, $to, $amount);
