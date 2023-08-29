@@ -84,6 +84,8 @@
                             <ul class='sub-items pl-3'>
                                 <li><a class="sidebarUrl" href="{{route('seller.config.show')}}">Quản Lí Marketing</a>
                                 </li>
+                                <li><a class="sidebarUrl" href="{{route('setup-marketing.show')}}">Setup Marketing</a>
+                                </li>
                                 <li>
                                     <a class="sidebarUrl" href="{{route('seller.vouchers.list')}}">Mã Giảm Giá</a>
                                 </li>

@@ -127,7 +127,7 @@
                     </div>
                     <hr>
                     <div class="content">{{ __('home.ORIGIN') }}</div>
-                    <input type="text" value="" id="search-origin" onchange="searchOrigin(this)" >{{ __('home.Products by origin') }}
+                    <input type="text" value="" class="w-100" id="search-origin" onchange="searchOrigin(this)" >{{ __('home.Products by origin') }}
 
                 </div>
                 <!-- Tab panes -->

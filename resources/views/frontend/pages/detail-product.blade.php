@@ -6,7 +6,6 @@
      $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
 @endphp
 
-
 @extends('frontend.layouts.master')
 @section('title', 'Detail')
 @section('content')
@@ -241,7 +240,6 @@
             overflow: hidden;
         }
     </style>
-
     <div class="container-fluid detail">
         <div class="grid second-nav">
             <div class="column-xs-12">
@@ -262,7 +260,7 @@
             <div class="col-12 col-md-4">
                 <div class="product-gallery">
                     <div class="product-image">
-                        <img id="productThumbnail" class="active"
+                        <img id="productThumbnail" class="active h-100"
                              src="{{ asset('storage/' . $product->thumbnail) }}">
                         <input type="text" id="urlImage" value="{{asset('storage/')}}" hidden="">
                     </div>
