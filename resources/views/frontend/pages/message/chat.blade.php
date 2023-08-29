@@ -74,7 +74,7 @@
 @endsection
 <script>
 
-    const url = 'ws://0.0.0.0:8800/?token';
+    const url = 'ws://localhost:8800/?token';
 
     var conn = new WebSocket(url + '={{ auth()->user()->token }}');
 
