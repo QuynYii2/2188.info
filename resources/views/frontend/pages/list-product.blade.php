@@ -38,9 +38,14 @@
             $nameSeller = DB::table('users')->where('id', $product->user_id)->first();
         @endphp
         <div class="card-brand">
-            <a href="{{route('shop.information.show', $nameSeller->id)}}">
-            {{($nameSeller->name)}}
-            </a>
+            @if(Auth::check())
+                <a href="{{route('shop.information.show', $nameSeller->id)}}">{{($nameSeller->name)}}</a>
+            @else
+                <a class="check_url">{{($nameSeller->name)}}</a>
+            @endif
+{{--            <a href="{{route('shop.information.show', $nameSeller->id)}}">--}}
+{{--            {{($nameSeller->name)}}--}}
+{{--            </a>--}}
         </div>
         <div class="card-title">
             @if(Auth::check())
