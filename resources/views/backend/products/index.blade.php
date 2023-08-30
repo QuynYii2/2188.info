@@ -124,7 +124,6 @@
                                              decoding="async"
                                              loading="lazy">
                                     @endif
-
                                 </a>
                             </td>
                             <td class="name column-name has-row-actions column-primary" data-colname="Name">

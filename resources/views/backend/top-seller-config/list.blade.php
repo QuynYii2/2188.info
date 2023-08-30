@@ -134,34 +134,65 @@
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th>Thumbnail banner</th>
-                        <th>Location</th>
-                        <th>Url redirect</th>
-                        <th>Thêm</th>
+                        <th>Thumbnail</th>
+                        <th>Name</th>
+                        <th>Qty Products</th>
+                        <th>Atc</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($configs as $config)
+                    @php
+                        $list_Setups = \App\Models\SetupMarketing::all();
+                    @endphp
+                    @foreach($list_Setups as $list_Setup)
                         <tr>
                             <td class="">{{$loop->index + 1}}</td>
                             <td>
-                                <img src="{{ asset('storage/'.$config->thumbnail) }}" style="width: 100px" class="img img-100"
+                                <img src="{{ asset('storage/'.$list_Setup->thumbnail) }}" style="width: 100px; height: 100px; object-fit: cover" class="img img-100"
                                      alt="Thumbnail">
                             </td>
                             <td>
-                               Location: {{$config->local}}
+                              {{$list_Setup->name}}
                             </td>
                             <td class="">
-                                <a href="{{$config->url}}">link</a>
+                                {{$list_Setup->name}}
                             </td>
                             <td>
-                                <form method="post" action="{{route('seller.config.delete', $config->id)}}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger">
-                                        Xoá
-                                    </button>
-                                </form>
+                                <a href="#" class="mr-2" style="color: black" data-toggle="modal" data-target="#exampleModal_eye">
+                                    <i class="fa-regular fa-eye"></i>
+                                </a>
+                                <div class="modal fade" id="exampleModal_eye" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <a href="#">Xem chi tiết</a>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Thumbnail</th>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Act</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <th scope="row">1</th>
+                                                        <td>Mark</td>
+                                                        <td>Otto</td>
+                                                        <td>@mdo</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

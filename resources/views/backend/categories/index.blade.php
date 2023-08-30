@@ -4,7 +4,6 @@
     List Category
 @endsection
 @section('content')
-
     <div class="wrap nosubsub snipcss-yDRNt">
         <h1 class="wp-heading-inline">
             Product categories

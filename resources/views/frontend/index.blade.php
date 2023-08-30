@@ -63,12 +63,12 @@
                                 <div class="col-lg-6 item item-left text-center">
                                     @if(Auth::check())
                                         <a href="{{ route('category.show', $cate->id) }}">
-                                            {{-- <img class="icon_i" alt="">--}}
+                                             <img class="icon_i" alt="">
                                             <div class="text">{{($cate->{'name_' .$langDisplay->getLangDisplay()})}}</div>
                                         </a>
                                     @else
                                         <a class="check_url">
-                                            {{-- <img class="icon_i" alt="">--}}
+                                             <img class="icon_i" alt="">
                                             <div class="text">{{($cate->{'name_' .$langDisplay->getLangDisplay()})}}</div>
                                         </a>
                                     @endif
@@ -188,21 +188,16 @@
             <div class="row">
                 <div class="col-md-3 col-xl-2 pt-3 pb-3">
                     @php
-                        $listCate = \App\Models\TopSellerConfig::all();
                         $detailMarketing = \App\Models\SetupMarketing::all();
                     @endphp
                     @for($i=0; $i<count($detailMarketing); $i++)
                         @if($i % 2 != 0)
                             <div class="section-left item-img banner_categories">
                                 <a href="{{ route('detail-marketing.show', $detailMarketing[$i]->id) }}">
-                                    <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
+                                    <img src="{{ asset('storage/' . $detailMarketing[$i]->thumbnail) }}"
                                          alt="">
                                     <div class="section-left--name">
-                                        @php
-                                            $ld = new \App\Http\Controllers\TranslateController();
-                                            $titleMarketing = $ld->translateText($listCate[$i]->name_custom, locationPermissionHelper());
-                                        @endphp
-                                        {{ $titleMarketing }}
+                                        {{ $detailMarketing[$i]->name }}
                                     </div>
                                 </a>
                             </div>
@@ -351,21 +346,16 @@
                 </div>
                 <div class="col-md-3 col-xl-2 pt-3 pb-3">
                     @php
-                        $listCate = \App\Models\TopSellerConfig::all();
                         $detailMarketing = \App\Models\SetupMarketing::all();
                     @endphp
                     @for($i=0; $i<count($detailMarketing); $i++)
                         @if($i % 2 == 0)
                             <div class="section-left item-img banner_categories">
                                 <a href="{{ route('detail-marketing.show', $detailMarketing[$i]->id) }}">
-                                <img src="{{ asset('storage/' . $listCate[$i]->thumbnail) }}"
+                                    <img src="{{ asset('storage/' . $detailMarketing[$i]->thumbnail) }}"
                                          alt="">
                                     <div class="section-left--name">
-                                        @php
-                                            $ld = new \App\Http\Controllers\TranslateController();
-                                            $nameMarketing = $ld->translateText($listCate[$i]->name_custom, locationPermissionHelper());
-                                        @endphp
-                                        {{ $nameMarketing }}
+                                        {{ $detailMarketing[$i]->name }}
                                     </div>
                                 </a>
                             </div>
