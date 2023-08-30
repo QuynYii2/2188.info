@@ -73,12 +73,33 @@
     </div>
 @endsection
 <script>
+    const url = 'ws://localhost:8080/?token';
 
-    const url = 'ws://localhost:8090/?token';
+    const maxReconnectAttempts = 5;
+    let reconnectAttempts = 0;
 
-    var conn = new WebSocket(url + '={{ auth()->user()->token }}');
+    function createWebSocket() {
+        const connection = new WebSocket(url + '={{ auth()->user()->token }}');
 
-    console.log(conn);
+        connection.addEventListener('open', () => {
+            console.log("Connected");
+        });
+
+        connection.addEventListener('close', () => {
+            if (reconnectAttempts < maxReconnectAttempts) {
+                console.log("Connection closed, attempting to reconnect...");
+                setTimeout(() => createWebSocket(), 1000);
+                reconnectAttempts++;
+            } else {
+                console.log(`Exceeded maximum reconnect attempts (${maxReconnectAttempts}). Stopping.`);
+            }
+        });
+
+        return connection;
+    }
+
+    const conn = createWebSocket();
+    console.log(conn)
 
     var from_user_id = "{{ Auth::user()->id }}";
 
