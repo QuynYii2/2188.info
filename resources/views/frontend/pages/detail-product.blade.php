@@ -1,8 +1,6 @@
 @php
-    use App\Models\Attribute;
-    use App\Models\VoucherItem;
-    use App\Models\Properties;use Illuminate\Support\Facades\Auth;
-     (new \App\Http\Controllers\Frontend\HomeController())->createStatisticShopDetail('views', $product->user_id);
+    use App\Models\Attribute;use App\Models\Properties;use Illuminate\Support\Facades\Auth;
+    (new \App\Http\Controllers\Frontend\HomeController())->createStatisticShopDetail('views', $product->user_id);
      $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
 @endphp
 
@@ -246,7 +244,7 @@
                 <nav>
                     <ol class="breadcrumb-list">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">{{ __('home.Home') }}</a></li>
-                        <li class="breadcrumb-item"><a href="#">Chi tiết sản phẩm</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{ __('home.Product details') }}</a></li>
                     </ol>
                 </nav>
             </div>
@@ -284,7 +282,7 @@
                     <div class="product-name"><a
                                 href="{{ route('shop.information.show', $name->id) }}">{{$name->name}}</a></div>
                     <div class="product-title">{{($product->name)}}</div>
-                    <div class="product-origin">Xuất xứ: {{$product->origin}}</div>
+                    <div class="product-origin">{{ __('home.ORIGIN') }}: {{$product->origin}}</div>
                     <div class="product-rating">
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
@@ -295,7 +293,8 @@
                     </div>
                     <div class="product-price d-flex" style="gap: 3rem">
                         @if($product->price != null)
-                            <div id="productPrice" class="price">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</div>
+                            <div id="productPrice"
+                                 class="price">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</div>
                             <strike id="productOldPrice">{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
                         @else
                             <strike id="productOldPrice">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strike>
@@ -330,7 +329,8 @@
                                 </div>
                             @endforeach
                         </div>
-                        <a id="resetSelect" class="btn btn-dark mt-3 " style="color: white"> Reset select</a>
+                        <a id="resetSelect" class="btn btn-dark mt-3 "
+                           style="color: white">{{ __('home.Reset select') }}</a>
                         @include('frontend.pages.shopProducts.modal-att', ['name' => ''])
 
                     @endif
@@ -352,7 +352,7 @@
                     @endphp
                     @if(!$price_sales)
                         <a class="p-2 btn-light" style="cursor: pointer" data-toggle="modal" data-target="#priceList">
-                            Bảng giá sỉ
+                            {{ __('home.Wholesale price list') }}
                         </a>
                     @endif
                     <!-- Modal -->
@@ -361,7 +361,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Bảng giá</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Price list') }}</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -370,8 +370,8 @@
                                     <table class="table-fill">
                                         <thead>
                                         <tr>
-                                            <th class="text-left">Month</th>
-                                            <th class="text-left">Sales</th>
+                                            <th class="text-left">{{ __('home.Month') }}</th>
+                                            <th class="text-left">{{ __('home.sales') }}</th>
                                         </tr>
                                         </thead>
                                         <tbody class="table-hover">
@@ -410,38 +410,44 @@
                         <button class="share"><i class="fa-regular fa-heart"></i></button>
                         <button class="share"><i class="fa-solid fa-share-nodes"></i></button>
                     </div>
-                    <div class="eyes"><i class="fa-regular fa-eye"></i> 19 customers are viewing this product</div>
+                    <div class="eyes"><i
+                                class="fa-regular fa-eye"></i> {{ __('home.19 customers are viewing this product') }}
+                    </div>
                 </form>
             </div>
             <div class="column-xs-12 column-md-3 layout-fixed">
                 <div class="main-actions">
                     <form action="">
                         <div class="express-header">
-                            <p>The minimum order quantity is 2 pair</p>
+                            <p>{{ __('home.The minimum order quantity is 2 pair') }}</p>
                             <div class="item-center d-flex justify-content-between">
-                                <span>0/2 pair</span>
+                                <span>0/2 {{ __('home.pair') }}</span>
                                 <span>from <b>$12.98$</b></span>
                             </div>
-                            <p class="">Lead time 15 days <i class="fa-solid fa-info"></i></p>
+                            <p class="">{{ __('home.Lead time') }} 15 {{ __('home.day') }} <i
+                                        class="fa-solid fa-info"></i></p>
                         </div>
                         <div class="express-body">
                             <div class="item-center d-flex justify-content-between">
-                                <span>Shipping</span>
+                                <span>{{ __('home.shipping') }}</span>
                                 <span>from <b>$12.98$</b></span>
                             </div>
                             <div>
-                                <p class="">Lead time 15 days <i class="fa-solid fa-info"></i></p>
+                                <p class="">{{ __('home.Lead time') }} 15 {{ __('home.day') }} <i
+                                            class="fa-solid fa-info"></i></p>
                             </div>
                         </div>
                         <div class="express-footer">
                             <a href="#">
-                                <div class="button-start">Start order</div>
+                                <div class="button-start">{{ __('home.Start orde') }}</div>
                             </a>
                             <a href="#">
-                                <div class="button-call"><i class="fa-solid fa-envelope"></i> Contact supplier</div>
+                                <div class="button-call"><i
+                                            class="fa-solid fa-envelope"></i> {{ __('home.Contact supplier') }}</div>
                             </a>
                             <a href="#">
-                                <div class="button-call"><i class="fa-solid fa-phone"></i> Call us</div>
+                                <div class="button-call"><i class="fa-solid fa-phone"></i> {{ __('home.Call us') }}
+                                </div>
                             </a>
 
                         </div>
@@ -468,7 +474,7 @@
                             </div>
                             <div class="company-brand ilvietnam-1-1-7">
                                 <span class="ilvietnam-2-7-8">
-                                    nhà sản xuất
+                                    {{ __('home.Producer') }}
                                 </span>
                             </div>
                             <div class="card-supplier card-icons-lite ilvietnam-1-1-9">
@@ -494,13 +500,13 @@
                             <div class="ability ilvietnam-1-1-17">
                                 <img src="https://img.alicdn.com/imgextra/i3/O1CN015NySK71aBmY1PTG9K_!!6000000003292-2-tps-28-28.png"
                                      class="ilvietnam-2-17-18">
-                                Nhãn hiệu đã đăng ký (1)
+                                {{ __('home.Registered Trademark') }} (1)
                             </div>
                             <div class="company-basicCapacity ilvietnam-1-1-19">
                                 <a href=""
                                    class="attr-item ilvietnam-2-19-20" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-title ilvietnam-3-20-21">
-                                        xếp hạng cửa hàng
+                                        {{ __('home.Store Rating') }}
                                     </div>
                                     <div class="attr-content ilvietnam-3-20-22" title="4,7(21)">
                                         4,7(21)
@@ -508,7 +514,7 @@
                                 </a>
                                 <div class="attr-item ilvietnam-2-19-23" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-title ilvietnam-3-23-24">
-                                        Tỷ lệ giao hàng đúng hạn
+                                        {{ __('home.On-time delivery rate') }}
                                     </div>
                                     <div class="attr-content ilvietnam-3-23-25" title="95,6%">
                                         95,6%
@@ -516,7 +522,7 @@
                                 </div>
                                 <div class="attr-item ilvietnam-2-19-26" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-title ilvietnam-3-26-27">
-                                        Thời gian đáp ứng
+                                        {{ __('home.Response time') }}
                                     </div>
                                     <div class="attr-content ilvietnam-3-26-28" title="≤3h">
                                         ≤3h
@@ -524,7 +530,7 @@
                                 </div>
                                 <div class="attr-item ilvietnam-2-19-29" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-title ilvietnam-3-29-30">
-                                        doanh thu trực tuyến
+                                        {{ __('home.Online revenue') }}
                                     </div>
                                     <div class="attr-content ilvietnam-3-29-31" title="$480,000+">
                                         $480,000+
@@ -532,7 +538,7 @@
                                 </div>
                                 <div class="attr-item ilvietnam-2-19-32" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-title ilvietnam-3-32-33">
-                                        Không gian sàn
+                                        {{ __('home.Floor space') }}
                                     </div>
                                     <div class="attr-content ilvietnam-3-32-34" title="1000m²">
                                         1000m²
@@ -540,7 +546,7 @@
                                 </div>
                                 <div class="attr-item ilvietnam-2-19-35" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-title ilvietnam-3-35-36">
-                                        Nhân viên
+                                        {{ __('home.Staff') }}
                                     </div>
                                     <div class="attr-content ilvietnam-3-35-37" title="14">
                                         14
@@ -549,32 +555,32 @@
                             </div>
                             <div class="company-productionServiceCapacity service-2 ilvietnam-1-1-38">
                                 <div class="attr-title ilvietnam-2-38-39">
-                                    Dịch vụ
+                                    {{ __('home.Service') }}
                                 </div>
                                 <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-content ilvietnam-3-40-41" title="tùy chỉnh nhỏ">
-                                        tùy chỉnh nhỏ
+                                        {{ __('home.Small customization') }}
                                     </div>
                                 </div>
                                 <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-content ilvietnam-3-42-43" title="Tùy chỉnh dựa trên thiết kế">
-                                        Tùy chỉnh dựa trên thiết kế
+                                        {{ __('home.Customization based on design') }}
                                     </div>
                                 </div>
                             </div>
                             <div class="company-productionServiceCapacity service-2 ilvietnam-1-1-38">
                                 <div class="attr-title ilvietnam-2-38-39">
-                                    kiểm soát chất lượng
+                                    {{ __('home.Quality control') }}
                                 </div>
                                 <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-content ilvietnam-3-40-41"
                                          title="Nhận dạng truy xuất nguồn gốc nguyên liệu">
-                                        Nhận dạng truy xuất nguồn gốc nguyên liệu
+                                        {{ __('home.Identification of traceability of raw materials') }}
                                     </div>
                                 </div>
                                 <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-content ilvietnam-3-42-43" title="Kiểm tra thành phẩm">
-                                        Kiểm tra thành phẩm
+                                        {{ __('home.Finished product inspection') }}
                                     </div>
                                 </div>
                             </div>
@@ -585,7 +591,7 @@
                                class="company-qualificationCertificate service-4 ilvietnam-1-1-50">
                                 <div class="attr-item ilvietnam-2-50-53" aria-haspopup="true" aria-expanded="false">
                                     <div class="attr-content ilvietnam-3-53-54">
-                                        giấy chứng nhận
+                                        {{ __('home.Certificate') }}
                                     </div>
                                 </div>
                             </a>
@@ -593,13 +599,13 @@
                                 <a href="{{ route('shop.information.show', $name->id) }}"
                                    class="detail-next-btn detail-next-medium detail-next-btn-normal ilvietnam-2-55-56 attr-item">
                                     <span class="detail-next-btn-helper ilvietnam-3-56-57">
-                                       Hồ sơ công ty
+                                       {{ __('home.company profile') }}
                                     </span>
                                 </a>
                                 <a href="{{ route('shop.information.show', $name->id) }}"
                                    class="detail-next-btn detail-next-medium detail-next-btn-normal ilvietnam-2-55-56 attr-item">
                                     <span class="detail-next-btn-helper ilvietnam-3-58-59">
-                                                Ghé thăm cửa hàng
+                                        {{ __('home.Visit the store') }}
                                     </span>
                                 </a>
                             </div>
@@ -686,7 +692,7 @@
                                                                                  class="fa fa-star"></i></label>
                                 </div>
                                 <input id="input-star" value="0" hidden="">
-                                <div id="text-message" class="text-danger d-none">Please select star rating
+                                <div id="text-message" class="text-danger d-none">{{ __('home.Please select star rating') }}
                                 </div>
 
                                 <div class="form-group row">
@@ -710,7 +716,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <button id="btn-submit" class="btn btn-primary btn-16" type="submit">
-                                        Submit
+                                        {{ __('home.submit') }}
                                     </button>
                                 </div>
                             </form>

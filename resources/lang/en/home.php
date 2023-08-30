@@ -77,7 +77,7 @@ return [
     'all orders' => 'Tất cả đơn',
     'waiting for payment' => 'Chờ thanh toán',
     'processing' => 'Đang xử lý',
-    'shipping' => 'Đang vận chuyển',
+    'shipping' => 'Đang chuyển hàng',
     'delivered' => 'Đã giao',
     'canceled' => 'Đã hủy',
     'all' => 'Tất cả',
@@ -343,7 +343,7 @@ return [
     'Booth' => 'Gian hàng',
     'Partner List' => 'Danh sách đối tác',
     'Message received' => 'Tin nhắn đã nhận',
-    'Message sent' => 'Tin nhắn đã gửi',
+    'Tin nhắn đã gửi' => 'Tin nhắn đã gửi',
     'Purchase' => 'Mua hàng',
     'Foreign wholesale order' => 'Đặt sỉ nước ngoài',
     'Company code' => 'Mã công ty',
@@ -494,6 +494,55 @@ return [
     ' Why shop with us?' => 'Tại sao mua sắm với chúng tôi?',
     'QUALITY AND SAVING' => 'CHẤT LƯỢNG VÀ TIẾT KIỆM',
     'Comprehensive quality control and affordable prices' => 'Kiểm soát chất lượng toàn diện và giá cả phải chăng',
+    'List of customers' => 'Danh sách khách hàng',
+    'Product details' => 'Chi tiết sản phẩm',
+    'Reset select' => 'Đặt lại',
+    'Wholesale price list' => 'Bảng giá sỉ',
+    'Price list' => 'Bảng giá',
+    'Month' => 'Tháng',
+    '19 customers are viewing this product' => '19 khách hàng đang xem sản phẩm này',
+    'The minimum order quantity is 2 pair' => 'Số lượng đặt hàng tối thiểu là 2 đôi',
+    'pair' => 'đôi',
+    'Lead time' => 'Thời gian thực hiện',
+    'day' => 'Ngày',
+    'Start orde' => 'Bắt đầu đặt hàng',
+    'Contact supplier' => 'Liên hệ nhà cung cấp',
+    'Call us' => 'Gọi cho chúng tôi',
+    'Producer' => 'Nhà sản xuất',
+    'Registered Trademark' => 'Nhãn hiệu đã đăng ký',
+    'Store Rating' => 'Xếp hạng cửa hàng',
+    'On-time delivery rate' => 'Tỷ lệ giao hàng đúng hạn',
+    'Response time' => 'Thời gian đáp ứng',
+    'Online revenue' => 'Doanh thu trực tuyến',
+    'Floor space' => 'Không gian sàn',
+    'Service' => 'Dịch vụ',
+    'Small customization' => 'tùy chỉnh nhỏ',
+    'Customization based on design' => 'Tùy chỉnh dựa trên thiết kế',
+    'Quality control' => 'Kiểm soát chất lượng',
+    'Identification of traceability of raw materials' => 'Nhận dạng truy xuất nguồn gốc nguyên liệu',
+    'Finished product inspection' => 'Kiểm tra thành phẩm',
+    'Certificate' => 'Giấy chứng nhận',
+    'company profile' => 'Hồ sơ công ty',
+    'Visit the store' => 'Ghé thăm cửa hàng',
+    'Please select star rating' => 'Vui lòng chọn xếp hạng sao',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

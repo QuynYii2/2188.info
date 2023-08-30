@@ -3,6 +3,10 @@ body {
   font-family: "DM Sans", sans-serif;
 }
 
+.checked {
+  color: yellow;
+}
+
 .body {
   background-color: #f5f5f5;
 }
