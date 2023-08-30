@@ -2,7 +2,7 @@
 @extends('backend.layouts.master')
 @section('title', 'Edit Setup Marketing')
 @section('content')
-    <h3 class="text-center">Create SetUp Marketing</h3>
+    <h3 class="text-center">Edit SetUp Marketing</h3>
     <form action="{{route('setup-marketing.update', $edit_setup->id)}}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
@@ -18,6 +18,6 @@
             <label for="name">Name</label>
             <input type="text" name="name" class="form-control" id="name" value="{{$edit_setup->name}}" placeholder="Nhập tên setup marketing">
         </div>
-        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="submit" class="btn btn-primary">Update</button>
     </form>
 @endsection
