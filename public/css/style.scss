@@ -2363,7 +2363,7 @@ hr{
     font-size: 24px;
     margin-bottom: 15px;
   }
-  .section-left--name{
+  .section-left--name {
     margin-top: 5px;
     font-size: 17px;
     text-align: center;
@@ -2372,6 +2372,18 @@ hr{
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
+
+    &.button {
+      border-radius: 20px;
+      border: 1px solid black;
+      line-height: 34px;
+      &:hover {
+        background-color: $color-main;
+        border: white;
+        color: white;
+        text-decoration: none;
+      }
+    }
   }
 
   .product-banner {

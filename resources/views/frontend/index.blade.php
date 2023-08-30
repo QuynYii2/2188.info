@@ -192,13 +192,16 @@
                     @endphp
                     @for($i=0; $i<count($detailMarketing); $i++)
                         @if($i % 2 != 0)
-                            <div class="section-left item-img banner_categories">
+                            <div class="section-left banner_categories">
                                 <a href="{{ route('detail-marketing.show', $detailMarketing[$i]->id) }}">
                                     <img src="{{ asset('storage/' . $detailMarketing[$i]->thumbnail) }}"
                                          alt="">
-                                    <div class="section-left--name">
+                                    <span class="section-left--name">
                                         {{ $detailMarketing[$i]->name }}
-                                    </div>
+                                    </span>
+                                    {{--                                    <span class="button section-left--name">--}}
+                                    {{--                                        Xem ngay--}}
+                                    {{--                                    </span>--}}
                                 </a>
                             </div>
                         @endif
@@ -347,6 +350,9 @@
                                     <span class="section-left--name">
                                         {{ $detailMarketing[$i]->name }}
                                     </span>
+{{--                                    <span class="button section-left--name">--}}
+{{--                                        Xem ngay--}}
+{{--                                    </span>--}}
                                 </a>
                             </div>
                         @endif

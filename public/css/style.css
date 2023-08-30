@@ -2044,6 +2044,17 @@ hr {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+.section .section-left--name.button {
+  border-radius: 20px;
+  border: 1px solid black;
+  line-height: 34px;
+}
+.section .section-left--name.button:hover {
+  background-color: #fd6506;
+  border: white;
+  color: white;
+  text-decoration: none;
+}
 .section .product-banner img {
   width: 100%;
   height: 100%;

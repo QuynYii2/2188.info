@@ -23,7 +23,7 @@
                     <div class="row" id="renderProduct">
                         @if($products)
                             @foreach($products as $product)
-                                <div class="col-xl-3 col-md-4 col-6 section">
+                                <div class="col-xl-2 col-md-3 col-6 section">
                                     @include('frontend.pages.list-product')
                                 </div>
                             @endforeach
