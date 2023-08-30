@@ -142,6 +142,8 @@
                                 </button>
                             </div>
 
+
+
                             @php
                                 $memberPerson = \App\Models\MemberRegisterPersonSource::where([
                                     ['email', Auth::user()->email],
@@ -240,7 +242,7 @@
                                             }
                                         @endphp
                                         @php
-                                            $locale = $_COOKIE['countryCode'];
+                                            $locale = 'kr';
                                             if(!$locale){
                                                 $locale == 'vn';
                                             }
