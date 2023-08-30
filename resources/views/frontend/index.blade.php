@@ -241,7 +241,7 @@
                     </section>
 
                     <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
-                    <section class="section-Fifth section pt-3 pb-3 container-fluid">
+                    <section class="section-Fifth section mt-3">
                         <div class="content"><i class="fa-solid fa-fire-flame-curved"></i>{{ __('home.Hot Deals') }}
                         </div>
                         <div class="swiper HotDeals">
@@ -259,7 +259,7 @@
                             </div>
                         </div>
                     </section>
-                    <div class="category-img section pt-3 pb-3 container-fluid">
+                    <div class="category-img section pt-3 pb-3">
                         <div class="category-img">
                             @if($locale == 'vi')
                                 <div class="content ">Viet Nam
@@ -300,7 +300,7 @@
                     </div>
                     @foreach($arrayProducts as $keys => $arrayProduct)
                         @if($keys != $locale)
-                            <div class="category-img section pt-3 pb-3 container-fluid">
+                            <div class="category-img section pt-3 pb-3">
                                 @if($keys == 'vi')
                                     <div class="content ">Japan
                                         <img class="flag-ct"
@@ -350,9 +350,9 @@
                                 <a href="{{ route('detail-marketing.show', $detailMarketing[$i]->id) }}">
                                     <img src="{{ asset('storage/' . $detailMarketing[$i]->thumbnail) }}"
                                          alt="">
-                                    <div class="section-left--name">
+                                    <p class="section-left--name">
                                         {{ $detailMarketing[$i]->name }}
-                                    </div>
+                                    </p>
                                 </a>
                             </div>
                         @endif

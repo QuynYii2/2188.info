@@ -146,10 +146,14 @@ new Swiper(".NewProducts", {
     },
     breakpoints: {
         300: {
-            slidesPerView: 3,
+            slidesPerView: 2,
             spaceBetween: 10,
         },
-        1000: {
+        600: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+        },
+        900: {
             slidesPerView: 4,
             spaceBetween: 10,
         },
@@ -166,10 +170,14 @@ new Swiper(".FeaturedProducts", {
     },
     breakpoints: {
         300: {
-            slidesPerView: 3,
+            slidesPerView: 2,
             spaceBetween: 10,
         },
-        1000: {
+        600: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+        },
+        900: {
             slidesPerView: 4,
             spaceBetween: 10,
         },
