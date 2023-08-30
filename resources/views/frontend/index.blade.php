@@ -350,9 +350,9 @@
                                 <a href="{{ route('detail-marketing.show', $detailMarketing[$i]->id) }}">
                                     <img src="{{ asset('storage/' . $detailMarketing[$i]->thumbnail) }}"
                                          alt="">
-                                    <p class="section-left--name">
+                                    <span class="section-left--name">
                                         {{ $detailMarketing[$i]->name }}
-                                    </p>
+                                    </span>
                                 </a>
                             </div>
                         @endif
