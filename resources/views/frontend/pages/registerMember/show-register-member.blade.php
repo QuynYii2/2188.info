@@ -59,21 +59,12 @@
                                     @if($arrayPermissionID)
                                         @foreach($arrayPermissionID as $permissionID)
                                             <li>
+
                                                 @php
                                                     $permission = \App\Models\Permission::find($permissionID);
+                                                    $ld = new \App\Http\Controllers\TranslateController();
                                                 @endphp
-
-                                                @if(locationHelper() == 'kr')
-                                                    <div class="item-text">{{ $permission->name_ko }}</div>
-                                                @elseif(locationHelper() == 'cn')
-                                                    <div class="item-text">{{$permission->name_zh}}</div>
-                                                @elseif(locationHelper() == 'jp')
-                                                    <div class="item-text">{$permission->name_ja}}</div>
-                                                @elseif(locationHelper() == 'vi')
-                                                    <div class="item-text">{{$permission->name_vi}}</div>
-                                                @else
-                                                    <div class="item-text">{{$permission->name_en}}</div>
-                                                @endif
+                                                {{ $ld->translateText($permission->name, locationPermissionHelper()) }}
                                             </li>
                                         @endforeach
                                     @endif

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ProductStatus;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
 use App\Models\Product;
@@ -17,6 +18,7 @@ class ShopInformationController extends Controller
 
     public function index($id, Request $request)
     {
+        (new HomeController())->getLocale($request);
         $priceProductOfCategory = Product::selectRaw('MAX(price) AS maxPrice, MIN(price) AS minPrice')
             ->where([['products.status', '=', ProductStatus::ACTIVE], ['user_id', '=', $id]])
             ->first();

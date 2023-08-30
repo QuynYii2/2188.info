@@ -539,7 +539,7 @@
                             <li class="nav-item">
                                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
                                    aria-controls="home"
-                                   aria-selected="true">Thông tin Shop</a>
+                                   aria-selected="true">{{ __('home.Shop Information') }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#product" role="tab"

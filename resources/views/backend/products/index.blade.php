@@ -18,6 +18,7 @@
         $permissionUsers[]= null;
     }
 
+    $isAdmin = (new  \App\Http\Controllers\Frontend\HomeController())->checkAdmin();
 @endphp
 @section('content')
     <div id="wpbody-content" class="snipcss-PfbzX">
@@ -327,8 +328,12 @@
 
                                                                                     <div class="form-group">
                                                                                         <div class="name">Nhập số lượng</div>
-                                                                                        <input type="number" class="form-control" name="qty" id="qty"
-                                                                                               placeholder="Nhập giá khuyến mãi" value="{{$product->qty}}" min="1">
+                                                                                        <input type="number"
+                                                                                               class="form-control"
+                                                                                               name="qty" id="qty"
+                                                                                               placeholder="Nhập giá khuyến mãi"
+                                                                                               value="{{$product->qty}}"
+                                                                                               min="1">
                                                                                     </div>
 
                                                                                     <div class="form-group">
@@ -571,29 +576,47 @@
                                 @endforeach
                             </td>
                             <td class="hot column-hot" data-colname="Hot">
-                                @for($i = 0; $i< count($permissionUsers); $i++)
-                                    @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm hot')
-                                        @if($product->hot == 1)
-                                            <label class="switch">
-                                                <input value="{{$product->id}}" class="inputHotCheckbox"
-                                                       name="inputHot-{{$product->id}}" id="inputHot-{{$product->id}}"
-                                                       type="checkbox" checked>
-                                                <span class="slider round"></span>
-                                            </label>
-                                        @else
-                                            <label class="switch">
-                                                <input value="{{$product->id}}" class="inputHotCheckbox"
-                                                       name="inputHot-{{$product->id}}" id="inputHot-{{$product->id}}"
-                                                       type="checkbox">
-                                                <span class="slider round"></span>
-                                            </label>
-                                        @endif
-                                        @break
+                                @if($isAdmin == true)
+                                    @if($product->hot == 1)
+                                        <label class="switch">
+                                            <input value="{{$product->id}}" class="inputHotCheckbox"
+                                                   name="inputHot-{{$product->id}}" id="inputHot-{{$product->id}}"
+                                                   type="checkbox" checked>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    @else
+                                        <label class="switch">
+                                            <input value="{{$product->id}}" class="inputHotCheckbox"
+                                                   name="inputHot-{{$product->id}}" id="inputHot-{{$product->id}}"
+                                                   type="checkbox">
+                                            <span class="slider round"></span>
+                                        </label>
                                     @endif
-                                @endfor
+                                @else
+                                    @for($i = 0; $i< count($permissionUsers); $i++)
+                                        @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm hot')
+                                            @if($product->hot == 1)
+                                                <label class="switch">
+                                                    <input value="{{$product->id}}" class="inputHotCheckbox"
+                                                           name="inputHot-{{$product->id}}" id="inputHot-{{$product->id}}"
+                                                           type="checkbox" checked>
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            @else
+                                                <label class="switch">
+                                                    <input value="{{$product->id}}" class="inputHotCheckbox"
+                                                           name="inputHot-{{$product->id}}" id="inputHot-{{$product->id}}"
+                                                           type="checkbox">
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            @endif
+                                            @break
+                                        @endif
+                                    @endfor
+                                @endif
                             </td>
                             <td class="featured column-featured" data-colname="Featured">
-                                @for($i = 0; $i< count($permissionUsers); $i++)
+                                @if($isAdmin == true)
                                     @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm nổi bật')
                                         @if($product->feature == 1)
                                             <label class="switch">
@@ -614,7 +637,30 @@
                                         @endif
                                         @break
                                     @endif
-                                @endfor
+                                @else
+                                    @for($i = 0; $i< count($permissionUsers); $i++)
+                                        @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm nổi bật')
+                                            @if($product->feature == 1)
+                                                <label class="switch">
+                                                    <input value="{{$product->id}}" class="inputFeatureCheckbox"
+                                                           name="inputFeature-{{$product->id}}"
+                                                           id="inputFeature-{{$product->id}}"
+                                                           type="checkbox" checked>
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            @else
+                                                <label class="switch">
+                                                    <input value="{{$product->id}}" class="inputFeatureCheckbox"
+                                                           name="inputFeature-{{$product->id}}"
+                                                           id="inputFeature-{{$product->id}}"
+                                                           type="checkbox">
+                                                    <span class="slider round"></span>
+                                                </label>
+                                            @endif
+                                            @break
+                                        @endif
+                                    @endfor
+                                @endif
                             </td>
                             <td>
                                 Đã xuất bản <br>

@@ -48,8 +48,8 @@ class HomeController extends Controller
     {
         $this->getLocale($request);
         $locale = 'kr';
-        if ($locale == 'vn') {
-            $locale = 'vi';
+        if ($locale == 'ko') {
+            $locale = 'kr';
         }
 
         $currencies = [
