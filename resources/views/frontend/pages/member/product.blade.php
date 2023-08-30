@@ -118,8 +118,8 @@
                 @foreach($price_sales as $price_sale)
                     <tr>
                         <td>{{$price_sale->quantity}}</td>
-                        <td>-{{$price_sale->sales}} %</td>
-                        <td>{{$price_sale->days}} ngày kể từ ngày đặt hàng</td>
+                        <td>{{($prises - ($prises * $discount / 100)) * $quantity}}</td>
+                        <td>{{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
                     </tr>
                 @endforeach
             @endif

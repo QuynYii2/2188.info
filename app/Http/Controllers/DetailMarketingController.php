@@ -19,6 +19,7 @@ class DetailMarketingController extends Controller
         $listTransport = TransportMethod::all();
         $topSeller = TopSellerConfig::where('local', $id)->get();
         $arrayProduct = null;
+
         foreach ($topSeller as $item) {
             $listProduct = $item->product;
             $arrayProductItem = explode(',', $listProduct);
@@ -26,7 +27,10 @@ class DetailMarketingController extends Controller
                 $arrayProduct[] = $value;
             }
         }
-        $products = Product::whereIn('id', $arrayProduct)->get();
+        $products = null;
+        if ($arrayProduct){
+            $products = Product::whereIn('id', $arrayProduct)->get();
+        }
         return view('frontend.pages.marketing-detail', compact('listPayment', 'listTransport', 'products', 'currency'));
     }
 }

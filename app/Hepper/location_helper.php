@@ -3,11 +3,11 @@
 
 if (!function_exists('location')) {
     function locationHelper() {
-        $locale = 'vi';
+        $locale = 'kr';
         return $locale;
     }
     function locationPermissionHelper() {
-        $locale = 'vi';
+        $locale = 'kr';
         if ($locale == 'kr') {
             $locationPermission = 'ko';
         }

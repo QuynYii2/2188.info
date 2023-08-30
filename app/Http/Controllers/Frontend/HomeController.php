@@ -47,7 +47,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $this->getLocale($request);
-        $locale = 'vn';
+        $locale = 'kr';
         if ($locale == 'vn') {
             $locale = 'vi';
         }
@@ -192,7 +192,7 @@ class HomeController extends Controller
     {
         if ($request->session()->has('locale')) {
             $locale = $request->session()->get('locale');
-            app()->setLocale('vn');
+            app()->setLocale('kr');
         } else {
             $ipAddress = $request->ip();
             $geoIp = new GeoIP();
@@ -201,12 +201,12 @@ class HomeController extends Controller
                 $locale = $locale['countryCode'];
             }
         }
-        app()->setLocale('vn');
+        app()->setLocale('kr');
     }
 
     public function getLangDisplay()
     {
-        $locale = 'vi';
+        $locale = 'kr';
         if (!$locale) {
             $locale = 'vi';
         }
