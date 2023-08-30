@@ -12,7 +12,7 @@ body {
 }
 
 #mt-body {
-  margin-top: 185px;
+  margin-top: 175px;
 }
 
 #checkboxes {
@@ -816,8 +816,8 @@ a {
 }
 .header .header-pc .header-top-right .item .total_shop {
   position: absolute;
-  top: -5px;
-  right: -5px;
+  top: 0px;
+  right: 5px;
   height: 20px;
   width: 20px;
   border-radius: 30px;
@@ -2030,7 +2030,6 @@ hr {
 }
 
 .section .content {
-  margin-top: 20px;
   font-weight: 700;
   font-size: 24px;
   margin-bottom: 15px;
@@ -2039,11 +2038,22 @@ hr {
   margin-top: 5px;
   font-size: 17px;
   text-align: center;
-  height: 50px;
-  -webkit-line-clamp: 2;
+  height: 35px;
+  -webkit-line-clamp: 1;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+.section .section-left--name.button {
+  border-radius: 20px;
+  border: 1px solid black;
+  line-height: 34px;
+}
+.section .section-left--name.button:hover {
+  background-color: #fd6506;
+  border: white;
+  color: white;
+  text-decoration: none;
 }
 .section .product-banner img {
   width: 100%;
@@ -2194,7 +2204,6 @@ hr {
 }
 .section-left {
   height: 40vh;
-  margin-top: 70px;
 }
 .section-left img {
   width: 100%;
@@ -2233,10 +2242,6 @@ hr {
   text-decoration: underline;
 }
 
-.section-left.item-img.banner_categories {
-  margin-bottom: 60px;
-}
-
 .card-container {
   position: relative;
   display: -webkit-box;
@@ -2273,6 +2278,15 @@ hr {
   display: -webkit-box !important;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.banner_categories {
+  height: auto;
+  margin-bottom: 30px;
+  background: white;
+}
+.banner_categories img {
+  height: 85%;
 }
 
 .body .section-First-left {

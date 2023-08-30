@@ -184,7 +184,7 @@
             <img src="https://cdn11.bigcommerce.com/s-cas40rmoh/product_images/uploaded_images/banner-custom-home-2.png"
                  alt="">
         </section>
-        <div class="section margin-layout-index container-fluid">
+        <div class="section margin-layout-index container-fluid mt-3">
             <div class="row">
                 <div class="col-md-3 col-xl-2">
                     @php
@@ -192,13 +192,16 @@
                     @endphp
                     @for($i=0; $i<count($detailMarketing); $i++)
                         @if($i % 2 != 0)
-                            <div class="section-left item-img banner_categories">
+                            <div class="section-left banner_categories">
                                 <a href="{{ route('detail-marketing.show', $detailMarketing[$i]->id) }}">
                                     <img src="{{ asset('storage/' . $detailMarketing[$i]->thumbnail) }}"
                                          alt="">
-                                    <div class="section-left--name">
+                                    <span class="section-left--name">
                                         {{ $detailMarketing[$i]->name }}
-                                    </div>
+                                    </span>
+                                    {{--                                    <span class="button section-left--name">--}}
+                                    {{--                                        Xem ngay--}}
+                                    {{--                                    </span>--}}
                                 </a>
                             </div>
                         @endif
@@ -206,37 +209,31 @@
                 </div>
                 <div class="col-12 col-md-9 col-xl-8">
                     <section class="section-Fourth section">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="content">{{ __('home.New Products') }}</div>
-                                <div class="swiper NewProducts row">
-                                    <div class="swiper-wrapper ">
-                                        @foreach($newProducts as $product)
-                                            <div class="swiper-slide">
-                                                @include('frontend.pages.list-product')
-                                            </div>
-                                        @endforeach
+                        <div class="content">{{ __('home.New Products') }}</div>
+                        <div class="swiper NewProducts row">
+                            <div class="swiper-wrapper ">
+                                @foreach($newProducts as $product)
+                                    <div class="swiper-slide">
+                                        @include('frontend.pages.list-product')
                                     </div>
-                                    <div class="swiper-button-next"></div>
-                                    <div class="swiper-button-prev"></div>
-                                </div>
+                                @endforeach
                             </div>
-                            <div class="col-12">
-                                <div class="content">{{ __('home.Featured Products') }}</div>
-                                <div class="swiper FeaturedProducts">
-                                    <div class="swiper-wrapper">
-                                        @foreach($productFeatures as $productFeature)
-                                            @foreach($productFeature as $product)
-                                                <div class="swiper-slide">
-                                                    @include('frontend.pages.list-product')
-                                                </div>
-                                            @endforeach
-                                        @endforeach
-                                    </div>
-                                    <div class="swiper-button-next"></div>
-                                    <div class="swiper-button-prev"></div>
-                                </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+                        <div class="content">{{ __('home.Featured Products') }}</div>
+                        <div class="swiper FeaturedProducts">
+                            <div class="swiper-wrapper">
+                                @foreach($productFeatures as $productFeature)
+                                    @foreach($productFeature as $product)
+                                        <div class="swiper-slide">
+                                            @include('frontend.pages.list-product')
+                                        </div>
+                                    @endforeach
+                                @endforeach
                             </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
                         </div>
                     </section>
 
@@ -346,13 +343,16 @@
                     @endphp
                     @for($i=0; $i<count($detailMarketing); $i++)
                         @if($i % 2 == 0)
-                            <div class="section-left item-img banner_categories">
+                            <div class="section-left banner_categories">
                                 <a href="{{ route('detail-marketing.show', $detailMarketing[$i]->id) }}">
                                     <img src="{{ asset('storage/' . $detailMarketing[$i]->thumbnail) }}"
                                          alt="">
                                     <span class="section-left--name">
                                         {{ $detailMarketing[$i]->name }}
                                     </span>
+{{--                                    <span class="button section-left--name">--}}
+{{--                                        Xem ngay--}}
+{{--                                    </span>--}}
                                 </a>
                             </div>
                         @endif

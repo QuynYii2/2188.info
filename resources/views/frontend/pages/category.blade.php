@@ -14,36 +14,36 @@
                 ELECTRONICS
             </div>
         </div>
-        <section class="section container-fluid">
-            <div class="content">{{ __('home.Jump to') }}:</div>
-            <div class="swiper CategoriesOne category-item">
-                <div class="swiper-wrapper">
-                    @php
-                        $listCate = DB::table('categories')->where('parent_id', null)->get();
-                    @endphp
-                    @foreach($listCate as $cate)
-                        <div class="swiper-slide">
-                            <a href="{{ route('category.show', $cate->id) }}">
-                                <div class="img">
-                                    <img src="{{ asset('storage/' . $cate->thumbnail) }}"
-                                         alt="">
-                                </div>
-                                <div class="text">
-                                    {{($cate->{'name' . $langDisplay->getLangDisplay()})}}
-                                </div>
-                            </a>
-                        </div>
-                    @endforeach
-                </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-pagination"></div>
-            </div>
-        </section>
+{{--        <section class="section container-fluid">--}}
+{{--            <div class="content">{{ __('home.Jump to') }}:</div>--}}
+{{--            <div class="swiper CategoriesOne category-item">--}}
+{{--                <div class="swiper-wrapper">--}}
+{{--                    @php--}}
+{{--                        $listCate = DB::table('categories')->where('parent_id', null)->get();--}}
+{{--                    @endphp--}}
+{{--                    @foreach($listCate as $cate)--}}
+{{--                        <div class="swiper-slide">--}}
+{{--                            <a href="{{ route('category.show', $cate->id) }}">--}}
+{{--                                <div class="img">--}}
+{{--                                    <img src="{{ asset('storage/' . $cate->thumbnail) }}"--}}
+{{--                                         alt="">--}}
+{{--                                </div>--}}
+{{--                                <div class="text">--}}
+{{--                                    {{($cate->{'name' . $langDisplay->getLangDisplay()})}}--}}
+{{--                                </div>--}}
+{{--                            </a>--}}
+{{--                        </div>--}}
+{{--                    @endforeach--}}
+{{--                </div>--}}
+{{--                <div class="swiper-button-next"></div>--}}
+{{--                <div class="swiper-button-prev"></div>--}}
+{{--                <div class="swiper-pagination"></div>--}}
+{{--            </div>--}}
+{{--        </section>--}}
         <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
         <div class="category-header align-items-center mt-4 mb-3 container-fluid d-flex justify-content-between">
             <div class="category-header--left">
-                <a href="{{route('home')}}">{{ __('home.Home') }}</a> / <a href="#">{{ __('home.Electronics') }}</a>
+{{--                <a href="{{route('home')}}">{{ __('home.Home') }}</a> / <a href="#">{{ __('home.Electronics') }}</a>--}}
             </div>
             <div class="category-header--right">
                 <div class="show-item mr-4 align-items-center">
@@ -78,64 +78,64 @@
         </div>
         <hr>
         <div class="category-body container-fluid">
-            <div class="row">
-                <div class="col-xl-2 category-body-left">
-                    <div class="content">{{ __('home.PAYMENT METHODS') }}</div>
-                    @foreach($listPayment as $payment)
-                        <div class="OptionContainer">
-                            <div class="OptionHead">
-                                <input type="checkbox" class="payment-checkbox" value="{{ $payment->id }}">{{(($payment->name))}}
-                            </div>
-                        </div>
-                    @endforeach
-                    <hr>
-                    <div class="content">{{ __('home.SHIPPING METHODS') }}</div>
-                    @foreach($listTransport as $transport)
-                        <div class="OptionContainer">
-                            <div class="OptionHead">
-                                <input type="checkbox" class="transport-checkbox"
-                                       value="{{ $transport->id }}">{{ ($transport->name) }}
-                            </div>
-                        </div>
-                    @endforeach
-                    <div class="MenuContainer"></div>
-                    <hr>
-                    <input type="checkbox" class="mr-2" value="" id="check_sale" onchange="checkSale(this)">{{ __('home.Products on sale') }}
-                    <hr>
-                    <div class="content">{{ __('home.PRICE') }}</div>
-                    <div class="category-price">
-                        <div class="wrapper">
-                            <div class="price-input d-flex">
-                                <div class="field">
-                                    <div>{{ __('home.Min') }}</div>
-                                    <input type="number" class="input-min" id="price-min" value="0">
-                                </div>
-                                <div class="separator">-</div>
-                                <div class="field">
-                                    <div>{{ __('home.Max') }}</div>
-                                    <input type="number" class="input-max" id="price-max" value="{{ $priceProductOfCategory->maxPrice }}">
-                                </div>
-                            </div>
-                            <div class="slider">
-                                <div class="progress"></div>
-                            </div>
-                            <div class="range-input">
-                                <input type="range" class="range-min" min="0" max="{{ $priceProductOfCategory->maxPrice }}" value="0" step="1">
-                                <input type="range" class="range-max" min="0" max="{{ $priceProductOfCategory->maxPrice }}" value="{{ $priceProductOfCategory->maxPrice }}" step="1">
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="content">{{ __('home.ORIGIN') }}</div>
-                    <input type="text" value="" class="w-100" id="search-origin" onchange="searchOrigin(this)" >{{ __('home.Products by origin') }}
+{{--            <div class="row">--}}
+{{--                <div class="col-xl-2 category-body-left">--}}
+{{--                    <div class="content">{{ __('home.PAYMENT METHODS') }}</div>--}}
+{{--                    @foreach($listPayment as $payment)--}}
+{{--                        <div class="OptionContainer">--}}
+{{--                            <div class="OptionHead">--}}
+{{--                                <input type="checkbox" class="payment-checkbox" value="{{ $payment->id }}">{{(($payment->name))}}--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    @endforeach--}}
+{{--                    <hr>--}}
+{{--                    <div class="content">{{ __('home.SHIPPING METHODS') }}</div>--}}
+{{--                    @foreach($listTransport as $transport)--}}
+{{--                        <div class="OptionContainer">--}}
+{{--                            <div class="OptionHead">--}}
+{{--                                <input type="checkbox" class="transport-checkbox"--}}
+{{--                                       value="{{ $transport->id }}">{{ ($transport->name) }}--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    @endforeach--}}
+{{--                    <div class="MenuContainer"></div>--}}
+{{--                    <hr>--}}
+{{--                    <input type="checkbox" class="mr-2" value="" id="check_sale" onchange="checkSale(this)">{{ __('home.Products on sale') }}--}}
+{{--                    <hr>--}}
+{{--                    <div class="content">{{ __('home.PRICE') }}</div>--}}
+{{--                    <div class="category-price">--}}
+{{--                        <div class="wrapper">--}}
+{{--                            <div class="price-input d-flex">--}}
+{{--                                <div class="field">--}}
+{{--                                    <div>{{ __('home.Min') }}</div>--}}
+{{--                                    <input type="number" class="input-min" id="price-min" value="0">--}}
+{{--                                </div>--}}
+{{--                                <div class="separator">-</div>--}}
+{{--                                <div class="field">--}}
+{{--                                    <div>{{ __('home.Max') }}</div>--}}
+{{--                                    <input type="number" class="input-max" id="price-max" value="{{ $priceProductOfCategory->maxPrice }}">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="slider">--}}
+{{--                                <div class="progress"></div>--}}
+{{--                            </div>--}}
+{{--                            <div class="range-input">--}}
+{{--                                <input type="range" class="range-min" min="0" max="{{ $priceProductOfCategory->maxPrice }}" value="0" step="1">--}}
+{{--                                <input type="range" class="range-max" min="0" max="{{ $priceProductOfCategory->maxPrice }}" value="{{ $priceProductOfCategory->maxPrice }}" step="1">--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <hr>--}}
+{{--                    <div class="content">{{ __('home.ORIGIN') }}</div>--}}
+{{--                    <input type="text" value="" class="w-100" id="search-origin" onchange="searchOrigin(this)" >{{ __('home.Products by origin') }}--}}
 
-                </div>
+{{--                </div>--}}
                 <!-- Tab panes -->
-                <div class="tab-content col-xl-10">
+                <div class="tab-content">
                     <div id="home" class="tab-pane active "><br>
                         <div class="row" id="renderProduct">
                             @foreach($listProduct as $product)
-                                <div class="col-xl-3 col-md-4 col-6 section">
+                                <div class="col-xl-2 col-md-3 col-6 section">
                                     @include('frontend.pages.list-product')
                                 </div>
                             @endforeach
@@ -210,7 +210,7 @@
                         @endforeach
                     </div>
                 </div>
-            </div>
+{{--            </div>--}}
         </div>
     </div>
     @include('frontend.pages.modal-products')
