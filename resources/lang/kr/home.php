@@ -44,7 +44,7 @@ return [
     'discount code' => '할인 코드',
     'my coin management' => '나의 코인 관리',
     'my bookcare' => '나의 bookcare',
-    'voucher management'=>'Voucher 관리',
+    'voucher management'=>'바우처 관리',
     'product multilviews'=>'제품 멀티뷰',
     'category interest'=>'관심있는 카테고리',
 
@@ -482,7 +482,7 @@ return [
     'SHIPPING POLICY' => '배송 약관',
     'VIOLATION' => '반품 및 환불 약관',
     // new
-    'If you are looking for a website to buy and sell online is a great choice for you.' => 'Nếu bạn đang tìm kiếm một trang web để mua và bán hàng trực tuyến là một sự lựa chọn tuyệt vời dành cho bạn.',
+    'If you are looking for a website to buy and sell online is a great choice for you.' => '온라인으로 물건을 거래할 사이트를 찾고 있다면, 이것은 당신에게 훌륭한 선택이다.',
     'long description' => '전자 상거래 사이트는 구매자와 판매자가 샵의 상품 및 프로모션 정보를 쉽게 상호 작용하고 교환할 수 있도록 한다.
      따라서 매매는 더 빠르고 간단해진다. 당신은 판매자와 직접 대화하여 구매할 품목에 대해 직접 물어볼 수 있다.
      만약 당신이 명품, 명성 있는 제품을 찾고 싶다면, 이것은 당신에게 이상적인 선택이다.
