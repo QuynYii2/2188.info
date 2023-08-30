@@ -296,6 +296,7 @@
                         </div>
                     </div>
                     @foreach($arrayProducts as $keys => $arrayProduct)
+                        @dd($keys)
                         @if($keys != $locale)
                             <div class="category-img section pt-3 pb-3">
                                 @if($keys == 'vi')
