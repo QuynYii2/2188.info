@@ -368,21 +368,6 @@
                         </a>
                     </div>
                 </div>
-                <div class="Notarization">
-                    <a target="_blank" rel="noopener noreferrer" href="http://online.gov.vn/HomePage/WebsiteDisplay.aspx?DocId=18375" class="_44TnCg">
-                        <div class="footer-vn-background footer-vn-vn_registered_red-png jeaJPZ">
-                        </div>
-                    </a>
-                    <a target="_blank" rel="noopener noreferrer" href="http://online.gov.vn/HomePage/AppDisplay.aspx?DocId=29" class="_44TnCg">
-                        <div class="footer-vn-background footer-vn-vn_registered_red-png jeaJPZ">
-                        </div>
-                    </a>
-                    <a target="_blank" rel="noopener noreferrer" href="#" class="_44TnCg">
-                        <div class="footer-vn-background footer-vn-vn_no_fake_item-png b1v1Th">
-                        </div>
-                    </a>
-                </div>
-
                 <div class="footer-addres">
 {{--                    Địa chỉ: Tầng 4-5-6, Tòa nhà Capital Place, số 29 đường Liễu Giai, Phường Ngọc Khánh, Quận Ba Đình, Thành phố Hà Nội, Việt Nam. Tổng đài hỗ trợ: 19001221 - Email: cskh@hotro.shopee.vn--}}
                 </div>
