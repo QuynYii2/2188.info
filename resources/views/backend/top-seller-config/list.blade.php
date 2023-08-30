@@ -181,9 +181,6 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    @php
-                                                        $productLists =
-                                                    @endphp
                                                     <tr>
                                                         <th scope="row">1</th>
                                                         <td>Mark</td>

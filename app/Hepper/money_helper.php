@@ -46,7 +46,7 @@ if (!function_exists('convertCurrency')) {
         $response = $client->request('GET', 'https://currency-conversion-and-exchange-rates.p.rapidapi.com/convert?from='.$from.'&to='.$to.'&amount='.$amount, [
             'headers' => [
                 'X-RapidAPI-Host' => 'currency-conversion-and-exchange-rates.p.rapidapi.com',
-                'X-RapidAPI-Key' => '663b3108demsh12a19e733282bc6p12ec6fjsnafb62a2a96f9',
+                'X-RapidAPI-Key' => 'be654f625cmsh6b5bde7af2d1784p19dcd2jsnd8821fdbb687',
             ],
         ]);
 
