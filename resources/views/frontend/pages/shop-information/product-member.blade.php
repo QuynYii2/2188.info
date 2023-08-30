@@ -234,8 +234,8 @@
         </div>
         <div class="row">
             @foreach($products as $product)
-                <div class="col-md-2">
-                    <button type="button" style="background-color: white" class="btn thumbnailProduct col-12"
+                <div class="col-md-3 col-2 mt-4">
+                    <button type="button" style="background-color: white" class="btn thumbnailProduct col-12 p-0"
                             data-toggle="modal"
                             data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}">
                         <div class="standsMember-item section">
