@@ -143,19 +143,24 @@
                             </div>
 
                             @php
-                                $company = \App\Models\MemberRegisterInfo::where([
-                                    ['user_id', Auth::user()->id],
-                                    ['status', \App\Enums\MemberRegisterInfoStatus::ACTIVE]
+                                $memberPerson = \App\Models\MemberRegisterPersonSource::where([
+                                    ['email', Auth::user()->email],
+                                    ['status', \App\Enums\MemberRegisterPersonSourceStatus::ACTIVE]
                                 ])->first();
+                                $company= null;
+                                if ($memberPerson){
+                                    $company = \App\Models\MemberRegisterInfo::find($memberPerson->member_id);
+                                }
                             @endphp
+
                             @if($company && $company->member != \App\Enums\RegisterMember::BUYER)
                                 <div class="item button_seller align-center d-flex">
-                                        <button type="button" class="full-width cursor-pointer" data-toggle="modal"
-                                                data-target="#modalBuyBulkLogistic">
-                                            <div class="it em-text">
-                                                {{ __('home.Buy wholesale') }}
-                                            </div>
-                                        </button>
+                                    <button type="button" class="full-width cursor-pointer" data-toggle="modal"
+                                            data-target="#modalBuyBulkLogistic">
+                                        <div class="it em-text">
+                                            {{ __('home.Buy wholesale') }}
+                                        </div>
+                                    </button>
                                 </div>
                             @else
                                 <div class="item button_seller align-center d-flex">
@@ -302,7 +307,7 @@
                                     @endif
 
                                     <div class="drop-item -hand-pointer">
-                                        <a href="{{route('chat.message.show')}}" >{{ __('home.Message') }}</a>
+                                        <a href="{{route('chat.message.show')}}">{{ __('home.Message') }}</a>
                                     </div>
 
                                     <div class="drop-item -hand-pointer" onclick="logout()">
@@ -1203,7 +1208,8 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary"><a href="{{route('process.register.member')}}">{{ __('home.Sign up to upgrade') }}</a></button>
+                <button type="button" class="btn btn-primary"><a
+                            href="{{route('process.register.member')}}">{{ __('home.Sign up to upgrade') }}</a></button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}</button>
             </div>
         </div>
