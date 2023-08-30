@@ -154,18 +154,38 @@
                             <td>
                               {{$list_Setup->name}}
                             </td>
-                            <td class="">
-                                {{$list_Setup->name}}
+                            <td>
+                                @php
+                                    $topSeller = \App\Models\TopSellerConfig::where('local', $list_Setup->id)->get();
+                                   $arrayProduct = null;
+
+                                   foreach ($topSeller as $item) {
+                                       $listProduct = $item->product;
+                                       $arrayProductItem = explode(',', $listProduct);
+                                       foreach ($arrayProductItem as $value) {
+                                           $arrayProduct[] = $value;
+                                       }
+                                   }
+                                   $products = null;
+                                   if ($arrayProduct){
+                                       $products = \App\Models\Product::whereIn('id', $arrayProduct)->get();
+                                   }
+                                @endphp
+                                @if($products)
+                                    {{count($products)}}
+                                @else
+                                    0
+                                @endif
                             </td>
                             <td>
-                                <a href="#" class="mr-2" style="color: black" data-toggle="modal" data-target="#exampleModal_eye">
+                                <a href="#" class="mr-2" style="color: black" data-toggle="modal" data-target="#exampleModal_eye{{$list_Setup->id}}">
                                     <i class="fa-regular fa-eye"></i>
                                 </a>
-                                <div class="modal fade" id="exampleModal_eye" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="exampleModal_eye{{$list_Setup->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <a href="#">Xem chi tiết</a>
+                                                <a href="{{ route('detail-marketing.show', $list_Setup->id) }}">Xem chi tiết</a>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -181,12 +201,31 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Mark</td>
-                                                        <td>Otto</td>
-                                                        <td>@mdo</td>
-                                                    </tr>
+                                                    @if($products)
+                                                        @foreach($products as $productMkt)
+                                                            <tr>
+                                                                <th scope="row">{{$loop->index + 1}}</th>
+                                                                <td>
+                                                                    <img src="{{ asset('storage/'.$productMkt->thumbnail) }}" style="width: 100px; height: 100px; object-fit: cover" class="img img-100"
+                                                                         alt="Thumbnail">
+                                                                </td>
+                                                                <td>{{$productMkt->name}}</td>
+                                                                <td>
+                                                                    <form method="post" action="{{route('detail-marketing.delete',
+                                                                    [
+                                                                        'id' => $list_Setup->id,
+                                                                        'product' => $productMkt->id,
+                                                                    ])}}">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button class="btn">
+                                                                            <i class="fa-solid fa-trash-can" style="color: red"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
                                                     </tbody>
                                                 </table>
                                             </div>

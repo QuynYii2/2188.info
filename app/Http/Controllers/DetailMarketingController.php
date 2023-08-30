@@ -28,9 +28,29 @@ class DetailMarketingController extends Controller
             }
         }
         $products = null;
-        if ($arrayProduct){
+        if ($arrayProduct) {
             $products = Product::whereIn('id', $arrayProduct)->get();
         }
         return view('frontend.pages.marketing-detail', compact('listPayment', 'listTransport', 'products', 'currency'));
+    }
+
+
+    public function delete($id, $product)
+    {
+        $topSeller = TopSellerConfig::where('local', $id)->get();
+
+        foreach ($topSeller as $item) {
+            $listProduct = $item->product;
+            $arrayProductItem = explode(',', $listProduct);
+            if (($key = array_search($product, $arrayProductItem)) !== false) {
+                unset($arrayProductItem[$key]);
+            }
+            $listProduct = implode(',', $arrayProductItem);
+            $item->product = $listProduct;
+            $item->save();
+        }
+
+        alert()->success('Success', 'Delete thành công');
+        return redirect(route('seller.config.show'));
     }
 }

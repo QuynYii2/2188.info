@@ -189,6 +189,7 @@ Route::middleware(['auth'])->group(callback: function () {
 
     //Detail marketing
     Route::get('/detail-marketing/{id}',[\App\Http\Controllers\DetailMarketingController::class, 'index'])->name('detail-marketing.show');
+    Route::delete('/detail-marketing/{id}/{product}', [\App\Http\Controllers\DetailMarketingController::class, 'delete'])->name('detail-marketing.delete');
 
 // End register member
     //View member
