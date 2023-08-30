@@ -491,6 +491,7 @@ return [
     ' Why shop with us?' => 'Tại sao mua sắm với chúng tôi?',
     'QUALITY AND SAVING' => 'CHẤT LƯỢNG VÀ TIẾT KIỆM',
     'Comprehensive quality control and affordable prices' => 'Kiểm soát chất lượng toàn diện và giá cả phải chăng',
+    'Sign up to upgrade' => '업그레이드하려면 가입하세요',
 
 
 
