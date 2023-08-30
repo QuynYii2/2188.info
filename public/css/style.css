@@ -2030,10 +2030,10 @@ hr {
 }
 
 .section .content {
+  margin-top: 20px;
   font-weight: 700;
   font-size: 24px;
   margin-bottom: 15px;
-  padding-left: 15px;
 }
 .section .section-left--name {
   margin-top: 5px;
@@ -2231,10 +2231,6 @@ hr {
 .section .brand-item--all a:hover {
   color: #0a6cdc;
   text-decoration: underline;
-}
-
-.section-left.item-img.banner_categories {
-  margin-bottom: 60px;
 }
 
 .card-container {
