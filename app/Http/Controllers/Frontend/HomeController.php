@@ -106,16 +106,21 @@ class HomeController extends Controller
 //        dd($productHots);
         $permissionFeature = Permission::where('name', 'Nâng cấp sản phẩm nổi bật')->first();
         $permissionSellerFeatures = DB::table('permission_user')->where('permission_id', $permissionFeature->id)->get();
-        $productFeatures = [];
-        foreach ($permissionSellerFeatures as $permissionSellerFeature) {
-            $products = Product::where([
-                ['status', ProductStatus::ACTIVE],
-                ['user_id', $permissionSellerFeature->user_id]
-            ])->orderBy('feature', 'desc')->get();
-            $products = $products->unique('slug');
-            $productFeatures[] = $products;
-        }
-//        $productFeatures = Product::where('feature', 1)->get();
+//        $productFeatures = [];
+//        foreach ($permissionSellerFeatures as $permissionSellerFeature) {
+//            $products = Product::where([
+//                ['status', ProductStatus::ACTIVE],
+//                ['user_id', $permissionSellerFeature->user_id]
+//            ])->orderBy('feature', 'desc')->get();
+//            $products = $products->unique('slug');
+//            $productFeatures[] = $products;
+//        }
+
+        $products = Product::where([
+            ['status', ProductStatus::ACTIVE]
+        ])->orderBy('feature', 'desc')->get();
+        $products = $products->unique('slug');
+        $productFeatures[] = $products;
 
         $configsTop1 = TopSellerConfig::where('local', TopSellerConfigLocation::OptionOne)->orderBy('created_at', 'desc')->limit(3)->get();
         $configsTop2 = TopSellerConfig::where('local', TopSellerConfigLocation::OptionTwo)->orderBy('created_at', 'desc')->limit(3)->get();
