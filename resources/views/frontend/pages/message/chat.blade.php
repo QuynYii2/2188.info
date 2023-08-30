@@ -73,12 +73,24 @@
     </div>
 @endsection
 <script>
+    const url = 'ws://localhost:8080/?token';
 
-    const url = 'ws://localhost:8090/?token';
+    function createWebSocket() {
+        const connection = new WebSocket(url + '={{ auth()->user()->token }}');
 
-    var conn = new WebSocket(url + '={{ auth()->user()->token }}');
+        connection.addEventListener('open', () => {
+            console.log("Connected");
+        });
 
-    console.log(conn);
+        connection.addEventListener('close', () => {
+            console.log("Connection closed, attempting to reconnect...");
+            setTimeout(() => createWebSocket(), 1000); // Retry after 1 second
+        });
+
+        return connection;
+    }
+
+    const conn = createWebSocket();
 
     var from_user_id = "{{ Auth::user()->id }}";
 
