@@ -146,16 +146,12 @@ new Swiper(".NewProducts", {
     },
     breakpoints: {
         300: {
-            slidesPerView: 2,
+            slidesPerView: 3,
             spaceBetween: 10,
         },
-        1280: {
-            slidesPerView: 2,
-            spaceBetween: 40,
-        },
-        1500: {
-            slidesPerView: 3,
-            spaceBetween: 25,
+        1000: {
+            slidesPerView: 4,
+            spaceBetween: 10,
         },
     },
     mousewheel: true,
@@ -170,16 +166,12 @@ new Swiper(".FeaturedProducts", {
     },
     breakpoints: {
         300: {
-            slidesPerView: 2,
+            slidesPerView: 3,
             spaceBetween: 10,
         },
-        1280: {
-            slidesPerView: 2,
-            spaceBetween: 40,
-        },
-        1500: {
-            slidesPerView: 3,
-            spaceBetween: 25,
+        1000: {
+            slidesPerView: 4,
+            spaceBetween: 10,
         },
     },
     mousewheel: true,

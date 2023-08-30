@@ -186,7 +186,7 @@
         </section>
         <div class="section margin-layout-index container-fluid">
             <div class="row">
-                <div class="col-md-3 col-xl-2 pt-3 pb-3">
+                <div class="col-md-3 col-xl-2">
                     @php
                         $detailMarketing = \App\Models\SetupMarketing::all();
                     @endphp
@@ -205,9 +205,9 @@
                     @endfor
                 </div>
                 <div class="col-12 col-md-9 col-xl-8">
-                    <section class="section-Fourth section pt-3 pb-3 container-fluid">
+                    <section class="section-Fourth section">
                         <div class="row">
-                            <div class="col-12 col-xl-12 col-xxl-6">
+                            <div class="col-12">
                                 <div class="content">{{ __('home.New Products') }}</div>
                                 <div class="swiper NewProducts row">
                                     <div class="swiper-wrapper ">
@@ -223,7 +223,7 @@
                                     <div class="swiper-button-prev"></div>
                                 </div>
                             </div>
-                            <div class="col-12 col-xl-12 col-xxl-6">
+                            <div class="col-12">
                                 <div class="content">{{ __('home.Featured Products') }}</div>
                                 <div class="swiper FeaturedProducts">
                                     <div class="swiper-wrapper">
@@ -344,7 +344,7 @@
                         @endif
                     @endforeach
                 </div>
-                <div class="col-md-3 col-xl-2 pt-3 pb-3">
+                <div class="col-md-3 col-xl-2">
                     @php
                         $detailMarketing = \App\Models\SetupMarketing::all();
                     @endphp

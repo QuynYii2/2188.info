@@ -84,18 +84,12 @@
         <div class="header-top text-center">
             <div class="container-fluid">
                 <div class="row align-items-center">
-                    <div class="header-top-left col-xl-4 col-md-4 row">
+                    <div class="header-top-left col-xl-2 col-md-2">
                         @if(!$config->isEmpty())
-                            <div class="header-logo col-xl-7 ">
+                            <div class="header-logo">
                                 <a href="{{route('home')}}">
                                     <img src="{{ asset('storage/'.$config[0]->logo) }}" alt="">
                                 </a>
-                            </div>
-                        @endif
-                        @if(!$config->isEmpty())
-                            <div class="header-address text-center col-xl-5">
-                                <a class="header-address--text" href="">{{ __('home.Available 24/7 at') }}</a>
-                                <a class="header-address--phone" href="">{{$config[0]->phone}}</a>
                             </div>
                         @endif
                     </div>
@@ -137,7 +131,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="header-top-right col-xl-3 col-md-4 d-flex text-center justify-content-around">
+                    <div class="header-top-right col-xl-5 col-md-6 d-flex text-center justify-content-end">
                         @if(Auth::check())
                             <div class="item button_seller align-center d-flex">
                                 <button type="button" class="full-width cursor-pointer" data-toggle="modal"

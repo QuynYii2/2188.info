@@ -8,7 +8,7 @@ body {
 }
 
 #mt-body {
-  margin-top: 195px;
+  margin-top: 185px;
 }
 
 #checkboxes {
@@ -31,7 +31,7 @@ body {
   margin-top: 10px;
 }
 .layout-fixed .main-actions .express-footer .button-start {
-  font-size: 14px;
+  font-size: 13px;
   padding: 5px 15px;
   background: #fd6506;
   color: white;
@@ -683,20 +683,6 @@ a {
 .header .header-pc .header-top-left .header-logo img {
   width: 100%;
 }
-.header .header-pc .header-top-left .header-address {
-  display: inline-grid;
-}
-.header .header-pc .header-top-left .header-address--text {
-  color: white;
-  font-weight: 500;
-  text-decoration: none;
-}
-.header .header-pc .header-top-left .header-address--phone {
-  text-decoration: none;
-  color: white;
-  font-weight: 600;
-  font-size: 20px;
-}
 .header .header-pc .header-top-middle .search-wrapper {
   position: relative;
   margin: 0;
@@ -705,7 +691,7 @@ a {
   background-color: white;
 }
 .header .header-pc .header-top-middle .search-wrapper input {
-  padding-left: 10%;
+  padding-left: 15%;
   padding-right: 10%;
   width: 100%;
   height: 100%;
@@ -2039,14 +2025,11 @@ hr {
   background-color: white;
 }
 
-.section {
-  margin-top: 30px;
-  margin-bottom: 30px;
-}
 .section .content {
   font-weight: 700;
   font-size: 24px;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
+  padding-left: 15px;
 }
 .section .section-left--name {
   margin-top: 5px;
@@ -2146,9 +2129,9 @@ hr {
   color: gray;
 }
 .section .item-body .card-title a {
-  height: 50px;
+  height: 25px;
   font-size: 16px;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -2293,7 +2276,7 @@ hr {
   border-radius: 10px;
   background-color: white;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.15);
-  height: 100%;
+  height: auto;
 }
 .body .section-First-left .content {
   background-color: #fd6506;
@@ -2331,6 +2314,7 @@ hr {
 }
 .body .section-First-left .list .item-left {
   border-left: none;
+  height: 10vh;
 }
 .body .section-First-left .list .item-left a:hover {
   text-decoration: none;
@@ -2341,6 +2325,7 @@ hr {
 }
 .body .section-First-middle {
   z-index: 0;
+  height: 60vh;
 }
 .body .section-First-middle .swiper {
   width: 100%;
@@ -2363,11 +2348,12 @@ hr {
 }
 .body .section-First-right {
   margin: auto;
+  height: 60vh;
 }
 .body .section-First-right .item {
-  margin-top: 20px;
+  height: 30vh;
 }
-.body .section-First-right img {
+.body .section-First-right .item img {
   width: 100%;
   height: 100%;
   border-radius: 10px;
@@ -2679,12 +2665,6 @@ figure.zoom img {
   display: flex;
   justify-content: center;
   margin-bottom: 2.5rem;
-}
-.footer .Notarization {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin-top: 0;
 }
 .footer .footer-addres {
   display: block;
