@@ -242,7 +242,7 @@
                                             }
                                         @endphp
                                         @php
-                                            $locale = $_COOKIE['countryCode'];
+                                            $locale = 'kr';
                                             if(!$locale){
                                                 $locale == 'vn';
                                             }
