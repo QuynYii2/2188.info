@@ -130,15 +130,12 @@
             font-weight: normal;
             text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
         }
-
         tr:first-child {
             border-top: none;
         }
-
         tr:last-child {
             border-bottom: none;
         }
-
         td {
             background: #FFFFFF;
             padding: 20px;
@@ -149,30 +146,23 @@
             text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
             border-right: 1px solid #C1C3D1;
         }
-
         td:last-child {
             border-right: 0px;
         }
-
         th.text-left {
             text-align: left;
         }
-
         td.text-left {
             text-align: left;
         }
-
         .card-central-logo.ilvietnam-1-1-2 {
-
             display: flex;
             justify-content: center;
             margin-top: -15px;
         }
-
         .ability.ilvietnam-1-1-17 {
             margin: 10px 0;
         }
-
         .company-basicCapacity.ilvietnam-1-1-19 {
             display: flex;
             justify-content: space-between;
@@ -182,12 +172,10 @@
             text-align: left;
             font-size: 14px;
         }
-
         .attr-item {
             width: 50%;
             margin-top: 12px;
         }
-
         .company-productionServiceCapacity.service-2.ilvietnam-1-1-38 {
             display: flex;
             justify-content: space-between;
@@ -203,9 +191,8 @@
             text-overflow: ellipsis;
             font-size: 14px;
             line-height: 16px;
-            margin-bottom: 15px;
             position: relative;
-            margin-top: 25px;
+            margin: 10px 0;
         }
 
         .attr-item.ilvietnam-2-38-40 {
@@ -832,7 +819,7 @@
                     $products = \App\Models\Product::where([['location','=','vi'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
                 @endphp
                 @foreach($products as $product)
-                    <div class="swiper-slide">
+                    <div class="swiper-slide" style="background: #f5f5f5">
                         @include('frontend.pages.list-product')
                     </div>
                 @endforeach
