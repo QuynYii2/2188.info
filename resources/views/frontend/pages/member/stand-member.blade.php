@@ -113,8 +113,8 @@
             <div class="d-flex justify-content-between align-items-center p-3">
                 <a href="{{ route('stand.register.member.index', $company->id) }}" class="btn btn-primary">{{ __('home.Booth') }}</a>
                 <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">{{ __('home.Partner List') }}</a>
-                <a href="{{route('chat.message.show')}}" class="btn btn-primary">{{ __('home.Message received') }}</a>
-                <a href="{{route('chat.message.show')}}" class="btn btn-warning">{{ __('home.Message sent') }}</a>
+                <a href="{{route('chat.message.received')}}" class="btn btn-primary">{{ __('home.Message received') }}</a>
+                <a href="{{route('chat.message.sent')}}" class="btn btn-warning">{{ __('home.Message sent') }}</a>
                 <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
                 <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
             </div>
@@ -461,7 +461,7 @@
                                             <tr>
                                                 <td>{{$price_sale->quantity}}</td>
                                                 <td>{{($prises - ($prises * $discount / 100)) * $quantity}}</td>
-                                                <td>{{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
+                                                <td class="2323" ></td>{{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
                                             </tr>
                                         @endforeach
                                     @endif
