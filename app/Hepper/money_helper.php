@@ -16,6 +16,7 @@ if (!function_exists('convertCurrency')) {
     {
         $cacheKey = "exchange_rate_{$from}_{$to}";
         $cachedRate = Cache::get($cacheKey);
+        dd($cachedRate);
 
         if (!$cachedRate) {
             $cachedRate = getExchangeRate($from, $to, $amount);
