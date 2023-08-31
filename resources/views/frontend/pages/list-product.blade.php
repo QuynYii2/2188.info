@@ -3,7 +3,6 @@
 
 @php
     $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
-    dd($productDetail)
 @endphp
 <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
 <div class="item item-hover">
