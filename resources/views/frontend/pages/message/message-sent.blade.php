@@ -129,11 +129,6 @@
                                         <h5 class="card-title">
                                             {{$user->name}}
                                         </h5>
-                                        <p>Đã gửi tới:
-                                            <span>{{$user->name}}</span>, Thời gian:
-                                            <span>{{$message->created_at}}</span>, Trạng thái:
-                                            <span>{{$message->message_status}}
-                                        </p>
                                     </div>
                                 @endforeach
                             @endif
@@ -141,13 +136,20 @@
                     </div>
                     {{--        {{ $listMessage->links() }}--}}
                 </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <h5 id="chat_user" class="text-center">{{$user->name}}</h5>
-                        <h5 id="chat_message">{!! $message->chat_message !!}</h5>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Chat</button>
+                @if(!$listMessage->isEmpty())
+                    @php
+                        $user = \App\Models\User::find($listMessage[0]->to_user_id);
+                    @endphp
+                    <div class="col-md-6">
+                        <div class="card">
+                            <h5 id="chat_user" class="text-center">{{$user->name}}</h5>
+                            <h5 id="chat_message">
+
+                            </h5>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Chat</button>
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
     @endif
@@ -176,7 +178,33 @@
                 let user = $(this).data('user');
                 $('#chat_user').html( user['name'] );
                 $('#chat_message').html( message['chat_message'] );
+                renderMessage({{auth()->user()->id}}, message['to_user_id']);
             })
         })
+
+        function renderMessage(from, to) {
+            let url = '/chat-message'
+            fetch(url + '/' + from + '/' + to, {
+                method: 'GET',
+            })
+                .then(response => {
+                    if (response.status == 200) {
+                        return response.text();
+                    }
+                })
+                .then((response) => {
+                    console.log('ádadad')
+                    $('#chat_message').empty().append(response);
+                })
+                .catch(error => console.log(error));
+        }
+
+        function renderDefault() {
+            let listMessage = $('.card-item-message');
+            let messageDefault = $(listMessage[0]).data('message');
+            renderMessage({{auth()->user()->id}}, messageDefault['to_user_id']);
+        }
+
+        renderDefault();
     </script>
 @endsection

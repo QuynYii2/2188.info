@@ -31,6 +31,13 @@ class SampleController extends Controller
             $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
         }
         $listMessage = Chat::where('from_user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(3);
+
+        $collection = $listMessage;
+
+        $listMessage = $collection->groupBy('to_user_id')->map(function ($group) {
+            return $group->first();
+        })->values();
+
         return view('frontend.pages.message.message-sent', compact('listMessage', 'company'));
     }
 
@@ -44,7 +51,23 @@ class SampleController extends Controller
             $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
         }
         $listMessage = Chat::where('to_user_id', Auth::user()->id)->orderBy('id', 'desc')->paginate(3);
+
+        $collection = $listMessage;
+
+        $listMessage = $collection->groupBy('from_user_id')->map(function ($group) {
+            return $group->first();
+        })->values();
+
         return view('frontend.pages.message.message-received', compact('listMessage', 'company'));
+    }
+
+    public function findAllMessage($from, $to)
+    {
+        $listMessage = Chat::where([
+            ['from_user_id', $from],
+            ['to_user_id', $to],
+        ])->orderBy('id', 'asc')->get();
+        return view('frontend.pages.message.two-way-message', compact('listMessage'));
     }
 }
 
