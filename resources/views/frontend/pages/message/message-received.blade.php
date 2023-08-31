@@ -141,6 +141,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="card">
+                        @dd($user)
                         <h5 id="chat_user" class="text-center">{{$user->name}}</h5>
                         <h5 id="chat_message">{!! $message->chat_message !!}</h5>
                         <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Chat</button>
