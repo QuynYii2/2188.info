@@ -153,7 +153,7 @@ new Swiper(".NewProducts", {
             slidesPerView: 3,
             spaceBetween: 10,
         },
-        900: {
+        800: {
             slidesPerView: 4,
             spaceBetween: 10,
         },
