@@ -130,6 +130,9 @@
             color: #fac325;
         }
 
+        tr i{
+            color: #fac325;
+        }
         tr:first-child {
             border-top: none;
         }
@@ -1074,7 +1077,7 @@
             let btn = document.getElementById('btn-submit');
             let input = document.getElementById('input-star');
             let message = document.getElementById('text-message');
-            if (input.value === 0) {
+            if (input.value == 0) {
                 message.classList.remove("d-none");
                 btn.disabled = true;
             } else {
