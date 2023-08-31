@@ -6,6 +6,11 @@
     @php
         $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
     @endphp
+    <style>
+        body{
+            background: #f5f5f5;
+        }
+    </style>
     <div id="body-content">
         <div class="category-banner">
             <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/category-banner-top-layout-2.jpg"
