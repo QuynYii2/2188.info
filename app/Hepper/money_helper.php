@@ -2,6 +2,8 @@
 
 use App\Models\Currency;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
+
 
 if (!function_exists('convertCurrency')) {
     function convertCurrency($from, $to, $amount)
@@ -12,32 +14,39 @@ if (!function_exists('convertCurrency')) {
 
     function convertCurrencyDB($from, $to, $amount)
     {
+        $cacheKey = "exchange_rate_{$from}_{$to}";
+        $cachedRate = Cache::get($cacheKey);
+
+        if (!$cachedRate) {
+            $cachedRate = getExchangeRate($from, $to, $amount);
+            Cache::put($cacheKey, $cachedRate, 1440);
+        }
+
         $item = Currency::where([
             ['from', $from],
             ['to', $to],
         ])->first();
-        $time = 24;
+
         if ($item) {
             $createTime = Carbon::parse($item->created_at)->addDay();
             $currentTime = Carbon::now();
             if ($createTime < $currentTime) {
-                $rate = getExchangeRate($from, $to, $amount);
-                $item->rate = $rate;
+                $item->rate = $cachedRate;
                 $item->save();
             } else {
-                $rate = $item->rate;
-                $item->save();
+                $cachedRate = $item->rate;
             }
         } else {
-            $rate = getExchangeRate($from, $to, $amount);
             $currency = new Currency();
             $currency->from = $from;
             $currency->to = $to;
-            $currency->rate = $rate;
+            $currency->rate = $cachedRate;
             $currency->save();
         }
-        return $rate;
+
+        return $cachedRate;
     }
+
 
     function getExchangeRate($from, $to, $amount)
     {
@@ -46,7 +55,7 @@ if (!function_exists('convertCurrency')) {
         $response = $client->request('GET', 'https://currency-conversion-and-exchange-rates.p.rapidapi.com/convert?from='.$from.'&to='.$to.'&amount='.$amount, [
             'headers' => [
                 'X-RapidAPI-Host' => 'currency-conversion-and-exchange-rates.p.rapidapi.com',
-                'X-RapidAPI-Key' => '8952fb2442msha95d77aae500e2fp1de1adjsn9039eaaf3beb',
+                'X-RapidAPI-Key' => 'eb9ba2aa18msh85ccd247d114b7bp125ddfjsndcb93a58ed8f',
             ],
         ]);
 

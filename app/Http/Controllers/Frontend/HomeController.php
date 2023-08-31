@@ -95,14 +95,20 @@ class HomeController extends Controller
         $permissionHot = Permission::where('name', 'Nâng cấp sản phẩm hot')->first();
         $permissionSellerHots = DB::table('permission_user')->where('permission_id', $permissionHot->id)->get();
         $productHots = [];
-        foreach ($permissionSellerHots as $permissionSellerHot) {
-            $products = Product::where([
-                ['status', ProductStatus::ACTIVE],
-                ['user_id', $permissionSellerHot->user_id]
-            ])->orderBy('hot', 'desc')->get();
-            $products = $products->unique('slug');
-            $productHots[] = $products;
-        }
+//        foreach ($permissionSellerHots as $permissionSellerHot) {
+//            $products = Product::where([
+//                ['status', ProductStatus::ACTIVE],
+//                ['user_id', $permissionSellerHot->user_id]
+//            ])->orderBy('hot', 'desc')->get();
+//            $products = $products->unique('slug');
+//            $productHots[] = $products;
+//        }
+
+        $products = Product::where([
+            ['status', ProductStatus::ACTIVE]
+        ])->orderBy('hot', 'desc')->get();
+        $products = $products->unique('slug');
+        $productHots[] = $products;
 //        dd($productHots);
         $permissionFeature = Permission::where('name', 'Nâng cấp sản phẩm nổi bật')->first();
         $permissionSellerFeatures = DB::table('permission_user')->where('permission_id', $permissionFeature->id)->get();
