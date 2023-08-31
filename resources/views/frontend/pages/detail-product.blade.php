@@ -11,7 +11,9 @@
         .product-content p {
             margin-bottom: 0;
         }
-
+        #mt-body{
+            background: white!important;
+        }
         .btn-16 {
             margin: 0 16px;
         }

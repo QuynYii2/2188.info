@@ -12,7 +12,8 @@ body {
 }
 
 #mt-body {
-  margin-top: 175px;
+  background: #f5f5f5;
+  padding-top: 175px;
 }
 
 #checkboxes {

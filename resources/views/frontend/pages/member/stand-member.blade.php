@@ -111,7 +111,7 @@
             <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
             <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
             <div class="d-flex justify-content-between align-items-center p-3">
-                <a href="{{route('seller.config.show', $company->id)}}" class="btn btn-primary">{{ __('home.Booth') }}</a>
+                <a href="{{ route('stand.register.member.index', $company->id) }}" class="btn btn-primary">{{ __('home.Booth') }}</a>
                 <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">{{ __('home.Partner List') }}</a>
                 <a href="{{route('chat.message.show')}}" class="btn btn-primary">{{ __('home.Message received') }}</a>
                 <a href="{{route('chat.message.show')}}" class="btn btn-warning">{{ __('home.Message sent') }}</a>
@@ -230,7 +230,7 @@
                 </div>
             </div>
     </div>
-    <div class="mt-3 row justify-content-center container-fluid">
+    <div class="mt-3 row container-fluid">
         @foreach($products as $product)
             <button type="button" class="btn thumbnailProduct col-xl-2 col-md-3" data-toggle="modal"
                     data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}" data-name="

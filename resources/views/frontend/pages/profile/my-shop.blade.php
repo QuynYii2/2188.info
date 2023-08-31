@@ -18,7 +18,7 @@
         <div class="row">
             @if(!$products->isEmpty())
                 @foreach($products as $product)
-                    <div class="col-xl-3 col-md-3 col-6 section">
+                    <div class="col-xl-3 col-md-3 col-6 section mb-4">
                         @include('frontend.pages.list-product')
                     </div>
                 @endforeach
