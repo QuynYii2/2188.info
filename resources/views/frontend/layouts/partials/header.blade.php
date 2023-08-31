@@ -186,8 +186,14 @@
                                 <div class="signMenu" id="signMenu">
                                     <div class="name">
                                         <a href="{{route('profile.show')}}">{{Auth::user()->name}}</a>
-                                        <a href="{{route('process.register.member')}}"
-                                           class="">{{ __('home.Membership upgrade') }}</a>
+                                        @if($company && $company->member == \App\Enums\RegisterMember::LOGISTIC)
+                                            <a href="{{route('process.register.member')}}" hidden=""
+                                               class="">{{ __('home.Membership upgrade') }}</a>
+                                        @else
+                                            <a href="{{route('process.register.member')}}"
+                                               class="">{{ __('home.Membership upgrade') }}</a>
+                                        @endif
+
                                     </div>
                                     <hr>
                                     @php

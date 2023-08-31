@@ -522,6 +522,43 @@ return [
     'company profile' => '회사 소개서',
     'Visit the store' => '상점 방문',
     'Please select star rating' => '별 등급을 선택하십시오',
+    // NEW V2.222222
+    'Start orde' => '시작 주문',
+    'COUPON CODE' => 'MÃ GIẢM GIÁ',
+    'Enter your coupon code if you have one.' => 'Nhập mã phiếu giảm giá của bạn nếu bạn có.',
+    'Apply' => 'Áp dụng',
+    'GIFT CERTIFICATE' => 'PHIẾU QUÀ TẶNG',
+    'SHIPPING' => 'ĐANG CHUYỂN HÀNG',
+    'Country' => 'Quốc gia',
+    'VietNam' => 'VietNam',
+    'TrungQuoc' => 'TrungQuoc',
+    'Han Quoc' => 'Han Quoc',
+    'State/Province' => 'Tiểu bang/Tỉnh',
+    'Suburb/City' => 'Suburb/City',
+    'Zip/Postcode' => 'Zip/Postcode',
+    'Estimate Shipping' => 'Estimate Shipping',
+    'Subtotal' => 'Subtotal',
+    'Grand total' => 'Grand total',
+    'Check out' => 'Check out',
+    'Gift Wrapping' => 'Gift Wrapping',
+    'Save' => 'Save',
+    'inch' => 'inch',
+    'Edit' => 'Edit',
+    'TOTAL' => 'TOTAL',
+    'Chưa có sản phẩm trong giỏ hàng' => 'Chưa có sản phẩm trong giỏ hàng',
+    'Your Cart' => 'Your Cart',
+    'Order Summary' => 'Order Summary',
+    'Edit Cart' => 'Edit Cart',
+    'Mã giảm giá có sẵn' => 'Mã giảm giá có sẵn',
+    'coin' => 'coin',
+    'Chưa có sản phẩm nào' => 'Chưa có sản phẩm nào',
+    'ELECTRONICS' => 'ELECTRONICS',
+    'New' => 'New',
+    'Sale' => 'Sale',
+
+
+
+
 
 
 
