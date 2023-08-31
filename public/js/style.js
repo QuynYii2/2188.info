@@ -150,10 +150,10 @@ new Swiper(".NewProducts", {
             spaceBetween: 10,
         },
         600: {
-            slidesPerView: 2,
+            slidesPerView: 3,
             spaceBetween: 10,
         },
-        900: {
+        800: {
             slidesPerView: 4,
             spaceBetween: 10,
         },
@@ -174,7 +174,7 @@ new Swiper(".FeaturedProducts", {
             spaceBetween: 10,
         },
         600: {
-            slidesPerView: 2,
+            slidesPerView: 3,
             spaceBetween: 10,
         },
         900: {
@@ -185,30 +185,6 @@ new Swiper(".FeaturedProducts", {
     mousewheel: true,
     keyboard: true,
 });
-new Swiper(".HotDeal", {
-    cssMode: true,
-    navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
-    },
-    breakpoints: {
-        300: {
-            slidesPerView: 2,
-            spaceBetween: 10,
-        },
-        900: {
-            slidesPerView: 3,
-            spaceBetween: 10,
-        },
-        1280: {
-            slidesPerView: 5,
-            spaceBetween: 30,
-        },
-    },
-    mousewheel: true,
-    keyboard: true,
-});
-
 new Swiper(".HotDeals", {
     cssMode: true,
     navigation: {
@@ -220,13 +196,13 @@ new Swiper(".HotDeals", {
             slidesPerView: 2,
             spaceBetween: 10,
         },
-        900: {
+        600: {
             slidesPerView: 3,
             spaceBetween: 10,
         },
-        1280: {
+        900: {
             slidesPerView: 4,
-            spaceBetween: 40,
+            spaceBetween: 10,
         },
     },
     mousewheel: true,
@@ -246,13 +222,13 @@ new Swiper(".listProduct", {
             slidesPerView: 2,
             spaceBetween: 10,
         },
-        1024: {
+        600: {
             slidesPerView: 3,
-            spaceBetween: 30,
+            spaceBetween: 10,
         },
-        1500: {
+        900: {
             slidesPerView: 4,
-            spaceBetween: 30,
+            spaceBetween: 10,
         },
     },
     mousewheel: true,

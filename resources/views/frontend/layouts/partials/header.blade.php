@@ -141,9 +141,6 @@
                                     </div>
                                 </button>
                             </div>
-
-
-
                             @php
                                 $memberPerson = \App\Models\MemberRegisterPersonSource::where([
                                     ['email', Auth::user()->email],
@@ -220,11 +217,11 @@
                                             onclick="logout()">{{ __('home.Sign Out') }}</button>
                                 </div>
                                 <div class="hover-list">
-                                    <a href="{{route('profile.show')}}" class="none_decoration">
-                                        <div class="drop-item">
-                                            {{ __('home.profile') }}
-                                        </div>
-                                    </a>
+{{--                                    <a href="{{route('profile.show')}}" class="none_decoration">--}}
+{{--                                        <div class="drop-item">--}}
+{{--                                            {{ __('home.profile') }}--}}
+{{--                                        </div>--}}
+{{--                                    </a>--}}
 
                                     @if(!$checkBuyer)
                                         {{--                                        @if($coin)--}}
@@ -870,7 +867,7 @@
         </div>
     </div>
     <div class="header-mobile halo-header">
-        <div class="hd-mobile flex-row p-0">
+        <div class="hd-mobile row p-0">
             <div class="col-3 d-flex">
                 <div class="hd-mobile--leftOne">
                     <button onclick="menuMobile()"><i class="fa-solid fa-bars"></i></button>
@@ -974,7 +971,7 @@
                         </button>
                     </div>
                     <div class="signMenuM" id="signMenuM">
-                        <div class="name"><a href="{{route('profile.show')}}">{{Auth::user()->name}}</a></div>
+{{--                        <div class="name"><a href="{{route('profile.show')}}">{{Auth::user()->name}}</a></div>--}}
                         <hr>
                         <button class="signOut" href="#" onclick="logout()">Log Out</button>
                     </div>
