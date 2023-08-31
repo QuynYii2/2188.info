@@ -313,15 +313,15 @@
                     </div>
                     <div class="description-text">
                         @if(locationHelper() == 'kr')
-                            <div class="item-text">{{ $product->short_description_ko }}</div>
+                            <div class="item-text">{!! $product->short_description_ko !!}</div>
                         @elseif(locationHelper() == 'cn')
-                            <div class="item-text">{{$product->short_description_zh}}</div>
+                            <div class="item-text">{!! $product->short_description_zh !!}</div>
                         @elseif(locationHelper() == 'jp')
-                            <div class="item-text">{{$product->short_description_ja}}</div>
+                            <div class="item-text">{!! $product->short_description_ja !!}</div>
                         @elseif(locationHelper() == 'vi')
-                            <div class="item-text">{{$product->short_description_vi}}</div>
+                            <div class="item-text">{!! $product->short_description_vi !!}</div>
                         @else
-                            <div class="item-text">{{$product->short_description_en}}</div>
+                            <div class="item-text">{!! $product->short_description_en !!}</div>
                         @endif
                     </div>
                     @if(!$attributes->isEmpty())
@@ -661,15 +661,15 @@
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <div class="content" id="content1">
                     @if(locationHelper() == 'kr')
-                        <div class="item-text">{{ $product->description_ko }}</div>
+                        <div class="item-text">{!! $product->description_ko !!}</div>
                     @elseif(locationHelper() == 'cn')
-                        <div class="item-text">{{$product->description_zh}}</div>
+                        <div class="item-text">{!! $product->description_zh !!}</div>
                     @elseif(locationHelper() == 'jp')
-                        <div class="item-text">{{$product->description_ja}}</div>
+                        <div class="item-text">{!! $product->description_ja !!}</div>
                     @elseif(locationHelper() == 'vi')
-                        <div class="item-text">{{$product->description_vi}}</div>
+                        <div class="item-text">{!! $product->description_vi !!}</div>
                     @else
-                        <div class="item-text">{{$product->description_en}}</div>
+                        <div class="item-text">{!! $product->description_en !!}</div>
                     @endif
 {{--                    {!! $product->description!!}--}}
                 </div>
