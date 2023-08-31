@@ -126,6 +126,10 @@
             text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
         }
 
+        tr i{
+            color: #fac325;
+        }
+
         tr:first-child {
             border-top: none;
         }
@@ -1070,7 +1074,7 @@
             let btn = document.getElementById('btn-submit');
             let input = document.getElementById('input-star');
             let message = document.getElementById('text-message');
-            if (input.value == 0) {
+            if (input.value === 0) {
                 message.classList.remove("d-none");
                 btn.disabled = true;
             } else {
@@ -1080,60 +1084,90 @@
         }
 
 
-        function starCheck(value) {
-            let star1 = document.getElementById('star1');
-            let star2 = document.getElementById('star2');
-            let star3 = document.getElementById('star3');
-            let star4 = document.getElementById('star4');
-            let star5 = document.getElementById('star5');
-            let input = document.getElementById('input-star');
+//         function starCheck(value) {
+//             let star1 = document.getElementById('star1');
+//             let star2 = document.getElementById('star2');
+//             let star3 = document.getElementById('star3');
+//             let star4 = document.getElementById('star4');
+//             let star5 = document.getElementById('star5');
+//             let input = document.getElementById('input-star');
+// //
+//             let icon1 = document.getElementById('icon-star-1');
+//             let icon2 = document.getElementById('icon-star-2');
+//             let icon3 = document.getElementById('icon-star-3');
+//             let icon4 = document.getElementById('icon-star-4');
+//             let icon5 = document.getElementById('icon-star-5');
 //
-            let icon1 = document.getElementById('icon-star-1');
-            let icon2 = document.getElementById('icon-star-2');
-            let icon3 = document.getElementById('icon-star-3');
-            let icon4 = document.getElementById('icon-star-4');
-            let icon5 = document.getElementById('icon-star-5');
+//
+//             switch (value) {
+//                 case 1:
+//                     star1.checked = true;
+//                     input.value = 1;
+//                     icon1.classList.add("checked");
+//                     break;
+//                 case 2:
+//                     star2.checked = true;
+//                     input.value = 2;
+//                     icon1.classList.add("checked");
+//                     icon2.classList.add("checked");
+//                     break;
+//                 case 3:
+//                     star3.checked = true;
+//                     input.value = 3;
+//                     icon1.classList.add("checked");
+//                     icon2.classList.add("checked");
+//                     icon3.classList.add("checked");
+//                     break;
+//                 case 4:
+//                     star4.checked = true;
+//                     input.value = 4;
+//                     icon1.classList.add("checked");
+//                     icon2.classList.add("checked");
+//                     icon3.classList.add("checked");
+//                     icon4.classList.add("checked");
+//                     break;
+//                 default:
+//                     star5.checked = true;
+//                     input.value = 5;
+//                     icon1.classList.add("checked");
+//                     icon2.classList.add("checked");
+//                     icon3.classList.add("checked");
+//                     icon4.classList.add("checked");
+//                     icon5.classList.add("checked");
+//                     break;
+//             }
+//             checkStar();
+//         }
 
+        function starCheck(value) {
+            let input = document.getElementById('input-star');
+            let star = document.getElementById('star' + value);
+            let icon = document.getElementById('icon-star-' + value);
 
-            switch (value) {
-                case 1:
-                    star1.checked = true;
-                    input.value = 1;
-                    icon1.classList.add("checked");
-                    break;
-                case 2:
-                    star2.checked = true;
-                    input.value = 2;
-                    icon1.classList.add("checked");
-                    icon2.classList.add("checked");
-                    break;
-                case 3:
-                    star3.checked = true;
-                    input.value = 3;
-                    icon1.classList.add("checked");
-                    icon2.classList.add("checked");
-                    icon3.classList.add("checked");
-                    break;
-                case 4:
-                    star4.checked = true;
-                    input.value = 4;
-                    icon1.classList.add("checked");
-                    icon2.classList.add("checked");
-                    icon3.classList.add("checked");
-                    icon4.classList.add("checked");
-                    break;
-                default:
-                    star5.checked = true;
-                    input.value = 5;
-                    icon1.classList.add("checked");
-                    icon2.classList.add("checked");
-                    icon3.classList.add("checked");
-                    icon4.classList.add("checked");
-                    icon5.classList.add("checked");
-                    break;
+            let isChecked = star.checked;
+
+            // Toggle the clicked star
+            star.checked = !isChecked;
+
+            for (let i = 1; i <= 5; i++) {
+                let currentStar = document.getElementById('star' + i);
+                let currentIcon = document.getElementById('icon-star-' + i);
+
+                if (i <= value) {
+                    currentStar.checked = true;
+                    currentIcon.classList.add("checked");
+                } else {
+                    currentStar.checked = false;
+                    currentIcon.classList.remove("checked");
+                }
             }
+
+            // Update the input value based on the checked state of the clicked star
+            input.value = star.checked ? value : value - 1;
+
             checkStar();
         }
+
 
         function toggleReadMore() {
             var moreLink = document.getElementById("more-link");
