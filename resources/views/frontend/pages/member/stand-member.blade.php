@@ -461,7 +461,7 @@
                                             <tr>
                                                 <td>{{$price_sale->quantity}}</td>
                                                 <td>{{($prises - ($prises * $discount / 100)) * $quantity}}</td>
-                                                <td>{{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
+                                                <td class="2323" ></td>{{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
                                             </tr>
                                         @endforeach
                                     @endif
