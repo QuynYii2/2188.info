@@ -292,7 +292,6 @@
 {{--                                            </div>--}}
 {{--                                        @endif--}}
 
-
                                         @php
                                             $exitMemberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
                                             $exitsMember = null;
