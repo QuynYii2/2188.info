@@ -27,10 +27,10 @@ class EvaluateProductController extends Controller
             ];
             $success = EvaluateProduct::create($evaluate);
             if ($success) {
-                alert()->success('Success', 'Change Email Success!');
+                alert()->success('Success', __('home.Thank you for evaluating our products!'));
                 return redirect(route('detail_product.show', ["id" => $request->input('product_id')]));
             } else {
-                alert()->error('Error', 'Change Email error!');
+                alert()->error('Opps!', __('home.Error during the process of posting your review!'));
                 return back();
             }
         } else {

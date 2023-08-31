@@ -300,7 +300,7 @@ return [
     'ORIGIN' => 'Nguồn gốc',
     'PRICE' => 'Giá',
     'Sort By' => 'Sắp xếp',
-    'Show' => 'Hiển thi',
+    'Show' => 'Hiển thị',
     '10 products per page' => '10 sản phẩm mỗi trang',
     '20 products per page' => '20 sản phẩm mỗi trang',
     '30 products per page' => '30 sản phẩm mỗi trang',
@@ -525,6 +525,8 @@ return [
     'company profile' => 'Hồ sơ công ty',
     'Visit the store' => 'Ghé thăm cửa hàng',
     'Please select star rating' => 'Vui lòng chọn xếp hạng sao',
+    'Thank you for evaluating our products!' => 'Thank you for evaluating our products!',
+    'Error during the process of posting your review!' => 'Error during the process of posting your review!'
 
 
 
