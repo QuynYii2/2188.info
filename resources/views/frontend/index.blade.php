@@ -333,7 +333,6 @@
                                         @foreach($arrayProduct as $product)
                                             @php
                                                 $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
-                                                dd($productDetail);
                                             @endphp
                                             <div class="swiper-slide">
                                                 @include('frontend.pages.list-product')
