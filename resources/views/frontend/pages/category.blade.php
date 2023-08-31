@@ -6,6 +6,11 @@
     @php
         $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
     @endphp
+    <style>
+        body{
+            background: #f5f5f5;
+        }
+    </style>
     <div id="body-content">
         <div class="category-banner">
             <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/category-banner-top-layout-2.jpg"
@@ -76,7 +81,6 @@
                 </ul>
             </div>
         </div>
-        <hr>
         <div class="category-body container-fluid">
 {{--            <div class="row">--}}
 {{--                <div class="col-xl-2 category-body-left">--}}
@@ -135,7 +139,7 @@
                     <div id="home" class="tab-pane active "><br>
                         <div class="row" id="renderProduct">
                             @foreach($listProduct as $product)
-                                <div class="col-xl-2 col-md-3 col-6 section">
+                                <div class="col-xl-2 col-md-3 col-6 section mb-4">
                                     @include('frontend.pages.list-product')
                                 </div>
                             @endforeach
