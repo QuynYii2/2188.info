@@ -206,11 +206,11 @@
                                     <img src="{{ asset('storage/' . $detailMarketing[$i]->thumbnail) }}"
                                          alt="">
                                     <span class="section-left--name">
-                                        {{ $detailMarketing[$i]->name }}
+                                        @php
+                                            $ld = new \App\Http\Controllers\TranslateController();
+                                        @endphp
+                                        {{ $ld->translateText($detailMarketing[$i]->name, locationPermissionHelper()) }}
                                     </span>
-                                    {{--                                    <span class="button section-left--name">--}}
-                                    {{--                                        Xem ngay--}}
-                                    {{--                                    </span>--}}
                                 </a>
                             </div>
                         @endif
@@ -357,11 +357,11 @@
                                     <img src="{{ asset('storage/' . $detailMarketing[$i]->thumbnail) }}"
                                          alt="">
                                     <span class="section-left--name">
-                                        {{ $detailMarketing[$i]->name }}
+                                        @php
+                                            $ld = new \App\Http\Controllers\TranslateController();
+                                        @endphp
+                                        {{ $ld->translateText($detailMarketing[$i]->name, locationPermissionHelper()) }}
                                     </span>
-{{--                                    <span class="button section-left--name">--}}
-{{--                                        Xem ngay--}}
-{{--                                    </span>--}}
                                 </a>
                             </div>
                         @endif
