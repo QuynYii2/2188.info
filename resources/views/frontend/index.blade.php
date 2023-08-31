@@ -5,6 +5,15 @@
         body{
             background: #f5f5f5;
         }
+        @media (min-width: 1900px) {
+            .col-xl-2{
+                max-width: 14%;
+            }
+            .col-xl-8{
+                max-width: 72%;
+            }
+
+        }
     </style>
     @php
         $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
@@ -221,7 +230,7 @@
                             <div class="swiper-button-next"></div>
                             <div class="swiper-button-prev"></div>
                         </div>
-                        <div class="content">{{ __('home.Featured Products') }}</div>
+                        <div class="content mt-4">{{ __('home.Featured Products') }}</div>
                         <div class="swiper FeaturedProducts">
                             <div class="swiper-wrapper">
                                 @foreach($productFeatures as $productFeature)

@@ -4,6 +4,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
     <style>
+        body{
+            background: #f5f5f5;
+        }
         .size{
             font-size: 17px;
         }
@@ -108,10 +111,10 @@
             <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
             <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
             <div class="d-flex justify-content-between align-items-center p-3">
-                <a href="{{route('seller.config.show', $company->id)}}" class="btn btn-primary">{{ __('home.Booth') }}</a>
+                <a href="{{ route('stand.register.member.index', $company->id) }}" class="btn btn-primary">{{ __('home.Booth') }}</a>
                 <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">{{ __('home.Partner List') }}</a>
-                <a href="{{route('chat.message.show')}}" class="btn btn-primary">{{ __('home.Message received') }}</a>
-                <a href="{{route('chat.message.show')}}" class="btn btn-warning">{{ __('home.Message sent') }}</a>
+                <a href="{{route('chat.message.received')}}" class="btn btn-primary">{{ __('home.Message received') }}</a>
+                <a href="{{route('chat.message.sent')}}" class="btn btn-warning">{{ __('home.Message sent') }}</a>
                 <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
                 <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
             </div>
@@ -227,9 +230,9 @@
                 </div>
             </div>
     </div>
-    <div class="mt-3 d-flex justify-content-center">
+    <div class="mt-3 row container-fluid">
         @foreach($products as $product)
-            <button type="button" style="background-color: white" class="btn thumbnailProduct col-2" data-toggle="modal"
+            <button type="button" class="btn thumbnailProduct col-xl-2 col-md-3" data-toggle="modal"
                     data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}" data-name="
                          @if(locationHelper() == 'kr')
                                         {{ ($product->name_ko) }}
@@ -243,7 +246,7 @@
                                         {{ ($product->name_en) }}
                                     @endif
                          ">
-                <div class="standsMember-item section">
+                <div class="standsMember-item section"  style="background-color: white">
                     <img data-id="{{$product->id}}"
                          src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
                          class="thumbnailProduct" data-value="{{$product}}"
@@ -458,7 +461,7 @@
                                             <tr>
                                                 <td>{{$price_sale->quantity}}</td>
                                                 <td>{{($prises - ($prises * $discount / 100)) * $quantity}}</td>
-                                                <td>{{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
+                                                <td class="2323" ></td>{{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
                                             </tr>
                                         @endforeach
                                     @endif

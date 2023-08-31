@@ -113,7 +113,7 @@ class CategoryController extends Controller
         $str = '';
         $currency = (new HomeController())->getLocation($request);
         foreach ($listProduct as $product) {
-            $str .= '<div class="col-xl-2 col-md-3 col-6 section">
+            $str .= '<div class="col-xl-2 col-md-3 col-6 section mb-4">
             <div class="item">
                 <div class="item-img">
                     <img src="' . asset('storage/' . $product['thumbnail']) .'" alt="">

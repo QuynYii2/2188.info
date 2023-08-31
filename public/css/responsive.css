@@ -422,6 +422,9 @@
   #mt-body {
     margin-top: 40px;
   }
+  .image-list li {
+    height: 50px;
+  }
   .list-voucher .search .form-search {
     margin: 0px 20px;
   }
@@ -437,6 +440,9 @@
   .swiper-button-next {
     padding: 15px;
     border: 2px solid #505050;
+  }
+  .category-header--right {
+    display: block !important;
   }
   .swiper-button-prev {
     padding: 15px;
@@ -488,7 +494,8 @@
     color: #0a6cdc;
   }
   .section .item-body .card-price {
-    font-size: 16px;
+    font-size: 15px;
+    display: block !important;
   }
   .section .item-body .card-bottom--left {
     height: 35px;
