@@ -76,7 +76,6 @@
                 </ul>
             </div>
         </div>
-        <hr>
         <div class="category-body container-fluid">
 {{--            <div class="row">--}}
 {{--                <div class="col-xl-2 category-body-left">--}}

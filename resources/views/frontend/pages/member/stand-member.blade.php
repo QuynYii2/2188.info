@@ -4,6 +4,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
     <style>
+        body{
+            background: #f5f5f5;
+        }
         .size{
             font-size: 17px;
         }
@@ -227,9 +230,9 @@
                 </div>
             </div>
     </div>
-    <div class="mt-3 d-flex justify-content-center">
+    <div class="mt-3 row justify-content-center container-fluid">
         @foreach($products as $product)
-            <button type="button" style="background-color: white" class="btn thumbnailProduct col-2" data-toggle="modal"
+            <button type="button" class="btn thumbnailProduct col-xl-2 col-md-3" data-toggle="modal"
                     data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}" data-name="
                          @if(locationHelper() == 'kr')
                                         {{ ($product->name_ko) }}
@@ -243,7 +246,7 @@
                                         {{ ($product->name_en) }}
                                     @endif
                          ">
-                <div class="standsMember-item section">
+                <div class="standsMember-item section"  style="background-color: white">
                     <img data-id="{{$product->id}}"
                          src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
                          class="thumbnailProduct" data-value="{{$product}}"
