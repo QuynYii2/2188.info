@@ -8,7 +8,7 @@
         @php
             $user = null;
         @endphp
-        <div class="container mb-2">
+        <div class="container-fluid mb-2">
             <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
             <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
             <div class="d-flex justify-content-between align-items-center p-3">
@@ -111,8 +111,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
-                    <div class="card" style="width: 18rem;">
+                <div class="col-md-3">
+                    <div class="card">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="">Message</div>
                             <div class="">
@@ -141,7 +141,7 @@
                     @php
                         $user = \App\Models\User::find($listMessage[0]->from_user_id);
                     @endphp
-                    <div class="col-md-6">
+                    <div class="col-md-9">
                         <div class="card">
                             <h5 id="chat_user" class="text-center">{{$user->name}}</h5>
                             <h5 id="chat_message">

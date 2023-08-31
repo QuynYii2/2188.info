@@ -255,7 +255,7 @@
                                         @endphp
                                         @if(($isAdmin == true || $locale != 'vn') && !$checkTrust)
                                             <div class="drop-item">
-                                                <a href="{{ route('seller.products.home') }}">{{ __('home.Seller channel') }}</a>
+                                                <a href="{{ route('seller.products.home') }}">{{ __('home.Product Management') }}</a>
                                             </div>
                                         @endif
                                         @php
@@ -286,11 +286,11 @@
                                                 <a href="{{ route('trust.register.member.index') }}">{{ __('home.Shop') }}</a>
                                             </div>
                                         @endif
-                                        @if(!$checkTrust && $isValid==true)
-                                            <div class="drop-item">
-                                                <a href="{{route('shop.list.products')}}">{{ __('home.Product Management') }}</a>
-                                            </div>
-                                        @endif
+{{--                                        @if(!$checkTrust && $isValid==true)--}}
+{{--                                            <div class="drop-item">--}}
+{{--                                                <a href="{{route('shop.list.products')}}">{{ __('home.Product Management') }}</a>--}}
+{{--                                            </div>--}}
+{{--                                        @endif--}}
 
 
                                         @php
