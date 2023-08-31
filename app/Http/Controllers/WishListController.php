@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Frontend\HomeController;
 use App\Models\WishList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,9 +14,9 @@ use App\Models\Product;
 class WishListController extends Controller
 {
 
-    public function wishListIndex()
+    public function wishListIndex(Request $request)
     {
-
+        (new HomeController())->getLocale($request);
         $wishListItems = DB::table('wish_lists')->where('user_id', '=', Auth::user()->id)->get();
         $productIds = [];
         foreach ($wishListItems as $productId) {
