@@ -176,6 +176,8 @@ Route::get('/products/location/{locale}', [\App\Http\Controllers\ProductControll
 Route::get('/products-shop/{id}', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByShops'])->name('list.products.shop.show');
 Route::get('/products-shop-category/{category}/{shop}', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByCategoryAndShops'])->name('list.products.shop.category.show');
 
+Route::get('/chat-message/{from}/{to}', [SampleController::class, 'findAllMessage'])->name('chat.message.show.to.way');
+
 Route::middleware(['auth'])->group(callback: function () {
     //Chat message
     Route::get('/chat-message', [SampleController::class, 'chat'])->name('chat.message.show');

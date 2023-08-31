@@ -5,6 +5,9 @@
 @section('content')
     <h3 class="text-center">Tin nhắn đã nhận</h3>
     @if($company)
+        @php
+            $user = null;
+        @endphp
         <div class="container mb-2">
             <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
             <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
@@ -127,11 +130,6 @@
                                         <img src="{{ asset('storage/'.$user->image) }}" alt="" width="60px"
                                              height="60xp">
                                         <h5 class="card-title">{{$user->name}}</h5>
-                                        <p>Đã nhận từ:
-                                            <span>{{$user->name}}</span>, Thời gian:
-                                            <span>{{$message->created_at}}</span>, Trạng thái:
-                                            <span>{{$message->message_status}}
-                                        </p>
                                     </div>
                                 @endforeach
                             @endif
@@ -139,17 +137,26 @@
                     </div>
                     {{--        {{ $listMessage->links() }}--}}
                 </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <h5 id="chat_user" class="text-center">{{$user->name}}</h5>
-                        <h5 id="chat_message">{!! $message->chat_message !!}</h5>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Chat</button>
+                @if(!$listMessage->isEmpty())
+                    @php
+                        $user = \App\Models\User::find($listMessage[0]->from_user_id);
+                    @endphp
+                    <div class="col-md-6">
+                        <div class="card">
+                            <h5 id="chat_user" class="text-center">{{$user->name}}</h5>
+                            <h5 id="chat_message">
+
+                            </h5>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Chat</button>
+                        </div>
                     </div>
-                </div>
+                @endif
+
             </div>
         </div>
     @endif
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -172,9 +179,34 @@
             $('.card-item-message').on('click', function () {
                 let message = $(this).data('message');
                 let user = $(this).data('user');
-                $('#chat_user').html( user['name'] );
-                $('#chat_message').html( message['chat_message'] );
+                $('#chat_user').html(user['name']);
+                $('#chat_message').html(message['chat_message']);
+                renderMessage(message['from_user_id'], {{auth()->user()->id}});
             })
         })
+
+        function renderMessage(from, to) {
+            let url = '/chat-message'
+            fetch(url + '/' + from + '/' + to, {
+                method: 'GET',
+            })
+                .then(response => {
+                    if (response.status == 200) {
+                        return response.text();
+                    }
+                })
+                .then((response) => {
+                    $('#chat_message').empty().append(response);
+                })
+                .catch(error => console.log(error));
+        }
+
+        function renderDefault() {
+            let listMessage = $('.card-item-message');
+            let messageDefault = $(listMessage[0]).data('message');
+            renderMessage(messageDefault['from_user_id'], {{auth()->user()->id}});
+        }
+
+        renderDefault();
     </script>
 @endsection
