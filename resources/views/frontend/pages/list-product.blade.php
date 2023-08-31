@@ -43,9 +43,6 @@
             @else
                 <a class="check_url">{{($nameSeller->name)}}</a>
             @endif
-{{--            <a href="{{route('shop.information.show', $nameSeller->id)}}">--}}
-{{--            {{($nameSeller->name)}}--}}
-{{--            </a>--}}
         </div>
         <div class="card-title">
             @if(Auth::check())

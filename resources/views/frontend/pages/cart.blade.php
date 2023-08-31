@@ -16,13 +16,12 @@
             <h1>Your Cart</h1>
         </div>
         @if ($cartItems->isEmpty())
-            <p>Chưa có sản phẩm trong giỏ hàng.</p>
+            <p>Chưa có sản phẩm trong giỏ hàng</p>
         @else
             <div class="pagelist">
                 <table id="table-cart" class="table table-bordered">
                     <thead>
                     <tr class="header">
-                        {{--                        <th scope="col">#</th>--}}
                         <th scope="col">ITEM</th>
                         <th scope="col">PRICE</th>
                         <th scope="col">QUANTITY</th>
@@ -283,7 +282,7 @@
                         <span> <span id="max-total"> {{ $cartItem->price*$cartItem->quantity }}</span></span>
                     </div>
                     <a href="{{route('checkout.show')}}">
-                        <button type="submit" class="btn mb-2 submit float-right submit-100"> Check out</button>
+                        <button type="submit" class="btn mb-2 submit float-right submit-100">Check out</button>
                     </a>
                 </div>
             </div>

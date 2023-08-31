@@ -78,59 +78,6 @@
         </div>
         <hr>
         <div class="category-body container-fluid">
-{{--            <div class="row">--}}
-{{--                <div class="col-xl-2 category-body-left">--}}
-{{--                    <div class="content">{{ __('home.PAYMENT METHODS') }}</div>--}}
-{{--                    @foreach($listPayment as $payment)--}}
-{{--                        <div class="OptionContainer">--}}
-{{--                            <div class="OptionHead">--}}
-{{--                                <input type="checkbox" class="payment-checkbox" value="{{ $payment->id }}">{{(($payment->name))}}--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    @endforeach--}}
-{{--                    <hr>--}}
-{{--                    <div class="content">{{ __('home.SHIPPING METHODS') }}</div>--}}
-{{--                    @foreach($listTransport as $transport)--}}
-{{--                        <div class="OptionContainer">--}}
-{{--                            <div class="OptionHead">--}}
-{{--                                <input type="checkbox" class="transport-checkbox"--}}
-{{--                                       value="{{ $transport->id }}">{{ ($transport->name) }}--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    @endforeach--}}
-{{--                    <div class="MenuContainer"></div>--}}
-{{--                    <hr>--}}
-{{--                    <input type="checkbox" class="mr-2" value="" id="check_sale" onchange="checkSale(this)">{{ __('home.Products on sale') }}--}}
-{{--                    <hr>--}}
-{{--                    <div class="content">{{ __('home.PRICE') }}</div>--}}
-{{--                    <div class="category-price">--}}
-{{--                        <div class="wrapper">--}}
-{{--                            <div class="price-input d-flex">--}}
-{{--                                <div class="field">--}}
-{{--                                    <div>{{ __('home.Min') }}</div>--}}
-{{--                                    <input type="number" class="input-min" id="price-min" value="0">--}}
-{{--                                </div>--}}
-{{--                                <div class="separator">-</div>--}}
-{{--                                <div class="field">--}}
-{{--                                    <div>{{ __('home.Max') }}</div>--}}
-{{--                                    <input type="number" class="input-max" id="price-max" value="{{ $priceProductOfCategory->maxPrice }}">--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="slider">--}}
-{{--                                <div class="progress"></div>--}}
-{{--                            </div>--}}
-{{--                            <div class="range-input">--}}
-{{--                                <input type="range" class="range-min" min="0" max="{{ $priceProductOfCategory->maxPrice }}" value="0" step="1">--}}
-{{--                                <input type="range" class="range-max" min="0" max="{{ $priceProductOfCategory->maxPrice }}" value="{{ $priceProductOfCategory->maxPrice }}" step="1">--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <hr>--}}
-{{--                    <div class="content">{{ __('home.ORIGIN') }}</div>--}}
-{{--                    <input type="text" value="" class="w-100" id="search-origin" onchange="searchOrigin(this)" >{{ __('home.Products by origin') }}--}}
-
-{{--                </div>--}}
-                <!-- Tab panes -->
                 <div class="tab-content">
                     <div id="home" class="tab-pane active "><br>
                         <div class="row" id="renderProduct">
@@ -178,7 +125,19 @@
                                             {{($namenewProduct->name)}}
                                         </div>
                                         <div class="card-title-list">
-                                            <a href="{{route('detail_product.show', $product->id)}}">{{  ($product->name)}}</a>
+                                            <a href="{{route('detail_product.show', $product->id)}}">
+                                                @if(locationHelper() == 'kr')
+                                                    <div class="item-text">{{ $product->name_ko }}</div>
+                                                @elseif(locationHelper() == 'cn')
+                                                    <div class="item-text">{{$product->name_zh}}</div>
+                                                @elseif(locationHelper() == 'jp')
+                                                    <div class="item-text">{{$product->name_ja}}</div>
+                                                @elseif(locationHelper() == 'vi')
+                                                    <div class="item-text">{{$product->name_vi}}</div>
+                                                @else
+                                                    <div class="item-text">{{$product->name_en}}</div>
+                                                @endif
+                                            </a>
                                         </div>
                                         <div class="card-price d-flex">
                                             @if($product->price)

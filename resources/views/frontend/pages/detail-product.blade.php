@@ -281,7 +281,18 @@
                     @csrf
                     <div class="product-name"><a
                                 href="{{ route('shop.information.show', $name->id) }}">{{$name->name}}</a></div>
-                    <div class="product-title">{{($product->name)}}</div>
+                    <div class="product-title">
+                        @if(locationHelper() == 'kr')
+                            <div class="item-text">{{ $product->name_ko }}</div>
+                        @elseif(locationHelper() == 'cn')
+                            <div class="item-text">{{$product->name_zh}}</div>
+                        @elseif(locationHelper() == 'jp')
+                            <div class="item-text">{{$product->name_ja}}</div>
+                        @elseif(locationHelper() == 'vi')
+                            <div class="item-text">{{$product->name_vi}}</div>
+                        @else
+                            <div class="item-text">{{$product->name_en}}</div>
+                        @endif</div>
                     <div class="product-origin">{{ __('home.ORIGIN') }}: {{$product->origin}}</div>
                     <div class="product-rating">
                         <i class="fa fa-star"></i>
@@ -301,7 +312,17 @@
                         @endif
                     </div>
                     <div class="description-text">
-                        {!! $product->short_description!!}
+                        @if(locationHelper() == 'kr')
+                            <div class="item-text">{{ $product->short_description_ko }}</div>
+                        @elseif(locationHelper() == 'cn')
+                            <div class="item-text">{{$product->short_description_zh}}</div>
+                        @elseif(locationHelper() == 'jp')
+                            <div class="item-text">{{$product->short_description_ja}}</div>
+                        @elseif(locationHelper() == 'vi')
+                            <div class="item-text">{{$product->short_description_vi}}</div>
+                        @else
+                            <div class="item-text">{{$product->short_description_en}}</div>
+                        @endif
                     </div>
                     @if(!$attributes->isEmpty())
                         <div class="row">
@@ -323,7 +344,12 @@
                                                    id="input-{{$attribute->attribute_id}}-{{$loop->index+1}}"
                                                    name="inputProperty-{{$attribute->attribute_id}}" type="radio"
                                                    value="{{$attribute->attribute_id}}-{{$property->id}}">
-                                            <label for="input-{{$attribute->attribute_id}}-{{$loop->index+1}}">{{$property->name}}</label>
+                                            <label for="input-{{$attribute->attribute_id}}-{{$loop->index+1}}">
+                                                @php
+                                                    $ld = new \App\Http\Controllers\TranslateController();
+                                                @endphp
+                                                {{ $ld->translateText($property->name, locationPermissionHelper()) }}
+                                            </label>
                                         @endforeach
                                     </div>
                                 </div>
@@ -584,8 +610,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="attr-title ilvietnam-2-38-39">
-                                Chứng chỉ
+                            <div class="attr-title ilvietnam-2-38-39">{{ __('home.Certificate') }}
                             </div>
                             <a href="{{ route('shop.information.show', $name->id) }}"
                                class="company-qualificationCertificate service-4 ilvietnam-1-1-50">
@@ -635,7 +660,18 @@
         <div class="tab-content container-fluid" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <div class="content" id="content1">
-                    {!! $product->description!!}
+                    @if(locationHelper() == 'kr')
+                        <div class="item-text">{{ $product->description_ko }}</div>
+                    @elseif(locationHelper() == 'cn')
+                        <div class="item-text">{{$product->description_zh}}</div>
+                    @elseif(locationHelper() == 'jp')
+                        <div class="item-text">{{$product->description_ja}}</div>
+                    @elseif(locationHelper() == 'vi')
+                        <div class="item-text">{{$product->description_vi}}</div>
+                    @else
+                        <div class="item-text">{{$product->description_en}}</div>
+                    @endif
+{{--                    {!! $product->description!!}--}}
                 </div>
                 <button id="toggleBtn1" class="toggleBtn"
                         onclick="toggleContent('content1', 'toggleBtn1')">{{ __('home.Show More') }}</button>
