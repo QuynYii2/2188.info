@@ -1079,6 +1079,7 @@
             let message = document.getElementById('text-message');
             if (input.value == 0) {
                 message.classList.remove("d-none");
+
                 btn.disabled = true;
             } else {
                 message.classList.add("d-none");
