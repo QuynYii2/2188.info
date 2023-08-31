@@ -288,7 +288,12 @@
                         @else
                             <div class="item-text">{{$product->name_en}}</div>
                         @endif</div>
-                    <div class="product-origin">{{ __('home.ORIGIN') }}: {{$product->origin}}</div>
+                    <div class="product-origin">{{ __('home.ORIGIN') }}:
+                        @php
+                            $ld = new \App\Http\Controllers\TranslateController();
+                        @endphp
+                        {{ $ld->translateText($product->origin, locationPermissionHelper()) }}
+                    </div>
                     <div class="product-rating">
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>

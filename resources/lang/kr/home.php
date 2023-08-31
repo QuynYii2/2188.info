@@ -106,6 +106,7 @@ return [
     'online shopping center' => '온라인 쇼핑 센터',
     'settled' => '입주',
     'sales' => '판매',
+    'new' => '새로운',
     'management' => '관리',
     'overseas customer development' => '해외 고객 개발',
     'all categories' => '모든 카테고리',
