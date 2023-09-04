@@ -401,7 +401,7 @@
                                 <tr>
                                     <th scope="col">{{ __('home.quantity') }}</th>
                                     <th scope="col">{{ __('home.Unit price') }}</th>
-                                    <th scope="col">{{ __('home.Ngày dự kiến xuất kho') }}</th>
+                                    <th scope="col">{{ __('home.ngày kể từ ngày đặt hàng') }}</th>
                                 </tr>
                                 </thead>
 
