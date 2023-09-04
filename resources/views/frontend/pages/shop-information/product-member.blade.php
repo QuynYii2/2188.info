@@ -529,9 +529,9 @@
             </div>
             <div id="body-modal-att"></div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="selectAttProduct()">
-                    Lưu
+                    {{ __('home.Save') }}
                 </button>
             </div>
         </div>

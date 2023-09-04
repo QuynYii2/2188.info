@@ -207,6 +207,7 @@ return [
     'next' => 'Sau',
     //
     'save login' => 'Ghi nhớ đăng nhập',
+    'Save' => 'Lưu tùy chọn',
     'choose branch' => 'Chọn ngành',
     'back home' => 'Quay về trang chủ',
     'type product' => 'Mã sản phẩm',

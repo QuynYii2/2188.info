@@ -542,7 +542,7 @@ return [
     'Grand total' => 'Grand total',
     'Check out' => 'Check out',
     'Gift Wrapping' => 'Gift Wrapping',
-    'Save' => 'Save',
+    'Save' => '구하다',
     'inch' => 'inch',
     'Edit' => 'Edit',
     'TOTAL' => 'TOTAL',
