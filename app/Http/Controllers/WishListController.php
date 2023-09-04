@@ -44,7 +44,7 @@ class WishListController extends Controller
                 'product_id' => $productId
             ])->get();
 
-            if ($existingWishList != NUll) {
+            if ($existingWishList->isNotEmpty()) {
                 return response()->json(['message' => 'Sản phẩm này đã có trong danh sách yêu thích của bạn'], 200);
             } else {
                 WishList::create([
