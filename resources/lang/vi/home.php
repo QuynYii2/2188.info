@@ -529,7 +529,10 @@ return [
     'Visit the store' => 'Ghé thăm cửa hàng',
     'Please select star rating' => 'Vui lòng chọn xếp hạng sao',
     'Thank you for evaluating our products!' => 'Cảm ơn bạn đã đánh giá sản phẩm của chúng tôi!',
-    'Error during the process of posting your review!' => 'Lỗi trong quá trình đăng bình luận đánh giá của bạn!'
+    'Error during the process of posting your review!' => 'Lỗi trong quá trình đăng bình luận đánh giá của bạn!',
+    'received-by' => 'Đã nhận bởi: ',
+    'posted-by' => 'Được gửi bởi: ',
+    'time' => 'Thời gian: ',
 
 
 

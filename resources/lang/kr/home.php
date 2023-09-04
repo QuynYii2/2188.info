@@ -556,6 +556,9 @@ return [
     'ELECTRONICS' => 'ELECTRONICS',
     'New' => 'New',
     'Sale' => 'Sale',
+    'received-by' => '받은 사람: ',
+    'posted-by' => '보낸 사람: ',
+    'time' => '시간: ',
 
 
 

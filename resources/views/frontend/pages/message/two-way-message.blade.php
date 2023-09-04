@@ -4,10 +4,10 @@
         $userTo = \App\Models\User::find($message->to_user_id);
     @endphp
     {!! $message->chat_message !!}
-    <p class="small">Đã nhận từ:
-        <span>{{$userTo->name}}</span>, Đuợc gửi bởi:
-        <span>{{$userFrom->name}}</span>, Thời gian:
-        <span>{{$message->created_at}}</span>, Trạng thái:
-        <span>{{$message->message_status}}
+    <p class="small">{{ __('home.received-by') }}
+        <span>{{$userTo->name}}</span>, {{ __('home.posted-by') }}
+        <span>{{$userFrom->name}}</span>, {{ __('home.posted-by') }}
+        <span>{{$message->created_at}}</span>, {{ __('home.time') }}
+        <span>{{$message->message_status}}  {{ __('home.Status') }}
     </p>
 @endforeach

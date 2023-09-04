@@ -43,6 +43,7 @@ class CategoryController extends Controller
 
     public function filterInCategory(Request $request, $id)
     {
+        (new HomeController())->getLocale($request);
         $sortArr = explode(' ', $request->data['sortBy']);
         $selectedPayments = $request->data['selectedPayments'];
         $selectedTransports = $request->data['selectedTransports'];
@@ -110,6 +111,7 @@ class CategoryController extends Controller
 
     public function renderDataToHTML($listProduct, $request)
     {
+        (new HomeController())->getLocale($request);
         $str = '';
         $currency = (new HomeController())->getLocation($request);
         foreach ($listProduct as $product) {
