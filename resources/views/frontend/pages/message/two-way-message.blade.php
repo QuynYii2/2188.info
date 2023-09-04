@@ -5,9 +5,9 @@
     @endphp
     {!! $message->chat_message !!}
     <p class="small">{{ __('home.received-by') }}
-        <span>{{$userTo->name}}</span>, {{ __('home.posted-by') }}
-        <span>{{$userFrom->name}}</span>, {{ __('home.posted-by') }}
-        <span>{{$message->created_at}}</span>, {{ __('home.time') }}
-        <span>{{$message->message_status}}  {{ __('home.Status') }}
+        <span>{{$userTo->name}} : <b>{{ __('home.posted-by') }}</b> </span>
+        <span>{{$userFrom->name}} : <b> {{ __('home.posted-by') }} </b></span>
+        <span>{{$message->created_at}} : <b> {{ __('home.time') }} </b></span>
+        <span>{{$message->message_status}} : <b> {{ __('home.Status') }} </b></span>
     </p>
 @endforeach
