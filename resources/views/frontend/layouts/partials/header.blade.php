@@ -183,7 +183,7 @@
                                     <i class="item-icon fa-regular fa-user"></i>
                                     <div class="name_and_package_member">
                                         <div class="item-text">{{Auth::user()->name}}</div>
-                                        <span class="package_member">( {{__('home.Member')}} : {{$company->member}} }</span>
+                                        <span class="package_member">( {{__('home.Member')}} : {{$company->member}} )</span>
                                     </div>
 
                                 </button>
