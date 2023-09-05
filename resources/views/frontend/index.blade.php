@@ -23,95 +23,95 @@
     <div class="body" id="body-content">
         <section class="section-First pt-3 pb-3 container-fluid">
             <div class="row m-0">
-                <div class="section-First-left section-First-hd col-xl-2 col-12">
-                    <span class="content">{{ __('home.SHOP BY CATEGORIES') }}</span>
-                    <hr>
-                    <div class="row list">
-                        @php
-                            $listCate = DB::table('categories')->where('parent_id', null)->get();
-                            $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
-                        @endphp
-                        @if(count($listCate)>10)
-                            @for($i =0; $i <10; $i ++)
-                                <div class="col-lg-6 item item-left text-center">
-                                    @if(Auth::check())
-                                        <a href="{{ route('category.show', $listCate[$i]->id) }}">
-                                            <div class="text">
-                                                @if(locationHelper() == 'kr')
-                                                    <div class="text">{{ $listCate[$i]->name_ko }}</div>
-                                                @elseif(locationHelper() == 'cn')
-                                                    <div class="text">{{$listCate[$i]->name_zh}}</div>
-                                                @elseif(locationHelper() == 'jp')
-                                                    <div class="text">{{$listCate[$i]->name_ja}}</div>
-                                                @elseif(locationHelper() == 'vi')
-                                                    <div class="text">{{$listCate[$i]->name_vi}}</div>
-                                                @else
-                                                    <div class="text">{{$listCate[$i]->name_en}}</div>
-                                                @endif
-                                            </div>
-                                        </a>
-                                    @else
-                                        <a class="check_url">
-                                            @if(locationHelper() == 'kr')
-                                                <div class="text">{{ $listCate[$i]->name_ko }}</div>
-                                            @elseif(locationHelper() == 'cn')
-                                                <div class="text">{{$listCate[$i]->name_zh}}</div>
-                                            @elseif(locationHelper() == 'jp')
-                                                <div class="text">{{$listCate[$i]->name_ja}}</div>
-                                            @elseif(locationHelper() == 'vi')
-                                                <div class="text">{{$listCate[$i]->name_vi}}</div>
-                                            @else
-                                                <div class="text">{{$listCate[$i]->name_en}}</div>
-                                            @endif
-                                        </a>
-                                    @endif
-                                </div>
-                            @endfor
-                        @else
-                            @foreach($listCate as $cate)
-                                <div class="col-lg-6 item item-left text-center">
-                                    @if(Auth::check())
-                                        <a href="{{ route('category.show', $cate->id) }}">
-                                             <img class="icon_i" alt="">
-                                            <div class="text">{{($cate->{'name_' .$langDisplay->getLangDisplay()})}}</div>
-                                        </a>
-                                    @else
-                                        <a class="check_url">
-                                             <img class="icon_i" alt="">
-                                            <div class="text">{{($cate->{'name_' .$langDisplay->getLangDisplay()})}}</div>
-                                        </a>
-                                    @endif
-                                </div>
-                            @endforeach
-                        @endif
-                    </div>
-                </div>
-                <div class="section-First-left section-First-mobile col-12">
-                    <span class="content">SHOP BY CATEGORIES</span>
-                    <hr>
-                    <div class="list d-flex justify-content-center">
-                        @php
-                            $listCate = DB::table('categories')->where('parent_id', null)->get();
-                        @endphp
-                        @foreach($listCate as $cate)
-                            <div class="item item-left text-center">
-                                @if(Auth::check())
-                                    <a href="{{ route('category.show', $cate->id) }}">
-                                        <img src="{{ asset('storage/' . $cate->thumbnail) }}"
-                                             alt="">
-                                        <div class="text">{{($cate->{'name' . $langDisplay->getLangDisplay()})}}</div>
-                                    </a>
-                                @else
-                                    <a class="check_url">
-                                        <img src="{{ asset('storage/' . $cate->thumbnail) }}"
-                                             alt="">
-                                        <div class="text">{{($cate->{'name' . $langDisplay->getLangDisplay()})}}</div>
-                                    </a>
-                                @endif
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
+{{--                <div class="section-First-left section-First-hd col-xl-2 col-12">--}}
+{{--                    <span class="content">{{ __('home.SHOP BY CATEGORIES') }}</span>--}}
+{{--                    <hr>--}}
+{{--                    <div class="row list">--}}
+{{--                        @php--}}
+{{--                            $listCate = DB::table('categories')->where('parent_id', null)->get();--}}
+{{--                            $langDisplay = new \App\Http\Controllers\Frontend\HomeController();--}}
+{{--                        @endphp--}}
+{{--                        @if(count($listCate)>10)--}}
+{{--                            @for($i =0; $i <10; $i ++)--}}
+{{--                                <div class="col-lg-6 item item-left text-center">--}}
+{{--                                    @if(Auth::check())--}}
+{{--                                        <a href="{{ route('category.show', $listCate[$i]->id) }}">--}}
+{{--                                            <div class="text">--}}
+{{--                                                @if(locationHelper() == 'kr')--}}
+{{--                                                    <div class="text">{{ $listCate[$i]->name_ko }}</div>--}}
+{{--                                                @elseif(locationHelper() == 'cn')--}}
+{{--                                                    <div class="text">{{$listCate[$i]->name_zh}}</div>--}}
+{{--                                                @elseif(locationHelper() == 'jp')--}}
+{{--                                                    <div class="text">{{$listCate[$i]->name_ja}}</div>--}}
+{{--                                                @elseif(locationHelper() == 'vi')--}}
+{{--                                                    <div class="text">{{$listCate[$i]->name_vi}}</div>--}}
+{{--                                                @else--}}
+{{--                                                    <div class="text">{{$listCate[$i]->name_en}}</div>--}}
+{{--                                                @endif--}}
+{{--                                            </div>--}}
+{{--                                        </a>--}}
+{{--                                    @else--}}
+{{--                                        <a class="check_url">--}}
+{{--                                            @if(locationHelper() == 'kr')--}}
+{{--                                                <div class="text">{{ $listCate[$i]->name_ko }}</div>--}}
+{{--                                            @elseif(locationHelper() == 'cn')--}}
+{{--                                                <div class="text">{{$listCate[$i]->name_zh}}</div>--}}
+{{--                                            @elseif(locationHelper() == 'jp')--}}
+{{--                                                <div class="text">{{$listCate[$i]->name_ja}}</div>--}}
+{{--                                            @elseif(locationHelper() == 'vi')--}}
+{{--                                                <div class="text">{{$listCate[$i]->name_vi}}</div>--}}
+{{--                                            @else--}}
+{{--                                                <div class="text">{{$listCate[$i]->name_en}}</div>--}}
+{{--                                            @endif--}}
+{{--                                        </a>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+{{--                            @endfor--}}
+{{--                        @else--}}
+{{--                            @foreach($listCate as $cate)--}}
+{{--                                <div class="col-lg-6 item item-left text-center">--}}
+{{--                                    @if(Auth::check())--}}
+{{--                                        <a href="{{ route('category.show', $cate->id) }}">--}}
+{{--                                             <img class="icon_i" alt="">--}}
+{{--                                            <div class="text">{{($cate->{'name_' .$langDisplay->getLangDisplay()})}}</div>--}}
+{{--                                        </a>--}}
+{{--                                    @else--}}
+{{--                                        <a class="check_url">--}}
+{{--                                             <img class="icon_i" alt="">--}}
+{{--                                            <div class="text">{{($cate->{'name_' .$langDisplay->getLangDisplay()})}}</div>--}}
+{{--                                        </a>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+{{--                            @endforeach--}}
+{{--                        @endif--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="section-First-left section-First-mobile col-12">--}}
+{{--                    <span class="content">SHOP BY CATEGORIES</span>--}}
+{{--                    <hr>--}}
+{{--                    <div class="list d-flex justify-content-center">--}}
+{{--                        @php--}}
+{{--                            $listCate = DB::table('categories')->where('parent_id', null)->get();--}}
+{{--                        @endphp--}}
+{{--                        @foreach($listCate as $cate)--}}
+{{--                            <div class="item item-left text-center">--}}
+{{--                                @if(Auth::check())--}}
+{{--                                    <a href="{{ route('category.show', $cate->id) }}">--}}
+{{--                                        <img src="{{ asset('storage/' . $cate->thumbnail) }}"--}}
+{{--                                             alt="">--}}
+{{--                                        <div class="text">{{($cate->{'name' . $langDisplay->getLangDisplay()})}}</div>--}}
+{{--                                    </a>--}}
+{{--                                @else--}}
+{{--                                    <a class="check_url">--}}
+{{--                                        <img src="{{ asset('storage/' . $cate->thumbnail) }}"--}}
+{{--                                             alt="">--}}
+{{--                                        <div class="text">{{($cate->{'name' . $langDisplay->getLangDisplay()})}}</div>--}}
+{{--                                    </a>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
+{{--                        @endforeach--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <div class="section-First-middle col-xl-6 col-md-8 col-12">
                     <!-- Swiper -->
                     <div class="swiper mySwiper">

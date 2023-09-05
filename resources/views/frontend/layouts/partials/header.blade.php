@@ -181,7 +181,7 @@
                             <div class="item user">
                                 <button class="btn btn-primary" style="box-shadow: none" onclick="signIn()"><i
                                             class="item-icon fa-regular fa-user"></i>
-                                    <div class="item-text">{{Auth::user()->name}}</div>
+                                    <div class="item-text">{{Auth::user()->name}} - {{$company->member}}</div>
                                 </button>
                                 <div class="signMenu" id="signMenu">
                                     <div class="name">
