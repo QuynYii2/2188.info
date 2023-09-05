@@ -106,10 +106,10 @@
                                         </div>
                                         <div class="text">
                                             <div class="text-sale">
-                                                Sale
+                                                {{ __('home.sales') }}
                                             </div>
                                             <div class="text-new">
-                                                New
+                                                {{ __('home.new') }}
                                             </div>
                                         </div>
                                     </div>

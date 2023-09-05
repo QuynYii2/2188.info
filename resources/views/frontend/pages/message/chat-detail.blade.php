@@ -218,7 +218,6 @@
 					<div class="col col-4">
 			`;
                 if (data.data[count].notification_type == 'Send Request') {
-                    console.log(data.data[count])
                     if (data.data[count].status == '{{\App\Enums\ChatRequestStatus::PENDING}}') {
                         html += '<button type="button" name="send_request" class="btn btn-warning btn-sm float-end">Request Send</button>';
                     } else {

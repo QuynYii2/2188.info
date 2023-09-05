@@ -12,8 +12,7 @@ body {
 }
 
 #mt-body {
-  background: #f5f5f5;
-  padding-top: 175px;
+  margin-top: 175px;
 }
 
 #checkboxes {
@@ -2081,10 +2080,11 @@ hr {
   transform: translate(-50%, -50%);
 }
 .section .item-img .button-view button {
-  padding: 8px 15px;
+  padding: 8px;
   border-radius: 50px;
   background-color: #fff;
   border: none;
+  border: 1px solid white;
 }
 .section .item-img .button-view button:hover {
   color: white;

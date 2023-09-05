@@ -5,7 +5,7 @@
 @section('content')
     <h3 class="text-center">Tin nhắn đã gửi</h3>
     @if($company)
-        <div class="container mb-2">
+        <div class="container-fluid mb-2">
             <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
             <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
             <div class="d-flex justify-content-between align-items-center p-3">
@@ -108,8 +108,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
-                    <div class="card" style="width: 18rem;">
+                <div class="col-md-3">
+                    <div class="card">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="">Message</div>
                             <div class="">
@@ -128,12 +128,8 @@
                                              height="60xp">
                                         <h5 class="card-title">
                                             {{$user->name}}
+                                            <hr>
                                         </h5>
-                                        <p>Đã gửi tới:
-                                            <span>{{$user->name}}</span>, Thời gian:
-                                            <span>{{$message->created_at}}</span>, Trạng thái:
-                                            <span>{{$message->message_status}}
-                                        </p>
                                     </div>
                                 @endforeach
                             @endif
@@ -141,13 +137,20 @@
                     </div>
                     {{--        {{ $listMessage->links() }}--}}
                 </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <h5 id="chat_user" class="text-center">{{$user->name}}</h5>
-                        <h5 id="chat_message">{!! $message->chat_message !!}</h5>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Chat</button>
+                @if(!$listMessage->isEmpty())
+                    @php
+                        $user = \App\Models\User::find($listMessage[0]->to_user_id);
+                    @endphp
+                    <div class="col-md-9">
+                        <div class="card">
+                            <h5 id="chat_user" class="text-center">{{$user->name}}</h5>
+                            <h5 id="chat_message">
+
+                            </h5>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Chat</button>
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
     @endif
@@ -176,7 +179,33 @@
                 let user = $(this).data('user');
                 $('#chat_user').html( user['name'] );
                 $('#chat_message').html( message['chat_message'] );
+                renderMessage({{auth()->user()->id}}, message['to_user_id']);
             })
         })
+
+        function renderMessage(from, to) {
+            let url = '/chat-message'
+            fetch(url + '/' + from + '/' + to, {
+                method: 'GET',
+            })
+                .then(response => {
+                    if (response.status == 200) {
+                        return response.text();
+                    }
+                })
+                .then((response) => {
+                    console.log('ádadad')
+                    $('#chat_message').empty().append(response);
+                })
+                .catch(error => console.log(error));
+        }
+
+        function renderDefault() {
+            let listMessage = $('.card-item-message');
+            let messageDefault = $(listMessage[0]).data('message');
+            renderMessage({{auth()->user()->id}}, messageDefault['to_user_id']);
+        }
+
+        renderDefault();
     </script>
 @endsection

@@ -75,20 +75,20 @@
                     <div id="home" class="tab-pane active "><br>
                         <div class="row" id="renderProduct">
                             @foreach($listProduct as $product)
-                                <div class="col-xl-2 col-md-3 col-6 section">
+                                <div class="col-xl-2 col-md-3 col-6 section mb-4">
                                     <div class="item">
                                         <div class="item-img">
                                             <img src="{{ asset('storage/' . $product->thumbnail) }}"
                                                  alt="">
                                             <div class="button-view">
-                                                <button class="quickView" data-value="{{$product}}">Quick view</button>
+                                                <button class="quickView" data-value="{{$product}}">{{ __('home.Quick view') }}</button>
                                             </div>
                                             <div class="text">
                                                 <div class="text-sale">
-                                                    Sale
+                                                    {{ __('home.sales') }}
                                                 </div>
                                                 <div class="text-new">
-                                                    New
+                                                    {{ __('home.new') }}
                                                 </div>
                                             </div>
                                         </div>
@@ -155,10 +155,10 @@
                                         </div>
                                         <div class="text">
                                             <div class="text-sale">
-                                                Sale
+                                                {{ __('home.sales') }}
                                             </div>
                                             <div class="text-new">
-                                                New
+                                                {{ __('home.new') }}
                                             </div>
                                         </div>
                                     </div>

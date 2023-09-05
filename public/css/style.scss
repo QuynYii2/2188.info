@@ -2415,10 +2415,11 @@ hr{
         left: 50%;
         transform: translate(-50%, -50%);
         button {
-          padding: 8px 15px;
+          padding: 8px;
           border-radius: 50px;
           background-color: #fff;
           border: none;
+          border: 1px solid white;
 
           &:hover {
             color: white;

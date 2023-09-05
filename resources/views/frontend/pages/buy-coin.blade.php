@@ -4,7 +4,7 @@
 
 @section('content')
     <div style="background-color: #f7f7f7">
-        <div class="container mb-2">
+        <div class="container-fluid mb-2">
             <div class="category" >{{ __('home.buy coin') }}</div>
             <div class="row mt-3">
                 <div class="row p-3">

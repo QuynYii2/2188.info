@@ -176,12 +176,9 @@ Route::get('/products/location/{locale}', [\App\Http\Controllers\ProductControll
 Route::get('/products-shop/{id}', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByShops'])->name('list.products.shop.show');
 Route::get('/products-shop-category/{category}/{shop}', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByCategoryAndShops'])->name('list.products.shop.category.show');
 
-Route::middleware(['auth'])->group(callback: function () {
-    //Chat message
-    Route::get('/chat-message', [SampleController::class, 'chat'])->name('chat.message.show');
-    Route::get('/chat-message-sent', [SampleController::class, 'getListMessageSent'])->name('chat.message.sent');
-    Route::get('/chat-message-received', [SampleController::class, 'getListMessageReceived'])->name('chat.message.received');
-    //Setup marketing
+Route::get('/chat-message/{from}/{to}', [SampleController::class, 'findAllMessage'])->name('chat.message.show.to.way');
+
+Route::group(['middleware' => 'role.admin'], function () {
     Route::get('/setup-marketing/', [\App\Http\Controllers\SetupMarketingController::class, 'index'])->name('setup-marketing.show');
     Route::get('/setup-marketing/create', [\App\Http\Controllers\SetupMarketingController::class, 'create'])->name('create-setup-marketing');
     Route::post('/setup-marketing/create', [\App\Http\Controllers\SetupMarketingController::class, 'store'])->name('store-setup-marketing');
@@ -190,8 +187,17 @@ Route::middleware(['auth'])->group(callback: function () {
     Route::post('/setup-marketing/update/{id}', [\App\Http\Controllers\SetupMarketingController::class, 'update'])->name('setup-marketing.update');
 
     //Detail marketing
-    Route::get('/detail-marketing/{id}',[\App\Http\Controllers\DetailMarketingController::class, 'index'])->name('detail-marketing.show');
+    Route::get('/detail-marketing/{id}', [\App\Http\Controllers\DetailMarketingController::class, 'index'])->name('detail-marketing.show');
     Route::delete('/detail-marketing/{id}/{product}', [\App\Http\Controllers\DetailMarketingController::class, 'delete'])->name('detail-marketing.delete');
+});
+
+Route::middleware(['auth'])->group(callback: function () {
+    //Chat message
+    Route::get('/chat-message', [SampleController::class, 'chat'])->name('chat.message.show');
+    Route::get('/chat-message-sent', [SampleController::class, 'getListMessageSent'])->name('chat.message.sent');
+    Route::get('/chat-message-received', [SampleController::class, 'getListMessageReceived'])->name('chat.message.received');
+    //Setup marketing
+
 
 // End register member
     //View member

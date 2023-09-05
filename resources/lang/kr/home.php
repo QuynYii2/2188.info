@@ -106,6 +106,7 @@ return [
     'online shopping center' => '온라인 쇼핑 센터',
     'settled' => '입주',
     'sales' => '판매',
+    'new' => '새로운',
     'management' => '관리',
     'overseas customer development' => '해외 고객 개발',
     'all categories' => '모든 카테고리',
@@ -541,7 +542,7 @@ return [
     'Grand total' => 'Grand total',
     'Check out' => 'Check out',
     'Gift Wrapping' => 'Gift Wrapping',
-    'Save' => 'Save',
+    'Save' => '구하다',
     'inch' => 'inch',
     'Edit' => 'Edit',
     'TOTAL' => 'TOTAL',
@@ -555,6 +556,9 @@ return [
     'ELECTRONICS' => 'ELECTRONICS',
     'New' => 'New',
     'Sale' => 'Sale',
+    'received-by' => '받은 사람: ',
+    'posted-by' => '보낸 사람: ',
+    'time' => '시간: ',
 
 
 
