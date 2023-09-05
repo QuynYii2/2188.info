@@ -228,11 +228,6 @@
                                     </a>
 
                                     @if(!$checkBuyer)
-                                        {{--                                        @if($coin)--}}
-                                        {{--                                            <div class="drop-item">--}}
-                                        {{--                                                <a href="">Coins: {{$coin->quantity}}</a>--}}
-                                        {{--                                            </div>--}}
-                                        {{--                                        @endif--}}
                                         <a href="{{route('wish.list.index')}}" class="none_decoration">
                                             <div class="drop-item">
                                                 {{ __('home.Wish Lists') }}
@@ -281,14 +276,14 @@
 
                                             $isValid = (new \App\Http\Controllers\Frontend\HomeController())->checkSellerOrAdmin();
                                         @endphp
-                                        @if($isMember && $member->member != \App\Enums\RegisterMember::TRUST)
+                                        @if($isMember && $member->member == \App\Enums\RegisterMember::LOGISTIC)
                                             <div class="drop-item">
                                                 <a href="{{ route('stand.register.member.index', $member->id) }}">{{ __('home.Shop') }}</a>
                                             </div>
-                                        @elseif($isMember && $member->member == \App\Enums\RegisterMember::TRUST)
-                                            <div class="drop-item">
-                                                <a href="{{ route('trust.register.member.index') }}">{{ __('home.Shop') }}</a>
-                                            </div>
+{{--                                        @elseif($isMember && $member->member == \App\Enums\RegisterMember::TRUST)--}}
+{{--                                            <div class="drop-item">--}}
+{{--                                                <a href="{{ route('trust.register.member.index') }}">{{ __('home.Shop') }}</a>--}}
+{{--                                            </div>--}}
                                         @endif
 {{--                                        @if(!$checkTrust && $isValid==true)--}}
 {{--                                            <div class="drop-item">--}}
