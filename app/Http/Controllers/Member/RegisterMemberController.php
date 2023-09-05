@@ -94,9 +94,9 @@ class RegisterMemberController extends Controller
         }
         session()->forget('region');
         session()->put('region', $locale);
-        if ($company && $company->member == RegisterMember::TRUST) {
-            return back();
-        }
+//        if ($company && $company->member == RegisterMember::TRUST) {
+//            return back();
+//        }
         return view('frontend.pages.member.member-partner', compact('company', 'memberList'));
     }
 
