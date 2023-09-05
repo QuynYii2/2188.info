@@ -217,11 +217,11 @@
                                             onclick="logout()">{{ __('home.Sign Out') }}</button>
                                 </div>
                                 <div class="hover-list">
-{{--                                    <a href="{{route('profile.show')}}" class="none_decoration">--}}
-{{--                                        <div class="drop-item">--}}
-{{--                                            {{ __('home.profile') }}--}}
-{{--                                        </div>--}}
-{{--                                    </a>--}}
+                                    <a href="{{route('profile.show')}}" class="none_decoration">
+                                        <div class="drop-item">
+                                            {{ __('home.profile') }}
+                                        </div>
+                                    </a>
 
                                     @if(!$checkBuyer)
                                         {{--                                        @if($coin)--}}
