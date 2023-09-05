@@ -26,5 +26,16 @@ class MemberRegisterPersonSource extends Model
         'isVerify',
         'type',
         'status',
+        //
+        // ngày đăng kí
+        'datetime_register',
+        // tên tiếng anh
+        'name_en',
+        // chức trách
+        'responsibility',
+        // chức vụ
+        'position',
+        // id code
+        'code',
     ];
 }

@@ -130,6 +130,14 @@ Route::get(
     '/payment-register-member-success/{registerMember}',
     [AuthController::class, 'successRegisterMember']
 )->name('show.success.payment.member');
+Route::get(
+    '/register-member-ship/{member}',
+    [AuthController::class, 'registerMemberShip']
+)->name('show.register.member.ship');
+Route::get(
+    '/congratulation-register-member/{member}',
+    [AuthController::class, 'congratulationRegisterMember']
+)->name('show.register.member.congratulation');
 //Route::get('/register-member/{registerMember}', [AuthController::class, 'showRegisterMember'])->name('show.register.member');
 Route::post(
     '/register-member-info',

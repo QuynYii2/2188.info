@@ -92,6 +92,19 @@
         text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
     }
 
+    #type_business_checkboxes {
+        display: none;
+        border: 1px #dadada solid;
+    }
+
+    #type_business_checkboxes label {
+        display: block;
+    }
+
+    #type_business_checkboxes label:hover {
+        background-color: #cccccc;
+    }
+
 </style>
 @section('content')
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
@@ -110,28 +123,140 @@
                         <input type="text" class="d-none" name="member" value="{{ ($member->name) }}">
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="companyName">{{ __('home.Company Name') }}</label>
-                                <input type="text" class="form-control" id="companyName"
-                                       value="{{ $exitsMember ? $exitsMember->name : old('companyName') }}"
-                                       name="companyName" required>
+                                <label for="datetime_register"> Ngày đăng ký </label>
+                                <input type="text" class="form-control" id="datetime_register"
+                                       name="datetime_register" disabled>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="codeBusiness">{{ __('home.Code Business') }}</label>
-                                <input type="text" class="form-control" id="codeBusiness"
-                                       value="{{ $exitsMember ? $exitsMember->code_business : old('codeBusiness') }}"
-                                       name="codeBusiness"
-                                       required>
+                                <label for="number_clearance"> Số thông quan </label>
+                                <input type="text" class="form-control" id="number_clearance"
+                                       value="{{ $exitsMember ? $exitsMember->number_clearance : old('number_clearance') }}"
+                                       name="number_clearance">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="phoneNumber">{{ __('home.phone number') }}</label>
-                                <input type="number" class="form-control" id="phoneNumber"
-                                       value="{{ $exitsMember ? $exitsMember->phone : old('phoneNumber') }}"
-                                       name="phoneNumber" required>
+                                <label for="name_en"> Tên công ty Tiếng Anh</label>
+                                <input type="text" class="form-control" id="name_en"
+                                       value="{{ $exitsMember ? $exitsMember->name_en : old('name_en') }}"
+                                       name="name_en" required>
                             </div>
-                            <div class="form-group col-md-6 register-member">
-                                <label for="category">{{ __('home.Category') }}</label>
+
+                            <div class="form-group col-md-6">
+                                <label for="name_kr"> Tên công ty Tiếng Hàn</label>
+                                <input type="text" class="form-control" id="name_kr"
+                                       value="{{ $exitsMember ? $exitsMember->name_kr : old('name_kr') }}"
+                                       name="name_kr" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="phone">Điện thoại</label>
+                                <input type="text" class="form-control" id="phone"
+                                       value="{{ $exitsMember ? $exitsMember->phone : old('phone') }}"
+                                       name="phone" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="fax">Fax</label>
+                                <input type="text" class="form-control" id="fax"
+                                       value="{{ $exitsMember ? $exitsMember->fax : old('fax') }}"
+                                       name="fax">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="number_business">Số đăng ký kinh doanh</label>
+                                <input type="text" class="form-control" id="number_business"
+                                       value="{{ $exitsMember ? $exitsMember->number_business : old('number_business') }}"
+                                       name="number_business" required>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="giay_phep_kinh_doanh">Giấy phép kinh doanh </label>
+                                <input type="file" class="form-control" id="giay_phep_kinh_doanh"
+                                       name="giay_phep_kinh_doanh" {{ $exitsMember ? '' : 'required' }}">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="type_business">Ngành nghề kinh doanh</label>
+                                <div class="multiselect" style="position: relative">
+                                    <div class="selectBox" id="type_business_click" onclick="showCheckboxes1()">
+                                        <select>
+                                            <option>{{ __('home.Select the applicable category') }}</option>
+                                        </select>
+                                        <div class="overSelect"></div>
+                                    </div>
+                                    @if($exitsMember)
+                                        @php
+                                            $listCategory = $exitsMember->type_business;
+                                            $arrayCategory = explode(',', $listCategory);
+                                        @endphp
+                                        <div id="type_business_checkboxes" class="mt-1  checkboxes">
+                                            @foreach($categories as $category)
+                                                @if(!$category->parent_id)
+                                                    @foreach($arrayCategory as $item)
+                                                        @php
+                                                            $isChecked = false;
+                                                            if ($category->id == $item){
+                                                                $isChecked = true;
+                                                                break;
+                                                            }
+                                                        @endphp
+                                                    @endforeach
+                                                    <label class="ml-2" for="type_business-{{$category->id}}">
+                                                        <input type="checkbox" id="type_business-{{$category->id}}"
+                                                               name="type_business-{{$category->id}}"
+                                                               value="{{ ($category->id) }}"
+                                                               {{ $isChecked ? 'checked' : '' }}
+                                                               class="inputCheckboxCategory mr-2 p-3"/>
+                                                        <span class="labelCheckboxCategory">
+                                                            @if(locationHelper() == 'kr')
+                                                                <div class="item-text">{{ $category->name_ko }}</div>
+                                                            @elseif(locationHelper() == 'cn')
+                                                                <div class="item-text">{{$category->name_zh}}</div>
+                                                            @elseif(locationHelper() == 'jp')
+                                                                <div class="item-text">{{$category->name_ja}}</div>
+                                                            @elseif(locationHelper() == 'vi')
+                                                                <div class="item-text">{{$category->name_vi}}</div>
+                                                            @else
+                                                                <div class="item-text">{{$category->name_en}}</div>
+                                                            @endif</span>
+                                                    </label>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    @else
+                                        <div id="type_business_checkboxes" class="mt-1  checkboxes">
+                                            @foreach($categories as $category)
+                                                @if(!$category->parent_id)
+                                                    <label class="ml-2" for="type_business-{{$category->id}}">
+                                                        <input type="checkbox" id="type_business-{{$category->id}}"
+                                                               name="type_business-{{$category->id}}"
+                                                               value="{{ ($category->id) }}"
+                                                               class="inputCheckboxCategory mr-2 p-3"/>
+                                                        <span class="labelCheckboxCategory">
+                                                            @if(locationHelper() == 'kr')
+                                                                <div class="item-text">{{ $category->name_ko }}</div>
+                                                            @elseif(locationHelper() == 'cn')
+                                                                <div class="item-text">{{$category->name_zh}}</div>
+                                                            @elseif(locationHelper() == 'jp')
+                                                                <div class="item-text">{{$category->name_ja}}</div>
+                                                            @elseif(locationHelper() == 'vi')
+                                                                <div class="item-text">{{$category->name_vi}}</div>
+                                                            @else
+                                                                <div class="item-text">{{$category->name_en}}</div>
+                                                            @endif
+                                                        </span>
+                                                    </label>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="form-group col-md-3 register-member">
+                                <label for="category">Ngành hàng kinh doanh</label>
                                 <div class="multiselect" style="position: relative">
                                     <div class="selectBox" id="div-click" onclick="showCheckboxes()">
                                         <select>
@@ -141,7 +266,7 @@
                                     </div>
                                     @if($exitsMember)
                                         @php
-                                            $listCategory = $exitsMember->category_id;
+                                            $listCategory = $exitsMember->code_business;
                                             $arrayCategory = explode(',', $listCategory);
                                         @endphp
                                         <div id="checkboxes" class="mt-1  checkboxes">
@@ -161,7 +286,7 @@
                                                                name="category-{{$category->id}}"
                                                                value="{{ ($category->id) }}"
                                                                {{ $isChecked ? 'checked' : '' }}
-                                                               class="inputCheckboxCategory mr-2 p-3"/>
+                                                               class="inputCheckboxCategory1 mr-2 p-3"/>
                                                         <span class="labelCheckboxCategory">
                                                             @if(locationHelper() == 'kr')
                                                                 <div class="item-text">{{ $category->name_ko }}</div>
@@ -194,7 +319,7 @@
                                                                        name="category-{{$child->id}}"
                                                                        value="{{$child->id}}"
                                                                        {{ $isChecked1 ? 'checked' : '' }}
-                                                                       class="inputCheckboxCategory mr-2 p-3"/>
+                                                                       class="inputCheckboxCategory1 mr-2 p-3"/>
                                                                 <span class="labelCheckboxCategory">@if(locationHelper() == 'kr')
                                                                         <div class="item-text">{{ $child->name_ko }}</div>
                                                                     @elseif(locationHelper() == 'cn')
@@ -225,7 +350,7 @@
                                                                            name="category-{{$child2->id}}"
                                                                            value="{{$child2->id}}"
                                                                            {{ $isChecked2 ? 'checked' : '' }}
-                                                                           class="inputCheckboxCategory mr-2 p-3"/>
+                                                                           class="inputCheckboxCategory1 mr-2 p-3"/>
                                                                     <span class="labelCheckboxCategory">@if(locationHelper() == 'kr')
                                                                             <div class="item-text">{{ $child2->name_ko }}</div>
                                                                         @elseif(locationHelper() == 'cn')
@@ -252,7 +377,7 @@
                                                         <input type="checkbox" id="category-{{$category->id}}"
                                                                name="category-{{$category->id}}"
                                                                value="{{ ($category->id) }}"
-                                                               class="inputCheckboxCategory mr-2 p-3"/>
+                                                               class="inputCheckboxCategory1 mr-2 p-3"/>
                                                         <span class="labelCheckboxCategory">
                                                             @if(locationHelper() == 'kr')
                                                                 <div class="item-text">{{ $category->name_ko }}</div>
@@ -276,7 +401,7 @@
                                                                 <input type="checkbox" id="category-{{$child->id}}"
                                                                        name="category-{{$child->id}}"
                                                                        value="{{$child->id}}"
-                                                                       class="inputCheckboxCategory mr-2 p-3"/>
+                                                                       class="inputCheckboxCategory1 mr-2 p-3"/>
                                                                 <span class="labelCheckboxCategory">
                                                                     @if(locationHelper() == 'kr')
                                                                         <div class="item-text">{{ $child->name_ko }}</div>
@@ -299,7 +424,7 @@
                                                                     <input type="checkbox" id="category-{{$child2->id}}"
                                                                            name="category-{{$child2->id}}"
                                                                            value="{{$child2->id}}"
-                                                                           class="inputCheckboxCategory mr-2 p-3"/>
+                                                                           class="inputCheckboxCategory1 mr-2 p-3"/>
                                                                     <span class="labelCheckboxCategory">@if(locationHelper() == 'kr')
                                                                             <div class="item-text">{{ $child2->name_ko }}</div>
                                                                         @elseif(locationHelper() == 'cn')
@@ -322,61 +447,99 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
+                                <label for="status_business">Trạng thái công ty</label>
+                                <input type="text" class="form-control" id="status_business"
+                                       value="{{ $exitsMember ? $exitsMember->name : old('status_business') }}"
+                                       name="status_business" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="certify_business">Giấy chứng nhận ngành nghề</label>
+                                <input type="file" class="form-control" id="certify_business"
+                                       name="certify_business" {{ $exitsMember ? '' : 'required' }}">
+                            </div>
+                        </div>
+                        <h6 class="">Địa chỉ kinh doanh Tiếng Anh:</h6>
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
                                 <label for="countries-select">{{ __('home.Select country') }}</label>
                                 <select class="form-control" id="countries-select" name="countries-select"
                                         onchange="getListState(this.value)" required>
                                 </select>
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-2">
                                 <label for="cities-select">{{ __('home.Choose the city') }}</label>
                                 <select class="form-control" id="cities-select" name="cities-select"
                                         onchange="getListCity(this.value)">
                                     <option value="">-- {{ __('home.Choose the city') }} --</option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-2">
                                 <label for="provinces-select">{{ __('home.Select district/district') }}</label>
                                 <select class="form-control" id="provinces-select" name="provinces-select"
                                         onchange="getListWard(this.value)">
                                     <option value="">-- {{ __('home.Select district/district') }} --</option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-3">
-                                <label for="wards-select">{{ __('home.Select ward/commune') }}</label>
-                                <select class="form-control" name="wards-select" id="wards-select">
-                                    <option value="">-- {{ __('home.Select ward/commune') }} --</option>
+                            <div class="form-group col-md-6">
+                                <label for="address_en">Địa chỉ chi tiết</label>
+                                <input type="text" name="address_en" id="address_en" class="form-control" required
+                                       value="{{ $exitsMember ? $exitsMember->address_en : old('address_en') }}">
+                            </div>
+                        </div>
+                        <h6 class="">Địa chỉ kinh doanh Tiếng Hàn:</h6>
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <label for="countries-select-1">{{ __('home.Select country') }}</label>
+                                <select class="form-control" id="countries-select-1" name="countries-select-1"
+                                        onchange="getListState1(this.value)" required>
                                 </select>
                             </div>
-                            @php
-                                $isValid = false;
-                                if ($member->name == \App\Enums\RegisterMember::BUYER){
-                                    $isValid = true;
-                                }
-                            @endphp
-                            @if($isValid == false)
-                                @if($exitsMember && $exitsMember->giay_phep_kinh_doanh)
-                                    <img src="{{asset('storage/'.$exitsMember->giay_phep_kinh_doanh)}}" alt="">
-                                @else
-                                    <div class="form-group col-md-12">
-                                        <div class="image-upload">
-                                            <div class="image-edit">
-                                                <input type='file' name="giay_phep_kinh_doanh" id="coverUpload"
-                                                       class="imageUpload" data-preview="imagePreview" accept="image/*"/>
-                                                <label for="coverUpload"></label>
-                                            </div>
-                                            <div class="preview">
-                                                <div id="imagePreview"></div>
-                                            </div>
-                                            <p class="error browser">
-                                                {{ __('home.Your browser does not support') }}
-                                                <a href="https://developer.mozilla.org/en/DOM/window.URL">URL</a> or
-                                                <a href="https://developer.mozilla.org/en/DOM/FileReader">{{ __('home.FileReader') }}</a>
-                                            </p>
-                                            <p class="error invalid-file"></p>
-                                        </div>
-                                    </div>
-                                @endif
-                            @endif
+                            <div class="form-group col-md-2">
+                                <label for="cities-select-1">{{ __('home.Choose the city') }}</label>
+                                <select class="form-control" id="cities-select-1" name="cities-select-1"
+                                        onchange="getListCity1(this.value)">
+                                    <option value="">-- {{ __('home.Choose the city') }} --</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="provinces-select-1">{{ __('home.Select district/district') }}</label>
+                                <select class="form-control" id="provinces-select-1" name="provinces-select-1"
+                                        onchange="getListWard1(this.value)">
+                                    <option value="">-- {{ __('home.Select district/district') }} --</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="address_kr"> Địa chỉ chi tiết</label>
+                                <input type="text" name="address_kr" id="address_kr" class="form-control" required
+                                       value="{{ $exitsMember ? $exitsMember->address_kr : old('address_kr') }}">
+                            </div>
+                        </div>
+                        <h6 class="">Mã hàng:</h6>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="code_1">Phân loại lần 1</label>
+                                <input type="text" class="form-control" id="code_1"
+                                       value="{{ $exitsMember ? $exitsMember->code_1 : old('code_1') }}"
+                                       name="code_1" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="code_2">Phân loại lần 3</label>
+                                <input type="text" class="form-control" id="code_2"
+                                       value="{{ $exitsMember ? $exitsMember->code_2 : old('code_2') }}"
+                                       name="code_2" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="code_3">Phân loại lần 3</label>
+                                <input type="text" class="form-control" id="code_3"
+                                       value="{{ $exitsMember ? $exitsMember->code_3 : old('code_3') }}"
+                                       name="code_3" required>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="code_4">Phân loại lần 4</label>
+                                <input type="text" class="form-control" id="code_4"
+                                       value="{{ $exitsMember ? $exitsMember->code_4 : old('code_4') }}"
+                                       name="code_4" required>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">{{ __('home.sign up') }}</button>
                     </form>
@@ -385,6 +548,7 @@
             </div>
         </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
@@ -396,7 +560,23 @@
                     $('.inputCheckboxCategory:checkbox:not(:checked)').prop('disabled', false);
                 }
             })
+
+            $('.inputCheckboxCategory1').on('click', function () {
+                let count = document.querySelectorAll('.inputCheckboxCategory1:checked').length
+                if (count > 3) {
+                    $('.inputCheckboxCategory1:checkbox:not(:checked)').prop('disabled', true);
+                } else {
+                    $('.inputCheckboxCategory1:checkbox:not(:checked)').prop('disabled', false);
+                }
+            })
         })
+
+        function getDate() {
+            let nowTime = new Date().toLocaleString();
+            $('#datetime_register').val(nowTime);
+        }
+
+        getDate();
     </script>
     <script>
         var expanded = false;
@@ -405,7 +585,6 @@
             var checkboxes = document.getElementById("checkboxes");
             if (!expanded) {
                 window.addEventListener('click', function (e) {
-                    var checkboxes = document.getElementById("checkboxes");
                     var div = document.getElementById('div-click');
                     if (checkboxes.contains(e.target) || div.contains(e.target)) {
                         $('#div-click').on('click', function () {
@@ -430,15 +609,50 @@
             }
         }
 
+        var expanded1 = false;
+
+        function showCheckboxes1() {
+            var checkboxes1 = document.getElementById("type_business_checkboxes");
+            if (!expanded) {
+                window.addEventListener('click', function (e) {
+                    let div = document.getElementById('type_business_click');
+                    if (checkboxes1.contains(e.target) || div.contains(e.target)) {
+                        $('#type_business_click').on('click', function () {
+                            if (!expanded) {
+                                checkboxes1.style.display = "block";
+                                expanded = true;
+                            } else {
+                                checkboxes1.style.display = "none";
+                                expanded = false;
+                            }
+                        });
+                    } else {
+                        checkboxes1.style.display = "none";
+                        expanded = false;
+                    }
+                })
+                checkboxes1.style.display = "block";
+                expanded = true;
+            } else {
+                checkboxes1.style.display = "none";
+                expanded = false;
+            }
+        }
 
         const ID_COUNTRY = 'countries-select'
         const ID_STATE = 'cities-select'
         const ID_CITY = 'provinces-select'
         const ID_WARD = 'wards-select'
 
+        const ID_COUNTRY_1 = 'countries-select-1'
+        const ID_STATE_1 = 'cities-select-1'
+        const ID_CITY_1 = 'provinces-select-1'
+        const ID_WARD_1 = 'wards-select-1'
+
         let country_code = ''
         let city_code = ''
         getListNation();
+        getListNation1();
 
         function getListNation() {
             let url = '{{ route('location.nation.get') }}'
@@ -446,7 +660,6 @@
                 .then(async function (res) {
                     const data = await res.json();
                     makeHTMLFromJson(data, ID_COUNTRY)
-
                     autoSelectedOption(ID_STATE)
                 });
         }
@@ -484,6 +697,52 @@
                 .then(async function (res) {
                     const data = await res.json();
                     makeHTMLFromJson(data, ID_WARD)
+                });
+        }
+
+        function getListNation1() {
+            let url = '{{ route('location.nation.get') }}'
+            fetch(url)
+                .then(async function (res) {
+                    const data = await res.json();
+                    makeHTMLFromJson(data, ID_COUNTRY_1)
+                    autoSelectedOption(ID_STATE_1)
+                });
+        }
+
+        function getListState1(id) {
+            let url = '{{ route('location.state.get', ['id' => ':id']) }}';
+            url = url.replace(':id', id);
+            country_code = id;
+            fetch(url)
+                .then(async function (res) {
+                    clearDataOption();
+                    const data = await res.json();
+                    makeHTMLFromJson(data, ID_STATE_1)
+                    autoSelectedOption(ID_CITY_1)
+                });
+        }
+
+        function getListCity1(id) {
+            let url = '{{ route('location.city.get', ['id' => ':id', 'code' => ':code']) }}';
+            url = url.replace(':id', id);
+            url = url.replace(':code', country_code);
+            fetch(url)
+                .then(async function (res) {
+                    const data = await res.json();
+                    makeHTMLFromJson(data, ID_CITY_1)
+                    autoSelectedOption(ID_WARD_1)
+                });
+        }
+
+        function getListWard1(id) {
+            let url = '{{ route('location.ward.get', ['id' => ':id', 'code' => ':code']) }}';
+            url = url.replace(':id', id);
+            url = url.replace(':code', country_code);
+            fetch(url)
+                .then(async function (res) {
+                    const data = await res.json();
+                    makeHTMLFromJson(data, ID_WARD_1)
                 });
         }
 
@@ -531,75 +790,75 @@
 
     </script>
 
-    <script>
-        $(function () {
-            "use strict";
+    {{--    <script>--}}
+    {{--        $(function () {--}}
+    {{--            "use strict";--}}
 
-            // Hide URL/FileReader API requirement message in capable browsers:
-            if (
-                window.createObjectURL ||
-                window.URL ||
-                window.webkitURL ||
-                window.FileReader
-            ) {
-                $(".browser").hide();
-                $(".preview").children().show();
-            }
+    {{--            // Hide URL/FileReader API requirement message in capable browsers:--}}
+    {{--            if (--}}
+    {{--                window.createObjectURL ||--}}
+    {{--                window.URL ||--}}
+    {{--                window.webkitURL ||--}}
+    {{--                window.FileReader--}}
+    {{--            ) {--}}
+    {{--                $(".browser").hide();--}}
+    {{--                $(".preview").children().show();--}}
+    {{--            }--}}
 
-            function isDataURL(s) {
-                return !!s.match(isDataURL.regex);
-            }
+    {{--            function isDataURL(s) {--}}
+    {{--                return !!s.match(isDataURL.regex);--}}
+    {{--            }--}}
 
-            isDataURL.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,[a-z0-9\!\$\&\'\,\(\)\*\+\,\;\=\-\.\_\~\:\@\/\?\%\s]*\s*$/i;
+    {{--            isDataURL.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,[a-z0-9\!\$\&\'\,\(\)\*\+\,\;\=\-\.\_\~\:\@\/\?\%\s]*\s*$/i;--}}
 
-            function readURL(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    var preview = $(input).data("preview");
-                    var _invalid = $(input).parent().parent().find(".invalid-file");
+    {{--            function readURL(input) {--}}
+    {{--                if (input.files && input.files[0]) {--}}
+    {{--                    var reader = new FileReader();--}}
+    {{--                    var preview = $(input).data("preview");--}}
+    {{--                    var _invalid = $(input).parent().parent().find(".invalid-file");--}}
 
-                    reader.onload = function (e) {
-                        if (isDataURL(e.target.result)) {
-                            _invalid.hide();
-                            $("#" + preview).css(
-                                "background-image",
-                                "url(" + e.target.result + ")"
-                            );
-                            $("#" + preview).hide();
-                            $("#" + preview).fadeIn(650);
-                        } else {
-                            $("#" + preview).hide();
+    {{--                    reader.onload = function (e) {--}}
+    {{--                        if (isDataURL(e.target.result)) {--}}
+    {{--                            _invalid.hide();--}}
+    {{--                            $("#" + preview).css(--}}
+    {{--                                "background-image",--}}
+    {{--                                "url(" + e.target.result + ")"--}}
+    {{--                            );--}}
+    {{--                            $("#" + preview).hide();--}}
+    {{--                            $("#" + preview).fadeIn(650);--}}
+    {{--                        } else {--}}
+    {{--                            $("#" + preview).hide();--}}
 
-                            _invalid.html(
-                                '<div class="alert alert-danger"><strong>Error!</strong> Invalid image file.</div>'
-                            );
-                            _invalid.show();
-                        }
-                    };
+    {{--                            _invalid.html(--}}
+    {{--                                '<div class="alert alert-danger"><strong>Error!</strong> Invalid image file.</div>'--}}
+    {{--                            );--}}
+    {{--                            _invalid.show();--}}
+    {{--                        }--}}
+    {{--                    };--}}
 
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
+    {{--                    reader.readAsDataURL(input.files[0]);--}}
+    {{--                }--}}
+    {{--            }--}}
 
-            $(".imageUpload").bind("change", function (e) {
-                e.preventDefault();
+    {{--            $(".imageUpload").bind("change", function (e) {--}}
+    {{--                e.preventDefault();--}}
 
-                readURL(this);
-            });
-        });
+    {{--                readURL(this);--}}
+    {{--            });--}}
+    {{--        });--}}
 
-    </script>
-    <script>
-        window.onbeforeunload = function (e) {
-            var y = window.event.clientY;
-            if (y < 0) {
-                return 'Window closed';
-            }
-            else {
-                return 'Window refreshed';
-            }
-        };
-    </script>
+    {{--    </script>--}}
+    {{--    <script>--}}
+    {{--        window.onbeforeunload = function (e) {--}}
+    {{--            var y = window.event.clientY;--}}
+    {{--            if (y < 0) {--}}
+    {{--                return 'Window closed';--}}
+    {{--            }--}}
+    {{--            else {--}}
+    {{--                return 'Window refreshed';--}}
+    {{--            }--}}
+    {{--        };--}}
+    {{--    </script>--}}
 @endsection
 
 

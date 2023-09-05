@@ -350,13 +350,34 @@ class AuthController extends Controller
             $memberID = $request->input('member_id');
 
             $address = $request->input('wards-select') . ', ' . $request->input('provinces-select') . ', ' . $request->input('cities-select') . ', ' . $request->input('countries-select');
-            $companyName = $request->input('companyName');
-            $numberBusiness = $request->input('numberBusiness');
-            $codeBusiness = $request->input('codeBusiness');
-            $phoneNumber = $request->input('phoneNumber');
+            $companyName = $request->input('name_en');
+            $numberBusiness = $request->input('number_business');
+            $phoneNumber = $request->input('phone');
             $fax = $request->input('fax');
-            $type = $request->input('type');
+            if (!$fax) {
+                $fax = 'default';
+            }
             $registerMember = $request->input('member');
+            //
+            $datetime_register = Carbon::now()->addHours(7);
+            $number_clearance = $request->input('number_clearance');
+            $name_en = $request->input('name_en');
+            $name_kr = $request->input('name_kr');
+            $address_en = $request->input('address_en');
+            $address_kr = $request->input('address_kr');
+            //file
+            if ($request->hasFile('certify_business')) {
+                $gpkd = $request->file('certify_business');
+                $certify_business = $gpkd->store('certify_business', 'public');
+            } else {
+                $certify_business = '';
+            }
+
+            $status_business = $request->input('status_business');
+            $code_1 = $request->input('code_1');
+            $code_2 = $request->input('code_2');
+            $code_3 = $request->input('code_3');
+            $code_4 = $request->input('code_4');
 
 
             if ($request->hasFile('giay_phep_kinh_doanh')) {
@@ -365,10 +386,26 @@ class AuthController extends Controller
             } else {
                 $gpkdPath = '';
             }
-            $arrayIds = $this->getArrayIds($request);
+
+            $arrayIds = $this->getArrayIds($request, 'category-');
             if ($arrayIds) {
                 try {
-                    $listIDs = implode(',', $arrayIds);
+                    $categories = implode(',', $arrayIds);
+                } catch (\Exception $exception) {
+                    alert()->error('Error', 'Error, Please choosing your apply category!');
+                    return back();
+                }
+            } else {
+                alert()->error('Error', 'Error, Please choosing your apply category!');
+                return back();
+            }
+
+            $codeBusiness = $categories;
+
+            $arrayIds = $this->getArrayIds($request, 'type_business-');
+            if ($arrayIds) {
+                try {
+                    $type_business = implode(',', $arrayIds);
                 } catch (\Exception $exception) {
                     alert()->error('Error', 'Error, Please choosing your apply!');
                     return back();
@@ -401,13 +438,27 @@ class AuthController extends Controller
                 $exitsMember->user_id = $id;
                 $exitsMember->name = $companyName;
                 $exitsMember->phone = $phoneNumber;
-                $exitsMember->category_id = $listIDs;
+                $exitsMember->category_id = $categories;
+                $exitsMember->numberBusiness = $numberBusiness;
+                $exitsMember->type_business = $type_business;
                 $exitsMember->code_business = $codeBusiness;
                 $exitsMember->giay_phep_kinh_doanh = $gpkdPath;
                 $exitsMember->address = $address;
                 $exitsMember->member_id = $memberID;
                 $exitsMember->member = $registerMember;
                 $exitsMember->status = $status;
+
+                $exitsMember->number_clearance = $number_clearance;
+                $exitsMember->name_en = $name_en;
+                $exitsMember->name_kr = $name_kr;
+                $exitsMember->address_en = $address_en;
+                $exitsMember->address_kr = $address_kr;
+                $exitsMember->certify_business = $certify_business;
+                $exitsMember->status_business = $status_business;
+                $exitsMember->code_1 = $code_1;
+                $exitsMember->code_2 = $code_2;
+                $exitsMember->code_3 = $code_3;
+                $exitsMember->code_4 = $code_4;
 
                 $success = $exitsMember->save();
                 $newUser = $exitsMember;
@@ -416,17 +467,30 @@ class AuthController extends Controller
                     'user_id' => $id,
                     'name' => $companyName,
                     'phone' => $phoneNumber,
-                    'fax' => 'default',
+                    'fax' => $fax,
                     'code_fax' => 'default',
-                    'category_id' => $listIDs,
+                    'category_id' => $categories,
                     'code_business' => $codeBusiness,
-                    'number_business' => 'default',
-                    'type_business' => 'default',
+                    'number_business' => $numberBusiness,
+                    'type_business' => $type_business,
                     'member' => $registerMember,
                     'address' => $address,
                     'member_id' => $memberID,
                     'status' => $status,
                     'giay_phep_kinh_doanh' => $gpkdPath,
+
+                    'datetime_register' => $datetime_register,
+                    'number_clearance' => $number_clearance,
+                    'name_en' => $name_en,
+                    'name_kr' => $name_kr,
+                    'address_en' => $address_en,
+                    'address_kr' => $address_kr,
+                    'certify_business' => $certify_business,
+                    'status_business' => $status_business,
+                    'code_1' => $code_1,
+                    'code_2' => $code_2,
+                    'code_3' => $code_3,
+                    'code_4' => $code_4,
                 ];
 
                 $success = MemberRegisterInfo::create($create);
@@ -462,7 +526,7 @@ class AuthController extends Controller
     public function registerMemberPerson(Request $request)
     {
         try {
-            $fullName = $request->input('fullName');
+            $fullName = $request->input('name');
             $password = $request->input('password');
             $passwordConfirm = $request->input('passwordConfirm');
             $phoneNumber = $request->input('phoneNumber');
@@ -470,6 +534,12 @@ class AuthController extends Controller
             $rank = $request->input('rank');
             $sns_account = $request->input('sns_account');
             $member = $request->input('member');
+            //
+            $datetime_register = Carbon::now()->addHours(7);
+            $name_en = $request->input('name_en');
+            $responsibility = $request->input('responsibility');
+            $position = $request->input('position');
+            $codeItem = $request->input('code');
 
             if ($password !== $passwordConfirm) {
                 alert()->error('Error', 'Error, Password or Password confirm incorrect!');
@@ -532,6 +602,11 @@ class AuthController extends Controller
                 'verifyCode' => $code,
                 'isVerify' => 0,
                 'price' => $price,
+                'datetime_register' => $datetime_register,
+                'name_en' => $name_en,
+                'responsibility' => $responsibility,
+                'position' => $position,
+                'code' => $codeItem,
                 'status' => MemberRegisterPersonSourceStatus::INACTIVE
             ];
 
@@ -541,9 +616,15 @@ class AuthController extends Controller
                 $memberPersonSource->name = $fullName;
                 $memberPersonSource->phone = $phoneNumber;
                 $memberPersonSource->rank = $rank;
-                $memberPersonSource->member_id = $member;
+
                 $memberPersonSource->sns_account = $sns_account;
                 $memberPersonSource->price = $price;
+
+                $memberPersonSource->datetime_register = $datetime_register;
+                $memberPersonSource->name_en = $name_en;
+                $memberPersonSource->position = $position;
+                $memberPersonSource->responsibility = $responsibility;
+
                 $memberPersonSource->status = MemberRegisterPersonSourceStatus::INACTIVE;
                 if ($email == $memberPersonSource->email) {
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
@@ -591,7 +672,6 @@ class AuthController extends Controller
             alert()->error('Error', 'Error, Create error!');
             return back();
         } catch (\Exception $exception) {
-            dd($exception);
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
@@ -622,14 +702,20 @@ class AuthController extends Controller
     public function registerMemberPersonRepresent(Request $request)
     {
         try {
-            $fullName = $request->input('fullName');
+            $fullName = $request->input('name');
             $password = $request->input('password');
             $passwordConfirm = $request->input('passwordConfirm');
             $phoneNumber = $request->input('phoneNumber');
             $email = $request->input('email');
-            $staff = $request->input('staff');
+            $staff = $request->input('rank');
             $sns_account = $request->input('sns_account');
             $personSource = $request->input('person');
+            //
+            $datetime_register = Carbon::now()->addHours(7);
+            $name_en = $request->input('name_en');
+            $responsibility = $request->input('responsibility');
+            $position = $request->input('position');
+            $codeItem = $request->input('code');
 
             if ($password !== $passwordConfirm) {
                 alert()->error('Error', 'Error, Password or Password confirm incorrect!');
@@ -663,6 +749,13 @@ class AuthController extends Controller
                 'type' => MemberRegisterType::REPRESENT,
                 'verifyCode' => $code,
                 'isVerify' => 0,
+
+                'datetime_register' => $datetime_register,
+                'name_en' => $name_en,
+                'responsibility' => $responsibility,
+                'position' => $position,
+                'code' => $codeItem,
+
                 'status' => MemberRegisterPersonSourceStatus::INACTIVE
             ];
 
@@ -689,9 +782,15 @@ class AuthController extends Controller
                 $memberPerson->user_id = $id;
                 $memberPerson->name = $fullName;
                 $memberPerson->phone = $phoneNumber;
-                $memberPerson->member_id = $memberBefore->member_id;
+
                 $memberPerson->sns_account = $sns_account;
                 $memberPerson->price = $memberBefore->price;
+
+                $memberPerson->datetime_register = $datetime_register;
+                $memberPerson->name_en = $name_en;
+                $memberPerson->position = $position;
+                $memberPerson->responsibility = $responsibility;
+
                 $memberPerson->status = MemberRegisterPersonSourceStatus::INACTIVE;
                 if ($email == $memberPerson->email) {
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
@@ -799,6 +898,33 @@ class AuthController extends Controller
         return view('frontend.pages.registerMember.success-member', compact('registerMember'));
     }
 
+    /*Show form register membership*/
+    public function registerMemberShip($member, Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $memberRepresent = MemberRegisterPersonSource::find($member);
+        if (!$memberRepresent) {
+            return back();
+        }
+        $memberSource = MemberRegisterPersonSource::find($memberRepresent->person);
+        return view('frontend.pages.registerMember.membership', compact('memberRepresent', 'memberSource'));
+    }
+
+    /*Show form register membership*/
+    public function congratulationRegisterMember($member, Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $memberRepresent = MemberRegisterPersonSource::find($member);
+        if (!$memberRepresent) {
+            return back();
+        }
+        $memberSource = MemberRegisterPersonSource::find($memberRepresent->person);
+        $company = MemberRegisterInfo::find($memberRepresent->member_id);
+        $member = Member::find($company->member_id);
+        return view('frontend.pages.registerMember.congratulation',
+            compact('memberRepresent', 'memberSource', 'company', 'member'));
+    }
+
     /*Show form nhập verify code để send mail*/
     public function processVerifyEmail($email, Request $request)
     {
@@ -843,7 +969,7 @@ class AuthController extends Controller
                     ]));
                 } else {
                     alert()->success('Success', 'Success, Verify success! Please login and paid bill');
-                    return redirect(route('login'));
+                    return redirect(route('show.register.member.ship', $member->id));
                 }
             }
             alert()->error('Error', 'Error, Verify error!');
@@ -863,13 +989,13 @@ class AuthController extends Controller
         return redirect('/');
     }
 
-    private function getArrayIds(Request $request)
+    private function getArrayIds(Request $request, $input)
     {
         $listCategoryName[] = null;
         $arrayIds = null;
         $categories = Category::all();
         foreach ($categories as $category) {
-            $name = 'category-' . $category->id;
+            $name = $input . $category->id;
             $listCategoryName[] = $name;
         }
         if ($listCategoryName != null) {
