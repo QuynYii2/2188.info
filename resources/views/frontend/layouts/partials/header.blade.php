@@ -1176,17 +1176,17 @@
             </div>
             <div class="modal-body">
                 <div class="d-flex justify-content-center align-items-center">
-                    <a href="{{route('parent.register.member.locale', 'kr')}}">
+                    <a href="{{route('trust.register.member.locale', 'kr')}}">
                         <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
                              src="{{ asset('images/korea.png') }}"
                              alt="">
                     </a>
-                    <a href="{{route('parent.register.member.locale', 'jp')}}">
+                    <a href="{{route('trust.register.member.locale', 'jp')}}">
                         <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
                              src="{{ asset('images/japan.webp') }}"
                              alt="">
                     </a>
-                    <a href="{{route('parent.register.member.locale', 'cn')}}">
+                    <a href="{{route('trust.register.member.locale', 'cn')}}">
                         <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
                              src="{{ asset('images/china.webp') }}"
                              alt="">
