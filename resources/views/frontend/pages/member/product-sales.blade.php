@@ -10,4 +10,3 @@
         </tr>
     @endforeach
 @endif
-{{__('home.sales')}}

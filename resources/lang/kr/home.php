@@ -5,7 +5,7 @@ return [
     'about' => '회사소개',
     'contact' => '연락처',
     'search' => '검색',
-    'placeholder search' => '제품 검색',
+    'placeholder search' => '검색 - 여기 다 있다',
     'sign in' => '로그인',
     'sign up' => '회원가입',
     'seller' => '판매자',
@@ -38,7 +38,7 @@ return [
     'favorite product' => '관심있는 제품',
     'product to buy later' => '나중에 구입할 제품',
     'my review' => '나의 후기 내역',
-    'share with profit' => '친구들과 공유',
+    'share with profit' => '공유하기',
     'insurance contract' => '보험 계약',
     'buy first pay later' => '선매후불',
     'discount code' => '할인 코드',
@@ -256,7 +256,7 @@ return [
     'shop by categories' => '카테고리별로 쇼핑하기',
     'Lookbook'=> '매뉴얼',
     'Shipping & Returns'=>'배송 및 반품',
-    'Contact Us'=>'문의',
+    'Contact Us'=>'Contact Us',
     'Blog'=>'블로그',
     'Gift Cards'=>'기프트 카드',
     'Wish Lists'=>'위시리스트',
@@ -271,7 +271,7 @@ return [
     'Theme FAQs'=>'자주 묻는 질문',
     'SHOP BY CATEGORIES'=>'카테고리별 쇼핑',
     'New Products' => '신제품',
-    'Hot Deals' => '핫딜',
+    'Hot Deals' => 'Hot Deals',
     'Top Brands' => 'TOP 브랜드',
     'SUBSCRIBE TO OUR NEWSLETTER' => '뉴스레터 구독',
     'CATEGORIES' => '카테고리',
@@ -315,7 +315,7 @@ return [
     'Related Products' => '관련 상품',
     'Add To Cart' => '장바구니에 추가',
     'Customers Also Viewed' => '고객도 조회',
-    'remaining' => '남아 있음',
+    'remaining' => '잔고',
     'Household Plants' => '가정용 식물',
     'Bonsai' => '분재',
     'Quick view' => '퀵뷰',
@@ -336,7 +336,7 @@ return [
     'POWER PRODUCTION ' => '파워생산회원',
     'Member' =>'회원',
     'Member booth' => '회원 상점 ',
-    'Booth' => '가게',
+    'Booth' => '상품 전시장',
     'Partner List' => '지정 거래처',
     'Message received' => '받은 문서',
     'Message sent' => '보낸 문서',
@@ -464,20 +464,20 @@ return [
     'Returns & Refund' => '반품 및 환불',
     'Customer care' => '고객지원',
     'Warranty Policy' => '보증 정책',
-    'ABOUT 2188' => '2188 소개',
-    'About 2188 Vietnam' => '2188 베트남 소개',
-    'Recruitment' => '채용',
+    'ABOUT 2188' => 'About 2188',
+    'About 2188 Vietnam' => 'About 2188 Vietnam',
+    'Recruitment' => '채용 공고',
     'Terms 2188' => '2188 이용약관',
     'Privacy Policy' => '개인 정보 보호 정책',
     'Genuine' => '정품',
-    'Flash Sales' => '플래시 세일',
+    'Flash Sales' => 'FLASH SALE',
     'Ambassador Programme' => '앰버서더 프로그램',
     'Media Contact' => '미디어 연락',
-    'PAYMENT' => '결제',
-    'LOGISTICS' => '물류업체',
-    'FOLLOW US' => '팔로우 해주십시오',
-    'APP DOWNLOAD' => '앱 다운받기',
-    '© 2023. All Rights Reserved.' => '© 2023. 모든 권리가 예약되었습니다.',
+    'PAYMENT' => 'PAYMENT METHODS',
+    'LOGISTICS' => 'LOGISTICS',
+    'FOLLOW US' => 'FOLLOW US',
+    'APP DOWNLOAD' => 'APP DOWNLOAD',
+    '© 2023. All Rights Reserved.' => '© 2023. All Rights Reserved.',
     'Country & Region' => '국가 및 지역',
     'TERM OF SERVICE' => '서비스 약관',
     'SHIPPING POLICY' => '배송 약관',
@@ -491,7 +491,7 @@ return [
     ' Why shop with us?' => '왜 저희와 쇼핑해야 할까?',
     'QUALITY AND SAVING' => '품질 및 저축',
     'Comprehensive quality control and affordable prices' => '철저한 품질 관리 및 저렴한 가격',
-    'Sign up to upgrade' => '업그레이드 하려면 하십시오',
+    'Sign up to upgrade' => '회원등업',
     'List of customers' => '지정 거래처',
     'Product details' => '제품 내역',
     'Reset select' => '원태 복귀',
@@ -525,94 +525,38 @@ return [
     'Please select star rating' => '별 등급을 선택하십시오',
     // NEW V2.222222
     'Start orde' => '시작 주문',
-    'COUPON CODE' => 'MÃ GIẢM GIÁ',
-    'Enter your coupon code if you have one.' => 'Nhập mã phiếu giảm giá của bạn nếu bạn có.',
-    'Apply' => 'Áp dụng',
-    'GIFT CERTIFICATE' => 'PHIẾU QUÀ TẶNG',
-    'SHIPPING' => 'ĐANG CHUYỂN HÀNG',
-    'Country' => 'Quốc gia',
-    'VietNam' => 'VietNam',
-    'TrungQuoc' => 'TrungQuoc',
-    'Han Quoc' => 'Han Quoc',
-    'State/Province' => 'Tiểu bang/Tỉnh',
+    'COUPON CODE' => '할인 코드',
+    'Enter your coupon code if you have one.' => '할인코드를 입력하십시오',
+    'Apply' => '적용',
+    'GIFT CERTIFICATE' => '상품권',
+    'SHIPPING' => '배송 중',
+    'Country' => '국가 선택',
+    'VietNam' => '베트남',
+    'TrungQuoc' => '중국',
+    'Han Quoc' => '한국',
+    'State/Province' => 'State/Province',
     'Suburb/City' => 'Suburb/City',
-    'Zip/Postcode' => 'Zip/Postcode',
-    'Estimate Shipping' => 'Estimate Shipping',
-    'Subtotal' => 'Subtotal',
-    'Grand total' => 'Grand total',
-    'Check out' => 'Check out',
-    'Gift Wrapping' => 'Gift Wrapping',
-    'Save' => '구하다',
+    'Zip/Postcode' => 'Zip/우편번호',
+    'Estimate Shipping' => '배송비',
+    'Subtotal' => '소계',
+    'Grand total' => '총계',
+    'Check out' => '주문',
+    'Gift Wrapping' => '선물 포장',
+    'Save' => '저장',
     'inch' => 'inch',
-    'Edit' => 'Edit',
-    'TOTAL' => 'TOTAL',
-    'Chưa có sản phẩm trong giỏ hàng' => 'Chưa có sản phẩm trong giỏ hàng',
-    'Your Cart' => 'Your Cart',
-    'Order Summary' => 'Order Summary',
-    'Edit Cart' => 'Edit Cart',
-    'Mã giảm giá có sẵn' => 'Mã giảm giá có sẵn',
-    'coin' => 'coin',
-    'Chưa có sản phẩm nào' => 'Chưa có sản phẩm nào',
+    'Edit' => '편집',
+    'TOTAL' => '총계',
+    'Chưa có sản phẩm trong giỏ hàng' => '장바구니에 상품이 없습니다',
+    'Your Cart' => '나의 장바구니',
+    'Order Summary' => '주문 내역',
+    'Edit Cart' => '장바구니 편집',
+    'Mã giảm giá có sẵn' => '나의 할인코드',
+    'coin' => '코인',
+    'Chưa có sản phẩm nào' => '상품이 없습니다',
     'ELECTRONICS' => 'ELECTRONICS',
     'New' => 'New',
     'Sale' => 'Sale',
     'received-by' => '받은 사람: ',
     'posted-by' => '보낸 사람: ',
     'time' => '시간: ',
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
