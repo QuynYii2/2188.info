@@ -26,17 +26,24 @@
                                 <h5 class="text-center">{{ __('home.Check the rules you must agree to below') }}</h5>
                                 <div class="rules" onclick="validateAll()">
                                     <p class="text-warning">
-                                        {{ __('home.Agree to the terms and conditions that we provide') }}
+                                        Đồng ý với Điều khoản
                                     </p>
                                     <input type="checkbox" id="rules" name="rules" required>
-                                    <label for="rules"> {{ __('home.Trust') }}</label><br>
+                                    <label for="rules"> Tôi đồng ý với các Điều khoản trên</label><br>
                                 </div>
                                 <div class="getInfo" onclick="validateAll()">
                                     <p class="text-warning">
-                                        {{ __('home.Permission to collect information') }}
+                                        Đồng ý với Chính sách thu thập thông tin
                                     </p>
                                     <input type="checkbox" id="getInfo" name="getInfo" required>
-                                    <label for="getInfo"> {{ __('home.Trust') }}</label><br>
+                                    <label for="getInfo"> Tôi đồng ý với các Điều khoản trên</label><br>
+                                </div>
+                                <div class="trustInfo" onclick="validateAll()">
+                                    <p class="text-warning">
+                                        Đồng ý với Điều khoản sử dụng thông tin
+                                    </p>
+                                    <input type="checkbox" id="trustInfo" name="trustInfo" required>
+                                    <label for="getInfo"> Tôi đồng ý với các Điều khoản trên</label><br>
                                 </div>
                                 <div class="all" onclick="validate()">
                                     <p class="text-warning">
@@ -108,9 +115,11 @@
         if (all.checked) {
             document.getElementById("rules").checked = true;
             document.getElementById("getInfo").checked = true;
+            document.getElementById("trustInfo").checked = true;
         } else {
             document.getElementById("rules").checked = false;
             document.getElementById("getInfo").checked = false;
+            document.getElementById("trustInfo").checked = false;
         }
 
         toggle();
@@ -120,7 +129,8 @@
         var all = document.getElementById("all");
         var rules = document.getElementById("rules");
         var getInfo = document.getElementById("getInfo");
-        all.checked = !!(rules.checked && getInfo.checked);
+        var trustInfo = document.getElementById("trustInfo");
+        all.checked = !!(rules.checked && getInfo.checked && trustInfo.checked);
 
         toggle();
     }
