@@ -150,6 +150,13 @@ body {
 .user_login {
   display: flex;
 }
+.header .header-pc .header-top-right .item .item-icon {
+  font-size: 35px;
+}
+.name_and_package_member {
+  line-height: 18px;
+  margin-left: 10px;
+}
 
 .item-voucher .item {
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
