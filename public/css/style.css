@@ -14,6 +14,31 @@ body {
 #mt-body {
   margin-top: 175px;
 }
+.frame{
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 0;
+  margin-right: 0;
+  border: 1px solid #dee2e6;
+}
+.list_choose_categories{
+  display: flex;
+  gap: 80px;
+}
+.list_choose_categories li {
+  margin-right: -8px;
+  padding: 10px 30px;
+}
+.list_choose_categories li:after{
+  content:"";
+  height: 45px;
+  width: 1px;
+  position: absolute;
+  background-color: #dee2e6;
+  top: 0;
+  margin: 0 85px;
+
+}
 
 #checkboxes {
   z-index: 2;
