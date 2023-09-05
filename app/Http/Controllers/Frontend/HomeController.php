@@ -212,7 +212,7 @@ class HomeController extends Controller
                 $locale = $locale['countryCode'];
             }
         }
-        app()->setLocale('vi');
+        app()->setLocale('kr');
     }
 
     public function getLangDisplay()
