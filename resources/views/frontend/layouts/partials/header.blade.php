@@ -179,9 +179,10 @@
                             @endphp
 
                             <div class="item user">
-                                <button class="btn btn-primary" style="box-shadow: none" onclick="signIn()"><i
+                                <button class="btn btn-primary user_login" style="box-shadow: none" onclick="signIn()"><i
                                             class="item-icon fa-regular fa-user"></i>
-                                    <div class="item-text">{{Auth::user()->name}} - {{$company->member}}</div>
+                                    <div class="item-text">{{Auth::user()->name}}</div>
+                                    <span class="package_member">( {{__('home.Member')}} : {{$company->member}} }</span>
                                 </button>
                                 <div class="signMenu" id="signMenu">
                                     <div class="name">

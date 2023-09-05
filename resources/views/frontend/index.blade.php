@@ -146,23 +146,31 @@
                         <div class="swiper-pagination"></div>
                     </div>
                 </div>
-                <div class="section-First-right col-xl-4 col-md-4">
+                <div class="section-First-right col-xl-6 col-md-4">
                     <div class="row">
                         @if(!$banner)
-                            <div class="col-6 item">
+                            <div class="col-4 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-1.png"
                                      alt="">
                             </div>
-                            <div class="col-6 item">
+                            <div class="col-4 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-2.png"
                                      alt="">
                             </div>
-                            <div class="col-6 item">
+                            <div class="col-4 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-3.png"
                                      alt="">
                             </div>
-                            <div class="col-6 item">
+                            <div class="col-4 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-4.png"
+                                     alt="">
+                            </div>
+                            <div class="col-4 item">
+                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-1.png"
+                                     alt="">
+                            </div>
+                            <div class="col-4 item">
+                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-2.png"
                                      alt="">
                             </div>
                         @else
