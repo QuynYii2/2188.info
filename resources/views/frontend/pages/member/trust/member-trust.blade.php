@@ -42,7 +42,7 @@
         <div class="border d-flex justify-content-between align-items-center p-5">
             <a href="{{route('trust.register.member.index')}}" class="btn btn-warning">{{ __('home.List of customers') }}</a>
             <a href="#" class="btn btn-primary">{{ __('home.Message received') }}</a>
-            <a href="#" class="btn btn-warning">{{ __('home.Tin nhắn đã gửi') }}</a>
+            <a href="#" class="btn btn-warning">{{ __('home.Message sent') }}</a>
             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">{{ __('home.Purchase') }}</a>
             <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
         </div>

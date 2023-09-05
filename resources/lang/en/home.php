@@ -344,7 +344,7 @@ return [
     'Booth' => 'Gian hàng',
     'Partner List' => 'Danh sách đối tác',
     'Message received' => 'Tin nhắn đã nhận',
-    'Tin nhắn đã gửi' => 'Tin nhắn đã gửi',
+    'Message sent' => 'Tin nhắn đã gửi',
     'Purchase' => 'Mua hàng',
     'Foreign wholesale order' => 'Đặt sỉ nước ngoài',
     'Company code' => 'Mã công ty',
