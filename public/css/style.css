@@ -151,7 +151,7 @@ body {
   display: flex;
 }
 .header .header-pc .header-top-right .item .item-icon {
-  font-size: 35px;
+  font-size: 35px !important;
 }
 .name_and_package_member {
   line-height: 18px;
