@@ -12,7 +12,24 @@
             .col-xl-8{
                 max-width: 72%;
             }
+        }
+        .swiper {
+            width: 100%;
+            height: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
+        .swiper-slide1 {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            height: calc((100% - 30px) / 2) !important;
+
+            /* Center slide text vertically */
+            display: grid;
+            justify-content: center;
+            align-items: center;
         }
     </style>
     @php
@@ -196,10 +213,6 @@
                     </div>
                 </div>
             </div>
-        </section>
-        <section class="section-Second pt-3 pb-3 container-fluid text-center">
-            <img src="https://cdn11.bigcommerce.com/s-cas40rmoh/product_images/uploaded_images/banner-custom-home-2.png"
-                 alt="">
         </section>
         <div class="section margin-layout-index container-fluid mt-3">
             <div class="row">
