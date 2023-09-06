@@ -605,261 +605,261 @@
                 </div>
             </div>
         </div>
-{{--        <div class="header-bottom">--}}
-{{--            <div class="container-fluid">--}}
-{{--                <div class="row align-items-center">--}}
-{{--                    <div class="col-xl-10 col-md-10 header-bottom-left d-flex align-items-center pl-0">--}}
-{{--                        <div class="header-bottom-left--item header_bottom--one col-2 pl-0">--}}
-{{--                            <div class="header_bottom--one--hd">--}}
-{{--                                <i class="fa-solid fa-bars"></i>--}}
-{{--                                {{ __('home.Category') }}--}}
-{{--                                <i class="fa-solid fa-angle-down"></i>--}}
-{{--                            </div>--}}
-{{--                            @php--}}
-{{--                                $listCate = DB::table('categories')->where('parent_id', null)->get();--}}
-{{--                            @endphp--}}
-{{--                            <div class="drop-menu">--}}
-{{--                                <div class="drop-relative">--}}
-{{--                                    @foreach($listCate as $cate)--}}
-{{--                                        <div class=" header_bottom--one--list">--}}
-{{--                                            <div class="header_bottom--one--list--item">--}}
-{{--                                                <a class="item d-flex" href="{{ route('category.show', $cate->id) }}">--}}
-{{--                                                    <i class="fa-solid fa-tv"></i>--}}
-{{--                                                    @if(locationHelper() == 'kr')--}}
-{{--                                                        <div class="item-text">{{ $cate->name_ko }}</div>--}}
-{{--                                                    @elseif(locationHelper() == 'cn')--}}
-{{--                                                        <div class="item-text">{{$cate->name_zh}}</div>--}}
-{{--                                                    @elseif(locationHelper() == 'jp')--}}
-{{--                                                        <div class="item-text">{{$cate->name_ja}}</div>--}}
-{{--                                                    @elseif(locationHelper() == 'vi')--}}
-{{--                                                        <div class="item-text">{{$cate->name_vi}}</div>--}}
-{{--                                                    @else--}}
-{{--                                                        <div class="item-text">{{$cate->name_en}}</div>--}}
-{{--                                                    @endif--}}
+        <div class="header-bottom">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-xl-10 col-md-10 header-bottom-left d-flex align-items-center pl-0">
+                        <div class="header-bottom-left--item header_bottom--one col-2 pl-0">
+                            <div class="header_bottom--one--hd">
+                                <i class="fa-solid fa-bars"></i>
+                                {{ __('home.Category') }}
+                                <i class="fa-solid fa-angle-down"></i>
+                            </div>
+                            @php
+                                $listCate = DB::table('categories')->where('parent_id', null)->get();
+                            @endphp
+                            <div class="drop-menu">
+                                <div class="drop-relative">
+                                    @foreach($listCate as $cate)
+                                        <div class=" header_bottom--one--list">
+                                            <div class="header_bottom--one--list--item">
+                                                <a class="item d-flex" href="{{ route('category.show', $cate->id) }}">
+                                                    <i class="fa-solid fa-tv"></i>
+                                                    @if(locationHelper() == 'kr')
+                                                        <div class="item-text">{{ $cate->name_ko }}</div>
+                                                    @elseif(locationHelper() == 'cn')
+                                                        <div class="item-text">{{$cate->name_zh}}</div>
+                                                    @elseif(locationHelper() == 'jp')
+                                                        <div class="item-text">{{$cate->name_ja}}</div>
+                                                    @elseif(locationHelper() == 'vi')
+                                                        <div class="item-text">{{$cate->name_vi}}</div>
+                                                    @else
+                                                        <div class="item-text">{{$cate->name_en}}</div>
+                                                    @endif
 
-{{--                                                    <i class="fa-solid fa-angle-right"></i>--}}
-{{--                                                </a>--}}
-{{--                                                @if(!$listCate->isEmpty())--}}
-{{--                                                    <ul class="hd_dropdown--right">--}}
-{{--                                                        <div class="list-category">--}}
-{{--                                                            @php--}}
-{{--                                                                $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();--}}
-{{--                                                            @endphp--}}
-{{--                                                            @foreach($listChild as $child)--}}
-{{--                                                                <div class="colum d-block">--}}
-{{--                                                                    @if(locationHelper() == 'kr')--}}
-{{--                                                                        <li>--}}
-{{--                                                                            <a class="colum-hd"--}}
-{{--                                                                               href="{{ route('category.show', $child->id) }}">{{$child->name_ko}} </a>--}}
-{{--                                                                        </li>--}}
-{{--                                                                    @elseif(locationHelper() == 'cn')--}}
-{{--                                                                        <li>--}}
-{{--                                                                            <a class="colum-hd"--}}
-{{--                                                                               href="{{ route('category.show', $child->id) }}">{{$child->name_zh}} </a>--}}
-{{--                                                                        </li>--}}
-{{--                                                                    @elseif(locationHelper() == 'jp')--}}
-{{--                                                                        <li>--}}
-{{--                                                                            <a class="colum-hd"--}}
-{{--                                                                               href="{{ route('category.show', $child->id) }}">{{$child->name_ja}} </a>--}}
-{{--                                                                        </li>--}}
-{{--                                                                    @elseif(locationHelper() == 'vi')--}}
-{{--                                                                        <li>--}}
-{{--                                                                            <a class="colum-hd"--}}
-{{--                                                                               href="{{ route('category.show', $child->id) }}">{{$child->name_vi}} </a>--}}
-{{--                                                                        </li>--}}
-{{--                                                                    @else--}}
-{{--                                                                        <li>--}}
-{{--                                                                            <a class="colum-hd"--}}
-{{--                                                                               href="{{ route('category.show', $child->id) }}">{{$child->name_en}} </a>--}}
-{{--                                                                        </li>--}}
-{{--                                                                    @endif--}}
+                                                    <i class="fa-solid fa-angle-right"></i>
+                                                </a>
+                                                @if(!$listCate->isEmpty())
+                                                    <ul class="hd_dropdown--right">
+                                                        <div class="list-category">
+                                                            @php
+                                                                $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
+                                                            @endphp
+                                                            @foreach($listChild as $child)
+                                                                <div class="colum d-block">
+                                                                    @if(locationHelper() == 'kr')
+                                                                        <li>
+                                                                            <a class="colum-hd"
+                                                                               href="{{ route('category.show', $child->id) }}">{{$child->name_ko}} </a>
+                                                                        </li>
+                                                                    @elseif(locationHelper() == 'cn')
+                                                                        <li>
+                                                                            <a class="colum-hd"
+                                                                               href="{{ route('category.show', $child->id) }}">{{$child->name_zh}} </a>
+                                                                        </li>
+                                                                    @elseif(locationHelper() == 'jp')
+                                                                        <li>
+                                                                            <a class="colum-hd"
+                                                                               href="{{ route('category.show', $child->id) }}">{{$child->name_ja}} </a>
+                                                                        </li>
+                                                                    @elseif(locationHelper() == 'vi')
+                                                                        <li>
+                                                                            <a class="colum-hd"
+                                                                               href="{{ route('category.show', $child->id) }}">{{$child->name_vi}} </a>
+                                                                        </li>
+                                                                    @else
+                                                                        <li>
+                                                                            <a class="colum-hd"
+                                                                               href="{{ route('category.show', $child->id) }}">{{$child->name_en}} </a>
+                                                                        </li>
+                                                                    @endif
 
-{{--                                                                    @php--}}
-{{--                                                                        $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();--}}
-{{--                                                                    @endphp--}}
-{{--                                                                    @foreach($listChild2 as $child2)--}}
-{{--                                                                        @if(locationHelper() == 'kr')--}}
-{{--                                                                            <li>--}}
-{{--                                                                                <a class="colum-item"--}}
-{{--                                                                                   href="{{ route('category.show', $child2->id) }}">{{$child2->name_ko}}</a>--}}
-{{--                                                                            </li>--}}
-{{--                                                                        @elseif(locationHelper() == 'cn')--}}
-{{--                                                                            <li>--}}
-{{--                                                                                <a class="colum-item"--}}
-{{--                                                                                   href="{{ route('category.show', $child2->id) }}">{{$child2->name_zh}}</a>--}}
-{{--                                                                            </li>--}}
-{{--                                                                        @elseif(locationHelper() == 'jp')--}}
-{{--                                                                            <li>--}}
-{{--                                                                                <a class="colum-item"--}}
-{{--                                                                                   href="{{ route('category.show', $child2->id) }}">{{$child2->name_ja}}</a>--}}
-{{--                                                                            </li>--}}
-{{--                                                                        @elseif(locationHelper() == 'vi')--}}
-{{--                                                                            <li>--}}
-{{--                                                                                <a class="colum-item"--}}
-{{--                                                                                   href="{{ route('category.show', $child2->id) }}">{{$child2->name_vi}}</a>--}}
-{{--                                                                            </li>--}}
-{{--                                                                        @else--}}
-{{--                                                                            <li>--}}
-{{--                                                                                <a class="colum-item"--}}
-{{--                                                                                   href="{{ route('category.show', $child2->id) }}">{{$child2->name_en}}</a>--}}
-{{--                                                                            </li>--}}
-{{--                                                                        @endif--}}
+                                                                    @php
+                                                                        $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
+                                                                    @endphp
+                                                                    @foreach($listChild2 as $child2)
+                                                                        @if(locationHelper() == 'kr')
+                                                                            <li>
+                                                                                <a class="colum-item"
+                                                                                   href="{{ route('category.show', $child2->id) }}">{{$child2->name_ko}}</a>
+                                                                            </li>
+                                                                        @elseif(locationHelper() == 'cn')
+                                                                            <li>
+                                                                                <a class="colum-item"
+                                                                                   href="{{ route('category.show', $child2->id) }}">{{$child2->name_zh}}</a>
+                                                                            </li>
+                                                                        @elseif(locationHelper() == 'jp')
+                                                                            <li>
+                                                                                <a class="colum-item"
+                                                                                   href="{{ route('category.show', $child2->id) }}">{{$child2->name_ja}}</a>
+                                                                            </li>
+                                                                        @elseif(locationHelper() == 'vi')
+                                                                            <li>
+                                                                                <a class="colum-item"
+                                                                                   href="{{ route('category.show', $child2->id) }}">{{$child2->name_vi}}</a>
+                                                                            </li>
+                                                                        @else
+                                                                            <li>
+                                                                                <a class="colum-item"
+                                                                                   href="{{ route('category.show', $child2->id) }}">{{$child2->name_en}}</a>
+                                                                            </li>
+                                                                        @endif
 
-{{--                                                                    @endforeach--}}
-{{--                                                                </div>--}}
-{{--                                                            @endforeach--}}
-{{--                                                        </div>--}}
-{{--                                                        <div class="list-product row m-2">--}}
-{{--                                                            <div class="col-md-2">--}}
-{{--                                                                <b>Featured Products</b>--}}
-{{--                                                                <span>Quis ipsum suspendisse ultrices gravida. Risus an commodo viverra delta maecenas cumsan lacus de facilisis.</span>--}}
-{{--                                                            </div>--}}
-{{--                                                            <div class="col-md-6 list-product--swiper">--}}
-{{--                                                                <div class="swiper Category_listProduct">--}}
-{{--                                                                    <div class="swiper-wrapper">--}}
-{{--                                                                        @php--}}
-{{--                                                                            $products = DB::table('products')->get();--}}
-{{--                                                                        @endphp--}}
-{{--                                                                        @foreach($products as $product)--}}
-{{--                                                                            <div class="swiper-slide">--}}
-{{--                                                                                <div class="item">--}}
-{{--                                                                                    <div class="item-img">--}}
-{{--                                                                                        <img src="{{ asset('storage/' . $product->thumbnail) }}"--}}
-{{--                                                                                             alt="">--}}
-{{--                                                                                    </div>--}}
-{{--                                                                                    <div class="item-body">--}}
-{{--                                                                                        <div class="card-rating">--}}
-{{--                                                                                            <i class="fa-solid fa-star"--}}
-{{--                                                                                               style="color: #fac325;"></i>--}}
-{{--                                                                                            <i class="fa-solid fa-star"--}}
-{{--                                                                                               style="color: #fac325;"></i>--}}
-{{--                                                                                            <i class="fa-solid fa-star"--}}
-{{--                                                                                               style="color: #fac325;"></i>--}}
-{{--                                                                                            <i class="fa-solid fa-star"--}}
-{{--                                                                                               style="color: #fac325;"></i>--}}
-{{--                                                                                            <i class="fa-solid fa-star"--}}
-{{--                                                                                               style="color: #fac325;"></i>--}}
-{{--                                                                                            <span>(1)</span>--}}
-{{--                                                                                        </div>--}}
-{{--                                                                                        @php--}}
-{{--                                                                                            $nameUser = DB::table('users')->where('id', $product->user_id)->first();--}}
-{{--                                                                                        @endphp--}}
-{{--                                                                                        <div class="card-brand">--}}
-{{--                                                                                            {{ ($nameUser->name) }}--}}
-{{--                                                                                        </div>--}}
-{{--                                                                                        <div class="card-title">--}}
-{{--                                                                                            <a href="{{route('detail_product.show', $product->id)}}">--}}
-{{--                                                                                                @if(locationHelper() == 'kr')--}}
-{{--                                                                                                    {{ ($product->name_ko) }}--}}
-{{--                                                                                                @elseif(locationHelper() == 'cn')--}}
-{{--                                                                                                    {{ ($product->name_zh) }}--}}
-{{--                                                                                                @elseif(locationHelper() == 'jp')--}}
-{{--                                                                                                    {{ ($product->name_ja) }}--}}
-{{--                                                                                                @elseif(locationHelper() == 'vi')--}}
-{{--                                                                                                    {{ ($product->name_vi) }}--}}
-{{--                                                                                                @else--}}
-{{--                                                                                                    {{ ($product->name_en) }}--}}
-{{--                                                                                                @endif--}}
-{{--                                                                                            </a>--}}
-{{--                                                                                        </div>--}}
-{{--                                                                                        <div class="card-price d-flex justify-content-between">--}}
-{{--                                                                                            <!-- <div class="price">--}}
-{{--                                                                                                            <strong>$189.000</strong>--}}
-{{--                                                                                                        </div> -->--}}
-{{--                                                                                            <div class="price-sale">--}}
-{{--                                                                                                <strong>${{$product->qty}}</strong>--}}
-{{--                                                                                            </div>--}}
-{{--                                                                                            <div class="price-cost">--}}
-{{--                                                                                                <strike>${{$product->price}}</strike>--}}
-{{--                                                                                            </div>--}}
-{{--                                                                                        </div>--}}
-{{--                                                                                        <div class="card-bottom d-flex justify-content-between">--}}
-{{--                                                                                            <div class="card-bottom--left">--}}
-{{--                                                                                                <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>--}}
-{{--                                                                                            </div>--}}
-{{--                                                                                        </div>--}}
-{{--                                                                                    </div>--}}
-{{--                                                                                </div>--}}
-{{--                                                                            </div>--}}
-{{--                                                                        @endforeach--}}
-{{--                                                                    </div>--}}
-{{--                                                                    <div class="swiper-button-next"></div>--}}
-{{--                                                                    <div class="swiper-button-prev"></div>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                            <div class="col-md-4 img">--}}
-{{--                                                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/mega-menu-style-1.jpg"--}}
-{{--                                                                     alt="">--}}
-{{--                                                            </div>--}}
-{{--                                                        </div>--}}
-{{--                                                    </ul>--}}
-{{--                                                @endif--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    @endforeach--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="header-bottom-left--item">--}}
-{{--                            <a href="">--}}
-{{--                                <span class="text">{{ __('home.About Us') }}</span>--}}
-{{--                            </a>--}}
-{{--                        </div>--}}
-{{--                        <div class="header-bottom-left--item">--}}
-{{--                            <a href="">--}}
-{{--                                <span class="text">{{ __('home.Lookbook') }}</span>--}}
-{{--                            </a>--}}
+                                                                    @endforeach
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                        <div class="list-product row m-2">
+                                                            <div class="col-md-2">
+                                                                <b>Featured Products</b>
+                                                                <span>Quis ipsum suspendisse ultrices gravida. Risus an commodo viverra delta maecenas cumsan lacus de facilisis.</span>
+                                                            </div>
+                                                            <div class="col-md-6 list-product--swiper">
+                                                                <div class="swiper Category_listProduct">
+                                                                    <div class="swiper-wrapper">
+                                                                        @php
+                                                                            $products = DB::table('products')->get();
+                                                                        @endphp
+                                                                        @foreach($products as $product)
+                                                                            <div class="swiper-slide">
+                                                                                <div class="item">
+                                                                                    <div class="item-img">
+                                                                                        <img src="{{ asset('storage/' . $product->thumbnail) }}"
+                                                                                             alt="">
+                                                                                    </div>
+                                                                                    <div class="item-body">
+                                                                                        <div class="card-rating">
+                                                                                            <i class="fa-solid fa-star"
+                                                                                               style="color: #fac325;"></i>
+                                                                                            <i class="fa-solid fa-star"
+                                                                                               style="color: #fac325;"></i>
+                                                                                            <i class="fa-solid fa-star"
+                                                                                               style="color: #fac325;"></i>
+                                                                                            <i class="fa-solid fa-star"
+                                                                                               style="color: #fac325;"></i>
+                                                                                            <i class="fa-solid fa-star"
+                                                                                               style="color: #fac325;"></i>
+                                                                                            <span>(1)</span>
+                                                                                        </div>
+                                                                                        @php
+                                                                                            $nameUser = DB::table('users')->where('id', $product->user_id)->first();
+                                                                                        @endphp
+                                                                                        <div class="card-brand">
+                                                                                            {{ ($nameUser->name) }}
+                                                                                        </div>
+                                                                                        <div class="card-title">
+                                                                                            <a href="{{route('detail_product.show', $product->id)}}">
+                                                                                                @if(locationHelper() == 'kr')
+                                                                                                    {{ ($product->name_ko) }}
+                                                                                                @elseif(locationHelper() == 'cn')
+                                                                                                    {{ ($product->name_zh) }}
+                                                                                                @elseif(locationHelper() == 'jp')
+                                                                                                    {{ ($product->name_ja) }}
+                                                                                                @elseif(locationHelper() == 'vi')
+                                                                                                    {{ ($product->name_vi) }}
+                                                                                                @else
+                                                                                                    {{ ($product->name_en) }}
+                                                                                                @endif
+                                                                                            </a>
+                                                                                        </div>
+                                                                                        <div class="card-price d-flex justify-content-between">
+                                                                                            <!-- <div class="price">
+                                                                                                            <strong>$189.000</strong>
+                                                                                                        </div> -->
+                                                                                            <div class="price-sale">
+                                                                                                <strong>${{$product->qty}}</strong>
+                                                                                            </div>
+                                                                                            <div class="price-cost">
+                                                                                                <strike>${{$product->price}}</strike>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="card-bottom d-flex justify-content-between">
+                                                                                            <div class="card-bottom--left">
+                                                                                                <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        @endforeach
+                                                                    </div>
+                                                                    <div class="swiper-button-next"></div>
+                                                                    <div class="swiper-button-prev"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4 img">
+                                                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/mega-menu-style-1.jpg"
+                                                                     alt="">
+                                                            </div>
+                                                        </div>
+                                                    </ul>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <div class="header-bottom-left--item">
+                            <a href="">
+                                <span class="text">{{ __('home.About Us') }}</span>
+                            </a>
+                        </div>
+                        <div class="header-bottom-left--item">
+                            <a href="">
+                                <span class="text">{{ __('home.Lookbook') }}</span>
+                            </a>
 
-{{--                        </div>--}}
-{{--                        <div class="header-bottom-left--item">--}}
-{{--                            <a href="">--}}
-{{--                                <span class="text">{{ __('home.Buy Superkart') }}</span>--}}
-{{--                            </a>--}}
-{{--                        </div>--}}
-{{--                        <div class="header-bottom-left--item">--}}
-{{--                            <a href="">--}}
-{{--                                <span class="text">{{ __('home.Theme FAQs') }}</span>--}}
-{{--                            </a>--}}
-{{--                        </div>--}}
-{{--                        <div class="header-bottom-left--item">--}}
-{{--                            <a href="">--}}
-{{--                                <span class="text">{{ __('home.Shipping & Returns') }}</span>--}}
-{{--                            </a>--}}
-{{--                        </div>--}}
-{{--                        <div class="header-bottom-left--item">--}}
-{{--                            <a href="">--}}
-{{--                                <span class="text">{{ __('home.Contact Us') }}</span>--}}
-{{--                            </a>--}}
-{{--                        </div>--}}
-{{--                        <div class="header-bottom-left--item">--}}
-{{--                            <a href="">--}}
-{{--                                <span class="text">{{ __('home.Blog') }}</span>--}}
-{{--                            </a>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <div class="col-xl-2 col-md-2 header-bottom-right d-flex align-items-center justify-content-end">--}}
-{{--                        <div class="help">--}}
-{{--                            <i class="fa-solid fa-headset"></i>--}}
-{{--                            <span>{{ __('home.Help') }}</span>--}}
-{{--                        </div>--}}
-{{--                        --}}{{--                        <div class="d-flex">--}}
-{{--                        --}}{{--                            <div class="header-bottom-left--item item-left--vi ">--}}
-{{--                        --}}{{--                                <a href="{{ route('language', ['locale' => 'vi']) }}"></a>--}}
-{{--                        --}}{{--                            </div>--}}
-{{--                        --}}{{--                            <div class="header-bottom-left--item item-left--cn">--}}
-{{--                        --}}{{--                                <a href="{{ route('language', ['locale' => 'cn']) }}"></a>--}}
-{{--                        --}}{{--                            </div>--}}
-{{--                        --}}{{--                            <div class="header-bottom-left--item item-left--kr">--}}
-{{--                        --}}{{--                                <a href="{{ route('language', ['locale' => 'kr']) }}"></a>--}}
-{{--                        --}}{{--                            </div>--}}
-{{--                        --}}{{--                            <div class="header-bottom-left--item item-left--jp">--}}
-{{--                        --}}{{--                                <a href="{{ route('language', ['locale' => 'jp']) }}"></a>--}}
-{{--                        --}}{{--                            </div>--}}
-{{--                        --}}{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
+                        </div>
+                        <div class="header-bottom-left--item">
+                            <a href="">
+                                <span class="text">{{ __('home.Buy Superkart') }}</span>
+                            </a>
+                        </div>
+                        <div class="header-bottom-left--item">
+                            <a href="">
+                                <span class="text">{{ __('home.Theme FAQs') }}</span>
+                            </a>
+                        </div>
+                        <div class="header-bottom-left--item">
+                            <a href="">
+                                <span class="text">{{ __('home.Shipping & Returns') }}</span>
+                            </a>
+                        </div>
+                        <div class="header-bottom-left--item">
+                            <a href="">
+                                <span class="text">{{ __('home.Contact Us') }}</span>
+                            </a>
+                        </div>
+                        <div class="header-bottom-left--item">
+                            <a href="">
+                                <span class="text">{{ __('home.Blog') }}</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-md-2 header-bottom-right d-flex align-items-center justify-content-end">
+                        <div class="help">
+                            <i class="fa-solid fa-headset"></i>
+                            <span>{{ __('home.Help') }}</span>
+                        </div>
+                        {{--                        <div class="d-flex">--}}
+                        {{--                            <div class="header-bottom-left--item item-left--vi ">--}}
+                        {{--                                <a href="{{ route('language', ['locale' => 'vi']) }}"></a>--}}
+                        {{--                            </div>--}}
+                        {{--                            <div class="header-bottom-left--item item-left--cn">--}}
+                        {{--                                <a href="{{ route('language', ['locale' => 'cn']) }}"></a>--}}
+                        {{--                            </div>--}}
+                        {{--                            <div class="header-bottom-left--item item-left--kr">--}}
+                        {{--                                <a href="{{ route('language', ['locale' => 'kr']) }}"></a>--}}
+                        {{--                            </div>--}}
+                        {{--                            <div class="header-bottom-left--item item-left--jp">--}}
+                        {{--                                <a href="{{ route('language', ['locale' => 'jp']) }}"></a>--}}
+                        {{--                            </div>--}}
+                        {{--                        </div>--}}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="header-mobile halo-header">
         <div class="hd-mobile row p-0">
