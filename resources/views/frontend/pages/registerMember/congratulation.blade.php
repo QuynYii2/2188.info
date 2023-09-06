@@ -4,8 +4,13 @@
 @section('content')
     <div class="container">
         <div class="float-right mb-3">
-            <p>Hội viên đăng kí:{{$memberSource->name}}</p>
-            <p>Hội viên đại diện:{{$memberRepresent->name}}</p>
+            @if($memberSource)
+                <p>Hội viên đăng kí:{{$memberSource->name}}</p>
+            @endif
+
+            @if($memberRepresent)
+                <p>Hội viên đại diện:{{$memberRepresent->name}}</p>
+            @endif
             <p>
                 <i class="fa-solid fa-star"></i>
                 <i class="fa-solid fa-star"></i>
