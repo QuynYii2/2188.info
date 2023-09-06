@@ -9,7 +9,7 @@ $color-main: #fd6506;
   background-color: #f5f5f5;
 }
 #mt-body{
-  margin-top: 175px;
+  margin-top: 190px;
 }
 #checkboxes{
   z-index: 2;
@@ -464,6 +464,7 @@ $color-main: #fd6506;
         transition: color 0.3s ease;
         letter-spacing: 0.0625rem;
         font-weight: 700;
+        margin-right: 10px;
         &:hover{
           transform: scaleX(1);
           border: 1px solid $color-main;
@@ -477,6 +478,7 @@ $color-main: #fd6506;
         padding: 14px 25px;
         border-radius: 30px;
         font-size: 20px;
+        margin-right: 10px;
       }
       input:hover {
         border-color: green;
@@ -738,7 +740,7 @@ a {
           background-color: white;
 
           input {
-            padding-left: 15%;
+            padding-left: 10%;
             padding-right: 10%;
             width: 100%;
             height: 100%;
@@ -2680,8 +2682,11 @@ hr{
   height: auto;
   margin-bottom: 30px;
   background: white;
+  height: 35vh;
   img{
     height: 85%;
+    object-fit: cover;
+    width: auto;
   }
 }
 .body {
@@ -2797,9 +2802,23 @@ hr{
   }
 
   .section-Second {
-    img {
-      width: 80%;
+    background-color: white;
+    .second-header{
+      border-bottom: 1px solid rgba(0,0,0,.05);
+      p{
+        margin-right: 20px;
+        font-size: 20px;
+      }
     }
+    .second-body{
+      img{
+        width: 100%;
+      }
+    }
+    i{
+      color: $color-main;
+    }
+
   }
 
   .section-Fifth {
@@ -2874,7 +2893,7 @@ hr{
 
     .list {
       .item {
-        border-radius: 10px;
+        border-radius: 4px;
         padding: 30px 25px;
         margin: 0 10px;
         background: white;

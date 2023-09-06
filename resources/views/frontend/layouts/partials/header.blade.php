@@ -131,7 +131,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="header-top-right col-xl-5 col-md-6 d-flex text-center justify-content-end">
+                    <div class="header-top-right col-xl-5 col-md-6 d-flex text-center justify-content-end align-items-center">
                         @if(Auth::check())
                             <div class="item button_seller align-center d-flex">
                                 <button type="button" class="full-width cursor-pointer" data-toggle="modal"
@@ -228,11 +228,6 @@
                                     </a>
 
                                     @if(!$checkBuyer)
-                                        <a href="{{route('wish.list.index')}}" class="none_decoration">
-                                            <div class="drop-item">
-                                                {{ __('home.Wish Lists') }}
-                                            </div>
-                                        </a>
                                         @php
                                             $user = Auth::user()->id;
                                             $role_id = DB::table('role_user')->where('user_id', $user)->get();

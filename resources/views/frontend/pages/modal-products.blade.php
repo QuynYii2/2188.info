@@ -47,7 +47,7 @@
                                 <span>Còn lại: </span>
                                 <label for="qty" id="qty"></label>
                             </div>
-                            <div class="d-flex buy justify-content-around">
+                            <div class="d-flex buy justify-content-center">
                                 <div>
                                     <input type="number" name="quantity" class="input" min="" value="" >
                                     <div class="spinner">

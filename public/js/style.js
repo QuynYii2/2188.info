@@ -209,6 +209,24 @@ new Swiper(".HotDeals", {
     keyboard: true,
 });
 
+new Swiper(".advertisementBanner",{
+    pagination: {
+        el: ".swiper-pagination",
+        dynamicBullets: true,
+    },
+});
+
+new Swiper(".secondrightSwiper",{
+    slidesPerView: 4,
+    grid: {
+        rows: 2,
+    },
+    spaceBetween: 10,
+    pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+    },
+});
 
 new Swiper(".HotDeal", {
     cssMode: true,

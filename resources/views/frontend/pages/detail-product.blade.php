@@ -418,7 +418,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex buy justify-content-around">
+                    <div class="d-flex buy justify-content-center">
                         <div>
                             <input min="{{$product->min}}" value="{{$product->min}}" type="number" class="input"
                                    name="quantity">
