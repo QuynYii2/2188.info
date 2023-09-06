@@ -34,26 +34,30 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Người đại diện</td>
-                    <td>{{$memberRepresent->staff}}</td>
-                    <td>{{$memberRepresent->name_en}}</td>
-                    <td>{{$memberRepresent->name}}</td>
-                    <td>{{$memberRepresent->code}}</td>
-                    <td>{{$memberRepresent->phone}}</td>
-                    <td>{{$memberRepresent->email}}</td>
-                    <td>{{$memberRepresent->sns_account}}</td>
-                </tr>
-                <tr>
-                    <td>Người đăng ký</td>
-                    <td>{{$memberSource->staff}}</td>
-                    <td>{{$memberSource->name_en}}</td>
-                    <td>{{$memberSource->name}}</td>
-                    <td>{{$memberSource->code}}</td>
-                    <td>{{$memberSource->phone}}</td>
-                    <td>{{$memberSource->email}}</td>
-                    <td>{{$memberSource->sns_account}}</td>
-                </tr>
+                @if($memberRepresent)
+                    <tr>
+                        <td>Người đại diện</td>
+                        <td>{{$memberRepresent->staff}}</td>
+                        <td>{{$memberRepresent->name_en}}</td>
+                        <td>{{$memberRepresent->name}}</td>
+                        <td>{{$memberRepresent->code}}</td>
+                        <td>{{$memberRepresent->phone}}</td>
+                        <td>{{$memberRepresent->email}}</td>
+                        <td>{{$memberRepresent->sns_account}}</td>
+                    </tr>
+                @endif
+                @if($memberSource)
+                    <tr>
+                        <td>Người đăng ký</td>
+                        <td>{{$memberSource->staff}}</td>
+                        <td>{{$memberSource->name_en}}</td>
+                        <td>{{$memberSource->name}}</td>
+                        <td>{{$memberSource->code}}</td>
+                        <td>{{$memberSource->phone}}</td>
+                        <td>{{$memberSource->email}}</td>
+                        <td>{{$memberSource->sns_account}}</td>
+                    </tr>
+                @endif
                 </tbody>
             </table>
             <div class="row mt-3 border ml-1">
