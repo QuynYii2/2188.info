@@ -191,6 +191,9 @@ Route::get('/products-shop/{id}', [\App\Http\Controllers\Frontend\ProductControl
 Route::get('/products-shop-category/{category}/{shop}', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByCategoryAndShops'])->name('list.products.shop.category.show');
 
 Route::get('/chat-message/{from}/{to}', [SampleController::class, 'findAllMessage'])->name('chat.message.show.to.way');
+//Detail marketing
+Route::get('/detail-marketing/{id}', [\App\Http\Controllers\DetailMarketingController::class, 'index'])->name('detail-marketing.show');
+Route::delete('/detail-marketing/{id}/{product}', [\App\Http\Controllers\DetailMarketingController::class, 'delete'])->name('detail-marketing.delete');
 
 Route::group(['middleware' => 'role.admin'], function () {
     Route::get('/setup-marketing/', [\App\Http\Controllers\SetupMarketingController::class, 'index'])->name('setup-marketing.show');
@@ -199,10 +202,6 @@ Route::group(['middleware' => 'role.admin'], function () {
     Route::delete('/setup-marketing/create/{id}', [\App\Http\Controllers\SetupMarketingController::class, 'delete'])->name('setup-marketing.delete');
     Route::get('/setup-marketing/edit/{id}', [\App\Http\Controllers\SetupMarketingController::class, 'edit'])->name('setup-marketing.edit');
     Route::post('/setup-marketing/update/{id}', [\App\Http\Controllers\SetupMarketingController::class, 'update'])->name('setup-marketing.update');
-
-    //Detail marketing
-    Route::get('/detail-marketing/{id}', [\App\Http\Controllers\DetailMarketingController::class, 'index'])->name('detail-marketing.show');
-    Route::delete('/detail-marketing/{id}/{product}', [\App\Http\Controllers\DetailMarketingController::class, 'delete'])->name('detail-marketing.delete');
 });
 
 Route::middleware(['auth'])->group(callback: function () {
