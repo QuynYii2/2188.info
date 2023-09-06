@@ -42,7 +42,7 @@ class RegisterMemberSuccessController extends Controller
             return back();
         }
         $currency = (new \App\Http\Controllers\Frontend\HomeController())->getLocation($request);
-        return view('frontend.pages.member.stand-member', compact('company','currency'));
+        return view('frontend.pages.member.stand-member', compact('company', 'currency'));
     }
 
     public function memberParent(Request $request, $id)
@@ -79,8 +79,9 @@ class RegisterMemberSuccessController extends Controller
         return view('frontend.pages.member.member-partner', compact('company', 'memberList'));
     }
 
-    public function memberPartnerLocale($locale)
+    public function memberPartnerLocale($locale, Request $request)
     {
+        (new HomeController())->getLocale($request);
         $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
         $company = null;
         $memberList = null;

@@ -49,12 +49,16 @@
             </div>
         </div>
         <div class="border d-flex justify-content-between align-items-center p-3">
-            <a href="{{route('stand.register.member.index', $company->id)}}" class="btn btn-primary">{{ __('home.Shop') }}</a>
-            <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">{{ __('home.Partner List') }}</a>
+            <a href="{{route('stand.register.member.index', $company->id)}}"
+               class="btn btn-primary">{{ __('home.Shop') }}</a>
+            <a href="{{route('partner.register.member.index')}}"
+               class="btn btn-warning">{{ __('home.Partner List') }}</a>
             <a href="#" class="btn btn-primary">{{ __('home.Message received') }}</a>
             <a href="#" class="btn btn-warning">{{ __('home.Message sent') }}</a>
-            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">{{ __('home.Purchase') }}</a>
-            <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
+            <a href="#" class="btn btn-primary" data-toggle="modal"
+               data-target="#exampleModal">{{ __('home.Purchase') }}</a>
+            <a href="#" class="btn btn-warning" data-toggle="modal"
+               data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
         </div>
         <table class="table table-bordered">
             <thead>
@@ -143,7 +147,8 @@
                                             </form>
                                         @else
                                             <form method="post"
-                                                  action="{{ route('stands.unregister.member', $memberPartner->id) }}" }>
+                                                  action="{{ route('stands.unregister.member', $memberPartner->id) }}"
+                                                  }>
                                                 @csrf
                                                 <input type="text" name="company_id_source"
                                                        value="{{ $memberPartner->id }}" hidden>
@@ -217,7 +222,7 @@
     </div>
     <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-content p-4" style="width: auto">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -227,18 +232,18 @@
                 <div class="modal-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <a href="https://shipgo.biz/kr">
-                            <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt="">
+                            <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt=""
+                                 style="border: 1px solid; margin: 20px">
                         </a>
                         <a href="https://shipgo.biz/jp">
-                            <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt="">
+                            <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt=""
+                                 style="border: 1px solid; margin: 20px">
                         </a>
                         <a href="https://shipgo.biz/cn">
-                            <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt="">
+                            <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt=""
+                                 style="border: 1px solid; margin: 20px">
                         </a>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -247,7 +252,7 @@
     <div class="modal fade" id="exampleModalBuyBulk" role="dialog" aria-labelledby="exampleModalBuyBulk"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-content p-4" style="width: auto">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -255,20 +260,25 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <a href="{{route('parent.register.member.locale', 'kr')}}">
-                            <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt="">
-                        </a>
-                        <a href="{{route('parent.register.member.locale', 'jp')}}">
-                            <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt="">
-                        </a>
-                        <a href="{{route('parent.register.member.locale', 'cn')}}">
-                            <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt="">
-                        </a>
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <a href="{{route('parent.register.member.locale', 'kr')}}">
+                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                                     src="{{ asset('images/korea.png') }}"
+                                     alt="">
+                            </a>
+                            <a href="{{route('parent.register.member.locale', 'jp')}}">
+                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                                     src="{{ asset('images/japan.webp') }}"
+                                     alt="">
+                            </a>
+                            <a href="{{route('parent.register.member.locale', 'cn')}}">
+                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                                     src="{{ asset('images/china.webp') }}"
+                                     alt="">
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
