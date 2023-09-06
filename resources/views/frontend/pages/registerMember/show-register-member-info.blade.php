@@ -263,19 +263,19 @@
                 .then(async function (res) {
                     const data = await res.json();
                     makeHTMLFromJson(data, ID_CITY)
-                    autoSelectedOption(ID_WARD)
+                    // autoSelectedOption(ID_WARD)
                 });
         }
 
         function getListWard(id) {
-            let url = '{{ route('location.ward.get', ['id' => ':id', 'code' => ':code']) }}';
-            url = url.replace(':id', id);
-            url = url.replace(':code', country_code);
-            fetch(url)
-                .then(async function (res) {
-                    const data = await res.json();
-                    makeHTMLFromJson(data, ID_WARD)
-                });
+            {{--let url = '{{ route('location.ward.get', ['id' => ':id', 'code' => ':code']) }}';--}}
+            {{--url = url.replace(':id', id);--}}
+            {{--url = url.replace(':code', country_code);--}}
+            {{--fetch(url)--}}
+            {{--    .then(async function (res) {--}}
+            {{--        const data = await res.json();--}}
+            {{--        makeHTMLFromJson(data, ID_WARD)--}}
+            {{--    });--}}
         }
 
         function getListNation1() {
@@ -294,7 +294,7 @@
             country_code = id;
             fetch(url)
                 .then(async function (res) {
-                    clearDataOption();
+                    clearDataOption1();
                     const data = await res.json();
                     makeHTMLFromJson(data, ID_STATE_1)
                     autoSelectedOption(ID_CITY_1)
@@ -309,19 +309,19 @@
                 .then(async function (res) {
                     const data = await res.json();
                     makeHTMLFromJson(data, ID_CITY_1)
-                    autoSelectedOption(ID_WARD_1)
+                    // autoSelectedOption(ID_WARD_1)
                 });
         }
 
         function getListWard1(id) {
-            let url = '{{ route('location.ward.get', ['id' => ':id', 'code' => ':code']) }}';
-            url = url.replace(':id', id);
-            url = url.replace(':code', country_code);
-            fetch(url)
-                .then(async function (res) {
-                    const data = await res.json();
-                    makeHTMLFromJson(data, ID_WARD_1)
-                });
+            {{--let url = '{{ route('location.ward.get', ['id' => ':id', 'code' => ':code']) }}';--}}
+            {{--url = url.replace(':id', id);--}}
+            {{--url = url.replace(':code', country_code);--}}
+            {{--fetch(url)--}}
+            {{--    .then(async function (res) {--}}
+            {{--        const data = await res.json();--}}
+            {{--        makeHTMLFromJson(data, ID_WARD_1)--}}
+            {{--    });--}}
         }
 
         function makeHTMLFromJson(data, id_where) {
@@ -343,7 +343,13 @@
         function clearDataOption() {
             document.getElementById(ID_STATE).innerHTML = '';
             document.getElementById(ID_CITY).innerHTML = '';
-            document.getElementById(ID_WARD).innerHTML = '';
+            // document.getElementById(ID_WARD).innerHTML = '';
+        }
+
+        function clearDataOption1() {
+            document.getElementById(ID_STATE_1).innerHTML = '';
+            document.getElementById(ID_CITY_1).innerHTML = '';
+            // document.getElementById(ID_WARD_1).innerHTML = '';
         }
 
         function autoSelectedOption(id_where) {
