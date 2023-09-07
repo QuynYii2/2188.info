@@ -11,16 +11,20 @@
         .product-content p {
             margin-bottom: 0;
         }
-        #mt-body{
-            background: white!important;
+
+        #mt-body {
+            background: white !important;
         }
+
         .btn-16 {
             margin: 0 16px;
         }
-        #myTabContent .tab-pane{
+
+        #myTabContent .tab-pane {
             padding: 20px;
             border: 1px solid #f5f5f5;
         }
+
         @media only screen and (min-width: 769px) and (max-width: 991px) {
             .tabs-item a {
                 font-size: 15px;
@@ -130,15 +134,19 @@
             font-weight: normal;
             text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
         }
-        tr i{
+
+        tr i {
             color: #fac325;
         }
+
         tr:first-child {
             border-top: none;
         }
+
         tr:last-child {
             border-bottom: none;
         }
+
         td {
             background: #FFFFFF;
             padding: 20px;
@@ -149,23 +157,29 @@
             text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
             border-right: 1px solid #C1C3D1;
         }
+
         td:last-child {
             border-right: 0px;
         }
+
         th.text-left {
             text-align: left;
         }
+
         td.text-left {
             text-align: left;
         }
+
         .card-central-logo.ilvietnam-1-1-2 {
             display: flex;
             justify-content: center;
             margin-top: -15px;
         }
+
         .ability.ilvietnam-1-1-17 {
             margin: 10px 0;
         }
+
         .company-basicCapacity.ilvietnam-1-1-19 {
             display: flex;
             justify-content: space-between;
@@ -175,10 +189,12 @@
             text-align: left;
             font-size: 14px;
         }
+
         .attr-item {
             width: 50%;
             margin-top: 12px;
         }
+
         .company-productionServiceCapacity.service-2.ilvietnam-1-1-38 {
             display: flex;
             justify-content: space-between;
@@ -315,11 +331,11 @@
                     </div>
                     <div class="product-price d-flex" style="gap: 3rem">
                         @if($product->price != null)
+                            <strike class="productOldPrice" id="productOldPrice">({{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}})</strike>
                             <div id="productPrice"
                                  class="price">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</div>
-                            <strike id="productOldPrice">{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
                         @else
-                            <strike id="productOldPrice">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strike>
+                            <strike class="productOldPrice" id="productOldPrice">({{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}})</strike>
                         @endif
                     </div>
                     <div class="description-text">
@@ -368,8 +384,6 @@
                         </div>
                         <a id="resetSelect" class="btn btn-dark mt-3 "
                            style="color: white">{{ __('home.Reset select') }}</a>
-                        @include('frontend.pages.shopProducts.modal-att', ['name' => ''])
-
                     @endif
                     <div class="">
                         <input id="product_id" hidden value="{{$product->id}}">
@@ -429,7 +443,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex buy justify-content-center">
+                    <div class="d-flex buy">
                         <div>
                             <input min="{{$product->min}}" value="{{$product->min}}" type="number" class="input"
                                    name="quantity">
@@ -695,7 +709,7 @@
                     @else
                         <div class="item-text">{!! $product->description_en !!}</div>
                     @endif
-{{--                    {!! $product->description!!}--}}
+                    {{--                    {!! $product->description!!}--}}
                 </div>
                 <button id="toggleBtn1" class="toggleBtn"
                         onclick="toggleContent('content1', 'toggleBtn1')">{{ __('home.Show More') }}</button>
@@ -746,7 +760,7 @@
                                 <input type="radio" name="star_number" id="star4" value="4" hidden="">
                                 <label for="star4" onclick="starCheck(4)"><i id="icon-star-4"
                                                                              class="fa fa-star"></i></label>
-                                <input type="radio" name="star_number" id="star5" value="5" hidden="">
+                                <input type="radio" name="star_number" id="star5" value="5" hidden="" checked>
                                 <label for="star5" onclick="starCheck(5)"><i id="icon-star-5"
                                                                              class="fa fa-star"></i></label>
                             </div>
@@ -788,25 +802,34 @@
                             <table class="table table-bordered">
                                 <tbody>
                                 <tr>
-                                    <td colspan="2">
+                                    <td>
                                         <strong>{{$res->username}}</strong>
                                     </td>
+                                    @if($res->user_id == Auth::user()->id)
+                                        <td>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#edit-comment" onclick="getCommentById({{ $res->id }})">
+                                                {{ __('home.edit-comment') }}
+                                            </button>
+                                        </td>
+                                    @endif
+
                                 </tr>
                                 <tr>
-                                    <td colspan="2">
+                                    <td>
                                         <p>{{$res->content}}</p>
                                         <p class="m-0">{{$res->created_at}}</p>
                                     </td>
                                 </tr>
                                 @if($res->status == \App\Enums\EvaluateProductStatus::PENDING)
                                     <tr>
-                                        <td colspan="2">
+                                        <td>
                                             <p class="text-danger">{{ __('home.wait a review') }}</p>
                                         </td>
                                     </tr>
                                 @endif
                                 <tr>
-                                    <td colspan="2">
+                                    <td>
                                         <strong class="mr-2">{{ __('home.customer rating') }}: </strong>
                                         @if($res->star_number == 1)
                                             <span class="fa fa-stack">
@@ -898,6 +921,72 @@
     </section>
 
     @include('frontend.pages.modal-products')
+
+    <div class="modal fade" id="edit-comment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post" action="{{route('update.evaluate.id')}}">
+                    <div class="modal-body">
+                        @csrf
+                        <input type="text" hidden id="id-cmt-edit" name="id">
+
+                        <input type="text" class="form-control" id="product_id" name="product_id"
+                               value="{{$product->id}}" hidden/>
+                        <div class="rating">
+                            <input type="radio" name="star_number" id="star-edit-1" value="1" hidden="">
+                            <label for="star-edit-1" onclick="starCheckEdit(1)"><i id="icon-star-edit-1"
+                                                                         class="fa fa-star"></i></label>
+                            <input type="radio" name="star_number" id="star-edit-2" value="2" hidden="">
+                            <label for="star-edit-2" onclick="starCheckEdit(2)"><i id="icon-star-edit-2"
+                                                                         class="fa fa-star"></i></label>
+                            <input type="radio" name="star_number" id="star-edit-3" value="3" hidden="">
+                            <label for="star-edit-3" onclick="starCheckEdit(3)"><i id="icon-star-edit-3"
+                                                                         class="fa fa-star"></i></label>
+                            <input type="radio" name="star_number" id="star-edit-4" value="4" hidden="">
+                            <label for="star-edit-4" onclick="starCheckEdit(4)"><i id="icon-star-edit-4"
+                                                                         class="fa fa-star"></i></label>
+                            <input type="radio" name="star_number" id="star-edit-5" value="5" hidden="" checked>
+                            <label for="star-edit-5" onclick="starCheckEdit(5)"><i id="icon-star-edit-5"
+                                                                         class="fa fa-star"></i></label>
+                        </div>
+                        <input id="input-star-edit" value="0" hidden="">
+                        <div id="text-message" class="text-danger d-none">{{ __('home.Please select star rating') }}
+                        </div>
+
+                        <div class="form-group row">
+                            <label for=""
+                                   class="col-sm-12 col-form-label">{{ __('home.your name') }}</label>
+                            <div class="col-sm-12">
+                                <input onclick="checkStar()" type="text" class="form-control" id="name-edit"
+                                       name="username"
+                                       placeholder="{{ __('home.your name') }}" required/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for=""
+                                   class="col-sm-12 col-form-label">{{ __('home.your review') }}</label>
+                            <div class="col-sm-12">
+                                    <textarea onclick="checkStar()" class="form-control" id="content-edit"
+                                              name="content"
+                                              placeholder="{{ __('home.your review') }}"
+                                              rows="3" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">{{ __('home.submit') }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
     <script>
         function toggleContent(contentId, btnId) {
             var content = document.getElementById(contentId);
@@ -912,9 +1001,6 @@
             }
         }
     </script>
-
-    </script>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
         var result = [];
         var product_id = document.getElementById('product_id')
@@ -1137,62 +1223,6 @@
             }
         }
 
-
-//         function starCheck(value) {
-//             let star1 = document.getElementById('star1');
-//             let star2 = document.getElementById('star2');
-//             let star3 = document.getElementById('star3');
-//             let star4 = document.getElementById('star4');
-//             let star5 = document.getElementById('star5');
-//             let input = document.getElementById('input-star');
-// //
-//             let icon1 = document.getElementById('icon-star-1');
-//             let icon2 = document.getElementById('icon-star-2');
-//             let icon3 = document.getElementById('icon-star-3');
-//             let icon4 = document.getElementById('icon-star-4');
-//             let icon5 = document.getElementById('icon-star-5');
-//
-//
-//             switch (value) {
-//                 case 1:
-//                     star1.checked = true;
-//                     input.value = 1;
-//                     icon1.classList.add("checked");
-//                     break;
-//                 case 2:
-//                     star2.checked = true;
-//                     input.value = 2;
-//                     icon1.classList.add("checked");
-//                     icon2.classList.add("checked");
-//                     break;
-//                 case 3:
-//                     star3.checked = true;
-//                     input.value = 3;
-//                     icon1.classList.add("checked");
-//                     icon2.classList.add("checked");
-//                     icon3.classList.add("checked");
-//                     break;
-//                 case 4:
-//                     star4.checked = true;
-//                     input.value = 4;
-//                     icon1.classList.add("checked");
-//                     icon2.classList.add("checked");
-//                     icon3.classList.add("checked");
-//                     icon4.classList.add("checked");
-//                     break;
-//                 default:
-//                     star5.checked = true;
-//                     input.value = 5;
-//                     icon1.classList.add("checked");
-//                     icon2.classList.add("checked");
-//                     icon3.classList.add("checked");
-//                     icon4.classList.add("checked");
-//                     icon5.classList.add("checked");
-//                     break;
-//             }
-//             checkStar();
-//         }
-
         function starCheck(value) {
             let input = document.getElementById('input-star');
             let star = document.getElementById('star' + value);
@@ -1222,6 +1252,31 @@
             checkStar();
         }
 
+        function starCheckEdit(value) {
+            let input = document.getElementById('input-star-edit');
+            let star = document.getElementById('star-edit-' + value);
+            let icon = document.getElementById('icon-star-edit-' + value);
+
+            let isChecked = star.checked;
+
+            // Toggle the clicked star
+            star.checked = !isChecked;
+
+            for (let i = 1; i <= 5; i++) {
+                let currentStar = document.getElementById('star-edit-' + i);
+                let currentIcon = document.getElementById('icon-star-edit-' + i);
+
+                if (i <= value) {
+                    currentStar.checked = true;
+                    currentIcon.classList.add("checked");
+                } else {
+                    currentStar.checked = false;
+                    currentIcon.classList.remove("checked");
+                }
+            }
+            console.log(input.value)
+            input.value = star.checked ? value : value - 1;
+        }
 
         function toggleReadMore() {
             var moreLink = document.getElementById("more-link");
@@ -1268,7 +1323,6 @@
 
         }
 
-
         var y = window.matchMedia("(max-width: 991px)")
         responsiveTable(y);
         x.addListener(responsiveTable)
@@ -1294,10 +1348,8 @@
             var minBrightness = 128; // Độ sáng tối thiểu
             var maxBrightness = 255; // Độ sáng tối đa
 
-
             var color;
             var brightness;
-
 
             do {
                 color = Math.floor(Math.random() * 16777215).toString(16);
@@ -1332,6 +1384,21 @@
         }
 
         getPercent();
+
+        async function getCommentById(id) {
+            let url = '{{ route('find.evaluate.id', ['id' => ':id']) }}';
+            url = url.replace(':id', id);
+
+            const response = await fetch(url);
+
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById('id-cmt-edit').value = data[0].id;
+                document.getElementById('name-edit').value = data[0].username;
+                document.getElementById('content-edit').value = data[0].content;
+                starCheckEdit(data[0].star_number)
+            }
+        }
     </script>
 @endsection
 

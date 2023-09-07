@@ -81,9 +81,11 @@ class PromotionController extends Controller
     {
         (new HomeController())->getLocale($request);
         $products = $this->mergeDuplicate($request);
-        if (count($products) < 1) {
-            alert()->error('Error', 'Không có sản phẩm phù hợp!');
-            return redirect(route('seller.promotion.list'));
+        if ($products) {
+            if (count($products) < 1) {
+                alert()->error('Error', 'Không có sản phẩm phù hợp!');
+                return redirect(route('seller.promotion.list'));
+            }
         }
         return view('backend/promotion/create', compact('products'));
     }
@@ -148,12 +150,20 @@ class PromotionController extends Controller
         foreach ($products as $product) {
             $myArray[] = $product->id;
         }
-        foreach ($vouchers as $voucher) {
-            $listIDs = $voucher->apply;
-            $arrayIDs = explode(',', $listIDs);
+        $arrayIDs = null;
+        $items = null;
+        if ($myArray) {
+            foreach ($vouchers as $voucher) {
+                $listIDs = $voucher->apply;
+                $arrayIDs = explode(',', $listIDs);
+            }
+            if ($arrayIDs) {
+                $items = array_diff($myArray, $arrayIDs);
+            } else {
+                $items = $myArray;
+            }
         }
-        $products = array_diff($myArray, $arrayIDs);
-        return $products;
+        return $items;
     }
 
     private function getArrayIds(Request $request)

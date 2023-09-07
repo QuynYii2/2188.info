@@ -27,7 +27,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @if(!$evaluates)
+                        @if(!$evaluates->isEmpty())
                             @foreach ($evaluates as $evaluate)
                                 <tr>
                                     <td><input type="checkbox" value="{{ $evaluate->id }}"></td>

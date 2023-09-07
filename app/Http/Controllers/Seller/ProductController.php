@@ -332,11 +332,13 @@ class ProductController extends Controller
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', \Illuminate\Support\Facades\Auth::user()->id]])->get();
         $att_of_product = DB::table('product_attribute')->where('product_id', $product->id)->get();
         $productDetails = Variation::where([['product_id', $id], ['status', VariationStatus::ACTIVE]])->get();
+        $price_sales = ProductSale::where('product_id',$id)->get();
 
         return view('backend.products.edit', compact(
             'categories',
             'att_of_product',
             'attributes',
+            'price_sales',
             'product',
             'productDetails'));
 
@@ -497,6 +499,7 @@ class ProductController extends Controller
                 return back();
             }
         } catch (\Exception $exception) {
+            dd($exception);
             alert()->error('Error', 'Error, please try again');
             return back();
         }

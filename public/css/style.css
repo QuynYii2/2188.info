@@ -16,14 +16,30 @@ body {
 }
 
 #checkboxes {
-  position: absolute;
-  background: white;
-  top: 32px;
-  left: 0;
-  right: 0;
-  height: 40vh;
-  overflow-y: auto;
-  z-index: 10;
+  z-index: 2;
+}
+
+#myform {
+  text-align: center;
+  padding: 5px;
+  border: 1px dotted #ccc;
+  margin: 2%;
+}
+
+.qty {
+  width: 40px;
+  height: 25px;
+  text-align: center;
+}
+
+input.qtyplus {
+  width: 25px;
+  height: 25px;
+}
+
+input.qtyminus {
+  width: 25px;
+  height: 25px;
 }
 
 #type_business_checkboxes {
@@ -249,7 +265,7 @@ body {
   margin-bottom: 10px;
 }
 .cart .pagelist .quantity .input-number {
-  width: 50px;
+  width: 60px;
   padding: 5px;
 }
 .cart .pagelist .submit {
@@ -298,6 +314,7 @@ body {
   padding: 25px 0;
 }
 .checkout-bg .checkout .orderSummary-footer .grandtotal {
+  text-transform: capitalize;
   margin: 5px 0;
 }
 .checkout-bg .checkout .orderSummary-footer .grandtotal .total {
@@ -313,6 +330,7 @@ body {
   background-color: white;
 }
 .checkout-bg .checkout .checkout-item label {
+  text-transform: capitalize;
   margin-bottom: 10px;
 }
 .checkout-bg .checkout .checkout-item label i {
@@ -415,30 +433,36 @@ body {
 .detail .product-name {
   color: gray;
   text-decoration: underline;
+  font-size: 16px;
 }
 .detail .product .product-title {
-  font-weight: bold;
-  font-size: 23px;
+  font-weight: 500;
+  font-size: 20px;
   margin-bottom: 10px;
 }
 .detail .product-origin {
   color: #666;
-  font-size: 14px;
+  font-size: 15px;
 }
 .detail .product .product-price {
-  font-family: "Rubik", sans-serif;
   margin-top: 10px;
   font-size: 23px;
   font-weight: 700;
+  align-items: center;
 }
 .detail .product .product-price .price {
   color: #e10600;
+}
+.detail .product .product-price .productOldPrice {
+  font-weight: 500;
+  font-size: 15px;
+  color: #929292;
 }
 .detail .product .description-text {
   text-align: start;
   border-top: 0.0625rem solid #e3dddd;
   margin: 10px 15px 10px 0;
-  padding: 1rem;
+  padding: 1rem 0;
 }
 .detail .product .product-rating i {
   color: #fd6506;
@@ -1026,7 +1050,7 @@ a {
 }
 .header .header-pc .header-top-right .item-shop .shop-menu .shop-list .shop-item--text .text-seller {
   color: gray;
-  font-size: 16px;
+  font-size: 14px;
 }
 .header .header-pc .header-top-right .item-shop .shop-menu .shop-list .shop-item--text .text-name {
   margin: 5px 0;
@@ -1045,8 +1069,8 @@ a {
 }
 .header .header-pc .header-top-right .item-shop .shop-menu .shop-list .shop-item--text .text-price {
   margin-top: 5px;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
 }
 .header .header-pc .header-top-right .item-shop .shop-menu .shop-list .shop-item--text .text-quantity {
   margin-top: 20px;
@@ -2173,7 +2197,7 @@ hr {
   color: #0a6cdc;
 }
 .section .item-body .card-price {
-  font-size: 16px;
+  font-size: 15px;
   margin: 0 0 10px 0;
 }
 .section .item-body .card-price .price-sale {

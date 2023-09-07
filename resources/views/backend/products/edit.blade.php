@@ -124,7 +124,7 @@
                             @for($i = 0; $i< count($permissionUsers); $i++)
                                 @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm hot')
                                     <div class="col-4 d-flex align-items-center">
-                                        <label for="hot_product" >Sản phẩm hot</label>
+                                        <label for="hot_product">Sản phẩm hot</label>
                                         <div class="col-4 col-sm-4">
                                             <input class="form-control" type="checkbox" id="hot_product"
                                                    name="hot_product">
@@ -138,7 +138,8 @@
                                     <div class="col-4 d-flex align-items-center">
                                         <label for="feature_product" class="">Sản phẩm nổi bật</label>
                                         <div class="col-4 col-sm-4">
-                                            <input class="form-control" type="checkbox" id="feature_product" name="feature_product">
+                                            <input class="form-control" type="checkbox" id="feature_product"
+                                                   name="feature_product">
                                         </div>
                                     </div>
                                     @break
@@ -227,12 +228,12 @@
                                                    accept="image/*">
                                         </div>
                                     @endif
-                                <div>
-                                    <input hidden="" name="id{{$loop->index+1}}"
-                                           value="{{$productDetail->id}}">
-                                    <a class="btnRemove btn btn-danger mb-3" style="color: white"
-                                       data-value="{{$productDetail->id}}">Remove</a>
-                                </div>
+                                    <div>
+                                        <input hidden="" name="id{{$loop->index+1}}"
+                                               value="{{$productDetail->id}}">
+                                        <a class="btnRemove btn btn-danger mb-3" style="color: white"
+                                           data-value="{{$productDetail->id}}">Remove</a>
+                                    </div>
                                 @endforeach
                             @endif
                         </div>
@@ -317,7 +318,7 @@
                         <div class="form-group">
                             <div class="name">Nhập giá khuyến mãi(nếu có)</div>
                             <input type="number" class="form-control" name="giakhuyenmai" id="name"
-                                   placeholder="Nhập giá khuyến mãi"  value="{{$product->price}}" min="1">
+                                   placeholder="Nhập giá khuyến mãi" value="{{$product->price}}" min="1">
                         </div>
                         <div class="form-group">
                             <div class="name">Nhập số lượng</div>
@@ -326,11 +327,13 @@
                         </div>
                         <div class="form-group">
                             <div class="name">Xuất xứ</div>
-                            <input type="text" class="form-control" name="origin" id="origin" placeholder="Nhập xuất xứ" value="{{$product->origin}}">
+                            <input type="text" class="form-control" name="origin" id="origin" placeholder="Nhập xuất xứ"
+                                   value="{{$product->origin}}">
                         </div>
                         <div class="form-group">
                             <div class="name">Sản phẩm tối thiểu</div>
-                            <input type="number" value="{{$product->min}}" class="form-control" name="min" id="min" placeholder="Nhập số lượng tối thiểu" min="1">
+                            <input type="number" value="{{$product->min}}" class="form-control" name="min" id="min"
+                                   placeholder="Nhập số lượng tối thiểu" min="1">
                         </div>
                         <div class="form-group">
                             <div class="d-flex">
@@ -338,46 +341,42 @@
                             </div>
                             <div>
                                 <div class="">
-                                    <div class="add-fields" data-af_base="#base-package-fields" data-af_target=".packages">
+                                    <div class="add-fields" data-af_base="#base-package-fields"
+                                         data-af_target=".packages">
                                         <div class="packages">
 
                                         </div>
-                                        <button type="button" class="btn add-form-field"><i class="fa-solid fa-plus"></i> Thêm khoảng giá</button>
+                                        <button type="button" class="btn add-form-field"><i
+                                                    class="fa-solid fa-plus"></i> Thêm khoảng giá
+                                        </button>
                                     </div>
                                     <div id="base-package-fields" hidden>
-                                        @php
-                                            $price_sales = \App\Models\ProductSale::where('product_id', '=', $product->id)->get();
-                                        @endphp
                                         @if(!$price_sales->isEmpty())
                                             @foreach($price_sales as $price_sale)
                                                 <div class="form-group form-group-price">
                                                     <div class="d-flex align-items-center">
                                                         <div class="">
-                                                            <input value="{{$price_sale->quantity}}" type="number" class="form-control form-price" name="quantity[]" placeholder="Từ (sản phẩm)">
+                                                            <input value="{{$price_sale->quantity}}" type="number"
+                                                                   class="form-control form-price" name="quantity[]"
+                                                                   placeholder="Từ (sản phẩm)">
                                                         </div>
                                                         <div class="">
-                                                            <input value="{{$price_sale->sales}}" type="number" class="form-control form-price" name="sales[]" placeholder="Giảm %">
+                                                            <input value="{{$price_sale->sales}}" type="number"
+                                                                   class="form-control form-price" name="sales[]"
+                                                                   placeholder="Giảm %">
                                                         </div>
                                                         <div class="">
-                                                            <button type="button" class="btn remove-form-field"><i class="fa-regular fa-trash-can"></i></button>
+                                                            <input value="{{$price_sale->days}}" type="number"
+                                                                   class="form-control form-price" name="days[]"
+                                                                   placeholder="Ngay gia hang du kien">
+                                                        </div>
+                                                        <div class="">
+                                                            <button type="button" class="btn remove-form-field"><i
+                                                                        class="fa-regular fa-trash-can"></i></button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             @endforeach
-                                        @else
-                                            <div class="form-group form-group-price">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="">
-                                                        <input type="number" class="form-control form-price" name="quantity[]" placeholder="Từ (sản phẩm)">
-                                                    </div>
-                                                    <div class="">
-                                                        <input type="number" class="form-control form-price" name="sales[]" placeholder="Giảm %">
-                                                    </div>
-                                                    <div class="">
-                                                        <button type="button" class="btn remove-form-field"><i class="fa-regular fa-trash-can"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         @endif
                                     </div>
                                 </div>
@@ -952,7 +951,7 @@
     <script>
         let desc = document.querySelectorAll('.description');
         for (let i = 0; i < desc.length; i++) {
-            CKEDITOR.replace( desc[i], {
+            CKEDITOR.replace(desc[i], {
                 filebrowserBrowseUrl: '{{ asset('ckfinder/ckfinder.html') }}',
                 filebrowserImageBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Images') }}',
                 filebrowserFlashBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Flash') }}',

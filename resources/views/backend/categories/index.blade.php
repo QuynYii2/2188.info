@@ -117,10 +117,10 @@
                                                     $parent1 = \App\Models\Category::find($category->parent_id);
                                                     if ($parent1){
                                                         $isParent1 = true;
-                                                    }
-                                                    $parent0 = \App\Models\Category::find($parent1->parent_id);
-                                                    if ($parent0){
-                                                        $isParent0 = true;
+                                                        $parent0 = \App\Models\Category::find($parent1->parent_id);
+                                                        if ($parent0){
+                                                            $isParent0 = true;
+                                                        }
                                                     }
                                                 @endphp
                                             @endif
@@ -206,7 +206,9 @@
                                                                                             @php
                                                                                                 $categoryParent = \App\Models\Category::find($category->parent_id);
                                                                                             @endphp
-                                                                                            <option value="{{$category->parent_id}}">{{$categoryParent->name}}</option>
+                                                                                            @if($categoryParent)
+                                                                                                <option value="{{$category->parent_id}}">{{$categoryParent->name}}</option>
+                                                                                            @endif
                                                                                         @else
                                                                                             <option value="-1">Trống</option>
                                                                                         @endif

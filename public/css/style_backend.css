@@ -118,7 +118,7 @@ body {
 }
 .header-card--right .todo_list .nav {
   margin: 10px 0;
-  padding: 12px 0;
+  padding: 0;
   border-bottom: 1px solid rgb(229, 229, 229);
 }
 .header-card--right .todo_list .nav .nav-item a {
