@@ -559,6 +559,10 @@ return [
     'received-by' => '받은 사람: ',
     'posted-by' => '보낸 사람: ',
     'time' => '시간: ',
+
+    'edit-comment' => '편집',
+    'content' => 'Nội dung',
+    'star number' => 'Số sao',
     // Register member
     // start
     'Agree to Terms' => '약관동의',

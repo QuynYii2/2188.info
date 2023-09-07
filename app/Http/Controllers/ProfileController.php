@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Frontend\HomeController;
+use App\Models\EvaluateProduct;
 use App\Models\Product;
 use App\Models\ProductViewed;
 use Illuminate\Http\Request;
@@ -49,7 +50,9 @@ class ProfileController extends Controller
     public function product_evaluation(Request $request)
     {
         (new HomeController())->getLocale($request);
-        return view('frontend/pages/profile/product-evaluation');
+        $listEvaluate = EvaluateProduct::where('user_id', Auth::user()->id)->get();
+
+        return view('frontend/pages/profile/product-evaluation', compact('listEvaluate'));
     }
 
     public function favorite_product(Request $request)

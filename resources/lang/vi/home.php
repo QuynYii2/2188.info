@@ -221,7 +221,7 @@ return [
     // thanh toán khi nhận hàng, thẻ ghi nợ hoặc tín dụng, ví điện tử
 
     'Cart' => 'Giỏ Hàng',
-    'Product Name' => 'Sản Phẩm',
+    'Product Name' => 'Tên sản phẩm',
     'Price' => 'Giá',
     'Total Amount' => 'Số Tiền',
     'Action' => 'Thao tác',
@@ -534,6 +534,10 @@ return [
     'received-by' => 'Đã nhận bởi: ',
     'posted-by' => 'Được gửi bởi: ',
     'time' => 'Thời gian: ',
+
+    'edit-comment' => 'Sửa đánh giá',
+    'content' => 'Nội dung',
+    'star number' => 'Số sao',
     // Register member
     // start
     'Agree to Terms' => 'Đồng ý với Điều khoản',
