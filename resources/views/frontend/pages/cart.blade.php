@@ -13,7 +13,6 @@
                     <li class="breadcrumb-item active">{{ __('home.Your Cart') }}</li>
                 </ol>
             </nav>
-            <h1>{{ __('home.Your Cart') }}</h1>
         </div>
         @if ($cartItems->isEmpty())
             <p>{{ __('home.Chưa có sản phẩm trong giỏ hàng') }}</p>

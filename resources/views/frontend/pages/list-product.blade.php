@@ -55,10 +55,21 @@
                     @endif
                 </a>
             @else
-                <a href="{{route('detail_product.show', $product->id)}}>{{($product->name_ko)}}</a>
+                <a href="#">
+                    @if(locationHelper() == 'kr')
+                        {{ ($product->name_ko) }}
+                    @elseif(locationHelper() == 'cn')
+                        {{ ($product->name_zh) }}
+                    @elseif(locationHelper() == 'jp')
+                        {{ ($product->name_ja) }}
+                    @elseif(locationHelper() == 'vi')
+                        {{ ($product->name_vi) }}
+                    @else
+                        {{ ($product->name_en) }}
+                    @endif
+                </a>
             @endif
         </div>
-
         @if($product->price)
             <div class="card-price">
                 @if($product->price != null)
@@ -82,7 +93,7 @@
                 @if(Auth::check())
                     <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
                 @else
-                    <a class="check_url">{{ __('home.Choose Options') }}</a>
+                    <a>{{ __('home.Choose Options') }}</a>
                 @endif
             </div>
             <div class="card-bottom--right " id-product="{{$product->id}}">
