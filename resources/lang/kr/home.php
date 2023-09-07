@@ -561,8 +561,8 @@ return [
     'time' => '시간: ',
 
     'edit-comment' => '편집',
-    'content' => 'Nội dung',
-    'star number' => 'Số sao',
+    'content' => '내용',
+    'star number' => '평가 점수',
     // Register member
     // start
     'Agree to Terms' => '약관동의',
