@@ -27,10 +27,19 @@
                                         ${{$member->price}}
                                     </h3>
                                     <h6 class="card-subtitle mb-2 text-muted">
-                                        {{ __('home.Member') }} {{$member->name}}
-                                    </h6>
-                                    <h6 class="text-nowrap">
-                                        {{ __('home.Xem chi tiết') }}
+                                        {{ __('home.Member') }}
+                                        @if(locationHelper() == 'kr')
+                                            {{ ($member->lang_kr) }}
+                                        @elseif(locationHelper() == 'cn')
+                                            {{ ($member->lang_cn) }}
+                                        @elseif(locationHelper() == 'jp')
+                                            {{ ($member->lang_jp) }}
+                                        @elseif(locationHelper() == 'vi')
+                                            {{ ($member->name) }}
+                                        @else
+                                            {{ ($member->lang_en) }}
+                                        @endif
+{{--                                        {{$member->name}}--}}
                                     </h6>
                                     <ol class="text-success">
                                         @php
