@@ -55,7 +55,19 @@
                                              alt="" width="60px" height="60px">
                                     </div>
                                     <div class="col-md-9 float-left">
-                                        <div class="text-secondary">{{($cartItem->product->category->name)}}</div>
+                                        <div class="text-secondary">
+                                            @if(locationHelper() == 'kr')
+                                                {{($cartItem->product->category->name_ko)}}
+                                            @elseif(locationHelper() == 'cn')
+                                                {{($cartItem->product->category->name_zh)}}
+                                            @elseif(locationHelper() == 'jp')
+                                                {{($cartItem->product->category->name_ja)}}
+                                            @elseif(locationHelper() == 'vi')
+                                                {{($cartItem->product->category->name)}}
+                                            @else
+                                                {{($cartItem->product->category->name_en)}}
+                                            @endif
+                                        </div>
                                         <a href="{{route('detail_product.show', $cartItem->product->id)}}">{{($cartItem->product->name)}}</a>
                                         @if($cartItem->values != 0)
                                             @php
