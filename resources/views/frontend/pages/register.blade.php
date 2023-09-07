@@ -50,7 +50,7 @@
 
                                                     @endphp
                                                     @if(locationHelper() == 'kr')
-                                                        {{ ($permission->lang_ko) }}
+                                                        {{ ($permission->lang_kr) }}
                                                     @elseif(locationHelper() == 'cn')
                                                         {{ ($permission->lang_cn) }}
                                                     @elseif(locationHelper() == 'jp')
