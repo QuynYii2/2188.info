@@ -105,29 +105,25 @@
         <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
         <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
         <div class="d-flex justify-content-between align-items-center p-3">
-            <a href="{{ route('stand.register.member.index', $company->id) }}" class="btn btn-primary">{{ __('home.Booth') }}</a>
-            <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">{{ __('home.Partner List') }}</a>
-            <a href="{{route('chat.message.received')}}" class="btn btn-primary">{{ __('home.Message received') }}</a>
-            <a href="{{route('chat.message.sent')}}" class="btn btn-warning">{{ __('home.Message sent') }}</a>
-            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
-            <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
+            <div>
+                <a href="{{ route('stand.register.member.index', $company->id) }}" class="btn btn-primary mr-2">{{ __('home.Booth') }}</a>
+                <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">{{ __('home.Partner List') }}</a>
+            </div>
+            <div>
+                <a href="{{route('chat.message.received')}}" class="btn btn-primary mr-2">{{ __('home.Message received') }}</a>
+                <a href="{{route('chat.message.sent')}}" class="btn btn-primary mr-2">{{ __('home.Message sent') }}</a>
+                <a href="#" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
+            </div>
         </div>
         <div class="row m-0">
             <div class="col-md-6 border">
                 <div class="row">
-                    <div class="col-md-12 border">
-                        <div class="mb-3">
-                            @if(locationHelper() == 'kr')
-                                {{ ($company->name_ko) }}
-                            @elseif(locationHelper() == 'cn')
-                                {{ ($company->name_zh) }}
-                            @elseif(locationHelper() == 'jp')
-                                {{ ($company->name_ja) }}
-                            @elseif(locationHelper() == 'vi')
-                                {{ ($company->name_vi) }}
-                            @else
-                                {{ ($company->name_en) }}
-                            @endif
+                    <div class="col-md-12 border" style="border-right: 1px solid white!important">
+                        <div class="mt-2">
+                            <h5 class="mb-3">
+                                {{ ($company->name) }}
+                            </h5>
                         </div>
                     </div>
                     <div class="row p-2">
@@ -156,7 +152,7 @@
             </div>
             <div class="col-md-6 border">
                 <div class="row">
-                    <div class="col-md-12 border">
+                    <div class="col-md-12 border" style="border-left: 1px solid white!important">
                         <div class="mt-2">
                             <h5 class="mb-3">{{ __('home.Specified products') }}</h5>
                         </div>

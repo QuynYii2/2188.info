@@ -49,16 +49,20 @@
             </div>
         </div>
         <div class="border d-flex justify-content-between align-items-center p-3">
-            <a href="{{route('stand.register.member.index', $company->id)}}"
-               class="btn btn-primary">{{ __('home.Shop') }}</a>
-            <a href="{{route('partner.register.member.index')}}"
-               class="btn btn-warning">{{ __('home.Partner List') }}</a>
-            <a href="#" class="btn btn-primary">{{ __('home.Message received') }}</a>
-            <a href="#" class="btn btn-warning">{{ __('home.Message sent') }}</a>
-            <a href="#" class="btn btn-primary" data-toggle="modal"
-               data-target="#exampleModal">{{ __('home.Purchase') }}</a>
-            <a href="#" class="btn btn-warning" data-toggle="modal"
-               data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
+            <div>
+                <a href="{{route('stand.register.member.index', $company->id)}}"
+                   class="btn btn-primary mr-2">{{ __('home.Shop') }}</a>
+                <a href="{{route('partner.register.member.index')}}"
+                   class="btn btn-warning">{{ __('home.Partner List') }}</a>
+            </div>
+            <div>
+                <a href="#" class="btn btn-primary mr-2">{{ __('home.Message received') }}</a>
+                <a href="#" class="btn btn-primary mr-2">{{ __('home.Message sent') }}</a>
+                <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
+                   data-target="#exampleModal">{{ __('home.Purchase') }}</a>
+                <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
+                   data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
+            </div>
         </div>
         <table class="table table-bordered">
             <thead>

@@ -47,7 +47,7 @@
                                 $percent = $sales->sales;
                             }
                         @endphp
-                        <tr>
+                        <tr style="border-bottom: 1px solid #dbdbdb">
                             <td>
                                 <div class="row mt-3">
                                     <div class="col-md-3 img-product">
@@ -96,7 +96,7 @@
                                             <a class="text-edit" href="#" data-toggle="modal"
                                                data-target="#exampleModal">
                                                 <i class='fas fa-edit'></i>
-                                                {{ __('home.Change') }}
+                                                Change
                                             </a>
                                             <div class="modal fade" id="exampleModal" tabindex="-1"
                                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -134,7 +134,7 @@
                                                                         <label class="form-option unavailable"
                                                                                for="attribute_rectangle__189_374"
                                                                                data-product-attribute-value="374">
-                                                                            <span class="form-option-variant">{{ __('home.32 inch') }}</span>
+                                                                            <span class="form-option-variant">32 inch</span>
                                                                         </label>
                                                                     </div>
                                                                     <div class="form-option-wrapper">
@@ -146,7 +146,7 @@
                                                                         <label class="form-option unavailable"
                                                                                for="attribute_rectangle__189_375"
                                                                                data-product-attribute-value="375">
-                                                                            <span class="form-option-variant">{{ __('home.42 inch') }}</span>
+                                                                            <span class="form-option-variant">42 inch</span>
                                                                         </label>
                                                                     </div>
                                                                     <div class="form-option-wrapper">
@@ -159,7 +159,7 @@
                                                                         <label class="form-option"
                                                                                for="attribute_rectangle__189_376"
                                                                                data-product-attribute-value="376">
-                                                                            <span class="form-option-variant">{{ __('home.55 inch') }}</span>
+                                                                            <span class="form-option-variant">55 inch</span>
                                                                         </label>
                                                                     </div>
                                                                 </div>
@@ -167,7 +167,7 @@
                                                         </div>
                                                         <div class="modal-footer justify-content-center align-items-center">
                                                             <button type="button" class=" text-center btn btn-primary">
-                                                                {{ __('home.Save') }}
+                                                                Save
                                                             </button>
                                                         </div>
                                                     </div>
@@ -178,14 +178,14 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="price"
+                            <td class="price" style="vertical-align: middle;"
                                 id="price-{{ $cartItem->id }}">{{ number_format(convertCurrency('USD', $currency,$cartItem->price), 0, ',', '.') }} {{$currency}}</td>
-                            <td class="quantity">
+                            <td class="quantity"  style="vertical-align: middle;">
                                 <form>
                                     <input type="text" id="id-cart" value="{{ $cartItem->id }}" hidden/>
                                     <input type="text" id="id-link" value="{{ asset('/') }}" hidden/>
                                     <input class="input-number" type="number" id="quantity-{{ $cartItem->id }}"
-                                           name="quantity" style="border-radius: 15px; border-color: #ccc"
+                                           name="quantity" style="border-radius: 30px; border-color: #ccc"
                                            value="{{ $cartItem->quantity }}"
                                            onchange="myfunction({{ $cartItem->id }}); "
                                            min="{{$cartItem->product->min}}"/>
@@ -194,17 +194,17 @@
                             <input hidden="" type="text" id="price-percent-{{ $cartItem->id }}"
                                    value="{{ $percent }}">
                             @if($percent)
-                                <td id="total-quantity-{{ $cartItem->id }}">
+                                <td id="total-quantity-{{ $cartItem->id }}" style="vertical-align: middle;">
                                     {{ number_format(convertCurrency('USD', $currency,($cartItem->price*$cartItem->quantity) - ($cartItem->price*$cartItem->quantity)*$percent/100), 0, ',', '.') }} {{$currency}}
                                 </td>
                             @else
-                                <td id="total-quantity-{{ $cartItem->id }}">
+                                <td id="total-quantity-{{ $cartItem->id }}" style="vertical-align: middle;">
                                     {{ number_format(convertCurrency('USD', $currency,$cartItem->price*$cartItem->quantity), 0, ',', '.') }} {{$currency}}
                                 </td>
                             @endif
 
-                            <td>
-                                <form class="text-center" action="{{ route('cart.delete', $cartItem->id) }}"
+                            <td  style="vertical-align: middle;">
+                                <form action="{{ route('cart.delete', $cartItem->id) }}"
                                       method="POST">
                                     @csrf
                                     @method('DELETE')
@@ -218,75 +218,75 @@
             </div>
             <div class="row cart-content">
                 <div class="col-md-4">
-                    <div class="text-uppercase">{{ __('home.COUPON CODE') }}</div>
+                    <div class="text-uppercase">COUPON CODE</div>
                     <div class="">
-                        <label for="inputPassword2">{{ __('home.Enter your coupon code if you have one.') }}</label>
+                        <label for="inputPassword2">Enter your coupon code if you have one.</label>
                         <form class="d-flex align-items-center justify-content-between">
                             <div class="form-group">
                                 <input type="text" class="form-control" id="inputPassword2"
                                        placeholder="Enter your coupon code">
                             </div>
-                            <button type="submit" class="btn mb-2 submit">{{ __('home.Apply') }}</button>
+                            <button type="submit" class="btn mb-2 submit">Apply</button>
                         </form>
                     </div>
-                    <div class="text-uppercase">{{ __('home.GIFT CERTIFICATE') }}</div>
+                    <div class="text-uppercase">GIFT CERTIFICATE</div>
                     <div class="">
-                        <label for="inputPassword2">{{ __('home.Enter your coupon code if you have one.') }}</label>
+                        <label for="inputPassword2">Enter your coupon code if you have one.</label>
                         <form class="d-flex align-items-center justify-content-between">
                             <div class="form-group">
                                 <input type="text" class="form-control" id="inputPassword2"
                                        placeholder="Enter your coupon code">
                             </div>
-                            <button type="submit" class="btn mb-2 submit">{{ __('home.Apply') }}</button>
+                            <button type="submit" class="btn mb-2 submit">Apply</button>
                         </form>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="text-uppercase">{{ __('home.SHIPPING') }}</div>
+                    <div class="text-uppercase">SHIPPING</div>
                     <div class="">
-                        <label for="inputPassword2">{{ __('home.Enter your coupon code if you have one.') }}</label>
+                        <label for="inputPassword2">Enter your coupon code if you have one.</label>
                         <form>
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <span class="mr-3">{{ __('home.Country') }}</span>
+                                <span class="mr-3">Country</span>
                                 <div class="form-group">
                                     <select name="" id="">
-                                        <option value="">{{ __('home.VietNam') }}</option>
-                                        <option value="">{{ __('home.TrungQuoc') }}</option>
-                                        <option value="">{{ __('home.Han Quoc') }}</option>
+                                        <option value="">VietNam</option>
+                                        <option value="">TrungQuoc</option>
+                                        <option value="">Han Quoc</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <span class="mr-3">{{ __('home.State/Province') }}</span>
+                                <span class="mr-3">State/Province</span>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="inputPassword2"
-                                           placeholder={{ __('home.State/Province') }}>
+                                           placeholder="State/province">
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <span class="mr-3">{{ __('home.Suburb/City') }}</span>
+                                <span class="mr-3">Suburb/City</span>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="inputPassword2"
-                                           placeholder={{ __('home.Suburb/City') }}>
+                                           placeholder="Suburb/City">
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <span class="mr-3">{{ __('home.Zip/Postcode') }}</span>
+                                <span class="mr-3">Zip/Postcode</span>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="inputPassword2"
-                                           placeholder="{{ __('home.Zip/Postcode') }}">
+                                           placeholder="Zip/Postcode">
                                 </div>
                             </div>
-                            <button type="submit" class="btn mb-2 submit float-right submit-60">{{ __('home.Estimate Shipping') }}
+                            <button type="submit" class="btn mb-2 submit float-right submit-60">Estimate Shipping
                             </button>
                         </form>
                     </div>
 
                 </div>
                 <div class="col-md-4">
-                    <div class="text-uppercase">{{ __('home.COUPON CODE') }}</div>
+                    <div class="text-uppercase">COUPON CODE</div>
                     <div class="subtotal d-flex justify-content-between">
-                        <span class="">{{ __('home.Subtotal') }}: </span>
+                        <span class="">Subtotal: </span>
                         <span class="subtotal-price">0</span>
                     </div>
                     <div class="grandtotal d-flex justify-content-between">
@@ -294,7 +294,7 @@
                         <span> <span id="max-total"> {{ $cartItem->price*$cartItem->quantity }}</span></span>
                     </div>
                     <a href="{{route('checkout.show')}}">
-                        <button type="submit" class="btn mb-2 submit float-right submit-100">{{ __('home.Check out') }}</button>
+                        <button type="submit" class="btn mb-2 submit float-right submit-100">Check out</button>
                     </a>
                 </div>
             </div>

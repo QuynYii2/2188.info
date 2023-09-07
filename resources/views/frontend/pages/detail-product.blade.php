@@ -304,11 +304,11 @@
                     </div>
                     <div class="product-price d-flex" style="gap: 3rem">
                         @if($product->price != null)
+                            <strike class="productOldPrice" id="productOldPrice">({{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}})</strike>
                             <div id="productPrice"
                                  class="price">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</div>
-                            <strike id="productOldPrice">{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
                         @else
-                            <strike id="productOldPrice">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strike>
+                            <strike class="productOldPrice" id="productOldPrice">({{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}})</strike>
                         @endif
                     </div>
                     <div class="description-text">
@@ -418,7 +418,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex buy justify-content-center">
+                    <div class="d-flex buy">
                         <div>
                             <input min="{{$product->min}}" value="{{$product->min}}" type="number" class="input"
                                    name="quantity">
