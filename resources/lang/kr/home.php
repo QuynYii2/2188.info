@@ -334,7 +334,7 @@ return [
     'POWER VENDOR' => '파워벤더회원',
     'PRODUCTION' => '생산회원',
     'POWER PRODUCTION ' => '파워생산회원',
-    'Member' => '회원',
+    'Member' => '회원등급',
     'Member booth' => '회원 상점 ',
     'Booth' => '상품 전시장',
     'Partner List' => '지정 거래처',
@@ -559,6 +559,10 @@ return [
     'received-by' => '받은 사람: ',
     'posted-by' => '보낸 사람: ',
     'time' => '시간: ',
+
+    'edit-comment' => '편집',
+    'content' => '내용',
+    'star number' => '평가 점수',
     // Register member
     // start
     'Agree to Terms' => '약관동의',

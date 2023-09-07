@@ -528,6 +528,11 @@ return [
     'Please select star rating' => 'Vui lòng chọn xếp hạng sao',
     'Thank you for evaluating our products!' => 'Thank you for evaluating our products!',
     'Error during the process of posting your review!' => 'Error during the process of posting your review!',
+
+    'edit-comment' => 'Sửa đánh giá',
+    'content' => 'Nội dung',
+    'star number' => 'Số sao',
+    'Error during the process of posting your review!' => 'Error during the process of posting your review!',
     // Register member
     // start
     'Agree to Terms' => 'Agree to Terms',

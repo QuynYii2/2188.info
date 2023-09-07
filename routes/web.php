@@ -224,11 +224,14 @@ Route::middleware(['auth'])->group(callback: function () {
 //    Route::get('/address-book/', [\App\Http\Controllers\ProfileController::class, 'address_book']);
     Route::get('/payment-information/', [ProfileController::class, 'payment_information']);
     Route::get('/product-evaluation/', [ProfileController::class, 'product_evaluation']);
+    Route::get('/product-evaluation/delete/{id}', [EvaluateProductController::class, 'destroy'])->name('product_evaluation.delete');
     Route::get('/favorite-product/', [ProfileController::class, 'favorite_product']);
     Route::get('/product-viewed/', [ProfileController::class, 'product_viewed']);
     Route::get('/my-review/', [ProfileController::class, 'my_review']);
     // Đánh giá sản phẩm
     Route::post('/evaluate', [EvaluateProductController::class, 'store'])->name('create.evaluate');
+    Route::get('/evaluate/{id}', [EvaluateProductController::class, 'show'])->name('find.evaluate.id');
+    Route::post('/evaluate/update', [EvaluateProductController::class, 'update'])->name('update.evaluate.id');
     // Address Controller
     Route::get('/address-book', [AddressController::class, 'index'])->name('address.show');
     Route::post('/address', [AddressController::class, 'store'])->name('address.create');
@@ -489,7 +492,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add-cart/{product}/{percent}', [CartController::class, 'addToCartPromotion'])->name('cart.add.promotion');
     //
     Route::get('/product-views', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByViews'])->name('product.views');
+
 });
+
+
 
 // Backend v2
 Route::group(['prefix' => 'seller', 'middleware' => 'role.seller-or-admin'], function () {

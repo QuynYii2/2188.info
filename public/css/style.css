@@ -1050,7 +1050,7 @@ a {
 }
 .header .header-pc .header-top-right .item-shop .shop-menu .shop-list .shop-item--text .text-seller {
   color: gray;
-  font-size: 16px;
+  font-size: 14px;
 }
 .header .header-pc .header-top-right .item-shop .shop-menu .shop-list .shop-item--text .text-name {
   margin: 5px 0;
@@ -1069,8 +1069,8 @@ a {
 }
 .header .header-pc .header-top-right .item-shop .shop-menu .shop-list .shop-item--text .text-price {
   margin-top: 5px;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
 }
 .header .header-pc .header-top-right .item-shop .shop-menu .shop-list .shop-item--text .text-quantity {
   margin-top: 20px;
