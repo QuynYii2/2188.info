@@ -138,7 +138,7 @@
 
                 <div class="row form-group">
                     <label for="day" class="col-md-2 col-12 col-form-label">{{ __('home.gender') }}</label>
-                    <div class="col-sm-9 m-auto">
+                    <div class="col-sm-9">
                         <div class="row">
                             <div class=" col-sm-4 col-4">
                                 <input class="" type="radio" name="gender"

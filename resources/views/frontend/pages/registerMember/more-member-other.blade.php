@@ -86,7 +86,7 @@
                                         }
                                     @endphp
                                 @endforeach
-                                <label class="ml-2" for="type_business-{{$category->id}}">
+                                <label class="ml-2 d-flex align-items-center" for="type_business-{{$category->id}}">
                                     <input type="checkbox" id="type_business-{{$category->id}}"
                                            name="type_business-{{$category->id}}"
                                            value="{{ ($category->id) }}"
@@ -112,7 +112,7 @@
                     <div id="type_business_checkboxes" class="mt-1  checkboxes">
                         @foreach($categories as $category)
                             @if(!$category->parent_id)
-                                <label class="ml-2" for="type_business-{{$category->id}}">
+                                <label class="ml-2 d-flex align-items-center" for="type_business-{{$category->id}}">
                                     <input type="checkbox" id="type_business-{{$category->id}}"
                                            name="type_business-{{$category->id}}"
                                            value="{{ ($category->id) }}"
@@ -163,7 +163,7 @@
                                         }
                                     @endphp
                                 @endforeach
-                                <label class="ml-2" for="category-{{$category->id}}">
+                                <label class="ml-2 d-flex align-items-center" for="category-{{$category->id}}">
                                     <input type="checkbox" id="category-{{$category->id}}"
                                            name="category-{{$category->id}}"
                                            value="{{ ($category->id) }}"
@@ -196,7 +196,7 @@
                                                 }
                                             @endphp
                                         @endforeach
-                                        <label class="ml-4" for="category-{{$child->id}}">
+                                        <label class="ml-4 d-flex align-items-center" for="category-{{$child->id}}">
                                             <input type="checkbox" id="category-{{$child->id}}"
                                                    name="category-{{$child->id}}"
                                                    value="{{$child->id}}"
@@ -227,7 +227,7 @@
                                                     }
                                                 @endphp
                                             @endforeach
-                                            <label class="ml-5" for="category-{{$child2->id}}">
+                                            <label class="ml-5 d-flex align-items-center" for="category-{{$child2->id}}">
                                                 <input type="checkbox" id="category-{{$child2->id}}"
                                                        name="category-{{$child2->id}}"
                                                        value="{{$child2->id}}"
@@ -255,7 +255,7 @@
                     <div id="checkboxes" class="mt-1  checkboxes">
                         @foreach($categories as $category)
                             @if(!$category->parent_id)
-                                <label class="ml-2" for="category-{{$category->id}}">
+                                <label class="ml-2 d-flex align-items-center" for="category-{{$category->id}}">
                                     <input type="checkbox" id="category-{{$category->id}}"
                                            name="category-{{$category->id}}"
                                            value="{{ ($category->id) }}"
@@ -279,7 +279,7 @@
                                         $categories = DB::table('categories')->where('parent_id', $category->id)->get();
                                     @endphp
                                     @foreach($categories as $child)
-                                        <label class="ml-4" for="category-{{$child->id}}">
+                                        <label class="ml-4 d-flex align-items-center" for="category-{{$child->id}}">
                                             <input type="checkbox" id="category-{{$child->id}}"
                                                    name="category-{{$child->id}}"
                                                    value="{{$child->id}}"
@@ -302,7 +302,7 @@
                                             $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
                                         @endphp
                                         @foreach($listChild2 as $child2)
-                                            <label class="ml-5" for="category-{{$child2->id}}">
+                                            <label class="ml-5 d-flex align-items-center" for="category-{{$child2->id}}">
                                                 <input type="checkbox" id="category-{{$child2->id}}"
                                                        name="category-{{$child2->id}}"
                                                        value="{{$child2->id}}"

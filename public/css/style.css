@@ -16,7 +16,25 @@ body {
 }
 
 #checkboxes {
-  z-index: 2;
+  position: absolute;
+  background: white;
+  top: 32px;
+  left: 0;
+  right: 0;
+  height: 40vh;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+#type_business_checkboxes {
+  position: absolute;
+  background: white;
+  top: 32px;
+  left: 0;
+  right: 0;
+  height: 40vh;
+  overflow-y: auto;
+  z-index: 10;
 }
 
 .layout-fixed .main-actions {
@@ -190,7 +208,7 @@ body {
 }
 
 .modal-dialog {
-  min-width: 1000px !important;
+  min-width: 1300px !important;
 }
 
 .cart .pagetitle .breadcrumb {
@@ -400,7 +418,7 @@ body {
 }
 .detail .product .product-title {
   font-weight: bold;
-  font-size: 25px;
+  font-size: 23px;
   margin-bottom: 10px;
 }
 .detail .product-origin {
@@ -410,7 +428,7 @@ body {
 .detail .product .product-price {
   font-family: "Rubik", sans-serif;
   margin-top: 10px;
-  font-size: 24px;
+  font-size: 23px;
   font-weight: 700;
 }
 .detail .product .product-price .price {
@@ -419,8 +437,8 @@ body {
 .detail .product .description-text {
   text-align: start;
   border-top: 0.0625rem solid #e3dddd;
-  margin: 10px 0;
-  padding: 1rem 0 0 0;
+  margin: 10px 15px 10px 0;
+  padding: 1rem;
 }
 .detail .product .product-rating i {
   color: #fd6506;
@@ -694,7 +712,7 @@ a {
   background-color: white;
 }
 .header .header-pc .header-top-middle .search-wrapper input {
-  padding-left: 10%;
+  padding-left: 13%;
   padding-right: 10%;
   width: 100%;
   height: 100%;
@@ -1132,7 +1150,7 @@ a {
   display: none;
   position: absolute;
   top: 0;
-  padding-top: 54px;
+  padding-top: 51px;
 }
 .header .header-pc .header-bottom-left .header_bottom--one .drop-menu .drop-relative {
   position: relative;
@@ -2130,42 +2148,42 @@ hr {
   text-decoration: none;
 }
 .section .item-body {
-  padding: 15px;
+  padding: 10px;
 }
 .section .item-body .card-rating span {
   color: rgba(32, 32, 32, 0.6);
 }
 .section .item-body .card-brand {
   font-size: 14px;
-  margin: 5px 0;
+  margin-bottom: 5px;
 }
 .section .item-body .card-brand a {
   color: gray;
 }
-.section .item-body .card-title a {
+.section .item-body .card-title1 a {
   height: 25px;
-  font-size: 16px;
+  font-size: 15px;
   -webkit-line-clamp: 1;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.section .item-body .card-title:hover a {
+.section .item-body .card-title1:hover a {
   text-decoration: underline;
   color: #0a6cdc;
 }
 .section .item-body .card-price {
-  font-size: 17px;
+  font-size: 16px;
   margin: 0 0 10px 0;
 }
 .section .item-body .card-price .price-sale {
   color: #e10600;
 }
 .section .item-body .card-bottom--left {
-  height: 40px;
+  height: 30px;
   border-radius: 20px 20px 20px 20px;
   border: 1px solid black;
-  line-height: 34px;
+  line-height: 25px;
 }
 .section .item-body .card-bottom--left a {
   padding: 0 15px;
@@ -2182,11 +2200,11 @@ hr {
 }
 .section .item-body .card-bottom--right {
   display: none;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   text-align: center;
-  line-height: 45px;
+  line-height: 35px;
   background-color: #f5f5f5;
 }
 .section .item-body .card-bottom--right i {
@@ -2290,6 +2308,7 @@ hr {
   height: 85%;
   object-fit: cover;
   width: auto;
+  width: 100%;
 }
 
 .body .section-First-left {
@@ -2429,43 +2448,7 @@ hr {
 .body .section-Seven button:focus {
   outline: none;
 }
-.body .section-Eight {
-  position: relative;
-}
-.body .section-Eight img {
-  width: 100%;
-}
-.body .section-Eight .section-content {
-  margin: auto;
-  text-align: center;
-  position: absolute;
-  top: 10%;
-  left: 10%;
-  right: 10%;
-}
-.body .section-Eight .section-content .content {
-  margin-bottom: 40px;
-  font-size: 40px;
-  color: white;
-  font-weight: 700;
-}
-.body .section-Eight .list .item {
-  border-radius: 4px;
-  padding: 30px 25px;
-  margin: 0 10px;
-  background: white;
-  text-align: -webkit-center;
-  min-height: 300px;
-}
-.body .section-Eight .list .item-img {
-  width: 30%;
-  margin-bottom: 30px;
-}
-.body .section-Eight .list .item-content {
-  margin-bottom: 20px;
-  font-size: 18px;
-  font-weight: 700;
-}
+
 figure.zoom {
   background-position: 50% 50%;
   position: relative;
@@ -3328,7 +3311,7 @@ img {
 }
 
 .breadcrumb-list li {
-  font-size: 13px;
+  font-size: 15px;
   letter-spacing: 0.125rem;
   text-transform: uppercase;
 }

@@ -1,16 +1,16 @@
-<form class="p-3" action="{{route('register.member.buyer')}}" method="post"
+<form action="{{route('register.member.buyer')}}" method="post"
       enctype="multipart/form-data">
     @csrf
     <input type="text" class="d-none" name="member_id" value="{{ $member->id }}">
     <input type="text" class="d-none" name="member" value="{{ ($member->name) }}">
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label for="datetime_register"> Ngày đăng ký </label>
+            <label for="datetime_register"> Ngày đăng ký: </label>
             <input type="text" class="form-control" id="datetime_register"
                    name="datetime_register" disabled>
         </div>
         <div class="form-group col-md-6">
-            <label for="number_clearance"> Số thông quan </label>
+            <label for="number_clearance"> Số thông quan: </label>
             <input type="text" class="form-control" id="number_clearance"
                    value="{{ $exitsMember ? $exitsMember->number_clearance : old('number_clearance') }}"
                    name="number_clearance">
@@ -62,9 +62,9 @@
 
     <div class="form-row">
         <div class="form-group col-md-6">
-            <label for="type_business">Ngành nghề</label>
+            <label for="type_business">Ngành nghề:</label>
             <div class="multiselect" style="position: relative">
-                <div class="selectBox" id="type_business_click" onclick="showCheckboxes1()">
+                <div class="selectBox" style="position: relative" id="type_business_click" onclick="showCheckboxes1()">
                     <select>
                         <option>{{ __('home.Select the applicable category') }}</option>
                     </select>
@@ -75,7 +75,7 @@
                         $listCategory = $exitsMember->type_business;
                         $arrayCategory = explode(',', $listCategory);
                     @endphp
-                    <div id="type_business_checkboxes" class="mt-1  checkboxes">
+                    <div id="type_business_checkboxes">
                         @foreach($categories as $category)
                             @if(!$category->parent_id)
                                 @foreach($arrayCategory as $item)
@@ -87,13 +87,13 @@
                                         }
                                     @endphp
                                 @endforeach
-                                <label class="ml-2" for="type_business-{{$category->id}}">
+                                <label class="ml-2 d-flex align-items-center" for="type_business-{{$category->id}}">
                                     <input type="checkbox" id="type_business-{{$category->id}}"
                                            name="type_business-{{$category->id}}"
                                            value="{{ ($category->id) }}"
                                            {{ $isChecked ? 'checked' : '' }}
                                            class="inputCheckboxCategory mr-2 p-3"/>
-                                    <span class="labelCheckboxCategory">
+                                    <span class="labelCheckboxCategory d-flex">
                                                             @if(locationHelper() == 'kr')
                                             <div class="item-text">{{ $category->name_ko }}</div>
                                         @elseif(locationHelper() == 'cn')
@@ -110,15 +110,15 @@
                         @endforeach
                     </div>
                 @else
-                    <div id="type_business_checkboxes" class="mt-1  checkboxes">
+                    <div id="type_business_checkboxes" class="mt-1 checkboxes">
                         @foreach($categories as $category)
                             @if(!$category->parent_id)
-                                <label class="ml-2" for="type_business-{{$category->id}}">
+                                <label class="ml-2 d-flex align-items-center" for="type_business-{{$category->id}}">
                                     <input type="checkbox" id="type_business-{{$category->id}}"
                                            name="type_business-{{$category->id}}"
                                            value="{{ ($category->id) }}"
                                            class="inputCheckboxCategory mr-2 p-3"/>
-                                    <span class="labelCheckboxCategory">
+                                    <span class="labelCheckboxCategory ">
                                                             @if(locationHelper() == 'kr')
                                             <div class="item-text">{{ $category->name_ko }}</div>
                                         @elseif(locationHelper() == 'cn')
@@ -140,9 +140,9 @@
         </div>
 
         <div class="form-group col-md-6 register-member">
-            <label for="category">Ngành hàng</label>
+            <label for="category">Ngành hàng:</label>
             <div class="multiselect" style="position: relative">
-                <div class="selectBox" id="div-click" onclick="showCheckboxes()">
+                <div class="selectBox" style="position: relative" id="div-click" onclick="showCheckboxes()">
                     <select>
                         <option>{{ __('home.Select the applicable category') }}</option>
                     </select>
@@ -165,13 +165,13 @@
                                         }
                                     @endphp
                                 @endforeach
-                                <label class="ml-2" for="category-{{$category->id}}">
+                                <label class="ml-2 d-flex align-items-center" for="category-{{$category->id}}">
                                     <input type="checkbox" id="category-{{$category->id}}"
                                            name="category-{{$category->id}}"
                                            value="{{ ($category->id) }}"
                                            {{ $isChecked ? 'checked' : '' }}
                                            class="inputCheckboxCategory1 mr-2 p-3"/>
-                                    <span class="labelCheckboxCategory">
+                                    <span class="labelCheckboxCategory ">
                                         @if(locationHelper() == 'kr')
                                             <div class="item-text">{{ $category->name_ko }}</div>
                                         @elseif(locationHelper() == 'cn')
@@ -198,13 +198,13 @@
                                                 }
                                             @endphp
                                         @endforeach
-                                        <label class="ml-4" for="category-{{$child->id}}">
+                                        <label class="ml-4 d-flex align-items-center" for="category-{{$child->id}}">
                                             <input type="checkbox" id="category-{{$child->id}}"
                                                    name="category-{{$child->id}}"
                                                    value="{{$child->id}}"
                                                    {{ $isChecked1 ? 'checked' : '' }}
                                                    class="inputCheckboxCategory1 mr-2 p-3"/>
-                                            <span class="labelCheckboxCategory">@if(locationHelper() == 'kr')
+                                            <span class="labelCheckboxCategory ">@if(locationHelper() == 'kr')
                                                     <div class="item-text">{{ $child->name_ko }}</div>
                                                 @elseif(locationHelper() == 'cn')
                                                     <div class="item-text">{{$child->name_zh}}</div>
@@ -229,13 +229,13 @@
                                                     }
                                                 @endphp
                                             @endforeach
-                                            <label class="ml-5" for="category-{{$child2->id}}">
+                                            <label class="ml-5 d-flex align-items-center" for="category-{{$child2->id}}">
                                                 <input type="checkbox" id="category-{{$child2->id}}"
                                                        name="category-{{$child2->id}}"
                                                        value="{{$child2->id}}"
                                                        {{ $isChecked2 ? 'checked' : '' }}
                                                        class="inputCheckboxCategory1 mr-2 p-3"/>
-                                                <span class="labelCheckboxCategory">@if(locationHelper() == 'kr')
+                                                <span class="labelCheckboxCategory ">@if(locationHelper() == 'kr')
                                                         <div class="item-text">{{ $child2->name_ko }}</div>
                                                     @elseif(locationHelper() == 'cn')
                                                         <div class="item-text">{{$child2->name_zh}}</div>
@@ -257,12 +257,12 @@
                     <div id="checkboxes" class="mt-1  checkboxes">
                         @foreach($categories as $category)
                             @if(!$category->parent_id)
-                                <label class="ml-2" for="category-{{$category->id}}">
+                                <label class="ml-2 d-flex align-items-center" for="category-{{$category->id}}">
                                     <input type="checkbox" id="category-{{$category->id}}"
                                            name="category-{{$category->id}}"
                                            value="{{ ($category->id) }}"
                                            class="inputCheckboxCategory1 mr-2 p-3"/>
-                                    <span class="labelCheckboxCategory">
+                                    <span class="labelCheckboxCategory ">
                                                             @if(locationHelper() == 'kr')
                                             <div class="item-text">{{ $category->name_ko }}</div>
                                         @elseif(locationHelper() == 'cn')
@@ -281,12 +281,12 @@
                                         $categories = DB::table('categories')->where('parent_id', $category->id)->get();
                                     @endphp
                                     @foreach($categories as $child)
-                                        <label class="ml-4" for="category-{{$child->id}}">
+                                        <label class="ml-4 d-flex align-items-center " for="category-{{$child->id}}">
                                             <input type="checkbox" id="category-{{$child->id}}"
                                                    name="category-{{$child->id}}"
                                                    value="{{$child->id}}"
                                                    class="inputCheckboxCategory1 mr-2 p-3"/>
-                                            <span class="labelCheckboxCategory">
+                                            <span class="labelCheckboxCategory ">
                                                                     @if(locationHelper() == 'kr')
                                                     <div class="item-text">{{ $child->name_ko }}</div>
                                                 @elseif(locationHelper() == 'cn')
@@ -304,12 +304,12 @@
                                             $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
                                         @endphp
                                         @foreach($listChild2 as $child2)
-                                            <label class="ml-5" for="category-{{$child2->id}}">
+                                            <label class="ml-5 d-flex align-items-center" for="category-{{$child2->id}}">
                                                 <input type="checkbox" id="category-{{$child2->id}}"
                                                        name="category-{{$child2->id}}"
                                                        value="{{$child2->id}}"
                                                        class="inputCheckboxCategory1 mr-2 p-3"/>
-                                                <span class="labelCheckboxCategory">@if(locationHelper() == 'kr')
+                                                <span class="labelCheckboxCategory ">@if(locationHelper() == 'kr')
                                                         <div class="item-text">{{ $child2->name_ko }}</div>
                                                     @elseif(locationHelper() == 'cn')
                                                         <div class="item-text">{{$child2->name_zh}}</div>
