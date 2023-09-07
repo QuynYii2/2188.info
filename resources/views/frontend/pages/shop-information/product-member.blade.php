@@ -116,18 +116,10 @@
             <div class="col-md-6 border">
                 <div class="row">
                     <div class="col-md-12 border">
-                        <div class="mb-3">
-                            @if(locationHelper() == 'kr')
-                                {{ ($company->name_ko) }}
-                            @elseif(locationHelper() == 'cn')
-                                {{ ($company->name_zh) }}
-                            @elseif(locationHelper() == 'jp')
-                                {{ ($company->name_ja) }}
-                            @elseif(locationHelper() == 'vi')
-                                {{ ($company->name_vi) }}
-                            @else
-                                {{ ($company->name_en) }}
-                            @endif
+                        <div class="mt-2">
+                            <h5 class="mb-3">
+                                {{ ($company->name) }}
+                            </h5>
                         </div>
                     </div>
                     <div class="row p-2">

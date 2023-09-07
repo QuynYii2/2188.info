@@ -47,7 +47,7 @@
                                 $percent = $sales->sales;
                             }
                         @endphp
-                        <tr>
+                        <tr style="border-bottom: 1px solid #dbdbdb">
                             <td>
                                 <div class="row mt-3">
                                     <div class="col-md-3 img-product">

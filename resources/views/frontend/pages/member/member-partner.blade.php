@@ -50,14 +50,14 @@
         </div>
         <div class="border d-flex justify-content-between align-items-center p-3">
             <a href="{{route('stand.register.member.index', $company->id)}}"
-               class="btn btn-primary">{{ __('home.Shop') }}</a>
+               class="btn btn-light">{{ __('home.Shop') }}</a>
             <a href="{{route('partner.register.member.index')}}"
-               class="btn btn-warning">{{ __('home.Partner List') }}</a>
-            <a href="#" class="btn btn-primary">{{ __('home.Message received') }}</a>
-            <a href="#" class="btn btn-warning">{{ __('home.Message sent') }}</a>
-            <a href="#" class="btn btn-primary" data-toggle="modal"
+               class="btn btn-light">{{ __('home.Partner List') }}</a>
+            <a href="#" class="btn btn-light">{{ __('home.Message received') }}</a>
+            <a href="#" class="btn btn-light">{{ __('home.Message sent') }}</a>
+            <a href="#" class="btn btn-light" data-toggle="modal"
                data-target="#exampleModal">{{ __('home.Purchase') }}</a>
-            <a href="#" class="btn btn-warning" data-toggle="modal"
+            <a href="#" class="btn btn-light" data-toggle="modal"
                data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
         </div>
         <table class="table table-bordered">

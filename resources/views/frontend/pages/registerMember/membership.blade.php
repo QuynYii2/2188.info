@@ -2,10 +2,10 @@
 
 @section('title', 'Register Member')
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <h3 class="text-center">Đăng kí nhân viên</h3>
-        <div class="container mt-3">
-            <h5 class="">
+        <div class="mt-3">
+            <h5>
                 Thứ tự đăng ký:
             </h5>
             <br>
@@ -60,11 +60,11 @@
                 @endif
                 </tbody>
             </table>
-            <div class="row mt-3 border ml-1">
-                <div class="col-md-4">
+            <div class=" mt-3 ml-1">
+                <div class="">
 
                 </div>
-                <div class="col-md-4" id="buttonRegisterMembership">
+                <div id="buttonRegisterMembership">
 
                 </div>
                 <!-- Modal -->
@@ -126,7 +126,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalRegisterMore">
                         Đăng ký thêm
                     </button>

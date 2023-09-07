@@ -32,13 +32,13 @@
         @php
             $nameSeller = DB::table('users')->where('id', $product->user_id)->first();
         @endphp
-        <div class="card-brand">
-            @if(Auth::check())
-                <a href="{{route('shop.information.show', $nameSeller->id)}}">{{($nameSeller->name)}}</a>
-            @else
-                <a class="check_url">{{($nameSeller->name)}}</a>
-            @endif
-        </div>
+{{--        <div class="card-brand">--}}
+{{--            @if(Auth::check())--}}
+{{--                <a href="{{route('shop.information.show', $nameSeller->id)}}">{{($nameSeller->name)}}</a>--}}
+{{--            @else--}}
+{{--                <a class="check_url">{{($nameSeller->name)}}</a>--}}
+{{--            @endif--}}
+{{--        </div>--}}
         <div class="card-title1">
             @if(Auth::check())
                 <a href="{{route('detail_product.show', $product->id)}}">
@@ -60,7 +60,7 @@
         </div>
 
         @if($product->price)
-            <div class="card-price d-flex justify-content-between">
+            <div class="card-price">
                 @if($product->price != null)
                     <div class="price-sale">
                         <strong> {{ number_format(convertCurrency($product->location, $currency,$product->price), 0, ',', '.') }} {{$currency}}</strong>

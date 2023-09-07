@@ -16,14 +16,7 @@ body {
 }
 
 #checkboxes {
-  position: absolute;
-  background: white;
-  top: 32px;
-  left: 0;
-  right: 0;
-  height: 40vh;
-  overflow-y: auto;
-  z-index: 10;
+  z-index: 2;
 }
 
 #type_business_checkboxes {
@@ -2173,7 +2166,7 @@ hr {
   color: #0a6cdc;
 }
 .section .item-body .card-price {
-  font-size: 16px;
+  font-size: 15px;
   margin: 0 0 10px 0;
 }
 .section .item-body .card-price .price-sale {

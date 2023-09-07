@@ -617,7 +617,6 @@
                             </td>
                             <td class="featured column-featured" data-colname="Featured">
                                 @if($isAdmin == true)
-                                    @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm nổi bật')
                                         @if($product->feature == 1)
                                             <label class="switch">
                                                 <input value="{{$product->id}}" class="inputFeatureCheckbox"
@@ -635,8 +634,6 @@
                                                 <span class="slider round"></span>
                                             </label>
                                         @endif
-                                        @break
-                                    @endif
                                 @else
                                     @for($i = 0; $i< count($permissionUsers); $i++)
                                         @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm nổi bật')
