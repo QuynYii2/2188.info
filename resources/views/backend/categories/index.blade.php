@@ -206,7 +206,9 @@
                                                                                             @php
                                                                                                 $categoryParent = \App\Models\Category::find($category->parent_id);
                                                                                             @endphp
-                                                                                            <option value="{{$category->parent_id}}">{{$categoryParent->name}}</option>
+                                                                                            @if($categoryParent)
+                                                                                                <option value="{{$category->parent_id}}">{{$categoryParent->name}}</option>
+                                                                                            @endif
                                                                                         @else
                                                                                             <option value="-1">Trống</option>
                                                                                         @endif

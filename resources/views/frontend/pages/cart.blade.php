@@ -229,75 +229,75 @@
             </div>
             <div class="row cart-content">
                 <div class="col-md-4">
-                    <div class="text-uppercase">COUPON CODE</div>
+                    <div class="text-uppercase">{{ __('home.COUPON CODE') }}</div>
                     <div class="">
-                        <label for="inputPassword2">Enter your coupon code if you have one.</label>
+                        <label for="inputPassword2">{{ __('home.Enter your coupon code if you have one.') }}</label>
                         <form class="d-flex align-items-center justify-content-between">
                             <div class="form-group">
                                 <input type="text" class="form-control" id="inputPassword2"
                                        placeholder="Enter your coupon code">
                             </div>
-                            <button type="submit" class="btn mb-2 submit">Apply</button>
+                            <button type="submit" class="btn mb-2 submit">{{ __('home.Apply') }}</button>
                         </form>
                     </div>
-                    <div class="text-uppercase">GIFT CERTIFICATE</div>
+                    <div class="text-uppercase">{{ __('home.GIFT CERTIFICATE') }}</div>
                     <div class="">
-                        <label for="inputPassword2">Enter your coupon code if you have one.</label>
+                        <label for="inputPassword2">{{ __('home.Enter your coupon code if you have one.') }}</label>
                         <form class="d-flex align-items-center justify-content-between">
                             <div class="form-group">
                                 <input type="text" class="form-control" id="inputPassword2"
                                        placeholder="Enter your coupon code">
                             </div>
-                            <button type="submit" class="btn mb-2 submit">Apply</button>
+                            <button type="submit" class="btn mb-2 submit">{{ __('home.Apply') }}</button>
                         </form>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="text-uppercase">SHIPPING</div>
+                    <div class="text-uppercase">{{ __('home.SHIPPING') }}</div>
                     <div class="">
-                        <label for="inputPassword2">Enter your coupon code if you have one.</label>
+                        <label for="inputPassword2">{{ __('home.Enter your coupon code if you have one.') }}</label>
                         <form>
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <span class="mr-3">Country</span>
+                                <span class="mr-3">{{ __('home.Country') }}</span>
                                 <div class="form-group">
                                     <select name="" id="">
-                                        <option value="">VietNam</option>
-                                        <option value="">TrungQuoc</option>
-                                        <option value="">Han Quoc</option>
+                                        <option value="">{{ __('home.VietNam') }}</option>
+                                        <option value="">{{ __('home.TrungQuoc') }}</option>
+                                        <option value="">{{ __('home.Han Quoc') }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <span class="mr-3">State/Province</span>
+                                <span class="mr-3">{{ __('home.State/Province') }}</span>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="inputPassword2"
-                                           placeholder="State/province">
+                                           placeholder={{ __('home.State/Province') }}>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <span class="mr-3">Suburb/City</span>
+                                <span class="mr-3">{{ __('home.Suburb/City') }}</span>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="inputPassword2"
-                                           placeholder="Suburb/City">
+                                           placeholder={{ __('home.Suburb/City') }}>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <span class="mr-3">Zip/Postcode</span>
+                                <span class="mr-3">{{ __('home.Zip/Postcode') }}</span>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="inputPassword2"
-                                           placeholder="Zip/Postcode">
+                                           placeholder="{{ __('home.Zip/Postcode') }}">
                                 </div>
                             </div>
-                            <button type="submit" class="btn mb-2 submit float-right submit-60">Estimate Shipping
+                            <button type="submit" class="btn mb-2 submit float-right submit-60">{{ __('home.Estimate Shipping') }}
                             </button>
                         </form>
                     </div>
 
                 </div>
                 <div class="col-md-4">
-                    <div class="text-uppercase">COUPON CODE</div>
+                    <div class="text-uppercase">{{ __('home.COUPON CODE') }}</div>
                     <div class="subtotal d-flex justify-content-between">
-                        <span class="">Subtotal: </span>
+                        <span class="">{{ __('home.Subtotal') }}: </span>
                         <span class="subtotal-price">0</span>
                     </div>
                     <div class="grandtotal d-flex justify-content-between">
@@ -305,10 +305,11 @@
                         <span> <span id="max-total"> {{ $cartItem->price*$cartItem->quantity }}</span></span>
                     </div>
                     <a href="{{route('checkout.show')}}">
-                        <button type="submit" class="btn mb-2 submit float-right submit-100">Check out</button>
+                        <button type="submit" class="btn mb-2 submit float-right submit-100">{{ __('home.Check out') }}</button>
                     </a>
                 </div>
             </div>
+
         @endif
     </div>
     <script>
