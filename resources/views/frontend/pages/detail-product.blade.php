@@ -1252,7 +1252,7 @@
                     currentIcon.classList.remove("checked");
                 }
             }
-
+            console.log(input.value)
             input.value = star.checked ? value : value - 1;
         }
 
@@ -1301,7 +1301,6 @@
 
         }
 
-
         var y = window.matchMedia("(max-width: 991px)")
         responsiveTable(y);
         x.addListener(responsiveTable)
@@ -1327,10 +1326,8 @@
             var minBrightness = 128; // Độ sáng tối thiểu
             var maxBrightness = 255; // Độ sáng tối đa
 
-
             var color;
             var brightness;
-
 
             do {
                 color = Math.floor(Math.random() * 16777215).toString(16);
@@ -1379,7 +1376,6 @@
                 document.getElementById('content-edit').value = data[0].content;
                 starCheckEdit(data[0].star_number)
             }
-
         }
     </script>
 @endsection

@@ -224,6 +224,7 @@ Route::middleware(['auth'])->group(callback: function () {
 //    Route::get('/address-book/', [\App\Http\Controllers\ProfileController::class, 'address_book']);
     Route::get('/payment-information/', [ProfileController::class, 'payment_information']);
     Route::get('/product-evaluation/', [ProfileController::class, 'product_evaluation']);
+    Route::get('/product-evaluation/delete/{id}', [EvaluateProductController::class, 'destroy'])->name('product_evaluation.delete');
     Route::get('/favorite-product/', [ProfileController::class, 'favorite_product']);
     Route::get('/product-viewed/', [ProfileController::class, 'product_viewed']);
     Route::get('/my-review/', [ProfileController::class, 'my_review']);
@@ -491,7 +492,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add-cart/{product}/{percent}', [CartController::class, 'addToCartPromotion'])->name('cart.add.promotion');
     //
     Route::get('/product-views', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByViews'])->name('product.views');
+
 });
+
+
 
 // Backend v2
 Route::group(['prefix' => 'seller', 'middleware' => 'role.seller-or-admin'], function () {

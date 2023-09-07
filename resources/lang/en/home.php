@@ -529,7 +529,7 @@ return [
     'Thank you for evaluating our products!' => 'Thank you for evaluating our products!',
     'Error during the process of posting your review!' => 'Error during the process of posting your review!',
 
-    'edit-comment' => 'Sửa đánh giá'
-
-
+    'edit-comment' => 'Sửa đánh giá',
+    'content' => 'Nội dung',
+    'star number' => 'Số sao'
 ];

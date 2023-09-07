@@ -560,5 +560,7 @@ return [
     'posted-by' => '보낸 사람: ',
     'time' => '시간: ',
 
-    'edit-comment' => '편집'
+    'edit-comment' => '편집',
+    'content' => 'Nội dung',
+    'star number' => 'Số sao'
 ];

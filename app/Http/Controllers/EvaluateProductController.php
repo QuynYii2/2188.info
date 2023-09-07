@@ -63,4 +63,15 @@ class EvaluateProductController extends Controller
             return $exception;
         }
     }
+
+    public function destroy($id)
+    {
+        try {
+            $evaluate = EvaluateProduct::where('id', $id)->first();
+            $evaluate->delete();
+            return back();
+        } catch (\Exception $exception) {
+            return back();
+        }
+    }
 }
