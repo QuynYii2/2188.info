@@ -8,7 +8,20 @@ use Illuminate\Support\Facades\Cache;
 if (!function_exists('convertCurrency')) {
     function convertCurrency($from, $to, $amount)
     {
-        $rate = convertCurrencyDB($from, $to, $amount);
+        switch ($from) {
+            case 'vi':
+                $currentFrom = 'VND';
+                break;
+            case 'kr':
+                $currentFrom = 'KRW';
+                break;
+            case 'cn':
+                $currentFrom = 'CNY';
+                break;
+            default:
+                $currentFrom = 'USD';
+        }
+        $rate = convertCurrencyDB($currentFrom, $to, $amount);
         return $rate * $amount;
     }
 

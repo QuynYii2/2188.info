@@ -78,6 +78,7 @@
 @php
     $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
     $locale = app()->getLocale();
+    $company = null;
 @endphp
 <header class="header">
     <div class="header-pc halo-header">
@@ -183,7 +184,9 @@
                                     <i class="item-icon fa-regular fa-user"></i>
                                     <div class="name_and_package_member">
                                         <div class="item-text">{{Auth::user()->name}}</div>
-                                        <span class="package_member">( {{__('home.Member')}} : {{$company->member}} )</span>
+                                        @if($company)
+                                            <span class="package_member">( {{__('home.Member')}} : {{$company->member}} )</span>
+                                        @endif
                                     </div>
 
                                 </button>
@@ -275,16 +278,16 @@
                                             <div class="drop-item">
                                                 <a href="{{ route('stand.register.member.index', $member->id) }}">{{ __('home.Shop') }}</a>
                                             </div>
-{{--                                        @elseif($isMember && $member->member == \App\Enums\RegisterMember::TRUST)--}}
-{{--                                            <div class="drop-item">--}}
-{{--                                                <a href="{{ route('trust.register.member.index') }}">{{ __('home.Shop') }}</a>--}}
-{{--                                            </div>--}}
+                                            {{--                                        @elseif($isMember && $member->member == \App\Enums\RegisterMember::TRUST)--}}
+                                            {{--                                            <div class="drop-item">--}}
+                                            {{--                                                <a href="{{ route('trust.register.member.index') }}">{{ __('home.Shop') }}</a>--}}
+                                            {{--                                            </div>--}}
                                         @endif
-{{--                                        @if(!$checkTrust && $isValid==true)--}}
-{{--                                            <div class="drop-item">--}}
-{{--                                                <a href="{{route('shop.list.products')}}">{{ __('home.Product Management') }}</a>--}}
-{{--                                            </div>--}}
-{{--                                        @endif--}}
+                                        {{--                                        @if(!$checkTrust && $isValid==true)--}}
+                                        {{--                                            <div class="drop-item">--}}
+                                        {{--                                                <a href="{{route('shop.list.products')}}">{{ __('home.Product Management') }}</a>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        @endif--}}
 
                                         @php
                                             $exitMemberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
@@ -964,7 +967,7 @@
                         </button>
                     </div>
                     <div class="signMenuM" id="signMenuM">
-{{--                        <div class="name"><a href="{{route('profile.show')}}">{{Auth::user()->name}}</a></div>--}}
+                        {{--                        <div class="name"><a href="{{route('profile.show')}}">{{Auth::user()->name}}</a></div>--}}
                         <hr>
                         <button class="signOut" href="#" onclick="logout()">Log Out</button>
                     </div>
@@ -1169,25 +1172,37 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="d-flex justify-content-center align-items-center">
-                    <a href="{{route('trust.register.member.locale', 'kr')}}">
-                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
-                             src="{{ asset('images/korea.png') }}"
-                             alt="">
-                    </a>
-                    <a href="{{route('trust.register.member.locale', 'jp')}}">
-                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
-                             src="{{ asset('images/japan.webp') }}"
-                             alt="">
-                    </a>
-                    <a href="{{route('trust.register.member.locale', 'cn')}}">
-                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
-                             src="{{ asset('images/china.webp') }}"
-                             alt="">
-                    </a>
-                </div>
-            </div>
+            @if($company)
+                @if($company->member == \App\Enums\RegisterMember::TRUST)
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{{route('trust.register.member.locale', 'kr')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt="">
+                            </a>
+                            <a href="{{route('trust.register.member.locale', 'jp')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt="">
+                            </a>
+                            <a href="{{route('trust.register.member.locale', 'cn')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                @elseif($company->member == \App\Enums\RegisterMember::LOGISTIC)
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{{route('parent.register.member.locale', 'kr')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt="">
+                            </a>
+                            <a href="{{route('parent.register.member.locale', 'jp')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt="">
+                            </a>
+                            <a href="{{route('parent.register.member.locale', 'cn')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                @endif
+            @endif
         </div>
     </div>
 </div>
@@ -1223,19 +1238,37 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <a href="{{route('trust.register.member.locale', 'kr')}}">
-                        <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt="">
-                    </a>
-                    <a href="{{route('trust.register.member.locale', 'jp')}}">
-                        <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt="">
-                    </a>
-                    <a href="{{route('trust.register.member.locale', 'cn')}}">
-                        <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt="">
-                    </a>
-                </div>
-            </div>
+            @if($company)
+                @if($company->member == \App\Enums\RegisterMember::TRUST)
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{{route('trust.register.member.locale', 'kr')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt="">
+                            </a>
+                            <a href="{{route('trust.register.member.locale', 'jp')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt="">
+                            </a>
+                            <a href="{{route('trust.register.member.locale', 'cn')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                @elseif($company->member == \App\Enums\RegisterMember::LOGISTIC)
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{{route('parent.register.member.locale', 'kr')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt="">
+                            </a>
+                            <a href="{{route('parent.register.member.locale', 'jp')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt="">
+                            </a>
+                            <a href="{{route('parent.register.member.locale', 'cn')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                @endif
+            @endif
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{ __('home.Close') }}</button>
             </div>
@@ -1244,34 +1277,6 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-{{--<script>--}}
-{{--    // variable to store our intervalID--}}
-{{--    let nIntervId;--}}
-
-{{--    function changeColor() {--}}
-{{--        // check if an interval has already been set up--}}
-{{--        if (!nIntervId) {--}}
-{{--            nIntervId = setInterval(flashText, 1500);--}}
-{{--        }--}}
-{{--    }--}}
-
-{{--    function flashText() {--}}
-{{--        const oElem = document.getElementById("popup-alert");--}}
-{{--        if (oElem.className == 'd-none') {--}}
-{{--            oElem.className = 'd-block'--}}
-{{--        } else {--}}
-{{--            oElem.className = 'd-none'--}}
-{{--        }--}}
-{{--    }--}}
-
-{{--    function stopTextColor() {--}}
-{{--        clearInterval(nIntervId);--}}
-{{--        // release our intervalID from the variable--}}
-{{--        nIntervId = null;--}}
-{{--    }--}}
-
-{{--    changeColor();--}}
-{{--</script>--}}
 <script>
     // Hàm logout
     function logout() {
