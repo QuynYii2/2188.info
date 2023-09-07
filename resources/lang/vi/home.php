@@ -538,6 +538,7 @@ return [
     'edit-comment' => 'Sửa đánh giá',
     'content' => 'Nội dung',
     'star number' => 'Số sao',
+    'from' => 'Từ',
     // Register member
     // start
     'Agree to Terms' => 'Đồng ý với Điều khoản',

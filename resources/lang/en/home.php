@@ -527,6 +527,7 @@ return [
     'Visit the store' => 'Ghé thăm cửa hàng',
     'Please select star rating' => 'Vui lòng chọn xếp hạng sao',
     'Thank you for evaluating our products!' => 'Thank you for evaluating our products!',
+    'from' => 'Từ',
     'Error during the process of posting your review!' => 'Error during the process of posting your review!',
 
     'edit-comment' => 'Sửa đánh giá',
