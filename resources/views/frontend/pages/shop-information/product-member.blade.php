@@ -250,7 +250,16 @@
                                     <i class="fa-solid fa-star" style="color: #fac325;"></i>
                                     <i class="fa-solid fa-star" style="color: #fac325;"></i>
                                     <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <span>(1)</span>
+                                    @php
+                                        $ratings = \App\Models\EvaluateProduct::where('product_id', $product->id)->get();
+                                        $totalRatings = $ratings->count();
+                                        $totalStars = 0;
+                                        foreach ($ratings as $rating) {
+                                            $totalStars += $rating->star_number;
+                                        }
+                                        $averageRating = $totalRatings > 0 ? $totalStars / $totalRatings : 0;
+                                    @endphp
+                                    <span>{{ $averageRating }}({{ $totalRatings }})</span>
                                 </div>
                                 @php
                                     $nameSeller = DB::table('users')->where('id', $product->user_id)->first();

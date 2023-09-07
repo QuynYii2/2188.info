@@ -534,6 +534,7 @@ return [
     'received-by' => 'Đã nhận bởi: ',
     'posted-by' => 'Được gửi bởi: ',
     'time' => 'Thời gian: ',
+    'from' => 'Từ',
     // Register member
     // start
     'Agree to Terms' => 'Đồng ý với Điều khoản',
