@@ -47,181 +47,183 @@
                             }
                         @endphp
                         <tr style="border-bottom: 1px solid #dbdbdb">
-                            <td>
-                                <div class="row mt-3">
-                                    <div class="col-md-3 img-product">
-                                        <img class="img" src="{{ asset('storage/'.$cartItem->product->thumbnail) }}"
-                                             alt="" width="60px" height="60px">
-                                    </div>
-                                    <div class="col-md-9 float-left">
-                                        <div class="text-secondary">
-                                            @if(locationHelper() == 'kr')
-                                                {{($cartItem->product->category->name_ko)}}
-                                            @elseif(locationHelper() == 'cn')
-                                                {{($cartItem->product->category->name_zh)}}
-                                            @elseif(locationHelper() == 'jp')
-                                                {{($cartItem->product->category->name_ja)}}
-                                            @elseif(locationHelper() == 'vi')
-                                                {{($cartItem->product->category->name)}}
-                                            @else
-                                                {{($cartItem->product->category->name)}}
-                                            @endif
+                            <div class="row">
+                                <td class="col-md-6">
+                                    <div class="row mt-3">
+                                        <div class="col-md-2 img-product">
+                                            <img class="img" src="{{ asset('storage/'.$cartItem->product->thumbnail) }}"
+                                                 alt="" width="60px" height="60px">
                                         </div>
-                                        <a href="{{route('detail_product.show', $cartItem->product->id)}}">
-                                            @if(locationHelper() == 'kr')
-                                                {{($cartItem->product->name_ko)}}
-                                            @elseif(locationHelper() == 'cn')
-                                                {{($cartItem->product->name_zh)}}
-                                            @elseif(locationHelper() == 'jp')
-                                                {{($cartItem->product->name_ja)}}
-                                            @elseif(locationHelper() == 'vi')
-                                                {{($cartItem->product->name)}}
-                                            @else
-                                                {{($cartItem->product->name_en)}}
-                                            @endif
-                                        </a>
-                                        @if($cartItem->values != 0)
-                                            @php
-                                                $list = $cartItem->values;
-                                                $array = explode(',', $list);
-                                            @endphp
-                                            @foreach($array as $variable)
-                                                @if($variable)
-                                                    @php
-                                                        $arrayAttPro = explode('-', $variable);
-                                                        if (count($arrayAttPro)>1){
-                                                            $att = \App\Models\Attribute::find($arrayAttPro[0]);
-                                                            $pro = \App\Models\Properties::find($arrayAttPro[1]);
-                                                        }
-                                                    @endphp
-                                                    @if(count($arrayAttPro)>1)
-                                                        <div class="font-italic">
+                                        <div class="col-md-10 float-left">
+                                            <div class="text-secondary">
+                                                @if(locationHelper() == 'kr')
+                                                    {{($cartItem->product->category->name_ko)}}
+                                                @elseif(locationHelper() == 'cn')
+                                                    {{($cartItem->product->category->name_zh)}}
+                                                @elseif(locationHelper() == 'jp')
+                                                    {{($cartItem->product->category->name_ja)}}
+                                                @elseif(locationHelper() == 'vi')
+                                                    {{($cartItem->product->category->name)}}
+                                                @else
+                                                    {{($cartItem->product->category->name)}}
+                                                @endif
+                                            </div>
+                                            <a href="{{route('detail_product.show', $cartItem->product->id)}}">
+                                                @if(locationHelper() == 'kr')
+                                                    {{($cartItem->product->name_ko)}}
+                                                @elseif(locationHelper() == 'cn')
+                                                    {{($cartItem->product->name_zh)}}
+                                                @elseif(locationHelper() == 'jp')
+                                                    {{($cartItem->product->name_ja)}}
+                                                @elseif(locationHelper() == 'vi')
+                                                    {{($cartItem->product->name)}}
+                                                @else
+                                                    {{($cartItem->product->name_en)}}
+                                                @endif
+                                            </a>
+                                            @if($cartItem->values != 0)
+                                                @php
+                                                    $list = $cartItem->values;
+                                                    $array = explode(',', $list);
+                                                @endphp
+                                                @foreach($array as $variable)
+                                                    @if($variable)
+                                                        @php
+                                                            $arrayAttPro = explode('-', $variable);
+                                                            if (count($arrayAttPro)>1){
+                                                                $att = \App\Models\Attribute::find($arrayAttPro[0]);
+                                                                $pro = \App\Models\Properties::find($arrayAttPro[1]);
+                                                            }
+                                                        @endphp
+                                                        @if(count($arrayAttPro)>1)
+                                                            <div class="font-italic">
                                                             <span class="text-secondary">
                                                             {{($att->name)}}
                                                         </span>: <span>{{($pro->name)}}</span>
-                                                        </div>
+                                                            </div>
+                                                        @endif
                                                     @endif
-                                                @endif
 
-                                            @endforeach
-                                            <a class="text-edit" href="#" data-toggle="modal"
-                                               data-target="#exampleModal">
-                                                <i class='fas fa-edit'></i>
-                                                Change
-                                            </a>
-                                            <div class="modal fade" id="exampleModal" tabindex="-1"
-                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">
-                                                                Edit {{($cartItem->product->name)}}</h5>
-                                                            <button type="button" class="close" data-dismiss="modal"
-                                                                    aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="form-field"
-                                                                 data-product-attribute="set-rectangle"
-                                                                 role="radiogroup"
-                                                                 aria-labelledby="rectangle-group-label">
-                                                                <label class="form-label form-label--alternate form-label--inlineSmall"
-                                                                       id="rectangle-group-label">
-                                                                    Size:
-                                                                    <small>
-                                                                        *
-                                                                    </small>
-                                                                    <span data-option-value=""></span>
-                                                                </label>
+                                                @endforeach
+                                                <a class="text-edit" href="#" data-toggle="modal"
+                                                   data-target="#exampleModal">
+                                                    <i class='fas fa-edit'></i>
+                                                    Change
+                                                </a>
+                                                <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                                    Edit {{($cartItem->product->name)}}</h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="form-field"
+                                                                     data-product-attribute="set-rectangle"
+                                                                     role="radiogroup"
+                                                                     aria-labelledby="rectangle-group-label">
+                                                                    <label class="form-label form-label--alternate form-label--inlineSmall"
+                                                                           id="rectangle-group-label">
+                                                                        Size:
+                                                                        <small>
+                                                                            *
+                                                                        </small>
+                                                                        <span data-option-value=""></span>
+                                                                    </label>
 
-                                                                <div class="d-flex justify-content-between align-items-center">
-                                                                    <div class="form-option-wrapper">
-                                                                        <input class="form-radio" type="radio"
-                                                                               id="attribute_rectangle__189_374"
-                                                                               name="attribute[189]" value="374"
-                                                                               required=""
-                                                                               data-state="false">
-                                                                        <label class="form-option unavailable"
-                                                                               for="attribute_rectangle__189_374"
-                                                                               data-product-attribute-value="374">
-                                                                            <span class="form-option-variant">32 inch</span>
-                                                                        </label>
-                                                                    </div>
-                                                                    <div class="form-option-wrapper">
-                                                                        <input class="form-radio" type="radio"
-                                                                               id="attribute_rectangle__189_375"
-                                                                               name="attribute[189]" value="375"
-                                                                               required=""
-                                                                               data-state="false">
-                                                                        <label class="form-option unavailable"
-                                                                               for="attribute_rectangle__189_375"
-                                                                               data-product-attribute-value="375">
-                                                                            <span class="form-option-variant">42 inch</span>
-                                                                        </label>
-                                                                    </div>
-                                                                    <div class="form-option-wrapper">
-                                                                        <input class="form-radio" type="radio"
-                                                                               id="attribute_rectangle__189_376"
-                                                                               name="attribute[189]" value="376"
-                                                                               checked=""
-                                                                               data-default="" required=""
-                                                                               data-state="true">
-                                                                        <label class="form-option"
-                                                                               for="attribute_rectangle__189_376"
-                                                                               data-product-attribute-value="376">
-                                                                            <span class="form-option-variant">55 inch</span>
-                                                                        </label>
+                                                                    <div class="d-flex justify-content-between align-items-center">
+                                                                        <div class="form-option-wrapper">
+                                                                            <input class="form-radio" type="radio"
+                                                                                   id="attribute_rectangle__189_374"
+                                                                                   name="attribute[189]" value="374"
+                                                                                   required=""
+                                                                                   data-state="false">
+                                                                            <label class="form-option unavailable"
+                                                                                   for="attribute_rectangle__189_374"
+                                                                                   data-product-attribute-value="374">
+                                                                                <span class="form-option-variant">32 inch</span>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-option-wrapper">
+                                                                            <input class="form-radio" type="radio"
+                                                                                   id="attribute_rectangle__189_375"
+                                                                                   name="attribute[189]" value="375"
+                                                                                   required=""
+                                                                                   data-state="false">
+                                                                            <label class="form-option unavailable"
+                                                                                   for="attribute_rectangle__189_375"
+                                                                                   data-product-attribute-value="375">
+                                                                                <span class="form-option-variant">42 inch</span>
+                                                                            </label>
+                                                                        </div>
+                                                                        <div class="form-option-wrapper">
+                                                                            <input class="form-radio" type="radio"
+                                                                                   id="attribute_rectangle__189_376"
+                                                                                   name="attribute[189]" value="376"
+                                                                                   checked=""
+                                                                                   data-default="" required=""
+                                                                                   data-state="true">
+                                                                            <label class="form-option"
+                                                                                   for="attribute_rectangle__189_376"
+                                                                                   data-product-attribute-value="376">
+                                                                                <span class="form-option-variant">55 inch</span>
+                                                                            </label>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="modal-footer justify-content-center align-items-center">
-                                                            <button type="button" class=" text-center btn btn-primary">
-                                                                Save
-                                                            </button>
+                                                            <div class="modal-footer justify-content-center align-items-center">
+                                                                <button type="button" class=" text-center btn btn-primary">
+                                                                    Save
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        @endif
-                                        <p class="mt-2">Gift Wrapping: <span>Add</span></p>
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td class="price" style="vertical-align: middle;"
-                                id="price-{{ $cartItem->id }}">{{ number_format(convertCurrency('USD', $currency,$cartItem->price), 0, ',', '.') }} {{$currency}}</td>
-                            <td class="quantity"  style="vertical-align: middle;">
-                                <form>
-                                    <input type="text" id="id-cart" value="{{ $cartItem->id }}" hidden/>
-                                    <input type="text" id="id-link" value="{{ asset('/') }}" hidden/>
-                                    <input class="input-number" type="number" id="quantity-{{ $cartItem->id }}"
-                                           name="quantity" style="border-radius: 30px; border-color: #ccc"
-                                           value="{{ $cartItem->quantity }}"
-                                           onchange="myfunction({{ $cartItem->id }}); "
-                                           min="{{$cartItem->product->min}}"/>
-                                </form>
-                            </td>
-                            <input hidden="" type="text" id="price-percent-{{ $cartItem->id }}"
-                                   value="{{ $percent }}">
-                            @if($percent)
-                                <td id="total-quantity-{{ $cartItem->id }}" style="vertical-align: middle;">
-                                    {{ number_format(convertCurrency('USD', $currency,($cartItem->price*$cartItem->quantity) - ($cartItem->price*$cartItem->quantity)*$percent/100), 0, ',', '.') }} {{$currency}}
                                 </td>
-                            @else
-                                <td id="total-quantity-{{ $cartItem->id }}" style="vertical-align: middle;">
-                                    {{ number_format(convertCurrency('USD', $currency,$cartItem->price*$cartItem->quantity), 0, ',', '.') }} {{$currency}}
+                                <td class="price col-md-2" style="vertical-align: middle;"
+                                    id="price-{{ $cartItem->id }}">{{ number_format(convertCurrency('USD', $currency,$cartItem->price), 0, ',', '.') }} {{$currency}}</td>
+                                <td class="quantity col-md-1"  style="vertical-align: middle;">
+                                    <form>
+                                        <input type="text" id="id-cart" value="{{ $cartItem->id }}" hidden/>
+                                        <input type="text" id="id-link" value="{{ asset('/') }}" hidden/>
+                                        <input class="input-number" type="number" id="quantity-{{ $cartItem->id }}"
+                                               name="quantity" style="border-radius: 30px; border-color: #ccc"
+                                               value="{{ $cartItem->quantity }}"
+                                               onchange="myfunction({{ $cartItem->id }}); "
+                                               min="{{$cartItem->product->min}}"/>
+                                    </form>
                                 </td>
-                            @endif
+                                <input hidden="" type="text" id="price-percent-{{ $cartItem->id }}"
+                                       value="{{ $percent }}">
+                                @if($percent)
+                                    <td class="col-md-2" id="total-quantity-{{ $cartItem->id }}" style="vertical-align: middle;">
+                                        {{ number_format(convertCurrency('USD', $currency,($cartItem->price*$cartItem->quantity) - ($cartItem->price*$cartItem->quantity)*$percent/100), 0, ',', '.') }} {{$currency}}
+                                    </td>
+                                @else
+                                    <td class="col-md-2" id="total-quantity-{{ $cartItem->id }}" style="vertical-align: middle;">
+                                        {{ number_format(convertCurrency('USD', $currency,$cartItem->price*$cartItem->quantity), 0, ',', '.') }} {{$currency}}
+                                    </td>
+                                @endif
 
-                            <td  style="vertical-align: middle;">
-                                <form action="{{ route('cart.delete', $cartItem->id) }}"
-                                      method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input class="submit" type="submit" value="&times;"/>
-                                </form>
-                            </td>
+                                <td class="col-md-1" style="vertical-align: middle;">
+                                    <form action="{{ route('cart.delete', $cartItem->id) }}"
+                                          method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <input class="submit" type="submit" value="&times;"/>
+                                    </form>
+                                </td>
+
+                            </div>
                         </tr>
                     @endforeach
                     </tbody>
