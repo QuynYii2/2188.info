@@ -12,6 +12,7 @@
             <div class="mt-5">
                 <form class="p-3" action="{{route('register.member.represent')}}" method="post">
                     @csrf
+                    <input type="text" class="form-control" name="person" value="{{ ($person) }}" hidden="">
                     @if($memberPerson)
                         <div class="form-row">
                             <div class="form-group col-md-4">
@@ -65,7 +66,6 @@
                             </div>
                         </div>
                     @else
-                        <input type="text" class="form-control" name="person" value="{{ ($person) }}" hidden="">
                         <div class="form-group">
                             <label for="datetime_register">{{ __('home.Day register') }}:</label>
                             <input type="text" class="form-control" id="datetime_register" name="datetime_register"

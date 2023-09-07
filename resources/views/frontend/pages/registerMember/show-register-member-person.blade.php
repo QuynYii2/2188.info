@@ -59,6 +59,7 @@
                                 <input type="text" class="form-control" id="sns_account" name="sns_account" value="{{$memberPersonSource->sns_account}}" required>
                             </div>
                         </div>
+                        <input type="text" class="form-control" name="member" value="{{$member}}" hidden="">
                         <button type="submit" class="btn btn-primary">{{ __('home.sign up') }}</button>
 
                     @else

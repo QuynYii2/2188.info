@@ -244,7 +244,7 @@ class RegisterMemberController extends Controller
                 'rank' => '',
                 'member_id' => $newMember->id,
                 'sns_account' => $sns_account,
-                'type' => MemberRegisterType::REPRESENT,
+                'type' => MemberRegisterType::SOURCE,
                 'verifyCode' => $code,
                 'isVerify' => 0,
                 'price' => $price,
@@ -377,7 +377,7 @@ class RegisterMemberController extends Controller
                 $exitsMember->name = $companyName;
                 $exitsMember->phone = $phoneNumber;
                 $exitsMember->category_id = $categories;
-                $exitsMember->numberBusiness = $numberBusiness;
+                $exitsMember->number_business = $numberBusiness;
                 $exitsMember->type_business = $type_business;
                 $exitsMember->code_business = $codeBusiness;
                 $exitsMember->giay_phep_kinh_doanh = $gpkdPath;
@@ -563,9 +563,10 @@ class RegisterMemberController extends Controller
                 $memberPersonSource->position = $position;
                 $memberPersonSource->responsibility = $responsibility;
 
-                $memberPersonSource->status = MemberRegisterPersonSourceStatus::INACTIVE;
+
                 if ($email == $memberPersonSource->email) {
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
+                    $memberPersonSource->status = MemberRegisterPersonSourceStatus::ACTIVE;
                     $memberPersonSource->email = $email;
                     $success = $memberPersonSource->save();
                     $register = MemberRegisterInfo::find($member);
@@ -576,14 +577,13 @@ class RegisterMemberController extends Controller
                     ]));
                 } else {
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
+                    $memberPersonSource->status = MemberRegisterPersonSourceStatus::INACTIVE;
                     $memberPersonSource->email = $email;
-                    $user = User::where('email', Auth::user()->email)->first();
-                    $user->email = $email;
                     $this->sendMail($data, $email);
-                    $user->save();
                     $memberPersonSource->isVerify = 0;
                     $memberPersonSource->verifyCode = $code;
                     $success = $memberPersonSource->save();
+                    dd('1212');
                 }
             } else {
                 $userOld = User::where('email', $email)->first();
@@ -601,6 +601,7 @@ class RegisterMemberController extends Controller
                 $this->sendMail($data, $email);
                 $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member);
                 $success = MemberRegisterPersonSource::create($create);
+                dd('2222');
             }
 
             if ($success) {
@@ -735,7 +736,7 @@ class RegisterMemberController extends Controller
                     $memberPerson->email = $email;
                     $success = $memberPerson->save();
                     alert()->success('Success', 'Success');
-                    return redirect(route('home'));
+                    return redirect(route('show.register.member.ship', $memberBefore->member_id));
                 } else {
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
                     $memberPerson->email = $email;
@@ -953,6 +954,15 @@ class RegisterMemberController extends Controller
             return null;
         }
         return $arrayIds;
+    }
+
+    private function updateUser($user, $fullName, $email, $phoneNumber, $member)
+    {
+        $user->name = $fullName;
+        $user->email = $email;
+        $user->phone = $phoneNumber;
+        $user->member = $member;
+        $user->save();
     }
 
     private function sendMail($data, $email)

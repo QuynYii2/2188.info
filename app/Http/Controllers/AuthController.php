@@ -272,13 +272,4 @@ class AuthController extends Controller
         }
         return $locale;
     }
-
-    private function updateUser($user, $fullName, $email, $phoneNumber, $member)
-    {
-        $user->name = $fullName;
-        $user->email = $email;
-        $user->phone = $phoneNumber;
-        $user->member = $member;
-        $user->save();
-    }
 }
