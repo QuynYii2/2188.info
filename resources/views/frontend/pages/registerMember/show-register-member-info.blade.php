@@ -148,7 +148,7 @@
         })
 
         function getDate() {
-            let nowTime = new Date().toLocaleString();
+            let nowTime = new Date().toLocaleDateString('en-GB');
             $('#datetime_register').val(nowTime);
         }
 
