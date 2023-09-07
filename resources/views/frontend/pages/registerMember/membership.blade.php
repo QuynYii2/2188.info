@@ -3,40 +3,40 @@
 @section('title', 'Register Member')
 @section('content')
     <div class="container">
-        <h3 class="text-center">Đăng kí nhân viên</h3>
+        <h3 class="text-center">{{ __('home.Employee registration') }}</h3>
         <div class="container mt-3">
             <h5 class="">
-                Thứ tự đăng ký:
+                {{ __('home.Registration order') }}:
             </h5>
             <br>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item">Phân loại hội viên</li>
-                    <li class="breadcrumb-item">Đồng ý điều khoản</li>
-                    <li class="breadcrumb-item"> Đăng ký công ty</li>
-                    <li class="breadcrumb-item">Đăng ký người đăng ký</li>
-                    <li class="breadcrumb-item">Đăng ký người đại diện</li>
-                    <li class="breadcrumb-item active">Danh sách người quản lý</li>
+                    <li class="breadcrumb-item">{{ __('home.Classification of members') }}</li>
+                    <li class="breadcrumb-item">{{ __('home.Agree to terms') }}</li>
+                    <li class="breadcrumb-item">{{ __('home.Company registration') }}</li>
+                    <li class="breadcrumb-item">{{ __('home.Subscriber registration') }}</li>
+                    <li class="breadcrumb-item">{{ __('home.Representative registration') }}</li>
+                    <li class="breadcrumb-item active">{{ __('home.Register as member') }}</li>
                 </ol>
             </nav>
-            <h5 class="text-center mt-3">Danh sách người quản lý đã đăng kí</h5>
+            <h5 class="text-center mt-3">{{ __('home.List of registered managers') }}</h5>
             <table class="table border">
                 <thead>
                 <tr>
-                    <th scope="col">Phụ trách</th>
-                    <th scope="col">Chức vụ</th>
-                    <th scope="col">Tên English</th>
-                    <th scope="col">Tên hiện tại</th>
-                    <th scope="col">ID</th>
-                    <th scope="col">Số điện thoại</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">SNS</th>
+                    <th scope="col">{{ __('home.Responsibility') }}</th>
+                    <th scope="col">{{ __('home.Position') }}</th>
+                    <th scope="col">{{ __('home.Name English') }}</th>
+                    <th scope="col">{{ __('home.Name Korea') }}</th>
+                    <th scope="col">{{ __('home.ID') }}</th>
+                    <th scope="col">{{ __('home.Phone Number') }}</th>
+                    <th scope="col">{{ __('home.email') }}</th>
+                    <th scope="col">{{ __('home.SNS Account') }}</th>
                 </tr>
                 </thead>
                 <tbody>
                 @if($memberRepresent)
                     <tr>
-                        <td>Người đại diện</td>
+                        <td>{{ __('home.Representative member') }}</td>
                         <td>{{$memberRepresent->staff}}</td>
                         <td>{{$memberRepresent->name_en}}</td>
                         <td>{{$memberRepresent->name}}</td>
@@ -48,7 +48,7 @@
                 @endif
                 @if($memberSource)
                     <tr>
-                        <td>Người đăng ký</td>
+                        <td>{{ __('home.Registered member') }}</td>
                         <td>{{$memberSource->staff}}</td>
                         <td>{{$memberSource->name_en}}</td>
                         <td>{{$memberSource->name}}</td>
@@ -73,54 +73,18 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalRegisterMembershipLabel">Đăng ký nhân viên</h5>
+                                <h5 class="modal-title" id="modalRegisterMembershipLabel">{{ __('home.Employee registration') }}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <form>
                                 <div class="modal-body">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="inputEmail4">Email</label>
-                                            <input type="email" class="form-control" id="inputEmail4">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="inputPassword4">Password</label>
-                                            <input type="password" class="form-control" id="inputPassword4">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputAddress">Address</label>
-                                        <input type="text" class="form-control" id="inputAddress"
-                                               placeholder="1234 Main St">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputAddress2">Address 2</label>
-                                        <input type="text" class="form-control" id="inputAddress2"
-                                               placeholder="Apartment, studio, or floor">
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="inputCity">City</label>
-                                            <input type="text" class="form-control" id="inputCity">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="inputState">State</label>
-                                            <select id="inputState" class="form-control">
-                                                <option selected>Choose...</option>
-                                                <option>...</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-md-2">
-                                            <label for="inputZip">Zip</label>
-                                            <input type="text" class="form-control" id="inputZip">
-                                        </div>
-                                    </div>
+
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}</button>
+                                    <button type="button" class="btn btn-primary">{{ __('home.Save') }}</button>
                                 </div>
                             </form>
                         </div>
@@ -128,7 +92,7 @@
                 </div>
                 <div class="col-md-4">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalRegisterMore">
-                        Đăng ký thêm
+                        {{ __('home.Sign up for more') }}
                     </button>
                 </div>
                 <!-- Modal -->
@@ -137,54 +101,18 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalRegisterMoreLabel">Đăng ký thêm</h5>
+                                <h5 class="modal-title" id="modalRegisterMoreLabel">{{ __('home.Sign up for more') }}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <form>
                                 <div class="modal-body">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="inputEmail4">Email</label>
-                                            <input type="email" class="form-control" id="inputEmail4">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="inputPassword4">Password</label>
-                                            <input type="password" class="form-control" id="inputPassword4">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputAddress">Address</label>
-                                        <input type="text" class="form-control" id="inputAddress"
-                                               placeholder="1234 Main St">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputAddress2">Address 2</label>
-                                        <input type="text" class="form-control" id="inputAddress2"
-                                               placeholder="Apartment, studio, or floor">
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label for="inputCity">City</label>
-                                            <input type="text" class="form-control" id="inputCity">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="inputState">State</label>
-                                            <select id="inputState" class="form-control">
-                                                <option selected>Choose...</option>
-                                                <option>...</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-md-2">
-                                            <label for="inputZip">Zip</label>
-                                            <input type="text" class="form-control" id="inputZip">
-                                        </div>
-                                    </div>
+
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}</button>
+                                    <button type="button" class="btn btn-primary">{{ __('home.Save') }}</button>
                                 </div>
                             </form>
                         </div>
@@ -192,14 +120,14 @@
                 </div>
             </div>
             <a href="{{route('show.register.member.congratulation', $memberRepresent->id)}}"
-               class="btn btn-success mt-3 mb-5">Xác nhận</a>
+               class="btn btn-success mt-3 mb-5">{{ __('home.apply') }}</a>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
             if (localStorage.getItem("register_membership")) {
-                let html = '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalRegisterMembership">Đăng ký nhân viên</button>';
+                let html = '<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modalRegisterMembership">{{ __('home.Employee registration') }}</button>';
                 $('#buttonRegisterMembership').empty().append(html);
             }
         })
