@@ -8,25 +8,25 @@
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="{{route('home')}}">Home</a>
+                        <a href="{{route('home')}}">{{ __('home.Home') }}</a>
                     </li>
-                    <li class="breadcrumb-item active">Your Cart</li>
+                    <li class="breadcrumb-item active">{{ __('home.Your Cart') }}</li>
                 </ol>
             </nav>
-            <h1>Your Cart</h1>
+            <h1>{{ __('home.Your Cart') }}</h1>
         </div>
         @if ($cartItems->isEmpty())
-            <p>Chưa có sản phẩm trong giỏ hàng</p>
+            <p>{{ __('home.Chưa có sản phẩm trong giỏ hàng') }}</p>
         @else
             <div class="pagelist">
                 <table id="table-cart" class="table table-bordered">
                     <thead>
                     <tr class="header">
-                        <th scope="col">ITEM</th>
-                        <th scope="col">PRICE</th>
-                        <th scope="col">QUANTITY</th>
-                        <th scope="col">TOTAL</th>
-                        <th scope="col">ACTION</th>
+                        <th scope="col">{{ __('home.item') }}</th>
+                        <th scope="col">{{ __('home.PRICE') }}</th>
+                        <th scope="col">{{ __('home.quantity') }}</th>
+                        <th scope="col">{{ __('home.TOTAL') }}</th>
+                        <th scope="col">{{ __('home.Action') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -84,7 +84,7 @@
                                             <a class="text-edit" href="#" data-toggle="modal"
                                                data-target="#exampleModal">
                                                 <i class='fas fa-edit'></i>
-                                                Change
+                                                {{ __('home.Change') }}
                                             </a>
                                             <div class="modal fade" id="exampleModal" tabindex="-1"
                                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -122,7 +122,7 @@
                                                                         <label class="form-option unavailable"
                                                                                for="attribute_rectangle__189_374"
                                                                                data-product-attribute-value="374">
-                                                                            <span class="form-option-variant">32 inch</span>
+                                                                            <span class="form-option-variant">{{ __('home.32 inch') }}</span>
                                                                         </label>
                                                                     </div>
                                                                     <div class="form-option-wrapper">
@@ -134,7 +134,7 @@
                                                                         <label class="form-option unavailable"
                                                                                for="attribute_rectangle__189_375"
                                                                                data-product-attribute-value="375">
-                                                                            <span class="form-option-variant">42 inch</span>
+                                                                            <span class="form-option-variant">{{ __('home.42 inch') }}</span>
                                                                         </label>
                                                                     </div>
                                                                     <div class="form-option-wrapper">
@@ -147,7 +147,7 @@
                                                                         <label class="form-option"
                                                                                for="attribute_rectangle__189_376"
                                                                                data-product-attribute-value="376">
-                                                                            <span class="form-option-variant">55 inch</span>
+                                                                            <span class="form-option-variant">{{ __('home.55 inch') }}</span>
                                                                         </label>
                                                                     </div>
                                                                 </div>
@@ -155,7 +155,7 @@
                                                         </div>
                                                         <div class="modal-footer justify-content-center align-items-center">
                                                             <button type="button" class=" text-center btn btn-primary">
-                                                                Save
+                                                                {{ __('home.Save') }}
                                                             </button>
                                                         </div>
                                                     </div>
@@ -206,75 +206,75 @@
             </div>
             <div class="row cart-content">
                 <div class="col-md-4">
-                    <div class="text-uppercase">COUPON CODE</div>
+                    <div class="text-uppercase">{{ __('home.COUPON CODE') }}</div>
                     <div class="">
-                        <label for="inputPassword2">Enter your coupon code if you have one.</label>
+                        <label for="inputPassword2">{{ __('home.Enter your coupon code if you have one.') }}</label>
                         <form class="d-flex align-items-center justify-content-between">
                             <div class="form-group">
                                 <input type="text" class="form-control" id="inputPassword2"
                                        placeholder="Enter your coupon code">
                             </div>
-                            <button type="submit" class="btn mb-2 submit">Apply</button>
+                            <button type="submit" class="btn mb-2 submit">{{ __('home.Apply') }}</button>
                         </form>
                     </div>
-                    <div class="text-uppercase">GIFT CERTIFICATE</div>
+                    <div class="text-uppercase">{{ __('home.GIFT CERTIFICATE') }}</div>
                     <div class="">
-                        <label for="inputPassword2">Enter your coupon code if you have one.</label>
+                        <label for="inputPassword2">{{ __('home.Enter your coupon code if you have one.') }}</label>
                         <form class="d-flex align-items-center justify-content-between">
                             <div class="form-group">
                                 <input type="text" class="form-control" id="inputPassword2"
                                        placeholder="Enter your coupon code">
                             </div>
-                            <button type="submit" class="btn mb-2 submit">Apply</button>
+                            <button type="submit" class="btn mb-2 submit">{{ __('home.Apply') }}</button>
                         </form>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="text-uppercase">SHIPPING</div>
+                    <div class="text-uppercase">{{ __('home.SHIPPING') }}</div>
                     <div class="">
-                        <label for="inputPassword2">Enter your coupon code if you have one.</label>
+                        <label for="inputPassword2">{{ __('home.Enter your coupon code if you have one.') }}</label>
                         <form>
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <span class="mr-3">Country</span>
+                                <span class="mr-3">{{ __('home.Country') }}</span>
                                 <div class="form-group">
                                     <select name="" id="">
-                                        <option value="">VietNam</option>
-                                        <option value="">TrungQuoc</option>
-                                        <option value="">Han Quoc</option>
+                                        <option value="">{{ __('home.VietNam') }}</option>
+                                        <option value="">{{ __('home.TrungQuoc') }}</option>
+                                        <option value="">{{ __('home.Han Quoc') }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <span class="mr-3">State/Province</span>
+                                <span class="mr-3">{{ __('home.State/Province') }}</span>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="inputPassword2"
-                                           placeholder="State/province">
+                                           placeholder={{ __('home.State/Province') }}>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <span class="mr-3">Suburb/City</span>
+                                <span class="mr-3">{{ __('home.Suburb/City') }}</span>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="inputPassword2"
-                                           placeholder="Suburb/City">
+                                           placeholder={{ __('home.Suburb/City') }}>
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between align-items-baseline">
-                                <span class="mr-3">Zip/Postcode</span>
+                                <span class="mr-3">{{ __('home.Zip/Postcode') }}</span>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="inputPassword2"
-                                           placeholder="Zip/Postcode">
+                                           placeholder="{{ __('home.Zip/Postcode') }}">
                                 </div>
                             </div>
-                            <button type="submit" class="btn mb-2 submit float-right submit-60">Estimate Shipping
+                            <button type="submit" class="btn mb-2 submit float-right submit-60">{{ __('home.Estimate Shipping') }}
                             </button>
                         </form>
                     </div>
 
                 </div>
                 <div class="col-md-4">
-                    <div class="text-uppercase">COUPON CODE</div>
+                    <div class="text-uppercase">{{ __('home.COUPON CODE') }}</div>
                     <div class="subtotal d-flex justify-content-between">
-                        <span class="">Subtotal: </span>
+                        <span class="">{{ __('home.Subtotal') }}: </span>
                         <span class="subtotal-price">0</span>
                     </div>
                     <div class="grandtotal d-flex justify-content-between">
@@ -282,7 +282,7 @@
                         <span> <span id="max-total"> {{ $cartItem->price*$cartItem->quantity }}</span></span>
                     </div>
                     <a href="{{route('checkout.show')}}">
-                        <button type="submit" class="btn mb-2 submit float-right submit-100">Check out</button>
+                        <button type="submit" class="btn mb-2 submit float-right submit-100">{{ __('home.Check out') }}</button>
                     </a>
                 </div>
             </div>
