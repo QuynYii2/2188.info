@@ -5,11 +5,11 @@
     <div class="container">
         <div class="float-right mb-3">
             @if($memberSource)
-                <p>Hội viên đăng kí:{{$memberSource->name}}</p>
+                <p>{{ __('home.Representative member') }}:{{$memberSource->name}}</p>
             @endif
 
             @if($memberRepresent)
-                <p>Hội viên đại diện:{{$memberRepresent->name}}</p>
+                <p>{{ __('home.Registered member') }}:{{$memberRepresent->name}}</p>
             @endif
             <p>
                 <i class="fa-solid fa-star"></i>
@@ -20,7 +20,7 @@
             </p>
         </div>
         <div class="">
-            <h3 class="text-center">Chúc mừng bạn đã đăng ký hội viên {{$company->member}}</h3>
+            <h3 class="text-center">{{ __('home.Congratulations, you have registered as a member') }} {{$company->member}}</h3>
             @php
                 $listPermissionID = $member->permission_id;
                 $arrayPermissionID = null;
@@ -28,7 +28,7 @@
                     $arrayPermissionID = explode(',', $listPermissionID);
                 }
             @endphp
-            <p>Quyền lợi của hội viên</p>
+            <p>{{ __('home.Membership benefits') }}</p>
             <ol class="text-success">
                 @if($arrayPermissionID)
                     @foreach($arrayPermissionID as $permissionID)
@@ -44,7 +44,7 @@
                 @endif
             </ol>
         </div>
-        <a href="{{route('login')}}" class="btn btn-success mb-5">Đăng nhập ngay</a>
+        <a href="{{route('login')}}" class="btn btn-success mb-5">{{ __('home.Log in now') }}</a>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @endsection

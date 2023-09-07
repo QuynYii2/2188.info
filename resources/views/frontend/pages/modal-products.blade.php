@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="grid product">
+                <div class="grid product" style="border-bottom: 1px solid white">
                     <div class="column-xs-12 column-md-5">
                         <div class="product-gallery">
                             <div class="product-image">

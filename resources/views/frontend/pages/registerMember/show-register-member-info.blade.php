@@ -111,18 +111,16 @@
     <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
     <div class="start-page mb-3">
         <div class="background container-fluid pt-3 justify-content-center pb-3">
-            <div class="row card border">
-                <div class="form-title text-center pt-2">
-                    <div class="title">{{ __('home.Sign up for information') }}</div>
-                </div>
-                <div class="container mt-5">
-                    @if($member->name == \App\Enums\RegisterMember::BUYER)
-                        @include('frontend.pages.registerMember.buyer')
-                    @else
-                        @include('frontend.pages.registerMember.more-member-other')
-                    @endif
-                    <h2 id="result"></h2>
-                </div>
+            <div class="form-title text-center pt-2">
+                <div class="title">{{ __('home.Sign up for information') }}</div>
+            </div>
+            <div class="mt-4">
+                @if($member->name == \App\Enums\RegisterMember::BUYER)
+                    @include('frontend.pages.registerMember.buyer')
+                @else
+                    @include('frontend.pages.registerMember.more-member-other')
+                @endif
+                <h2 id="result"></h2>
             </div>
         </div>
     </div>

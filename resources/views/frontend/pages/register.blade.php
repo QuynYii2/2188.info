@@ -4,7 +4,7 @@
 
 @section('content')
     <style>
-        body {
+        mt-body {
             background: rgb(255, 235, 225);
         }
     </style>

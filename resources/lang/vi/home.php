@@ -534,4 +534,60 @@ return [
     'received-by' => 'Đã nhận bởi: ',
     'posted-by' => 'Được gửi bởi: ',
     'time' => 'Thời gian: ',
+    // Register member
+    // start
+    'Agree to Terms' => 'Đồng ý với Điều khoản',
+    'Agree to the Information Collection Policy' => 'Đồng ý với Chính sách thu thập thông tin ',
+    'Agree to the Terms of Information Use' => 'Đồng ý với Điều khoản sử dụng thông tin',
+    'I agree to the above Terms' => 'Tôi đồng ý với các Điều khoản trên',
+    'Day register' => 'Ngày đăng kí ',
+    'Number clearance' => 'Số thông quan',
+    'Name company English' => 'Tên công ty Tiếng Anh',
+    'Name company Korea' => 'Tên công ty Tiếng Hàn',
+    // nganh nghe
+    'Career' => 'Ngành nghề',
+    // nganh hang
+    'Industry' => 'Ngành hàng',
+    'Address English' => 'Địa chỉ Tiếng Anh',
+    'Address Korea' => 'Địa chỉ Tiếng Hàn',
+    'Address detail' => 'Địa chỉ chi tiết',
+    // so dang ky kinh odanh
+    'Business registration number' => 'Số đăng ký kinh doanh',
+    // giay phep kinh doanh
+    'Business license' => 'Giấy phép kinh doanh',
+    'Company status' => 'Trạng thái công ty',
+    // giay chung nhan nganh nghe
+    'Industry Certificate' => 'Giấy chứng nhận ngành nghề',
+    // ma hang
+    'PLU' => 'Mã hàng',
+    '1st classification' => 'Phân loại lần 1',
+    '2nd classification' => 'Phân loại lần 2',
+    '3rd classification' => 'Phân loại lần 3',
+    '4th classification' => 'Phân loại lần 4',
+    'Phone Number' => 'Số điện thoại',
+    // Nganh hang kinh doanh
+    'Business industry' => 'Ngành hàng kinh doanh',
+    // Nganh nghe kinh doanh
+    'Business' => 'Ngành nghề kinh doanh',
+    // Chuc vu
+    'Position company' => 'Chức vụ',
+    'Responsibility company' => 'Chức trách',
+    'Name English' => 'Họ và tên Tiếng Anh',
+    'Name Korea' => 'Họ và tên Tiếng Hàn',
+    'ID' => 'ID',
+    'Congratulations, you have registered as a member' => 'Chúc mừng bạn đã đăng ký hội viên',
+    'Representative member'=>'Hội viên đại diện',
+    'Registered member'=>'Hội viên đăng kí',
+    'Log in now'=>'Đăng nhập ngay',
+    'Employee registration' => 'Đăng ký nhân viên',
+    'Registration order' => 'Thứ tự đăng ký',
+    'List of registered managers' => 'Danh sách người quản lý đã đăng kí',
+    'Sign up for more' => 'Đăng ký thêm',
+    'Classification of members' => 'Phân loại hội viên',
+    'Agree to terms' => 'Đồng ý điều khoản ',
+    'Company registration' => ' Đăng ký công ty ',
+    'Subscriber registration' => 'Đăng ký người đăng ký ',
+    'Representative registration' => 'Đăng ký người đại diện ',
+    'Register as member' => 'Đăng ký nhân viên ',
+    // end
 ];
