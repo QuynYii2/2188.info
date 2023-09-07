@@ -19,7 +19,17 @@
                     @foreach($members as $member)
                         <div class="col-md-4 mb-5">
                             <h6 class="text-center mt-2 mb-3 member-name">
-                                {{$member->name}}
+                                @if(locationHelper() == 'kr')
+                                    {{ ($member->lang_kr) }}
+                                @elseif(locationHelper() == 'cn')
+                                    {{ ($member->lang_cn) }}
+                                @elseif(locationHelper() == 'jp')
+                                    {{ ($member->lang_jp) }}
+                                @elseif(locationHelper() == 'vi')
+                                    {{ ($member->name) }}
+                                @else
+                                    {{ ($member->lang_en) }}
+                                @endif
                             </h6>
                             <div class="card">
                                 <div class="card-body">
