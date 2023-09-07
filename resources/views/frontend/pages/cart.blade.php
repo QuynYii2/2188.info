@@ -65,10 +65,22 @@
                                             @elseif(locationHelper() == 'vi')
                                                 {{($cartItem->product->category->name)}}
                                             @else
-                                                {{($cartItem->product->category->name_en)}}
+                                                {{($cartItem->product->category->name)}}
                                             @endif
                                         </div>
-                                        <a href="{{route('detail_product.show', $cartItem->product->id)}}">{{($cartItem->product->name)}}</a>
+                                        <a href="{{route('detail_product.show', $cartItem->product->id)}}">
+                                            @if(locationHelper() == 'kr')
+                                                {{($cartItem->product->name_ko)}}
+                                            @elseif(locationHelper() == 'cn')
+                                                {{($cartItem->product->name_zh)}}
+                                            @elseif(locationHelper() == 'jp')
+                                                {{($cartItem->product->name_ja)}}
+                                            @elseif(locationHelper() == 'vi')
+                                                {{($cartItem->product->name)}}
+                                            @else
+                                                {{($cartItem->product->name_en)}}
+                                            @endif
+                                        </a>
                                         @if($cartItem->values != 0)
                                             @php
                                                 $list = $cartItem->values;
