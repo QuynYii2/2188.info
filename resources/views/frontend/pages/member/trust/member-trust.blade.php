@@ -22,27 +22,25 @@
             $listCategory = $company->category_id;
             $arrayCategory  = explode(',', $listCategory);
         @endphp
-        <div class="row">
-            <div class="col-md-4 border ml-3">
-                <div class="row text-center">
+        <div class="row frame">
+            <div class="col-md-12 ml-3">
+                <ul class="list_choose_categories">
                     @foreach($arrayCategory as $itemCategory)
                         @php
                             $category = \App\Models\Category::find($itemCategory);
                         @endphp
-                        <div class="col-md-6">
-                            {{$category->name}}
-                        </div>
+                        <li class="">
+                            <a href="">{{$category->name}}</a>
+                        </li>
                     @endforeach
-                </div>
-            </div>
-            <div class="col-md-8 border mr-3">
+                </ul>
 
             </div>
         </div>
         <div class="border d-flex justify-content-between align-items-center p-5">
             <a href="{{route('trust.register.member.index')}}" class="btn btn-warning">{{ __('home.List of customers') }}</a>
             <a href="#" class="btn btn-primary">{{ __('home.Message received') }}</a>
-            <a href="#" class="btn btn-warning">{{ __('home.Tin nhắn đã gửi') }}</a>
+            <a href="#" class="btn btn-warning">{{ __('home.Message sent') }}</a>
             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">{{ __('home.Purchase') }}</a>
             <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
         </div>

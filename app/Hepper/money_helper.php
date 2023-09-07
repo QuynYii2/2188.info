@@ -8,7 +8,20 @@ use Illuminate\Support\Facades\Cache;
 if (!function_exists('convertCurrency')) {
     function convertCurrency($from, $to, $amount)
     {
-        $rate = convertCurrencyDB($from, $to, $amount);
+        switch ($from) {
+            case 'vi':
+                $currentFrom = 'VND';
+                break;
+            case 'kr':
+                $currentFrom = 'KRW';
+                break;
+            case 'cn':
+                $currentFrom = 'CNY';
+                break;
+            default:
+                $currentFrom = 'USD';
+        }
+        $rate = convertCurrencyDB($currentFrom, $to, $amount);
         return $rate * $amount;
     }
 
@@ -50,6 +63,7 @@ if (!function_exists('convertCurrency')) {
 
     function getExchangeRate($from, $to, $amount)
     {
+
         $client = new \GuzzleHttp\Client();
 
         $response = $client->request('GET', 'https://currency-conversion-and-exchange-rates.p.rapidapi.com/convert?from='.$from.'&to='.$to.'&amount='.$amount, [

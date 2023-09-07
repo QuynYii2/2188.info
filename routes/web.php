@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Member\RegisterMemberController;
+use App\Http\Controllers\Member\RegisterMemberSuccessController;
 use App\Http\Controllers\Member\TrustMemberController;
 use App\Http\Controllers\MemberPartnerController;
 use App\Http\Controllers\PaypalPaymentController;
@@ -100,58 +101,71 @@ Route::middleware('auth.product')->group(function () {
 
 Route::get(
     '/register-member',
-    [AuthController::class, 'processRegisterMember']
+    [RegisterMemberController::class, 'processRegisterMember']
 )->name('process.register.member');
 Route::get(
     '/register-member/{registerMember}',
-    [AuthController::class, 'showRegisterMember']
+    [RegisterMemberController::class, 'showRegisterMember']
 )->name('show.register.member');
 Route::get(
     '/register-member-info/{registerMember}',
-    [AuthController::class, 'showRegisterMemberInfo']
+    [RegisterMemberController::class, 'showRegisterMemberInfo']
 )->name('show.register.member.info');
 Route::get(
     '/register-member-person-source/{member_id}/{registerMember}',
-    [AuthController::class, 'showRegisterMemberPerson']
+    [RegisterMemberController::class, 'showRegisterMemberPerson']
 )->name('show.register.member.person.source');
 Route::get(
     '/verify-register-member-person-source/{email}',
-    [AuthController::class, 'processVerifyEmail']
+    [RegisterMemberController::class, 'processVerifyEmail']
 )->name('show.verify.register.member');
 Route::get(
     '/register-member-person-source-represent/{person_id}/{registerMember}',
-    [AuthController::class, 'showRegisterMemberPersonRepresent']
+    [RegisterMemberController::class, 'showRegisterMemberPersonRepresent']
 )->name('show.register.member.person.represent');
 Route::get(
     '/payment-register-member/{registerMember}',
-    [AuthController::class, 'showPaymentMember']
+    [RegisterMemberController::class, 'showPaymentMember']
 )->name('show.payment.member');
 Route::get(
     '/payment-register-member-success/{registerMember}',
-    [AuthController::class, 'successRegisterMember']
+    [RegisterMemberController::class, 'successRegisterMember']
 )->name('show.success.payment.member');
-//Route::get('/register-member/{registerMember}', [AuthController::class, 'showRegisterMember'])->name('show.register.member');
+Route::get(
+    '/register-member-ship/{member}',
+    [RegisterMemberController::class, 'registerMemberShip']
+)->name('show.register.member.ship');
+Route::get(
+    '/congratulation-register-member/{member}',
+    [RegisterMemberController::class, 'congratulationRegisterMember']
+)->name('show.register.member.congratulation');
+//Route::get('/register-member/{registerMember}', [RegisterMemberController::class, 'showRegisterMember'])->name('show.register.member');
+Route::post(
+    '/register-member-buyer',
+    [RegisterMemberController::class, 'registerMemberBuyer']
+)->name('register.member.buyer');
 Route::post(
     '/register-member-info',
-    [AuthController::class, 'registerMemberInfo']
+    [RegisterMemberController::class, 'registerMemberInfo']
 )->name('register.member.info');
 Route::post(
     '/register-member-source',
-    [AuthController::class, 'registerMemberPerson']
+    [RegisterMemberController::class, 'registerMemberPerson']
 )->name('register.member.source');
 Route::post(
     '/verify-register-member-person-source',
-    [AuthController::class, 'verifyEmail']
+    [RegisterMemberController::class, 'verifyEmail']
 )->name('verify.register.member');
 Route::post(
     '/register-member-person-source-represent',
-    [AuthController::class, 'registerMemberPersonRepresent']
+    [RegisterMemberController::class, 'registerMemberPersonRepresent']
 )->name('register.member.represent');
 Route::post(
     '/payment-register-member',
-    [AuthController::class, 'paymentMember']
+    [RegisterMemberController::class, 'paymentMember']
 )->name('payment.member');
 
+// End register member
 
 Route::get('/location-nation', [AuthController::class, 'getListNation'])->name('location.nation.get');
 Route::get('/location-state/{id}', [AuthController::class, 'getListStateByNation'])->name('location.state.get');
@@ -176,22 +190,27 @@ Route::get('/products/location/{locale}', [\App\Http\Controllers\ProductControll
 Route::get('/products-shop/{id}', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByShops'])->name('list.products.shop.show');
 Route::get('/products-shop-category/{category}/{shop}', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByCategoryAndShops'])->name('list.products.shop.category.show');
 
-Route::middleware(['auth'])->group(callback: function () {
-    //Chat message
-    Route::get('/chat-message', [SampleController::class, 'chat'])->name('chat.message.show');
-    Route::get('/chat-message-sent', [SampleController::class, 'getListMessageSent'])->name('chat.message.sent');
-    Route::get('/chat-message-received', [SampleController::class, 'getListMessageReceived'])->name('chat.message.received');
-    //Setup marketing
+Route::get('/chat-message/{from}/{to}', [SampleController::class, 'findAllMessage'])->name('chat.message.show.to.way');
+//Detail marketing
+Route::get('/detail-marketing/{id}', [\App\Http\Controllers\DetailMarketingController::class, 'index'])->name('detail-marketing.show');
+Route::delete('/detail-marketing/{id}/{product}', [\App\Http\Controllers\DetailMarketingController::class, 'delete'])->name('detail-marketing.delete');
+
+Route::group(['middleware' => 'role.admin'], function () {
     Route::get('/setup-marketing/', [\App\Http\Controllers\SetupMarketingController::class, 'index'])->name('setup-marketing.show');
     Route::get('/setup-marketing/create', [\App\Http\Controllers\SetupMarketingController::class, 'create'])->name('create-setup-marketing');
     Route::post('/setup-marketing/create', [\App\Http\Controllers\SetupMarketingController::class, 'store'])->name('store-setup-marketing');
     Route::delete('/setup-marketing/create/{id}', [\App\Http\Controllers\SetupMarketingController::class, 'delete'])->name('setup-marketing.delete');
     Route::get('/setup-marketing/edit/{id}', [\App\Http\Controllers\SetupMarketingController::class, 'edit'])->name('setup-marketing.edit');
     Route::post('/setup-marketing/update/{id}', [\App\Http\Controllers\SetupMarketingController::class, 'update'])->name('setup-marketing.update');
+});
 
-    //Detail marketing
-    Route::get('/detail-marketing/{id}',[\App\Http\Controllers\DetailMarketingController::class, 'index'])->name('detail-marketing.show');
-    Route::delete('/detail-marketing/{id}/{product}', [\App\Http\Controllers\DetailMarketingController::class, 'delete'])->name('detail-marketing.delete');
+Route::middleware(['auth'])->group(callback: function () {
+    //Chat message
+    Route::get('/chat-message', [SampleController::class, 'chat'])->name('chat.message.show');
+    Route::get('/chat-message-sent', [SampleController::class, 'getListMessageSent'])->name('chat.message.sent');
+    Route::get('/chat-message-received', [SampleController::class, 'getListMessageReceived'])->name('chat.message.received');
+    //Setup marketing
+
 
 // End register member
     //View member
@@ -419,11 +438,11 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     // Product Shop
     Route::get('/list-products-shop', [\App\Http\Controllers\ProductController::class, 'getListProductShop'])->name('shop.list.products');
     // Register member
-//    Route::get('/products-register-member', [RegisterMemberController::class, 'index'])->name('products.register.member.index');
-    Route::get('/stands-register-member/{id}', [RegisterMemberController::class, 'memberStand'])->name('stand.register.member.index');
-    Route::get('/parents-register-member', [RegisterMemberController::class, 'memberPartner'])->name('partner.register.member.index');
-    Route::get('/parents-register-member/{locale}', [RegisterMemberController::class, 'memberPartnerLocale'])->name('parent.register.member.locale');
-    Route::post('/products-register-member', [RegisterMemberController::class, 'saveProduct'])->name('products.register.member.create');
+//    Route::get('/products-register-member', [RegisterMemberSuccessController::class, 'index'])->name('products.register.member.index');
+    Route::get('/stands-register-member/{id}', [RegisterMemberSuccessController::class, 'memberStand'])->name('stand.register.member.index');
+    Route::get('/parents-register-member', [RegisterMemberSuccessController::class, 'memberPartner'])->name('partner.register.member.index');
+    Route::get('/parents-register-member/{locale}', [RegisterMemberSuccessController::class, 'memberPartnerLocale'])->name('parent.register.member.locale');
+    Route::post('/products-register-member', [RegisterMemberSuccessController::class, 'saveProduct'])->name('products.register.member.create');
     Route::post('/add-to-cart-register-member/{product}', [CartController::class, 'addToCartApi'])->name('cart.api');
     Route::post('/stands-register-member', [MemberPartnerController::class, 'store'])->name('stands.register.member');
     Route::post('/stands-unregister-member/{id}', [MemberPartnerController::class, 'delete'])->name('stands.unregister.member');

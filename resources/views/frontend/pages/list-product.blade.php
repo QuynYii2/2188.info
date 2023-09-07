@@ -19,8 +19,11 @@
                         data-target="#exampleModal">{{ __('home.Quick view') }}</button>
             </div>
             <div class="text">
+                <div class="text-sale">
+                    {{ __('home.sales') }}
+                </div>
                 <div class="text-new">
-                    New
+                    {{ __('home.new') }}
                 </div>
             </div>
         </div>
@@ -68,14 +71,14 @@
             <div class="card-price d-flex justify-content-between">
                 @if($product->price != null)
                     <div class="price-sale">
-                        <strong> {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strong>
+                        <strong> {{ number_format(convertCurrency($product->location, $currency,$product->price), 0, ',', '.') }} {{$currency}}</strong>
                     </div>
                     <div class="price-cost">
-                        <strike>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
+                        <strike>{{ number_format(convertCurrency($product->location, $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
                     </div>
                 @else
                     <div class="price-sale">
-                        <strong>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strong>
+                        <strong>{{ number_format(convertCurrency($product->location, $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strong>
                     </div>
                 @endif
             </div>

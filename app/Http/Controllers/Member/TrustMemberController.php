@@ -14,6 +14,7 @@ class TrustMemberController extends Controller
 {
     public function memberStand(Request $request)
     {
+
         $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
         (new HomeController())->getLocale($request);
         $company = MemberRegisterInfo::where([
@@ -24,8 +25,9 @@ class TrustMemberController extends Controller
         return view('frontend.pages.member.trust.member-trust', compact('companies', 'company'));
     }
 
-    public function memberPartnerLocale($locale)
+    public function memberPartnerLocale(Request $request, $locale)
     {
+        (new HomeController())->getLocale($request);
         $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
         $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
         $companies = MemberRegisterInfo::where('category_id', $company->category_id)->get();

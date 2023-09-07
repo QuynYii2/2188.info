@@ -106,7 +106,8 @@ return [
     'international logistics co' => 'Công ty vận chuyển quốc tế IL',
     'online shopping center' => 'Trung tâm mua sắm',
     'settled' => 'Đã đăng ký',
-    'sales' => 'Doanh thu',
+    'sales' => 'Giảm giá',
+    'new' => 'Hàng mới',
     'management' => 'Quản lý',
     'overseas customer development' => 'Phát triển khách hàng nước ngoài',
     'all categories' => 'Tất cả danh mục',
@@ -206,6 +207,7 @@ return [
     'next' => 'Sau',
     //
     'save login' => 'Ghi nhớ đăng nhập',
+    'Save' => 'Lưu tùy chọn',
     'choose branch' => 'Chọn ngành',
     'back home' => 'Quay về trang chủ',
     'type product' => 'Mã sản phẩm',
@@ -319,7 +321,7 @@ return [
     'Max' => 'Tối đa',
     'Related Products' => 'Những sảm phẩm tương tự',
     'Add To Cart' => 'Thêm vào giỏ hàng',
-    'Customers Also Viewed' => 'Khác hàng đã xem',
+    'Customers Also Viewed' => 'Khách hàng đã xem',
     'remaining' => 'Còn lại: ',
     'Household Plants' => 'cây gia dụng',
     'Bonsai' => 'cây cảnh',
@@ -507,7 +509,7 @@ return [
     'pair' => 'đôi',
     'Lead time' => 'Thời gian thực hiện',
     'day' => 'Ngày',
-    'Start orde' => 'Bắt đầu đặt hàng',
+    'Start orde' => 'Ngày',
     'Contact supplier' => 'Liên hệ nhà cung cấp',
     'Call us' => 'Gọi cho chúng tôi',
     'Producer' => 'Nhà sản xuất',
@@ -528,18 +530,8 @@ return [
     'Visit the store' => 'Ghé thăm cửa hàng',
     'Please select star rating' => 'Vui lòng chọn xếp hạng sao',
     'Thank you for evaluating our products!' => 'Cảm ơn bạn đã đánh giá sản phẩm của chúng tôi!',
-    'Error during the process of posting your review!' => 'Lỗi trong quá trình đăng bình luận đánh giá của bạn!'
-
-
-
-
-
-
-
-
-
-
-
-
-
+    'Error during the process of posting your review!' => 'Lỗi trong quá trình đăng bình luận đánh giá của bạn!',
+    'received-by' => 'Đã nhận bởi: ',
+    'posted-by' => 'Được gửi bởi: ',
+    'time' => 'Thời gian: ',
 ];

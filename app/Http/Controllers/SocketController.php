@@ -199,7 +199,7 @@ class SocketController extends Controller implements MessageComponentInterface
 
                 $chat_request->to_user_id = $data->to_user_id;
 
-                $chat_request->status = ChatRequestStatus::PENDING;
+                $chat_request->status = ChatRequestStatus::APPROVED;
 
                 $chat_request->save();
 

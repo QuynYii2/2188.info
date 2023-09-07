@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Frontend\HomeController;
 use App\Models\WishList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,9 +14,9 @@ use App\Models\Product;
 class WishListController extends Controller
 {
 
-    public function wishListIndex()
+    public function wishListIndex(Request $request)
     {
-
+        (new HomeController())->getLocale($request);
         $wishListItems = DB::table('wish_lists')->where('user_id', '=', Auth::user()->id)->get();
         $productIds = [];
         foreach ($wishListItems as $productId) {
@@ -43,7 +44,7 @@ class WishListController extends Controller
                 'product_id' => $productId
             ])->get();
 
-            if ($existingWishList) {
+            if ($existingWishList->isNotEmpty()) {
                 return response()->json(['message' => 'Sản phẩm này đã có trong danh sách yêu thích của bạn'], 200);
             } else {
                 WishList::create([

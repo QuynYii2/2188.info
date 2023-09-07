@@ -43,6 +43,7 @@ class CategoryController extends Controller
 
     public function filterInCategory(Request $request, $id)
     {
+        (new HomeController())->getLocale($request);
         $sortArr = explode(' ', $request->data['sortBy']);
         $selectedPayments = $request->data['selectedPayments'];
         $selectedTransports = $request->data['selectedTransports'];
@@ -51,8 +52,8 @@ class CategoryController extends Controller
         $maxPrice = $request->data['maxPrice'];
         $isSale = $request->data['isSale'];
 
-        $query = Product::select('products.*', 'users.payment_method', 'users.transport_method' )
-            ->where([ ['products.status', '=', ProductStatus::ACTIVE]])
+        $query = Product::select('products.*', 'users.payment_method', 'users.transport_method')
+            ->where([['products.status', '=', ProductStatus::ACTIVE]])
             ->whereRaw("FIND_IN_SET(?, products.list_category)", [$id])
             ->join('users', 'products.user_id', '=', 'users.id');
 
@@ -110,22 +111,23 @@ class CategoryController extends Controller
 
     public function renderDataToHTML($listProduct, $request)
     {
+        (new HomeController())->getLocale($request);
         $str = '';
         $currency = (new HomeController())->getLocation($request);
         foreach ($listProduct as $product) {
             $str .= '<div class="col-xl-2 col-md-3 col-6 section mb-4">
             <div class="item">
                 <div class="item-img">
-                    <img src="' . asset('storage/' . $product['thumbnail']) .'" alt="">
+                    <img src="' . asset('storage/' . $product['thumbnail']) . '" alt="">
                     <div class="button-view">
-                        <button>Quick view</button>
+                        <button>' . __('home.Quick view') . '</button>
                     </div>
                     <div class="text">
                         <div class="text-sale">
-                            Sale
+                            ' . __('home.sales') . '
                         </div>
                         <div class="text-new">
-                            New
+                            ' . __('home.new') . '
                         </div>
                     </div>
                 </div>
@@ -141,21 +143,21 @@ class CategoryController extends Controller
                     <div class="card-brand">
                     </div>
                     <div class="card-title">
-                        <a href="' . route('detail_product.show', $product['id'] ) . '">' . $product['name'] . '</a>
+                        <a href="' . route('detail_product.show', $product['id']) . '">' . $product['name'] . '</a>
                     </div>
                     <div class="card-price d-flex justify-content-between">
                         <div class="price-sale">
-                            <strong>' . number_format(convertCurrency('USD', $currency,$product['price']), 0, ',', '.') . $currency . '</strong>
+                            <strong>' . number_format(convertCurrency('USD', $currency, $product['price']), 0, ',', '.') . $currency . '</strong>
                         </div>
                         <div class="price-cost">';
             if ($product['old_price'] != null) {
-                $str .= '<strike>' . number_format(convertCurrency('USD', $currency,$product['old_price']), 0, ',', '.') . $currency  . '</strike>';
+                $str .= '<strike>' . number_format(convertCurrency('USD', $currency, $product['old_price']), 0, ',', '.') . $currency . '</strike>';
             }
             $str .= '</div>
                     </div>
                     <div class="card-bottom d-flex justify-content-between">
                         <div class="card-bottom--left">
-                            <a href="' . route('detail_product.show', $product['id'] ) . '">Choose Options</a>
+                            <a href="' . route('detail_product.show', $product['id']) . '">' . __('home.Choose Options') . '</a>
                         </div>
                         <div class="card-bottom--right">
                             <i class="item-icon fa-regular fa-heart"></i>
