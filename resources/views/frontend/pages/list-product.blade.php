@@ -55,7 +55,7 @@
                     @endif
                 </a>
             @else
-                <a class="check_url">{{($product->name_ko)}}</a>
+                <a href="{{route('detail_product.show', $product->id)}}>{{($product->name_ko)}}</a>
             @endif
         </div>
 

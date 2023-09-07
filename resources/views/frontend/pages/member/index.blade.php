@@ -52,7 +52,7 @@
                                     <div class="row">
                                         <div class="col-md-6 border">
                                             <div class="row">
-                                                <div class="col-md-12 border">
+                                                <div class="col-md-12 border"  style="border-right: 1px solid white">
                                                     <div class="mt-2">
                                                         <h5 class="mb-3">{{ ($memberCompany->name) }}</h5>
                                                     </div>
@@ -86,7 +86,7 @@
                                         </div>
                                         <div class="col-md-6 border">
                                             <div class="row">
-                                                <div class="col-md-12 border">
+                                                <div class="col-md-12 border" style="border-left: 1px solid white!important">
                                                     <div class="mt-2">
                                                         <h5 class="mb-3">Sản phẩm chỉ định</h5>
                                                     </div>

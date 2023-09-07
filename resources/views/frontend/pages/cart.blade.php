@@ -13,7 +13,6 @@
                     <li class="breadcrumb-item active">Your Cart</li>
                 </ol>
             </nav>
-            <h1>Your Cart</h1>
         </div>
         @if ($cartItems->isEmpty())
             <p>Chưa có sản phẩm trong giỏ hàng</p>
@@ -166,14 +165,14 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="price"
+                            <td class="price" style="vertical-align: middle;"
                                 id="price-{{ $cartItem->id }}">{{ number_format(convertCurrency('USD', $currency,$cartItem->price), 0, ',', '.') }} {{$currency}}</td>
-                            <td class="quantity">
+                            <td class="quantity"  style="vertical-align: middle;">
                                 <form>
                                     <input type="text" id="id-cart" value="{{ $cartItem->id }}" hidden/>
                                     <input type="text" id="id-link" value="{{ asset('/') }}" hidden/>
                                     <input class="input-number" type="number" id="quantity-{{ $cartItem->id }}"
-                                           name="quantity" style="border-radius: 15px; border-color: #ccc"
+                                           name="quantity" style="border-radius: 30px; border-color: #ccc"
                                            value="{{ $cartItem->quantity }}"
                                            onchange="myfunction({{ $cartItem->id }}); "
                                            min="{{$cartItem->product->min}}"/>
@@ -182,17 +181,17 @@
                             <input hidden="" type="text" id="price-percent-{{ $cartItem->id }}"
                                    value="{{ $percent }}">
                             @if($percent)
-                                <td id="total-quantity-{{ $cartItem->id }}">
+                                <td id="total-quantity-{{ $cartItem->id }}" style="vertical-align: middle;">
                                     {{ number_format(convertCurrency('USD', $currency,($cartItem->price*$cartItem->quantity) - ($cartItem->price*$cartItem->quantity)*$percent/100), 0, ',', '.') }} {{$currency}}
                                 </td>
                             @else
-                                <td id="total-quantity-{{ $cartItem->id }}">
+                                <td id="total-quantity-{{ $cartItem->id }}" style="vertical-align: middle;">
                                     {{ number_format(convertCurrency('USD', $currency,$cartItem->price*$cartItem->quantity), 0, ',', '.') }} {{$currency}}
                                 </td>
                             @endif
 
-                            <td>
-                                <form class="text-center" action="{{ route('cart.delete', $cartItem->id) }}"
+                            <td  style="vertical-align: middle;">
+                                <form action="{{ route('cart.delete', $cartItem->id) }}"
                                       method="POST">
                                     @csrf
                                     @method('DELETE')
