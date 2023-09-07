@@ -598,14 +598,16 @@
                                             @if($product->hot == 1)
                                                 <label class="switch">
                                                     <input value="{{$product->id}}" class="inputHotCheckbox"
-                                                           name="inputHot-{{$product->id}}" id="inputHot-{{$product->id}}"
+                                                           name="inputHot-{{$product->id}}"
+                                                           id="inputHot-{{$product->id}}"
                                                            type="checkbox" checked>
                                                     <span class="slider round"></span>
                                                 </label>
                                             @else
                                                 <label class="switch">
                                                     <input value="{{$product->id}}" class="inputHotCheckbox"
-                                                           name="inputHot-{{$product->id}}" id="inputHot-{{$product->id}}"
+                                                           name="inputHot-{{$product->id}}"
+                                                           id="inputHot-{{$product->id}}"
                                                            type="checkbox">
                                                     <span class="slider round"></span>
                                                 </label>
@@ -617,23 +619,23 @@
                             </td>
                             <td class="featured column-featured" data-colname="Featured">
                                 @if($isAdmin == true)
-                                        @if($product->feature == 1)
-                                            <label class="switch">
-                                                <input value="{{$product->id}}" class="inputFeatureCheckbox"
-                                                       name="inputFeature-{{$product->id}}"
-                                                       id="inputFeature-{{$product->id}}"
-                                                       type="checkbox" checked>
-                                                <span class="slider round"></span>
-                                            </label>
-                                        @else
-                                            <label class="switch">
-                                                <input value="{{$product->id}}" class="inputFeatureCheckbox"
-                                                       name="inputFeature-{{$product->id}}"
-                                                       id="inputFeature-{{$product->id}}"
-                                                       type="checkbox">
-                                                <span class="slider round"></span>
-                                            </label>
-                                        @endif
+                                    @if($product->feature == 1)
+                                        <label class="switch">
+                                            <input value="{{$product->id}}" class="inputFeatureCheckbox"
+                                                   name="inputFeature-{{$product->id}}"
+                                                   id="inputFeature-{{$product->id}}"
+                                                   type="checkbox" checked>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    @else
+                                        <label class="switch">
+                                            <input value="{{$product->id}}" class="inputFeatureCheckbox"
+                                                   name="inputFeature-{{$product->id}}"
+                                                   id="inputFeature-{{$product->id}}"
+                                                   type="checkbox">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    @endif
                                 @else
                                     @for($i = 0; $i< count($permissionUsers); $i++)
                                         @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm nổi bật')

@@ -3,7 +3,7 @@
 @section('title', 'Register Member')
 @section('content')
     <div class="container-fluid">
-        <h3 class="text-center">Chúc mừng bạn đã đăng ký hội viên {{$company->member}}</h3>
+        <h3 class="text-center">{{ __('home.Congratulations, you have registered as a member') }} {{$company->member}}</h3>
         <div class="d-flex justify-content-around mt-5">
             @php
                 $listPermissionID = $member->permission_id;
@@ -13,7 +13,7 @@
                 }
             @endphp
             <div class="">
-                <p>Quyền lợi của hội viên</p>
+                <p>{{ __('home.Membership benefits') }}</p>
                 <ol class="text-success">
                     @if($arrayPermissionID)
                         @foreach($arrayPermissionID as $permissionID)
@@ -31,11 +31,11 @@
             </div>
             <div class="">
                 @if($memberSource)
-                    <p>Hội viên đăng kí:{{$memberSource->name}}</p>
+                    <p>{{ __('home.Representative member') }}:{{$memberSource->name}}</p>
                 @endif
 
                 @if($memberRepresent)
-                    <p>Hội viên đại diện:{{$memberRepresent->name}}</p>
+                    <p>{{ __('home.Registered member') }}:{{$memberRepresent->name}}</p>
                 @endif
                 <p>
                     <i class="fa-solid fa-star"></i>
@@ -47,7 +47,7 @@
             </div>
         </div>
         <div class="d-flex justify-content-center">
-            <a href="{{route('login')}}" class="btn btn-success mb-5">Đăng nhập ngay</a>
+            <a href="{{route('login')}}" class="btn btn-success mb-5">{{ __('home.Log in now') }}</a>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
