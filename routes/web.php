@@ -229,6 +229,8 @@ Route::middleware(['auth'])->group(callback: function () {
     Route::get('/my-review/', [ProfileController::class, 'my_review']);
     // Đánh giá sản phẩm
     Route::post('/evaluate', [EvaluateProductController::class, 'store'])->name('create.evaluate');
+    Route::get('/evaluate/{id}', [EvaluateProductController::class, 'show'])->name('find.evaluate.id');
+    Route::post('/evaluate/update', [EvaluateProductController::class, 'update'])->name('update.evaluate.id');
     // Address Controller
     Route::get('/address-book', [AddressController::class, 'index'])->name('address.show');
     Route::post('/address', [AddressController::class, 'store'])->name('address.create');

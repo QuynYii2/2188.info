@@ -38,4 +38,29 @@ class EvaluateProductController extends Controller
             return view('frontend/pages/login');
         }
     }
+
+    public function show($id)
+    {
+        $evaluate = EvaluateProduct::where('id', $id)->get();
+        if ($evaluate) {
+            return response()->json($evaluate);
+        }
+        return '';
+    }
+    public function update(Request $request)
+    {
+        try {
+
+            $evaluate = EvaluateProduct::where('id', $request->input('id'))->first();
+
+            $evaluate->username = $request->input('username');
+            $evaluate->content = $request->input('content');
+            $evaluate->star_number = $request->input('star_number');
+
+            $evaluate->save();
+            return back();
+        } catch (\Exception $exception) {
+            return $exception;
+        }
+    }
 }

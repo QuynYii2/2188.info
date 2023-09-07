@@ -534,4 +534,6 @@ return [
     'received-by' => 'Đã nhận bởi: ',
     'posted-by' => 'Được gửi bởi: ',
     'time' => 'Thời gian: ',
+
+    'edit-comment' => 'Sửa đánh giá'
 ];
