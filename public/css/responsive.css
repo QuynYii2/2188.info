@@ -131,36 +131,6 @@
     width: 200px;
     height: 200px;
   }
-  .body .section-Eight {
-    position: relative;
-  }
-  .body .section-Eight img {
-    width: 100%;
-  }
-  .body .section-Eight .section-content {
-    margin: auto;
-    text-align: center;
-    position: absolute;
-    top: 10%;
-    left: 10%;
-    right: 10%;
-  }
-  .body .section-Eight .section-content .content {
-    margin-bottom: 25px;
-    font-size: 35px;
-  }
-  .body .section-Eight .list .item {
-    padding: 15px;
-    min-height: 250px;
-  }
-  .body .section-Eight .list .item-img {
-    width: 28%;
-    margin-bottom: 15px;
-  }
-  .body .section-Eight .list .item-content {
-    margin-bottom: 15px;
-    font-size: 16px;
-  }
 }
 @media (max-width: 1140px) {
   .header .header-pc .header-top-right .item .item-text {
@@ -350,39 +320,6 @@
   .body .section-First-mobile {
     margin-top: 40px;
     order: 3;
-  }
-  .body .section-Eight {
-    position: relative;
-  }
-  .body .section-Eight img {
-    width: 100%;
-  }
-  .body .section-Eight .section-content {
-    margin: auto;
-    text-align: center;
-    position: absolute;
-    top: 10%;
-    left: 10%;
-    right: 10%;
-  }
-  .body .section-Eight .section-content .content {
-    margin-bottom: 18px;
-    font-size: 30px;
-  }
-  .body .section-Eight .list .item {
-    padding: 10px;
-    min-height: 210px;
-  }
-  .body .section-Eight .list .item-img {
-    width: 25%;
-    margin-bottom: 10px;
-  }
-  .body .section-Eight .list .item-content {
-    margin-bottom: 10px;
-    font-size: 15px;
-  }
-  .body .section-Eight .list .item-content {
-    font-size: 14px;
   }
   .body .section-Second img {
     width: 90%;
@@ -578,9 +515,6 @@
   }
   .body .section-Sixth .brand img {
     width: 100%;
-  }
-  .body .section-Eight .list {
-    overflow-x: auto;
   }
   .body .section-Seven {
     padding: 30px 0;
@@ -793,17 +727,6 @@
   }
   .body .section-Third .swiper-pagination {
     margin-top: 10px;
-  }
-  .body .section-Eight .img {
-    min-height: 400px;
-    width: 100%;
-  }
-  .body .section-Eight .list .item {
-    min-width: 220px;
-    min-height: 240px;
-  }
-  .body .section-Eight .list .item-img {
-    margin-bottom: 20px;
   }
 }
 @media (min-width: 1366px) {

@@ -1140,7 +1140,7 @@
                     </a>
                     <a href="https://shipgo.biz/en">
                         <div class="custom_flag">
-                            <img class="w-70 h-70 p-2" src="{{ asset('flag/us.svg') }}" alt="">
+                            <img class="w-70 h-90 p-2" src="{{ asset('flag/us.svg') }}" alt="">
                         </div>
                     </a>
                     <a href="https://shipgo.biz/cn">

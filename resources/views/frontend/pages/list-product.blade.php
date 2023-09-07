@@ -29,14 +29,6 @@
         </div>
     @endif
     <div class="item-body">
-        <div class="card-rating">
-            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-            <span>(1)</span>
-        </div>
         @php
             $nameSeller = DB::table('users')->where('id', $product->user_id)->first();
         @endphp
@@ -47,7 +39,7 @@
                 <a class="check_url">{{($nameSeller->name)}}</a>
             @endif
         </div>
-        <div class="card-title">
+        <div class="card-title1">
             @if(Auth::check())
                 <a href="{{route('detail_product.show', $product->id)}}">
                     @if(locationHelper() == 'kr')
