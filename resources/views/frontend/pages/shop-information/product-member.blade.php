@@ -257,6 +257,9 @@
                                     @endphp
                                     <span>{{ $averageRating }}({{ $totalRatings }})</span>
                                 </div>
+{{--                                <input type="text" id="test-id" value="{{ $averageRating }}" hidden="">--}}
+{{--                                <input type="text" id="test-idd" value="{{ $products }}" hidden="">--}}
+
                                 @php
                                     $nameSeller = DB::table('users')->where('id', $product->user_id)->first();
                                 @endphp
