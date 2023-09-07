@@ -16,15 +16,16 @@ class SellerEvaluateProductController extends Controller
     {
         // Join 2 table: evaluate_products and products to export data necessary from before condition
         try {
+            $userId = Auth::id(); // Use Auth::id() for better readability
             $eva = DB::table('evaluate_products')
                 ->join('products', 'products.id', '=', 'evaluate_products.product_id')
-                ->where([['products.user_id', '=', Auth::user()->id], ['status', '!=', EvaluateProductStatus::DELETED]])
+                ->where('products.user_id', $userId)
+                ->where('evaluate_products.status', '!=', EvaluateProductStatus::DELETED)
                 ->select('evaluate_products.*')
-//            ->orderByDesc('evaluate_products.id')
                 ->get();
 
         } catch (\Exception $exception) {
-            $eva[] = null;
+            $eva = null;
         }
 
         return view('backend/evaluate/list')->with('evaluates', $eva);
