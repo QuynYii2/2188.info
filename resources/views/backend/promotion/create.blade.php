@@ -13,11 +13,11 @@
                 <div class="form-row">
                     <div class="form-group col-md-8">
                         <label for="name">Tên khuyến mãi</label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Nhập tên khuyến mãi">
+                        <input type="text" class="form-control" required name="name" id="name" placeholder="Nhập tên khuyến mãi">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="percent">Phần trăm khuyến mãi</label>
-                        <input type="number" min="1" max="100" class="form-control" name="percent" id="percent"
+                        <input type="number" min="1" max="100" required class="form-control" name="percent" id="percent"
                                placeholder="60">
                     </div>
                 </div>
@@ -32,18 +32,20 @@
                                 <div class="overSelect"></div>
                             </div>
                             <div id="checkboxes" class="mt-1">
-                                @foreach($products as $ID)
-                                    @php
-                                        $product = \App\Models\Product::find($ID);
-                                    @endphp
-                                    <label class="ml-2" for="category-{{$product->id}}">
-                                        <input type="checkbox" id="category-{{$product->id}}"
-                                               name="category-{{$product->id}}"
-                                               value="{{$product->id}}"
-                                               class="mr-2 p-3"/>
-                                        {{$product->name}}
-                                    </label>
-                                @endforeach
+                                @if($products)
+                                    @foreach($products as $ID)
+                                        @php
+                                            $product = \App\Models\Product::find($ID);
+                                        @endphp
+                                        <label class="ml-2" for="category-{{$product->id}}">
+                                            <input type="checkbox" id="category-{{$product->id}}"
+                                                   name="category-{{$product->id}}"
+                                                   value="{{$product->id}}"
+                                                   class="mr-2 p-3"/>
+                                            {{$product->name}}
+                                        </label>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -58,11 +60,11 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="startDate">Ngày bắt đầu</label>
-                        <input type="datetime-local" class="form-control" name="startDate" id="startDate">
+                        <input type="datetime-local" required class="form-control" name="startDate" id="startDate">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="endDate">Ngày kết thúc </label>
-                        <input type="datetime-local" class="form-control" name="endDate" id="endDate">
+                        <input type="datetime-local" required class="form-control" name="endDate" id="endDate">
                     </div>
                 </div>
                 <div class="form-group">
