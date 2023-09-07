@@ -117,10 +117,10 @@
                                                     $parent1 = \App\Models\Category::find($category->parent_id);
                                                     if ($parent1){
                                                         $isParent1 = true;
-                                                    }
-                                                    $parent0 = \App\Models\Category::find($parent1->parent_id);
-                                                    if ($parent0){
-                                                        $isParent0 = true;
+                                                        $parent0 = \App\Models\Category::find($parent1->parent_id);
+                                                        if ($parent0){
+                                                            $isParent0 = true;
+                                                        }
                                                     }
                                                 @endphp
                                             @endif

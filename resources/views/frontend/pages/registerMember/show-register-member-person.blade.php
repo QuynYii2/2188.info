@@ -143,7 +143,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function getDate() {
-            let nowTime = new Date().toLocaleString();
+            let nowTime = new Date().toLocaleDateString('en-GB');
             $('#datetime_register').val(nowTime);
         }
 

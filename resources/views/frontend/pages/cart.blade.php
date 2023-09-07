@@ -8,24 +8,25 @@
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="{{route('home')}}">Home</a>
+                        <a href="{{route('home')}}">{{ __('home.Home') }}</a>
                     </li>
-                    <li class="breadcrumb-item active">Your Cart</li>
+                    <li class="breadcrumb-item active">{{ __('home.Your Cart') }}</li>
                 </ol>
             </nav>
+            <h1>{{ __('home.Your Cart') }}</h1>
         </div>
         @if ($cartItems->isEmpty())
-            <p>Chưa có sản phẩm trong giỏ hàng</p>
+            <p>{{ __('home.Chưa có sản phẩm trong giỏ hàng') }}</p>
         @else
             <div class="pagelist">
                 <table id="table-cart" class="table table-bordered">
                     <thead>
                     <tr class="header">
-                        <th scope="col">ITEM</th>
-                        <th scope="col">PRICE</th>
-                        <th scope="col">QUANTITY</th>
-                        <th scope="col">TOTAL</th>
-                        <th scope="col">ACTION</th>
+                        <th scope="col">{{ __('home.item') }}</th>
+                        <th scope="col">{{ __('home.PRICE') }}</th>
+                        <th scope="col">{{ __('home.quantity') }}</th>
+                        <th scope="col">{{ __('home.TOTAL') }}</th>
+                        <th scope="col">{{ __('home.Action') }}</th>
                     </tr>
                     </thead>
                     <tbody>

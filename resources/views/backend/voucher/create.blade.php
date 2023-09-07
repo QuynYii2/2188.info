@@ -13,15 +13,15 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="nameVoucher">Tên mã giảm giá</label>
-                        <input type="text" class="form-control" name="nameVoucher" id="nameVoucher" placeholder="Nhập tên ãm giảm giá">
+                        <input type="text" class="form-control" required name="nameVoucher" id="nameVoucher" placeholder="Nhập tên ãm giảm giá">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="quantity">Số lượng</label>
-                        <input type="number" min="1" class="form-control" name="quantity" id="quantity" placeholder="123">
+                        <input type="number" min="1" class="form-control" required name="quantity" id="quantity" placeholder="123">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="percent">Phần trăm giảm giá</label>
-                        <input type="number" min="1" max="100" class="form-control" name="percent" id="percent" placeholder="60">
+                        <input type="number" min="1" max="100" class="form-control" required name="percent" id="percent" placeholder="60">
                     </div>
                 </div>
                 <div class="form-row">
@@ -70,11 +70,11 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="startDate">Ngày bắt đầu</label>
-                        <input type="datetime-local" class="form-control" name="startDate" id="startDate">
+                        <input type="datetime-local" required class="form-control" name="startDate" id="startDate">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="endDate">Ngày kết thúc </label>
-                        <input type="datetime-local" class="form-control" name="endDate" id="endDate">
+                        <input type="datetime-local" required class="form-control" name="endDate" id="endDate">
                     </div>
                 </div>
                 <div class="form-group">

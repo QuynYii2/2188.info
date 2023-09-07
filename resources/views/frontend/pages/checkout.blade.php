@@ -57,7 +57,7 @@
                                             @endforeach
                                         </select>
                                         <label for="voucher">
-                                            <i class="fa fa-user"></i>Mã giảm giá có sẵn
+                                            <i class="fa fa-user"></i>{{ __('home.Mã giảm giá có sẵn') }}
                                         </label>
                                         <select name="voucher" id="voucher" class="form-control mb-3"
                                                 onchange="getvoucher()">
@@ -79,7 +79,7 @@
                                                         {{($voucher->name)}} - {{$voucher->code}}
                                                     </option>
                                                 @else
-                                                    <option disabled>{{(($voucher->name))}} - Không thể sử dụng</option>
+                                                    <option disabled>{{(($voucher->name))}} - {{ __('home.Không thể sử dụng') }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
@@ -135,8 +135,8 @@
                             </div>
                             <div class="col-md-4 col-12 orderSummary">
                                 <div class="d-flex justify-content-between orderSummary-header">
-                                    <span class="summary">Order Summary</span>
-                                    <span><a href="{{route ('cart.index') }}">Edit Cart</a></span>
+                                    <span class="summary">{{ __('home.Order Summary') }}</span>
+                                    <span><a href="{{route ('cart.index') }}">{{ __('home.Edit Cart') }}</a></span>
                                 </div>
                                 <div class="orderSummary-body ">
                                     @foreach ($carts as $cartItem)
