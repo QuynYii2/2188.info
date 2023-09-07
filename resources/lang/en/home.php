@@ -44,9 +44,9 @@ return [
     'discount code' => 'Discount code',
     'my coin management' => 'My coin',
     'my bookcare' => 'My Bookcare',
-    'voucher management'=>'Quản lý mã giảm giá',
-    'product multilviews'=>'Lượt xem cao nhất',
-    'category interest'=>'Danh mục quan tâm',
+    'voucher management' => 'Quản lý mã giảm giá',
+    'product multilviews' => 'Lượt xem cao nhất',
+    'category interest' => 'Danh mục quan tâm',
 
     //thông tin cá nhân, họ và tên, nickname, ngày sinh, giới tính, quốc tịch, số điện thoại và email, số điện thoại, địa chỉ email, bảo mật, đổi mật khẩu, thiết lập mã pin, liên kết mạng xã hội, lưu thay đổi, địa chỉ
     'personal information' => 'Personal info',
@@ -248,8 +248,8 @@ return [
     'profile' => 'Trang cá nhân',
     'Payment Methods' => 'Phương thức thanh toán',
     'order' => 'Đơn hàng',
-    'OrderID' =>'Mã đơn hàng',
-        'was new product' => 'Sản phẩm mới thêm',
+    'OrderID' => 'Mã đơn hàng',
+    'was new product' => 'Sản phẩm mới thêm',
     'view card' => 'Xem giỏ hàng',
 
 
@@ -259,21 +259,21 @@ return [
     'payment management' => 'Quản lý thanh toán',
     'account manage' => 'Quản lý tài khoản',
     'shop by categories' => 'Danh sách danh mục',
-    'Lookbook'=>'Sách hướng dẫn',
-    'Shipping & Returns'=>'Vận chuyển & Trả hàng',
-    'Contact Us'=>'Liên hệ chúng tôi',
-    'Blog'=>'Bài viết',
-    'Gift Cards'=>'Thẻ quà tặng',
-    'Wish Lists'=>'Danh sách yêu thích',
-    'Help'=>'Hỗ trợ',
-    'upgrade'=>'Nâng cấp',
-    'Seller channel'=>'kênh người bán',
-    'Shop'=>'Gian hàng',
-    'Log out'=>'Đăng xuất',
-    'Category'=>'Danh mục',
-    'About Us'=>'Về chúng tôi',
-    'Buy Superkart'=>'Mua sắm',
-    'Theme FAQs'=>'Câu hỏi thường gặp',
+    'Lookbook' => 'Sách hướng dẫn',
+    'Shipping & Returns' => 'Vận chuyển & Trả hàng',
+    'Contact Us' => 'Liên hệ chúng tôi',
+    'Blog' => 'Bài viết',
+    'Gift Cards' => 'Thẻ quà tặng',
+    'Wish Lists' => 'Danh sách yêu thích',
+    'Help' => 'Hỗ trợ',
+    'upgrade' => 'Nâng cấp',
+    'Seller channel' => 'kênh người bán',
+    'Shop' => 'Gian hàng',
+    'Log out' => 'Đăng xuất',
+    'Category' => 'Danh mục',
+    'About Us' => 'Về chúng tôi',
+    'Buy Superkart' => 'Mua sắm',
+    'Theme FAQs' => 'Câu hỏi thường gặp',
     'SHOP BY CATEGORIES' => 'Các danh mục',
     'New Products' => 'Sản phẩm mới',
     'Hot Deals' => 'Ưu đãi lớn',
@@ -339,7 +339,7 @@ return [
     'POWER VENDOR' => 'POWER VENDOR',
     'PRODUCTION' => 'PRODUCTION',
     'POWER PRODUCTION ' => 'POWER PRODUCTION ',
-    'Member' =>'Hội viên ',
+    'Member' => 'Hội viên ',
     'Member booth' => 'Gian hàng hội viên ',
     'Booth' => 'Gian hàng',
     'Partner List' => 'Danh sách đối tác',
@@ -527,78 +527,61 @@ return [
     'Visit the store' => 'Ghé thăm cửa hàng',
     'Please select star rating' => 'Vui lòng chọn xếp hạng sao',
     'Thank you for evaluating our products!' => 'Thank you for evaluating our products!',
-    'Error during the process of posting your review!' => 'Error during the process of posting your review!'
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    'Error during the process of posting your review!' => 'Error during the process of posting your review!',
+    // Register member
+    // start
+    'Agree to Terms' => 'Agree to Terms',
+    'Agree to the Information Collection Policy' => 'Agree to the Information Collection Policy',
+    'Agree to the Terms of Information Use' => 'Agree to the Terms of Information Use',
+    'I agree to the above Terms' => 'I agree to the above Terms',
+    'Day register' => 'Day register',
+    'Number clearance' => 'Number clearance',
+    'Name company English' => 'Name company English',
+    'Name company Korea' => 'Name company Korea',
+    // nganh nghe
+    'Career' => 'Career',
+    // nganh hang
+    'Industry' => 'Industry',
+    'Address English' => 'Address English',
+    'Address Korea' => 'Address Korea',
+    'Address detail' => 'Address detail',
+    // so dang ky kinh odanh
+    'Business registration number' => 'Business registration number',
+    // giay phep kinh doanh
+    'Business license' => 'Business license',
+    'Company status' => 'Company status',
+    // giay chung nhan nganh nghe
+    'Industry Certificate' => 'Industry Certificate',
+    // ma hang
+    'PLU' => 'PLU',
+    '1st classification' => '1st classification',
+    '2nd classification' => '2nd classification',
+    '3rd classification' => '3rd classification',
+    '4th classification' => '4th classification',
+    'Phone Number' => 'Phone Number',
+    // Nganh hang kinh doanh
+    'Business industry' => 'Business industry',
+    // Nganh nghe kinh doanh
+    'Business' => 'Business',
+    // Chuc vu
+    'Position company' => 'Position company',
+    'Responsibility company' => 'Responsibility company',
+    'Name English' => 'Name English',
+    'Name Korea' => 'Name Korea',
+    'ID' => 'ID',
+    'Congratulations, you have registered as a member' => 'Congratulations, you have registered as a member',
+    'Representative member'=>'Representative member',
+    'Registered member'=>'Registered member',
+    'Log in now'=>'Login now',
+    'Employee registration' => 'Employee registration',
+    'Registration order' => 'Registration order',
+    'List of registered managers' => 'List of registered managers',
+    'Sign up for more' => 'Sign up for more',
+    'Classification of members' => 'Classification of members',
+    'Agree to terms' => 'Agree to terms ',
+    'Company registration' => 'Company registratio ',
+    'Subscriber registration' => 'Subscriber registration ',
+    'Representative registration' => 'Representative registration ',
+    'Register as member' => 'Register as members ',
+    // end
 ];

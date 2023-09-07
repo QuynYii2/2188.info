@@ -17,12 +17,12 @@
                         @if($memberPersonSource)
                             <div class="form-row">
                                 <div class="form-group col-md-4">
-                                    <label for="position">Chức vụ:</label>
+                                    <label for="position">{{ __('home.Position') }}:</label>
                                     <input type="text" class="form-control" id="position" name="position"
                                            value="{{$memberPersonSource->position}}" required>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="responsibility">Chức trách:</label>
+                                    <label for="responsibility">{{ __('home.Responsibility') }}:</label>
                                     <input type="text" class="form-control" id="responsibility" name="responsibility" value="{{$memberPersonSource->responsibility}}"
                                            required>
                                 </div>
@@ -37,11 +37,11 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="name_en">Tên English:</label>
+                                    <label for="name_en">{{ __('home.Name English') }}:</label>
                                     <input type="text" class="form-control" id="name_en" name="name_en" value="{{$memberPersonSource->name_en}}" required>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="name">Tên hiện tại:</label>
+                                    <label for="name">{{ __('home.Name Korea') }}:</label>
                                     <input type="text" class="form-control" id="name" name="name" value="{{$memberPersonSource->name}}" required>
                                 </div>
                             </div>
@@ -64,18 +64,18 @@
 
                         @else
                             <div class="form-group">
-                                <label for="datetime_register">Ngày giờ đăng ký:</label>
+                                <label for="datetime_register">{{ __('home.Day register') }}:</label>
                                 <input type="text" class="form-control" id="datetime_register" name="datetime_register"
                                        disabled>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-4">
-                                    <label for="position">Chức vụ:</label>
+                                    <label for="position">{{ __('home.Position') }}:</label>
                                     <input type="text" class="form-control" id="position" name="position"
                                            required>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="responsibility">Chức trách:</label>
+                                    <label for="responsibility">{{ __('home.Responsibility') }}:</label>
                                     <input type="text" class="form-control" id="responsibility" name="responsibility"
                                            required>
                                 </div>
@@ -91,18 +91,18 @@
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="name_en">Tên English:</label>
+                                    <label for="name_en">{{ __('home.Name English') }}:</label>
                                     <input type="text" class="form-control" id="name_en" name="name_en" required>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="name">Tên hiện tại:</label>
+                                    <label for="name">{{ __('home.Name Korea') }}:</label>
                                     <input type="text" class="form-control" id="name" name="name" required>
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-md-4">
-                                    <label for="code">ID:</label>
+                                    <label for="code">{{ __('home.ID') }}:</label>
                                     <input type="text" class="form-control" id="code" name="code" required>
                                 </div>
                                 <div class="form-group col-md-4">
@@ -110,8 +110,7 @@
                                     <input type="password" class="form-control" id="password" name="password" required>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="passwordConfirm">{{ __('home.Password') }}
-                                        : {{ __('home.Confirm') }}</label>
+                                    <label for="passwordConfirm">{{ __('home.Password') }}{{ __('home.Confirm') }}:</label>
                                     <input type="password" class="form-control" id="passwordConfirm"
                                            name="passwordConfirm"
                                            required>

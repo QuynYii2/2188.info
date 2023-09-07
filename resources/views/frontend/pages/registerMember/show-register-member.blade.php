@@ -24,24 +24,24 @@
                         <h5 class="text-center">{{ __('home.Check the rules you must agree to below') }}</h5>
                         <div class="rules" onclick="validateAll()">
                             <p class="text-warning">
-                                Đồng ý với Điều khoản
+                                {{ __('home.Agree to Terms') }}
                             </p>
                             <input type="checkbox" id="rules" name="rules" required>
-                            <label for="rules"> Tôi đồng ý với các Điều khoản trên</label><br>
+                            <label for="rules">  {{ __('home.I agree to the above Terms') }}</label><br>
                         </div>
                         <div class="getInfo" onclick="validateAll()">
                             <p class="text-warning">
-                                Đồng ý với Chính sách thu thập thông tin
+                                {{ __('home.Agree to the Information Collection Policy') }}
                             </p>
                             <input type="checkbox" id="getInfo" name="getInfo" required>
-                            <label for="getInfo"> Tôi đồng ý với các Điều khoản trên</label><br>
+                            <label for="getInfo"> {{ __('home.I agree to the above Terms') }}</label><br>
                         </div>
                         <div class="trustInfo" onclick="validateAll()">
                             <p class="text-warning">
-                                Đồng ý với Điều khoản sử dụng thông tin
+                                {{ __('home.Agree to the Terms of Information Use') }}
                             </p>
                             <input type="checkbox" id="trustInfo" name="trustInfo" required>
-                            <label for="getInfo"> Tôi đồng ý với các Điều khoản trên</label><br>
+                            <label for="getInfo"> {{ __('home.I agree to the above Terms') }}</label><br>
                         </div>
                         <div class="all" onclick="validate()">
                             <p class="text-warning">

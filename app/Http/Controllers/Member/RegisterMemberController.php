@@ -909,6 +909,10 @@ class RegisterMemberController extends Controller
                         'registerMember' => $register->member
                     ]));
                 } else {
+                    if ($register->member == RegisterMember::TRUST) {
+                        alert()->success('Success', 'Success, Verify success!');
+                        return redirect(route('show.register.member.congratulation', $member->id));
+                    }
                     alert()->success('Success', 'Success, Verify success! Please login and paid bill');
                     return redirect(route('show.register.member.ship', $member->id));
                 }
