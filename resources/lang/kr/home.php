@@ -334,7 +334,7 @@ return [
     'POWER VENDOR' => '파워벤더회원',
     'PRODUCTION' => '생산회원',
     'POWER PRODUCTION ' => '파워생산회원',
-    'Member' => '회원',
+    'Member' => '회원등급',
     'Member booth' => '회원 상점 ',
     'Booth' => '상품 전시장',
     'Partner List' => '지정 거래처',
