@@ -49,7 +49,17 @@
                                                         $permission = \App\Models\Permission::find($permissionID);
 
                                                     @endphp
-                                                    {{$ld->translateText($permission->name, locationPermissionHelper())}}
+                                                    @if(locationHelper() == 'kr')
+                                                        {{ ($permission->lang_ko) }}
+                                                    @elseif(locationHelper() == 'cn')
+                                                        {{ ($permission->lang_cn) }}
+                                                    @elseif(locationHelper() == 'jp')
+                                                        {{ ($permission->lang_jp) }}
+                                                    @elseif(locationHelper() == 'vi')
+                                                        {{ ($permission->name) }}
+                                                    @else
+                                                        {{ ($permission->lang_en) }}
+                                                    @endif
                                                 </li>
                                             @endforeach
                                         @endif
