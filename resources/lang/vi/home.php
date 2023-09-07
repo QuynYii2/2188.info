@@ -534,6 +534,8 @@ return [
     'received-by' => 'Đã nhận bởi: ',
     'posted-by' => 'Được gửi bởi: ',
     'time' => 'Thời gian: ',
+    'Gift Wrapping' => 'Gói quà',
+
     // Register member
     // start
     'Agree to Terms' => 'Đồng ý với Điều khoản',
@@ -589,5 +591,7 @@ return [
     'Subscriber registration' => 'Đăng ký người đăng ký ',
     'Representative registration' => 'Đăng ký người đại diện ',
     'Register as member' => 'Đăng ký nhân viên ',
+    'Add' => 'Thêm vào',
+
     // end
 ];

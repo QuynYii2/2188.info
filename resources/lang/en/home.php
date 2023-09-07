@@ -516,6 +516,7 @@ return [
     'Response time' => 'Thời gian đáp ứng',
     'Online revenue' => 'Doanh thu trực tuyến',
     'Floor space' => 'Không gian sàn',
+    'Gift Wrapping' => 'Gói quà',
     'Service' => 'Dịch vụ',
     'Small customization' => 'tùy chỉnh nhỏ',
     'Customization based on design' => 'Tùy chỉnh dựa trên thiết kế',
@@ -583,5 +584,7 @@ return [
     'Subscriber registration' => 'Subscriber registration ',
     'Representative registration' => 'Representative registration ',
     'Register as member' => 'Register as members ',
+    'Add' => 'Thêm vào',
+
     // end
 ];

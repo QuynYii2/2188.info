@@ -98,8 +98,34 @@
                                                     @if(count($arrayAttPro)>1)
                                                         <div class="font-italic">
                                                             <span class="text-secondary">
-                                                            {{($att->name)}}
-                                                        </span>: <span>{{($pro->name)}}</span>
+                                                                @if(locationHelper() == 'kr')
+                                                                    {{($att->name_ko)}}
+                                                                @elseif(locationHelper() == 'cn')
+                                                                    {{($att->name_zh)}}
+                                                                @elseif(locationHelper() == 'jp')
+                                                                    {{($att->name_ja)}}
+                                                                @elseif(locationHelper() == 'vi')
+                                                                    {{($att->name)}}
+                                                                @else
+                                                                    {{($att->name_en)}}
+                                                                @endif
+                                                        </span>:
+                                                            @php
+                                                            $ld = new \App\Http\Controllers\TranslateController();
+                                                            @endphp
+                                                            <span>
+                                                                 @if(locationHelper() == 'kr')
+                                                                    {{ $ld->translateText($pro->name, 'ko') }}
+                                                                @elseif(locationHelper() == 'cn')
+                                                                    {{ $ld->translateText($pro->name, 'zh-CN') }}
+                                                                @elseif(locationHelper() == 'jp')
+                                                                    {{ $ld->translateText($pro->name, 'ja') }}
+                                                                @elseif(locationHelper() == 'vi')
+                                                                    {{ $ld->translateText($pro->name, 'vi') }}
+                                                                @else
+                                                                    {{ $ld->translateText($pro->name, 'en') }}
+                                                                @endif
+                                                            </span>
                                                         </div>
                                                     @endif
                                                 @endif
@@ -108,7 +134,7 @@
                                             <a class="text-edit" href="#" data-toggle="modal"
                                                data-target="#exampleModal">
                                                 <i class='fas fa-edit'></i>
-                                                Change
+                                                {{ __('home.Change') }}
                                             </a>
                                             <div class="modal fade" id="exampleModal" tabindex="-1"
                                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -186,7 +212,7 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        <p class="mt-2">Gift Wrapping: <span>Add</span></p>
+                                        <p class="mt-2">{{ __('home.Gift Wrapping') }}: <span>{{ __('home.Add') }}</span></p>
                                     </div>
                                 </div>
                             </td>
@@ -302,7 +328,7 @@
                         <span class="subtotal-price">0</span>
                     </div>
                     <div class="grandtotal d-flex justify-content-between">
-                        <span>Grand total: </span>
+                        <span>{{ __('home.Grand total') }}: </span>
                         <span> <span id="max-total"> {{ $cartItem->price*$cartItem->quantity }}</span></span>
                     </div>
                     <a href="{{route('checkout.show')}}">

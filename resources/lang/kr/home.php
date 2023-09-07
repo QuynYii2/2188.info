@@ -614,5 +614,7 @@ return [
     'Subscriber registration' => '회사등록 ',
     'Representative registration' => '대표등록 ',
     'Register as member' => '직원등록 ',
+    'Add' => '추가하다',
+
     // end
 ];
