@@ -25,8 +25,8 @@ if (!function_exists('convertCurrency')) {
 //        if ($rate != 1) {
 //            return $rate * $amount;
 //        } else {
-            $total = subGetExchangeRate($currentFrom, $to, $amount);
-            return $total;
+        $rate = subConvertCurrencyDB($currentFrom, $to, $amount);
+        return $rate*$amount;
 //        }
     }
 
@@ -65,6 +65,34 @@ if (!function_exists('convertCurrency')) {
         return $cachedRate;
     }
 
+    function subConvertCurrencyDB($from, $to, $amount)
+    {
+        $item = Currency::where([
+            ['from', $from],
+            ['to', $to],
+        ])->first();
+
+        if ($item) {
+            $createTime = Carbon::parse($item->created_at)->addDay();
+            $currentTime = Carbon::now();
+            if ($createTime < $currentTime) {
+                $rate = subGetExchangeRate($from, $to, $amount);
+                $item->rate = $rate;
+                $item->save();
+            } else {
+                $rate = $item->rate;
+            }
+        } else {
+            $rate = subGetExchangeRate($from, $to, $amount);
+            $currency = new Currency();
+            $currency->from = $from;
+            $currency->to = $to;
+            $currency->rate = $rate;
+            $currency->save();
+        }
+        return $rate;
+    }
+
 
     function getExchangeRate($from, $to, $amount)
     {
@@ -91,6 +119,7 @@ if (!function_exists('convertCurrency')) {
     function subGetExchangeRate($from, $to, $amount)
     {
         $client = new \GuzzleHttp\Client();
+        $amount = 1;
         $url = 'https://currency-converter-by-api-ninjas.p.rapidapi.com/v1/convertcurrency?have=' . $from . '&want=' . $to . '&amount=' . $amount;
         $response = $client->request('GET', $url, [
             'headers' => [
