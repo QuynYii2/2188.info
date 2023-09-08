@@ -95,27 +95,28 @@
                         @endif
                     </div>
                     <div class="header-top-middle col-xl-5 col-md-4 " id="in-search">
-                        <form class="search-wrapper">
-                            <input type="text" placeholder="{{ __('home.placeholder search') }}"
+                        <form class="search-wrapper" method="get" action="{{route('search.products.name')}}">
+                            <input type="text" name="key_search" placeholder="{{ __('home.placeholder search') }}"
                                    style="box-shadow: none">
 
                             <button class="button-right" type="submit"
                                     onclick="<?php echo $checkBuyer ? 'showAlert(1)' : (Auth::check() ? '' : 'showAlert(2)') ?>">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
+
                             <div class="category-drop input-group-prepend">
-                                <button class="btn-all btn-outline-secondary dropdown-toggle" type="button"
+                                <button class="dropdown-toggle" type="button"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{ __('home.all') }}
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">{{ __('home.all') }}</a>
+                                    <a class="dropdown-item" href="{{route('search.products.category', 0)}}">{{ __('home.all') }}</a>
                                     @php
                                         $listCate = DB::table('categories')->where('parent_id', null)->get();
                                     @endphp
                                     @foreach($listCate as $cate)
                                         <a class="item-hd dropdown-item "
-                                           href="">-- {{($cate->{'name' . $langDisplay->getLangDisplay()})}}</a>
+                                           href="{{route('search.products.category', $cate->id)}}">-- {{($cate->{'name' . $langDisplay->getLangDisplay()})}}</a>
                                         @if(!$listCate->isEmpty())
                                             <ul class="hd_dropdown--right row">
                                                 @php
@@ -123,7 +124,7 @@
                                                 @endphp
                                                 @foreach($listChild as $child)
                                                     <a class="dropdown-item"
-                                                       href="">––– {{($child->{'name' . $langDisplay->getLangDisplay()})}}</a>
+                                                       href="{{route('search.products.category', $child->id)}}">––– {{($child->{'name' . $langDisplay->getLangDisplay()})}}</a>
                                                 @endforeach
                                             </ul>
                                         @endif
@@ -928,23 +929,24 @@
             </div>
             <div onclick="closeMobile()" class="opacity_menu"></div>
             <div class="hd-mobile_menu" id="search">
-                <button class="btn-all btn-outline-secondary dropdown-toggle" type="button"
+                <div class="dropdown-toggle" type="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All
-                </button>
+                </div>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">All</a>
+                    <a class="dropdown-item" href="{{route('search.products.category', 0)}}">All</a>
                     @php
                         $listCate = DB::table('categories')->where('parent_id', null)->get();
                     @endphp
                     @foreach($listCate as $cate)
-                        <a class="item-hd dropdown-item " href="">-- {{ ($cate->name) }}</a>
+                        <a class="item-hd dropdown-item "
+                           href=" {{route('search.products.category', $cate->id)}}">-- {{ ($cate->name) }}</a>
                         @if(!$listCate->isEmpty())
                             <ul class="hd_dropdown--right row">
                                 @php
                                     $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
                                 @endphp
                                 @foreach($listChild as $child)
-                                    <a class="dropdown-item" href="">––– {{ ($child->name) }}</a>
+                                    <a class="dropdown-item" href="{{route('search.products.category', $cate->id)}}">––– {{ ($child->name) }}</a>
                                 @endforeach
                             </ul>
                         @endif
