@@ -6,7 +6,7 @@
     <div class="start-page mb-3">
         <div class="background container-fluid pt-3 justify-content-center pb-3">
             <div class="form-title text-center pt-2">
-                <div class="title">{{ __('home.sign up member') }}</div>
+                <h3 class="title">{{ __('home.sign up member') }}</h3>
             </div>
             <div class="mt-5 m-5 row">
                 @if(!empty($members))
