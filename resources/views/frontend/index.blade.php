@@ -166,27 +166,27 @@
                 <div class="section-First-right col-xl-6 col-md-4">
                     <div class="row">
                         @if(!$banner)
-                            <div class="col-4 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-1.png"
                                      alt="">
                             </div>
-                            <div class="col-4 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-2.png"
                                      alt="">
                             </div>
-                            <div class="col-4 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-3.png"
                                      alt="">
                             </div>
-                            <div class="col-4 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-4.png"
                                      alt="">
                             </div>
-                            <div class="col-4 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-1.png"
                                      alt="">
                             </div>
-                            <div class="col-4 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-2.png"
                                      alt="">
                             </div>
@@ -248,19 +248,57 @@
                                     <div class="swiper-slide topSearch-item">
                                         <div class="topSearch-header">
                                             <img src="https://down-vn.img.susercontent.com/file/4e9ad6627f7ae59588d947d44f4fb575" alt="">
+                                            <div class="text-bottom">Bán 12+/tháng</div>
                                         </div>
                                         <div class="topSearch-body">
-
+                                            Men's Crossbody Bag
                                         </div>
                                     </div>
-                                    <div class="swiper-slide">Slide 2</div>
-                                    <div class="swiper-slide">Slide 3</div>
-                                    <div class="swiper-slide">Slide 4</div>
-                                    <div class="swiper-slide">Slide 5</div>
-                                    <div class="swiper-slide">Slide 6</div>
-                                    <div class="swiper-slide">Slide 7</div>
-                                    <div class="swiper-slide">Slide 8</div>
-                                    <div class="swiper-slide">Slide 9</div>
+                                    <div class="swiper-slide topSearch-item">
+                                        <div class="topSearch-header">
+                                            <img src="https://down-vn.img.susercontent.com/file/741a0aaa5c209ef06f5b6d1a47dec339" alt="">
+                                            <div class="text-bottom">Bán 12+/tháng</div>
+                                        </div>
+                                        <div class="topSearch-body">
+                                            Men's Crossbody Bag
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide topSearch-item">
+                                        <div class="topSearch-header">
+                                            <img src="https://down-vn.img.susercontent.com/file/23bcecc9b8ee89423b60e9fdba882103" alt="">
+                                            <div class="text-bottom">Bán 12+/tháng</div>
+                                        </div>
+                                        <div class="topSearch-body">
+                                            Men's Crossbody Bag
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide topSearch-item">
+                                        <div class="topSearch-header">
+                                            <img src="https://down-vn.img.susercontent.com/file/b8acc5877b10e57cce70fe555d5cfe19" alt="">
+                                            <div class="text-bottom">Bán 12+/tháng</div>
+                                        </div>
+                                        <div class="topSearch-body">
+                                            Men's Crossbody Bag
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide topSearch-item">
+                                        <div class="topSearch-header">
+                                            <img src="https://down-vn.img.susercontent.com/file/4e9ad6627f7ae59588d947d44f4fb575" alt="">
+                                            <div class="text-bottom">Bán 12+/tháng</div>
+                                        </div>
+                                        <div class="topSearch-body">
+                                            Men's Crossbody Bag
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide topSearch-item">
+                                        <div class="topSearch-header">
+                                            <img src="https://down-vn.img.susercontent.com/file/4e9ad6627f7ae59588d947d44f4fb575" alt="">
+                                            <div class="text-bottom">Bán 12+/tháng</div>
+                                        </div>
+                                        <div class="topSearch-body">
+                                            Men's Crossbody Bag
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                     </section>
