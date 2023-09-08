@@ -73,22 +73,16 @@ if (!function_exists('convertCurrency')) {
         ])->first();
 
         if ($item) {
-//            $createTime = Carbon::parse($item->created_at)->addDay();
-//            $currentTime = Carbon::now();
-//            if ($createTime < $currentTime) {
-//                $isValid = true;
-//            } else {
-//                $isValid = false;
-//            }
-
-//            if ($isValid == false) {
-//                $rate = $item->rate;
-//            } else {
-//                $rate = subGetExchangeRate($from, $to, $amount);
-//                $item->rate = $rate;
-//                $item->save();
-//            }
-            $rate = $item->rate;
+            $createTime = Carbon::parse($item->updated_at)->addDay();
+            $currentTime = Carbon::now();
+            if ($createTime < $currentTime) {
+                $rate = subGetExchangeRate($from, $to, $amount);
+                $item->rate = $rate;
+                $item->save();
+            } else {
+                $rate = $item->rate;
+            }
+//            $rate = $item->rate;
         } else {
             $rate = subGetExchangeRate($from, $to, $amount);
             $currency = new Currency();
@@ -131,7 +125,7 @@ if (!function_exists('convertCurrency')) {
         $response = $client->request('GET', $url, [
             'headers' => [
                 'X-RapidAPI-Host' => 'currency-converter-by-api-ninjas.p.rapidapi.com',
-                'X-RapidAPI-Key' => '79b4b17bc4msh2cb9dbaadc30462p1f029ajsn6d21b28fc4af',
+                'X-RapidAPI-Key' => '317cde09cdmsh1e9ff616e329ff6p1b3edejsnacd94136c963',
             ],
         ]);
         $item = $response->getBody();
