@@ -621,6 +621,27 @@ return [
     'Register as member' => '직원등록 ',
     'Search Results' => '검색 결과',
     'Top Search' => '인기 상품',
-    'See All' => '모두 보기'
+    'See All' => '모두 보기',
     // end
+    'số lượng' => '수량',
+    'ảnh sản phẩm choose file' => '사진 선택',
+    'tất cả kho hàng' => '모든 상품 보기',
+    'thiết lập phương thức thanh toán' => '결제방식 설정',
+    'thiết lập phương thức vận chuyển' => '배송방식 설정',
+//    'contact' => '연락처',
+    'hình thức thanh toán' => '결제 방식',
+    'thanh toán thẻ nội địa' => '국내 카드',
+    'thanh toán qua paypal' => 'Paypal ',
+    'Kho Voucher' => '나의 할인코드',
+    'Voucher' => '할인코드',
+    'Lưu' => '저장',
+    'Nhập mã voucher tại đây' => '할인코드를 여기에 입력하십시오',
+    'Tất cả' => '모두 보기',
+    'Shoping mall' => '쇼핑몰',
+    'Shop' => '상점',
+    'Voucher giảm ' => '할인코드',
+    'Áp dụng cho' => '적용 상품',
+    'Ngày kết thúc ' => '종료일',
+    'Copy' => '복사',
+    'mã voucher đã được sao chép' => '할인코드가 복사되었습니다'
 ];
