@@ -316,7 +316,18 @@
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star-half-o"></i>
-                        <span>4.7(21)</span>
+                        <span>
+                           @php
+                               $ratings = \App\Models\EvaluateProduct::where('product_id', $product->id)->get();
+                               $totalRatings = $ratings->count();
+                               $totalStars = 0;
+                               foreach ($ratings as $rating) {
+                                   $totalStars += $rating->star_number;
+                               }
+                               $averageRating = $totalRatings > 0 ? $totalStars / $totalRatings : 0;
+                           @endphp
+                            <span>{{ $averageRating }}({{ $totalRatings }})</span>
+                        </span>
                     </div>
                     <div class="product-price d-flex" style="gap: 3rem">
                         @if($product->price != null)
@@ -459,10 +470,15 @@
                 <div class="main-actions">
                     <form action="">
                         <div class="express-header">
-                            <p>{{ __('home.The minimum order quantity is 2 pair') }}</p>
+                            <p>{{ __('home.The minimum order quantity is 2 pair') }} {{$product->min}} {{ __('home.pair') }}</p>
                             <div class="item-center d-flex justify-content-between">
-                                <span>0/2 {{ __('home.pair') }}</span>
-                                <span>from <b>$12.98$</b></span>
+                                <span> {{$product->min}} {{ __('home.pair') }}</span>
+                                @if($product->price != null)
+                                    <div id="productPrice"
+                                         class="price">{{ __('home.from') }} {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</div>
+                                @else
+                                    <strike id="productOldPrice"> {{ __('home.from') }} {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strike>
+                                @endif
                             </div>
                             <p class="">{{ __('home.Lead time') }} 15 {{ __('home.day') }} <i
                                         class="fa-solid fa-info"></i></p>
@@ -470,7 +486,12 @@
                         <div class="express-body">
                             <div class="item-center d-flex justify-content-between">
                                 <span>{{ __('home.shipping') }}</span>
-                                <span>from <b>$12.98$</b></span>
+                                @if($product->price != null)
+                                    <div id="productPrice"
+                                         class="price">{{ __('home.from') }} {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</div>
+                                @else
+                                    <strike id="productOldPrice"> {{ __('home.from') }} {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strike>
+                                @endif
                             </div>
                             <div>
                                 <p class="">{{ __('home.Lead time') }} 15 {{ __('home.day') }} <i
@@ -481,11 +502,11 @@
                             <a href="#">
                                 <div class="button-start">{{ __('home.Start orde') }}</div>
                             </a>
-                            <a href="#">
+                            <a href="{{ route('shop.information.show', $name->id) }}">
                                 <div class="button-call"><i
                                             class="fa-solid fa-envelope"></i> {{ __('home.Contact supplier') }}</div>
                             </a>
-                            <a href="#">
+                            <a href="{{ route('chat.message.show', $name->name) }}">
                                 <div class="button-call"><i class="fa-solid fa-phone"></i> {{ __('home.Call us') }}
                                 </div>
                             </a>
@@ -493,6 +514,10 @@
                         </div>
                     </form>
                 </div>
+                @php
+                    $shopInformation = \App\Models\ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first()
+                @endphp
+                @if($shopInformation)
                 <div class="detail-module">
                     <form action="">
                         <div class="widget-supplier-card company-card-integrated company-card-integrated-lite has-ta origin gps-background ilvietnam-0-0-1 snipcss-Kyhj9 style-v8cHz"
@@ -514,7 +539,7 @@
                             </div>
                             <div class="company-brand ilvietnam-1-1-7">
                                 <span class="ilvietnam-2-7-8">
-                                    {{ __('home.Producer') }}
+                                    {{ __('home.Producer') }} {{$shopInformation->product_name}}
                                 </span>
                             </div>
                             <div class="card-supplier card-icons-lite ilvietnam-1-1-9">
@@ -523,13 +548,12 @@
 
                                     </i>
                                     <span class="register-country ilvietnam-3-10-12">
-                                        CN
-
+                                       {{$shopInformation->country}}
                                     </span>
                                 </span>
                                 <a class="verify-info ilvietnam-2-9-13" data-aui="ggs-icon" rel="nofollow">
                                     <span class="join-year ilvietnam-3-13-14">
-                                        <span class="value ilvietnam-4-14-15">&nbsp;&nbsp;&nbsp;14
+                                        <span class="value ilvietnam-4-14-15">{{$shopInformation->industry_year}}
                                         </span>
                                         <span class="unit ilvietnam-4-14-16">
                                             YRS
@@ -573,7 +597,7 @@
                                         {{ __('home.Online revenue') }}
                                     </div>
                                     <div class="attr-content ilvietnam-3-29-31" title="$480,000+">
-                                        $480,000+
+                                        ${{$shopInformation->annual_output}}+
                                     </div>
                                 </div>
                                 <div class="attr-item ilvietnam-2-19-32" aria-haspopup="true" aria-expanded="false">
@@ -581,7 +605,7 @@
                                         {{ __('home.Floor space') }}
                                     </div>
                                     <div class="attr-content ilvietnam-3-32-34" title="1000m²">
-                                        1000m²
+                                        {{$shopInformation->acreage}}m²
                                     </div>
                                 </div>
                                 <div class="attr-item ilvietnam-2-19-35" aria-haspopup="true" aria-expanded="false">
@@ -589,7 +613,7 @@
                                         {{ __('home.Staff') }}
                                     </div>
                                     <div class="attr-content ilvietnam-3-35-37" title="14">
-                                        14
+                                        {{$shopInformation->inspection_staff}}
                                     </div>
                                 </div>
                             </div>
@@ -649,9 +673,9 @@
                                 </a>
                             </div>
                         </div>
-
                     </form>
                 </div>
+                @endif
             </div>
         </div>
     </div>

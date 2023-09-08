@@ -568,7 +568,14 @@
             </div>
         </div>
     </div>
+
+{{--    <div id="test-id">---------------------</div>--}}
     <script>
+        // console.log('json', JSON.parse(document.getElementById('test-id').value));
+        // document.getElementById('test-id').innerHTML = JSON.parse(document.getElementById('test-id').value)
+        // console.log('json', JSON.parse(document.getElementById('test-idd').value));
+        // document.getElementById('test-idd').innerHTML = JSON.parse(document.getElementById('test-id').value)
+
         function toggleContent(contentId, btnId) {
             var content = document.getElementById(contentId);
             var toggleBtn = document.getElementById(btnId);

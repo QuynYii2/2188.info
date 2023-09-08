@@ -19,7 +19,17 @@
                     @foreach($members as $member)
                         <div class="col-md-4 mb-5">
                             <h6 class="text-center mt-2 mb-3 member-name">
-                                {{$member->name}}
+                                @if(locationHelper() == 'kr')
+                                    {{ ($member->lang_kr) }}
+                                @elseif(locationHelper() == 'cn')
+                                    {{ ($member->lang_cn) }}
+                                @elseif(locationHelper() == 'jp')
+                                    {{ ($member->lang_jp) }}
+                                @elseif(locationHelper() == 'vi')
+                                    {{ ($member->name) }}
+                                @else
+                                    {{ ($member->lang_en) }}
+                                @endif
                             </h6>
                             <div class="card">
                                 <div class="card-body">
@@ -27,10 +37,19 @@
                                         ${{$member->price}}
                                     </h3>
                                     <h6 class="card-subtitle mb-2 text-muted">
-                                        {{ __('home.Member') }} {{$member->name}}
-                                    </h6>
-                                    <h6 class="text-nowrap">
-                                        {{ __('home.Xem chi tiết') }}
+                                        {{ __('home.Member') }}
+                                        @if(locationHelper() == 'kr')
+                                            {{ ($member->lang_kr) }}
+                                        @elseif(locationHelper() == 'cn')
+                                            {{ ($member->lang_cn) }}
+                                        @elseif(locationHelper() == 'jp')
+                                            {{ ($member->lang_jp) }}
+                                        @elseif(locationHelper() == 'vi')
+                                            {{ ($member->name) }}
+                                        @else
+                                            {{ ($member->lang_en) }}
+                                        @endif
+{{--                                        {{$member->name}}--}}
                                     </h6>
                                     <ol class="text-success">
                                         @php
@@ -49,7 +68,17 @@
                                                         $permission = \App\Models\Permission::find($permissionID);
 
                                                     @endphp
-                                                    {{$ld->translateText($permission->name, locationPermissionHelper())}}
+                                                    @if(locationHelper() == 'kr')
+                                                        {{ ($permission->lang_kr) }}
+                                                    @elseif(locationHelper() == 'cn')
+                                                        {{ ($permission->lang_cn) }}
+                                                    @elseif(locationHelper() == 'jp')
+                                                        {{ ($permission->lang_jp) }}
+                                                    @elseif(locationHelper() == 'vi')
+                                                        {{ ($permission->name) }}
+                                                    @else
+                                                        {{ ($permission->lang_en) }}
+                                                    @endif
                                                 </li>
                                             @endforeach
                                         @endif
