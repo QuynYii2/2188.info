@@ -576,9 +576,9 @@ return [
     'Name Korea' => 'Name Korea',
     'ID' => 'ID',
     'Congratulations, you have registered as a member' => 'Congratulations, you have registered as a member',
-    'Representative member'=>'Representative member',
-    'Registered member'=>'Registered member',
-    'Log in now'=>'Login now',
+    'Representative member' => 'Representative member',
+    'Registered member' => 'Registered member',
+    'Log in now' => 'Login now',
     'Employee registration' => 'Employee registration',
     'Registration order' => 'Registration order',
     'List of registered managers' => 'List of registered managers',
@@ -589,5 +589,6 @@ return [
     'Subscriber registration' => 'Subscriber registration ',
     'Representative registration' => 'Representative registration ',
     'Register as member' => 'Register as members ',
+    'Search Results' => 'Search Results',
     // end
 ];

@@ -24,6 +24,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\RevenusController;
 use App\Http\Controllers\SampleController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\Seller\AttributeController;
 use App\Http\Controllers\Seller\CategoryController;
 use App\Http\Controllers\Seller\ExportFileController;
@@ -464,7 +465,11 @@ Route::get('/product', [\App\Http\Controllers\Frontend\ProductController::class,
 Route::get('/product-variable/{id}/{value}', [\App\Http\Controllers\ProductController::class, 'getVariable']);
 // Cart
 Route::middleware(['auth'])->group(function () {
-    //
+    // Search products
+    Route::get('/search-products/category={id}', [SearchController::class, 'searchByCategory'])->name('search.products.category');
+    Route::get('/search-products/name', [SearchController::class, 'searchByNameProducts'])->name('search.products.name');
+
+    // Member trust
     Route::get('/trusts-register-member', [TrustMemberController::class, 'memberStand'])->name('trust.register.member.index');
     Route::get('/trusts-register-member/{locale}', [TrustMemberController::class, 'memberPartnerLocale'])->name('trust.register.member.locale');
     // Cart
