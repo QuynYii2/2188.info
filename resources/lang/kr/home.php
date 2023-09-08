@@ -606,9 +606,9 @@ return [
     'Name Korea' => '성명자국어',
     'ID' => '아이디',
     'Congratulations, you have registered as a member' => '회원으로 가입 되신 것을 축하합니다',
-    'Representative member'=>'대표회원',
-    'Registered member'=>'등록회원',
-    'Log in now'=>'지금 로그인하십시오',
+    'Representative member' => '대표회원',
+    'Registered member' => '등록회원',
+    'Log in now' => '지금 로그인하십시오',
     'Employee registration' => '직원 등록',
     'Registration order' => '등록순서',
     'List of registered managers' => '등록된 관리자 목록',
@@ -619,5 +619,6 @@ return [
     'Subscriber registration' => '회사등록 ',
     'Representative registration' => '대표등록 ',
     'Register as member' => '직원등록 ',
+    'Search Results' => '검색 결과',
     // end
 ];

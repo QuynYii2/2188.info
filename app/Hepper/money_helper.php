@@ -77,6 +77,7 @@ if (!function_exists('convertCurrency')) {
             $currentTime = Carbon::now();
             if ($createTime < $currentTime) {
                 $rate = subGetExchangeRate($from, $to, $amount);
+                $item->updated_at = Carbon::now()->addHours(7);
                 $item->rate = $rate;
                 $item->save();
             } else {
