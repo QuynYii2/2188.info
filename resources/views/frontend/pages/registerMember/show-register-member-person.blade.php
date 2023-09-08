@@ -47,7 +47,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="phoneNumber">{{ __('home.phone number') }}:</label>
-                                <input type="text" class="form-control" id="phoneNumber" value="{{$memberPersonSource->phoneNumber}}" name="phoneNumber"
+                                <input type="text" class="form-control" id="phoneNumber" value="{{$memberPersonSource->phone}}" name="phoneNumber"
                                        required>
                             </div>
                             <div class="form-group col-md-4">
@@ -59,6 +59,7 @@
                                 <input type="text" class="form-control" id="sns_account" name="sns_account" value="{{$memberPersonSource->sns_account}}" required>
                             </div>
                         </div>
+                        <input type="text" class="form-control" name="member" value="{{$member}}" hidden="">
                         <button type="submit" class="btn btn-primary">{{ __('home.sign up') }}</button>
 
                     @else

@@ -244,7 +244,7 @@ class RegisterMemberController extends Controller
                 'rank' => '',
                 'member_id' => $newMember->id,
                 'sns_account' => $sns_account,
-                'type' => MemberRegisterType::REPRESENT,
+                'type' => MemberRegisterType::SOURCE,
                 'verifyCode' => $code,
                 'isVerify' => 0,
                 'price' => $price,
@@ -377,7 +377,7 @@ class RegisterMemberController extends Controller
                 $exitsMember->name = $companyName;
                 $exitsMember->phone = $phoneNumber;
                 $exitsMember->category_id = $categories;
-                $exitsMember->numberBusiness = $numberBusiness;
+                $exitsMember->number_business = $numberBusiness;
                 $exitsMember->type_business = $type_business;
                 $exitsMember->code_business = $codeBusiness;
                 $exitsMember->giay_phep_kinh_doanh = $gpkdPath;
@@ -548,6 +548,9 @@ class RegisterMemberController extends Controller
                 'status' => MemberRegisterPersonSourceStatus::INACTIVE
             ];
 
+            $userOld = User::where('email', $email)->first();
+            $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
+
             if ($memberPersonSource) {
                 $user = User::where('email', $memberPersonSource->email)->first();
                 $memberPersonSource->user_id = $id;
@@ -563,11 +566,12 @@ class RegisterMemberController extends Controller
                 $memberPersonSource->position = $position;
                 $memberPersonSource->responsibility = $responsibility;
 
-                $memberPersonSource->status = MemberRegisterPersonSourceStatus::INACTIVE;
+
                 if ($email == $memberPersonSource->email) {
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
+                    $memberPersonSource->status = MemberRegisterPersonSourceStatus::ACTIVE;
                     $memberPersonSource->email = $email;
-                    $success = $memberPersonSource->save();
+                    $memberPersonSource->save();
                     $register = MemberRegisterInfo::find($member);
                     alert()->success('Success', 'Success, Create success! Please continue next steps');
                     return redirect(route('show.register.member.person.represent', [
@@ -575,24 +579,29 @@ class RegisterMemberController extends Controller
                         'registerMember' => $register->member
                     ]));
                 } else {
+                    if ($userOld) {
+                        alert()->error('Error', 'Error, Email is user used!');
+                        return back();
+                    }
+
+                    if ($memberOld) {
+                        alert()->error('Error', 'Error, Email in member used!');
+                        return back();
+                    }
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
+                    $memberPersonSource->status = MemberRegisterPersonSourceStatus::INACTIVE;
                     $memberPersonSource->email = $email;
-                    $user = User::where('email', Auth::user()->email)->first();
-                    $user->email = $email;
                     $this->sendMail($data, $email);
-                    $user->save();
                     $memberPersonSource->isVerify = 0;
                     $memberPersonSource->verifyCode = $code;
                     $success = $memberPersonSource->save();
                 }
             } else {
-                $userOld = User::where('email', $email)->first();
                 if ($userOld) {
                     alert()->error('Error', 'Error, Email is user used!');
                     return back();
                 }
 
-                $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
                 if ($memberOld) {
                     alert()->error('Error', 'Error, Email in member used!');
                     return back();
@@ -715,6 +724,8 @@ class RegisterMemberController extends Controller
                 ])->first();
             }
 
+            $userOld = User::where('email', $email)->first();
+            $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
             if ($memberPerson) {
                 $user = User::where('email', $memberPerson->email)->first();
                 $memberPerson->user_id = $id;
@@ -733,28 +744,30 @@ class RegisterMemberController extends Controller
                 if ($email == $memberPerson->email) {
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
                     $memberPerson->email = $email;
-                    $success = $memberPerson->save();
+                    $memberPerson->save();
                     alert()->success('Success', 'Success');
-                    return redirect(route('home'));
+                    return redirect(route('show.register.member.ship', $memberBefore->member_id));
                 } else {
+                    if ($userOld) {
+                        alert()->error('Error', 'Error, Email is user used!');
+                        return back();
+                    }
+                    if ($memberOld) {
+                        alert()->error('Error', 'Error, Email in member used!');
+                        return back();
+                    }
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
                     $memberPerson->email = $email;
-                    $user = User::where('email', Auth::user()->email)->first();
-                    $user->email = $email;
                     $this->sendMail($data, $email);
-                    $user->save();
                     $memberPerson->isVerify = 0;
                     $memberPerson->verifyCode = $code;
                     $success = $memberPerson->save();
                 }
             } else {
-                $userOld = User::where('email', $email)->first();
                 if ($userOld) {
                     alert()->error('Error', 'Error, Email is user used!');
                     return back();
                 }
-
-                $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
                 if ($memberOld) {
                     alert()->error('Error', 'Error, Email in member used!');
                     return back();
@@ -770,7 +783,7 @@ class RegisterMemberController extends Controller
             }
             alert()->error('Error', 'Error, Create error!');
             return back();
-        } catch (\Exception $exception) {
+        } catch (\Exception $exception){
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
@@ -953,6 +966,17 @@ class RegisterMemberController extends Controller
             return null;
         }
         return $arrayIds;
+    }
+
+    private function updateUser($user, $fullName, $email, $phoneNumber, $member)
+    {
+        if ($user){
+            $user->name = $fullName;
+            $user->email = $email;
+            $user->phone = $phoneNumber;
+            $user->member = $member;
+            $user->save();
+        }
     }
 
     private function sendMail($data, $email)
