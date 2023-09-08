@@ -21,8 +21,13 @@ if (!function_exists('convertCurrency')) {
             default:
                 $currentFrom = 'USD';
         }
-        $rate = convertCurrencyDB($currentFrom, $to, $amount);
-        return $rate * $amount;
+//        $rate = convertCurrencyDB($currentFrom, $to, $amount);
+//        if ($rate != 1) {
+//            return $rate * $amount;
+//        } else {
+            $total = subGetExchangeRate($currentFrom, $to, $amount);
+            return $total;
+//        }
     }
 
     function convertCurrencyDB($from, $to, $amount)
@@ -66,7 +71,7 @@ if (!function_exists('convertCurrency')) {
 
         $client = new \GuzzleHttp\Client();
 
-        $response = $client->request('GET', 'https://currency-conversion-and-exchange-rates.p.rapidapi.com/convert?from='.$from.'&to='.$to.'&amount='.$amount, [
+        $response = $client->request('GET', 'https://currency-conversion-and-exchange-rates.p.rapidapi.com/convert?from=' . $from . '&to=' . $to . '&amount=' . $amount, [
             'headers' => [
                 'X-RapidAPI-Host' => 'currency-conversion-and-exchange-rates.p.rapidapi.com',
                 'X-RapidAPI-Key' => 'eb9ba2aa18msh85ccd247d114b7bp125ddfjsndcb93a58ed8f',
@@ -75,7 +80,28 @@ if (!function_exists('convertCurrency')) {
 
         $responseBody = $response->getBody()->getContents();
         $data = json_decode($responseBody, true);
-        $rate = $data['info']['rate'];
+        $rate = null;
+        if ($data['success'] == true) {
+            $rate = $data['info']['rate'];
+        }
+
         return $rate;
+    }
+
+    function subGetExchangeRate($from, $to, $amount)
+    {
+        $client = new \GuzzleHttp\Client();
+        $url = 'https://currency-converter-by-api-ninjas.p.rapidapi.com/v1/convertcurrency?have=' . $from . '&want=' . $to . '&amount=' . $amount;
+        $response = $client->request('GET', $url, [
+            'headers' => [
+                'X-RapidAPI-Host' => 'currency-converter-by-api-ninjas.p.rapidapi.com',
+                'X-RapidAPI-Key' => '79b4b17bc4msh2cb9dbaadc30462p1f029ajsn6d21b28fc4af',
+            ],
+        ]);
+        $item = $response->getBody();
+        $jsonData = $item->getContents();
+        $data = json_decode($jsonData, true);
+        $new_amount = $data['new_amount'];
+        return $new_amount;
     }
 }

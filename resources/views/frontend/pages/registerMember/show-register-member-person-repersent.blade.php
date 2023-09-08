@@ -51,7 +51,7 @@
                             <div class="form-group col-md-4">
                                 <label for="phoneNumber">{{ __('home.phone number') }}:</label>
                                 <input type="text" class="form-control" id="phoneNumber"
-                                       value="{{$memberPerson->phoneNumber}}" name="phoneNumber"
+                                       value="{{$memberPerson->phone}}" name="phoneNumber"
                                        required>
                             </div>
                             <div class="form-group col-md-4">
