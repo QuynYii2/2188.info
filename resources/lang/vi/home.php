@@ -595,5 +595,7 @@ return [
     'Representative registration' => 'Đăng ký người đại diện ',
     'Register as member' => 'Đăng ký nhân viên ',
     'Search Results' => 'Kết quả tìm kiếm',
+    'Top Search' => 'Tìm kiếm nhiều nhất',
+    'See All' => 'Xem tất cả'
     // end
 ];

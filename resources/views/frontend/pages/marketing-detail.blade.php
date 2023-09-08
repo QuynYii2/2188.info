@@ -45,21 +45,12 @@
                         <option value="price desc">{{ __('home.Price: Descending') }}</option>
                     </select>
                 </div>
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item layout-horizontal">
-                        <a class="nav-link active" data-toggle="tab" href="#home"><i class="fa-solid fa-grip"></i></a>
-                    </li>
-                    <li class="nav-item layout-vertical">
-                        <a class="nav-link" data-toggle="tab" href="#menu1"><i class="fa-solid fa-list"></i></a>
-                    </li>
-                </ul>
             </div>
         </div>
         <hr>
         <div class="category-body container-fluid">
             <div class="tab-content">
-                <div id="home" class="tab-pane active "><br>
-                    <div class="row" id="renderProduct">
+                <div class="row" id="renderProduct">
                         @if($products)
                             @foreach($products as $product)
                                 <div class="col-xl-2 col-md-3 col-6 section mb-4">
@@ -72,7 +63,6 @@
                             </p>
                         @endif
                     </div>
-                </div>
             </div>
         </div>
     </div>

@@ -1473,7 +1473,7 @@ a {
 .header .header-mobile .hd-mobile .hd-mobile_menu {
   overflow-y: auto;
   padding-top: 15px;
-  z-index: 3;
+  z-index: 6;
   width: 285px;
   background: white;
   position: fixed;
@@ -1498,7 +1498,7 @@ a {
 }
 .header .header-mobile .hd-mobile .opacity_menu.active {
   opacity: 9999;
-  z-index: 2;
+  z-index: 4;
   position: fixed;
 }
 .header .header-mobile .hd-mobile .search {
@@ -1514,7 +1514,7 @@ a {
 }
 .header .header-mobile .hd-mobile .search.active {
   opacity: 9999;
-  z-index: 2;
+  z-index: 5;
   position: fixed;
 }
 .header .header-mobile .hd-mobile--leftTwo {
@@ -1933,7 +1933,6 @@ a {
 }
 
 .category-banner {
-  margin-top: 40px;
   position: relative;
 }
 .category-banner img {
@@ -2232,7 +2231,7 @@ hr {
   background-color: #f5f5f5;
 }
 .section .item-body .card-bottom--right i {
-  font-size: 21px;
+  font-size: 18px;
 }
 .section .item-body .card-bottom--right:hover {
   background-color: #fd6506;
@@ -2523,7 +2522,6 @@ figure.zoom img {
 }
 
 .footer {
-  font-family: "DM Sans";
   background-color: #f5f5f5;
   padding: 40px 0;
 }
@@ -2699,7 +2697,6 @@ figure.zoom img {
   background: #f5f5f5;
 }
 .footer .footer-bottom-container {
-  width: 75rem;
   margin: 0 auto;
 }
 .footer .footer-bottom-list {
@@ -3542,6 +3539,47 @@ nav ul {
   font-size: 14px;
   margin-top: 10px;
   border: 1px solid #f5f7f8;
+}
+
+.topSearch {
+  background: white;
+}
+.topSearch .content_topSearch {
+  color: #ee4d2d;
+  font-size: 18px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 10px 10px 5px 10px;
+}
+.topSearch .content_topSearch a {
+  color: #ee4d2d;
+}
+.topSearch .swipertopSearch .topSearch-item .topSearch-header {
+  position: relative;
+}
+.topSearch .swipertopSearch .topSearch-item .topSearch-header img {
+  width: 100%;
+  height: 25vh;
+}
+.topSearch .swipertopSearch .topSearch-item .topSearch-header .text-bottom {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.26);
+  color: white;
+  text-align: center;
+  padding: 5px 0;
+}
+.topSearch .swipertopSearch .topSearch-item .topSearch-body {
+  text-align: center;
+  font-size: 16px;
+  padding: 10px 0;
+}
+.topSearch .swipertopSearch .topSearch-item .topSearch-body a {
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /*# sourceMappingURL=style.css.map */

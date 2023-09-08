@@ -166,27 +166,27 @@
                 <div class="section-First-right col-xl-6 col-md-4">
                     <div class="row">
                         @if(!$banner)
-                            <div class="col-4 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-1.png"
                                      alt="">
                             </div>
-                            <div class="col-4 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-2.png"
                                      alt="">
                             </div>
-                            <div class="col-4 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-3.png"
                                      alt="">
                             </div>
-                            <div class="col-4 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-4.png"
                                      alt="">
                             </div>
-                            <div class="col-4 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-1.png"
                                      alt="">
                             </div>
-                            <div class="col-4 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-2.png"
                                      alt="">
                             </div>
@@ -238,6 +238,56 @@
                     @endfor
                 </div>
                 <div class="col-12 col-md-9 col-xl-8">
+                    <section class="topSearch mb-4">
+                        <div class="content_topSearch d-flex justify-content-between">
+                            <h5>{{ __('home.Top Search') }}</h5>
+                            <a href="#">{{ __('home.See All') }} ></a>
+                        </div>
+                        <div class="swiper swipertopSearch">
+                            <div class="swiper-wrapper">
+                                @foreach($newProducts as $product)
+                                <div class="swiper-slide topSearch-item">
+                                    <div class="topSearch-header">
+                                        <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
+                                        <div class="text-bottom">Bán 12+/tháng</div>
+                                        <div class="number-top"></div>
+                                    </div>
+                                    <div class="topSearch-body">
+                                        @if(Auth::check())
+                                            <a href="{{route('detail_product.show', $product->id)}}">
+                                                @if(locationHelper() == 'kr')
+                                                    {{ ($product->name_ko) }}
+                                                @elseif(locationHelper() == 'cn')
+                                                    {{ ($product->name_zh) }}
+                                                @elseif(locationHelper() == 'jp')
+                                                    {{ ($product->name_ja) }}
+                                                @elseif(locationHelper() == 'vi')
+                                                    {{ ($product->name_vi) }}
+                                                @else
+                                                    {{ ($product->name_en) }}
+                                                @endif
+                                            </a>
+                                        @else
+                                            <a href="#">
+                                                @if(locationHelper() == 'kr')
+                                                    {{ ($product->name_ko) }}
+                                                @elseif(locationHelper() == 'cn')
+                                                    {{ ($product->name_zh) }}
+                                                @elseif(locationHelper() == 'jp')
+                                                    {{ ($product->name_ja) }}
+                                                @elseif(locationHelper() == 'vi')
+                                                    {{ ($product->name_vi) }}
+                                                @else
+                                                    {{ ($product->name_en) }}
+                                                @endif
+                                            </a>
+                                        @endif
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </section>
                     <section class="section-Fourth section">
                         <div class="content">{{ __('home.New Products') }}</div>
                         <div class="swiper NewProducts row">

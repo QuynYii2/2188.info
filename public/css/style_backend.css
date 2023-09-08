@@ -74,10 +74,12 @@ body {
 .header-card--right .todo_list .title {
   font-weight: 700;
   font-size: 20px;
+  margin-bottom: 10px;
 }
 .header-card--right .todo_list .title-small {
   color: rgb(153, 153, 153);
   font-size: 13px;
+  margin-bottom: 5px;
 }
 .header-card--right .todo_list--bottom {
   overflow-x: auto;
