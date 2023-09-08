@@ -3557,6 +3557,7 @@ nav ul {
   position: relative;
 }
 .topSearch .swipertopSearch .topSearch-item .topSearch-header img {
+  width: 100%;
   height: 25vh;
 }
 .topSearch .swipertopSearch .topSearch-item .topSearch-header .text-bottom {
@@ -3571,8 +3572,14 @@ nav ul {
 }
 .topSearch .swipertopSearch .topSearch-item .topSearch-body {
   text-align: center;
-  font-size: 20px;
+  font-size: 16px;
   padding: 10px 0;
+}
+.topSearch .swipertopSearch .topSearch-item .topSearch-body a {
+  -webkit-line-clamp: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /*# sourceMappingURL=style.css.map */

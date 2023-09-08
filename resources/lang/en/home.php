@@ -590,5 +590,7 @@ return [
     'Representative registration' => 'Representative registration ',
     'Register as member' => 'Register as members ',
     'Search Results' => 'Search Results',
+    'Top Search' => 'Top Search',
+    'See All' => 'See All'
     // end
 ];

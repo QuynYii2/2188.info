@@ -240,67 +240,53 @@
                 <div class="col-12 col-md-9 col-xl-8">
                     <section class="topSearch mb-4">
                         <div class="content_topSearch d-flex justify-content-between">
-                            <h5>TÌM KIẾM HÀNG ĐẦU</h5>
-                            <a href="#">Xem Tất Cả ></a>
+                            <h5>{{ __('home.Top Search') }}</h5>
+                            <a href="#">{{ __('home.See All') }} ></a>
                         </div>
                         <div class="swiper swipertopSearch">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide topSearch-item">
-                                        <div class="topSearch-header">
-                                            <img src="https://down-vn.img.susercontent.com/file/4e9ad6627f7ae59588d947d44f4fb575" alt="">
-                                            <div class="text-bottom">Bán 12+/tháng</div>
-                                        </div>
-                                        <div class="topSearch-body">
-                                            Men's Crossbody Bag
-                                        </div>
+                            <div class="swiper-wrapper">
+                                @foreach($newProducts as $product)
+                                <div class="swiper-slide topSearch-item">
+                                    <div class="topSearch-header">
+                                        <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
+                                        <div class="text-bottom">Bán 12+/tháng</div>
+                                        <div class="number-top"></div>
                                     </div>
-                                    <div class="swiper-slide topSearch-item">
-                                        <div class="topSearch-header">
-                                            <img src="https://down-vn.img.susercontent.com/file/741a0aaa5c209ef06f5b6d1a47dec339" alt="">
-                                            <div class="text-bottom">Bán 12+/tháng</div>
-                                        </div>
-                                        <div class="topSearch-body">
-                                            Men's Crossbody Bag
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide topSearch-item">
-                                        <div class="topSearch-header">
-                                            <img src="https://down-vn.img.susercontent.com/file/23bcecc9b8ee89423b60e9fdba882103" alt="">
-                                            <div class="text-bottom">Bán 12+/tháng</div>
-                                        </div>
-                                        <div class="topSearch-body">
-                                            Men's Crossbody Bag
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide topSearch-item">
-                                        <div class="topSearch-header">
-                                            <img src="https://down-vn.img.susercontent.com/file/b8acc5877b10e57cce70fe555d5cfe19" alt="">
-                                            <div class="text-bottom">Bán 12+/tháng</div>
-                                        </div>
-                                        <div class="topSearch-body">
-                                            Men's Crossbody Bag
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide topSearch-item">
-                                        <div class="topSearch-header">
-                                            <img src="https://down-vn.img.susercontent.com/file/4e9ad6627f7ae59588d947d44f4fb575" alt="">
-                                            <div class="text-bottom">Bán 12+/tháng</div>
-                                        </div>
-                                        <div class="topSearch-body">
-                                            Men's Crossbody Bag
-                                        </div>
-                                    </div>
-                                    <div class="swiper-slide topSearch-item">
-                                        <div class="topSearch-header">
-                                            <img src="https://down-vn.img.susercontent.com/file/4e9ad6627f7ae59588d947d44f4fb575" alt="">
-                                            <div class="text-bottom">Bán 12+/tháng</div>
-                                        </div>
-                                        <div class="topSearch-body">
-                                            Men's Crossbody Bag
-                                        </div>
+                                    <div class="topSearch-body">
+                                        @if(Auth::check())
+                                            <a href="{{route('detail_product.show', $product->id)}}">
+                                                @if(locationHelper() == 'kr')
+                                                    {{ ($product->name_ko) }}
+                                                @elseif(locationHelper() == 'cn')
+                                                    {{ ($product->name_zh) }}
+                                                @elseif(locationHelper() == 'jp')
+                                                    {{ ($product->name_ja) }}
+                                                @elseif(locationHelper() == 'vi')
+                                                    {{ ($product->name_vi) }}
+                                                @else
+                                                    {{ ($product->name_en) }}
+                                                @endif
+                                            </a>
+                                        @else
+                                            <a href="#">
+                                                @if(locationHelper() == 'kr')
+                                                    {{ ($product->name_ko) }}
+                                                @elseif(locationHelper() == 'cn')
+                                                    {{ ($product->name_zh) }}
+                                                @elseif(locationHelper() == 'jp')
+                                                    {{ ($product->name_ja) }}
+                                                @elseif(locationHelper() == 'vi')
+                                                    {{ ($product->name_vi) }}
+                                                @else
+                                                    {{ ($product->name_en) }}
+                                                @endif
+                                            </a>
+                                        @endif
                                     </div>
                                 </div>
+                                @endforeach
                             </div>
+                        </div>
                     </section>
                     <section class="section-Fourth section">
                         <div class="content">{{ __('home.New Products') }}</div>
