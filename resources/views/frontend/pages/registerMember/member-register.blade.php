@@ -24,13 +24,17 @@
                                         ${{$member->price}}
                                     </h3>
                                     <h6 class="card-subtitle mb-2 text-muted">
-                                        {{ __('home.Member') }} @php
-                                            $ld = new \App\Http\Controllers\TranslateController();
-                                        @endphp
-                                        {{ $ld->translateText($member->name, locationPermissionHelper()) }}
-                                    </h6>
-                                    <h6 class="text-nowrap">
-                                        {{ __('home.Xem chi tiết') }}
+                                        @if(locationHelper() == 'kr')
+                                            {{ ($member->text_kr) }}
+                                        @elseif(locationHelper() == 'cn')
+                                            {{ ($member->text_cn) }}
+                                        @elseif(locationHelper() == 'jp')
+                                            {{ ($member->text_jp) }}
+                                        @elseif(locationHelper() == 'vi')
+                                            {{ ($member->text_vi) }}
+                                        @else
+                                            {{ ($member->text_en) }}
+                                        @endif
                                     </h6>
                                     <ol class="text-success">
                                         @php
@@ -39,17 +43,27 @@
                                             if ($listPermissionID){
                                                 $arrayPermissionID = explode(',', $listPermissionID);
                                             }
+                                                        $ld = new \App\Http\Controllers\TranslateController();
+
                                         @endphp
                                         @if($arrayPermissionID)
                                             @foreach($arrayPermissionID as $permissionID)
                                                 <li>
                                                     @php
                                                         $permission = \App\Models\Permission::find($permissionID);
+
                                                     @endphp
-                                                    @php
-                                                        $ld = new \App\Http\Controllers\TranslateController();
-                                                    @endphp
-                                                    {{ $ld->translateText($permission->name, locationPermissionHelper()) }}
+                                                    @if(locationHelper() == 'kr')
+                                                        {{ ($permission->lang_kr) }}
+                                                    @elseif(locationHelper() == 'cn')
+                                                        {{ ($permission->lang_cn) }}
+                                                    @elseif(locationHelper() == 'jp')
+                                                        {{ ($permission->lang_jp) }}
+                                                    @elseif(locationHelper() == 'vi')
+                                                        {{ ($permission->name) }}
+                                                    @else
+                                                        {{ ($permission->lang_en) }}
+                                                    @endif
                                                 </li>
                                             @endforeach
                                         @endif
