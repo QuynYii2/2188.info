@@ -568,10 +568,17 @@ class RegisterMemberController extends Controller
 
 
                 if ($email == $memberPersonSource->email) {
+                    if ($exitsMember->member != RegisterMember::TRUST){
+                        DB::table('role_user')->insert([
+                            'role_id' => 2,
+                            'user_id' => $user->id
+                        ]);
+                    }
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
                     $memberPersonSource->status = MemberRegisterPersonSourceStatus::ACTIVE;
                     $memberPersonSource->email = $email;
                     $memberPersonSource->save();
+
                     $register = MemberRegisterInfo::find($member);
                     alert()->success('Success', 'Success, Create success! Please continue next steps');
                     return redirect(route('show.register.member.person.represent', [
@@ -587,6 +594,12 @@ class RegisterMemberController extends Controller
                     if ($memberOld) {
                         alert()->error('Error', 'Error, Email in member used!');
                         return back();
+                    }
+                    if ($exitsMember->member != RegisterMember::TRUST){
+                        DB::table('role_user')->insert([
+                            'role_id' => 2,
+                            'user_id' => $user->id
+                        ]);
                     }
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
                     $memberPersonSource->status = MemberRegisterPersonSourceStatus::INACTIVE;
@@ -742,6 +755,7 @@ class RegisterMemberController extends Controller
 
                 $memberPerson->status = MemberRegisterPersonSourceStatus::INACTIVE;
                 if ($email == $memberPerson->email) {
+                    $memberPerson->status = MemberRegisterPersonSourceStatus::ACTIVE;
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
                     $memberPerson->email = $email;
                     $memberPerson->save();
@@ -783,7 +797,7 @@ class RegisterMemberController extends Controller
             }
             alert()->error('Error', 'Error, Create error!');
             return back();
-        } catch (\Exception $exception){
+        } catch (\Exception $exception) {
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
@@ -970,7 +984,7 @@ class RegisterMemberController extends Controller
 
     private function updateUser($user, $fullName, $email, $phoneNumber, $member)
     {
-        if ($user){
+        if ($user) {
             $user->name = $fullName;
             $user->email = $email;
             $user->phone = $phoneNumber;

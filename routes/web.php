@@ -450,8 +450,6 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::post('/stands-register-member', [MemberPartnerController::class, 'store'])->name('stands.register.member');
     Route::post('/stands-unregister-member/{id}', [MemberPartnerController::class, 'delete'])->name('stands.unregister.member');
     //
-    Route::get('/trusts-register-member', [TrustMemberController::class, 'memberStand'])->name('trust.register.member.index');
-    Route::get('/trusts-register-member/{locale}', [TrustMemberController::class, 'memberPartnerLocale'])->name('trust.register.member.locale');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {
@@ -466,6 +464,9 @@ Route::get('/product', [\App\Http\Controllers\Frontend\ProductController::class,
 Route::get('/product-variable/{id}/{value}', [\App\Http\Controllers\ProductController::class, 'getVariable']);
 // Cart
 Route::middleware(['auth'])->group(function () {
+    //
+    Route::get('/trusts-register-member', [TrustMemberController::class, 'memberStand'])->name('trust.register.member.index');
+    Route::get('/trusts-register-member/{locale}', [TrustMemberController::class, 'memberPartnerLocale'])->name('trust.register.member.locale');
     // Cart
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/add-to-cart/{product}', [CartController::class, 'addToCart'])->name('cart.add');
