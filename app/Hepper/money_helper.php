@@ -73,15 +73,22 @@ if (!function_exists('convertCurrency')) {
         ])->first();
 
         if ($item) {
-            $createTime = Carbon::parse($item->created_at)->addDay();
-            $currentTime = Carbon::now();
-            if ($createTime < $currentTime) {
-                $rate = subGetExchangeRate($from, $to, $amount);
-                $item->rate = $rate;
-                $item->save();
-            } else {
-                $rate = $item->rate;
-            }
+//            $createTime = Carbon::parse($item->created_at)->addDay();
+//            $currentTime = Carbon::now();
+//            if ($createTime < $currentTime) {
+//                $isValid = true;
+//            } else {
+//                $isValid = false;
+//            }
+
+//            if ($isValid == false) {
+//                $rate = $item->rate;
+//            } else {
+//                $rate = subGetExchangeRate($from, $to, $amount);
+//                $item->rate = $rate;
+//                $item->save();
+//            }
+            $rate = $item->rate;
         } else {
             $rate = subGetExchangeRate($from, $to, $amount);
             $currency = new Currency();
