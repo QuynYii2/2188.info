@@ -61,6 +61,6 @@ class SetupMarketingController extends Controller
     {
         SetupMarketing::where('id', $id)->delete();
         alert()->success('Success', 'Delete thành công');
-        return redirect(route('detail-marketing.show'));
+        return redirect(route('setup-marketing.show'));
     }
 }
