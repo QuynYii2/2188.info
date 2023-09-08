@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\EvaluateProductStatus;
 use App\Enums\ProductStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\MemberRegisterInfo;
@@ -12,6 +13,7 @@ use App\Models\User;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ShopInformationController extends Controller
 {
@@ -43,7 +45,21 @@ class ShopInformationController extends Controller
             $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
         }
         $currency = (new \App\Http\Controllers\Frontend\HomeController())->getLocation($request);
-        return view('frontend/pages/shop-information/index', compact('listProduct', 'company', 'priceProductOfCategory', 'sellerInfo', 'countProductBySeller', 'listVouchers', 'shopInformation','currency' , 'id'));
+
+        $evaluates = DB::table('evaluate_products')
+            ->join('products', 'products.id', '=', 'evaluate_products.product_id')
+            ->where('products.user_id', $id)
+            ->where('evaluate_products.status', '!=', EvaluateProductStatus::DELETED)
+            ->select('evaluate_products.star_number')
+            ->get();
+        $totalRatings = $evaluates->count();
+        $totalStars = 0;
+        foreach ($evaluates as $evaluate) {
+            $totalStars += $evaluate->star_number;
+        }
+        $averageRating = $totalRatings > 0 ? $totalStars / $totalRatings : 0;
+        $averageRatingsFormatted = number_format($averageRating, 2);
+        return view('frontend/pages/shop-information/index', compact('listProduct', 'company', 'priceProductOfCategory', 'sellerInfo', 'countProductBySeller', 'listVouchers', 'shopInformation','currency' , 'id', 'averageRatingsFormatted', 'totalRatings'));
     }
 
 

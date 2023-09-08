@@ -310,25 +310,25 @@
                         @endphp
                         {{ $ld->translateText($product->origin, locationPermissionHelper()) }}
                     </div>
-                    <div class="product-rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-half-o"></i>
-                        <span>
-                           @php
-                               $ratings = \App\Models\EvaluateProduct::where('product_id', $product->id)->get();
-                               $totalRatings = $ratings->count();
-                               $totalStars = 0;
-                               foreach ($ratings as $rating) {
-                                   $totalStars += $rating->star_number;
-                               }
-                               $averageRating = $totalRatings > 0 ? $totalStars / $totalRatings : 0;
-                           @endphp
-                            <span>{{ $averageRating }}({{ $totalRatings }})</span>
-                        </span>
+                    <div class="card-rating text-left">
+                        @php
+                            $ratings = \App\Models\EvaluateProduct::where('product_id', $product->id)->get();
+                            $totalRatings = $ratings->count();
+                            $totalStars = 0;
+                            foreach ($ratings as $rating) {
+                                $totalStars += $rating->star_number;
+                            }
+                            $averageRating = $totalRatings > 0 ? $totalStars / $totalRatings : 0;
+                            $averageRatingsFormatted = number_format($averageRating, 2);
+                        @endphp
+
+                        @for ($i = 1; $i <= 5; $i++)
+                            <i class="fa-solid fa-star" style="color: {{ $i <= $averageRating ? '#fac325' : '#ccc' }}"></i>
+                        @endfor
+
+                        <span>{{ $averageRatingsFormatted }} ({{ $totalRatings }})</span>
                     </div>
+
                     <div class="product-price d-flex" style="gap: 3rem">
                         @if($product->price != null)
                             <strike class="productOldPrice" id="productOldPrice">({{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}})</strike>
@@ -573,7 +573,23 @@
                                         {{ __('home.Store Rating') }}
                                     </div>
                                     <div class="attr-content ilvietnam-3-20-22" title="4,7(21)">
-                                        4,7(21)
+                                        @php
+                                            $userId = $name->id;
+                                            $evaluates = DB::table('evaluate_products')
+                                                ->join('products', 'products.id', '=', 'evaluate_products.product_id')
+                                                ->where('products.user_id', $userId)
+                                                ->select('evaluate_products.star_number')
+                                                ->get();
+                                            $totalRating = $evaluates->count();
+                                            $totalStars = 0;
+                                            foreach ($evaluates as $evaluate) {
+                                                $totalStars += $evaluate->star_number;
+                                            }
+                                            $averageRatings = $totalRating > 0 ? $totalStars / $totalRating : 0;
+                                            $averageRatingsFormatted = number_format($averageRatings, 2);
+                                        @endphp
+                                        {{ $averageRatingsFormatted }} ({{ $totalRating }})
+
                                     </div>
                                 </a>
                                 <div class="attr-item ilvietnam-2-19-23" aria-haspopup="true" aria-expanded="false">

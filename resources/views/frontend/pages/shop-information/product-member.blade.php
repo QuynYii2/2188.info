@@ -241,11 +241,6 @@
                                  width="150px" height="150px">
                             <div class="item-body">
                                 <div class="card-rating text-left">
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                    <i class="fa-solid fa-star" style="color: #fac325;"></i>
                                     @php
                                         $ratings = \App\Models\EvaluateProduct::where('product_id', $product->id)->get();
                                         $totalRatings = $ratings->count();
@@ -254,11 +249,16 @@
                                             $totalStars += $rating->star_number;
                                         }
                                         $averageRating = $totalRatings > 0 ? $totalStars / $totalRatings : 0;
+                                        $averageRatingsFormatted = number_format($averageRating, 2);
                                     @endphp
-                                    <span>{{ $averageRating }}({{ $totalRatings }})</span>
+
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <i class="fa-solid fa-star" style="color: {{ $i <= $averageRating ? '#fac325' : '#ccc' }}"></i>
+                                    @endfor
+
+                                    <span>{{ $averageRatingsFormatted }} ({{ $totalRatings }})</span>
                                 </div>
-{{--                                <input type="text" id="test-id" value="{{ $averageRating }}" hidden="">--}}
-{{--                                <input type="text" id="test-idd" value="{{ $products }}" hidden="">--}}
+
 
                                 @php
                                     $nameSeller = DB::table('users')->where('id', $product->user_id)->first();
