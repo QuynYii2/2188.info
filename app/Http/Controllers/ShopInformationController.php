@@ -122,7 +122,7 @@ class ShopInformationController extends Controller
                 <div class="item-img">
                     <img src="' . asset('storage/' . $product['thumbnail']) . '" alt="">
                     <div class="button-view">
-                        <button class="quickView" onclick="clickImage(' . $product['id'] . ');" data-value="' . $product['id'] . '">Quick view3</button>
+                        <button class="quickView" onclick="clickImage(' . $product['id'] . ');" data-value="' . $product['id'] . '">Quick view</button>
                     </div>
                     <div class="text">
                         <div class="text-sale">
@@ -136,20 +136,10 @@ class ShopInformationController extends Controller
                 <input type="text" id="productThumbnail' . $product['id'] . '" class="d-none" value="' . $product['thumbnail'] . '">
                 <input type="text" id="productGallery' . $product['id'] . '" class="d-none" value="' . $product['gallery'] . '">
                 <div class="item-body">
-                    <div class="card-rating">
-                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                        <span>(1)</span>
-                    </div>
-                    <div class="card-brand">
-                    </div>
-                    <div class="card-title">
+                    <div class="card-title1">
                         <a href="' . route('detail_product.show', $product['id']) . '">' . $product['name'] . '</a>
                     </div>
-                    <div class="card-price d-flex justify-content-between">
+                    <div class="card-price">
                         <div class="price-sale">
                             <strong>' . $product['price'] . '</strong>
                         </div>

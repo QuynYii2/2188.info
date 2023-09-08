@@ -86,8 +86,6 @@
                 @endif
             </div>
         @endif
-
-
         <div class="card-bottom d-flex justify-content-between">
             <div class="card-bottom--left">
                 @if(Auth::check())

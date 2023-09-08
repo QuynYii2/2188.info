@@ -238,6 +238,32 @@
                     @endfor
                 </div>
                 <div class="col-12 col-md-9 col-xl-8">
+                    <section class="topSearch mb-3">
+                        <div class="content_topSearch d-flex justify-content-between">
+                            <h5>TÌM KIẾM HÀNG ĐẦU</h5>
+                            <a href="#">Xem Tất Cả ></a>
+                        </div>
+                        <div class="swiper swipertopSearch">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide topSearch-item">
+                                        <div class="topSearch-header">
+                                            <img src="https://down-vn.img.susercontent.com/file/4e9ad6627f7ae59588d947d44f4fb575" alt="">
+                                        </div>
+                                        <div class="topSearch-body">
+
+                                        </div>
+                                    </div>
+                                    <div class="swiper-slide">Slide 2</div>
+                                    <div class="swiper-slide">Slide 3</div>
+                                    <div class="swiper-slide">Slide 4</div>
+                                    <div class="swiper-slide">Slide 5</div>
+                                    <div class="swiper-slide">Slide 6</div>
+                                    <div class="swiper-slide">Slide 7</div>
+                                    <div class="swiper-slide">Slide 8</div>
+                                    <div class="swiper-slide">Slide 9</div>
+                                </div>
+                            </div>
+                    </section>
                     <section class="section-Fourth section">
                         <div class="content">{{ __('home.New Products') }}</div>
                         <div class="swiper NewProducts row">

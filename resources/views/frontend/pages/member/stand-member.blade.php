@@ -5,7 +5,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
     <style>
         body{
-            background: white;
+            background: #F5F5F5;
         }
         .size{
             font-size: 17px;
@@ -278,7 +278,7 @@
                         </div>
                         <div class="card-title text-left">
                             @if(Auth::check())
-                                <a href="{{route('detail_product.show', $product->id)}}">
+                                <a>
                                     @if(locationHelper() == 'kr')
                                         {{ ($product->name_ko) }}
                                     @elseif(locationHelper() == 'cn')
@@ -292,7 +292,7 @@
                                     @endif
                                 </a>
                             @else
-                                <a class="check_url">
+                                <a>
                                     @if(locationHelper() == 'kr')
                                         {{ ($product->name_ko) }}
                                     @elseif(locationHelper() == 'cn')

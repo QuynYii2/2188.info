@@ -157,3 +157,4 @@ storage/.DS_Store
 .idea/*.xml
 #
 #composer.lock
+package-lock.json

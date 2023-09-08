@@ -216,6 +216,15 @@ new Swiper(".advertisementBanner",{
     },
 });
 
+new Swiper(".swipertopSearch", {
+    slidesPerView: 5,
+    spaceBetween: 30,
+    pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+},
+});
+
 new Swiper(".secondrightSwiper",{
     slidesPerView: 4,
     grid: {

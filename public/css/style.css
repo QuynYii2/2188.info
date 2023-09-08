@@ -1473,7 +1473,7 @@ a {
 .header .header-mobile .hd-mobile .hd-mobile_menu {
   overflow-y: auto;
   padding-top: 15px;
-  z-index: 3;
+  z-index: 6;
   width: 285px;
   background: white;
   position: fixed;
@@ -1498,7 +1498,7 @@ a {
 }
 .header .header-mobile .hd-mobile .opacity_menu.active {
   opacity: 9999;
-  z-index: 2;
+  z-index: 4;
   position: fixed;
 }
 .header .header-mobile .hd-mobile .search {
@@ -1933,7 +1933,6 @@ a {
 }
 
 .category-banner {
-  margin-top: 40px;
   position: relative;
 }
 .category-banner img {
@@ -2232,7 +2231,7 @@ hr {
   background-color: #f5f5f5;
 }
 .section .item-body .card-bottom--right i {
-  font-size: 21px;
+  font-size: 18px;
 }
 .section .item-body .card-bottom--right:hover {
   background-color: #fd6506;
@@ -3542,6 +3541,10 @@ nav ul {
   font-size: 14px;
   margin-top: 10px;
   border: 1px solid #f5f7f8;
+}
+
+.topSearch .content_topSearch {
+  color: #ee4d2d;
 }
 
 /*# sourceMappingURL=style.css.map */
