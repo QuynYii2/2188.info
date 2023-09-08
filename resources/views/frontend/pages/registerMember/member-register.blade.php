@@ -13,10 +13,17 @@
                     @foreach($members as $member)
                         <div class="col-md-4 mb-5">
                             <h5 class="text-center mt-2 mb-3 member-name">
-                                @php
-                                    $ld = new \App\Http\Controllers\TranslateController();
-                                @endphp
-                                {{ $ld->translateText($member->name, locationPermissionHelper()) }}
+                                @if(locationHelper() == 'kr')
+                                    {{ ($member->lang_kr) }}
+                                @elseif(locationHelper() == 'cn')
+                                    {{ ($member->lang_cn) }}
+                                @elseif(locationHelper() == 'jp')
+                                    {{ ($member->lang_jp) }}
+                                @elseif(locationHelper() == 'vi')
+                                    {{ ($member->name) }}
+                                @else
+                                    {{ ($member->lang_en) }}
+                                @endif
                             </h5>
                             <div class="card">
                                 <div class="card-body">
