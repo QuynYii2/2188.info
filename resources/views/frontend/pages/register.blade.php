@@ -37,17 +37,16 @@
 {{--                                        ${{$member->price}}--}}
 {{--                                    </h3>--}}
                                     <h6 class="card-subtitle mb-2 text-muted">
-                                        {{ __('home.Member') }}
                                         @if(locationHelper() == 'kr')
-                                            {{ ($member->lang_kr) }}
+                                            {{ ($member->text_kr) }}
                                         @elseif(locationHelper() == 'cn')
-                                            {{ ($member->lang_cn) }}
+                                            {{ ($member->text_cn) }}
                                         @elseif(locationHelper() == 'jp')
-                                            {{ ($member->lang_jp) }}
+                                            {{ ($member->text_jp) }}
                                         @elseif(locationHelper() == 'vi')
-                                            {{ ($member->name) }}
+                                            {{ ($member->text_vi) }}
                                         @else
-                                            {{ ($member->lang_en) }}
+                                            {{ ($member->text_en) }}
                                         @endif
 {{--                                        {{$member->name}}--}}
                                     </h6>
