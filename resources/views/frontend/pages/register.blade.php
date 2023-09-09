@@ -33,9 +33,9 @@
                             </h6>
                             <div class="card">
                                 <div class="card-body">
-                                    <h3 class="card-title text-danger text-center">
-                                        ${{$member->price}}
-                                    </h3>
+{{--                                    <h3 class="card-title text-danger text-center">--}}
+{{--                                        ${{$member->price}}--}}
+{{--                                    </h3>--}}
                                     <h6 class="card-subtitle mb-2 text-muted">
                                         {{ __('home.Member') }}
                                         @if(locationHelper() == 'kr')
