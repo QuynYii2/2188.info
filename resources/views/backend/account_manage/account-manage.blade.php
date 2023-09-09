@@ -161,6 +161,7 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Role</th>
+                    <th>Loại hội viên</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -191,6 +192,7 @@
                         </td>
                         <td><a href="#">{{ $user->email }}</a></td>
                         <td>{{ $role }}</td>
+                        <td>{{ $user->member }}</td>
                         <td> @if ($user->status == 'ACTIVE')
                                 <span class="status text-success">&bull;</span>{{ $user->status }}
                             @else
@@ -214,14 +216,14 @@
                 @endforeach
                 </tbody>
             </table>
-            <div class="clearfix">
-                <div class="hint-text">Showing <b>10</b> out of <b>{{ $getAllUser->total() }}</b> entries</div>
-                <ul class="pagination">
-                    @foreach($getAllUser->links()->elements[0] as $index => $page)
-                        <li class="page-item"><a class="page-link" href="{{ $page }}">{{ $index }}</a></li>
-                    @endforeach
-                </ul>
-            </div>
+{{--            <div class="clearfix">--}}
+{{--                <div class="hint-text">Showing <b>10</b> out of <b>{{ $getAllUser->total() }}</b> entries</div>--}}
+{{--                <ul class="pagination">--}}
+{{--                    @foreach($getAllUser->links()->elements[0] as $index => $page)--}}
+{{--                        <li class="page-item"><a class="page-link" href="{{ $page }}">{{ $index }}</a></li>--}}
+{{--                    @endforeach--}}
+{{--                </ul>--}}
+{{--            </div>--}}
         </div>
     </div>
 
