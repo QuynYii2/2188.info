@@ -330,10 +330,9 @@
                                         </div>
                                     @endforeach
                                 @endforeach
-
-                                <div class="swiper-button-next"></div>
-                                <div class="swiper-button-prev"></div>
                             </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
                         </div>
                     </section>
                     <div class="category-img section pt-3 pb-3">
