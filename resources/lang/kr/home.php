@@ -572,8 +572,8 @@ return [
     'I agree to the above Terms' => '위 약관에 동의합니다',
     'Day register' => '등록일시',
     'Number clearance' => '통관번호',
-    'Name company English' => '상호영문',
-    'Name company Korea' => '상호한글',
+    'Name company English' => '성명 (영문)',
+    'Name company Korea' => '성명 (자국어)',
     // nganh nghe
     'Career' => '업종선택',
     // nganh hang
