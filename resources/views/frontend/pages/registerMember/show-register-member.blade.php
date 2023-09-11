@@ -61,18 +61,9 @@
                             }
                         @endphp
                         <ol class="text-success">
-                            @if($arrayPermissionID)
-                                @foreach($arrayPermissionID as $permissionID)
-                                    <li>
-
-                                        @php
-                                            $permission = \App\Models\Permission::find($permissionID);
-                                            $ld = new \App\Http\Controllers\TranslateController();
-                                        @endphp
-                                        {{ $ld->translateText($permission->name, locationPermissionHelper()) }}
-                                    </li>
-                                @endforeach
-                            @endif
+                            <li>{{__('home.permission_one')}}</li>
+                            <li>{{__('home.permission_two')}}</li>
+                            <li>{{__('home.permission_there')}}</li>
                         </ol>
                     </div>
                 </div>

@@ -58,7 +58,8 @@
                                                 $arrayPermissionID = explode(',', $listPermissionID);
                                             }
                                                         $ld = new \App\Http\Controllers\TranslateController();
-
+                                            $lastElement = end($arrayPermissionID);
+                                            array_pop($arrayPermissionID);
                                         @endphp
                                         @if($arrayPermissionID)
                                             @foreach($arrayPermissionID as $permissionID)
@@ -80,6 +81,23 @@
                                                     @endif
                                                 </li>
                                             @endforeach
+                                                @php
+                                                    $permission = \App\Models\Permission::find($lastElement);
+
+                                                @endphp
+                                                <p>
+                                                    @if(locationHelper() == 'kr')
+                                                        {{ ($permission->lang_kr) }}
+                                                    @elseif(locationHelper() == 'cn')
+                                                        {{ ($permission->lang_cn) }}
+                                                    @elseif(locationHelper() == 'jp')
+                                                        {{ ($permission->lang_jp) }}
+                                                    @elseif(locationHelper() == 'vi')
+                                                        {{ ($permission->name) }}
+                                                    @else
+                                                        {{ ($permission->lang_en) }}
+                                                    @endif
+                                                </p>
                                         @endif
                                     </ol>
                                     <div class="col-12 justify-content-center d-flex">

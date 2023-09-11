@@ -596,6 +596,9 @@ return [
     'Register as member' => 'Đăng ký nhân viên ',
     'Search Results' => 'Kết quả tìm kiếm',
     'Top Search' => 'Tìm kiếm nhiều nhất',
-    'See All' => 'Xem tất cả'
+    'See All' => 'Xem tất cả',
+    'permission_one' => 'Quản lý nhập hàng/ xuất hàng, Quản lý kho và doanh thu',
+    'permission_two' => 'Quản lý giao dịch và sản phẩm giao dịch điện tử',
+    'permission_there' => 'Quản lý giao dịch và sản phẩm giao dịch điện tử'
     // end
 ];
