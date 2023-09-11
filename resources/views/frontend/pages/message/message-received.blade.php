@@ -3,7 +3,7 @@
 @section('title', 'List Message Received')
 
 @section('content')
-    <h3 class="text-center">Tin nhắn đã nhận</h3>
+    <h3 class="text-center">{{ __('home.Message received') }}</h3>
     @if($company)
         @php
             $user = null;
@@ -26,7 +26,7 @@
                        data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
                     <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
                        data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
-                    <a href="{{route('chat.message.show')}}" class="btn btn-primary">Chat Now</a>
+                    <a href="{{route('chat.message.show')}}" class="btn btn-primary"> {{ __('home.Chat Now') }}</a>
                 </div>
             </div>
             <div class="row m-0">
@@ -133,10 +133,10 @@
                     <div class="col-md-9">
                         <div class="card">
                             <h5 id="chat_user" class="text-center">{{$user->name}}</h5>
-                            <h5 id="chat_message">
+                            <h5 id="chat_message" class="ml-3">
 
                             </h5>
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Chat</button>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">{{ __('home.chat') }}</button>
                         </div>
                     </div>
                 @endif

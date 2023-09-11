@@ -4,10 +4,10 @@
         $userTo = \App\Models\User::find($message->to_user_id);
     @endphp
     {!! $message->chat_message !!}
-    <p class="small">{{ __('home.received-by') }}
-        <span>{{$userTo->name}} : <b>{{ __('home.posted-by') }}</b> </span>
-        <span>{{$userFrom->name}} : <b> {{ __('home.posted-by') }} </b></span>
-        <span>{{$message->created_at}} : <b> {{ __('home.time') }} </b></span>
-        <span>{{$message->message_status}} : <b> {{ __('home.Status') }} </b></span>
+    <p class="small mt-3">
+        <span class="d-flex">{{ __('home.posted-by') }} :<b> {{$userTo->name}}</b> </span>
+        <span class="d-flex">{{ __('home.received-by') }} :<b>  {{$userFrom->name}} </b></span>
+        <span class="d-flex">{{ __('home.time') }} :<b>  {{$message->created_at}} </b></span>
+        <span class="d-flex">{{ __('home.Status') }} :<b>  {{$message->message_status}} </b></span>
     </p>
 @endforeach

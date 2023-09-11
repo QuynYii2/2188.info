@@ -326,7 +326,7 @@
                                 @endif
                             </div>
                         @endif
-                        <div class="card-bottom--left">
+                        <div class="card-bottom--left" hidden="">
                             @if(Auth::check())
                                 <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
                             @else
