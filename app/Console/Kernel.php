@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Command\DownRank;
+use App\Console\Commands\InserUser;
 use App\Console\Commands\UpdateRank;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -15,7 +16,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        UpdateRank::class
+        UpdateRank::class,
+        InserUser::class
     ];
 
     /**
@@ -28,14 +30,7 @@ class Kernel extends ConsoleKernel
     {
         // php artisan schedule:run
         $schedule->command('command:UpdateRank')->daily();
-
-//        $schedule->call(function () {
-//            UpdateRank::handle();
-//        })->daily();
-
-        $schedule->call(function () {
-            app()->make('App\Http\Controllers\Frontend\HomeController')->createMultilNewUser();
-        })->daily();
+        $schedule->command('command:insertUser')->daily();
     }
 
     /**
