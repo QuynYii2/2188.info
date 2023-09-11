@@ -17,9 +17,9 @@ class AccountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($size = 10)
+    public function index()
     {
-        $getAllUser = User::paginate($size);
+        $getAllUser = User::all();
         return view('backend.account_manage.account-manage', compact('getAllUser'));
     }
 
