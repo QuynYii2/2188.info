@@ -403,15 +403,15 @@ class HomeController extends Controller
                                 $language = 'vi';
                             }
 
-                            if ($language == 'zh-CN'){
+                            if ($language == 'zh-CN') {
                                 $language = 'cn';
                             }
 
-                            if ($language == 'ko'){
+                            if ($language == 'ko') {
                                 $language = 'kr';
                             }
 
-                            if ($language == 'ja'){
+                            if ($language == 'ja') {
                                 $language = 'jp';
                             }
 
@@ -597,7 +597,8 @@ class HomeController extends Controller
     private function callApi()
     {
         try {
-            $response = Http::get(env('URL_GET_ALL_USER'));
+            $url = 'http://xilaisong.com/User/GetAll.aspx';
+            $response = Http::get(env('URL_GET_ALL_USER', $url));
             $data = $response->body();
             return $data;
         } catch (\Exception $e) {
