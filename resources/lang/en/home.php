@@ -533,7 +533,9 @@ return [
     'edit-comment' => 'Sửa đánh giá',
     'content' => 'Nội dung',
     'star number' => 'Số sao',
-    'Error during the process of posting your review!' => 'Error during the process of posting your review!',
+    'received-by' => 'Đã nhận bởi: ',
+    'posted-by' => 'Được gửi bởi: ',
+    'time' => 'Thời gian: ',
     // Register member
     // start
     'Agree to Terms' => 'Agree to Terms',

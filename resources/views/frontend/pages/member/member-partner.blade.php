@@ -56,8 +56,8 @@
                    class="btn btn-warning">{{ __('home.Partner List') }}</a>
             </div>
             <div>
-                <a href="#" class="btn btn-primary mr-2">{{ __('home.Message received') }}</a>
-                <a href="#" class="btn btn-primary mr-2">{{ __('home.Message sent') }}</a>
+                <a href="{{route('chat.message.received')}}" class="btn btn-primary mr-2">{{ __('home.Message received') }}</a>
+                <a href="{{route('chat.message.sent')}}" class="btn btn-primary mr-2">{{ __('home.Message sent') }}</a>
                 <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
                    data-target="#exampleModal">{{ __('home.Purchase') }}</a>
                 <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
