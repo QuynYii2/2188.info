@@ -33,6 +33,8 @@ use App\Models\User;
 use App\Models\Voucher;
 use Carbon\Carbon;
 use Exception;
+use FuzzyWuzzy\Fuzz;
+use FuzzyWuzzy\Process;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -213,7 +215,7 @@ class HomeController extends Controller
                 $locale = $locale['countryCode'];
             }
         }
-        app()->setLocale('kr');
+        app()->setLocale('vi');
     }
 
     public function getLangDisplay()
@@ -353,7 +355,7 @@ class HomeController extends Controller
     {
         $listUser = $this->callApi();
         try {
-            if (!isset($_COOKIE["cookieInsertUser"])) {
+            if (!isset($_COOKIE["cookieInsertUser1"])) {
                 $passwordHash = Hash::make(Contains::PASSWORD_DEFAULT);
                 $listUser = trim($listUser);
                 if ($listUser) {
@@ -408,27 +410,67 @@ class HomeController extends Controller
 
                             $categoryDefault = Category::all();
 
-                            $categories = DB::table('categories')
-                                ->where('name', 'like', '%' . $category . '%')
-                                ->orWhere('name_vi', 'like', '%' . $category . '%')
-                                ->orWhere('name_ja', 'like', '%' . $category . '%')
-                                ->orWhere('name_ko', 'like', '%' . $category . '%')
-                                ->orWhere('name_en', 'like', '%' . $category . '%')
-                                ->orWhere('name_zh', 'like', '%' . $category . '%')
-                                ->select('categories.*')
-                                ->get();
+                            $fuzz = new Fuzz();
+                            $process = new Process($fuzz);
 
-                            if ($categories->isEmpty()) {
+                            $arrayNameCategory = null;
+
+                            for ($j = 0; $j < count($categoryDefault); $j++) {
+                                switch ($categoryDefault[$j]) {
+                                    case $categoryDefault[$j]->name_vi:
+                                        $value = $fuzz->ratio($category, $categoryDefault[$j]->name_vi);
+                                        if ($value > 50) {
+                                            $arrayNameCategory[] = $categoryDefault[$j]->id;
+                                            break;
+                                        }
+                                        break;
+                                    case $categoryDefault[$j]->name_ja:
+                                        $value = $fuzz->ratio($category, $categoryDefault[$j]->name_ja);
+                                        if ($value > 50) {
+                                            $arrayNameCategory[] = $categoryDefault[$j]->id;
+                                            break;
+                                        }
+                                        break;
+                                    case $categoryDefault[$j]->name_ko:
+                                        $value = $fuzz->ratio($category, $categoryDefault[$j]->name_ko);
+                                        if ($value > 50) {
+                                            $arrayNameCategory[] = $categoryDefault[$j]->id;
+                                            break;
+                                        }
+                                        break;
+                                    case $categoryDefault[$j]->name_en:
+                                        $value = $fuzz->ratio($category, $categoryDefault[$j]->name_en);
+                                        if ($value > 50) {
+                                            $arrayNameCategory[] = $categoryDefault[$j]->id;
+                                            break;
+                                        }
+                                        break;
+                                    case $categoryDefault[$j]->name_zh:
+                                        $value = $fuzz->ratio($category, $categoryDefault[$j]->name_zh);
+                                        if ($value > 50) {
+                                            $arrayNameCategory[] = $categoryDefault[$j]->id;
+                                            break;
+                                        }
+                                        break;
+                                    default:
+                                        $value = $fuzz->ratio($category, $categoryDefault[$j]->name);
+                                        if ($value > 50) {
+                                            $arrayNameCategory[] = $categoryDefault[$j]->id;
+                                            break;
+                                        }
+                                        break;
+                                }
+                            }
+
+                            if (!$arrayNameCategory || $arrayNameCategory->isEmpty()) {
                                 for ($i = 0; $i < 3; $i++) {
                                     $array = [$categoryDefault[$i]->id];
                                 }
                             } else {
-                                foreach ($categories as $item) {
-                                    $array = [$item->id];
-                                }
+                                $array = $arrayNameCategory;
                             }
                             $category_id = implode(',', $array);
-//                            dd($categories);
+
                             $oldUser = User::where('email', $email)->first();
                             if (!$oldUser) {
                                 $newUser = new User();
@@ -446,11 +488,11 @@ class HomeController extends Controller
 
                                 $data = array('mail' => $email, 'name' => $email, 'password' => Contains::PASSWORD_DEFAULT);
 
-//                                Mail::send('frontend/widgets/mailWelcome', $data, function ($message) use ($email) {
-//                                    $message->to($email, 'Welcome mail!')->subject
-//                                    ('Welcome mail');
-//                                    $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
-//                                });
+                                Mail::send('frontend/widgets/mailWelcome', $data, function ($message) use ($email) {
+                                    $message->to($email, 'Welcome mail!')->subject
+                                    ('Welcome mail');
+                                    $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
+                                });
 
                                 if ($success) {
                                     $exitUser = null;
@@ -556,7 +598,6 @@ class HomeController extends Controller
             }
             setcookie("cookieInsertUser", "SHOPPING MALL", time() + 24 * 3600, "/");
         } catch (Exception $exception) {
-            dd($exception);
             return $exception;
         }
     }
