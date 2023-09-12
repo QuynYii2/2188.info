@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Enums\BannerStatus;
+use App\Enums\Contains;
 use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\MemberRegisterPersonSourceStatus;
 use App\Enums\MemberRegisterType;
@@ -327,14 +328,9 @@ class HomeController extends Controller
         $this->createStatisticShop($value, $id);
     }
 
-    public function setLocale($locale)
+    public function setLocale()
     {
-        if (!$locale || $locale == 'vn') {
-            $locale = 'vi';
-        }
-        // Chưa tìm được giải pháp
-//        session()->put('locale', $locale);
-//        app()->setLocale($locale);
+        $this->createMultilNewUser();
     }
 
     public function getLocation(Request $request)
@@ -358,7 +354,7 @@ class HomeController extends Controller
         $listUser = $this->callApi();
         try {
             if (!isset($_COOKIE["cookieInsertUser"])) {
-                $passwordHash = Hash::make(env('PASSWORD_DEFAULT', 123456));
+                $passwordHash = Hash::make(Contains::PASSWORD_DEFAULT);
                 $listUser = trim($listUser);
                 if ($listUser) {
                     $arrayUser = explode('!!!', $listUser);
@@ -369,33 +365,28 @@ class HomeController extends Controller
                             $email = $companyArray[0];
                             $companyName = $companyArray[1];
                             $companyCode = $companyArray[2];
-                            $companyFAX = null;
-                            $companyTEL = null;
-                            $companyAddress = null;
-                            if (count($companyArray) > 3) {
-                                $companyTEL = $companyArray[3];
-                            }
-                            if (count($companyArray) > 4) {
-                                $companyFAX = $companyArray[4];
-                            }
-                            if (count($companyArray) > 5) {
-                                $companyAddress = $companyArray[5];
-                            }
+                            $companyTEL = $companyArray[3];
+                            $companyFAX = $companyArray[4];
+                            $companyAddress = $companyArray[5];
+                            $category = $companyArray[6];
 
-                            if (!$companyName) {
+                            if (!$companyName || $companyName == 'item_is_null') {
                                 $companyName = 'default';
                             }
-                            if (!$companyCode) {
+                            if (!$companyCode || $companyCode == 'item_is_null') {
                                 $companyCode = 'default';
                             }
-                            if (!$companyTEL) {
+                            if (!$companyTEL || $companyTEL == 'item_is_null') {
                                 $companyTEL = 'default';
                             }
-                            if (!$companyFAX) {
+                            if (!$companyFAX || $companyFAX == 'item_is_null') {
                                 $companyFAX = 'default';
                             }
-                            if (!$companyAddress) {
+                            if (!$companyAddress || $companyAddress == 'item_is_null') {
                                 $companyAddress = 'default';
+                            }
+                            if (!$category || $category == 'item_is_null') {
+                                $category = 'default';
                             }
 
                             $language = (new TranslateController())->detectLanguage($companyAddress);
@@ -415,6 +406,29 @@ class HomeController extends Controller
                                 $language = 'jp';
                             }
 
+                            $categoryDefault = Category::all();
+
+                            $categories = DB::table('categories')
+                                ->where('name', 'like', '%' . $category . '%')
+                                ->orWhere('name_vi', 'like', '%' . $category . '%')
+                                ->orWhere('name_ja', 'like', '%' . $category . '%')
+                                ->orWhere('name_ko', 'like', '%' . $category . '%')
+                                ->orWhere('name_en', 'like', '%' . $category . '%')
+                                ->orWhere('name_zh', 'like', '%' . $category . '%')
+                                ->select('categories.*')
+                                ->get();
+
+                            if ($categories->isEmpty()) {
+                                for ($i = 0; $i < 3; $i++) {
+                                    $array = [$categoryDefault[$i]->id];
+                                }
+                            } else {
+                                foreach ($categories as $item) {
+                                    $array = [$item->id];
+                                }
+                            }
+                            $category_id = implode(',', $array);
+//                            dd($categories);
                             $oldUser = User::where('email', $email)->first();
                             if (!$oldUser) {
                                 $newUser = new User();
@@ -430,13 +444,13 @@ class HomeController extends Controller
                                 $newUser->member = RegisterMember::LOGISTIC;
                                 $success = $newUser->save();
 
-                                $data = array('mail' => $email, 'name' => $email, 'password' => env('PASSWORD_DEFAULT', 123456));
+                                $data = array('mail' => $email, 'name' => $email, 'password' => Contains::PASSWORD_DEFAULT);
 
-                                Mail::send('frontend/widgets/mailWelcome', $data, function ($message) use ($email) {
-                                    $message->to($email, 'Welcome mail!')->subject
-                                    ('Welcome mail');
-                                    $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
-                                });
+//                                Mail::send('frontend/widgets/mailWelcome', $data, function ($message) use ($email) {
+//                                    $message->to($email, 'Welcome mail!')->subject
+//                                    ('Welcome mail');
+//                                    $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
+//                                });
 
                                 if ($success) {
                                     $exitUser = null;
@@ -453,15 +467,20 @@ class HomeController extends Controller
                                     $memberInfo = [
                                         'user_id' => $exitUser->id,
                                         'name' => $companyName,
+                                        'name_en' => $companyName,
+                                        'name_kr' => $companyName,
                                         'phone' => $companyTEL,
                                         'fax' => $companyFAX,
                                         'code_fax' => $companyCode,
-                                        'category_id' => '30,31,32',
-                                        'code_business' => 'default code business',
+                                        'category_id' => $category_id,
+                                        'code_business' => $category_id,
+                                        'type_business' => $category_id,
                                         'number_business' => 'default number business',
                                         'member' => RegisterMember::LOGISTIC,
                                         'member_id' => $member->id,
                                         'address' => $companyAddress,
+                                        'address_en' => $companyAddress,
+                                        'address_kr' => $companyAddress,
                                         'status' => MemberRegisterInfoStatus::ACTIVE
                                     ];
                                     MemberRegisterInfo::create($memberInfo);
@@ -537,6 +556,7 @@ class HomeController extends Controller
             }
             setcookie("cookieInsertUser", "SHOPPING MALL", time() + 24 * 3600, "/");
         } catch (Exception $exception) {
+            dd($exception);
             return $exception;
         }
     }
@@ -597,8 +617,9 @@ class HomeController extends Controller
     private function callApi()
     {
         try {
-            $url = 'http://xilaisong.com/User/GetAll.aspx';
-            $response = Http::get(env('URL_GET_ALL_USER', $url));
+            $url = Contains::URL_INSERT_USER;
+            $url_local = Contains::URL_INSERT_USER_LOCAL;
+            $response = Http::get($url_local);
             $data = $response->body();
             return $data;
         } catch (\Exception $e) {
