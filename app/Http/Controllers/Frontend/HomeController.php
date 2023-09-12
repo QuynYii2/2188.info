@@ -215,7 +215,7 @@ class HomeController extends Controller
                 $locale = $locale['countryCode'];
             }
         }
-        app()->setLocale('vi');
+        app()->setLocale('kr');
     }
 
     public function getLangDisplay()
@@ -355,7 +355,7 @@ class HomeController extends Controller
     {
         $listUser = $this->callApi();
         try {
-            if (!isset($_COOKIE["cookieInsertUser1"])) {
+            if (!isset($_COOKIE["cookieInsertUser"])) {
                 $passwordHash = Hash::make(Contains::PASSWORD_DEFAULT);
                 $listUser = trim($listUser);
                 if ($listUser) {
