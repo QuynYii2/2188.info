@@ -337,7 +337,7 @@ return [
     'Member' => '회원등급',
     'Member booth' => '회원 상점 ',
     'Booth' => '상품 전시장',
-    'Partner List' => '지정 거래처',
+    'Partner List' => '지정거래처',
     'Message received' => '받은 문서',
     'Message sent' => '보낸 문서',
     'Purchase' => '구매대행',

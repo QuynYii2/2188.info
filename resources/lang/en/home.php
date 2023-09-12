@@ -342,7 +342,7 @@ return [
     'Member' => 'Hội viên ',
     'Member booth' => 'Gian hàng hội viên ',
     'Booth' => 'Gian hàng',
-    'Partner List' => 'Danh sách đối tác',
+    'Partner List' => 'Partner List',
     'Message received' => 'Tin nhắn đã nhận',
     'Message sent' => 'Tin nhắn đã gửi',
     'Purchase' => 'Mua hàng',
