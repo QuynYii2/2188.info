@@ -5,23 +5,23 @@
     <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title">Chi tiet mã giảm giá</h5>
+            <h5 class="card-title">{{ __('home.Thêm mới mã giảm giá') }}</h5>
         </div>
         <div class="container">
             <form action="{{route('seller.rank.setup.update', $rankSeller->id)}}" method="post">
                 @csrf
                 <div class="form-row">
                     <div class="form-group col-md-3">
-                        <label for="percent">Phần trăm giảm giá</label>
+                        <label for="percent">{{ __('home.Phần trăm giảm giá') }}</label>
                         <input type="number" min="1" max="100" class="form-control" name="percent" id="percent"
                                placeholder="60" value="{{$rankSeller->percent}}">
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="apply">Apply</label>
+                        <label for="apply">{{ __('home.apply') }}</label>
                         <div class="multiselect">
                             <div class="selectBox" id="div-click" onclick="showCheckboxes()">
                                 <select>
-                                    <option>Chọn rank áp dụng</option>
+                                    <option>{{ __('home.Chọn rank áp dụng') }}</option>
                                 </select>
                                 <div class="overSelect"></div>
                             </div>
@@ -40,11 +40,11 @@
                     </div>
                     <input id="rank_apply" hidden="" value="{{$rankSeller->apply}}">
                     <div class="form-group col-md-3">
-                        <label for="percent">Mã</label>
+                        <label for="percent">{{ __('home.Mã') }}</label>
                         <input type="text" class="form-control" disabled value="{{$rankSeller->code}}">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary">{{ __('home.Lưu') }}</button>
             </form>
         </div>
     </div>

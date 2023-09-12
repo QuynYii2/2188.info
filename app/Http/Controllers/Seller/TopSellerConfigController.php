@@ -20,8 +20,9 @@ use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class TopSellerConfigController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $configs = TopSellerConfig::where('user_id', Auth::user()->id)->get();
         return view('backend.top-seller-config.list', compact('configs'));
     }

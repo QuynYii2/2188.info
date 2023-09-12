@@ -10,7 +10,7 @@
     </style>
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title">Danh sách sản phẩm</h5>
+            <h5 class="card-title">{{ __('home.Danh sách sản phẩm') }}</h5>
             @if (session('success_update_product'))
                 <div class="alert alert-success">
                     {{ session('success_update_product') }}
@@ -23,13 +23,13 @@
                 <table  class="table">
                     <thead>
                     <tr>
-                        <th>Tên sản phẩm</th>
-                        <th>Tác giả</th>
-                        <th>Chuyên mục</th>
-                        <th>Giá</th>
-                        <th>Ảnh đại diện</th>
-                        <th>Thời gian</th>
-                        <th>Thao tác</th>
+                        <th>{{ __('home.Tên sản phẩm') }}</th>
+                        <th>{{ __('home.Tác giả') }}</th>
+                        <th>{{ __('home.chuyên mục') }}</th>
+                        <th>{{ __('home.Giá bán') }}</th>
+                        <th>{{ __('home.Avatar') }}</th>
+                        <th>{{ __('home.Thời gian') }}</th>
+                        <th>{{ __('home.Thao tác') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -52,8 +52,8 @@
                                     <a href="#" onclick="clickBtn({{ $product->id}})"><i style="color: #d52727"
                                                                                          class="fa-solid fa-trash-can"></i></a>
                                     <button id="btn-delete-product-{{ $product->id}}" hidden type="submit"
-                                            onclick="return confirm('Bạn có chắc chắn muốn xóa?')">
-                                        Xoa
+                                            onclick="return confirm({{ __('home.Bạn có chắc chắn muốn xóa?') }})">
+                                        {{ __('home.Xoá') }}
                                     </button>
                                 </form>
                             </td>

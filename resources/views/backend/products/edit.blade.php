@@ -103,18 +103,18 @@
                     @endif
                     <div class="col-12 col-md-7 border-right mt-2 rm-pd-on-mobile">
                         <div class="form-group">
-                            <div class="name">Tên sản phẩm</div>
+                            <div class="name">{{ __('home.Tên sản phẩm') }}</div>
                             <input type="text" class="form-control" name="name" id="name"
                                    placeholder="Nhập tên sản phẩm" value="{{($product->name)}}"
                                    required>
                         </div>
                         <div class="form-group">
-                            <label for="short_description">Mô tả ngắn</label>
+                            <label for="short_description">{{ __('home.Mô tả ngắn') }}</label>
                             <textarea id="short_description" class="form-control description" name="short_description"
                                       rows="5">{{$product->short_description}}</textarea>
                         </div>
                         <div class="form-group">
-                            <label for="description">Mô tả chi tiết</label>
+                            <label for="description">{{ __('home.Mô tả chi tiết') }}</label>
                             <textarea id="description" class="form-control description" name="description"
                                       rows="5">{{$product->description}}</textarea>
                         </div>
@@ -124,7 +124,7 @@
                             @for($i = 0; $i< count($permissionUsers); $i++)
                                 @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm hot')
                                     <div class="col-4 d-flex align-items-center">
-                                        <label for="hot_product">Sản phẩm hot</label>
+                                        <label for="hot_product">{{ __('home.Sản phẩm hot') }}</label>
                                         <div class="col-4 col-sm-4">
                                             <input class="form-control" type="checkbox" id="hot_product"
                                                    name="hot_product">
@@ -136,7 +136,7 @@
                             @for($i = 0; $i< count($permissionUsers); $i++)
                                 @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm nổi bật')
                                     <div class="col-4 d-flex align-items-center">
-                                        <label for="feature_product" class="">Sản phẩm nổi bật</label>
+                                        <label for="feature_product" class="">{{ __('home.Sản phẩm nổi bật') }}</label>
                                         <div class="col-4 col-sm-4">
                                             <input class="form-control" type="checkbox" id="feature_product"
                                                    name="feature_product">
@@ -148,7 +148,7 @@
                         </div>
 
                         <div class="form-group col-12 col-sm-12 ">
-                            <label for="gallery">Thư viện ảnh:</label>
+                            <label for="gallery">{{ __('home.Thư viện ảnh') }}:</label>
                             @include('backend.products.modal-media')
                             @php
                                 $input = $product->gallery;
@@ -195,7 +195,7 @@
                                             @endforeach
                                         </div>
                                         <div class="form-group  col-6">
-                                            <label for="price">Giá bán</label>
+                                            <label for="price">{{ __('home.Giá bán') }}</label>
                                             <input type="number"
                                                    class="form-control"
                                                    id="price{{$productDetail->id}}"
@@ -212,7 +212,7 @@
                                                    value="{{$productDetail->price }}">
                                         </div>
 
-                                        <label for="thumbnail">Thumbnail</label>
+                                        <label for="thumbnail">{{ __('home.thumbnail') }}</label>
                                         <div class="form-group col-12">
                                             @if ($productDetail->thumbnail)
                                                 <img class="mt-2 mb-2"
@@ -383,7 +383,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="name">Tất cả danh mục</div>
+                            <div class="name">{{ __('home.Tất cả danh mục') }}</div>
                             @php
                                 $categories = DB::table('categories')->where('parent_id', null)->get();
                                 $productListCategory = $product->list_category;
@@ -472,7 +472,7 @@
         <form action="#" id="formDeleteVariable" class="d-none" method="POST">
             @csrf
             @method('DELETE')
-            <button type="submit" id="btnDeleteVariable">Delete</button>
+            <button type="submit" id="btnDeleteVariable">{{ __('home.Delete') }}</button>
         </form>
     </div><!-- wpcontent -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

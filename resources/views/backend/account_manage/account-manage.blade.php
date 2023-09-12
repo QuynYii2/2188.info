@@ -157,13 +157,13 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Avatar</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Loại hội viên</th>
-                    <th>Status</th>
-                    <th>Action</th>
+                    <th>{{ __('home.Avatar') }}</th>
+                    <th>{{ __('home.name') }}</th>
+                    <th>{{ __('home.email') }}</th>
+                    <th>{{ __('home.statusole') }}</th>
+                    <th>{{ __('home.Loại hội viên') }}</th>
+                    <th>{{ __('home.Status') }}</th>
+                    <th>{{ __('home.Action') }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -229,7 +229,7 @@
 
     <script>
         function confirmDelete() {
-             return confirm("Bạn có chắc chắn muốn xóa?")
+             return confirm({{ __('home.Bạn có chắc chắn muốn xóa?') }})
         }
     </script>
 @endsection

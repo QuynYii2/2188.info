@@ -30,19 +30,19 @@
                 <tr>
                     <td id="cb" class="manage-column column-cb check-column">
                         <label class="screen-reader-text" for="cb-select-all-1">
-                            Chọn toàn bộ
+                            {{ __('home.chọn toàn bộ') }}
                         </label>
                         <input id="cb-select-all-1" type="checkbox">
                     </td>
                     <th scope="col" id="thumb" class="manage-column column-thumb">
               <span class="wc-image tips">
-                Image
+                {{ __('home.Image') }}
               </span>
                     </th>
                     <th scope="col" id="name" class="manage-column column-name column-primary sortable desc">
                         <a href="#">
                 <span>
-                  Name
+                  {{ __('home.Name') }}
                 </span>
                             <span class="sorting-indicator">
                 </span>
@@ -51,26 +51,26 @@
                     <th scope="col" id="sku" class="manage-column column-sku sortable desc">
                         <a href="#">
                 <span>
-                  Người đăng
+                  {{ __('home.người đăng') }}
                 </span>
                             <span class="sorting-indicator">
                 </span>
                         </a>
                     </th>
                     <th scope="col" id="is_in_stock" class="manage-column column-is_in_stock">
-                        Stock
+                        {{ __('home.pricetock') }}
                     </th>
                     <th scope="col" id="price" class="manage-column column-price sortable desc">
                         <a href="#">
                 <span>
-                  Price
+                  {{ __('home.Price') }}
                 </span>
                             <span class="sorting-indicator">
                 </span>
                         </a>
                     </th>
                     <th scope="col" id="product_cat" class="manage-column column-product_cat">
-                        Categories
+                        {{ __('home.CATEGORIES') }}
                     </th>
                     <th scope="col" id="hot" class="manage-column column-hot style-RlVfN">
                               <span class="wc-hot parent-tips" data-tip="Hot">
@@ -78,12 +78,12 @@
                               </span>
                     </th>
                     <th scope="col" id="featured" class="manage-column column-featured style-RlVfN">
-                        Featured
+                        {{ __('home.featured') }}
                     </th>
                     <th scope="col" id="date" class="manage-column column-date sortable asc">
                         <a href="#">
                                 <span>
-                                    Date
+                                    {{ __('home.Date') }}
                                 </span>
                             <span class="sorting-indicator">
                                 </span>
@@ -101,13 +101,13 @@
                             class="iedit author-self level-0 post-42 type-product status-publish hentry product_cat-uncategorized entry">
                             <th scope="row" class="check-column">
                                 <label class="screen-reader-text" for="cb-select-42">
-                                    Chọn {{$product->name}}
+                                    {{ __('home.chọn') }} {{$product->name}}
                                 </label>
                                 <input id="cb-select-{{$product->id}}" type="checkbox" name="post[]"
                                        value="{{$product->id}}">
                                 <div class="locked-indicator">
                                     <span class="locked-indicator-icon" aria-hidden="true"></span>
-                                    <span class="screen-reader-text">“{{$product->name}}” đã bị khóa</span>
+                                    <span class="screen-reader-text">“{{$product->name}}” {{ __('home.đã bị khóa') }}</span>
                                 </div>
                             </th>
                             <td class="thumb column-thumb" data-colname="Image">
@@ -141,7 +141,7 @@
                                     <span class="edit">
                                           <a href="{{route('seller.products.edit', $product->id)}}"
                                              aria-label="Sửa “{{$product->name}}”">
-                                            Chỉnh sửa
+                                            {{ __('home.chỉnh sửa') }}
                                           </a>
                                       |
                                     </span>
@@ -151,7 +151,7 @@
                                                   aria-expanded="false" data-toggle="modal"
                                                   onclick="checkHotAndFeature({{$product->id}});"
                                                   data-target="#exampleQuickEditProduct{{$product->id}}">
-                                            Sửa nhanh
+                                            {{ __('home.Sửa nhanh') }}
                                           </button>
                                           |
                                         <!-- Modal -->
@@ -179,14 +179,14 @@
                                                           <div class="modal-body">
 
                                                               <div class="form-group">
-                                                                <label for="name">Name</label>
+                                                                <label for="name">{{ __('home.Name') }}</label>
                                                                 <input type="text" class="form-control" id="name"
                                                                        name="name"
                                                                        value="{{ $product->name }}">
                                                               </div>
 
                                                                <div class="form-group">
-                                                                    <label for="category">Category</label>
+                                                                    <label for="category">{{ __('home.category') }}</label>
                                                                     <select class="form-control" id="category"
                                                                             name="category_id">
                                                                         <option value="">-- Select Category --</option>
@@ -199,18 +199,18 @@
                                                                 </div>
 
                         <div class="form-group">
-                            <div class="name">Xuất xứ</div>
+                            <div class="name">{{ __('home.Xuất xứ') }}</div>
                             <input type="text" class="form-control" name="origin" id="origin" placeholder="Nhập xuất xứ"
                                    value="{{$product->origin}}">
                         </div>
                         <div class="form-group">
-                            <div class="name">Sản phẩm tối thiểu</div>
+                            <div class="name">{{ __('home.Sản phẩm tối thiểu') }}</div>
                             <input type="number" value="{{$product->min}}" class="form-control" name="min" id="min"
                                    placeholder="Nhập số lượng tối thiểu" min="1">
                         </div>
                         <div class="form-group">
                             <div class="d-flex">
-                                <div class="name">Mua nhiều giảm giá</div>
+                                <div class="name">{{ __('home.Mua nhiều giảm giá') }}</div>
                             </div>
                             <div>
                                 <div class="">
@@ -220,7 +220,7 @@
 
                                         </div>
                                         <button type="button" class="btn add-form-field"><i
-                                                    class="fa-solid fa-plus"></i> Thêm khoảng giá</button>
+                                                    class="fa-solid fa-plus"></i> {{ __('home.Thêm khoảng giá') }}</button>
                                     </div>
                                     <div id="base-package-fields" hidden>
                                         @php
@@ -506,11 +506,10 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <h5 class="text-center">
-                                                                        Bạn có chắc chắn muốn xoá product: {{$product->name}}
+                                                                        {{ __('home.Bạn có chắc chắn muốn xoá') }} : {{$product->name}}
                                                                     </h5>
                                                                     <p class="text-danger">
-                                                                        Nếu xoá bạn sẽ không thể không thể tìm thấy nó!
-                                                                        Chúng tôi sẽ không chịu trách nhiệm cho việc này!
+                                                                        {{ __('home.Nếu xoá bạn sẽ không thể không thể tìm thấy nó!Chúng tôi sẽ không chịu trách nhiệm cho việc này!') }}
                                                                     </p>
                                                                 </div>
                                                                 <div class="modal-footer">

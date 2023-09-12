@@ -1,17 +1,17 @@
 @extends('backend.layouts.master')
 @section('title', 'Create Top Seller')
 @section('content')
-    <h5 class="text-center mt-3 mb-4">Create marketing</h5>
+    <h5 class="text-center mt-3 mb-4">{{ __('home.Create marketing') }}</h5>
     <div class="card p-3">
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-secondary mb-3" data-toggle="modal" data-target="#exampleModal">Preview
+        <button type="button" class="btn btn-secondary mb-3" data-toggle="modal" data-target="#exampleModal">{{ __('home.Preview') }}
         </button>
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" style="max-width: 70vw">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Preview</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Preview') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -24,7 +24,7 @@
             </div>
         </div>
         <select class="form-select mb-4" aria-label="Default select example" id="selectMarketing">
-            <option id="marketing_product" value="1">Product</option>
+            <option id="marketing_product" value="1">{{ __('home.Product') }}</option>
         </select>
 
         <form id="marketing_product_form" class="marketing_product" action="{{route('seller.config.create')}}"

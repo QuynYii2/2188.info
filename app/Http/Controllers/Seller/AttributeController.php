@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Enums\AttributeStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\TranslateController;
 use App\Models\Attribute;
 use Illuminate\Http\Request;
@@ -11,8 +12,9 @@ use Illuminate\Support\Facades\Auth;
 
 class AttributeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $attributes = Attribute::where([['status', '!=', AttributeStatus::DELETED], ['user_id', Auth::user()->id]])->get();
         return view('backend.attributes.index', compact('attributes'));
 

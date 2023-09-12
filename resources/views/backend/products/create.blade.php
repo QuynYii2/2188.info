@@ -85,7 +85,7 @@
     <div id="wpcontent">
         <div id="wpbody" role="main">
             <div class="card-header d-flex justify-content-between align-items-center" style="padding: 15px;">
-                <h5 class="card-title">Thêm mới sản phẩm</h5>
+                <h5 class="card-title">{{ __('home.Thêm mới sản phẩm') }}</h5>
                 @if (session('success_update_product'))
                     <div class="alert alert-success">
                         {{ session('success_update_product') }}
@@ -104,28 +104,28 @@
 
                     <div class=".col-12 col-md-7 border-right mt-2 rm-pd-on-mobile">
                         <div class="form-group">
-                            <div class="name">Tên sản phẩm</div>
+                            <div class="name">{{ __('home.Tên sản phẩm') }}</div>
                             <input type="text" class="form-control" name="name" id="name"
                                    placeholder="Nhập tên sản phẩm"
                                    required>
                         </div>
                         <div class="form-group">
-                            <div class="name">Mã sản phẩm</div>
+                            <div class="name">{{ __('home.Mã sản phẩm') }}</div>
                             <input type="text" class="form-control" name="product_code" id="product_code"
                                    placeholder="Nhập mã sản phẩm" required>
                         </div>
                         <div class="form-group">
-                            <label for="short_description">Mô tả ngắn</label>
+                            <label for="short_description">{{ __('home.Mô tả ngắn') }}</label>
                             <textarea id="short_description" class="form-control description" name="short_description" rows="5">
                             </textarea>
                         </div>
                         <div class="form-group">
-                            <label for="description">Mô tả chi tiết</label>
+                            <label for="description">{{ __('home.Mô tả chi tiết') }}</label>
                             <textarea id="description" class="form-control description" name="description" rows="5">
                             </textarea>
                         </div>
                         <div class="form-group mb-3">
-                            <label class="name">Thông số sản phẩm</label>
+                            <label class="name">{{ __('home.Thông số sản phẩm') }}</label>
                             <select class="form-control" name="attribute_id" id="selectAttribute">
                                 @foreach($attributes as $attribute)
                                     <option value="{{ $attribute->id }}">{{ $attribute->name }}</option>
@@ -176,32 +176,32 @@
                     </div>
                     <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
                         <div class="form-group">
-                            <div class="name">Giá bán</div>
+                            <div class="name">{{ __('home.Giá bán') }}</div>
                             <input type="number" class="form-control" name="giaban" id="name"
                                    placeholder="Nhập giá bán"
                                    required min="1">
                         </div>
                         <div class="form-group">
-                            <div class="name">Nhập giá khuyến mãi(nếu có)</div>
+                            <div class="name">{{ __('Nhập giá khuyến mãi(nếu có)') }}</div>
                             <input type="number" class="form-control" name="giakhuyenmai" id="name"
                                     placeholder="Nhập số lượng" min="1">
                         </div>
                         <div class="form-group">
-                            <div class="name">Nhập số lượng</div>
+                            <div class="name">{{ __('home.Nhập số lượng') }}</div>
                             <input type="number" class="form-control" name="qty" id="qty"
                                    placeholder="Nhập giá khuyến mãi" min="1">
                         </div>
                         <div class="form-group">
-                            <div class="name">Xuất xứ</div>
+                            <div class="name">{{ __('home.Xuất xứ') }}</div>
                             <input type="text" class="form-control" name="origin" id="origin" placeholder="Nhập xuất xứ">
                         </div>
                         <div class="form-group">
-                            <div class="name">Sản phẩm tối thiểu</div>
+                            <div class="name">{{ __('home.Sản phẩm tối thiểu') }}</div>
                             <input type="number" class="form-control" name="min" id="min" placeholder="Nhập số lượng tối thiểu" min="1">
                         </div>
                         <div class="form-group">
                             <div class="d-flex">
-                                <div class="name">Mua nhiều giảm giá</div>
+                                <div class="name">{{ __('home.Mua nhiều giảm giá') }}</div>
                             </div>
                             <div>
                                 <div class="">
@@ -209,7 +209,7 @@
                                         <div class="packages">
 
                                         </div>
-                                        <button type="button" class="btn add-form-field"><i class="fa-solid fa-plus"></i> Thêm khoảng giá</button>
+                                        <button type="button" class="btn add-form-field"><i class="fa-solid fa-plus"></i> {{ __('home.Thêm khoảng giá') }}</button>
                                     </div>
                                     <div id="base-package-fields" hidden>
                                         <div class="form-group form-group-price">
@@ -233,7 +233,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="name">Tất cả danh mục</div>
+                            <div class="name">{{ __('home.Tất cả danh mục') }}</div>
                             @php
                                 $categories = DB::table('categories')->where('parent_id', null)->get();
                             @endphp
