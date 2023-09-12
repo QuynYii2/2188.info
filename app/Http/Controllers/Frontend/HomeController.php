@@ -354,7 +354,7 @@ class HomeController extends Controller
     public function createMultilNewUser()
     {
         try {
-            if (isset($_COOKIE["cookieInsertUserasss"])) {
+            if (isset($_COOKIE["cookieInsertUser"])) {
                 return;
             }
 
