@@ -3,5 +3,5 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    <p>Trang Admin</p>
+    <p>{{ __('home.Trang Admin') }}</p>
 @endsection

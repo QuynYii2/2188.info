@@ -153,7 +153,7 @@
     <div class="container-fluid">
 
         {{--        <a href="{{ route('storage.manage.export.pdf') }}"><button>Pdf</button></a>--}}
-        <h2>                                                Quản lý kho hàng</h2>
+        <h2>{{ __('home.quản lý kho hàng') }}</h2>
 
         <form action="{{ route('storage.manage.search') }}" class="row my-2 ">
             @csrf
@@ -178,7 +178,7 @@
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <button type="submit" class="btn btn-success position-absolute" style="bottom: 0">Search</button>
+                <button type="submit" class="btn btn-success position-absolute" style="bottom: 0">{{ __('home.search') }}</button>
             </div>
         </form>
         <form action="{{ route('storage.manage.export.excel') }}" method="post">
@@ -190,13 +190,13 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>Tên sản phẩm</th>
-                <th>Giá bán</th>
-                <th>Số lượng</th>
-                <th>Xuất xứ</th>
-                <th>Người nhập kho</th>
-                <th>Ngày nhập kho</th>
-                <th>Hành động</th>
+                <th>{{ __('home.Tên sản phẩm') }}</th>
+                <th>{{ __('home.Giá bán') }}</th>
+                <th>{{ __('home.Số lượng') }}</th>
+                <th>{{ __('home.Xuất xứ') }}</th>
+                <th>{{ __('home.người nhập kho') }}</th>
+                <th>{{ __('home.hgày nhập kho') }}</th>
+                <th>{{ __('home.hành động') }}</th>
             </tr>
             </thead>
             <tbody>

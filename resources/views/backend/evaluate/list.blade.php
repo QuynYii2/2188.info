@@ -8,7 +8,7 @@
         }
     </style>
     <div class="card-header" style="display: flex; justify-content: space-between; align-items: center">
-        <h5 class="card-title">Danh sách Đánh giá</h5>
+        <h5 class="card-title">{{ __('home.danh sách đánh giá') }}</h5>
     </div>
     <div class="container-fluid evaluate-list" style="height: 100vh">
         <div class="card">
@@ -19,11 +19,11 @@
                         <tr>
                             <th></th>
                             <th>ID</th>
-                            <th>Tên user</th>
-                            <th>ID sản phẩm</th>
-                            <th>Nội dung</th>
-                            <th>Trạng thái</th>
-                            <th>Action</th>
+                            <th>{{ __('home.Tên user') }}</th>
+                            <th>{{ __('home.ID sản phẩm') }}</th>
+                            <th>{{ __('home.Nội dung') }}</th>
+                            <th>{{ __('home.Trạng thái') }}</th>
+                            <th>{{ __('home.Action') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -38,14 +38,14 @@
                                     <td>{{ $evaluate->status }}</td>
                                     <td>
                                         <a href="{{ route('seller.evaluates.detail', $evaluate->id) }}"
-                                           class="btn btn-primary">Chi tiết</a>
+                                           class="btn btn-primary">{{ __('home.Chi tiết') }}</a>
                                         <form action="{{ route('seller.evaluates.delete', $evaluate->id) }}"
                                               method="POST"
                                               style="display: inline-block">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger"
-                                                    onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa
+                                                    onclick="return confirm({{ __('home.Bạn có chắc chắn muốn xóa') }})">{{ __('home.delete') }}
                                             </button>
                                         </form>
                                     </td>

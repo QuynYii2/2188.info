@@ -3,7 +3,7 @@
 @section('content')
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title">Đơn hàng</h5>
+            <h5 class="card-title">{{ __('home.Đơn hàng') }}</h5>
         </div>
         <form action="{{ route('seller.search.order.list') }}" class="row my-2 pl-3">
             @csrf
@@ -28,7 +28,7 @@
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <button type="submit" class="btn btn-success position-absolute" style="bottom: 0">Search</button>
+                <button type="submit" class="btn btn-success position-absolute" style="bottom: 0">{{ __('home.search<') }}/button>
             </div>
         </form>
         <form action="{{ route('order.manage.export.excel') }}" class="pl-3" method="post" id="formExportAll">

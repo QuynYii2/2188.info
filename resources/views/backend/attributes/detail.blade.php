@@ -14,7 +14,7 @@
                     <tbody>
                     <tr class="form-field form-required">
                         <th scope="row" valign="top">
-                            <label for="attribute_name">Name</label>
+                            <label for="attribute_name">{{ __('home.Name') }}</label>
                         </th>
                         <td>
                             <input name="attribute_name" id="attribute_name" type="text"

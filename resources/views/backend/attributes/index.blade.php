@@ -32,7 +32,7 @@
                             <thead>
                             <tr>
                                 <th scope="col">
-                                    Name
+                                    {{ __('home.Name') }}
                                 </th>
                                 <th scope="col">
                                     Slug
@@ -144,7 +144,7 @@
                                 @csrf
                                 <div class="form-field">
                                     <label for="attribute_name">
-                                        Name
+                                        {{ __('home.Name') }}
                                     </label>
                                     <input name="attribute_name" id="attribute_name" type="text" value="">
                                 </div>

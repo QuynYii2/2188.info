@@ -6,14 +6,14 @@
         @csrf
 
         <div class="form-group">
-            <label for="name">Tên danh mục</label>
+            <label for="name">{{ __('home.Tên danh mục') }}</label>
             <input type="text" name="name" id="name" class="form-control" required>
         </div>
 
         <div class="form-group">
-            <label for="parent_id">Danh mục cha</label>
+            <label for="parent_id">{{ __('home.Danh mục cha') }}</label>v
             <select name="parent_id" id="parent_id" class="form-control">
-                <option value="">-- Chọn danh mục cha --</option>
+                <option value="">{{ __('home.-- Chọn danh mục cha --') }}</option>
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
@@ -21,11 +21,11 @@
         </div>
 
         <div class="form-group">
-            <label for="thumbnail">Thumbnail</label>
+            <label for="thumbnail">{{ __('home.thumbnail') }}</label>
             <input type="file" name="thumbnail" id="thumbnail" class="form-control" accept="image/*">
         </div>
 
-        <button type="submit" class="btn btn-primary">Thêm mới</button>
+        <button type="submit" class="btn btn-primary">{{ __('home.thêm mới') }}</button>
     </form>
 
 @endsection

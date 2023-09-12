@@ -29,8 +29,9 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $categories = Category::all();
         $isAdmin = (new HomeController())->checkAdmin();
         if ($isAdmin) {
@@ -46,8 +47,9 @@ class ProductController extends Controller
         return view('backend/products/index', ['products' => $products, 'categories' => $categories]);
     }
 
-    public function home()
+    public function home(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $productProcessings = DB::table('order_items')
             ->join('orders', 'orders.id', '=', 'order_items.order_id')
             ->join('products', 'products.id', '=', 'order_items.product_id')
@@ -96,8 +98,9 @@ class ProductController extends Controller
             'promotions'));
     }
 
-    public function toggleProduct($id)
+    public function toggleProduct(Request $request, $id)
     {
+        (new HomeController())->getLocale($request);
         $product = Product::find($id);
         if ($product->status == ProductStatus::ACTIVE) {
             $product->status = ProductStatus::INACTIVE;
@@ -111,6 +114,7 @@ class ProductController extends Controller
 
     public function getProductsViews(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $user = Auth::user()->id;
         $role_id = DB::table('role_user')->where('user_id', $user)->get();
         $isAdmin = false;
@@ -170,8 +174,9 @@ class ProductController extends Controller
     }
 
 
-    public function create()
+    public function create(Request $request )
     {
+        (new HomeController())->getLocale($request);
         $categories = Category::all();
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', Auth::user()->id]])->get();
 
@@ -194,6 +199,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        (new HomeController())->getLocale($request);
         try {
             $maxProduct = Product::where([
                 ['user_id', Auth::user()->id],
@@ -324,9 +330,9 @@ class ProductController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-
+        (new HomeController())->getLocale($request);
         $product = Product::findOrFail($id);
         $categories = Category::all();
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', \Illuminate\Support\Facades\Auth::user()->id]])->get();
@@ -346,6 +352,7 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
+        (new HomeController())->getLocale($request);
         try {
             $product = Product::findOrFail($id);
 
@@ -692,6 +699,7 @@ class ProductController extends Controller
 
     private function createProduct($product, $request, $number)
     {
+        (new HomeController())->getLocale($request);
         $arrayIDs = $this->getCategory($request);
         if (!$arrayIDs || count($arrayIDs) == 0) {
             $categories = Category::all();

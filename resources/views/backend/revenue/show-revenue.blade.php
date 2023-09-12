@@ -71,7 +71,7 @@
     </style>
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title">Doanh thu</h5>
+            <h5 class="card-title">{{ __('home.Doanh thu') }}</h5>
         </div>
     </div>
 
@@ -79,11 +79,11 @@
         @csrf
         <div class="form-row">
             <div class="form-group col-md-3">
-                <label for="startDate">Từ ngày :</label>
+                <label for="startDate">{{ __('home.từ ngày') }} :</label>
                 <input class="form-control" type="date" id="startDate" name="startDate">
             </div>
             <div class="form-group col-md-3">
-                <label for="endDate">Đến ngày :</label>
+                <label for="endDate">{{ __('home.đến ngày') }} :</label>
                 <input class="form-control" type="date" id="endDate" name="endDate">
             </div>
 {{--            <div class="form-group col-md-3">--}}
@@ -96,7 +96,7 @@
 {{--            </div>--}}
             @if($isAdmin && $arraySeller)
                 <div class="form-group col-md-3">
-                    <label for="inputState">Seller name</label>
+                    <label for="inputState">{{ __('home.Seller name') }}</label>
                     <select id="inputState" name="seller" class="form-control">
                         @for($i=0; $i<count($arraySeller); $i++)
                             @php
@@ -108,30 +108,30 @@
                 </div>
             @endif
             <div class="form-group col-md-3">
-                <label for="inputState">Quốc gia</label>
+                <label for="inputState">{{ __('home.Quốc gia') }}</label>
                 <select id="inputState" name="location" class="form-control">
-                    <option value="all">All</option>
-                    <option value="vi">VietNam</option>
-                    <option value="kr">Korea</option>
-                    <option value="cn">China</option>
-                    <option value="jp">Japan</option>
+                    <option value="all">{{ __('home.All') }}</option>
+                    <option value="vi">{{ __('home.VietNam') }}</option>
+                    <option value="kr">{{ __('home.Korea') }}</option>
+                    <option value="cn">{{ __('home.China') }}</option>
+                    <option value="jp">{{ __('home.Japan') }}</option>
                 </select>
             </div>
         </div>
-        <a href="{{ route('revenues.excel') }}" class="btn btn-success">Excel</a>
-        <button type="submit" class="btn btn-success">Search</button>
-        <a href="{{route('revenues.index')}}" class="btn btn-secondary">Back</a>
+        <a href="{{ route('revenues.excel') }}" class="btn btn-success">{{ __('home.Excel') }}</a>
+        <button type="submit" class="btn btn-success">{{ __('home.search') }}</button>
+        <a href="{{route('revenues.index')}}" class="btn btn-secondary">{{ __('home.back') }}</a>
     </form>
 
     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
         <tr>
             <th class="th-sm">#</th>
-            <th class="th-sm">Seller name</th>
-            <th class="th-sm">Xếp hạng</th>
-            <th class="th-sm">Quốc gia</th>
-            <th class="th-sm">Ngày</th>
-            <th class="th-sm">Doanh thu</th>
+            <th class="th-sm">{{ __('home.ankeller name') }}</th>
+            <th class="th-sm">{{ __('home.Xếp hạng') }}</th>
+            <th class="th-sm">{{ __('home.Quốc gia') }}</th>
+            <th class="th-sm">{{ __('home.Ngày') }}</th>
+            <th class="th-sm">{{ __('home.Doanh thu') }}</th>
         </tr>
         </thead>
         <tbody>

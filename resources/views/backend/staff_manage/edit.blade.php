@@ -31,20 +31,20 @@
                 @method('PUT')
 
                 <div class="form-group">
-                    <label for="name">Name</label>
+                    <label for="name">{{ __('home.Name') }}</label>
                     <input type="text" class="form-control" id="name" name="name" value="{{ $product->name }}">
                 </div>
                 <div class="form-group">
-                    <label for="price">Giá bán</label>
+                    <label for="price">{{ __('home.Giá bán') }}</label>
                     <input type="number" class="form-control" id="price" name="price" value="{{ $product->price }}">
                 </div>
                 <div class="form-group">
-                    <label for="qty">Giá khuyến mãi</label>
+                    <label for="qty">{{ __('home.Giá khuyến mãi') }}</label>
                     <input type="number" class="form-control" id="qty" name="qty" value="{{ $product->qty }}">
                 </div>
 
                 <div class="form-group">
-                    <label for="category">Category</label>
+                    <label for="category">{{ __('home.category') }}</label>
                     <select class="form-control" id="category" name="category_id">
                         <option value="">-- Select Category --</option>
                         @foreach ($categories as $category)
@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label">Thông số sản phẩm</label>
+                    <label class="control-label">{{ __('home.Thông số sản phẩm') }}</label>
                     @foreach($attributes as $attribute)
                         @php
                             $properties = DB::table('properties')->where([['status', PropertiStatus::ACTIVE], ['attribute_id', $attribute->id]])->get();
@@ -108,7 +108,7 @@
                     @for($i = 0; $i< count($permissionUsers); $i++)
                         @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm hot')
                             <div class="col-4 d-flex">
-                                <label for="hot_product" class="col-8 col-sm-8">Sản phẩm hot</label>
+                                <label for="hot_product" class="col-8 col-sm-8">{{ __('home.Sản phẩm hot') }}</label>
                                 <div class="col-4 col-sm-4">
                                     <input class="form-control" type="checkbox" id="hot_product" name="hot_product">
                                 </div>
@@ -119,7 +119,7 @@
                     @for($i = 0; $i< count($permissionUsers); $i++)
                         @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm nổi bật')
                             <div class="col-4 d-flex">
-                                <label for="feature_product" class="col-8 col-sm-8">Sản phẩm nổi bật</label>
+                                <label for="feature_product" class="col-8 col-sm-8">{{ __('home.Sản phẩm nổi bật') }}</label>
                                 <div class="col-4 col-sm-4">
                                     <input class="form-control" type="checkbox" id="feature_product"
                                            name="feature_product">
@@ -131,7 +131,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="thumbnail">Thumbnail</label>
+                    <label for="thumbnail">{{ __('home.thumbnail') }}</label>
                     <input type="file" class="form-control-file" id="thumbnail" name="thumbnail" accept="image/*">
                     @if ($product->thumbnail)
                         <a href="{{ asset('storage/' . $product->thumbnail) }}" data-fancybox="group"

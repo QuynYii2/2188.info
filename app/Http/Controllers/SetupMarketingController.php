@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Frontend\HomeController;
 use App\Models\SetupMarketing;
 use Illuminate\Http\Request;
 
 class SetupMarketingController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $setups = SetupMarketing::all();
         return view('admin.setup-marketing.list', compact('setups'));
     }

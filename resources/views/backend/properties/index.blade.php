@@ -32,16 +32,16 @@
                             <thead>
                             <tr>
                                 <th scope="col">
-                                    Name
+                                    {{ __('home.Name') }}
                                 </th>
                                 <th scope="col">
-                                    Description
+                                    {{ __('home.countescription') }}
                                 </th>
                                 <th scope="col">
                                     Slug
                                 </th>
                                 <th scope="col">
-                                    Counts
+                                    {{ __('home.Count') }}
                                 </th>
                             </tr>
                             </thead>
@@ -58,14 +58,14 @@
                                             <div class="row-actions">
                                                 <span class="edit">
                                                     <a href="{{route('properties.detail', $property->id)}}">
-                                                        Edit
+                                                        {{ __('home.edit') }}
                                                     </a>
                                                     |
                                                 </span>
                                                 <span class="quick-edit">
                                                     <a href="#" data-toggle="modal"
                                                        data-target="#modalEditAttribute{{$property->id}}">
-                                                        Quick Edit
+                                                        {{ __('home.Quick Edit') }}
                                                     </a>
                                                     |
                                                     <!-- Modal -->
@@ -79,7 +79,7 @@
                                                                 @csrf
                                                                 <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">Update {{$property->name}}</h5>
+                                                                    <h5 class="modal-title" id="exampleModalLabel">{{ __('home.update') }} {{$property->name}}</h5>
                                                                     <button type="button" class="close"
                                                                             data-dismiss="modal" aria-label="Close">
                                                                       <span aria-hidden="true">&times;</span>
@@ -90,7 +90,7 @@
                                                                             <tbody>
                                                                             <tr class="form-field form-required term-name-wrap">
                                                                                 <th scope="row"><label
-                                                                                            for="property_name">Tên</label></th>
+                                                                                            for="property_name">{{ __('home.Name') }}</label></th>
                                                                                 <td><input name="property_name"
                                                                                            id="property_name"
                                                                                            type="text"
@@ -102,7 +102,7 @@
                                                                             </tr>
                                                                             <tr class="form-field term-slug-wrap">
                                                                                 <th scope="row"><label
-                                                                                            for="property_slug">Đường dẫn</label></th>
+                                                                                            for="property_slug">{{ __('home.Đường dẫn') }}</label></th>
                                                                                 <td><input name="property_slug"
                                                                                            id="property_slug"
                                                                                            type="text"
@@ -112,7 +112,7 @@
                                                                             </tr>
                                                                             <tr class="form-field term-description-wrap">
                                                                                 <th scope="row"><label
-                                                                                            for="property_description">Mô tả</label></th>
+                                                                                            for="property_description">{{ __('home.Mô tả') }}</label></th>
                                                                                 <td><textarea
                                                                                             name="property_description"
                                                                                             id="property_description"
@@ -128,9 +128,9 @@
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
-                                                                            data-dismiss="modal">Close</button>
+                                                                            data-dismiss="modal">{{ __('home.Close') }}</button>
                                                                     <button type="submit"
-                                                                            class="btn btn-success">Submit</button>
+                                                                            class="btn btn-success">{{ __('home.submit') }}</button>
                                                                   </div>
                                                             </div>
                                                             </form>
@@ -140,7 +140,7 @@
                                                 <span class="delete">
                                                     <a class="delete" data-toggle="modal"
                                                        data-target="#modalDeleteAttribute{{$property->id}}">
-                                                        Delete
+                                                        {{ __('home.delete') }}
                                                     </a>
                                                     <!-- Modal -->
                                                     <div class="modal fade text-black"
@@ -161,16 +161,15 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <h5 class="text-center">
-                                                                        Bạn có chắc chắn muốn xoá thuộc tính: {{$property->name}}
+                                                                        {{ __('home.Bạn có chắc chắn muốn xoá thuộc tính') }}: {{$property->name}}
                                                                     </h5>
                                                                     <p class="text-danger">
-                                                                        Nếu xoá bạn sẽ không thể không thể tìm thấy nó!
-                                                                        Chúng tôi sẽ không chịu trách nhiệm cho việc này!
+                                                                        {{ __('home.Nếu xoá bạn sẽ không thể không thể tìm thấy nó! Chúng tôi sẽ không chịu trách nhiệm cho việc này!') }}
                                                                     </p>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
-                                                                            data-dismiss="modal">Close</button>
+                                                                            data-dismiss="modal">{{ __('home.Close') }}</button>
                                                                     <button type="submit"
                                                                             class="btn btn-danger">Yes</button>
                                                                   </div>

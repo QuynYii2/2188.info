@@ -6,14 +6,14 @@
 @section('content')
     <div class="wrap nosubsub snipcss-yDRNt">
         <h1 class="wp-heading-inline">
-            Product categories
+            {{ __('home.Product categories') }}
         </h1>
         <div id="col-container" class="wp-clearfix">
             <div id="col-left">
                 <div class="col-wrap">
                     <div class="form-wrap">
                         <h2>
-                            Add new category
+                            {{ __('home.Add new category') }}
                         </h2>
                         <form id="addtag" method="post" action="{{route('seller.categories.store')}}" class="validate"
                               enctype="multipart/form-data">
@@ -21,7 +21,7 @@
                             @method('POST')
                             <div class="form-field form-required term-name-wrap">
                                 <label for="category_name">
-                                    Tên
+                                    {{ __('home.Name') }}
                                 </label>
                                 <input name="category_name" id="category_name" type="text" value="" size="40"
                                        aria-required="true"
@@ -29,19 +29,19 @@
                             </div>
                             <div class="form-field term-slug-wrap">
                                 <label for="category_slug">
-                                    Đường dẫn
+                                    {{ __('home.Đường dẫn') }}
                                 </label>
                                 <input name="category_slug" id="category_slug" type="text" value="" size="40"
                                        aria-describedby="slug-description">
                             </div>
                             <div class="form-field term-parent-wrap">
                                 <label for="category_parentID">
-                                    Parent category
+                                    {{ __('home.Parent category') }}
                                 </label>
                                 <select name="category_parentID" id="category_parentID" class="postform w-100"
                                         aria-describedby="parent-description" style="display: block!important;">
                                     <option value="-1">
-                                        Trống
+                                        {{ __('home.Trống') }}
                                     </option>
                                     @foreach($categories as $category)
                                         <option value="{{$category->id}}">
@@ -52,14 +52,14 @@
                             </div>
                             <div class="form-field term-description-wrap">
                                 <label for="category_description">
-                                    Mô tả
+                                    {{ __('home.Mô tả') }}
                                 </label>
                                 <textarea name="category_description" id="category_description" rows="5" cols="40"
                                           aria-describedby="description-description"></textarea>
                             </div>
                             <div class="form-field term-thumbnail-wrap">
                                 <label>
-                                    Thumbnail
+                                    {{ __('home.thumbnail') }}
                                 </label>
                                 <div>
                                     <input type="file" name="thumbnail" class="upload_image_button" required>
@@ -82,19 +82,19 @@
                         <thead>
                         <tr>
                             <th scope="col">
-                                Image
+                                {{ __('home.Image') }}
                             </th>
                             <th scope="col">
-                                Name
+                                {{ __('home.Name') }}
                             </th>
                             <th scope="col">
-                                Description
+                                {{ __('home.Description') }}
                             </th>
                             <th scope="col">
                                 Slug
                             </th>
                             <th scope="col">
-                                Count
+                                {{ __('home.Count') }}
                             </th>
                         </tr>
                         </thead>
@@ -138,14 +138,14 @@
                                         <div class="row-actions">
                                                 <span class="edit">
                                                     <a href="{{route('seller.categories.edit', $category->id)}}">
-                                                        Edit
+                                                        {{ __('home.edit') }}
                                                     </a>
                                                     |
                                                 </span>
                                             <span class="quick-edit">
                                                     <a href="#" data-toggle="modal"
                                                        data-target="#modalUpdateCategory{{$category->id}}">
-                                                        Quick Edit
+                                                        {{ __('home.Quick Edit') }}
                                                     </a>
                                                     |
                                                 <!-- Modal -->
@@ -161,7 +161,7 @@
                                                                 <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title" id="exampleModalLabel">
-                                                                        Update {{$category->name}}
+                                                                        {{ __('home.update') }} {{$category->name}}
                                                                     </h5>
                                                                     <button type="button" class="close"
                                                                             data-dismiss="modal" aria-label="Close">
@@ -173,7 +173,7 @@
                                                                         <tbody>
                                                                             <tr class="form-field form-required term-name-wrap">
                                                                                 <th scope="row"><label
-                                                                                            for="category_name">Tên</label></th>
+                                                                                            for="category_name">{{ __('home.Name') }}</label></th>
                                                                                 <td><input name="category_name"
                                                                                            id="category_name"
                                                                                            type="text"
@@ -185,7 +185,7 @@
                                                                             </tr>
                                                                             <tr class="form-field term-slug-wrap">
                                                                                 <th scope="row"><label
-                                                                                            for="category_slug">Đường dẫn</label></th>
+                                                                                            for="category_slug">{{ __('home.Đường dẫn') }}</label></th>
                                                                                 <td><input name="category_slug"
                                                                                            id="category_slug"
                                                                                            type="text"
@@ -195,7 +195,7 @@
                                                                             </tr>
                                                                             <tr class="form-field term-parent-wrap">
                                                                                 <th scope="row"><label
-                                                                                            for="category_parentID">Đường dẫn</label></th>
+                                                                                            for="category_parentID">{{ __('home.Đường dẫn') }}</label></th>
                                                                                 <td>
                                                                                     <select name="category_parentID"
                                                                                             id="category_parentID"
@@ -210,7 +210,7 @@
                                                                                                 <option value="{{$category->parent_id}}">{{$categoryParent->name}}</option>
                                                                                             @endif
                                                                                         @else
-                                                                                            <option value="-1">Trống</option>
+                                                                                            <option value="-1">{{ __('home.Trống') }}</option>
                                                                                         @endif
                                                                                         @foreach($categories as $categoryNews)
                                                                                             @if($categoryNews->id !== $category->parent_id)
@@ -218,14 +218,14 @@
                                                                                             @endif
                                                                                         @endforeach
                                                                                         @if($category->parent_id > 0)
-                                                                                            <option value="-1">Trống</option>
+                                                                                            <option value="-1">{{ __('home.Trống') }}</option>
                                                                                         @endif
                                                                                     </select>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr class="form-field term-description-wrap">
                                                                                 <th scope="row"><label
-                                                                                            for="category_description">Mô tả</label></th>
+                                                                                            for="category_description">{{ __('home.Mô tả') }}</label></th>
                                                                                 <td><textarea
                                                                                             name="category_description"
                                                                                             id="category_description"
@@ -236,7 +236,7 @@
                                                                             </tr>
                                                                             <tr class="form-field term-image-wrap">
                                                                                 <th scope="row"><label
-                                                                                            for="thumbnail">Thumbnail</label></th>
+                                                                                            for="thumbnail">{{ __('home.thumbnail') }}</label></th>
                                                                                 <td>
                                                                                    <input type="file" id="thumbnail"
                                                                                           name="thumbnail">
@@ -247,7 +247,7 @@
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
-                                                                            data-dismiss="modal">Close</button>
+                                                                            data-dismiss="modal">{{ __('home.Close') }}</button>
                                                                     <button type="submit"
                                                                             class="btn btn-danger">Yes</button>
                                                                   </div>
@@ -259,7 +259,7 @@
                                             <span class="delete">
                                                     <a class="delete" data-toggle="modal"
                                                        data-target="#modalDeleteCategory{{$category->id}}">
-                                                        Delete
+                                                        {{ __('home.delete') }}
                                                     </a>
                                                 <!-- Modal -->
                                                     <div class="modal fade text-black"
@@ -281,16 +281,15 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <h5 class="text-center">
-                                                                        Bạn có chắc chắn muốn xoá danh mục: {{$category->name}}
+                                                                        {{ __('home.Bạn có chắc chắn muốn xoá') }} danh mục: {{$category->name}}
                                                                     </h5>
                                                                     <p class="text-danger">
-                                                                        Nếu xoá bạn sẽ không thể không thể tìm thấy nó!
-                                                                        Chúng tôi sẽ không chịu trách nhiệm cho việc này!
+                                                                       {{ __('home.Nếu xoá bạn sẽ không thể không thể tìm thấy nó!Chúng tôi sẽ không chịu trách nhiệm cho việc này!') }}
                                                                     </p>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
-                                                                            data-dismiss="modal">Close</button>
+                                                                            data-dismiss="modal">{{ __('home.Close') }}</button>
                                                                     <button type="submit"
                                                                             class="btn btn-danger">Yes</button>
                                                                   </div>
@@ -304,7 +303,7 @@
                                     <td class="description column-description" data-colname="Mô tả">
                                         @if(!$category->description)
                                             <span aria-hidden="true">—</span>
-                                            <span class="screen-reader-text">Không có mô tả</span>
+                                            <span class="screen-reader-text">{{ __('home.Không có mô tả') }}</span>
                                         @else
                                             {{$category->description}}
                                         @endif
@@ -312,7 +311,7 @@
                                     <td class="slug column-slug" data-colname="Đường dẫn">
                                         @if(!$category->slug)
                                             <span aria-hidden="true">—</span>
-                                            <span class="screen-reader-text">Không có Đường dẫn</span>
+                                            <span class="screen-reader-text">{{ __('home.Không có Đường dẫn') }}</span>
                                         @else
                                             {{$category->slug}}
                                         @endif
