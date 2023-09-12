@@ -283,10 +283,10 @@
                                             <div class="drop-item">
                                                 <a href="{{ route('stand.register.member.index', $member->id) }}">{{ __('home.Shop') }}</a>
                                             </div>
-                                            {{--                                        @elseif($isMember && $member->member == \App\Enums\RegisterMember::TRUST)--}}
-                                            {{--                                            <div class="drop-item">--}}
-                                            {{--                                                <a href="{{ route('trust.register.member.index') }}">{{ __('home.Shop') }}</a>--}}
-                                            {{--                                            </div>--}}
+                                        @elseif($isMember && $member->member == \App\Enums\RegisterMember::TRUST)
+                                            <div class="drop-item">
+                                                <a href="{{ route('trust.register.member.index') }}">{{ __('home.Partner List') }}</a>
+                                            </div>
                                         @endif
                                         {{--                                        @if(!$checkTrust && $isValid==true)--}}
                                         {{--                                            <div class="drop-item">--}}
