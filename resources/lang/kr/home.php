@@ -625,7 +625,7 @@ return [
     'See All' => '모두 보기',
     'permission_one' => '상품의 입출고 관리, 재고관리 및 영업관리',
     'permission_two' => '전자상거래 및 전자상거래 상품관',
-    'permission_there' => '화물(국제, 국내, 해상, 항공, 특송, 택배)의 발송, 수취'
+    'permission_there' => '화물(국제, 국내, 해상, 항공, 특송, 택배)의 발송, 수취',
     // end
     'số lượng' => '수량',
     'ảnh sản phẩm choose file' => '사진 선택',
