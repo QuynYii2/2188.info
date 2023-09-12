@@ -1,0 +1,5 @@
+php artisan make:enum Contains
+you must copy (1), (2), (3) to Contains enum file
+(1) const URL_INSERT_USER =  '';
+(2) const URL_INSERT_USER_LOCAL =  '';
+(3) const PASSWORD_DEFAULT =  '123123';

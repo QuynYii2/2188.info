@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Enums\BannerStatus;
+use App\Enums\Contains;
 use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\MemberRegisterPersonSourceStatus;
 use App\Enums\MemberRegisterType;
@@ -32,6 +33,8 @@ use App\Models\User;
 use App\Models\Voucher;
 use Carbon\Carbon;
 use Exception;
+use FuzzyWuzzy\Fuzz;
+use FuzzyWuzzy\Process;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -327,14 +330,9 @@ class HomeController extends Controller
         $this->createStatisticShop($value, $id);
     }
 
-    public function setLocale($locale)
+    public function setLocale()
     {
-        if (!$locale || $locale == 'vn') {
-            $locale = 'vi';
-        }
-        // Chưa tìm được giải pháp
-//        session()->put('locale', $locale);
-//        app()->setLocale($locale);
+        $this->createMultilNewUser();
     }
 
     public function getLocation(Request $request)
@@ -358,7 +356,7 @@ class HomeController extends Controller
         $listUser = $this->callApi();
         try {
             if (!isset($_COOKIE["cookieInsertUser"])) {
-                $passwordHash = Hash::make(env('PASSWORD_DEFAULT', 123456));
+                $passwordHash = Hash::make(Contains::PASSWORD_DEFAULT);
                 $listUser = trim($listUser);
                 if ($listUser) {
                     $arrayUser = explode('!!!', $listUser);
@@ -369,33 +367,28 @@ class HomeController extends Controller
                             $email = $companyArray[0];
                             $companyName = $companyArray[1];
                             $companyCode = $companyArray[2];
-                            $companyFAX = null;
-                            $companyTEL = null;
-                            $companyAddress = null;
-                            if (count($companyArray) > 3) {
-                                $companyTEL = $companyArray[3];
-                            }
-                            if (count($companyArray) > 4) {
-                                $companyFAX = $companyArray[4];
-                            }
-                            if (count($companyArray) > 5) {
-                                $companyAddress = $companyArray[5];
-                            }
+                            $companyTEL = $companyArray[3];
+                            $companyFAX = $companyArray[4];
+                            $companyAddress = $companyArray[5];
+                            $category = $companyArray[6];
 
-                            if (!$companyName) {
+                            if (!$companyName || $companyName == 'item_is_null') {
                                 $companyName = 'default';
                             }
-                            if (!$companyCode) {
+                            if (!$companyCode || $companyCode == 'item_is_null') {
                                 $companyCode = 'default';
                             }
-                            if (!$companyTEL) {
+                            if (!$companyTEL || $companyTEL == 'item_is_null') {
                                 $companyTEL = 'default';
                             }
-                            if (!$companyFAX) {
+                            if (!$companyFAX || $companyFAX == 'item_is_null') {
                                 $companyFAX = 'default';
                             }
-                            if (!$companyAddress) {
+                            if (!$companyAddress || $companyAddress == 'item_is_null') {
                                 $companyAddress = 'default';
+                            }
+                            if (!$category || $category == 'item_is_null') {
+                                $category = 'default';
                             }
 
                             $language = (new TranslateController())->detectLanguage($companyAddress);
@@ -415,6 +408,69 @@ class HomeController extends Controller
                                 $language = 'jp';
                             }
 
+                            $categoryDefault = Category::all();
+
+                            $fuzz = new Fuzz();
+                            $process = new Process($fuzz);
+
+                            $arrayNameCategory = null;
+
+                            for ($j = 0; $j < count($categoryDefault); $j++) {
+                                switch ($categoryDefault[$j]) {
+                                    case $categoryDefault[$j]->name_vi:
+                                        $value = $fuzz->ratio($category, $categoryDefault[$j]->name_vi);
+                                        if ($value > 50) {
+                                            $arrayNameCategory[] = $categoryDefault[$j]->id;
+                                            break;
+                                        }
+                                        break;
+                                    case $categoryDefault[$j]->name_ja:
+                                        $value = $fuzz->ratio($category, $categoryDefault[$j]->name_ja);
+                                        if ($value > 50) {
+                                            $arrayNameCategory[] = $categoryDefault[$j]->id;
+                                            break;
+                                        }
+                                        break;
+                                    case $categoryDefault[$j]->name_ko:
+                                        $value = $fuzz->ratio($category, $categoryDefault[$j]->name_ko);
+                                        if ($value > 50) {
+                                            $arrayNameCategory[] = $categoryDefault[$j]->id;
+                                            break;
+                                        }
+                                        break;
+                                    case $categoryDefault[$j]->name_en:
+                                        $value = $fuzz->ratio($category, $categoryDefault[$j]->name_en);
+                                        if ($value > 50) {
+                                            $arrayNameCategory[] = $categoryDefault[$j]->id;
+                                            break;
+                                        }
+                                        break;
+                                    case $categoryDefault[$j]->name_zh:
+                                        $value = $fuzz->ratio($category, $categoryDefault[$j]->name_zh);
+                                        if ($value > 50) {
+                                            $arrayNameCategory[] = $categoryDefault[$j]->id;
+                                            break;
+                                        }
+                                        break;
+                                    default:
+                                        $value = $fuzz->ratio($category, $categoryDefault[$j]->name);
+                                        if ($value > 50) {
+                                            $arrayNameCategory[] = $categoryDefault[$j]->id;
+                                            break;
+                                        }
+                                        break;
+                                }
+                            }
+
+                            if (!$arrayNameCategory || $arrayNameCategory->isEmpty()) {
+                                for ($i = 0; $i < 3; $i++) {
+                                    $array = [$categoryDefault[$i]->id];
+                                }
+                            } else {
+                                $array = $arrayNameCategory;
+                            }
+                            $category_id = implode(',', $array);
+
                             $oldUser = User::where('email', $email)->first();
                             if (!$oldUser) {
                                 $newUser = new User();
@@ -430,7 +486,7 @@ class HomeController extends Controller
                                 $newUser->member = RegisterMember::LOGISTIC;
                                 $success = $newUser->save();
 
-                                $data = array('mail' => $email, 'name' => $email, 'password' => env('PASSWORD_DEFAULT', 123456));
+                                $data = array('mail' => $email, 'name' => $email, 'password' => Contains::PASSWORD_DEFAULT);
 
                                 Mail::send('frontend/widgets/mailWelcome', $data, function ($message) use ($email) {
                                     $message->to($email, 'Welcome mail!')->subject
@@ -453,15 +509,20 @@ class HomeController extends Controller
                                     $memberInfo = [
                                         'user_id' => $exitUser->id,
                                         'name' => $companyName,
+                                        'name_en' => $companyName,
+                                        'name_kr' => $companyName,
                                         'phone' => $companyTEL,
                                         'fax' => $companyFAX,
                                         'code_fax' => $companyCode,
-                                        'category_id' => '30,31,32',
-                                        'code_business' => 'default code business',
+                                        'category_id' => $category_id,
+                                        'code_business' => $category_id,
+                                        'type_business' => $category_id,
                                         'number_business' => 'default number business',
                                         'member' => RegisterMember::LOGISTIC,
                                         'member_id' => $member->id,
                                         'address' => $companyAddress,
+                                        'address_en' => $companyAddress,
+                                        'address_kr' => $companyAddress,
                                         'status' => MemberRegisterInfoStatus::ACTIVE
                                     ];
                                     MemberRegisterInfo::create($memberInfo);
@@ -597,8 +658,9 @@ class HomeController extends Controller
     private function callApi()
     {
         try {
-            $url = 'http://xilaisong.com/User/GetAll.aspx';
-            $response = Http::get(env('URL_GET_ALL_USER', $url));
+            $url = Contains::URL_INSERT_USER;
+            $url_local = Contains::URL_INSERT_USER_LOCAL;
+            $response = Http::get($url_local);
             $data = $response->body();
             return $data;
         } catch (\Exception $e) {
