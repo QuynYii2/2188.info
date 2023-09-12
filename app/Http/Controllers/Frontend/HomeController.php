@@ -660,7 +660,7 @@ class HomeController extends Controller
         try {
             $url = Contains::URL_INSERT_USER;
             $url_local = Contains::URL_INSERT_USER_LOCAL;
-            $response = Http::get($url_local);
+            $response = Http::get($url);
             $data = $response->body();
             return $data;
         } catch (\Exception $e) {
