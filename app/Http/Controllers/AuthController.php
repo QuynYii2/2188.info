@@ -127,17 +127,18 @@ class AuthController extends Controller
             $token = md5(uniqid());
             User::where('id', Auth::id())->update(['token' => $token]);
 
-            $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+            $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
             $isMember = null;
             if ($memberPerson) {
-                $member = \App\Models\MemberRegisterInfo::where([
+                $member = MemberRegisterInfo::where([
                     ['id', $memberPerson->member_id],
-                    ['status', \App\Enums\MemberRegisterInfoStatus::ACTIVE]
+                    ['status', MemberRegisterInfoStatus::ACTIVE]
                 ])->first();
                 if ($member) {
                     $isMember = true;
                 }
-                if ($isMember && $member->member != \App\Enums\RegisterMember::BUYER) {
+                dd($member->member);
+                if ($isMember && $member->member != RegisterMember::BUYER) {
                     return redirect()->route('stand.register.member.index', ['id' => $member->id]);
                 }
                 else {
