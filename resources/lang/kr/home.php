@@ -337,7 +337,7 @@ return [
     'Member' => '회원등급',
     'Member booth' => '회원 상점 ',
     'Booth' => '상품 전시장',
-    'Partner List' => '지정 거래처',
+    'Partner List' => '지정거래처',
     'Message received' => '받은 문서',
     'Message sent' => '보낸 문서',
     'Purchase' => '구매대행',
@@ -572,8 +572,8 @@ return [
     'I agree to the above Terms' => '위 약관에 동의합니다',
     'Day register' => '등록일시',
     'Number clearance' => '통관번호',
-    'Name company English' => '상호영문',
-    'Name company Korea' => '상호한글',
+    'Name company English' => '성명 (영문)',
+    'Name company Korea' => '성명 (자국어)',
     // nganh nghe
     'Career' => '업종선택',
     // nganh hang
@@ -602,8 +602,8 @@ return [
     // Chuc vu
     'Position company' => '직무',
     'Responsibility company' => '직책',
-    'Name English' => '성명영문',
-    'Name Korea' => '성명자국어',
+    'Name English' => '성명 (영문)',
+    'Name Korea' => '성명 (자국어)',
     'ID' => '아이디',
     'Congratulations, you have registered as a member' => '회원으로 가입 되신 것을 축하합니다',
     'Representative member' => '대표회원',
@@ -622,6 +622,10 @@ return [
     'Search Results' => '검색 결과',
     'Top Search' => '인기 상품',
     'See All' => '전체 보기',
+    'See All' => '모두 보기',
+    'permission_one' => '상품의 입출고 관리, 재고관리 및 영업관리',
+    'permission_two' => '전자상거래 및 전자상거래 상품관',
+    'permission_there' => '화물(국제, 국내, 해상, 항공, 특송, 택배)의 발송, 수취'
     // end
     'số lượng' => '수량',
     'ảnh sản phẩm choose file' => '사진 선택',

@@ -86,6 +86,7 @@
         @if($company)
             @php
                 $memberAccounts = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->get();
+
                 if (!$memberAccounts->isEmpty()){
                   $products = \App\Models\Product::where(function ($query) use ($company, $memberAccounts){
                         if (count($memberAccounts) == 2){
@@ -112,7 +113,7 @@
             <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
             <div class="d-flex justify-content-between align-items-center p-3">
                 <div>
-                    <a href="{{ route('stand.register.member.index', $company->id) }}" class="btn btn-primary mr-2">{{ __('home.Booth') }}</a>
+                    <a href=" @if($company->member == "LOGISTIC") {{ route('seller.config.show') }} @endif " class="btn btn-primary mr-2">{{ __('home.Booth') }}</a>
                     <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">{{ __('home.Partner List') }}</a>
                 </div>
                 <div>
@@ -326,7 +327,7 @@
                                 @endif
                             </div>
                         @endif
-                        <div class="card-bottom--left">
+                        <div class="card-bottom--left" hidden="">
                             @if(Auth::check())
                                 <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
                             @else

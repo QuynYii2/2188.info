@@ -14,16 +14,27 @@ class SearchController extends Controller
         (new HomeController())->getLocale($request);
         $name = $request->input('key_search');
         $currency = (new HomeController())->getLocation($request);
-        $products = Product::where(function ($query) use ($name) {
-            $query->where('name', 'LIKE', '%' . $name . '%')
-                ->orWhere('name_vi', 'LIKE', '%' . $name . '%')
-                ->orWhere('name_ja', 'LIKE', '%' . $name . '%')
-                ->orWhere('name_ko', 'LIKE', '%' . $name . '%')
-                ->orWhere('name_en', 'LIKE', '%' . $name . '%')
-                ->orWhere('name_zh', 'LIKE', '%' . $name . '%');
-        })
-            ->where('status', ProductStatus::ACTIVE)
-            ->get();
+        $id = $request->input('category_search');
+        if ($id == 0) {
+            $products = Product::where(function ($query) use ($name) {
+                $query->where('name', 'LIKE', '%' . $name . '%')
+                    ->orWhere('name_vi', 'LIKE', '%' . $name . '%')
+                    ->orWhere('name_ja', 'LIKE', '%' . $name . '%')
+                    ->orWhere('name_ko', 'LIKE', '%' . $name . '%')
+                    ->orWhere('name_en', 'LIKE', '%' . $name . '%')
+                    ->orWhere('name_zh', 'LIKE', '%' . $name . '%');
+            })->where('status', ProductStatus::ACTIVE)->get();
+        } else {
+            $products = Product::where(function ($query) use ($name) {
+                $query->where('name', 'LIKE', '%' . $name . '%')
+                    ->orWhere('name_vi', 'LIKE', '%' . $name . '%')
+                    ->orWhere('name_ja', 'LIKE', '%' . $name . '%')
+                    ->orWhere('name_ko', 'LIKE', '%' . $name . '%')
+                    ->orWhere('name_en', 'LIKE', '%' . $name . '%')
+                    ->orWhere('name_zh', 'LIKE', '%' . $name . '%');
+            })->where('products.status', ProductStatus::ACTIVE)
+                ->whereRaw("FIND_IN_SET(?, products.list_category)", [$id])->get();
+        }
         return view('frontend.pages.search-result', compact('products', 'currency'));
     }
 

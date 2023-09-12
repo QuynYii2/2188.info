@@ -106,14 +106,14 @@
         <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
         <div class="d-flex justify-content-between align-items-center p-3">
             <div>
-                <a href="{{ route('stand.register.member.index', $company->id) }}" class="btn btn-primary mr-2">{{ __('home.Booth') }}</a>
-                <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">{{ __('home.Partner List') }}</a>
+                <a href="{{ route('stand.register.member.index', $company->id) }}" class="btn btn-primary mr-2 d-inline-block">{{ __('home.Booth') }}</a>
+                <a href="{{route('partner.register.member.index')}}" class="btn btn-warning d-inline-block">{{ __('home.Partner List') }}</a>
             </div>
             <div>
-                <a href="{{route('chat.message.received')}}" class="btn btn-primary mr-2">{{ __('home.Message received') }}</a>
-                <a href="{{route('chat.message.sent')}}" class="btn btn-primary mr-2">{{ __('home.Message sent') }}</a>
-                <a href="#" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
-                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
+                <a href="{{route('chat.message.received')}}" class="btn btn-primary mr-2 d-inline-block">{{ __('home.Message received') }}</a>
+                <a href="{{route('chat.message.sent')}}" class="btn btn-primary mr-2 d-inline-block">{{ __('home.Message sent') }}</a>
+                <a href="#" class="btn btn-primary mr-2 d-inline-block" data-toggle="modal" data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
+                <a href="#" class="btn btn-primary d-inline-block" data-toggle="modal" data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
             </div>
         </div>
         <div class="row m-0">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Enums\BannerStatus;
+use App\Enums\Contains;
 use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\MemberRegisterPersonSourceStatus;
 use App\Enums\MemberRegisterType;
@@ -32,6 +33,8 @@ use App\Models\User;
 use App\Models\Voucher;
 use Carbon\Carbon;
 use Exception;
+use FuzzyWuzzy\Fuzz;
+use FuzzyWuzzy\Process;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -327,14 +330,9 @@ class HomeController extends Controller
         $this->createStatisticShop($value, $id);
     }
 
-    public function setLocale($locale)
+    public function setLocale()
     {
-        if (!$locale || $locale == 'vn') {
-            $locale = 'vi';
-        }
-        // Chưa tìm được giải pháp
-//        session()->put('locale', $locale);
-//        app()->setLocale($locale);
+        $this->createMultilNewUser();
     }
 
     public function getLocation(Request $request)
@@ -355,190 +353,205 @@ class HomeController extends Controller
     //Start import user form nn21
     public function createMultilNewUser()
     {
-        $listUser = $this->callApi();
         try {
-            if (!isset($_COOKIE["cookieInsertUser"])) {
-                $passwordHash = Hash::make(env('PASSWORD_DEFAULT', 123456));
-                $listUser = trim($listUser);
-                if ($listUser) {
-                    $arrayUser = explode('!!!', $listUser);
-                    foreach ($arrayUser as $company) {
-                        if ($company) {
-                            $companyArray = null;
-                            $companyArray = explode('&&', $company);
-                            $email = $companyArray[0];
-                            $companyName = $companyArray[1];
-                            $companyCode = $companyArray[2];
-                            $companyFAX = null;
-                            $companyTEL = null;
-                            $companyAddress = null;
-                            if (count($companyArray) > 3) {
-                                $companyTEL = $companyArray[3];
-                            }
-                            if (count($companyArray) > 4) {
-                                $companyFAX = $companyArray[4];
-                            }
-                            if (count($companyArray) > 5) {
-                                $companyAddress = $companyArray[5];
-                            }
+            if (isset($_COOKIE["cookieInsertUser"])) {
+                return;
+            }
 
-                            if (!$companyName) {
-                                $companyName = 'default';
-                            }
-                            if (!$companyCode) {
-                                $companyCode = 'default';
-                            }
-                            if (!$companyTEL) {
-                                $companyTEL = 'default';
-                            }
-                            if (!$companyFAX) {
-                                $companyFAX = 'default';
-                            }
-                            if (!$companyAddress) {
-                                $companyAddress = 'default';
-                            }
+            $listUser = $this->callApi();
+            $listUser = trim($listUser);
 
-                            $language = (new TranslateController())->detectLanguage($companyAddress);
-                            if ($language == '') {
-                                $language = 'vi';
-                            }
+            if (empty($listUser)) {
+                return;
+            }
 
-                            if ($language == 'zh-CN'){
-                                $language = 'cn';
-                            }
+            setcookie("cookieInsertUser", "SHOPPING MALL", time() + 24 * 3600, "/");
+            $passwordHash = Hash::make(Contains::PASSWORD_DEFAULT);
 
-                            if ($language == 'ko'){
-                                $language = 'kr';
-                            }
+            $categoryDefault = Category::all();
 
-                            if ($language == 'ja'){
-                                $language = 'jp';
-                            }
+            foreach (explode('!!!', $listUser) as $company) {
+                if (empty($company)) {
+                    continue;
+                }
 
-                            $oldUser = User::where('email', $email)->first();
-                            if (!$oldUser) {
-                                $newUser = new User();
-                                $newUser->name = 'default name';
-                                $newUser->email = $email;
-                                $newUser->phone = $companyTEL;
-                                $newUser->address = "default address";
-                                $newUser->region = $language;
-                                $newUser->password = $passwordHash;
-                                $newUser->type_account = "seller";
-                                $newUser->email_verified_at = now();
-                                $newUser->image = 'default image';
-                                $newUser->member = RegisterMember::LOGISTIC;
-                                $success = $newUser->save();
+                $companyArray = explode('&&', $company);
+                $email = $companyArray[0];
 
-                                $data = array('mail' => $email, 'name' => $email, 'password' => env('PASSWORD_DEFAULT', 123456));
+                for ($k = 1; $k < 7; $k++) {
+                    if (!$companyArray[$k] || $companyArray[$k] == 'item_is_null') {
+                        $companyArray[$k] = 'default';
+                    }
+                }
 
-                                Mail::send('frontend/widgets/mailWelcome', $data, function ($message) use ($email) {
-                                    $message->to($email, 'Welcome mail!')->subject
-                                    ('Welcome mail');
-                                    $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
-                                });
+                list($companyName, $companyCode, $companyTEL, $companyFAX, $companyAddress, $categoryCompany) = array_slice($companyArray, 1, 6);
 
-                                if ($success) {
-                                    $exitUser = null;
-                                    $exitUser = User::where('email', $email)->first();
+                $language = $this->getLanguageCode((new TranslateController())->detectLanguage($companyAddress));
 
-                                    DB::table('role_user')->insert([
-                                        'role_id' => 2,
-                                        'user_id' => $exitUser->id
-                                    ]);
+                $arrayNameCategory = $this->getCategoryIds($categoryCompany, $categoryDefault);
 
-                                    $member = Member::where('name', RegisterMember::LOGISTIC)->first();
+                if (empty($arrayNameCategory)) {
+                    $arrayNameCategory[] = 'default';
+                }
 
-                                    $memberInfo = null;
-                                    $memberInfo = [
-                                        'user_id' => $exitUser->id,
-                                        'name' => $companyName,
-                                        'phone' => $companyTEL,
-                                        'fax' => $companyFAX,
-                                        'code_fax' => $companyCode,
-                                        'category_id' => '30,31,32',
-                                        'code_business' => 'default code business',
-                                        'number_business' => 'default number business',
-                                        'member' => RegisterMember::LOGISTIC,
-                                        'member_id' => $member->id,
-                                        'address' => $companyAddress,
-                                        'status' => MemberRegisterInfoStatus::ACTIVE
-                                    ];
-                                    MemberRegisterInfo::create($memberInfo);
+                $category_id = implode(',', $arrayNameCategory);
 
-                                    $exitMember = null;
-                                    $exitMember = MemberRegisterInfo::where('user_id', $exitUser->id)->orderBy('created_at', 'desc')->first();
+                $oldUser = User::where('email', $email)->first();
 
-                                    $exitMemberPersonSource = MemberRegisterPersonSource::where([
-                                        ['email', $email],
-                                        ['type', MemberRegisterType::SOURCE]
-                                    ])->first();
+                if (!$oldUser) {
+                    $newUser = User::create([
+                        'name' => 'default name',
+                        'email' => $email,
+                        'phone' => $companyTEL,
+                        'address' => 'default address',
+                        'region' => $language,
+                        'password' => $passwordHash,
+                        'type_account' => 'seller',
+                        'email_verified_at' => now(),
+                        'image' => 'default image',
+                        'member' => RegisterMember::LOGISTIC
+                    ]);
 
-                                    if (!$exitMemberPersonSource) {
-                                        $memberPersonSource = null;
-                                        $memberPersonSource = [
-                                            'user_id' => $exitUser->id,
-                                            'name' => $companyName,
-                                            'password' => $passwordHash,
-                                            'phone' => $companyTEL,
-                                            'email' => $email,
-                                            'staff' => 'default',
-                                            'member_id' => $exitMember->id,
-                                            'price' => 0,
-                                            'rank' => '0',
-                                            'sns_account' => 'default',
-                                            'type' => MemberRegisterType::SOURCE,
-                                            'verifyCode' => '',
-                                            'isVerify' => 0,
-                                            'status' => MemberRegisterPersonSourceStatus::ACTIVE
-                                        ];
-                                        MemberRegisterPersonSource::create($memberPersonSource);
-                                    }
+                    Mail::send('frontend/widgets/mailWelcome', ['mail' => $email, 'name' => $email, 'password' => Contains::PASSWORD_DEFAULT], function ($message) use ($email) {
+                        $message->to($email, 'Welcome mail!')->subject('Welcome mail');
+                        $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
+                    });
 
-                                    $exitMemberPer = null;
-                                    $exitMemberPer = MemberRegisterPersonSource::where([
-                                        ['user_id', $exitUser->id],
-                                        ['email', $email],
-                                        ['type', MemberRegisterType::SOURCE]
-                                    ])->first();
-                                    if ($exitMemberPer) {
-                                        $exitMemberPersonRepresent = MemberRegisterPersonSource::where([
-                                            ['email', $email],
-                                            ['type', MemberRegisterType::REPRESENT]
-                                        ])->first();
-                                        if (!$exitMemberPersonRepresent) {
-                                            $memberPersonRepresent = null;
-                                            $memberPersonRepresent = [
-                                                'user_id' => $exitUser->id,
-                                                'name' => $companyName,
-                                                'password' => $passwordHash,
-                                                'phone' => $companyTEL,
-                                                'email' => $email,
-                                                'staff' => 'default',
-                                                'person' => $exitMemberPer->id,
-                                                'member_id' => $exitMember->id,
-                                                'price' => 0,
-                                                'rank' => '0',
-                                                'sns_account' => 'default',
-                                                'type' => MemberRegisterType::REPRESENT,
-                                                'verifyCode' => '',
-                                                'isVerify' => 0,
-                                                'status' => MemberRegisterPersonSourceStatus::ACTIVE
-                                            ];
+                    DB::table('role_user')->insert([
+                        'role_id' => 2,
+                        'user_id' => $newUser->id
+                    ]);
 
-                                            MemberRegisterPersonSource::create($memberPersonRepresent);
-                                        }
-                                    }
-                                }
-                            }
+                    $member = Member::where('name', RegisterMember::LOGISTIC)->first();
+
+                    $memberInfo = [
+                        'user_id' => $newUser->id,
+                        'name' => $companyName,
+                        'name_en' => $companyName,
+                        'name_kr' => $companyName,
+                        'phone' => $companyTEL,
+                        'fax' => $companyFAX,
+                        'code_fax' => $companyCode,
+                        'category_id' => $category_id,
+                        'code_business' => $category_id,
+                        'type_business' => $category_id,
+                        'number_business' => 'default number business',
+                        'member' => RegisterMember::LOGISTIC,
+                        'member_id' => $member->id,
+                        'address' => $companyAddress,
+                        'address_en' => $companyAddress,
+                        'address_kr' => $companyAddress,
+                        'status' => MemberRegisterInfoStatus::ACTIVE
+                    ];
+
+                    MemberRegisterInfo::create($memberInfo);
+
+                    $exitMember = MemberRegisterInfo::where('user_id', $newUser->id)->orderBy('created_at', 'desc')->first();
+
+                    $exitMemberPersonSource = MemberRegisterPersonSource::where([
+                        ['email', $email],
+                        ['type', MemberRegisterType::SOURCE]
+                    ])->first();
+
+                    if (!$exitMemberPersonSource) {
+                        $memberPersonSource = [
+                            'user_id' => $newUser->id,
+                            'name' => $companyName,
+                            'password' => $passwordHash,
+                            'phone' => $companyTEL,
+                            'email' => $email,
+                            'staff' => 'default',
+                            'member_id' => $exitMember->id,
+                            'price' => 0,
+                            'rank' => '0',
+                            'sns_account' => 'default',
+                            'type' => MemberRegisterType::SOURCE,
+                            'verifyCode' => '',
+                            'isVerify' => 0,
+                            'status' => MemberRegisterPersonSourceStatus::ACTIVE
+                        ];
+
+                        MemberRegisterPersonSource::create($memberPersonSource);
+                    }
+
+                    $exitMemberPer = MemberRegisterPersonSource::where([
+                        ['user_id', $newUser->id],
+                        ['email', $email],
+                        ['type', MemberRegisterType::SOURCE]
+                    ])->first();
+
+                    if ($exitMemberPer) {
+                        $exitMemberPersonRepresent = MemberRegisterPersonSource::where([
+                            ['email', $email],
+                            ['type', MemberRegisterType::REPRESENT]
+                        ])->first();
+
+                        if (!$exitMemberPersonRepresent) {
+                            $memberPersonRepresent = [
+                                'user_id' => $newUser->id,
+                                'name' => $companyName,
+                                'password' => $passwordHash,
+                                'phone' => $companyTEL,
+                                'email' => $email,
+                                'staff' => 'default',
+                                'person' => $exitMemberPer->id,
+                                'member_id' => $exitMember->id,
+                                'price' => 0,
+                                'rank' => '0',
+                                'sns_account' => 'default',
+                                'type' => MemberRegisterType::REPRESENT,
+                                'verifyCode' => '',
+                                'isVerify' => 0,
+                                'status' => MemberRegisterPersonSourceStatus::ACTIVE
+                            ];
+
+                            MemberRegisterPersonSource::create($memberPersonRepresent);
                         }
                     }
                 }
             }
-            setcookie("cookieInsertUser", "SHOPPING MALL", time() + 24 * 3600, "/");
         } catch (Exception $exception) {
             return $exception;
         }
+    }
+
+    private function getLanguageCode($language)
+    {
+        switch ($language) {
+            case 'zh-CN':
+                return 'cn';
+            case 'ko':
+                return 'kr';
+            case 'jp':
+                return 'jp';
+            default:
+                return 'vi';
+        }
+    }
+
+    private function getCategoryIds($categoryCompany, $categoryDefault)
+    {
+        $fuzz = new Fuzz();
+        $arrayNameCategory = [];
+
+        $properties = ['name_ja', 'name_ko', 'name_en', 'name_zh'];
+
+        foreach ($categoryDefault as $category) {
+            foreach ($properties as $property) {
+                try {
+                    $value = $fuzz->ratio($category->$property, $categoryCompany);
+                } catch (Exception $exception) {
+                    $value = 0;
+                }
+
+                if ($value > 50) {
+                    $arrayNameCategory[] = $category->id;
+                    break;
+                }
+            }
+        }
+
+        return $arrayNameCategory;
     }
     //End import user form nn21
 
@@ -597,7 +610,9 @@ class HomeController extends Controller
     private function callApi()
     {
         try {
-            $response = Http::get(env('URL_GET_ALL_USER'));
+            $url = Contains::URL_INSERT_USER;
+            $url_local = Contains::URL_INSERT_USER_LOCAL;
+            $response = Http::get($url);
             $data = $response->body();
             return $data;
         } catch (\Exception $e) {

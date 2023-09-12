@@ -592,29 +592,37 @@
                                         </label>
                                     @endif
                                 @else
-                                    @for($i = 0; $i< count($permissionUsers); $i++)
-                                        @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm hot')
-                                            @if($product->hot == 1)
-                                                <label class="switch">
-                                                    <input value="{{$product->id}}" class="inputHotCheckbox"
-                                                           name="inputHot-{{$product->id}}"
-                                                           id="inputHot-{{$product->id}}"
-                                                           type="checkbox" checked>
-                                                    <span class="slider round"></span>
-                                                </label>
-                                            @else
-                                                <label class="switch">
-                                                    <input value="{{$product->id}}" class="inputHotCheckbox"
-                                                           name="inputHot-{{$product->id}}"
-                                                           id="inputHot-{{$product->id}}"
-                                                           type="checkbox">
-                                                    <span class="slider round"></span>
-                                                </label>
-                                            @endif
-                                            @break
-                                        @endif
-                                    @endfor
+                                    <label class="switch">
+                                        <input value="{{$product->id}}" class="inputHotCheckbox"
+                                               name="inputHot-{{$product->id}}"
+                                               id="inputHot-{{$product->id}}"
+                                               type="checkbox"
+                                               @if($product->hot == 1) checked @endif
+                                               >
+                                        <span class="slider round"></span>
+                                    </label>
                                 @endif
+                                <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal-{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Bạn có muốn nâng cấp sản phẩm không
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}</button>
+                                                    <button type="button" class="btn btn-primary"><a
+                                                                href="{{route('permission.list.show')}}">{{ __('home.Sign up to upgrade') }}</a></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                             </td>
                             <td class="featured column-featured" data-colname="Featured">
                                 @if($isAdmin == true)
@@ -674,6 +682,44 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var checkboxes = document.querySelectorAll('.inputHotCheckbox');
+
+            checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    var modalId = 'exampleModal-' + this.value;
+                    var checkboxId = 'inputHot-' + this.value;
+                    var originalChecked = this.checked; // Lưu trạng thái ban đầu của checkbox
+
+                    if (this.checked) {
+                        var modal = document.getElementById(modalId);
+                        $(modal).modal('show');
+
+                        var confirmButton = document.querySelector('#' + modalId + ' .btn-primary');
+                        confirmButton.addEventListener('click', function () {
+                            var checkbox = document.getElementById(checkboxId);
+                            checkbox.checked = true;
+                            $(modal).modal('hide');
+                        });
+
+                        // Xử lý sự kiện đóng Modal
+                        $(modal).on('hidden.bs.modal', function () {
+                            var checkbox = document.getElementById(checkboxId);
+                            if (checkbox.checked !== originalChecked) {
+                                checkbox.checked = originalChecked;
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+    </script>
+
+
+
     <script>
         $(document).ready(function () {
             $(".inputHotCheckbox").click(function () {

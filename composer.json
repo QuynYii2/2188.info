@@ -25,7 +25,8 @@
         "spatie/simple-excel": "^3.2",
         "srmklive/paypal": "*",
         "stichoza/google-translate-php": "^4.1",
-        "torann/geoip": "^3.0"
+        "torann/geoip": "^3.0",
+        "wyndow/fuzzywuzzy": "^0.6.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
