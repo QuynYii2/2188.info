@@ -92,6 +92,7 @@ class AuthController extends Controller
 
         $user = User::where($isEmail ? 'email' : 'phone', $loginField)->first();
 
+
         if ($user && $user->status !== UserStatus::ACTIVE) {
             toast('Tài khoản của bạn đã bị khóa.', 'error', 'top-right');
             return back();
@@ -125,7 +126,24 @@ class AuthController extends Controller
             $login = $request->session()->get('login');
             $token = md5(uniqid());
             User::where('id', Auth::id())->update(['token' => $token]);
-            return redirect()->route('home');
+
+            $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+            $isMember = null;
+            if ($memberPerson) {
+                $member = \App\Models\MemberRegisterInfo::where([
+                    ['id', $memberPerson->member_id],
+                    ['status', \App\Enums\MemberRegisterInfoStatus::ACTIVE]
+                ])->first();
+                if ($member) {
+                    $isMember = true;
+                }
+                if ($isMember && $member->member != \App\Enums\RegisterMember::BUYER) {
+                    return redirect()->route('stand.register.member.index', ['id' => $member->id]);
+                }
+                else {
+                    return redirect()->route('home');
+                }
+            }
         } else {
             toast('Tên đăng nhập hoặc mật khẩu không chính xác', 'error', 'top-right');
         }
