@@ -71,7 +71,10 @@
                                 {{$loop->index+1}}
                             </th>
                             <td>
-                                {{$order->fullname}}
+                                @php
+                                    $ld = new \App\Http\Controllers\TranslateController();
+                                @endphp
+                                {{ $ld->translateText($order->fullname, locationPermissionHelper()) }}
                             </td>
                             <td>
                                 {{$order->phone}}
@@ -83,7 +86,10 @@
                                 {{$order->total}}
                             </td>
                             <td>
-                                {{$order->status}}
+                                @php
+                                    $ld = new \App\Http\Controllers\TranslateController();
+                                @endphp
+                                {{ $ld->translateText($order->status, locationPermissionHelper()) }}
                             </td>
                             <td>
                                 <a href="{{route('seller.order.detail', $order->id)}}"
