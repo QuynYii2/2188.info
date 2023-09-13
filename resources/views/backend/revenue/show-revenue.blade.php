@@ -120,7 +120,7 @@
         </div>
         <a href="{{ route('revenues.excel') }}" class="btn btn-success">{{ __('home.Excel') }}</a>
         <button type="submit" class="btn btn-success">{{ __('home.search') }}</button>
-        <a href="{{route('revenues.index')}}" class="btn btn-secondary">{{ __('home.back') }}</a>
+        <a href="{{route('revenues.index')}}" class="btn btn-secondary">{{ __('home.Back') }}</a>
     </form>
 
     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">

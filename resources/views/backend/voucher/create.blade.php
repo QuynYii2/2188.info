@@ -81,7 +81,7 @@
                     <label for="description">{{ __('home.Description') }}</label>
                     <textarea type="text" name="description" class="form-control" id="description" placeholder="Description"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">{{ __('home.Create<') }}/button>
+                <button type="submit" class="btn btn-primary">{{ __('home.Create') }}</button>
             </form>
         </div>
     </div>

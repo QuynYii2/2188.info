@@ -37,7 +37,7 @@
                         </select>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">{{ __('home.etubmit') }}</button>
+                <button type="submit" class="btn btn-primary">{{ __('home.submit') }}</button>
                 <a href="{{route('seller.products.views')}}" class="btn btn-secondary">Reset</a>
             </form>
         </div>

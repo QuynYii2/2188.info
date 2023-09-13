@@ -96,8 +96,9 @@ class StorageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create( Request $request)
     {
+        (new HomeController())->getLocale($request);
         return view('backend.storage-manage.create');
     }
 
