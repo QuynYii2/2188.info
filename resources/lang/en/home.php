@@ -883,5 +883,6 @@ return [
     'danh sách mã giảm giá' => 'danh sách mã giảm giá',
     'Không có voucher nào được tạo' =>  'Không có voucher nào được tạo',
     'tên mã giảm giá' => 'tên mã giảm giá',
-    'assign to' => 'assign to'
+    'assign to' => 'assign to',
+    'Đơn huỷ' =>'Đơn huỷ' ,
 ];

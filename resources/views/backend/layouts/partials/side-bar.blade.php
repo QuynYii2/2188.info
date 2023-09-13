@@ -45,7 +45,7 @@
             <ul class='sub-items pl-3'>
                 <li><a class="sidebarUrl" href="{{route('seller.order.list')}}">{{ __('home.Tất cả') }}</a>
                 </li>
-                <li><a class="sidebarUrl" href="#">{{ __('home.đơn huỷ') }}</a>
+                <li><a class="sidebarUrl" href="#">{{ __('home.Đơn huỷ') }}</a>
                 </li>
                 <li><a class="sidebarUrl" href="#">{{ __('home.trả hàng /hoàn tiền') }}</a>
                 </li>

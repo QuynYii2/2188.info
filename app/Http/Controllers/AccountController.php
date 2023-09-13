@@ -18,8 +18,9 @@ class AccountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $getAllUser = User::all();
         return view('backend.account_manage.account-manage', compact('getAllUser'));
     }

@@ -4,19 +4,19 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title">List Setup Marketing</h5>
-            <a href="{{ route('create-setup-marketing') }}" class="btn btn-primary">Thêm mới</a>
+            <a href="{{ route('create-setup-marketing') }}" class="btn btn-primary">{{ __('home.Thêm mới') }}</a>
         </div>
         @if($setups->isEmpty())
-            Không có configs nào được tạo
+            {{ __('home.Không có configs nào được tạo') }}
         @else
             <div class="card-body">
                 <table class="table">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Thumbnail</th>
-                        <th scope="col">Location</th>
-                        <th scope="col">Name</th>
+                        <th scope="col">{{ __('home.thumbnail') }}</th>
+                        <th scope="col">{{ __('home.location') }}</th>
+                        <th scope="col">{{ __('home.Name') }}</th>
                         <th scope="col">Operation</th>
                     </tr>
                     </thead>
