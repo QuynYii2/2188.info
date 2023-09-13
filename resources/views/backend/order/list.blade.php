@@ -8,7 +8,7 @@
         <form action="{{ route('seller.search.order.list') }}" class="row my-2 pl-3">
             @csrf
             <div class="col-sm-2">
-                <input placeholder="Full Name" type="text" class="form-control" id="fullName" name="fullName"
+                <input placeholder={{ __('home.full name') }} type="text" class="form-control" id="fullName" name="fullName"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
@@ -20,11 +20,11 @@
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <input placeholder="Từ ngày" type="date" class="form-control" id="from-date" name="from-date"
+                <input placeholder={{ __('home.từ ngày') }}"" type="date" class="form-control" id="from-date" name="from-date"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <input placeholder="Đến ngày" type="date" class="form-control" id="to-date" name="to-date"
+                <input placeholder={{ __('home.đến ngày') }} type="date" class="form-control" id="to-date" name="to-date"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">

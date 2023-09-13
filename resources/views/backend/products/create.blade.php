@@ -221,7 +221,7 @@
                                                     <input type="number" class="form-control form-price" name="sales[]" placeholder="Giảm %">
                                                 </div>
                                                 <div class="">
-                                                    <input type="number" class="form-control form-price" name="days[]" placeholder="Ngay gia hang du kien">
+                                                    <input type="number" class="form-control form-price" name="days[]" placeholder="Ngày giao hàng dự kiến">
                                                 </div>
                                                 <div class="">
                                                     <button type="button" class="btn remove-form-field"><i class="fa-regular fa-trash-can"></i></button>
@@ -290,7 +290,7 @@
                     <input type="text" hidden id="imgThumbnail" value="" name="imgThumbnail[]">
                     <div class="form-group col-12 col-md-7 col-sm-8 ">
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-success">Gửi</button>
+                            <button type="submit" class="btn btn-success">{{ __('home.Gửi') }}</button>
                         </div>
                     </div>
                 </form>

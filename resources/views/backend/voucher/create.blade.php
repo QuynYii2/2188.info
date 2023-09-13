@@ -13,7 +13,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="nameVoucher">{{ __('home.tên mã giảm giá') }}</label>
-                        <input type="text" class="form-control" required name="nameVoucher" id="nameVoucher" placeholder="Nhập tên ãm giảm giá">
+                        <input type="text" class="form-control" required name="nameVoucher" id="nameVoucher" placeholder={{ __('home.Nhập tên mã giảm giá') }}>
                     </div>
                     <div class="form-group col-md-3">
                         <label for="quantity">{{ __('home.Số lượng') }}</label>
@@ -51,7 +51,7 @@
                         </div>
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="assign_to">{{ __('home.assign To') }}</label>
+                        <label for="assign_to">{{ __('home.assign to') }}</label>
                         <select id="assign_to" name="assign_to" class="form-control">
                             <option value="0">No Assgin</option>
                             @foreach($levels as $level)
@@ -79,7 +79,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description">{{ __('home.Description') }}</label>
-                    <textarea type="text" name="description" class="form-control" id="description" placeholder="Description"></textarea>
+                    <textarea type="text" name="description" class="form-control" id="description" placeholder={{ __('home.Description') }}></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">{{ __('home.Create') }}</button>
             </form>

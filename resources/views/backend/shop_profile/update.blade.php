@@ -221,14 +221,14 @@
 
                         <div class="col-md-9 col-12">
                             <input type="file" class="form-control" name="image" accept="image/*">
-                            <img src="{{ asset('storage/' . $user->image) }}" alt="Ảnh giấy phép kinh doanh"
+                            <img src="{{ asset('storage/' . $user->image) }}" alt={{ __('home.Ảnh giấy phép kinh doanh') }}
                                  height="100" width="100">
                         </div>
                     </div>
                     <div class="row pl-2 pt-3">
                         <label for="day" class="col-sm-3 col-form-label col-12"></label>
                         <div class="col-md-9 col-12">
-                            <button class="btn btn-outline-primary align-center" type="submit">Lưu</button>
+                            <button class="btn btn-outline-primary align-center" type="submit">{{ __('home.Lưu') }}</button>
                         </div>
                     </div>
                 </form>

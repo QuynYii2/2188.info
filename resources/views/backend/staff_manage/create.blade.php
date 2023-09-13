@@ -42,17 +42,17 @@
                 <div class="form-group">
                     <div class="name">{{ __('home.full name') }}</div>
                     <input type="text" class="form-control" name="name" id="name"
-                           placeholder="Nhập Họ tên" required>
+                           placeholder={{ __('home.Nhập Họ tên') }} required>
                 </div>
                 <div class="form-group">
                     <div class="name">{{ __('home.phone number') }}</div>
                     <input type="text" class="form-control" name="phone" id="phone"
-                           placeholder="Nhập Số điện thoại" required>
+                           placeholder="{{ __('home.Nhập số điện thoại') }}" required>
                 </div>
                 <div class="form-group">
                     <div class="name">{{ __('home.social network id') }}</div>
                     <input type="text" class="form-control" name="social_media" id="social_media"
-                           placeholder="Nhập ID MXH" required>
+                           placeholder={{ __('home.Nhập id mxh') }} required>
                 </div>
 
                 <input type="text" hidden name="type_account" id="type_account"
@@ -69,16 +69,16 @@
                 <div class="form-group">
                     <div class="name">{{ __('home.Nickname') }}</div>
                     <input type="text" class="form-control" name="nickname" id="nickname"
-                           placeholder="Nhập Biệt danh" required>
+                           placeholder={{ __('home.Nhập biệt danh') }} required>
                 </div>
                 <div class="form-group">
                     <div class="name">{{ __('home.email') }}</div>
                     <input type="text" class="form-control" name="email" id="email"
-                           placeholder="Nhập Email" required>
+                           placeholder={{ __('home.Nhập email') }} required>
                 </div>
                 <div class="form-group">
                     <div class="name">{{ __('home.Password') }}</div>
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Nhập Mật khẩu"
+                    <input type="password" class="form-control" name="password" id="password" placeholder={{ __('home.Nhập mật khẩu') }}
                            required>
                 </div>
             </div>
@@ -87,7 +87,7 @@
             <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
             <div class="form-group col-12 col-md-7 col-sm-8 ">
                 <div class="row justify-content-center">
-                    <button type="submit" class="btn btn-success">Gửi</button>
+                    <button type="submit" class="btn btn-success">{{ __('home.Gửi') }}</button>
                 </div>
             </div>
         </form>

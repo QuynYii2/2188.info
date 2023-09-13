@@ -47,7 +47,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger">
-                                        Xoá mã giảm giá
+                                        {{ __('home.Xoá mã giảm giá') }}
                                     </button>
                                 </form>
                             </td>

@@ -96,7 +96,7 @@
 {{--            </div>--}}
             @if($isAdmin && $arraySeller)
                 <div class="form-group col-md-3">
-                    <label for="inputState">{{ __('home.Seller name') }}</label>
+                    <label for="inputState">{{ __('home.seller name') }}</label>
                     <select id="inputState" name="seller" class="form-control">
                         @for($i=0; $i<count($arraySeller); $i++)
                             @php
