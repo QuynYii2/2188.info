@@ -923,7 +923,10 @@ return [
     'Tỉ lệ đơn không thành công' => '불성공한 주문 비율',
     'Thời gian chuẩn bị hàng' => '출고 시간',
     'Tỉ lệ phản hồi' => '답장 비율',
-    'Thời gian phản hồi' => '답장 시간'
+    'Thời gian phản hồi' => '답장 시간',
+    'đơn huỷ' => '취소한 주문',
+    'chuyên mục' => '카테고리',
+    'Đã xuất bản' => '게시됨'
 
 
 

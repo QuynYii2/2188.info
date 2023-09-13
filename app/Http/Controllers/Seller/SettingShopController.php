@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ShopInformationController;
 use App\Models\PaymentMethod;
 use App\Models\ShopInfo;
@@ -19,16 +20,18 @@ class SettingShopController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $list = User::where('id', Auth::user()->id)->first(['payment_method', 'transport_method']);
         $listPayment = PaymentMethod::all();
         $listTransport = TransportMethod::all();
         return view('backend/shop_setting/index', compact('listPayment', 'listTransport', 'list'));
     }
 
-    public function profileShop()
+    public function profileShop(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $user = Auth::user();
         $shop_infos = ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first();
         // nếu $shop_infos tồn tại thì gọi update còn neeus ko có thì gọi view create
@@ -42,6 +45,7 @@ class SettingShopController extends Controller
 
     public function updateProfileShop(Request $request)
     {
+        (new HomeController())->getLocale($request);
         try {
             $user = Auth::user();
             $shopinformation = ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first();
@@ -87,6 +91,7 @@ class SettingShopController extends Controller
 
     public function saveProfileShop(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $user = Auth::user();
 
         $user->name = $request->input('name');
@@ -110,6 +115,7 @@ class SettingShopController extends Controller
 
     public function savePaymentMethod(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $user = Auth::user();
         $user->payment_method = implode(',', $request->input('payment_method'));
         $user->save();
@@ -118,6 +124,7 @@ class SettingShopController extends Controller
 
     public function saveTransportMethod(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $user = Auth::user();
         $user->transport_method = implode(',', $request->input('transport_method'));
         $user->save();

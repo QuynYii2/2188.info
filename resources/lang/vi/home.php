@@ -599,7 +599,7 @@ return [
     'See All' => 'Xem tất cả',
     'permission_one' => 'Quản lý nhập hàng/ xuất hàng, Quản lý kho và doanh thu',
     'permission_two' => 'Quản lý giao dịch và sản phẩm giao dịch điện tử',
-    'permission_there' => 'Quản lý giao dịch và sản phẩm giao dịch điện tử'
+    'permission_there' => 'Quản lý giao dịch và sản phẩm giao dịch điện tử',
     // end
     'số lượng' => 'số lượng',
     'ảnh sản phẩm choose file' =>  'ảnh sản phẩm choose file' ,

@@ -28,7 +28,7 @@
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <button type="submit" class="btn btn-success position-absolute" style="bottom: 0">{{ __('home.search<') }}/button>
+                <button type="submit" class="btn btn-success position-absolute" style="bottom: 0">{{ __('home.search') }}</button>
             </div>
         </form>
         <form action="{{ route('order.manage.export.excel') }}" class="pl-3" method="post" id="formExportAll">

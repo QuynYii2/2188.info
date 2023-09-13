@@ -29,6 +29,7 @@ class RankUserSellerController extends Controller
 
     public function create(Request $request)
     {
+        (new HomeController())->getLocale($request);
         try {
             $percent = $request->input('percent');
             $code = 'SMRS' . (new Utils())->generateString();
@@ -140,8 +141,9 @@ class RankUserSellerController extends Controller
         }
     }
 
-    public function delete($id)
+    public function delete(Request $request,$id)
     {
+        (new HomeController())->getLocale($request);
         try {
             $rankSeller = RankUserSeller::find($id);
             $rankSeller->delete();
@@ -274,6 +276,7 @@ class RankUserSellerController extends Controller
 
     private function getArrayIds(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $listCategoryName[] = null;
         $arrayIds = null;
         $reflector = new \ReflectionClass('App\Enums\RankSetupSeller');

@@ -58,7 +58,7 @@
                         </a>
                     </th>
                     <th scope="col" id="is_in_stock" class="manage-column column-is_in_stock">
-                        {{ __('home.pricetock') }}
+                        {{ __('home.stock') }}
                     </th>
                     <th scope="col" id="price" class="manage-column column-price sortable desc">
                         <a href="#">
@@ -275,7 +275,7 @@
                                                                             @foreach($productDetails as $productDetail)
                                                                                 @if($productDetail->variation && $productDetail->variation != 0)
                                                                                     <div class="form-group">
-                                                                                <label class="control-label">Thông số sản phẩm</label>
+                                                                                <label class="control-label">{{ __('home.Thông số sản phẩm') }}</label>
                                                                                 @php
                                                                                     $variable = $productDetail->variation;
                                                                                     $arrayVariation = explode(',', $variable);
@@ -309,7 +309,7 @@
                                                                             </div>
 
                                                                                     <div class="form-group">
-                                                                                    <label for="price">Giá bán</label>
+                                                                                    <label for="price">{{ __('home.Giá bán') }}</label>
                                                                                     <input type="number"
                                                                                            class="form-control"
                                                                                            id="price{{$productDetail->id}}"
@@ -318,7 +318,7 @@
                                                                             </div>
 
                                                                                     <div class="form-group">
-                                                                                    <label for="qty">Giá khuyến mãi</label>
+                                                                                    <label for="qty">{{ __('home.Giá khuyến mãi') }}</label>
                                                                                     <input type="number"
                                                                                            class="form-control"
                                                                                            id="qty{{$productDetail->id}}"
@@ -327,7 +327,7 @@
                                                                             </div>
 
                                                                                     <div class="form-group">
-                                                                                        <div class="name">Nhập số lượng</div>
+                                                                                        <div class="name">{{ __('home.Nhập số lượng') }}</div>
                                                                                         <input type="number"
                                                                                                class="form-control"
                                                                                                name="qty" id="qty"
@@ -337,7 +337,7 @@
                                                                                     </div>
 
                                                                                     <div class="form-group">
-                                                                                <label for="thumbnail">Thumbnail</label>
+                                                                                <label for="thumbnail">{{ __('home.thumbnail') }}</label>
                                                                                 <input type="file"
                                                                                        class="form-control-file"
                                                                                        id="thumbnail"
@@ -363,7 +363,7 @@
                                                                                 $productDetail = $productDetails[0];
                                                                             @endphp
                                                                             <div class="form-group">
-                                                                                    <label for="price">Giá bán</label>
+                                                                                    <label for="price">{{ __('home.Giá bán') }}</label>
                                                                                     <input type="number"
                                                                                            class="form-control"
                                                                                            id="price{{$productDetail->id}}"
@@ -372,7 +372,7 @@
                                                                             </div>
 
                                                                             <div class="form-group">
-                                                                                <label for="qty">Giá khuyến mãi</label>
+                                                                                <label for="qty">{{ __('home.Giá khuyến mãi') }}</label>
                                                                                 <input type="number"
                                                                                        class="form-control"
                                                                                        id="qty{{$productDetail->id}}"
@@ -380,7 +380,7 @@
                                                                                        value="{{$productDetail->price }}">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="thumbnail">Thumbnail</label>
+                                                                                <label for="thumbnail">{{ __('home.thumbnail') }}</label>
                                                                                 <input type="file"
                                                                                        class="form-control-file"
                                                                                        id="thumbnail"
@@ -413,7 +413,7 @@
                                                                         @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm hot')
                                                                             <div class="col-4 d-flex">
                                                                                 <label for="hot_product"
-                                                                                       class="col-8 col-sm-8">Sản phẩm hot</label>
+                                                                                       class="col-8 col-sm-8">{{ __('home.Sản phẩm hot') }}</label>
                                                                                 <div class="col-4 col-sm-4">
                                                                                     <input class="form-control"
                                                                                            type="checkbox"
@@ -428,7 +428,7 @@
                                                                         @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm nổi bật')
                                                                             <div class="col-4 d-flex">
                                                                                 <label for="feature_product"
-                                                                                       class="col-8 col-sm-8">Sản phẩm nổi bật</label>
+                                                                                       class="col-8 col-sm-8">{{ __('home.Sản phẩm nổi bật') }}</label>
                                                                                 <div class="col-4 col-sm-4">
                                                                                     <input class="form-control"
                                                                                            type="checkbox"
@@ -472,7 +472,7 @@
                                                           </div>
                                                           <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"
-                                                                    data-dismiss="modal">Close</button>
+                                                                    data-dismiss="modal">{{ __('home.Close') }}</button>
                                                             <button type="submit"
                                                                     class="btn btn-primary">Save changes</button>
                                                           </div>
@@ -484,7 +484,7 @@
                                     <span class="trash">
                                          <a class="delete" data-toggle="modal"
                                             data-target="#modalDeleteProduct{{$product->id}}">
-                                                        Delete
+                                                       {{ __('home.delete') }}
                                                     </a>
                                         <!-- Modal -->
                                                     <div class="modal fade text-black"
@@ -514,7 +514,7 @@
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
-                                                                            data-dismiss="modal">Close</button>
+                                                                            data-dismiss="modal">{{ __('home.Close') }}</button>
                                                                     <button type="submit"
                                                                             class="btn btn-danger">Yes</button>
                                                                   </div>
@@ -669,7 +669,7 @@
                                 @endif
                             </td>
                             <td>
-                                Đã xuất bản <br>
+                                {{ __('home.Đã xuất bản') }} <br>
                                 {{$product->created_at}}
                             </td>
                         </tr>

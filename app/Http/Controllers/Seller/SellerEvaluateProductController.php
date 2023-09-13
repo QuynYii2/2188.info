@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Enums\EvaluateProductStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Models\EvaluateProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -12,8 +13,9 @@ use Illuminate\Support\Facades\DB;
 
 class SellerEvaluateProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        (new HomeController())->getLocale($request);
         // Join 2 table: evaluate_products and products to export data necessary from before condition
         try {
             $userId = Auth::id(); // Use Auth::id() for better readability
@@ -31,8 +33,9 @@ class SellerEvaluateProductController extends Controller
         return view('backend/evaluate/list')->with('evaluates', $eva);
     }
 
-    public function detail($id)
+    public function detail(Request$request,$id)
     {
+        (new HomeController())->getLocale($request);
         $evaluate = EvaluateProduct::find($id);
         if ($evaluate != null || $evaluate->status != EvaluateProductStatus::DELETED) {
             return view('backend/evaluate/detail')->with('evaluate', $evaluate);
@@ -42,6 +45,7 @@ class SellerEvaluateProductController extends Controller
 
     public function update($id, Request $request)
     {
+        (new HomeController())->getLocale($request);
         $evaluate = EvaluateProduct::find($id);
         $status = $request->input('status');
         if ($evaluate != null || $evaluate->status != EvaluateProductStatus::DELETED) {
@@ -53,8 +57,9 @@ class SellerEvaluateProductController extends Controller
         return redirect(route('seller.evaluates.index'));
     }
 
-    public function delete($id)
+    public function delete(Request $request,$id)
     {
+        (new HomeController())->getLocale($request);
         $evaluate = EvaluateProduct::find($id);
         if ($evaluate != null || $evaluate->status != EvaluateProductStatus::DELETED) {
             $evaluate->status = EvaluateProductStatus::DELETED;

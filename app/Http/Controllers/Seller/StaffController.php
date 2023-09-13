@@ -6,6 +6,7 @@ use App\Enums\NotificationStatus;
 use App\Enums\PermissionUserStatus;
 use App\Enums\TimeLevelStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Libraries\GeoIP;
 use App\Models\Category;
 use App\Models\Notification;
@@ -29,8 +30,9 @@ class StaffController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $listUsers = StaffUsers::where([['parent_user_id', '=', Auth::user()->id]])->get();
         return view('backend/staff_manage/index', compact('listUsers'));
     }
@@ -40,8 +42,9 @@ class StaffController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        (new HomeController())->getLocale($request);
         return view('backend/staff_manage/create');
     }
 
@@ -53,6 +56,7 @@ class StaffController extends Controller
      */
     public function store(Request $request)
     {
+        (new HomeController())->getLocale($request);
 
         $ipAddress = $request->ip();
         $geoIp = new GeoIP();
@@ -252,8 +256,9 @@ class StaffController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
+        (new HomeController())->getLocale($request);
         $userS = StaffUsers::where([['user_id', '=', $id]])->first();
         $userS->delete();
         $user = User::where([['id', '=', $id]])->first();

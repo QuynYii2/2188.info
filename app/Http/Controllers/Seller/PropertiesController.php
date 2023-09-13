@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Seller;
 use App\Enums\AttributeStatus;
 use App\Enums\PropertiStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Attribute;
 use App\Models\Properties;
 use Illuminate\Http\Request;
@@ -13,8 +14,9 @@ use Illuminate\Support\Facades\DB;
 
 class PropertiesController extends Controller
 {
-    public function index($attributeID)
+    public function index(Request $request,$attributeID)
     {
+        (new HomeController())->getLocale($request);
         try {
             $attribute = Attribute::find($attributeID);
             $properties = Properties::where([['attribute_id', $attributeID], ['status', '!=', PropertiStatus::DELETED]])->get();
@@ -24,14 +26,16 @@ class PropertiesController extends Controller
         }
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', Auth::user()->id]])->get();
         return view('backend.properties.create', compact('attributes'));
     }
 
     public function store(Request $request)
     {
+        (new HomeController())->getLocale($request);
         try {
             $request->validate([
                 'property_name' => 'required',
@@ -66,8 +70,9 @@ class PropertiesController extends Controller
         }
     }
 
-    public function show($id)
+    public function show(Request $request,$id)
     {
+        (new HomeController())->getLocale($request);
         $property = Properties::where([['status', PropertiStatus::ACTIVE], ['id', $id]])->first();
         if ($property == null) {
             return back();
@@ -77,6 +82,7 @@ class PropertiesController extends Controller
 
     public function update(Request $request, $id)
     {
+        (new HomeController())->getLocale($request);
         try {
             $property = Properties::where([['status', PropertiStatus::ACTIVE], ['id', $id]])->first();
 
@@ -115,8 +121,9 @@ class PropertiesController extends Controller
         }
     }
 
-    public function toggle($id)
+    public function toggle(Request $request,$id)
     {
+        (new HomeController())->getLocale($request);
         $property = Properties::where('id', $id)->first();
         if ($property == null) {
             return back([400], ['Error']);
@@ -129,8 +136,9 @@ class PropertiesController extends Controller
         $property->save();
         return $property;
     }
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
+        (new HomeController())->getLocale($request);
         try {
             $property = Properties::where('id', $id)->first();
             if (!$property) {
