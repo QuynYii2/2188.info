@@ -6,7 +6,7 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title">{{ __('home.danh sách mã giảm giá') }}</h5>
-            <a href="{{ route('seller.vouchers.create.process') }}" class="btn btn-primary">Thêm mới</a>
+            <a href="{{ route('seller.vouchers.create.process') }}" class="btn btn-primary">{{ __('home.thêm mới') }}</a>
         </div>
         @if($vouchers->isEmpty())
             {{ __('home.Không có voucher nào được tạo') }}

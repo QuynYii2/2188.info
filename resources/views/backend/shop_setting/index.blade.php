@@ -29,7 +29,7 @@
                                 {{ $payment->name }}
                             </label>
                         @endforeach
-                        <button type="submit">Lưu</button>
+                        <button type="submit">{{ __('home.lưu') }}L</button>
                     </form>
                 </div>
             </div>
