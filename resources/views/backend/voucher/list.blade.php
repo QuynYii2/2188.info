@@ -5,26 +5,26 @@
 @section('content')
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title">Danh sách mã giảm giá</h5>
+            <h5 class="card-title">{{ __('home.danh sách mã giảm giá') }}</h5>
             <a href="{{ route('seller.vouchers.create.process') }}" class="btn btn-primary">Thêm mới</a>
         </div>
         @if($vouchers->isEmpty())
-            Không có voucher nào được tạo
+            {{ __('home.Không có voucher nào được tạo') }}
         @else
             <div class="card-body">
                 <table class="table">
                     <thead>
                     <tr class="text-center">
                         <th scope="col">#</th>
-                        <th>Tên mã giảm giá</th>
-                        <th>Mã</th>
-                        <th>Số lượng</th>
-                        <th>Phần trăm giảm giá</th>
-                        <th>Áp dụng</th>
-                        <th>Ngày bắt đầu</th>
-                        <th>Ngày hết hạn</th>
-                        <th>Trạng thái</th>
-                        <th>Thêm</th>
+                        <th>{{ __('home.tên mã giảm giá') }}</th>
+                        <th>{{ __('home.Mã') }}</th>
+                        <th>{{ __('home.số lượng') }}</th>
+                        <th>{{ __('home.Phần trăm giảm giá') }}</th>
+                        <th>{{ __('home.Áp dụng') }}</th>
+                        <th>{{ __('home.ngày bắt đầu') }}</th>
+                        <th>{{ __('home.ngày hết hạn') }}</th>
+                        <th>{{ __('home.trạng thái') }}</th>
+                        <th>{{ __('home.Thêm') }}</th>
                     </tr>
                     </thead>
                     <tbody>

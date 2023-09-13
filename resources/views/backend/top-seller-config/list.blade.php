@@ -137,7 +137,7 @@
                         <th>{{ __('home.thumbnail') }}</th>
                         <th>{{ __('home.Name') }}</th>
                         <th>{{ __('home.Qty Products') }}</th>
-                        <th>{{ __('home.Atc') }}</th>
+                        <th>Atc</th>
                     </tr>
                     </thead>
                     <tbody>
