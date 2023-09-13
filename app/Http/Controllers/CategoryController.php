@@ -25,6 +25,8 @@ class CategoryController extends Controller
     {
         (new HomeController())->getLocale($request);
         $categories = Category::get()->toTree();
+        $category = Category::find($id);
+        $childCategories = Category::where('parent_id', $id)->get();
         $listPayment = PaymentMethod::all();
         $listTransport = TransportMethod::all();
         $priceProductOfCategory = Product::selectRaw('MAX(price) AS maxPrice, MIN(price) AS minPrice')
@@ -38,7 +40,7 @@ class CategoryController extends Controller
             $priceProductOfCategory->minPrice = 0;
         }
         $listProduct = [];
-        return view('frontend/pages/category', compact('categories', 'listProduct', 'listPayment', 'listTransport', 'priceProductOfCategory'));
+        return view('frontend/pages/category', compact('categories', 'listProduct', 'listPayment', 'listTransport', 'priceProductOfCategory', 'category', 'childCategories'));
     }
 
     public function filterInCategory(Request $request, $id)
