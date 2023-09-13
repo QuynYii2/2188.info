@@ -450,7 +450,6 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::post('/add-to-cart-register-member/{product}', [CartController::class, 'addToCartApi'])->name('cart.api');
     Route::post('/stands-register-member', [MemberPartnerController::class, 'store'])->name('stands.register.member');
     Route::post('/stands-unregister-member/{id}', [MemberPartnerController::class, 'delete'])->name('stands.unregister.member');
-    //
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {
@@ -501,9 +500,12 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-
-
 // Backend v2
 Route::group(['prefix' => 'seller', 'middleware' => 'role.seller-or-admin'], function () {
     require_once __DIR__ . '/backend.php';
+});
+
+// Admin
+Route::group(['prefix' => 'admin', 'middleware' => 'role.admin'], function () {
+    require_once __DIR__ . '/admin.php';
 });

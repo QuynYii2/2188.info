@@ -377,6 +377,7 @@ class HomeController extends Controller
 
                 $companyArray = explode('&&', $company);
                 $email = $companyArray[0];
+                $email = str_replace('!', '', $email);
 
                 for ($k = 1; $k < 7; $k++) {
                     if (!$companyArray[$k] || $companyArray[$k] == 'item_is_null') {
