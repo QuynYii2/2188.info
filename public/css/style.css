@@ -152,6 +152,19 @@ input.qtyminus {
   border: 1px solid #fd6506;
 }
 
+.mr-16 {
+  margin-right: 16px;
+}
+
+.search_header {
+  position: absolute;
+  background-color: transparent;
+  right: 0;
+  top: 0;
+  height: 100%;
+  border-radius: 40px;
+}
+
 .full-width {
   width: 100%;
 }

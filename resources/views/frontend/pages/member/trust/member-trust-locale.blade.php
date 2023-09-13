@@ -1,8 +1,20 @@
 @extends('frontend.layouts.master')
 @section('title', 'Trust Register Members')
 @section('content')
+
     <div class="container-fluid">
         <h3 class="text-center">{{ __('home.List of customers') }}</h3>
+        <div class="d-flex justify-content-between align-items-center p-3">
+            <div>
+                <a href="{{route('trust.register.member.index')}}" class="btn btn-warning">{{ __('home.Partner List') }}</a>
+            </div>
+            <div>
+                <a href="{{route('chat.message.received')}}" class="btn btn-primary mr-2">{{ __('home.Message received') }}</a>
+                <a href="{{route('chat.message.sent')}}" style="" class="btn btn-primary mr-2">{{ __('home.Message sent') }}</a>
+                <a href="#" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModal">{{ __('home.Purchase') }}</a>
+                <a href="#" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
+            </div>
+        </div>
         <div class="border d-flex justify-content-between align-items-center bg-warning p-2">
             <h5>{{$company->name}}</h5>
             <div class="">
@@ -22,8 +34,8 @@
             $listCategory = $company->category_id;
             $arrayCategory  = explode(',', $listCategory);
         @endphp
-        <div class="row">
-            <div class="col-md-4 border ml-3">
+        <div class="row mr-16 ">
+            <div class="col-md-12 border ml-3">
                 <div class="row text-center">
                     @foreach($arrayCategory as $itemCategory)
                         @php
@@ -35,16 +47,6 @@
                     @endforeach
                 </div>
             </div>
-            <div class="col-md-8 border mr-3">
-
-            </div>
-        </div>
-        <div class="border d-flex justify-content-between align-items-center p-5">
-            <a href="{{route('trust.register.member.index')}}" class="btn btn-warning">{{ __('home.List of customers') }}</a>
-            <a href="#" class="btn btn-primary">{{ __('home.Message received') }}</a>
-            <a href="#" class="btn btn-warning">{{ __('home.Tin nhắn đã gửi') }}</a>
-            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">{{ __('home.Purchase') }}</a>
-            <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
         </div>
         <table class="table table-bordered">
             <thead>
