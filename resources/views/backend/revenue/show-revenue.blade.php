@@ -127,7 +127,7 @@
         <thead>
         <tr>
             <th class="th-sm">#</th>
-            <th class="th-sm">{{ __('home.ankeller name') }}</th>
+            <th class="th-sm">{{ __('home.seller name') }}</th>
             <th class="th-sm">{{ __('home.Xếp hạng') }}</th>
             <th class="th-sm">{{ __('home.Quốc gia') }}</th>
             <th class="th-sm">{{ __('home.Ngày') }}</th>

@@ -48,7 +48,7 @@
                 <th scope="col">{{ __('home.Product Name') }}</th>
                 <th scope="col">{{ __('home.category') }}</th>
                 @if($isAdmin)
-                    <th scope="col">{{ __('home.SellerName') }}</th>
+                    <th scope="col">{{ __('home.sellerName') }}</th>
                 @endif
                 <th scope="col">{{ __('home.quantity') }}</th>
                 <th scope="col">{{ __('home.PRICE') }}</th>
@@ -60,10 +60,29 @@
             @foreach($products as $product)
                 <tr>
                     <th scope="row">{{$loop->index +1}}</th>
-                    <td>{{($product->name)}}</td>
-                    <td>{{($product->category->name)}}</td>
+                    <td>
+                        @if(locationHelper() == 'kr')
+                            <div class="item-text">{{ $product->name_ko }}</div>
+                        @elseif(locationHelper() == 'cn')
+                            <div class="item-text">{{$product->name_zh}}</div>
+                        @elseif(locationHelper() == 'jp')
+                            <div class="item-text">{{$product->name_ja}}</div>
+                        @elseif(locationHelper() == 'vi')
+                            <div class="item-text">{{$product->name_vi}}</div>
+                        @else
+                            <div class="item-text">{{$product->name_en}}</div>
+                        @endif
+                    </td>
+                    <td>
+                        @php
+                            $ld = new \App\Http\Controllers\TranslateController();
+                        @endphp
+                        {{ $ld->translateText($product->category->name, locationPermissionHelper()) }}
+                       </td>
                     @if($isAdmin)
-                        <td>{{($product->user->name)}}</td>
+                        <td>
+
+                            {{($product->user->name)}}</td>
                     @endif
                     <td>{{$product->qty}}</td>
                     <td>{{$product->price}}</td>
