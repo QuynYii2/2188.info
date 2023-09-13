@@ -3,7 +3,7 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title">{{ __('home.danh sách sale') }}</h5>
-            <a href="{{ route('seller.rank.setup.processCreate') }}" class="btn btn-primary">Thêm mới</a>
+            <a href="{{ route('seller.rank.setup.processCreate') }}" class="btn btn-primary">{{ __('home.thêm mới') }}</a>
         </div>
         @if($rankSellers->isEmpty())
             {{ __('home.Không có rank nào được tạo') }}

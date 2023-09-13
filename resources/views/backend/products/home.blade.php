@@ -10,8 +10,8 @@
     <div class="container">
         @if($isAdmin == true)
             <div class="todo_list">
-                <div class="title">{{ __('home.táo cáo thống kê') }}</div>
-                <div class="title-small">{{ __('home.oàn bộ thống kê chi tiết') }}</div>
+                <div class="title">{{ __('home.báo cáo thống kê') }}</div>
+                <div class="title-small">{{ __('home.toàn bộ thống kê chi tiết') }}</div>
                 <div class="card-body">
                     <h3 class="text-center mt-3 mb-3">{{ __('home.lưu lượng người truy cập') }} </h3>
                     <!-- Line Chart -->
@@ -42,7 +42,7 @@
                         <th scope="col">#</th>
                         <th scope="col">{{ __('home.Product Name') }}</th>
                         <th scope="col">{{ __('home.Shop Name') }}</th>
-                        <th scope="col">{{ __('home.Status') }}/th>
+                        <th scope="col">{{ __('home.Status') }}</th>
                         <th scope="col">{{ __('home.Action') }}</th>
                     </tr>
                     </thead>
@@ -104,15 +104,15 @@
             <div class="row mt-4 todo_list--bottom">
                 <div class="col-md-3 col-6 list_item">
                     <span class="number">{{count($productWaitPayments)}}</span>
-                    <p>Chờ xác nhận</p>
+                    <p>{{ __('home.chờ xác nhận') }}</p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
                     <span class="number">{{count($productProcessings)}}</span>
-                    <p>{{ __('home.đã Xử Lý') }}  </p>
+                    <p>{{ __('home.đã xử lý') }}  </p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
                     <span class="number">{{count($productShippings)}}</span>
-                    <p> {{ __('home.đã Lấy Hàng ') }}</p>
+                    <p> {{ __('home.đã lấy hàng') }}</p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
                     <span class="number">{{count($productDelivereds)}}</span>
@@ -120,15 +120,15 @@
                 </div>
                 <div class="col-md-3 col-6 list_item">
                     <span class="number">{{count($productCancels)}}</span>
-                    <p> {{ __('home.đơn Hủy') }} </p>
+                    <p> {{ __('home.đơn hủy') }} </p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
                     <span class="number">{{count($productCancels)}}</span>
-                    <p> {{ __('home.trả hàng / hoàn tiền chờ xử lý') }} </p>
+                    <p> {{ __('home.Trả Hàng / Hoàn Tiền Chờ Xử Lý') }} </p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
                     <span class="number">{{count($productPause)}}</span>
-                    <p>{{ __('home.sản Phẩm Hết Hàng') }}  </p>
+                    <p>{{ __('home.sản phẩm hết hàng') }}  </p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
                     <span class="number">{{count($promotions)}}</span>
@@ -147,7 +147,7 @@
                         <p>{{ __('home.mã giảm giá của shop') }}</p>
                     </div>
                     <div class="list_item--bottom">
-                        <p>{{ __('home.Công cụ tăng đơn hàng bằng cách tạo mã giảm giá tặng cho người mua') }}</p>
+                        <p>{{ __('home.công cụ tăng đơn hàng bằng cách tạo mã giảm giá tặng cho người mua') }}</p>
                     </div>
                 </a>
                 <a href="{{route('seller.promotion.list')}}" class="col-md-4 marketing list_item">
@@ -157,14 +157,14 @@
                         <p> {{ __('home.chương trình của shop') }}</p>
                     </div>
                     <div class="list_item--bottom">
-                        <p>{{ __('home.Công cụ tăng đơn hàng bằng cách tạo chương trình giảm giá') }}</p>
+                        <p>{{ __('home.công cụ tăng đơn hàng bằng cách tạo chương trình giảm giá') }}</p>
                     </div>
                 </a>
                 <a href="{{route('seller.promotion.list')}}" class="col-md-4 marketing list_item">
                     <div class="list_item--top">
                         <img src="https://deo.shopeemobile.com/shopee/shopee-seller-live-sg/rootpages/static/modules/marketing/module-icons/bundle.png"
                              alt="">
-                        <p> {{ __('home.combo khuyến Mãi ') }}</p>
+                        <p> {{ __('home.Combo Khuyến Mãi ') }}</p>
                     </div>
                     <div class="list_item--bottom">
                         <p>{{ __('home.tạo combo khuyến mãi để tăng giá trị đơn hàng trên mỗi người mua') }}</p>
@@ -190,7 +190,7 @@
                 <li class="nav-item">
                     <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
                        aria-controls="contact" aria-selected="false">
-                        Chăm sóc khách hàng
+                        {{ __('home.Chăm sóc khách hàng') }}
                     </a>
                 </li>
             </ul>
@@ -206,7 +206,7 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td>{{ __('home.sản phẩm bị khóa/xóa') }}</td>
+                            <td>{{ __('home.Sản phẩm bị khóa/xóa') }}</td>
                             <td>0</td>
                             <td>0</td>
                         </tr>

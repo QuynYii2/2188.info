@@ -927,7 +927,20 @@ return [
     'Nhập id mxh' => '입력하십시오',
     'Nhập mật khẩu' => '입력하십시오',
     'Nhập tên mã giảm giá' => '할인코드 제목 입력',
-    'Xoá mã giảm giá' => '할인코드 삭제'
+    'Xoá mã giảm giá' => '할인코드 삭제',
+    'Trả Hàng / Hoàn Tiền Chờ Xử Lý' => '처리중인 반품/환불 요청',
+    'Combo Khuyến Mãi ' => '프로모션 콤보',
+    'Chăm sóc khách hàng' => '고객지원',
+    'Sản phẩm bị khóa/xóa' => '블럭/삭제된 상품',
+    'Nhập giá khuyến mãi' => '할인 가격 입력 ',
+    'Nhập mã sản phẩm' => '제품 코드',
+    'Nhập giá bán' => '판매가격 입력',
+    'Nhập xuất xứ' => '원산지 입력',
+    'Nhập số lượng tối thiểu' => '최소수량 입려',
+    'Từ (sản phẩm)' => '최소',
+    'Giảm %' => '할인 %',
+    'Ngày giao hàng dự kiến' => '예상 발송일',
+    'Nhập tên sản phẩm' => '상품명 입력'
 
 
 
