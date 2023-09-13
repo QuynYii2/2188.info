@@ -914,12 +914,21 @@ return [
     'Edit attribute' => '속성 설정',
     'Terms' => '이용약관',
     'Đơn huỷ' =>'취소된 주문',
-        'Bạn có chắc chắn muốn xoá thuộc tính' => '속성을 지우시겠습니까?',
+    'Bạn có chắc chắn muốn xoá thuộc tính' => '속성을 지우시겠습니까?',
     'Nếu xoá bạn sẽ không thể không thể tìm thấy nó! Chúng tôi sẽ không chịu trách nhiệm cho việc này' => '영원히 지우게 될 것입니다.  저희가 이 행동에 대해서 책임을 지지 않겠습니다',
     'danh sách mã giảm giá' => '나의 할인코드',
     'Không có voucher nào được tạo' => '생성된 할인코드가 없습니다',
     'tên mã giảm giá' => '할인코드 제목',
-    'assign to' => '적용 대상'
+    'assign to' => '적용 대상',
+    'Nhập Họ tên' => '입력하십시오',
+    'Nhập biệt danh' => '입력하십시오',
+    'Nhập số điện thoại' => '입력하십시오',
+    'Nhập email' => '입력하십시오',
+    'Nhập id mxh' => '입력하십시오',
+    'Nhập mật khẩu' => '입력하십시오',
+    'Nhập tên mã giảm giá' => '할인코드 제목 입력',
+    'Xoá mã giảm giá' => '할인코드 삭제'
+
 
 
 

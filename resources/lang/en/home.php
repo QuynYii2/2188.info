@@ -885,4 +885,12 @@ return [
     'tên mã giảm giá' => 'tên mã giảm giá',
     'assign to' => 'assign to',
     'Đơn huỷ' =>'Đơn huỷ' ,
+    'Nhập Họ tên' => 'Nhập Họ tên',
+    'Nhập biệt danh' => 'Nhập biệt danh',
+    'Nhập số điện thoại' =>  'Nhập số điện thoại',
+    'Nhập email' => 'Nhập email',
+    'Nhập id mxh' =>   'Nhập id mxh',
+    'Nhập mật khẩu' =>   'Nhập mật khẩu',
+    'Nhập tên mã giảm giá' => 'Nhập tên mã giảm giá',
+    'Xoá mã giảm giá' =>  'Xoá mã giảm giá'
 ];
