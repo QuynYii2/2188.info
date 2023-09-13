@@ -5,32 +5,32 @@
     <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title">Thêm mới mã giảm giá</h5>
+            <h5 class="card-title">{{ __('home.Thêm mới mã giảm giá') }}</h5>
         </div>
         <div class="container">
             <form action="{{route('seller.vouchers.create')}}" method="post">
                 @csrf
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="nameVoucher">Tên mã giảm giá</label>
+                        <label for="nameVoucher">{{ __('home.tên mã giảm giá') }}</label>
                         <input type="text" class="form-control" required name="nameVoucher" id="nameVoucher" placeholder="Nhập tên ãm giảm giá">
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="quantity">Số lượng</label>
+                        <label for="quantity">{{ __('home.Số lượng') }}</label>
                         <input type="number" min="1" class="form-control" required name="quantity" id="quantity" placeholder="123">
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="percent">Phần trăm giảm giá</label>
+                        <label for="percent">{{ __('home.Phần trăm giảm giá') }}</label>
                         <input type="number" min="1" max="100" class="form-control" required name="percent" id="percent" placeholder="60">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="status">Apply</label>
+                        <label for="status">{{ __('home.apply') }}</label>
                         <div class="multiselect">
                             <div class="selectBox" id="div-click" onclick="showCheckboxes()">
                                 <select>
-                                    <option>Chọn sản phẩm áp dụng</option>
+                                    <option>{{ __('home.chọn sản phẩm áp dụng') }}</option>
                                 </select>
                                 <div class="overSelect"></div>
                             </div>
@@ -51,7 +51,7 @@
                         </div>
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="assign_to">Assign To</label>
+                        <label for="assign_to">{{ __('home.assign To') }}</label>
                         <select id="assign_to" name="assign_to" class="form-control">
                             <option value="0">No Assgin</option>
                             @foreach($levels as $level)
@@ -60,7 +60,7 @@
                         </select>
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="status">Status</label>
+                        <label for="status">{{ __('home.Status') }}</label>
                         <select id="status" name="status" class="form-control">
                             <option value="{{\App\Enums\VoucherStatus::ACTIVE}}">{{\App\Enums\VoucherStatus::ACTIVE}}</option>
                             <option value="{{\App\Enums\VoucherStatus::INACTIVE}}">{{\App\Enums\VoucherStatus::INACTIVE}}</option>
@@ -69,19 +69,19 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="startDate">Ngày bắt đầu</label>
+                        <label for="startDate">{{ __('home.ngày bắt đầu') }}</label>
                         <input type="datetime-local" required class="form-control" name="startDate" id="startDate">
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="endDate">Ngày kết thúc </label>
+                        <label for="endDate">{{ __('home.ngày kết thúc') }} </label>
                         <input type="datetime-local" required class="form-control" name="endDate" id="endDate">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="description">Description</label>
+                    <label for="description">{{ __('home.Description') }}</label>
                     <textarea type="text" name="description" class="form-control" id="description" placeholder="Description"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-primary">{{ __('home.Create<') }}/button>
             </form>
         </div>
     </div>

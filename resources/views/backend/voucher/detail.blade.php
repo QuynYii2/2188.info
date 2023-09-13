@@ -5,26 +5,26 @@
     <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title">Chi tiết mã giảm giá</h5>
+            <h5 class="card-title">{{ __('home.Chi tiết mã giảm giá') }}</h5>
         </div>
         <div class="container">
             <form action="{{route('seller.vouchers.update', $voucher->id)}}" method="post">
                 @csrf
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="nameVoucher">Tên mã giảm giá</label>
+                        <label for="nameVoucher">{{ __('home.Tên mã giảm giá') }}</label>
                         <input type="text" class="form-control" name="nameVoucher" id="nameVoucher"
                                value="{{$voucher->name}}" required
                                placeholder="Nhập tên ãm giảm giá">
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="quantity">Số lượng</label>
+                        <label for="quantity">{{ __('home.Số lượng') }}</label>
                         <input type="number" min="1" class="form-control" name="quantity" id="quantity"
                                value="{{$voucher->quantity}}" required
                                placeholder="123">
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="percent">Phần trăm giảm giá</label>
+                        <label for="percent">{{ __('home.Phần trăm giảm giá') }}</label>
                         <input type="number" min="1" max="100" class="form-control" name="percent" id="percent"
                                value="{{$voucher->percent}}" required
                                placeholder="60">
@@ -42,7 +42,7 @@
                         <div class="multiselect">
                             <div class="selectBox" id="div-click" onclick="showCheckboxes()">
                                 <select>
-                                    <option>Chọn sản phẩm áp dụng</option>
+                                    <option>{{ __('home.Chọn sản phẩm áp dụng') }}</option>
                                 </select>
                                 <div class="overSelect"></div>
                             </div>
@@ -64,7 +64,7 @@
                     </div>
                     <input type="text" id="category_apply" value="{{$voucher->apply}}" hidden>
                     <div class="form-group col-md-3">
-                        <label for="assign_to">Assign To</label>
+                        <label for="assign_to">{{ __('home.assign to') }}</label>
                         <select id="assign_to" name="assign_to" class="form-control">
                             <option value="0">No Assgin</option>
                             @foreach($levels as $level)
@@ -87,23 +87,23 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="startDate">Ngày bắt đầu</label>
+                        <label for="startDate">{{ __('home.ngày bắt đầu') }}</label>
                         <input type="datetime-local" class="form-control" name="startDate" id="startDate"
                                required value="{{$voucher->startDate}}">
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="endDate">Ngày kết thúc </label>
+                        <label for="endDate">{{ __('home.ngày kết thúc') }} </label>
                         <input type="datetime-local" class="form-control" name="endDate" id="endDate"
                                required value="{{$voucher->endDate}}">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="description">Description</label>
+                    <label for="description">{{ __('home.Description') }}</label>
                     <textarea type="text" name="description" class="form-control" id="description"
                               placeholder="Description"
                     >{{$voucher->description}}</textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary">{{ __('home.update') }}/button>
             </form>
         </div>
     </div>
