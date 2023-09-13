@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title">List Setup Marketing</h5>
-            <a href="{{ route('create-setup-marketing') }}" class="btn btn-primary">{{ __('home.Thêm mới') }}</a>
+            <a href="{{ route('create-setup-marketing') }}" class="btn btn-primary">{{ __('home.thêm mới') }}</a>
         </div>
         @if($setups->isEmpty())
             {{ __('home.Không có configs nào được tạo') }}

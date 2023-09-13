@@ -106,13 +106,12 @@
                         <div class="form-group">
                             <div class="name">{{ __('home.Tên sản phẩm') }}</div>
                             <input type="text" class="form-control" name="name" id="name"
-                                   placeholder="Nhập tên sản phẩm"
-                                   required>
+                                   placeholder={{ __('home.Nhập tên sản phẩm')}} required>
                         </div>
                         <div class="form-group">
                             <div class="name">{{ __('home.Mã sản phẩm') }}</div>
                             <input type="text" class="form-control" name="product_code" id="product_code"
-                                   placeholder="Nhập mã sản phẩm" required>
+                                   placeholder={{ __('home.Nhập mã sản phẩm') }} required>
                         </div>
                         <div class="form-group">
                             <label for="short_description">{{ __('home.Mô tả ngắn') }}</label>
@@ -178,26 +177,26 @@
                         <div class="form-group">
                             <div class="name">{{ __('home.Giá bán') }}</div>
                             <input type="number" class="form-control" name="giaban" id="name"
-                                   placeholder="Nhập giá bán"
+                                   placeholder={{ __('home.Nhập giá bán') }}
                                    required min="1">
                         </div>
                         <div class="form-group">
-                            <div class="name">{{ __('Nhập giá khuyến mãi(nếu có)') }}</div>
+                            <div class="name">{{ __('home.Nhập giá khuyến mãi(nếu có)') }}</div>
                             <input type="number" class="form-control" name="giakhuyenmai" id="name"
-                                    placeholder="Nhập số lượng" min="1">
+                                    placeholder={{ __('home.Nhập số lượng') }} min="1">
                         </div>
                         <div class="form-group">
                             <div class="name">{{ __('home.Nhập số lượng') }}</div>
                             <input type="number" class="form-control" name="qty" id="qty"
-                                   placeholder="Nhập giá khuyến mãi" min="1">
+                                   placeholder={{ __('home.Nhập giá khuyến mãi') }} min="1">
                         </div>
                         <div class="form-group">
                             <div class="name">{{ __('home.Xuất xứ') }}</div>
-                            <input type="text" class="form-control" name="origin" id="origin" placeholder="Nhập xuất xứ">
+                            <input type="text" class="form-control" name="origin" id="origin" placeholder={{ __('home.Nhập xuất xứ') }}">
                         </div>
                         <div class="form-group">
                             <div class="name">{{ __('home.Sản phẩm tối thiểu') }}</div>
-                            <input type="number" class="form-control" name="min" id="min" placeholder="Nhập số lượng tối thiểu" min="1">
+                            <input type="number" class="form-control" name="min" id="min" placeholder={{ __('home.Nhập số lượng tối thiểu') }} min="1">
                         </div>
                         <div class="form-group">
                             <div class="d-flex">
@@ -215,13 +214,13 @@
                                         <div class="form-group form-group-price">
                                             <div class="d-flex align-items-center">
                                                 <div class="">
-                                                    <input type="number" class="form-control form-price" name="quantity[]" placeholder="Từ (sản phẩm)">
+                                                    <input type="number" class="form-control form-price" name="quantity[]" placeholder={{ __('home.Từ (sản phẩm)') }}>
                                                 </div>
                                                 <div class="">
-                                                    <input type="number" class="form-control form-price" name="sales[]" placeholder="Giảm %">
+                                                    <input type="number" class="form-control form-price" name="sales[]" placeholder={{ __('home.Giảm %') }}>
                                                 </div>
                                                 <div class="">
-                                                    <input type="number" class="form-control form-price" name="days[]" placeholder="Ngày giao hàng dự kiến">
+                                                    <input type="number" class="form-control form-price" name="days[]" placeholder={{ __('home.Ngày giao hàng dự kiến') }}>
                                                 </div>
                                                 <div class="">
                                                     <button type="button" class="btn remove-form-field"><i class="fa-regular fa-trash-can"></i></button>
