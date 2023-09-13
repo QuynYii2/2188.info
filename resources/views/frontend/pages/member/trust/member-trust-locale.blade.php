@@ -15,39 +15,7 @@
                 <a href="#" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
             </div>
         </div>
-        <div class="border d-flex justify-content-between align-items-center bg-warning p-2">
-            <h5>{{$company->name}}</h5>
-            <div class="">
-                <span>ID</span>: {{$company->id}}
-            </div>
-            <div class="">
-                <span>{{ __('home.Membership classification') }}</span>: {{$company->member}}
-            </div>
-            <div class="">
-                <span>{{ __('home.Membership Level') }}</span>: {{$company->member}}
-            </div>
-            <div class="">
-                <span>{{ __('home.customer rating') }}</span>
-            </div>
-        </div>
-        @php
-            $listCategory = $company->category_id;
-            $arrayCategory  = explode(',', $listCategory);
-        @endphp
-        <div class="row mr-16 ">
-            <div class="col-md-12 border ml-3">
-                <div class="row text-center">
-                    @foreach($arrayCategory as $itemCategory)
-                        @php
-                            $category = \App\Models\Category::find($itemCategory);
-                        @endphp
-                        <div class="col-md-6">
-                            {{$category->name}}
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
+        @include('frontend.pages.member.tabs_info')
         <table class="table table-bordered">
             <thead>
             <tr>
