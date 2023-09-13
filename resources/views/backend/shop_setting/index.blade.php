@@ -26,7 +26,10 @@
                                            checked
                                         @endif
                                 >
-                                {{ $payment->name }}
+                                @php
+                                    $ld = new \App\Http\Controllers\TranslateController();
+                                @endphp
+                                {{ $ld->translateText('Ngọc Anh phố', locationPermissionHelper()) }}
                             </label>
                         @endforeach
                         <button type="submit">{{ __('home.Lưu') }}L</button>
@@ -47,7 +50,10 @@
                                            checked
                                         @endif
                                 >
-                                {{ $transport->name }}
+                                @php
+
+                                @endphp
+                                {{ $ld->translateText( $transport->name, locationPermissionHelper()) }}
                             </label>
                         @endforeach
                         <button type="submit">{{ __('home.Lưu') }}</button>

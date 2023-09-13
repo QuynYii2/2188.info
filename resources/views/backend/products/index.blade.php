@@ -131,7 +131,11 @@
                                 <strong>
                                     <a class="row-title"
                                        href="{{route('seller.products.edit', $product->id)}}">
-                                        {{$product->name}}
+                                        @php
+                                            $ld = new \App\Http\Controllers\TranslateController();
+                                        @endphp
+                                        {{ $ld->translateText($product->name, locationPermissionHelper()) }}
+
                                     </a>
                                 </strong>
                                 <div class="row-actions">
@@ -192,7 +196,11 @@
                                                                         <option value="">-- Select Category --</option>
                                                                         @foreach ($categories as $category)
                                                                             <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>
-                                                                                {{ $category->name }}
+                                                                                @php
+                                                                                    $ld = new \App\Http\Controllers\TranslateController();
+                                                                                @endphp
+                                                                                {{ $ld->translateText($category->name, locationPermissionHelper()) }}
+
                                                                             </option>
                                                                         @endforeach
                                                                     </select>
