@@ -668,7 +668,6 @@ return [
     'cài đặt vận chuyển' => '배송 설정',
     'quản lý đơn hàng' => '주문관리',
     'tất cả' => '전체 보기',
-    'đơn hủy' => '취소한 주문',
     'trả hàng /hoàn tiền' => '반품/환불 요청',
     'quản lý sản phẩm' => '제품 관리',
     'Tất Cả Sản Phẩm' => '모든 상품 보기',
@@ -896,7 +895,6 @@ return [
     'đã xử lý' => '처리 중인 주문',
     'đã lấy hàng' => '배달 중인 주문',
     'đơn thành công' => '성공한 주문',
-    'đơn hủy' => '취소한 주문',
     'trả hàng/hoàn tiền chờ xử lý' => '반품/환불 요청',
     'sản phẩm hết hàng' => '품절 상품',
     'chương trình khuyến mãi chờ xử lý' => '홍보/할인 프로그램',
@@ -924,9 +922,15 @@ return [
     'Thời gian chuẩn bị hàng' => '출고 시간',
     'Tỉ lệ phản hồi' => '답장 비율',
     'Thời gian phản hồi' => '답장 시간',
-    'đơn huỷ' => '취소한 주문',
-    'chuyên mục' => '카테고리',
-    'Đã xuất bản' => '게시됨'
+
+    'Đã xuất bản' => '게시됨',
+    'Detail Order' => '세부사항 순서',
+    'Edit attribute' => '속성 설정',
+    'Terms' => '이용약관',
+    'Bạn có chắc chắn muốn xoá thuộc tính' => '속성을 지우시겠습니까?',
+    'Nếu xoá bạn sẽ không thể không thể tìm thấy nó! Chúng tôi sẽ không chịu trách nhiệm cho việc này' => '영원히 지우게 될 것입니다.  저희가 이 행동에 대해서 책임을 지지 않겠습니다',
+
+
 
 
 

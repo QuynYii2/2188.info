@@ -160,7 +160,7 @@
                     <th>{{ __('home.Avatar') }}</th>
                     <th>{{ __('home.name') }}</th>
                     <th>{{ __('home.email') }}</th>
-                    <th>{{ __('home.statusole') }}</th>
+                    <th>{{ __('home.status') }}</th>
                     <th>{{ __('home.Loại hội viên') }}</th>
                     <th>{{ __('home.Status') }}</th>
                     <th>{{ __('home.Action') }}</th>
