@@ -243,7 +243,13 @@
                                                name="category-{{$category->id}}"
                                                value="{{$category->id}}"
                                                class="inputCheckboxCategory mr-2 p-3"/>
-                                        <span class="labelCheckboxCategory">{{($category->name)}}</span>
+                                        <span class="labelCheckboxCategory">
+                                            @php
+                                                $ld = new \App\Http\Controllers\TranslateController();
+                                            @endphp
+                                            {{ $ld->translateText($category->name, locationPermissionHelper()) }}
+
+                                           </span>
                                     </label>
                                     @if(!$categories->isEmpty())
                                         @php
@@ -255,7 +261,9 @@
                                                        name="category-{{$child->id}}"
                                                        value="{{$child->id}}"
                                                        class="inputCheckboxCategory mr-2 p-3"/>
-                                                <span class="labelCheckboxCategory">{{($child->name)}}</span>
+                                                <span class="labelCheckboxCategory">
+                                                     {{ $ld->translateText($child->name, locationPermissionHelper()) }}
+                                                   </span>
                                             </label>
                                             @php
                                                 $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
@@ -266,7 +274,9 @@
                                                            name="category-{{$child2->id}}"
                                                            value="{{$child2->id}}"
                                                            class="inputCheckboxCategory mr-2 p-3"/>
-                                                    <span class="labelCheckboxCategory">{{($child2->name)}}</span>
+                                                    <span class="labelCheckboxCategory">
+                                                         {{ $ld->translateText($child2->name, locationPermissionHelper()) }}
+                                                       </span>
                                                 </label>
                                             @endforeach
                                         @endforeach

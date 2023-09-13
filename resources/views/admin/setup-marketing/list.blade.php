@@ -33,7 +33,12 @@
                                          loading="lazy">
                                 </th>
                                 <td>{{$setup->stt}}</td>
-                                <td>{{$setup->name}}</td>
+                                <td>
+                                    @php
+                                        $ld = new \App\Http\Controllers\TranslateController();
+                                    @endphp
+                                    {{ $ld->translateText($setup->name, locationPermissionHelper()) }}
+                                    </td>
                                 <td class="d-flex align-items-baseline" data-colname="Image">
                                     <a href="{{route('setup-marketing.edit', $setup->id)}}" style="color: black">
                                         <i class="fa-regular fa-pen-to-square"></i>

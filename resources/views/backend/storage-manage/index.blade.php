@@ -206,10 +206,19 @@
                 @endphp
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $storage->name }}</td>
+                    <td>
+                        @php
+                            $ld = new \App\Http\Controllers\TranslateController();
+                        @endphp
+                        {{ $ld->translateText($storage->name, locationPermissionHelper()) }}
+                    </td>
                     <td>{{ $storage->price }}</td>
                     <td>{{ $storage->quantity }}</td>
-                    <td>{{ $storage->origin }}</td>
+                    <td>
+                        @php
+                        @endphp
+                        {{ $ld->translateText($storage->origin, locationPermissionHelper()) }}
+                       </td>
                     <td>{{ $username === null ? "" : $storage->create_by. ' - ' . $username->name }}</td>
                     <td>{{ $storage->created_at }}</td>
                     <td class="">
