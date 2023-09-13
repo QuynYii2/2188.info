@@ -7,6 +7,22 @@
     @endphp
     <div class="container-fluid">
         <h3 class="text-center">{{ __('home.Partner List') }}</h3>
+        <div class=" d-flex justify-content-between align-items-center p-3">
+            <div>
+                <a href="{{route('stand.register.member.index', $company->id)}}"
+                   class="btn btn-primary mr-2">{{ __('home.Shop') }}</a>
+                <a href="{{route('partner.register.member.index')}}"
+                   class="btn btn-warning">{{ __('home.Partner List') }}</a>
+            </div>
+            <div>
+                <a href="{{route('chat.message.received')}}" class="btn btn-primary mr-2">{{ __('home.Message received') }}</a>
+                <a href="{{route('chat.message.sent')}}" class="btn btn-primary mr-2">{{ __('home.Message sent') }}</a>
+                <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
+                   data-target="#exampleModal">{{ __('home.Purchase') }}</a>
+                <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
+                   data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
+            </div>
+        </div>
         <div class="border d-flex justify-content-between align-items-center bg-warning p-2">
             <h5>{{$company->name}}</h5>
             <div class="">
@@ -48,22 +64,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="border d-flex justify-content-between align-items-center p-3">
-            <div>
-                <a href="{{route('stand.register.member.index', $company->id)}}"
-                   class="btn btn-primary mr-2">{{ __('home.Shop') }}</a>
-                <a href="{{route('partner.register.member.index')}}"
-                   class="btn btn-warning">{{ __('home.Partner List') }}</a>
-            </div>
-            <div>
-                <a href="{{route('chat.message.received')}}" class="btn btn-primary mr-2">{{ __('home.Message received') }}</a>
-                <a href="{{route('chat.message.sent')}}" class="btn btn-primary mr-2">{{ __('home.Message sent') }}</a>
-                <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
-                   data-target="#exampleModal">{{ __('home.Purchase') }}</a>
-                <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
-                   data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
-            </div>
-        </div>
+
         <table class="table table-bordered">
             <thead>
             <tr>
