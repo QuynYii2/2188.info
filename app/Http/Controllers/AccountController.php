@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\OrderStatus;
 use App\Enums\UserStatus;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
@@ -50,14 +51,16 @@ class AccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
+        (new HomeController())->getLocale($request);
         $products = Product::where('user_id', $id)->orderByDesc('id')->get();
         return view('backend.account_manage.show-shop', compact('products'));
     }
 
-    public function viewCart($id)
+    public function viewCart(Request $request,$id)
     {
+        (new HomeController())->getLocale($request);
         $orderAll = Order::where([
             ['user_id', '=', Auth::user()->id],
         ])->get();
@@ -104,8 +107,9 @@ class AccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request,$id)
     {
+        (new HomeController())->getLocale($request);
         //
     }
 

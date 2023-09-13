@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Product;
 use App\Models\StorageProduct;
 use App\Models\User;
@@ -18,14 +19,16 @@ class StorageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $storages = StorageProduct::where('create_by', Auth::user()->id)->orderByDesc('id')->get();
         return view('backend.storage-manage.index', compact('storages'));
     }
 
-    public function allStorage()
+    public function allStorage(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $id = Auth::user()->id;
         $roles = DB::table('role_user')->where('user_id', $id)->orderBy('role_id')->get('role_id');
         foreach ($roles as $role) {
@@ -40,6 +43,7 @@ class StorageController extends Controller
 
     public function searchStorage(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $query = [];
         $name = $request->input('name-search');
         $price = $request->input('price-search');
@@ -105,6 +109,7 @@ class StorageController extends Controller
      */
     public function store(Request $request)
     {
+        (new HomeController())->getLocale($request);
         if ($request->hasFile('gallery')) {
             $gallery = $request->file('gallery');
             $galleryPaths = [];
@@ -138,8 +143,9 @@ class StorageController extends Controller
         return $this->allStorage();
     }
 
-    public function isStorageExist($storageCheck)
+    public function isStorageExist(Request $request,$storageCheck)
     {
+        (new HomeController())->getLocale($request);
         $name = $storageCheck->name;
         $price = $storageCheck->price;
         $quantity = $storageCheck->quantity;
@@ -178,8 +184,9 @@ class StorageController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request,$id)
     {
+        (new HomeController())->getLocale($request);
         $storage = StorageProduct::findOrFail($id);
         return view('backend.storage-manage.edit', compact('storage'));
     }
@@ -193,6 +200,7 @@ class StorageController extends Controller
      */
     public function update(Request $request, $id)
     {
+        (new HomeController())->getLocale($request);
         $storage = StorageProduct::findOrFail($id);
 
         if ($request->hasFile('gallery')) {

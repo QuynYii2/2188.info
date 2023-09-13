@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Revenue;
@@ -15,6 +16,7 @@ class ExportFileController extends Controller
 {
     public function exportExcel(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $jsonData = $request->input('excel-value');
         $arrayData = json_decode($jsonData, true);
         $writer = SimpleExcelWriter::create(storage_path('app/public/storage.xlsx'));
@@ -23,8 +25,9 @@ class ExportFileController extends Controller
         return response()->download(storage_path('app/public/storage.xlsx'), 'storage-' . Auth::user()->name . '-' . rand() . '.xlsx')->deleteFileAfterSend();
     }
 
-    public function exportExcelRevenue()
+    public function exportExcelRevenue(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $writer = SimpleExcelWriter::streamDownload(storage_path('app/public/revenue.xlsx'));
         $user = Auth::user()->id;
         $role_id = DB::table('role_user')->where('user_id', $user)->get();
@@ -48,6 +51,7 @@ class ExportFileController extends Controller
 
     public function exportExcelOrder(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $jsonData = $request->input('excel-value');
         $arrayData = json_decode($jsonData, true);
         $writer = SimpleExcelWriter::create(storage_path('app/public/order.xlsx'));
@@ -59,6 +63,7 @@ class ExportFileController extends Controller
 
     public function exportExcelOrderDetail(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $listIDs = $request->input('excel-id');
         $arrayIDs = explode(',', $listIDs);
         $arrayData = null;

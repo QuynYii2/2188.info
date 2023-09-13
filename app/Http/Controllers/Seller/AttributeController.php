@@ -27,6 +27,7 @@ class AttributeController extends Controller
 
     public function store(Request $request)
     {
+        (new HomeController())->getLocale($request);
 
         try {
             $request->validate([
@@ -70,8 +71,9 @@ class AttributeController extends Controller
         }
     }
 
-    public function show($id)
+    public function show(Request $request,$id)
     {
+        (new HomeController())->getLocale($request);
         $attribute = Attribute::where([['status', AttributeStatus::ACTIVE], ['id', $id], ['user_id', Auth::user()->id]])->first();
         if ($attribute == null) {
             return redirect()->route('attributes.index');
@@ -81,6 +83,7 @@ class AttributeController extends Controller
 
     public function update(Request $request, $id)
     {
+        (new HomeController())->getLocale($request);
         try {
             $attribute = Attribute::where([['status', AttributeStatus::ACTIVE], ['id', $id], ['user_id', Auth::user()->id]])->first();
             if ($attribute == null) {
@@ -124,8 +127,9 @@ class AttributeController extends Controller
             return back();
         }
     }
-    public function toggle($id)
+    public function toggle(Request $request,$id)
     {
+        (new HomeController())->getLocale($request);
         $attribute = Attribute::where([['id', $id], ['user_id', Auth::user()->id]])->first();
         if ($attribute == null) {
             return back([400], ['Error']);
@@ -140,8 +144,9 @@ class AttributeController extends Controller
 //        return redirect()->route('attributes.index')->with('success', 'Attribute updated successfully.');
     }
 
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
+        (new HomeController())->getLocale($request);
         $attribute = Attribute::where([['status', AttributeStatus::ACTIVE], ['id', $id], ['user_id', Auth::user()->id]])->first();
         if ($attribute == null) {
             return redirect()->route('attributes.index');

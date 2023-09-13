@@ -599,7 +599,7 @@ return [
     'See All' => 'Xem tất cả',
     'permission_one' => 'Quản lý nhập hàng/ xuất hàng, Quản lý kho và doanh thu',
     'permission_two' => 'Quản lý giao dịch và sản phẩm giao dịch điện tử',
-    'permission_there' => 'Quản lý giao dịch và sản phẩm giao dịch điện tử'
+    'permission_there' => 'Quản lý giao dịch và sản phẩm giao dịch điện tử',
     // end
     'số lượng' => 'số lượng',
     'ảnh sản phẩm choose file' =>  'ảnh sản phẩm choose file' ,
@@ -898,4 +898,10 @@ return [
     'Thời gian chuẩn bị hàng' => 'Thời gian chuẩn bị hàng',
     'Tỉ lệ phản hồi' => 'Tỉ lệ phản hồi',
     'Thời gian phản hồi' => 'Thời gian phản hồi',
+    'Đã xuất bản' =>  'Đã xuất bản',
+    'Detail Order' =>  'Detail Order',
+    'Detail Order' =>  'Detail Order',
+    'Terms' => 'Terms',
+    'Bạn có chắc chắn muốn xoá thuộc tính' =>  'Bạn có chắc chắn muốn xoá thuộc tính' ,
+    'Nếu xoá bạn sẽ không thể không thể tìm thấy nó! Chúng tôi sẽ không chịu trách nhiệm cho việc này' => 'Nếu xoá bạn sẽ không thể không thể tìm thấy nó! Chúng tôi sẽ không chịu trách nhiệm cho việc này',
 ];

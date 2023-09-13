@@ -45,7 +45,7 @@
             <ul class='sub-items pl-3'>
                 <li><a class="sidebarUrl" href="{{route('seller.order.list')}}">{{ __('home.Tất cả') }}</a>
                 </li>
-                <li><a class="sidebarUrl" href="#">Đ{{ __('home.đơn huỷ') }}</a>
+                <li><a class="sidebarUrl" href="#">{{ __('home.đơn huỷ') }}</a>
                 </li>
                 <li><a class="sidebarUrl" href="#">{{ __('home.trả hàng /hoàn tiền') }}</a>
                 </li>
@@ -63,7 +63,7 @@
                 <li><a class="sidebarUrl" href="{{route('seller.products.views')}}">{{ __('home.Sắp xếp theo lượt xem') }}</a>
                 </li>
                 @if($isAdmin == true)
-                    <li><a class="sidebarUrl" href="/categories">Chuyên mục</a>
+                    <li><a class="sidebarUrl" href="/categories">{{ __('home.chuyên mục') }}</a>
                     </li>
                 @endif
             </ul>
@@ -198,7 +198,7 @@
                         </li>
                     @endif
                     <li>
-                    <li><a class="sidebarUrl" href="{{route('seller.evaluates.index')}}">{{ __('home.TQuản lí bình luận') }}</a></li>
+                    <li><a class="sidebarUrl" href="{{route('seller.evaluates.index')}}">{{ __('home.Quản lí bình luận') }}</a></li>
                     <li><a class="sidebarUrl" href="{{ route('profile.shop.index') }}">{{ __('home.Hồ Sơ Shop') }}</a>
                     </li>
                     <li><a class="sidebarUrl" href="#">{{ __('home.Trang Trí Shop') }}</a>

@@ -541,8 +541,9 @@ class ProductController extends Controller
         }
     }
 
-    public function setHotProduct($id)
+    public function setHotProduct(Request $request ,$id)
     {
+        (new HomeController())->getLocale($request);
         try {
             $product = Product::find($id);
             if ($product->hot == 1) {
@@ -557,8 +558,9 @@ class ProductController extends Controller
         }
     }
 
-    public function setFeatureProduct($id)
+    public function setFeatureProduct(Request $request ,$id)
     {
+        (new HomeController())->getLocale($request);
         try {
             $product = Product::find($id);
             if ($product->feature == 1) {
@@ -575,6 +577,7 @@ class ProductController extends Controller
 
     private function updateProduct($product, $request, $number)
     {
+        (new HomeController())->getLocale($request);
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
             $thumbnailPath = $thumbnail->store('thumbnails', 'public');
@@ -648,6 +651,7 @@ class ProductController extends Controller
 
     private function getAttributeProperty(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $proAtt = $request->input('attribute_property');
 
         if ($proAtt === null) {
@@ -676,8 +680,9 @@ class ProductController extends Controller
         return $newArray;
     }
 
-    private function createAttributeProduct(Product $product, $newArray)
+    private function createAttributeProduct(Product $request, $product, $newArray)
     {
+        (new HomeController())->getLocale($request);
         if ($newArray != null) {
             for ($i = 0; $i < count($newArray); $i++) {
                 $myArray = array();
@@ -807,8 +812,9 @@ class ProductController extends Controller
         return $success;
     }
 
-    private function mergeArray($array1, $array2)
+    private function mergeArray(Request $request,$array1, $array2)
     {
+        (new HomeController())->getLocale($request);
         $arrayList = [];
         for ($j = 0; $j < count($array1); $j++) {
             for ($z = 0; $z < count($array2); $z++) {
@@ -818,8 +824,9 @@ class ProductController extends Controller
         return $arrayList;
     }
 
-    private function getArray($array)
+    private function getArray(Request $request,$array)
     {
+        (new HomeController())->getLocale($request);
         if ($array) {
             if (count($array) == 1) {
                 return $array;
@@ -834,8 +841,9 @@ class ProductController extends Controller
         }
     }
 
-    private function getCategory($request)
+    private function getCategory(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $listIDs = null;
         $categories = Category::all();
         $listCategoryName[] = null;

@@ -41,7 +41,7 @@
                                     Order by
                                 </th>
                                 <th scope="col">
-                                    Terms
+                                    {{ __('home.Terms') }}
                                 </th>
                             </tr>
                             </thead>
@@ -58,13 +58,13 @@
                                             <div class="row-actions">
                                                 <span class="edit">
                                                     <a href="{{route('attributes.detail', $attribute->id)}}">
-                                                        Edit
+                                                        {{ __('home.edit') }}
                                                     </a>
                                                     |
                                                 </span>
                                                 <span class="delete">
                                                     <a class="delete" data-toggle="modal" data-target="#modalDeleteAttribute{{$attribute->id}}">
-                                                        Delete
+                                                        {{ __('home.delete') }}
                                                     </a>
                                                     <!-- Modal -->
                                                     <div class="modal fade text-black" id="modalDeleteAttribute{{$attribute->id}}" tabindex="-1"
@@ -83,11 +83,10 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <h5 class="text-center">
-                                                                        Bạn có chắc chắn muốn xoá thuộc tính: {{$attribute->name}}
+                                                                        {{ __('home.Bạn có chắc chắn muốn xoá thuộc tính') }}: {{$attribute->name}}
                                                                     </h5>
                                                                     <p class="text-danger">
-                                                                        Nếu xoá bạn sẽ không thể không thể tìm thấy nó!
-                                                                        Chúng tôi sẽ không chịu trách nhiệm cho việc này!
+                                                                        {{ __('home.Nếu xoá bạn sẽ không thể không thể tìm thấy nó! Chúng tôi sẽ không chịu trách nhiệm cho việc này') }}!
                                                                     </p>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -167,7 +166,7 @@
                                             Custom ordering
                                         </option>
                                         <option value="name">
-                                            Name
+                                            {{ __('home.Name') }}
                                         </option>
                                         <option value="name_num">
                                             Name (numeric)
