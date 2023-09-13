@@ -130,17 +130,6 @@
                             <div class="mt-2">
                                 <h5 class="mb-3">
                                     {{ ($company->name) }}
-    {{--                                @if(locationHelper() == 'kr')--}}
-    {{--                                    {{ ($company->name_ko) }}--}}
-    {{--                                @elseif(locationHelper() == 'cn')--}}
-    {{--                                    {{ ($company->name_zh) }}--}}
-    {{--                                @elseif(locationHelper() == 'jp')--}}
-    {{--                                    {{ ($company->name_ja) }}--}}
-    {{--                                @elseif(locationHelper() == 'vi')--}}
-    {{--                                    {{ ($company->name_vi) }}--}}
-    {{--                                @else--}}
-    {{--                                    {{ ($company->name_en) }}--}}
-    {{--                                @endif--}}
                                 </h5>
                             </div>
                         </div>
