@@ -192,7 +192,7 @@
                         </div>
                         <div class="form-group">
                             <div class="name">{{ __('home.Xuất xứ') }}</div>
-                            <input type="text" class="form-control" name="origin" id="origin" placeholder={{ __('home.Nhập xuất xứ') }}">
+                            <input type="text" class="form-control" name="origin" id="origin" placeholder="{{ __('home.Nhập xuất xứ') }}">
                         </div>
                         <div class="form-group">
                             <div class="name">{{ __('home.Sản phẩm tối thiểu') }}</div>
@@ -244,10 +244,17 @@
                                                value="{{$category->id}}"
                                                class="inputCheckboxCategory mr-2 p-3"/>
                                         <span class="labelCheckboxCategory">
-                                            @php
-                                                $ld = new \App\Http\Controllers\TranslateController();
-                                            @endphp
-                                            {{ $ld->translateText($category->name, locationPermissionHelper()) }}
+                                            @if(locationHelper() == 'kr')
+                                                <div class="text">{{ $category->name_ko }}</div>
+                                            @elseif(locationHelper() == 'cn')
+                                                <div class="text">{{$category->name_zh}}</div>
+                                            @elseif(locationHelper() == 'jp')
+                                                <div class="text">{{$category->name_ja}}</div>
+                                            @elseif(locationHelper() == 'vi')
+                                                <div class="text">{{$category->name_vi}}</div>
+                                            @else
+                                                <div class="text">{{$category->name_en}}</div>
+                                            @endif
 
                                            </span>
                                     </label>
@@ -262,7 +269,17 @@
                                                        value="{{$child->id}}"
                                                        class="inputCheckboxCategory mr-2 p-3"/>
                                                 <span class="labelCheckboxCategory">
-                                                     {{ $ld->translateText($child->name, locationPermissionHelper()) }}
+                                                     @if(locationHelper() == 'kr')
+                                                        <div class="text">{{ $child->name_ko }}</div>
+                                                    @elseif(locationHelper() == 'cn')
+                                                        <div class="text">{{$child->name_zh}}</div>
+                                                    @elseif(locationHelper() == 'jp')
+                                                        <div class="text">{{$child->name_ja}}</div>
+                                                    @elseif(locationHelper() == 'vi')
+                                                        <div class="text">{{$child->name_vi}}</div>
+                                                    @else
+                                                        <div class="text">{{$child->name_en}}</div>
+                                                    @endif
                                                    </span>
                                             </label>
                                             @php
@@ -275,7 +292,17 @@
                                                            value="{{$child2->id}}"
                                                            class="inputCheckboxCategory mr-2 p-3"/>
                                                     <span class="labelCheckboxCategory">
-                                                         {{ $ld->translateText($child2->name, locationPermissionHelper()) }}
+                                                         @if(locationHelper() == 'kr')
+                                                            <div class="text">{{ $child2->name_ko }}</div>
+                                                        @elseif(locationHelper() == 'cn')
+                                                            <div class="text">{{$child2->name_zh}}</div>
+                                                        @elseif(locationHelper() == 'jp')
+                                                            <div class="text">{{$child2->name_ja}}</div>
+                                                        @elseif(locationHelper() == 'vi')
+                                                            <div class="text">{{$child2->name_vi}}</div>
+                                                        @else
+                                                            <div class="text">{{$child2->name_en}}</div>
+                                                        @endif
                                                        </span>
                                                 </label>
                                             @endforeach
