@@ -42,7 +42,8 @@
                                 <td>{{$user->status}}</td>
                                 <td>
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <a href="{{route('admin.detail.users', $user->id)}}" class="btn btn-primary">Detail</a>
+                                        <a href="{{route('admin.private.update.users', $user->id)}}"
+                                           class="btn btn-primary">Detail</a>
                                         <form action="{{route('admin.delete.users', $user->id)}}" method="post">
                                             @method('DELETE')
                                             @csrf

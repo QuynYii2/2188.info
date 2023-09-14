@@ -116,14 +116,22 @@ class AdminUserController extends Controller
             if ($password) {
                 $user->password = Hash::make($password);
             }
+
+            if ($request->hasFile('thumbnail')) {
+                $avatar = $request->file('thumbnail');
+                $avatarPath = $avatar->store('avatar', 'public');
+                $user->image = $avatarPath;
+            }
+
+            $user->name = $request->input('name');
+            $user->address = $request->input('address');
+            $user->region = $request->input('region');
+
             $user->email = $request->input('email');
             $user->phone = $request->input('phone');
-            $user->name = $request->input('name');
             $user->status = $request->input('status');
 
             $companyPerson = MemberRegisterPersonSource::where('email', $user->email)->first();
-            $companyPerson->email = $request->input('email');
-            $companyPerson->phone = $request->input('phone');
 
             $role = $request->input('role');
 
@@ -132,7 +140,11 @@ class AdminUserController extends Controller
             $this->insertRole($role, $id);
 
             $user->save();
-            $companyPerson->save();
+            if ($companyPerson){
+                $companyPerson->email = $request->input('email');
+                $companyPerson->phone = $request->input('phone');
+                $companyPerson->save();
+            }
             alert()->success('Success', 'Save information user success');
             return redirect(route('admin.list.users'));
         } catch (\Exception $exception) {

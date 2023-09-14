@@ -61,9 +61,6 @@
         <div class="row mb-3">
             <div class="col-md-6"></div>
             <div class="col-md-6 d-flex justify-content-between align-items-center">
-                <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-secondary">Chỉnh
-                    sửa thông tin cao cấp
-                </button>
                 <form action="{{route('admin.delete.users', $user->id)}}" method="post">
                     @method('DELETE')
                     @csrf
@@ -73,42 +70,4 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa thông tin cao cấp</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <h5>Chỉnh sửa thông tin quan trọng bao gồm: mật khẩu, quyền hạn của user</h5>
-                    <p>Điều này sẽ có thể ảnh hướng đến hoạt động của user và dự án</p>
-                    <p class="text-danger">(Chúng tôi không khuyến khích điều này)</p>
-                    <div class="form-check">
-                        <input type="checkbox" id="inputCheckboxApply">
-                        <label for="inputCheckboxApply">
-                            Tôi đã hiểu
-                        </label>
-                    </div>
-                    <a id="btnContinue" class="btn btn-primary mt-3">Continue</a>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-        $(document).ready(function () {
-            $('#inputCheckboxApply').on('change', function () {
-                if ($('#inputCheckboxApply').is(':checked')) {
-                    let url = '{{route('admin.private.update.users', $user->id)}}';
-                    $('#btnContinue').attr("href", url);
-                }
-            })
-        })
-    </script>
 @endsection
