@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\MemberRegisterInfoStatus;
+use App\Enums\MemberRegisterType;
+use App\Enums\MemberStatus;
+use App\Enums\RegisterMember;
 use App\Enums\UserStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Models\Member;
 use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
 use App\Models\Role;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -122,33 +127,9 @@ class AdminUserController extends Controller
 
             $role = $request->input('role');
 
-            $adminRole = Role::where('name', 'super_admin')->first();
-            $seller = Role::where('name', 'seller')->first();
-            $buyer = Role::where('name', 'buyer')->first();
             DB::table('role_user')->where('user_id', $id)->delete();
 
-            if ($role == 'ADMIN') {
-                DB::table('role_user')->insert([
-                    [
-                        'role_id' => $adminRole->id,
-                        'user_id' => $id
-                    ],
-                    [
-                        'role_id' => $seller->id,
-                        'user_id' => $id
-                    ]
-                ]);
-            } elseif ($role == 'SELLER') {
-                DB::table('role_user')->insert([
-                    'role_id' => $seller->id,
-                    'user_id' => $id
-                ]);
-            } else {
-                DB::table('role_user')->insert([
-                    'role_id' => $buyer->id,
-                    'user_id' => $id
-                ]);
-            }
+            $this->insertRole($role, $id);
 
             $user->save();
             $companyPerson->save();
@@ -158,17 +139,117 @@ class AdminUserController extends Controller
             alert()->error('Error', 'Error, Please try again');
             return back();
         }
-
     }
 
     public function processCreate()
     {
-
+        $members = Member::where('status', MemberStatus::ACTIVE)->get();
+        return view('admin.user-manager.create-user', compact('members'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        try {
+            $user = new User();
 
+            $password = $request->input('password');
+
+            $oldUser = User::where('email', $request->input('email'))->first();
+            if ($oldUser) {
+                alert()->error('Error', 'Error, Email exits!');
+                return back();
+            }
+
+            $user->name = $request->input('name');
+            $user->phone = $request->input('phone');
+            $user->email = $request->input('email');
+            $user->password = Hash::make($password);
+
+            $user->region = $request->input('region');
+            $user->gender = $request->input('gender');
+            $user->date_of_birth = $request->input('date_of_birth');
+            $user->type_account = $request->input('type_account');
+
+            $user->address = $request->input('address');
+
+            if ($request->hasFile('image')) {
+                $avatar = $request->file('image');
+                $avatarPath = $avatar->store('avatar', 'public');
+                $user->image = $avatarPath;
+            }
+            $user->status = $request->input('status');
+            $member_id = $request->input('member');
+            $member = Member::find($member_id);
+            $user->member = $member->name;
+            $role = $request->input('role');
+
+            $user->save();
+
+            $newUser = User::where('email', $request->input('email'))->first();
+            $id = $newUser->id;
+            $this->insertRole($role, $id);
+
+            $company = new MemberRegisterInfo();
+
+            $company->user_id = $id;
+            $company->name = $request->input('name');
+            $company->phone = $request->input('phone');
+            $company->fax = 'fax';
+
+            $company->code_fax = 'code_fax';
+            $company->category_id = 'default';
+            $company->code_business = 'default';
+            $company->number_business = 'default';
+
+            $company->member = $member->name;
+            $company->status = $request->input('status');
+            $company->address = $request->input('address');
+            $company->member_id = $member_id;
+
+            $company->datetime_register = Carbon::now()->addHours(7);
+
+            $company->name_en = $request->input('name');
+            $company->name_kr = $request->input('name');
+
+            $company->address_en = $request->input('address');
+            $company->address_kr = $request->input('address');
+            $company->save();
+
+            $newCompany = MemberRegisterInfo::where([
+                ['name', $request->input('name')],
+                ['phone', $request->input('phone')],
+                ['member_id', $member_id],
+            ])->first();
+
+            $person = new MemberRegisterPersonSource();
+
+            $person->user_id = $id;
+
+            $person->member_id = $newCompany->id;
+            $person->name = $request->input('name');
+            $person->password = Hash::make($password);
+            $person->phone = $request->input('phone');
+            $person->email = $request->input('email');
+
+            $person->verifyCode = '123456';
+            $person->isVerify = 1;
+
+            $person->rank = 'default';
+
+            $person->datetime_register = Carbon::now()->addHours(7);
+
+            $person->type = MemberRegisterType::SOURCE;
+            $person->status = $request->input('status');
+            $person->name_en = $request->input('name');
+            $person->sns_account = 'default';
+            $person->save();
+
+            alert()->success('Success', 'Save information user success');
+            return redirect(route('admin.list.users'));
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error, Please try again');
+            return back();
+        }
     }
 
     public function showCompany($id)
@@ -217,5 +298,34 @@ class AdminUserController extends Controller
         $user->save();
         alert()->success('Success', 'Delete success');
         return redirect(route('admin.list.users'));
+    }
+
+    private function insertRole($role, $id)
+    {
+        $adminRole = Role::where('name', 'super_admin')->first();
+        $seller = Role::where('name', 'seller')->first();
+        $buyer = Role::where('name', 'buyer')->first();
+        if ($role == 'ADMIN') {
+            DB::table('role_user')->insert([
+                [
+                    'role_id' => $adminRole->id,
+                    'user_id' => $id
+                ],
+                [
+                    'role_id' => $seller->id,
+                    'user_id' => $id
+                ]
+            ]);
+        } elseif ($role == 'SELLER') {
+            DB::table('role_user')->insert([
+                'role_id' => $seller->id,
+                'user_id' => $id
+            ]);
+        } else {
+            DB::table('role_user')->insert([
+                'role_id' => $buyer->id,
+                'user_id' => $id
+            ]);
+        }
     }
 }
