@@ -138,8 +138,11 @@ class AuthController extends Controller
                     $isMember = true;
                 }
 //                dd($isMember, $member->member, RegisterMember::BUYER);
-                if ($isMember && $member->member !== RegisterMember::BUYER) {
+                if ($isMember && $member->member == RegisterMember::LOGISTIC) {
                     return redirect()->route('stand.register.member.index', ['id' => $member->id]);
+                }
+                elseif ($isMember && $member->member == RegisterMember::TRUST) {
+                    return redirect()->route('trust.register.member.index');
                 }
                 else {
                     return redirect()->route('home');
