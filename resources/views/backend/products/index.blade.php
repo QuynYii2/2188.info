@@ -159,9 +159,9 @@
                                           </button>
                                           |
                                         <!-- Modal -->
-                                            <div class="modal fade" id="exampleQuickEditProduct{{$product->id}}"
-                                                 tabindex="-1" role="dialog"
-                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                         <div class="modal fade" id="exampleQuickEditProduct{{$product->id}}"
+                                              tabindex="-1" role="dialog"
+                                              aria-labelledby="exampleModalLabel" aria-hidden="true">
                                               <div class="modal-dialog" role="document">
                                                  <form action="{{ route('seller.products.update', $product->id) }}"
                                                        method="POST"
@@ -196,16 +196,21 @@
                                                                         <option value="">-- Select Category --</option>
                                                                         @foreach ($categories as $category)
                                                                             <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>
-                                                                                @php
-                                                                                    $ld = new \App\Http\Controllers\TranslateController();
-                                                                                @endphp
-                                                                                {{ $ld->translateText($category->name, locationPermissionHelper()) }}
-
+                                                                                @if(locationHelper() == 'kr')
+                                                                                    <div class="text">{{ $category->name_ko }}</div>
+                                                                                @elseif(locationHelper() == 'cn')
+                                                                                    <div class="text">{{$category->name_zh}}</div>
+                                                                                @elseif(locationHelper() == 'jp')
+                                                                                    <div class="text">{{$category->name_ja}}</div>
+                                                                                @elseif(locationHelper() == 'vi')
+                                                                                    <div class="text">{{$category->name_vi}}</div>
+                                                                                @else
+                                                                                    <div class="text">{{$category->name_en}}</div>
+                                                                                @endif
                                                                             </option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
-
                         <div class="form-group">
                             <div class="name">{{ __('home.Xuất xứ') }}</div>
                             <input type="text" class="form-control" name="origin" id="origin" placeholder="Nhập xuất xứ"
@@ -606,31 +611,35 @@
                                                id="inputHot-{{$product->id}}"
                                                type="checkbox"
                                                @if($product->hot == 1) checked @endif
-                                               >
+                                        >
                                         <span class="slider round"></span>
                                     </label>
                                 @endif
                                 <!-- Modal -->
-                                    <div class="modal fade" id="exampleModal-{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel"></h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Bạn có muốn nâng cấp sản phẩm không
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}</button>
-                                                    <button type="button" class="btn btn-primary"><a
-                                                                href="{{route('permission.list.show')}}">{{ __('home.Sign up to upgrade') }}</a></button>
-                                                </div>
+                                <div class="modal fade" id="exampleModal-{{$product->id}}" tabindex="-1" role="dialog"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Bạn có muốn nâng cấp sản phẩm không
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">{{ __('home.Close') }}</button>
+                                                <button type="button" class="btn btn-primary"><a
+                                                            href="{{route('permission.list.show')}}">{{ __('home.Sign up to upgrade') }}</a>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                             </td>
                             <td class="featured column-featured" data-colname="Featured">
                                 @if($isAdmin == true)

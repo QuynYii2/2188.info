@@ -31,10 +31,10 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="password">Password</label>
-                    <input required type="password" class="form-control" id="password" name="password">
+                    <input required type="password" class="form-control" id="password" name="password" disabled>
                     <input type="checkbox" id="inputCheckboxPassword">
                     <label for="inputCheckboxPassword">
-                        Không cập nhập password
+                       Cập nhập password
                     </label>
                 </div>
                 <div class="form-group col-md-4">
@@ -74,12 +74,48 @@
                     </select>
                 </div>
             </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input required type="text" class="form-control" id="address" name="address" placeholder="1234 Main St"
+                       value="{{$user->address}}">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="region">Region</label>
+                    <input required type="text" class="form-control" id="region" name="region"
+                           value="{{$user->region}}">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Status</label>
+                    <select id="inputState" class="form-control" name="status">
+                        @if($user->status == \App\Enums\UserStatus::ACTIVE)
+                            <option value="{{\App\Enums\UserStatus::ACTIVE}}">ACTIVE</option>
+                            <option value="{{\App\Enums\UserStatus::INACTIVE}}">INACTIVE</option>
+                            <option value="{{\App\Enums\UserStatus::BAN}}">BAN</option>
+                        @elseif($user->status == \App\Enums\UserStatus::INACTIVE)
+                            <option value="{{\App\Enums\UserStatus::INACTIVE}}">INACTIVE</option>
+                            <option value="{{\App\Enums\UserStatus::ACTIVE}}">ACTIVE</option>
+                            <option value="{{\App\Enums\UserStatus::ACTIVE}}">BAN</option>
+                        @else
+                            <option value="{{\App\Enums\UserStatus::BAN}}">BAN</option>
+                            <option value="{{\App\Enums\UserStatus::ACTIVE}}">ACTIVE</option>
+                            <option value="{{\App\Enums\UserStatus::ACTIVE}}">INACTIVE</option>
+                        @endif
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="thumbnail">Image</label>
+                    <input type="file" class="form-control" id="thumbnail" name="thumbnail" accept="image/*">
+                    <img width="100px" height="100px" src="{{ asset('storage/'.$user->image) }}" alt="Avatar">
+                </div>
+            </div>
             <button type="submit" class="btn btn-success">Save</button>
         </form>
         <div class="row mb-3">
             <div class="col-md-6"></div>
             <div class="col-md-6 d-flex justify-content-between align-items-center">
-                <a href="{{route('admin.detail.users.company', $user->id)}}" class="btn btn-warning">Xem thông tin công ty</a>
+                <a href="{{route('admin.detail.users.company', $user->id)}}" class="btn btn-warning">Xem thông tin công
+                    ty</a>
                 <form action="{{route('admin.delete.users', $user->id)}}" method="post">
                     @method('DELETE')
                     @csrf
@@ -92,11 +128,9 @@
         $(document).ready(function () {
             $('#inputCheckboxPassword').on('change', function () {
                 if ($('#inputCheckboxPassword').is(':checked')) {
-                    $('#password').prop('disabled', true);
-                    $('#password').prop('required', false);
-                } else {
                     $('#password').prop('disabled', false);
-                    $('#password').prop('required', true);
+                } else {
+                    $('#password').prop('disabled', true);
                 }
             })
         })
