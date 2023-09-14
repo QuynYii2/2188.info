@@ -9,6 +9,7 @@ use App\Enums\RegisterMember;
 use App\Enums\UserStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Models\Category;
 use App\Models\Member;
 use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
@@ -140,7 +141,7 @@ class AdminUserController extends Controller
             $this->insertRole($role, $id);
 
             $user->save();
-            if ($companyPerson){
+            if ($companyPerson) {
                 $companyPerson->email = $request->input('email');
                 $companyPerson->phone = $request->input('phone');
                 $companyPerson->save();
@@ -156,7 +157,8 @@ class AdminUserController extends Controller
     public function processCreate()
     {
         $members = Member::where('status', MemberStatus::ACTIVE)->get();
-        return view('admin.user-manager.create-user', compact('members'));
+        $categories = Category::all();
+        return view('admin.user-manager.create-user', compact('members', 'categories'));
     }
 
     public function create(Request $request)
@@ -165,6 +167,7 @@ class AdminUserController extends Controller
             $user = new User();
 
             $password = $request->input('password');
+            $passwordConfirm = $request->input('passwordConfirm');
 
             $oldUser = User::where('email', $request->input('email'))->first();
             if ($oldUser) {
@@ -172,8 +175,13 @@ class AdminUserController extends Controller
                 return back();
             }
 
+            if ($password !== $passwordConfirm) {
+                alert()->error('Error', 'Error, Password or Password confirm incorrect!');
+                return back();
+            }
+
             $user->name = $request->input('name');
-            $user->phone = $request->input('phone');
+            $user->phone = $request->input('phoneNumber');
             $user->email = $request->input('email');
             $user->password = Hash::make($password);
 
@@ -182,7 +190,7 @@ class AdminUserController extends Controller
             $user->date_of_birth = $request->input('date_of_birth');
             $user->type_account = $request->input('type_account');
 
-            $user->address = $request->input('address');
+            $user->address = $request->input('address_en');
 
             if ($request->hasFile('image')) {
                 $avatar = $request->file('image');
@@ -197,39 +205,49 @@ class AdminUserController extends Controller
 
             $user->save();
 
+            $category = $request->input('category');
+            $listCategory = implode(',', $category);
+
+            $type_business = $request->input('type_business');
+            $listType_business = implode(',', $type_business);
+
             $newUser = User::where('email', $request->input('email'))->first();
             $id = $newUser->id;
             $this->insertRole($role, $id);
 
             $company = new MemberRegisterInfo();
 
+            $company->datetime_register = Carbon::now()->addHours(7);
             $company->user_id = $id;
             $company->name = $request->input('name');
-            $company->phone = $request->input('phone');
+            $company->phone = $request->input('phoneNumber');
             $company->fax = 'fax';
 
             $company->code_fax = 'code_fax';
-            $company->category_id = 'default';
-            $company->code_business = 'default';
+            $company->category_id = $listCategory;
+            $company->code_business = $listCategory;
             $company->number_business = 'default';
+            $company->type_business = $listType_business;
 
             $company->member = $member->name;
             $company->status = $request->input('status');
-            $company->address = $request->input('address');
+            $company->address = $request->input('address_en');
             $company->member_id = $member_id;
 
             $company->datetime_register = Carbon::now()->addHours(7);
 
-            $company->name_en = $request->input('name');
+            $company->name_en = $request->input('name_en');
             $company->name_kr = $request->input('name');
 
-            $company->address_en = $request->input('address');
-            $company->address_kr = $request->input('address');
+            $company->address_en = $request->input('address_en');
+            $company->address_kr = $request->input('address_kr');
+
+            $company->number_clearance = $request->input('number_clearance');
             $company->save();
 
             $newCompany = MemberRegisterInfo::where([
                 ['name', $request->input('name')],
-                ['phone', $request->input('phone')],
+                ['phone', $request->input('phoneNumber')],
                 ['member_id', $member_id],
             ])->first();
 
@@ -240,7 +258,7 @@ class AdminUserController extends Controller
             $person->member_id = $newCompany->id;
             $person->name = $request->input('name');
             $person->password = Hash::make($password);
-            $person->phone = $request->input('phone');
+            $person->phone = $request->input('phoneNumber');
             $person->email = $request->input('email');
 
             $person->verifyCode = '123456';
@@ -253,7 +271,8 @@ class AdminUserController extends Controller
             $person->type = MemberRegisterType::SOURCE;
             $person->status = $request->input('status');
             $person->name_en = $request->input('name');
-            $person->sns_account = 'default';
+            $person->sns_account = $request->input('sns_account');
+            $person->code = $request->input('code');
             $person->save();
 
             alert()->success('Success', 'Save information user success');
