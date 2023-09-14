@@ -16,35 +16,45 @@
             <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/category-banner-top-layout-2.jpg"
                  alt="">
             <div class="category-name">
-                ELECTRONICS
+                @if(locationHelper() == 'kr')
+                    {{ ($category->name_ko) }}
+                @elseif(locationHelper() == 'cn')
+                    {{ ($category->name_zh) }}
+                @elseif(locationHelper() == 'jp')
+                    {{ ($category->name_ja) }}
+                @elseif(locationHelper() == 'vi')
+                    {{ ($category->name_vi) }}
+                @else
+                    {{ ($category->name_en) }}
+                @endif
             </div>
         </div>
-{{--        <section class="section container-fluid">--}}
-{{--            <div class="content">{{ __('home.Jump to') }}:</div>--}}
-{{--            <div class="swiper CategoriesOne category-item">--}}
-{{--                <div class="swiper-wrapper">--}}
-{{--                    @php--}}
-{{--                        $listCate = DB::table('categories')->where('parent_id', null)->get();--}}
-{{--                    @endphp--}}
-{{--                    @foreach($listCate as $cate)--}}
-{{--                        <div class="swiper-slide">--}}
-{{--                            <a href="{{ route('category.show', $cate->id) }}">--}}
-{{--                                <div class="img">--}}
-{{--                                    <img src="{{ asset('storage/' . $cate->thumbnail) }}"--}}
-{{--                                         alt="">--}}
-{{--                                </div>--}}
-{{--                                <div class="text">--}}
-{{--                                    {{($cate->{'name' . $langDisplay->getLangDisplay()})}}--}}
-{{--                                </div>--}}
-{{--                            </a>--}}
-{{--                        </div>--}}
-{{--                    @endforeach--}}
-{{--                </div>--}}
-{{--                <div class="swiper-button-next"></div>--}}
-{{--                <div class="swiper-button-prev"></div>--}}
-{{--                <div class="swiper-pagination"></div>--}}
-{{--            </div>--}}
-{{--        </section>--}}
+        <section class="section container-fluid">
+            <div class="content">{{ __('home.Jump to') }}:</div>
+            <div class="swiper CategoriesOne category-item">
+                <div class="swiper-wrapper">
+                    @php
+                        $listCate = DB::table('categories')->where('parent_id', null)->get();
+                    @endphp
+                    @foreach($childCategories as $cate)
+                        <div class="swiper-slide">
+                            <a href="{{ route('category.show', $cate->id) }}">
+                                <div class="img">
+                                    <img src="{{ asset('storage/' . $cate->thumbnail) }}"
+                                         alt="">
+                                </div>
+                                <div class="text">
+                                    {{($cate->{'name' . $langDisplay->getLangDisplay()})}}
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
         <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
         <div class="category-header align-items-center mt-4 mb-3 container-fluid d-flex justify-content-between">
             <div class="category-header--left">

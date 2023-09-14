@@ -96,7 +96,7 @@
 {{--            </div>--}}
             @if($isAdmin && $arraySeller)
                 <div class="form-group col-md-3">
-                    <label for="inputState">{{ __('home.Seller name') }}</label>
+                    <label for="inputState">{{ __('home.seller name') }}</label>
                     <select id="inputState" name="seller" class="form-control">
                         @for($i=0; $i<count($arraySeller); $i++)
                             @php
@@ -120,14 +120,14 @@
         </div>
         <a href="{{ route('revenues.excel') }}" class="btn btn-success">{{ __('home.Excel') }}</a>
         <button type="submit" class="btn btn-success">{{ __('home.search') }}</button>
-        <a href="{{route('revenues.index')}}" class="btn btn-secondary">{{ __('home.back') }}</a>
+        <a href="{{route('revenues.index')}}" class="btn btn-secondary">{{ __('home.Back') }}</a>
     </form>
 
     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
         <tr>
             <th class="th-sm">#</th>
-            <th class="th-sm">{{ __('home.ankeller name') }}</th>
+            <th class="th-sm">{{ __('home.seller name') }}</th>
             <th class="th-sm">{{ __('home.Xếp hạng') }}</th>
             <th class="th-sm">{{ __('home.Quốc gia') }}</th>
             <th class="th-sm">{{ __('home.Ngày') }}</th>

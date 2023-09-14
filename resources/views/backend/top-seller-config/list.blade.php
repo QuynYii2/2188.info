@@ -137,7 +137,7 @@
                         <th>{{ __('home.thumbnail') }}</th>
                         <th>{{ __('home.Name') }}</th>
                         <th>{{ __('home.Qty Products') }}</th>
-                        <th>{{ __('home.Atc') }}</th>
+                        <th>Atc</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -152,7 +152,10 @@
                                      alt="Thumbnail">
                             </td>
                             <td>
-                              {{$list_Setup->name}}
+                                @php
+                                    $ld = new \App\Http\Controllers\TranslateController();
+                                @endphp
+                                {{ $ld->translateText($list_Setup->name, locationPermissionHelper()) }}
                             </td>
                             <td>
                                 @php
@@ -197,7 +200,7 @@
                                                         <th scope="col">#</th>
                                                         <th scope="col">{{ __('home.thumbnail') }}</th>
                                                         <th scope="col">{{ __('home.Name') }}</th>
-                                                        <th scope="col">{{ __('home.Act') }}</th>
+                                                        <th scope="col">{{ __('home.atc') }}</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
@@ -209,7 +212,12 @@
                                                                     <img src="{{ asset('storage/'.$productMkt->thumbnail) }}" style="width: 100px; height: 100px; object-fit: cover" class="img img-100"
                                                                          alt="Thumbnail">
                                                                 </td>
-                                                                <td>{{$productMkt->name}}</td>
+                                                                <td>
+                                                                    @php
+                                                                        $ld = new \App\Http\Controllers\TranslateController();
+                                                                    @endphp
+                                                                    {{ $ld->translateText($productMkt->name, locationPermissionHelper()) }}
+                                                                </td>
                                                                 <td>
                                                                     <form method="post" action="{{route('detail-marketing.delete',
                                                                     [

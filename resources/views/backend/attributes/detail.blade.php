@@ -6,7 +6,7 @@
 @section('content')
     <div id="wpbody-content">
         <div class="wrap woocommerce">
-            <h1>Edit attribute</h1>
+            <h1>{{ __('home.Edit attribute') }}</h1>
 
             <form action="{{route('attributes.update', $attribute->id)}}" method="post">
                 @csrf
@@ -46,7 +46,7 @@
                         <td>
                             <select name="attribute_orderby" id="attribute_orderby">
                                 <option value="menu_order" selected="selected">Custom ordering</option>
-                                <option value="name">Name</option>
+                                <option value="name">{{ __('home.Name') }}</option>
                                 <option value="name_num">Name (numeric)</option>
                                 <option value="id">Term ID</option>
                             </select>

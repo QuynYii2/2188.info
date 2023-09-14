@@ -7,48 +7,7 @@
     @endphp
     <div class="container-fluid">
         <h3 class="text-center">{{ __('home.Partner List') }}</h3>
-        <div class="border d-flex justify-content-between align-items-center bg-warning p-2">
-            <h5>{{$company->name}}</h5>
-            <div class="">
-                <span>ID</span>: {{$company->id}}
-            </div>
-            <div class="">
-                <span>{{ __('home.Membership classification') }}</span>: {{$company->member}}
-            </div>
-            <div class="">
-                <span>{{ __('home.Membership Level') }}</span>: {{$company->member}}
-            </div>
-            <div class="">
-                <span>{{ __('home.customer rating') }}</span>
-            </div>
-        </div>
-        @php
-            $listCategory = $company->category_id;
-            $arrayCategory  = explode(',', $listCategory);
-        @endphp
-        <div class="border mt-3">
-            <div class="row text-center">
-                @foreach($arrayCategory as $itemCategory)
-                    @php
-                        $category = \App\Models\Category::find($itemCategory);
-                    @endphp
-                    <div class="col-md-2">
-                        @if(locationHelper() == 'kr')
-                            <div class="item-text">{{ $category->name_ko }}</div>
-                        @elseif(locationHelper() == 'cn')
-                            <div class="item-text">{{$category->name_zh}}</div>
-                        @elseif(locationHelper() == 'jp')
-                            <div class="item-text">{{$category->name_ja}}</div>
-                        @elseif(locationHelper() == 'vi')
-                            <div class="item-text">{{$category->name_vi}}</div>
-                        @else
-                            <div class="item-text">{{$category->name_en}}</div>
-                        @endif
-                    </div>
-                @endforeach
-            </div>
-        </div>
-        <div class="border d-flex justify-content-between align-items-center p-3">
+        <div class=" d-flex justify-content-between align-items-center p-3">
             <div>
                 <a href="{{route('stand.register.member.index', $company->id)}}"
                    class="btn btn-primary mr-2">{{ __('home.Shop') }}</a>
@@ -64,6 +23,7 @@
                    data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
             </div>
         </div>
+        @include('frontend.pages.member.tabs_info')
         <table class="table table-bordered">
             <thead>
             <tr>

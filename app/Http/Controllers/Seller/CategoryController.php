@@ -12,8 +12,9 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $categories = Category::all();
         return view('backend/categories/index', [
             'categories' => $categories
@@ -21,8 +22,9 @@ class CategoryController extends Controller
 
     }
 
-    public function create()
+    public function create(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $categories = Category::all();
         return view('backend/categories/create', [
             'categories' => $categories
@@ -32,6 +34,7 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
+        (new HomeController())->getLocale($request);
         try {
             $validatedData = $request->validate([
                 'category_name' => 'required',
@@ -95,14 +98,16 @@ class CategoryController extends Controller
     }
 
 
-    public function show(Category $category)
+    public function show(Category $request, $category)
     {
+        (new HomeController())->getLocale($request);
         return view('backend/categories/edit', compact('category'));
     }
 
 
-    public function edit($id)
+    public function edit(Request $request,$id)
     {
+        (new HomeController())->getLocale($request);
         $categories = Category::all();
         $category = Category::find($id);
         if (!$category) {
@@ -114,6 +119,7 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
+        (new HomeController())->getLocale($request);
 
         try {
             $category = Category::find($id);
@@ -182,8 +188,9 @@ class CategoryController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
+        (new HomeController())->getLocale($request);
         try {
             $category = Category::find($id);
             if (!$category) {

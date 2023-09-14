@@ -27,21 +27,21 @@
             <div class="col-12 col-sm-12 border-right mt-2 rm-pd-on-mobile">
                 <div class="form-group">
                     <div class="name">{{ __('home.Tên sản phẩm') }}</div>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Nhập tên sản phẩm" required>
+                    <input type="text" class="form-control" name="name" id="name" placeholder={{ __('home.Nhập tên sản phẩm') }} required>
                 </div>
                 <div class="form-group row">
                     <div class="col-4 d-inline-block">
                         <div class="control-label small name" for="price">{{ __('home.Giá bán') }}</div>
                         <input type="number" class="form-control" required name="price" id="price"
-                               placeholder="Nhập giá bán">
+                               placeholder={{ __('home.Nhập giá bán') }} >
                     </div>
                     <div class="col-4 d-inline-block">
                         <div class="control-label small name" for="quantity">{{ __('home.Số lượng') }}</div>
-                        <input type="number" class="form-control" name="quantity" id="quantity" placeholder="Nhập số lượng">
+                        <input type="number" class="form-control" name="quantity" id="quantity" placeholder={{ __('home.Nhập số lượng') }}>
                     </div>
                     <div class="col-4 d-inline-block">
                         <div class="control-label small name" for="origin">{{ __('home.Xuất xứ') }}</div>
-                        <input type="text" class="form-control" name="origin" id="origin" placeholder="Nhập Xuất xứ">
+                        <input type="text" class="form-control" name="origin" id="origin" placeholder={{ __('home.Nhập xuất xứ') }}>
                     </div>
                 </div>
                 <div class="form-group col-12 col-sm-12 ">

@@ -20,7 +20,7 @@
                        class="btn btn-primary mr-2">{{ __('home.Message received') }}</a>
                     <a href="{{route('chat.message.sent')}}" class="btn btn-primary mr-2">{{ __('home.Message sent') }}</a>
                     <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
-                       data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
+                       data-target="#exampleModal">{{ __('home.Purchase') }}</a>
                     <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
                        data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
                     <a href="{{route('chat.message.show')}}" class="btn btn-primary">{{ __('home.Chat Now') }}</a>

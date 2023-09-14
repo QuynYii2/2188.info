@@ -22,6 +22,7 @@ class TopSellerConfigController extends Controller
 {
     public function index(Request $request)
     {
+
         (new HomeController())->getLocale($request);
         $configs = TopSellerConfig::where('user_id', Auth::user()->id)->get();
         return view('backend.top-seller-config.list', compact('configs'));
@@ -37,6 +38,7 @@ class TopSellerConfigController extends Controller
 
     public function create(Request $request)
     {
+        (new HomeController())->getLocale($request);
         try {
             $arrayProduct = $request->input('arrayProduct');
             $listProduct = implode(',', $arrayProduct);
@@ -74,8 +76,9 @@ class TopSellerConfigController extends Controller
         }
     }
 
-    public function delete($id)
+    public function delete(Request $request,$id)
     {
+        (new HomeController())->getLocale($request);
         try {
             TopSellerConfig::where('id', $id)->delete();
             alert()->success('Success', 'Delete success!');

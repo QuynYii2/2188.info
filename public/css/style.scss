@@ -138,6 +138,17 @@ input.qtyminus { width:25px; height:25px;}
     border: 1px solid $color-main ;
   }
 }
+.mr-16 {
+  margin-right: 16px;
+}
+.search_header {
+  position: absolute;
+  background-color: transparent;
+  right: 0;
+  top: 0;
+  height: 100%;
+  border-radius: 40px;
+}
 .full-width{
   width: 100%;
 }

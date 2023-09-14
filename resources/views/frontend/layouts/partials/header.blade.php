@@ -103,7 +103,7 @@
                                    style="box-shadow: none">
                             <input hidden="" type="text" id="category_search" name="category_search" value="0">
 
-                            <button class="button-right" type="submit"
+                            <button class="button-right search_header" type="submit"
                                     onclick="<?php echo $checkBuyer ? 'showAlert(1)' : (Auth::check() ? '' : 'showAlert(2)') ?>">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
