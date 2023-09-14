@@ -583,7 +583,17 @@
                                         $category = \App\Models\Category::find($cates);
                                     @endphp
                                     @if($category)
-                                        <a href="">{{$category->name}}</a> </br>
+                                        @if(locationHelper() == 'kr')
+                                            <div class="text">{{ $category->name_ko }}</div>
+                                        @elseif(locationHelper() == 'cn')
+                                            <div class="text">{{$category->name_zh}}</div>
+                                        @elseif(locationHelper() == 'jp')
+                                            <div class="text">{{$category->name_ja}}</div>
+                                        @elseif(locationHelper() == 'vi')
+                                            <div class="text">{{$category->name_vi}}</div>
+                                        @else
+                                            <div class="text">{{$category->name_en}}</div>
+                                        @endif
                                     @endif
                                 @endforeach
                             </td>
