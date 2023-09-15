@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\CategoryStatus;
 use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\MemberRegisterType;
 use App\Enums\MemberStatus;
@@ -158,7 +159,7 @@ class AdminUserController extends Controller
     public function processCreate()
     {
         $members = Member::where('status', MemberStatus::ACTIVE)->get();
-        $categories = Category::all();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         return view('admin.user-manager.create-user', compact('members', 'categories'));
     }
 

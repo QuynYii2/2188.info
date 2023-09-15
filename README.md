@@ -1,0 +1,1 @@
+composer require davejamesmiller/laravel-breadcrumbs

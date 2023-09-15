@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Enums\AttributeProductStatus;
 use App\Enums\AttributeStatus;
+use App\Enums\CategoryStatus;
 use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\OrderStatus;
 use App\Enums\ProductStatus;
@@ -32,7 +33,7 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $categories = Category::all();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $isAdmin = (new HomeController())->checkAdmin();
         if ($isAdmin) {
             $products = Product::where('status', '!=', ProductStatus::DELETED)->orderByDesc('id')->get();
@@ -177,7 +178,7 @@ class ProductController extends Controller
     public function create(Request $request )
     {
         (new HomeController())->getLocale($request);
-        $categories = Category::all();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', Auth::user()->id]])->get();
 
         $id = Auth::user()->id;
@@ -334,7 +335,7 @@ class ProductController extends Controller
     {
         (new HomeController())->getLocale($request);
         $product = Product::findOrFail($id);
-        $categories = Category::all();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', \Illuminate\Support\Facades\Auth::user()->id]])->get();
         $att_of_product = DB::table('product_attribute')->where('product_id', $product->id)->get();
         $productDetails = Variation::where([['product_id', $id], ['status', VariationStatus::ACTIVE]])->get();
@@ -586,7 +587,7 @@ class ProductController extends Controller
 
         $arrayIDs = $this->getCategory($request);
         if (!$arrayIDs || count($arrayIDs) == 0) {
-            $categories = Category::all();
+            $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
             $category = $categories[0];
             $arrayIDs[] = $category->id;
         }
@@ -707,7 +708,7 @@ class ProductController extends Controller
         (new HomeController())->getLocale($request);
         $arrayIDs = $this->getCategory($request);
         if (!$arrayIDs || count($arrayIDs) == 0) {
-            $categories = Category::all();
+            $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
             $category = $categories[0];
             $arrayIDs[] = $category->id;
         }
@@ -845,7 +846,7 @@ class ProductController extends Controller
     {
         (new HomeController())->getLocale($request);
         $listIDs = null;
-        $categories = Category::all();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $listCategoryName[] = null;
         foreach ($categories as $category) {
             $name = 'category-' . $category->id;
