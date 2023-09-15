@@ -16,9 +16,17 @@ class SampleController extends Controller
 {
     public function chat(Request $request)
     {
+        $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        $isMember = null;
+        if ($memberPerson){
+            $company = \App\Models\MemberRegisterInfo::where([
+                ['id', $memberPerson->member_id],
+                ['status', \App\Enums\MemberRegisterInfoStatus::ACTIVE]
+            ])->first();
+        }
         $homeController = new HomeController();
         $this->locale = $homeController->getLocale($request);
-        return view('frontend.pages.message.chat');
+        return view('frontend.pages.message.chat')->with('company', $company);
     }
 
     public function getListMessageSent(Request $request)
