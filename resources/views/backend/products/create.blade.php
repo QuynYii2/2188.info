@@ -6,7 +6,9 @@
     .btn-success {
         color: white !important;
     }
-
+    .labelCheckboxCategory{
+        display: inline-table;
+    }
     .name {
         margin-top: 20px;
         font-size: 14px;

@@ -196,14 +196,18 @@ class CategoryController extends Controller
             if (!$category) {
                 return back();
             }
-            if ($category->user_id != Auth::user()->id) {
-                alert()->error('Error', 'Không thể xoá, Vui lòng thử lại');
-                return redirect()->route('seller.categories.index');
+            $isAdmin =   (new HomeController())->checkAdmin();
+            if ($isAdmin == false){
+                if ($category->user_id != Auth::user()->id) {
+                    alert()->error('Error', 'Không thể xoá, Vui lòng thử lại');
+                    return redirect()->route('seller.categories.index');
+                }
             }
             $category->delete();
             alert()->success('Success', 'Category đã được xóa thành công!');
             return redirect()->route('seller.categories.index');
         } catch (\Exception $exception) {
+            dd($exception);
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
