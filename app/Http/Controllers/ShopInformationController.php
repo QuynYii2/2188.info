@@ -59,7 +59,19 @@ class ShopInformationController extends Controller
         }
         $averageRating = $totalRatings > 0 ? $totalStars / $totalRatings : 0;
         $averageRatingsFormatted = number_format($averageRating, 2);
-        return view('frontend/pages/shop-information/index', compact('listProduct', 'company', 'priceProductOfCategory', 'sellerInfo', 'countProductBySeller', 'listVouchers', 'shopInformation','currency' , 'id', 'averageRatingsFormatted', 'totalRatings'));
+        return view('frontend/pages/shop-information/index', compact(
+            'listProduct',
+            'company',
+            'priceProductOfCategory',
+            'sellerInfo',
+            'countProductBySeller',
+            'listVouchers',
+            'shopInformation',
+            'currency',
+            'id',
+            'user',
+            'averageRatingsFormatted',
+            'totalRatings'));
     }
 
 
@@ -180,14 +192,14 @@ class ShopInformationController extends Controller
         return $str;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function productByShop(Request $request, $id)
     {
-        //
+        (new HomeController())->getLocale($request);
+        $products = Product::where([
+            ['status', ProductStatus::ACTIVE],
+            ['user_id', $id]
+        ])->get();
+        return view('frontend.pages.shop-information.product-shop', compact('products'));
     }
 
 
