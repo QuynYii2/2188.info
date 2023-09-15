@@ -32,6 +32,16 @@ class SetupMarketingController extends Controller
             $thumbnailPath = $thumbnail->store('thumbnails', 'public');
             $newVariationData['thumbnail'] = $thumbnailPath;
         }
+
+        $nameValue = $request->input('name');
+        $ld = new TranslateController();
+
+        $item->name_vi = $ld->translateText($nameValue, 'vi');
+        $item->name_ja = $ld->translateText($nameValue, 'ja');
+        $item->name_ko = $ld->translateText($nameValue, 'ko');
+        $item->name_en = $ld->translateText($nameValue, 'en');
+        $item->name_zh = $ld->translateText($nameValue, 'zh-CN');
+
         $item->thumbnail = $thumbnailPath;
         $item->save();
         alert()->success('Success', 'Tạo thành công');
@@ -57,6 +67,14 @@ class SetupMarketingController extends Controller
             $thumbnail = $request->file('thumbnail');
             $thumbnailPath = $thumbnail->store('thumbnails', 'public');
         }
+        $nameValue = $request->input('name');
+        $ld = new TranslateController();
+
+        $edit_setup->name_vi = $ld->translateText($nameValue, 'vi');
+        $edit_setup->name_ja = $ld->translateText($nameValue, 'ja');
+        $edit_setup->name_ko = $ld->translateText($nameValue, 'ko');
+        $edit_setup->name_en = $ld->translateText($nameValue, 'en');
+        $edit_setup->name_zh = $ld->translateText($nameValue, 'zh-CN');
         $edit_setup->thumbnail = $thumbnailPath;
         $edit_setup->save();
         alert()->success('Success', 'Sửa thành công');

@@ -86,10 +86,15 @@
         <li>
             <a class="sidebar item" href='#'><i class="fa-solid fa-tag"></i>{{ __('home.Kênh Marketing') }} </a>
             <ul class='sub-items pl-3'>
-                <li><a class="sidebarUrl" href="{{route('seller.config.show')}}">{{ __('home.Quản Lí Marketing') }}</a>
-                </li>
-                <li><a class="sidebarUrl" href="{{route('setup-marketing.show')}}">{{ __('home.Setup Marketing') }}</a>
-                </li>
+                @if($isAdmin == true)
+                    <li>
+                        <a class="sidebarUrl" href="{{route('seller.config.show')}}">{{ __('home.Quản Lí Marketing') }}</a>
+                    </li>
+                    <li>
+                        <a class="sidebarUrl" href="{{route('setup-marketing.show')}}">{{ __('home.Setup Marketing') }}</a>
+                    </li>
+                @endif
+
                 <li>
                     <a class="sidebarUrl" href="{{route('seller.vouchers.list')}}">{{ __('home.Mã Giảm Giá') }}</a>
                 </li>
