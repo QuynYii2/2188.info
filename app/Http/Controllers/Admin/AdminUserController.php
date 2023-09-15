@@ -25,7 +25,8 @@ class AdminUserController extends Controller
     public function listUser(Request $request)
     {
         $users = User::where('status', '!=', UserStatus::DELETED)->paginate(10);
-        return view('admin.user-manager.list-user')->with('users', $users);
+        $members = Member::where('status', MemberStatus::ACTIVE)->get();
+        return view('admin.user-manager.list-user', compact('members', 'users'));
     }
 
     public function detail($id)
