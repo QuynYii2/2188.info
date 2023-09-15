@@ -496,9 +496,9 @@
                             </div>
                         </div>
                         <div class="express-footer">
-                            <a href="#">
-                                <div class="button-start">{{ __('home.Start orde') }}</div>
-                            </a>
+{{--                            <a href="#">--}}
+{{--                                <div class="button-start">{{ __('home.Start orde') }}</div>--}}
+{{--                            </a>--}}
                             <a href="{{ route('shop.information.show', $name->id) }}">
                                 <div class="button-call"><i
                                             class="fa-solid fa-envelope"></i> {{ __('home.Contact supplier') }}</div>
