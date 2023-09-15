@@ -398,7 +398,7 @@
                     @php
                         $price_sales = \App\Models\ProductSale::where('product_id', '=', $product->id)->get();
                     @endphp
-                    @if(!$price_sales)
+                    @if($price_sales)
                         <a class="p-2 btn-light" style="cursor: pointer" data-toggle="modal" data-target="#priceList">
                             {{ __('home.Wholesale price list') }}
                         </a>
