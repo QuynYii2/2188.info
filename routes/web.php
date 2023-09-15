@@ -288,6 +288,11 @@ Route::group(['middleware' => 'role.admin'], function () {
     Route::get('/admin/configs/{id}', [ConfigProjectController::class, 'detail'])->name('admin.configs.detail');
     Route::put('/admin/configs/{id}', [ConfigProjectController::class, 'update'])->name('admin.configs.update');
     Route::delete('/admin/configs/{id}', [ConfigProjectController::class, 'delete'])->name('admin.configs.delete');
+    // Top seller config
+    Route::get('/seller-configs', [TopSellerConfigController::class, 'index'])->name('seller.config.show');
+    Route::get('/seller-config/create', [TopSellerConfigController::class, 'processCreate'])->name('seller.config.processCreate');
+    Route::post('/seller-config', [TopSellerConfigController::class, 'create'])->name('seller.config.create');
+    Route::delete('/seller-config/{id}', [TopSellerConfigController::class, 'delete'])->name('seller.config.delete');
     // Admin banner
     Route::get('/admin/banners', [BannerController::class, 'index'])->name('admin.banners.show');
     Route::get('/admin/banners/create', [BannerController::class, 'processCreate'])->name('admin.banners.processCreate');
@@ -423,11 +428,6 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::post('/seller-setup', [RankUserSellerController::class, 'createSetup'])->name('seller.setup.create');
     Route::get('/seller-setup/{id}', [RankUserSellerController::class, 'detailSetup'])->name('seller.setup.detail');
     Route::post('/seller-setup/{id}', [RankUserSellerController::class, 'updateSetUp'])->name('seller.setup.update');
-    // Top seller config
-    Route::get('/seller-configs', [TopSellerConfigController::class, 'index'])->name('seller.config.show');
-    Route::get('/seller-config/create', [TopSellerConfigController::class, 'processCreate'])->name('seller.config.processCreate');
-    Route::post('/seller-config', [TopSellerConfigController::class, 'create'])->name('seller.config.create');
-    Route::delete('/seller-config/{id}', [TopSellerConfigController::class, 'delete'])->name('seller.config.delete');
     // Order
     Route::get('/order-managers', [\App\Http\Controllers\Seller\OrderController::class, 'index'])->name('seller.order.list');
     Route::get('/order-managers-search', [\App\Http\Controllers\Seller\OrderController::class, 'search'])->name('seller.search.order.list');
