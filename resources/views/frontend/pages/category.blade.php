@@ -29,7 +29,7 @@
                 @endif
             </div>
             <div class="breadcrumbs">
-                {!! getBreadcrumbs('category', $category) !!}
+{{--                {!! getBreadcrumbs('category', $category) !!}--}}
             </div>
 
         </div>
