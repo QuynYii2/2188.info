@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Command\DownRank;
 use App\Console\Commands\InserUser;
+use App\Console\Commands\MakeBreadcrumb;
 use App\Console\Commands\UpdateRank;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -17,7 +18,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         UpdateRank::class,
-        InserUser::class
+        InserUser::class,
+        MakeBreadcrumb::class
     ];
 
     /**

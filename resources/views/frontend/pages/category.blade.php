@@ -28,6 +28,10 @@
                     {{ ($category->name_en) }}
                 @endif
             </div>
+            <div class="breadcrumbs">
+                {!! getBreadcrumbs('category', $category) !!}
+            </div>
+
         </div>
         <section class="section container-fluid">
             <div class="content">{{ __('home.Jump to') }}:</div>

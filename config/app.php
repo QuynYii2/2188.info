@@ -181,6 +181,7 @@ return [
 //        Laravel\Socialite\SocialiteServiceProvider::class,
         SocialiteProviders\Manager\ServiceProvider::class,
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+        DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider::class,
     ],
 
     /*

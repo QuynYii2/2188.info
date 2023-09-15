@@ -253,10 +253,7 @@
         <div class="grid second-nav">
             <div class="column-xs-12">
                 <nav>
-                    <ol class="breadcrumb-list">
-                        <li class="breadcrumb-item"><a href="{{route('home')}}">{{ __('home.Home') }}</a></li>
-                        <li class="breadcrumb-item"><a href="#">{{ __('home.Product details') }}</a></li>
-                    </ol>
+                    {!! getBreadcrumbs('product', $product) !!}
                 </nav>
             </div>
         </div>
