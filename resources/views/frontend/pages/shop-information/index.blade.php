@@ -337,6 +337,7 @@
     #style-8dPYj.style-8dPYj {
         background-image: url("https://down-ws-vn.img.susercontent.com/vn-11134210-7qukw-lhy85rv6ohola9_tn.webp");
     }
+
     .toggleBtn {
         width: 130px;
         background: #fd6506;
@@ -353,6 +354,7 @@
         max-height: 6em;
         overflow: hidden;
     }
+
     .productView-description {
         width: 100%;
     }
@@ -365,7 +367,7 @@
 @section('content')
     @php
 
-    @endphp
+            @endphp
     <div class="shop-page__info snipcss-sPWYr">
         <div class="section-seller-overview-horizontal container">
             <div class="section-seller-overview-horizontal__leading row">
@@ -411,27 +413,96 @@
                     </div>
                     <div class="section-seller-overview-horizontal__buttons">
                         <a class="section-seller-overview-horizontal__button">
-                            <button class="shopee-button-outline shopee-button-outline--complement shopee-button-outline--fill">
-              <span class="section-seller-overview-horizontal__icon">
-                <svg enable-background="new 0 0 10 10" viewBox="0 0 10 10" x="0" y="0"
-                     class="shopee-svg-icon icon-plus-sign">
-                  <polygon points="10 4.5 5.5 4.5 5.5 0 4.5 0 4.5 4.5 0 4.5 0 5.5 4.5 5.5 4.5 10 5.5 10 5.5 5.5 10 5.5">
-                  </polygon>
-                </svg>
-              </span>
-                                {{ __('home.Follow') }}
-                            </button>
+                            @if(Auth::check())
+                                @if(Auth::user()->id == $id)
+                                    <button disabled class="shopee-button-outline
+                                    shopee-button-outline--complement
+                                    shopee-button-outline--fill text-secondary">
+                                  <span class="section-seller-overview-horizontal__icon">
+                                    <svg enable-background="new 0 0 10 10" viewBox="0 0 10 10" x="0" y="0"
+                                         class="shopee-svg-icon icon-plus-sign">
+                                      <polygon
+                                              points="10 4.5 5.5 4.5 5.5 0 4.5 0 4.5 4.5 0 4.5 0 5.5 4.5 5.5 4.5 10 5.5 10 5.5 5.5 10 5.5">
+                                      </polygon>
+                                    </svg>
+                                  </span>
+                                        {{ __('home.Follow') }}
+                                    </button>
+                                @else
+                                    @php
+                                        $companyPersonFollow = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                                        $companyPersonSource = \App\Models\MemberRegisterPersonSource::where('email', $user->email)->first();
+                                        $followed = null;
+                                        $companySource = null;
+                                        $companyFollow = null;
+                                        if ($companyPersonFollow && $companyPersonSource){
+                                               $companyFollow = \App\Models\MemberRegisterInfo::find($companyPersonFollow->member_id);
+                                               $companySource = \App\Models\MemberRegisterInfo::find($companyPersonSource->member_id);
+                                             $followed = \App\Models\MemberPartner::where([
+                                                ['company_id_follow', $companyFollow->id],
+                                                ['company_id_source', $companySource->id],
+                                                ['status', \App\Enums\MemberPartnerStatus::ACTIVE]
+                                            ])->first();
+                                        }
+                                    @endphp
+                                    @if($companySource)
+                                        @if(!$followed)
+                                            <form action="{{route('stands.register.member')}}" method="post">
+                                                @csrf
+                                                <input type="text" name="company_id_source"
+                                                       value="{{$companySource->id}} "
+                                                       hidden>
+                                                <button type="submit" class="shopee-button-outline
+                                                shopee-button-outline--complement
+                                                shopee-button-outline--fill">
+                                                <span class="section-seller-overview-horizontal__icon">
+                                                <svg enable-background="new 0 0 10 10" viewBox="0 0 10 10" x="0" y="0"
+                                                     class="shopee-svg-icon icon-plus-sign">
+                                                  <polygon
+                                                          points="10 4.5 5.5 4.5 5.5 0 4.5 0 4.5 4.5 0 4.5 0 5.5 4.5 5.5 4.5 10 5.5 10 5.5 5.5 10 5.5">
+                                                  </polygon>
+                                                </svg>
+                                              </span>
+                                                    {{ __('home.Follow') }}
+                                                </button>
+                                            </form>
+                                        @else
+                                            <form method="post"
+                                                  action="{{ route('stands.unregister.member', $companySource->id) }}">
+                                                @csrf
+                                                <input type="text" name="company_id_source"
+                                                       value="{{$companySource->id}} "
+                                                       hidden>
+                                                <button type="submit" class="shopee-button-outline
+                                                shopee-button-outline--complement
+                                                shopee-button-outline--fill">
+                                                <span class="section-seller-overview-horizontal__icon">
+                                                <svg enable-background="new 0 0 10 10" viewBox="0 0 10 10" x="0" y="0"
+                                                     class="shopee-svg-icon icon-plus-sign">
+                                                  <polygon
+                                                          points="10 4.5 5.5 4.5 5.5 0 4.5 0 4.5 4.5 0 4.5 0 5.5 4.5 5.5 4.5 10 5.5 10 5.5 5.5 10 5.5">
+                                                  </polygon>
+                                                </svg>
+                                              </span>
+                                                    {{ __('home.Unfollow') }}
+                                                </button>
+                                            </form>
+                                        @endif
+                                    @endif
+                                @endif
+                            @endif
+
                         </a>
-                        <a argettype="chatButton" class="section-seller-overview-horizontal__button">
+                        <a href="{{route('chat.message.show')}}" class="section-seller-overview-horizontal__button">
                             <button class="shopee-button-outline shopee-button-outline--complement shopee-button-outline--fill">
-              <span class="section-seller-overview-horizontal__icon">
-                <svg viewBox="0 0 16 16" class="shopee-svg-icon">
-                  <g fill-rule="evenodd">
-                    <path d="M15 4a1 1 0 01.993.883L16 5v9.932a.5.5 0 01-.82.385l-2.061-1.718-8.199.001a1 1 0 01-.98-.8l-.016-.117-.108-1.284 8.058.001a2 2 0 001.976-1.692l.018-.155L14.293 4H15zm-2.48-4a1 1 0 011 1l-.003.077-.646 8.4a1 1 0 01-.997.923l-8.994-.001-2.06 1.718a.5.5 0 01-.233.108l-.087.007a.5.5 0 01-.492-.41L0 11.732V1a1 1 0 011-1h11.52zM3.646 4.246a.5.5 0 000 .708c.305.304.694.526 1.146.682A4.936 4.936 0 006.4 5.9c.464 0 1.02-.062 1.608-.264.452-.156.841-.378 1.146-.682a.5.5 0 10-.708-.708c-.185.186-.445.335-.764.444a4.004 4.004 0 01-2.564 0c-.319-.11-.579-.258-.764-.444a.5.5 0 00-.708 0z">
-                    </path>
-                  </g>
-                </svg>
-              </span>
+                                  <span class="section-seller-overview-horizontal__icon">
+                                    <svg viewBox="0 0 16 16" class="shopee-svg-icon">
+                                      <g fill-rule="evenodd">
+                                        <path d="M15 4a1 1 0 01.993.883L16 5v9.932a.5.5 0 01-.82.385l-2.061-1.718-8.199.001a1 1 0 01-.98-.8l-.016-.117-.108-1.284 8.058.001a2 2 0 001.976-1.692l.018-.155L14.293 4H15zm-2.48-4a1 1 0 011 1l-.003.077-.646 8.4a1 1 0 01-.997.923l-8.994-.001-2.06 1.718a.5.5 0 01-.233.108l-.087.007a.5.5 0 01-.492-.41L0 11.732V1a1 1 0 011-1h11.52zM3.646 4.246a.5.5 0 000 .708c.305.304.694.526 1.146.682A4.936 4.936 0 006.4 5.9c.464 0 1.02-.062 1.608-.264.452-.156.841-.378 1.146-.682a.5.5 0 10-.708-.708c-.185.186-.445.335-.764.444a4.004 4.004 0 01-2.564 0c-.319-.11-.579-.258-.764-.444a.5.5 0 00-.708 0z">
+                                        </path>
+                                      </g>
+                                    </svg>
+                                  </span>
                                 {{ __('home.chat') }}
                             </button>
                         </a>
@@ -534,36 +605,20 @@
         <div class="container-fluid">
             <div class="row">
 
-                    <div class="productView-description">
-                        <ul class="nav nav-tabs container-fluid pt-4" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                                   aria-controls="home"
-                                   aria-selected="true">{{ __('home.Shop Information') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#product" role="tab"
-                                   aria-controls="profile" aria-selected="false">{{ __('home.All products') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#vouchers" role="tab"
-                                   aria-controls="contact" aria-selected="false">{{ __('home.Voucher Shop') }}</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content container-fluid" id="myTabContent">
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                    <div class="content" id="content2">@include('frontend.pages.shop-information.tabs_shop_info')</div>
-                                    <button id="toggleBtn2" class="toggleBtn" onclick="toggleContent('content2', 'toggleBtn2')">{{ __('home.Show More') }}</button>
-                            </div>
-
-                            <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="profile-tab">
-                                @include('frontend.pages.shop-information.product-member')
-                            </div>
-                            <div class="tab-pane fade" id="vouchers" role="tabpanel" aria-labelledby="contact-tab">
-                                @include('frontend.pages.shop-information.tabs_voucher')
-                            </div>
+                <div class="productView-description">
+                    <ul class="nav nav-tabs container-fluid pt-4" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#product" role="tab"
+                               aria-controls="profile" aria-selected="false">{{ __('home.All products') }}</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content container-fluid" id="myTabContent">
+                        <div class="tab-pane fade show active" id="product" role="tabpanel"
+                             aria-labelledby="profile-tab">
+                            @include('frontend.pages.shop-information.product-member')
                         </div>
                     </div>
+                </div>
 
             </div>
         </div>

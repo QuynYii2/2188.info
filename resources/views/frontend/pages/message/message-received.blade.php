@@ -1,5 +1,4 @@
 @extends('frontend.layouts.master')
-
 @section('title', 'List Message Received')
 
 @section('content')
@@ -7,13 +6,15 @@
     @if($company)
         @php
             $user = null;
+            $companyPerson = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->first();
+            $oldUser = \App\Models\User::where('email', $companyPerson->email)->first();
         @endphp
         <div class="container-fluid mb-2">
             <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
             <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
             <div class="d-flex justify-content-between align-items-center p-3">
                 <div>
-                    <a href="{{ route('stand.register.member.index', $company->id) }}"
+                    <a href="{{ route('list.products.shop.show', $oldUser->id) }}"
                        class="btn btn-primary mr-2">{{ __('home.Booth') }}</a>
                     <a href="{{route('partner.register.member.index')}}"
                        class="btn btn-warning">{{ __('home.Partner List') }}</a>
@@ -21,7 +22,8 @@
                 <div>
                     <a href="{{route('chat.message.received')}}"
                        class="btn btn-primary mr-2">{{ __('home.Message received') }}</a>
-                    <a href="{{route('chat.message.sent')}}" class="btn btn-primary mr-2">{{ __('home.Message sent') }}</a>
+                    <a href="{{route('chat.message.sent')}}"
+                       class="btn btn-primary mr-2">{{ __('home.Message sent') }}</a>
                     <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
                        data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
                     <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
@@ -110,20 +112,20 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="card-body">
-                            @if(!$listMessage->isEmpty())
-                                @foreach($listMessage as $message)
-                                    @php
-                                        $user = \App\Models\User::find($message->from_user_id);
-                                    @endphp
-                                    <div class="card-item-message card-item mb-3" data-message="{{$message}}"
-                                         data-user="{{$user}}" style="cursor: pointer">
-                                        <img src="{{ asset('storage/'.$user->image) }}" alt="" width="60px"
-                                             height="60xp">
-                                        <h5 class="card-title">{{$user->name}}</h5>
-                                    </div>
-                                @endforeach
-                            @endif
-                        </div>
+                        @if(!$listMessage->isEmpty())
+                            @foreach($listMessage as $message)
+                                @php
+                                    $user = \App\Models\User::find($message->from_user_id);
+                                @endphp
+                                <div class="card-item-message card-item mb-3" data-message="{{$message}}"
+                                     data-user="{{$user}}" style="cursor: pointer">
+                                    <img src="{{ asset('storage/'.$user->image) }}" alt="" width="60px"
+                                         height="60xp">
+                                    <h5 class="card-title">{{$user->name}}</h5>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
                     {{--        {{ $listMessage->links() }}--}}
                 </div>
                 @if(!$listMessage->isEmpty())
@@ -136,7 +138,8 @@
                             <h5 id="chat_message" class="ml-3">
 
                             </h5>
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">{{ __('home.chat') }}</button>
+                            <button class="btn btn-primary" data-toggle="modal"
+                                    data-target="#exampleModal">{{ __('home.chat') }}</button>
                         </div>
                     </div>
                 @endif
