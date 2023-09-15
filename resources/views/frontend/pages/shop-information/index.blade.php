@@ -606,12 +606,12 @@
             <div class="row">
 
                 <div class="productView-description">
-                    <ul class="nav nav-tabs container-fluid pt-4" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#product" role="tab"
-                               aria-controls="profile" aria-selected="false">{{ __('home.All products') }}</a>
-                        </li>
-                    </ul>
+{{--                    <ul class="nav nav-tabs container-fluid pt-4" id="myTab" role="tablist">--}}
+{{--                        <li class="nav-item">--}}
+{{--                            <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#product" role="tab"--}}
+{{--                               aria-controls="profile" aria-selected="false">{{ __('home.All products') }}</a>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
                     <div class="tab-content container-fluid" id="myTabContent">
                         <div class="tab-pane fade show active" id="product" role="tabpanel"
                              aria-labelledby="profile-tab">
