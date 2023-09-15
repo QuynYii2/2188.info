@@ -5,12 +5,17 @@
 @section('content')
     <h3 class="text-center">{{ __('home.Message sent') }}</h3>
     @if($company)
+        @php
+            $user = null;
+            $companyPerson = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->first();
+            $oldUser = \App\Models\User::where('email', $companyPerson->email)->first();
+        @endphp
         <div class="container-fluid mb-2">
             <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
             <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
             <div class="d-flex justify-content-between align-items-center pb-3">
                 <div>
-                    <a href="{{ route('stand.register.member.index', $company->id) }}"
+                    <a href="{{ route('list.products.shop.show', $oldUser->id) }}"
                        class="btn btn-primary mr-2">{{ __('home.Booth') }}</a>
                     <a href="{{route('partner.register.member.index')}}"
                        class="btn btn-warning">{{ __('home.Partner List') }}</a>

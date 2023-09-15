@@ -80,6 +80,8 @@
     @if($company)
         @php
             $memberAccounts = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->get();
+            $companyPerson = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->first();
+            $oldUser = \App\Models\User::where('email', $companyPerson->email)->first();
             if (!$memberAccounts->isEmpty()){
               $products = \App\Models\Product::where(function ($query) use ($company, $memberAccounts){
                     if (count($memberAccounts) == 2){
@@ -106,7 +108,7 @@
         <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
         <div class="d-flex justify-content-between align-items-center p-3">
             <div>
-                <a href="{{ route('stand.register.member.index', $company->id) }}" class="btn btn-primary mr-2 d-inline-block">{{ __('home.Booth') }}</a>
+                <a href="{{ route('list.products.shop.show', $oldUser->id) }}" class="btn btn-primary mr-2 d-inline-block">{{ __('home.Booth') }}</a>
                 <a href="{{route('partner.register.member.index')}}" class="btn btn-warning d-inline-block">{{ __('home.Partner List') }}</a>
             </div>
             <div>
