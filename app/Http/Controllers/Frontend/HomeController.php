@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Enums\BannerStatus;
+use App\Enums\CategoryStatus;
 use App\Enums\Contains;
 use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\MemberRegisterPersonSourceStatus;
@@ -368,7 +369,7 @@ class HomeController extends Controller
             setcookie("cookieInsertUser", "SHOPPING MALL", time() + 24 * 3600, "/");
             $passwordHash = Hash::make(Contains::PASSWORD_DEFAULT);
 
-            $categoryDefault = Category::all();
+            $categoryDefault = Category::where('status', CategoryStatus::ACTIVE)->get();
 
             foreach (explode('!!!', $listUser) as $company) {
                 if (empty($company)) {

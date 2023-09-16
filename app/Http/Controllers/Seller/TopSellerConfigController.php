@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Seller;
 
+use App\Enums\CategoryStatus;
 use App\Enums\CoinStatus;
 use App\Enums\OrderMethod;
 use App\Enums\OrderStatus;
@@ -30,7 +31,7 @@ class TopSellerConfigController extends Controller
 
     public function processCreate()
     {
-        $categories = Category::all();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $reflector = new \ReflectionClass('App\Enums\TopSellerConfigLocation');
         $options = $reflector->getConstants();
         return view('backend.top-seller-config.create', compact('categories', 'options'));

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Member;
 
+use App\Enums\CategoryStatus;
 use App\Enums\CoinStatus;
 use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\MemberRegisterPersonSourceStatus;
@@ -65,7 +66,7 @@ class RegisterMemberController extends Controller
     public function showRegisterMemberInfo($registerMember, Request $request)
     {
         (new HomeController())->getLocale($request);
-        $categories = Category::all();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $member = Member::find($registerMember);
         if (!$member || $member->status != MemberStatus::ACTIVE) {
             alert()->error('Error', 'Error, Page not found');
@@ -958,7 +959,7 @@ class RegisterMemberController extends Controller
     {
         $listCategoryName[] = null;
         $arrayIds = null;
-        $categories = Category::all();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         foreach ($categories as $category) {
             $name = $input . $category->id;
             $listCategoryName[] = $name;

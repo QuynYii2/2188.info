@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Seller;
 
+use App\Enums\CategoryStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\TranslateController;
@@ -15,7 +16,7 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $categories = Category::all();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         return view('backend/categories/index', [
             'categories' => $categories
         ]);
@@ -25,7 +26,7 @@ class CategoryController extends Controller
     public function create(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $categories = Category::all();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         return view('backend/categories/create', [
             'categories' => $categories
         ]);
@@ -105,10 +106,10 @@ class CategoryController extends Controller
     }
 
 
-    public function edit(Request $request,$id)
+    public function edit(Request $request, $id)
     {
         (new HomeController())->getLocale($request);
-        $categories = Category::all();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $category = Category::find($id);
         if (!$category) {
             return back();
@@ -188,7 +189,7 @@ class CategoryController extends Controller
     }
 
 
-    public function destroy(Request $request,$id)
+    public function destroy(Request $request, $id)
     {
         (new HomeController())->getLocale($request);
         try {
@@ -196,18 +197,19 @@ class CategoryController extends Controller
             if (!$category) {
                 return back();
             }
-            $isAdmin =   (new HomeController())->checkAdmin();
-            if ($isAdmin == false){
+            $isAdmin = (new HomeController())->checkAdmin();
+            if ($isAdmin == false) {
                 if ($category->user_id != Auth::user()->id) {
                     alert()->error('Error', 'Không thể xoá, Vui lòng thử lại');
                     return redirect()->route('seller.categories.index');
                 }
             }
-            $category->delete();
+            $category->status = CategoryStatus::DELETED;
+            Category::where('parent_id', $id)->update(['status', CategoryStatus::DELETED]);
+            $category->save();
             alert()->success('Success', 'Category đã được xóa thành công!');
             return redirect()->route('seller.categories.index');
         } catch (\Exception $exception) {
-            dd($exception);
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
