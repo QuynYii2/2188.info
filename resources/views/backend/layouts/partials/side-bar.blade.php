@@ -271,7 +271,7 @@
         @if($isAdmin)
             <li>
                 <a class="sidebar item sidebarUrl" href="#"><i
-                            class="fa-regular fa-clipboard"></i> Quản lý nhân viên
+                            class="fa-regular fa-clipboard"></i> {{ __('home.manager_member') }}
                 </a>
                 <ul class='sub-items pl-3'>
 

@@ -943,6 +943,7 @@ return [
     'Nhập tên sản phẩm' => '상품명 입력',
     'list_user' => '회원 목록',
     'create_member' => '새 회원 추가',
+    'manager_member' => '회원 관리',
 
 
 

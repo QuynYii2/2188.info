@@ -901,4 +901,5 @@ return [
     'Xoá mã giảm giá' =>  'Xoá mã giảm giá',
     'list_user' => 'Danh sách thành viên',
     'create_member' => 'Thêm mới thành viên',
+    'manager_member' => 'Quản lý thành viên',
 ];
