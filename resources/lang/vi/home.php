@@ -898,5 +898,7 @@ return [
     'Nhập id mxh' =>   'Nhập id mxh',
     'Nhập mật khẩu' =>   'Nhập mật khẩu',
     'Nhập tên mã giảm giá' => 'Nhập tên mã giảm giá',
-    'Xoá mã giảm giá' =>  'Xoá mã giảm giá'
+    'Xoá mã giảm giá' =>  'Xoá mã giảm giá',
+    'list_user' => 'Danh sách thành viên',
+    'create_member' => 'Thêm mới thành viên',
 ];

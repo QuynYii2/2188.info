@@ -940,7 +940,9 @@ return [
     'Từ (sản phẩm)' => '최소',
     'Giảm %' => '할인 %',
     'Ngày giao hàng dự kiến' => '예상 발송일',
-    'Nhập tên sản phẩm' => '상품명 입력'
+    'Nhập tên sản phẩm' => '상품명 입력',
+    'list_user' => '회원 목록',
+    'create_member' => '새 회원 추가',
 
 
 
