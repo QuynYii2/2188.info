@@ -25,13 +25,15 @@ class AdminUserController extends Controller
 {
     public function listUser(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $users = User::where('status', '!=', UserStatus::DELETED)->paginate(10);
         $members = Member::where('status', MemberStatus::ACTIVE)->get();
         return view('admin.user-manager.list-user', compact('members', 'users'));
     }
 
-    public function detail($id)
+    public function detail($id, Request $request)
     {
+        (new HomeController())->getLocale($request);
         $user = User::find($id);
         if (!$user || $user->status == UserStatus::DELETED) {
             $numLog = 404;
@@ -43,6 +45,7 @@ class AdminUserController extends Controller
 
     public function edit($id, Request $request)
     {
+        (new HomeController())->getLocale($request);
         try {
             $user = User::find($id);
             if (!$user || $user->status == UserStatus::DELETED) {
@@ -77,8 +80,9 @@ class AdminUserController extends Controller
         }
     }
 
-    public function processUpdate($id)
+    public function processUpdate($id, Request $request)
     {
+        (new HomeController())->getLocale($request);
         $user = User::find($id);
         if (!$user || $user->status == UserStatus::DELETED) {
             $numLog = 404;
@@ -106,6 +110,7 @@ class AdminUserController extends Controller
 
     public function update($id, Request $request)
     {
+        (new HomeController())->getLocale($request);
         try {
             $user = User::find($id);
             if (!$user || $user->status == UserStatus::DELETED) {
@@ -156,8 +161,9 @@ class AdminUserController extends Controller
         }
     }
 
-    public function processCreate()
+    public function processCreate(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $members = Member::where('status', MemberStatus::ACTIVE)->get();
         $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         return view('admin.user-manager.create-user', compact('members', 'categories'));
@@ -165,6 +171,7 @@ class AdminUserController extends Controller
 
     public function create(Request $request)
     {
+        (new HomeController())->getLocale($request);
         try {
             $user = new User();
 
@@ -285,8 +292,9 @@ class AdminUserController extends Controller
         }
     }
 
-    public function showCompany($id)
+    public function showCompany($id, Request $request)
     {
+        (new HomeController())->getLocale($request);
         $user = User::find($id);
         if (!$user || $user->status == UserStatus::DELETED) {
             $numLog = 404;
@@ -306,6 +314,7 @@ class AdminUserController extends Controller
 
     public function updateCompany($id, Request $request)
     {
+        (new HomeController())->getLocale($request);
         $company = MemberRegisterInfo::where('id', $id)->first();
 
         $company->name_kr = $request->input('name_kr');
@@ -319,8 +328,9 @@ class AdminUserController extends Controller
         return redirect(route('admin.list.users'));
     }
 
-    public function delete($id)
+    public function delete($id, Request $request)
     {
+        (new HomeController())->getLocale($request);
         $user = User::find($id);
         if (!$user || $user->status == UserStatus::DELETED) {
             $numLog = 404;
@@ -333,8 +343,9 @@ class AdminUserController extends Controller
         return redirect(route('admin.list.users'));
     }
 
-    private function insertRole($role, $id)
+    private function insertRole($role, $id, Request $request)
     {
+        (new HomeController())->getLocale($request);
         $adminRole = Role::where('name', 'super_admin')->first();
         $seller = Role::where('name', 'seller')->first();
         $buyer = Role::where('name', 'buyer')->first();
