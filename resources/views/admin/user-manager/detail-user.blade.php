@@ -3,8 +3,8 @@
     User Manager
 @endsection
 @section('content')
-    <div class="">
-        <h3 class="text-center mt-3">User Information</h3>
+    <div class="container">
+        <h3 class="text-center mt-3">{{ __('home.info_company') }}</h3>
         <a class="btn btn-info" href="{{route('admin.list.users')}}">{{ __('home.back_to') }}</a>
     </div>
     <div class="container">
