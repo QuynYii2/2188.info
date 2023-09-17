@@ -5,7 +5,7 @@
 @section('content')
     <div class="">
         <h3 class="text-center mt-3">User Information</h3>
-        <a class="btn btn-info" href="{{route('admin.list.users')}}">Quay lại danh sách</a>
+        <a class="btn btn-info" href="{{route('admin.list.users')}}">{{ __('home.back_to') }}</a>
     </div>
     <div class="container">
         <form action="{{route('admin.edit.users', $user->id)}}" method="post" enctype="multipart/form-data">
@@ -68,10 +68,8 @@
         <div class="row mb-3">
             <div class="col-md-6"></div>
             <div class="col-md-6 d-flex justify-content-between align-items-center">
-                <a href="{{route('admin.detail.users.company', $user->id)}}" class="btn btn-warning">Xem thông tin công
-                    ty</a>
-                <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-secondary">Chỉnh
-                    sửa thông tin cao cấp
+                <a href="{{route('admin.detail.users.company', $user->id)}}" class="btn btn-warning">{{ __('home.info_company') }}</a>
+                <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-secondary">{{ __('home.edit_user_up') }}
                 </button>
                 <form action="{{route('admin.delete.users', $user->id)}}" method="post">
                     @method('DELETE')

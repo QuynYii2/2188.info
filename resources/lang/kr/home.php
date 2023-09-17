@@ -944,6 +944,10 @@ return [
     'list_user' => '회원 목록',
     'create_member' => '새 회원 추가',
     'manager_member' => '회원 관리',
+    'back_to' => '돌아와',
+    'info_company' => '회사정보 보기',
+    'detail_account' => '계정 정보',
+    'edit_user_up' => '계정 정보',
 
 
 

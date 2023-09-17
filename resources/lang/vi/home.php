@@ -902,4 +902,8 @@ return [
     'list_user' => 'Danh sách thành viên',
     'create_member' => 'Thêm mới thành viên',
     'manager_member' => 'Quản lý thành viên',
+    'back_to' => 'Quay lại danh sách',
+    'info_company' => 'Thông tin chi tiết',
+    'detail_account' => 'Chi tiết tài khoản',
+    'edit_user_up' => '고급 정보 편집',
 ];

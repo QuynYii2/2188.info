@@ -5,7 +5,7 @@
 @section('content')
     <div class="">
         <h3 class="text-center mt-3">User More Information</h3>
-        <a class="btn btn-info" href="{{route('admin.list.users')}}">Quay lại danh sách</a>
+        <a class="btn btn-info" href="{{route('admin.list.users')}}">{{ __('home.back_to') }}</a>
     </div>
     <div class="container">
         <form action="{{route('admin.update.users', $user->id)}}" method="post" enctype="multipart/form-data">
@@ -114,8 +114,7 @@
         <div class="row mb-3">
             <div class="col-md-6"></div>
             <div class="col-md-6 d-flex justify-content-between align-items-center">
-                <a href="{{route('admin.detail.users.company', $user->id)}}" class="btn btn-warning">Xem thông tin công
-                    ty</a>
+                <a href="{{route('admin.detail.users.company', $user->id)}}" class="btn btn-warning">{{ __('home.info_company') }}</a>
                 <form action="{{route('admin.delete.users', $user->id)}}" method="post">
                     @method('DELETE')
                     @csrf
