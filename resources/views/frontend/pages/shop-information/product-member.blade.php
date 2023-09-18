@@ -114,7 +114,6 @@
         @endphp
 
         <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
-        <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
         <div class="d-flex justify-content-between align-items-center p-3">
             <div>
                 <a href="{{ route('list.products.shop.show', $oldUser->id) }}"
@@ -189,7 +188,7 @@
                                 @endphp
                                 <div class="col-md-6">
                                     <div class="mt-2 d-flex">
-                                        <a href="{{route('category.show', $category->id)}}" class="mb-3 size">
+                                        <div  class="mb-3 size">
                                             @if(locationHelper() == 'kr')
                                                 {{ ($category->name_ko) }}
                                             @elseif(locationHelper() == 'cn')
@@ -202,7 +201,7 @@
                                                 {{ ($category->name_en) }}
                                             @endif
                                             <i class="fa-solid fa-angle-right"></i>
-                                        </a>
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach
@@ -229,9 +228,6 @@
                             @csrf
                             <input type="text" name="company_id_source" value="{{$company->id}} " hidden>
                             <input type="text" name="price" value="{{$firstProduct->price ?? ''}}" hidden>
-                            <button class="btn btn-primary" id="btnFollow" type="submit">
-                                Follow
-                            </button>
                         </form>
                     @else
                         <form method="post" action="{{ route('stands.unregister.member', $company->id) }}" }>
@@ -291,7 +287,18 @@
                                 </div>
                                 <div class="card-title text-left">
                                     @if(Auth::check())
-                                        <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
+                                        <div>
+                                            @if(locationHelper() == 'kr')
+                                                {{ $product->name_ko }}
+                                            @elseif(locationHelper() == 'cn')
+                                                {{$product->name_zh}}
+                                            @elseif(locationHelper() == 'jp')
+                                                {{$product->name_ja}}
+                                            @elseif(locationHelper() == 'vi')
+                                                {{$product->name_vi}}
+                                            @else
+                                                {{$product->name_en}}</div>
+                                             @endif
                                     @else
                                         <a class="check_url">{{($product->name)}}</a>
                                     @endif

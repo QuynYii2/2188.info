@@ -213,10 +213,10 @@
     .shopee-button-outline {
         outline: none;
         cursor: pointer;
-        border: 1px solid rgba(0, 0, 0, .09);
+        border: 1px solid rgb(255 255 255);
         font-size: .875rem;
         font-weight: 300;
-        line-height: 1;
+        line-height: 0;
         letter-spacing: 0;
         display: flex;
         align-items: center;
@@ -224,7 +224,7 @@
         transition: background-color .1s cubic-bezier(.4, 0, .6, 1);
         border-radius: 2px;
         background: transparent;
-        color: rgba(0, 0, 0, .8);
+        color: rgb(255 255 255);
     }
 
     .shopee-button-outline--fill {
@@ -238,7 +238,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 1.5625rem;
         color: #fff;
         border-color: #fff;
         text-transform: uppercase;
@@ -392,13 +391,6 @@
                             </div>
                             <img class="shopee-avatar__img"
                                  src="https://down-ws-vn.img.susercontent.com/02cc55b581a1da07745c4e19070c0f16_tn">
-                        </div>
-                        <div class="section-seller-overview-horizontal__preferred-badge-wrapper">
-                            <div class="official-shop-new-badge">
-                                <img class="WgnEaf"
-                                     src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/483071c49603aa7163a7f51708bff61b.png"
-                                     loading="lazy" width="64" height="16">
-                            </div>
                         </div>
                         <div class="section-seller-overview-horizontal__portrait-info">
                             <h1 class="section-seller-overview-horizontal__portrait-name">
