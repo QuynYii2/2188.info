@@ -906,4 +906,6 @@ return [
     'info_company' => 'Thông tin chi tiết',
     'detail_account' => 'Chi tiết tài khoản',
     'edit_user_up' => '고급 정보 편집',
+    '상품 전시장' => 'Gian hàng',
+    '해외 B2B 도매상 명단' => 'Danh sách nhà bán sỉ B2B'
 ];
