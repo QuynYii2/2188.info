@@ -449,12 +449,12 @@
 
                                     </div>
 
-                                    @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
-                                        <button class="btn btn-success partnerBtn float-right" id="partnerBtn"
-                                                data-value="{{ $firstProduct->id }}"
-                                                data-count="100">{{ __('home.Tiếp nhận đặt hàng') }}
-                                        </button>
-                                    @endif
+{{--                                    @if($newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)--}}
+{{--                                        <button class="btn btn-success partnerBtn float-right" id="partnerBtn"--}}
+{{--                                                data-value="{{ $firstProduct->id }}"--}}
+{{--                                                data-count="100">{{ __('home.Tiếp nhận đặt hàng') }}--}}
+{{--                                        </button>--}}
+{{--                                    @endif--}}
                                 </div>
 
                             @endif

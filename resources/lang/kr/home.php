@@ -270,6 +270,8 @@ return [
     'Buy Superkart' => '쇼핑',
     'Theme FAQs' => '자주 묻는 질문',
     'SHOP BY CATEGORIES' => '카테고리별 쇼핑',
+    '해외 B2B 도매상 명단' => '해외 B2B 도매상 명단',
+    '상품 전시장' => '상품 전시장',
     'New Products' => '신제품',
     'Hot Deals' => 'Hot Deals',
     'Top Brands' => 'TOP 브랜드',
