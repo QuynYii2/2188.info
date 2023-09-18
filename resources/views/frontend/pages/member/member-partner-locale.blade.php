@@ -6,11 +6,11 @@
         $mentor = \App\Models\User::where('email', $memberPer->email)->first();
     @endphp
     <div class="container-fluid">
-        <h3 class="text-center">{{ __('home.Partner List') }}</h3>
+        <h3 class="text-center">{{ __('home.해외 B2B 도매상 명단') }}</h3>
         <div class=" d-flex justify-content-between align-items-center p-3">
             <div>
                 <a href="{{route('stand.register.member.index', $company->id)}}"
-                   class="btn btn-primary mr-2">{{ __('home.Shop') }}</a>
+                   class="btn btn-primary mr-2">{{ __('home.상품 전시장') }}</a>
                 <a href="{{route('partner.register.member.index')}}"
                    class="btn btn-warning">{{ __('home.Partner List') }}</a>
             </div>
