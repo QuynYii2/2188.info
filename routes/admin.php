@@ -1,6 +1,7 @@
 <?php
 
-// User
+// Admin
+// Route User
 use App\Http\Controllers\Admin\AdminUserController;
 
 Route::prefix('user')->group(function () {

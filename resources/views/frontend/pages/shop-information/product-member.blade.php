@@ -1,9 +1,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 <style>
-    .size{
+    .size {
         font-size: 17px;
     }
+
     :root {
         --color-white: #ffffff;
         --color-black: #000000;
@@ -44,7 +45,7 @@
         object-fit: cover;
     }
 
-    .modal-header{
+    .modal-header {
         border: none;
     }
 
@@ -58,7 +59,7 @@
         box-shadow: none;
     }
 
-    .modal-header{
+    .modal-header {
         padding-bottom: 0;
     }
 </style>
@@ -82,40 +83,54 @@
             $memberAccounts = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->get();
             $companyPerson = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->first();
             $oldUser = \App\Models\User::where('email', $companyPerson->email)->first();
-            if (!$memberAccounts->isEmpty()){
-              $products = \App\Models\Product::where(function ($query) use ($company, $memberAccounts){
-                    if (count($memberAccounts) == 2){
-                        $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
-                        $user2 = \App\Models\User::where('email', $memberAccounts[1]->email)->first();
-                    } else{
-                        $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
-                        $user2 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
-                    }
 
-                    $query->where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])
-                          ->orWhere([['user_id', $user1->id], ['status', \App\Enums\ProductStatus::ACTIVE]])
-                          ->orWhere([['user_id', $user2->id], ['status', \App\Enums\ProductStatus::ACTIVE]]);
-                    })->get();
-            } else{
-                $products = \App\Models\Product::where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])->get();
+            // Initialize user1 and user2 with null values
+            $user1 = null;
+            $user2 = null;
+
+            if (!$memberAccounts->isEmpty()) {
+                if (count($memberAccounts) == 2) {
+                    $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
+                    $user2 = \App\Models\User::where('email', $memberAccounts[1]->email)->first();
+                } else {
+                    $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
+                    $user2 = $user1; // Assign user2 to user1 if only one account
+                }
             }
-            $firstProduct = null;
-            if (!$products->isEmpty()){
-             $firstProduct = $products[0];
-            }
+
+            $products = \App\Models\Product::where(function ($query) use ($company, $user1, $user2) {
+                $query->where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]]);
+
+                if ($user1) {
+                    $query->orWhere([['user_id', $user1->id], ['status', \App\Enums\ProductStatus::ACTIVE]]);
+                }
+
+                if ($user2) {
+                    $query->orWhere([['user_id', $user2->id], ['status', \App\Enums\ProductStatus::ACTIVE]]);
+                }
+            })->get();
+
+            $firstProduct = $products->first();
         @endphp
+
         <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
         <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
         <div class="d-flex justify-content-between align-items-center p-3">
             <div>
-                <a href="{{ route('list.products.shop.show', $oldUser->id) }}" class="btn btn-primary mr-2 d-inline-block">{{ __('home.Booth') }}</a>
-                <a href="{{route('partner.register.member.index')}}" class="btn btn-warning d-inline-block">{{ __('home.Partner List') }}</a>
+                <a href="{{ route('list.products.shop.show', $oldUser->id) }}"
+                   class="btn btn-primary mr-2 d-inline-block">{{ __('home.Booth') }}</a>
+                <a href="{{route('partner.register.member.index')}}"
+                   class="btn btn-warning d-inline-block">{{ __('home.Partner List') }}</a>
             </div>
             <div>
-                <a href="{{route('chat.message.received')}}" class="btn btn-primary mr-2 d-inline-block">{{ __('home.Message received') }}</a>
-                <a href="{{route('chat.message.sent')}}" class="btn btn-primary mr-2 d-inline-block">{{ __('home.Message sent') }}</a>
-                <a href="#" class="btn btn-primary mr-2 d-inline-block" data-toggle="modal" data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
-                <a href="#" class="btn btn-primary d-inline-block" data-toggle="modal" data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
+                <a href="{{route('chat.message.received')}}"
+                   class="btn btn-primary mr-2 d-inline-block">{{ __('home.Message received') }}</a>
+                <a href="{{route('chat.message.sent')}}"
+                   class="btn btn-primary mr-2 d-inline-block">{{ __('home.Message sent') }}</a>
+                <a href="#" class="btn btn-primary mr-2 d-inline-block" data-toggle="modal"
+                   data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
+                <a href="#" class="btn btn-primary d-inline-block" data-toggle="modal"
+                   data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
             </div>
         </div>
         <div class="row m-0">
@@ -131,17 +146,20 @@
                     <div class="row p-2">
                         <div class="col-md-6">
                             <div class="mt-2">
-                                <div class="mb-3 size"><b>{{ __('home.Company code') }}: </b> {{ ($company->code_business) }}</div>
+                                <div class="mb-3 size"><b>{{ __('home.Company code') }}
+                                        : </b> {{ ($company->code_business) }}</div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mt-2">
-                                <div class="mb-3 size"><b>{{ __('home.Elite enterprise') }}: </b> {{ ($company->member) }}</div>
+                                <div class="mb-3 size"><b>{{ __('home.Elite enterprise') }}
+                                        : </b> {{ ($company->member) }}</div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mt-2">
-                                <div class="mb-3 size"><b>{{ __('home.Membership classification') }}: </b> {{ ($company->member) }}</div>
+                                <div class="mb-3 size"><b>{{ __('home.Membership classification') }}
+                                        : </b> {{ ($company->member) }}</div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -216,7 +234,7 @@
                             </button>
                         </form>
                     @else
-                        <form method="post" action="{{ route('stands.unregister.member', $company->id) }}"}>
+                        <form method="post" action="{{ route('stands.unregister.member', $company->id) }}" }>
                             @csrf
                             <input type="text" name="company_id_source"
                                    value="{{ $company->id }}" hidden>
@@ -255,7 +273,8 @@
                                     @endphp
 
                                     @for ($i = 1; $i <= 5; $i++)
-                                        <i class="fa-solid fa-star" style="color: {{ $i <= $averageRating ? '#fac325' : '#ccc' }}"></i>
+                                        <i class="fa-solid fa-star"
+                                           style="color: {{ $i <= $averageRating ? '#fac325' : '#ccc' }}"></i>
                                     @endfor
 
                                     <span>{{ $averageRatingsFormatted }} ({{ $totalRatings }})</span>
@@ -374,88 +393,76 @@
                                                 @endforeach
                                             @endif
                                         </div>
-                                        <button id="btnViewAttribute" data-id="{{$firstProduct->id}}" type="button"
-                                                class="btn" data-toggle="modal"
-                                                data-target="#modal-show-att">
-                                            Xem thuộc tính
-                                        </button>
                                     </div>
 
-                            <h6 class="text-center mt-2">{{ __('home.Xem chi tiết các hình ảnh khác') }}</h6>
-                            @if($productGallery)
-                                @php
-                                    $arrayProductImg = explode(',', $productGallery);
-                                @endphp
-                                <div class="row thumbnailSupGallery">
-                                    @foreach($arrayProductImg as $productImg)
-                                        <div class="col-md-3 thumbnailSupGallery-img">
-                                            <img src="{{ asset('storage/' . $productImg) }}" alt=""
-                                                 class="thumbnailProductGallery thumbnailGallery{{$loop->index+1}}"
-                                                 data-id="{{$firstProduct->id}}">
+                                    <h6 class="text-center mt-2">{{ __('home.Xem chi tiết các hình ảnh khác') }}</h6>
+                                    @if($productGallery)
+                                        @php
+                                            $arrayProductImg = explode(',', $productGallery);
+                                        @endphp
+                                        <div class="row thumbnailSupGallery">
+                                            @foreach($arrayProductImg as $productImg)
+                                                <div class="col-md-3 thumbnailSupGallery-img">
+                                                    <img src="{{ asset('storage/' . $productImg) }}" alt=""
+                                                         class="thumbnailProductGallery thumbnailGallery{{$loop->index+1}}"
+                                                         data-id="{{$firstProduct->id}}">
+                                                </div>
+                                            @endforeach
                                         </div>
-                                    @endforeach
+                                    @endif
+                                    <div class=" mt-2 text-center">
+                                        <h5 class="text-center">{{ __('home.Watch product videos') }} </h5>
+                                    </div>
                                 </div>
-                            @endif
-                            <div class=" mt-2 text-center">
-                                <h5 class="text-center">{{ __('home.Watch product videos') }} </h5>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h5>
-                                    {{ __('home.Order conditions') }}
-                                </h5>
-                            </div>
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th scope="col">{{ __('home.quantity') }}</th>
-                                    <th scope="col">{{ __('home.Unit price') }}</th>
-                                    <th scope="col">{{ __('home.ngày kể từ ngày đặt hàng') }}</th>
-                                </tr>
-                                </thead>
-
-                                <tbody id="tablebodyProductSale">
-                                @if(!$price_sales->isEmpty())
-                                    @foreach($price_sales as $price_sale)
+                                <div class="col-md-6">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5>
+                                            {{ __('home.Order conditions') }}
+                                        </h5>
+                                    </div>
+                                    <table class="table table-bordered">
+                                        <thead>
                                         <tr>
-                                            <td>{{$price_sale->quantity}}</td>
-                                            <td>-{{$price_sale->sales}} %</td>
-                                            <td>{{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
+                                            <th scope="col">{{ __('home.quantity') }}</th>
+                                            <th scope="col"> Giảm giá</th>
+                                            <th scope="col">{{ __('home.ngày kể từ ngày đặt hàng') }}</th>
                                         </tr>
-                                    @endforeach
-                                @endif
-                                </tbody>
-                            </table>
+                                        </thead>
 
-                            <p>{{ __('home.đơn giá phía trên là điều kiện FOB/TT') }}</p>
-                            <h5 class="text-center">{{ __('home.Đặt hàng') }}</h5>
-                            <table class="table table-bordered" id="table-selected-att">
-                                <thead>
-                                <tr>
-                                    <th scope="col">{{ __('home.Thuộc tính') }}</th>
-                                    <th scope="col">{{ __('home.Số lượng') }}</th>
-                                    <th scope="col">{{ __('home.Unit price') }}</th>
-                                    <th scope="col">{{ __('home.Thành tiền') }}</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+                                        <tbody id="tablebodyProductSale">
+                                        @if(!$price_sales->isEmpty())
+                                            @foreach($price_sales as $price_sale)
+                                                <tr>
+                                                    <td>{{$price_sale->quantity}}</td>
+                                                    <td>-{{$price_sale->sales}} %</td>
+                                                    <td>{{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
+                                        </tbody>
+                                    </table>
 
-                            @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
-                                <button class="btn btn-success partnerBtn float-right" id="partnerBtn"
-                                        data-value="{{ $firstProduct->id }}" data-count="100">{{ __('home.Tiếp nhận đặt hàng') }}
-                                </button>
+                                    <p>{{ __('home.đơn giá phía trên là điều kiện FOB/TT') }}</p>
+                                    <h5 class="text-center">{{ __('home.Đặt hàng') }}</h5>
+
+                                    <div id="tableMemberOrder">
+
+                                    </div>
+
+                                    @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
+                                        <button class="btn btn-success partnerBtn float-right" id="partnerBtn"
+                                                data-value="{{ $firstProduct->id }}"
+                                                data-count="100">{{ __('home.Tiếp nhận đặt hàng') }}
+                                        </button>
+                                    @endif
+                                </div>
+
                             @endif
                         </div>
-
-                    @endif
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 </div>
 @endif
 
@@ -553,8 +560,7 @@
 
     $('.thumbnailProduct').on('click', function () {
         let product = $(this).data('value');
-        let productName = $(this).data('name');
-        console.log(productName);
+        let productName = product['name'];
         let imageUrl = '{{ asset('storage/') }}';
         let imgMain = product['thumbnail'];
         imageUrl = imageUrl + '/' + imgMain;
@@ -578,10 +584,11 @@
             $('#tablebodyProductSale').empty().append(value);
         }
 
+        renderProduct(productID);
+
         let gallery = product['gallery']
         let arrayGallery = gallery.split(',');
 
-        // $('#partnerBtn').data('value', product['id']);
         let partnerBtn = document.getElementById('partnerBtn');
         partnerBtn.setAttribute('data-value', product['id']);
 
@@ -678,6 +685,27 @@
         }
         listItem = listIDs;
         localStorage.setItem('listID', listItem);
+    }
+
+    $(document).ready(function () {
+        let id = {{$firstProduct->id}};
+        renderProduct(id);
+    })
+
+    function renderProduct(product) {
+        let url = '{{ route('detail_product.member.attribute', ['id' => ':id']) }}';
+        url = url.replace(':id', product);
+
+        $.ajax({
+            url: url,
+            method: 'GET',
+        })
+            .done(function (response) {
+                $('#tableMemberOrder').empty().append(response);
+            })
+            .fail(function (_, textStatus) {
+                console.log(textStatus)
+            });
     }
 </script>
 
