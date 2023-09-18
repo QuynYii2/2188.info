@@ -71,7 +71,7 @@ class HomeController extends Controller
         }
 
 
-        $categories = Category::get()->toTree();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
 
         $locations = ['vi', 'kr', 'jp', 'cn', 'en'];
 
