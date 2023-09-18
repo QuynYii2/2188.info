@@ -113,7 +113,7 @@
             $firstProduct = $products->first();
         @endphp
 
-        <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
+{{--        <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>--}}
         <div class="d-flex justify-content-between align-items-center p-3">
             <div>
                 <a href="{{ route('list.products.shop.show', $oldUser->id) }}"
@@ -455,13 +455,6 @@
                                     <div id="tableMemberOrder">
 
                                     </div>
-
-{{--                                    @if($newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)--}}
-{{--                                        <button class="btn btn-success partnerBtn float-right" id="partnerBtn"--}}
-{{--                                                data-value="{{ $firstProduct->id }}"--}}
-{{--                                                data-count="100">{{ __('home.Tiếp nhận đặt hàng') }}--}}
-{{--                                        </button>--}}
-{{--                                    @endif--}}
                                 </div>
 
                             @endif

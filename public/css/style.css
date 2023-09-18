@@ -2244,6 +2244,7 @@ hr {
   padding: 0 15px;
   font-weight: 600;
   font-size: 13px;
+  text-align: center;
 }
 .section .item-body .card-bottom--left:hover {
   background-color: #fd6506;
