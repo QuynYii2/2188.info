@@ -30,19 +30,19 @@
                 <tr>
                     <td id="cb" class="manage-column column-cb check-column">
                         <label class="screen-reader-text" for="cb-select-all-1">
-                            Chọn toàn bộ
+                            {{ __('home.chọn toàn bộ') }}
                         </label>
                         <input id="cb-select-all-1" type="checkbox">
                     </td>
                     <th scope="col" id="thumb" class="manage-column column-thumb">
               <span class="wc-image tips">
-                Image
+                {{ __('home.Image') }}
               </span>
                     </th>
                     <th scope="col" id="name" class="manage-column column-name column-primary sortable desc">
                         <a href="#">
                 <span>
-                  Name
+                  {{ __('home.Name') }}
                 </span>
                             <span class="sorting-indicator">
                 </span>
@@ -51,26 +51,26 @@
                     <th scope="col" id="sku" class="manage-column column-sku sortable desc">
                         <a href="#">
                 <span>
-                  Người đăng
+                  {{ __('home.người đăng') }}
                 </span>
                             <span class="sorting-indicator">
                 </span>
                         </a>
                     </th>
                     <th scope="col" id="is_in_stock" class="manage-column column-is_in_stock">
-                        Stock
+                        {{ __('home.stock') }}
                     </th>
                     <th scope="col" id="price" class="manage-column column-price sortable desc">
                         <a href="#">
                 <span>
-                  Price
+                  {{ __('home.Price') }}
                 </span>
                             <span class="sorting-indicator">
                 </span>
                         </a>
                     </th>
                     <th scope="col" id="product_cat" class="manage-column column-product_cat">
-                        Categories
+                        {{ __('home.CATEGORIES') }}
                     </th>
                     <th scope="col" id="hot" class="manage-column column-hot style-RlVfN">
                               <span class="wc-hot parent-tips" data-tip="Hot">
@@ -78,12 +78,12 @@
                               </span>
                     </th>
                     <th scope="col" id="featured" class="manage-column column-featured style-RlVfN">
-                        Featured
+                        {{ __('home.featured') }}
                     </th>
                     <th scope="col" id="date" class="manage-column column-date sortable asc">
                         <a href="#">
                                 <span>
-                                    Date
+                                    {{ __('home.Date') }}
                                 </span>
                             <span class="sorting-indicator">
                                 </span>
@@ -101,13 +101,13 @@
                             class="iedit author-self level-0 post-42 type-product status-publish hentry product_cat-uncategorized entry">
                             <th scope="row" class="check-column">
                                 <label class="screen-reader-text" for="cb-select-42">
-                                    Chọn {{$product->name}}
+                                    {{ __('home.chọn') }} {{$product->name}}
                                 </label>
                                 <input id="cb-select-{{$product->id}}" type="checkbox" name="post[]"
                                        value="{{$product->id}}">
                                 <div class="locked-indicator">
                                     <span class="locked-indicator-icon" aria-hidden="true"></span>
-                                    <span class="screen-reader-text">“{{$product->name}}” đã bị khóa</span>
+                                    <span class="screen-reader-text">“{{$product->name}}” {{ __('home.đã bị khóa') }}</span>
                                 </div>
                             </th>
                             <td class="thumb column-thumb" data-colname="Image">
@@ -131,7 +131,11 @@
                                 <strong>
                                     <a class="row-title"
                                        href="{{route('seller.products.edit', $product->id)}}">
-                                        {{$product->name}}
+                                        @php
+                                            $ld = new \App\Http\Controllers\TranslateController();
+                                        @endphp
+                                        {{ $ld->translateText($product->name, locationPermissionHelper()) }}
+
                                     </a>
                                 </strong>
                                 <div class="row-actions">
@@ -141,7 +145,7 @@
                                     <span class="edit">
                                           <a href="{{route('seller.products.edit', $product->id)}}"
                                              aria-label="Sửa “{{$product->name}}”">
-                                            Chỉnh sửa
+                                            {{ __('home.chỉnh sửa') }}
                                           </a>
                                       |
                                     </span>
@@ -151,13 +155,13 @@
                                                   aria-expanded="false" data-toggle="modal"
                                                   onclick="checkHotAndFeature({{$product->id}});"
                                                   data-target="#exampleQuickEditProduct{{$product->id}}">
-                                            Sửa nhanh
+                                            {{ __('home.Sửa nhanh') }}
                                           </button>
                                           |
                                         <!-- Modal -->
-                                            <div class="modal fade" id="exampleQuickEditProduct{{$product->id}}"
-                                                 tabindex="-1" role="dialog"
-                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                         <div class="modal fade" id="exampleQuickEditProduct{{$product->id}}"
+                                              tabindex="-1" role="dialog"
+                                              aria-labelledby="exampleModalLabel" aria-hidden="true">
                                               <div class="modal-dialog" role="document">
                                                  <form action="{{ route('seller.products.update', $product->id) }}"
                                                        method="POST"
@@ -179,38 +183,47 @@
                                                           <div class="modal-body">
 
                                                               <div class="form-group">
-                                                                <label for="name">Name</label>
+                                                                <label for="name">{{ __('home.Name') }}</label>
                                                                 <input type="text" class="form-control" id="name"
                                                                        name="name"
                                                                        value="{{ $product->name }}">
                                                               </div>
 
                                                                <div class="form-group">
-                                                                    <label for="category">Category</label>
+                                                                    <label for="category">{{ __('home.category') }}</label>
                                                                     <select class="form-control" id="category"
                                                                             name="category_id">
                                                                         <option value="">-- Select Category --</option>
                                                                         @foreach ($categories as $category)
                                                                             <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>
-                                                                                {{ $category->name }}
+                                                                                @if(locationHelper() == 'kr')
+                                                                                    <div class="text">{{ $category->name_ko }}</div>
+                                                                                @elseif(locationHelper() == 'cn')
+                                                                                    <div class="text">{{$category->name_zh}}</div>
+                                                                                @elseif(locationHelper() == 'jp')
+                                                                                    <div class="text">{{$category->name_ja}}</div>
+                                                                                @elseif(locationHelper() == 'vi')
+                                                                                    <div class="text">{{$category->name_vi}}</div>
+                                                                                @else
+                                                                                    <div class="text">{{$category->name_en}}</div>
+                                                                                @endif
                                                                             </option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
-
                         <div class="form-group">
-                            <div class="name">Xuất xứ</div>
+                            <div class="name">{{ __('home.Xuất xứ') }}</div>
                             <input type="text" class="form-control" name="origin" id="origin" placeholder="Nhập xuất xứ"
                                    value="{{$product->origin}}">
                         </div>
                         <div class="form-group">
-                            <div class="name">Sản phẩm tối thiểu</div>
+                            <div class="name">{{ __('home.Sản phẩm tối thiểu') }}</div>
                             <input type="number" value="{{$product->min}}" class="form-control" name="min" id="min"
                                    placeholder="Nhập số lượng tối thiểu" min="1">
                         </div>
                         <div class="form-group">
                             <div class="d-flex">
-                                <div class="name">Mua nhiều giảm giá</div>
+                                <div class="name">{{ __('home.Mua nhiều giảm giá') }}</div>
                             </div>
                             <div>
                                 <div class="">
@@ -220,7 +233,7 @@
 
                                         </div>
                                         <button type="button" class="btn add-form-field"><i
-                                                    class="fa-solid fa-plus"></i> Thêm khoảng giá</button>
+                                                    class="fa-solid fa-plus"></i> {{ __('home.Thêm khoảng giá') }}</button>
                                     </div>
                                     <div id="base-package-fields" hidden>
                                         @php
@@ -275,7 +288,7 @@
                                                                             @foreach($productDetails as $productDetail)
                                                                                 @if($productDetail->variation && $productDetail->variation != 0)
                                                                                     <div class="form-group">
-                                                                                <label class="control-label">Thông số sản phẩm</label>
+                                                                                <label class="control-label">{{ __('home.Thông số sản phẩm') }}</label>
                                                                                 @php
                                                                                     $variable = $productDetail->variation;
                                                                                     $arrayVariation = explode(',', $variable);
@@ -309,7 +322,7 @@
                                                                             </div>
 
                                                                                     <div class="form-group">
-                                                                                    <label for="price">Giá bán</label>
+                                                                                    <label for="price">{{ __('home.Giá bán') }}</label>
                                                                                     <input type="number"
                                                                                            class="form-control"
                                                                                            id="price{{$productDetail->id}}"
@@ -318,7 +331,7 @@
                                                                             </div>
 
                                                                                     <div class="form-group">
-                                                                                    <label for="qty">Giá khuyến mãi</label>
+                                                                                    <label for="qty">{{ __('home.Giá khuyến mãi') }}</label>
                                                                                     <input type="number"
                                                                                            class="form-control"
                                                                                            id="qty{{$productDetail->id}}"
@@ -327,7 +340,7 @@
                                                                             </div>
 
                                                                                     <div class="form-group">
-                                                                                        <div class="name">Nhập số lượng</div>
+                                                                                        <div class="name">{{ __('home.Nhập số lượng') }}</div>
                                                                                         <input type="number"
                                                                                                class="form-control"
                                                                                                name="qty" id="qty"
@@ -337,7 +350,7 @@
                                                                                     </div>
 
                                                                                     <div class="form-group">
-                                                                                <label for="thumbnail">Thumbnail</label>
+                                                                                <label for="thumbnail">{{ __('home.thumbnail') }}</label>
                                                                                 <input type="file"
                                                                                        class="form-control-file"
                                                                                        id="thumbnail"
@@ -363,7 +376,7 @@
                                                                                 $productDetail = $productDetails[0];
                                                                             @endphp
                                                                             <div class="form-group">
-                                                                                    <label for="price">Giá bán</label>
+                                                                                    <label for="price">{{ __('home.Giá bán') }}</label>
                                                                                     <input type="number"
                                                                                            class="form-control"
                                                                                            id="price{{$productDetail->id}}"
@@ -372,7 +385,7 @@
                                                                             </div>
 
                                                                             <div class="form-group">
-                                                                                <label for="qty">Giá khuyến mãi</label>
+                                                                                <label for="qty">{{ __('home.Giá khuyến mãi') }}</label>
                                                                                 <input type="number"
                                                                                        class="form-control"
                                                                                        id="qty{{$productDetail->id}}"
@@ -380,7 +393,7 @@
                                                                                        value="{{$productDetail->price }}">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="thumbnail">Thumbnail</label>
+                                                                                <label for="thumbnail">{{ __('home.thumbnail') }}</label>
                                                                                 <input type="file"
                                                                                        class="form-control-file"
                                                                                        id="thumbnail"
@@ -413,7 +426,7 @@
                                                                         @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm hot')
                                                                             <div class="col-4 d-flex">
                                                                                 <label for="hot_product"
-                                                                                       class="col-8 col-sm-8">Sản phẩm hot</label>
+                                                                                       class="col-8 col-sm-8">{{ __('home.Sản phẩm hot') }}</label>
                                                                                 <div class="col-4 col-sm-4">
                                                                                     <input class="form-control"
                                                                                            type="checkbox"
@@ -428,7 +441,7 @@
                                                                         @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm nổi bật')
                                                                             <div class="col-4 d-flex">
                                                                                 <label for="feature_product"
-                                                                                       class="col-8 col-sm-8">Sản phẩm nổi bật</label>
+                                                                                       class="col-8 col-sm-8">{{ __('home.Sản phẩm nổi bật') }}</label>
                                                                                 <div class="col-4 col-sm-4">
                                                                                     <input class="form-control"
                                                                                            type="checkbox"
@@ -472,7 +485,7 @@
                                                           </div>
                                                           <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"
-                                                                    data-dismiss="modal">Close</button>
+                                                                    data-dismiss="modal">{{ __('home.Close') }}</button>
                                                             <button type="submit"
                                                                     class="btn btn-primary">Save changes</button>
                                                           </div>
@@ -484,7 +497,7 @@
                                     <span class="trash">
                                          <a class="delete" data-toggle="modal"
                                             data-target="#modalDeleteProduct{{$product->id}}">
-                                                        Delete
+                                                       {{ __('home.delete') }}
                                                     </a>
                                         <!-- Modal -->
                                                     <div class="modal fade text-black"
@@ -506,16 +519,15 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <h5 class="text-center">
-                                                                        Bạn có chắc chắn muốn xoá product: {{$product->name}}
+                                                                        {{ __('home.Bạn có chắc chắn muốn xoá') }} : {{$product->name}}
                                                                     </h5>
                                                                     <p class="text-danger">
-                                                                        Nếu xoá bạn sẽ không thể không thể tìm thấy nó!
-                                                                        Chúng tôi sẽ không chịu trách nhiệm cho việc này!
+                                                                        {{ __('home.Nếu xoá bạn sẽ không thể không thể tìm thấy nó!Chúng tôi sẽ không chịu trách nhiệm cho việc này!') }}
                                                                     </p>
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
-                                                                            data-dismiss="modal">Close</button>
+                                                                            data-dismiss="modal">{{ __('home.Close') }}</button>
                                                                     <button type="submit"
                                                                             class="btn btn-danger">Yes</button>
                                                                   </div>
@@ -571,7 +583,17 @@
                                         $category = \App\Models\Category::find($cates);
                                     @endphp
                                     @if($category)
-                                        <a href="">{{$category->name}}</a> </br>
+                                        @if(locationHelper() == 'kr')
+                                            <div class="text">{{ $category->name_ko }}</div>
+                                        @elseif(locationHelper() == 'cn')
+                                            <div class="text">{{$category->name_zh}}</div>
+                                        @elseif(locationHelper() == 'jp')
+                                            <div class="text">{{$category->name_ja}}</div>
+                                        @elseif(locationHelper() == 'vi')
+                                            <div class="text">{{$category->name_vi}}</div>
+                                        @else
+                                            <div class="text">{{$category->name_en}}</div>
+                                        @endif
                                     @endif
                                 @endforeach
                             </td>
@@ -593,49 +615,60 @@
                                         </label>
                                     @endif
                                 @else
-                                    @for($i = 0; $i< count($permissionUsers); $i++)
-                                        @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm hot')
-                                            @if($product->hot == 1)
-                                                <label class="switch">
-                                                    <input value="{{$product->id}}" class="inputHotCheckbox"
-                                                           name="inputHot-{{$product->id}}" id="inputHot-{{$product->id}}"
-                                                           type="checkbox" checked>
-                                                    <span class="slider round"></span>
-                                                </label>
-                                            @else
-                                                <label class="switch">
-                                                    <input value="{{$product->id}}" class="inputHotCheckbox"
-                                                           name="inputHot-{{$product->id}}" id="inputHot-{{$product->id}}"
-                                                           type="checkbox">
-                                                    <span class="slider round"></span>
-                                                </label>
-                                            @endif
-                                            @break
-                                        @endif
-                                    @endfor
+                                    <label class="switch">
+                                        <input value="{{$product->id}}" class="inputHotCheckbox"
+                                               name="inputHot-{{$product->id}}"
+                                               id="inputHot-{{$product->id}}"
+                                               type="checkbox"
+                                               @if($product->hot == 1) checked @endif
+                                        >
+                                        <span class="slider round"></span>
+                                    </label>
                                 @endif
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal-{{$product->id}}" tabindex="-1" role="dialog"
+                                     aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Bạn có muốn nâng cấp sản phẩm không
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">{{ __('home.Close') }}</button>
+                                                <button type="button" class="btn btn-primary"><a
+                                                            href="{{route('permission.list.show')}}">{{ __('home.Sign up to upgrade') }}</a>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                             <td class="featured column-featured" data-colname="Featured">
                                 @if($isAdmin == true)
-                                    @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm nổi bật')
-                                        @if($product->feature == 1)
-                                            <label class="switch">
-                                                <input value="{{$product->id}}" class="inputFeatureCheckbox"
-                                                       name="inputFeature-{{$product->id}}"
-                                                       id="inputFeature-{{$product->id}}"
-                                                       type="checkbox" checked>
-                                                <span class="slider round"></span>
-                                            </label>
-                                        @else
-                                            <label class="switch">
-                                                <input value="{{$product->id}}" class="inputFeatureCheckbox"
-                                                       name="inputFeature-{{$product->id}}"
-                                                       id="inputFeature-{{$product->id}}"
-                                                       type="checkbox">
-                                                <span class="slider round"></span>
-                                            </label>
-                                        @endif
-                                        @break
+                                    @if($product->feature == 1)
+                                        <label class="switch">
+                                            <input value="{{$product->id}}" class="inputFeatureCheckbox"
+                                                   name="inputFeature-{{$product->id}}"
+                                                   id="inputFeature-{{$product->id}}"
+                                                   type="checkbox" checked>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    @else
+                                        <label class="switch">
+                                            <input value="{{$product->id}}" class="inputFeatureCheckbox"
+                                                   name="inputFeature-{{$product->id}}"
+                                                   id="inputFeature-{{$product->id}}"
+                                                   type="checkbox">
+                                            <span class="slider round"></span>
+                                        </label>
                                     @endif
                                 @else
                                     @for($i = 0; $i< count($permissionUsers); $i++)
@@ -663,7 +696,7 @@
                                 @endif
                             </td>
                             <td>
-                                Đã xuất bản <br>
+                                {{ __('home.Đã xuất bản') }} <br>
                                 {{$product->created_at}}
                             </td>
                         </tr>
@@ -676,6 +709,44 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var checkboxes = document.querySelectorAll('.inputHotCheckbox');
+
+            checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    var modalId = 'exampleModal-' + this.value;
+                    var checkboxId = 'inputHot-' + this.value;
+                    var originalChecked = this.checked; // Lưu trạng thái ban đầu của checkbox
+
+                    if (this.checked) {
+                        var modal = document.getElementById(modalId);
+                        $(modal).modal('show');
+
+                        var confirmButton = document.querySelector('#' + modalId + ' .btn-primary');
+                        confirmButton.addEventListener('click', function () {
+                            var checkbox = document.getElementById(checkboxId);
+                            checkbox.checked = true;
+                            $(modal).modal('hide');
+                        });
+
+                        // Xử lý sự kiện đóng Modal
+                        $(modal).on('hidden.bs.modal', function () {
+                            var checkbox = document.getElementById(checkboxId);
+                            if (checkbox.checked !== originalChecked) {
+                                checkbox.checked = originalChecked;
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+    </script>
+
+
+
     <script>
         $(document).ready(function () {
             $(".inputHotCheckbox").click(function () {

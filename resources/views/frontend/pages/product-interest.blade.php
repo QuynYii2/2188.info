@@ -11,7 +11,7 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="title mt-3 mb-3 text-center">Sản phẩm quan tâm</div>
         <div class=" p-3">
             <div class="row p-2">

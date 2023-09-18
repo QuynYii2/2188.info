@@ -88,7 +88,7 @@
                         <div class="col-md-12">
                             <div class="form-group row">
                                 <label for="staticEmail"
-                                       class="col-md-3 col-12 col-form-label">Tên người bán</label>
+                                       class="col-md-3 col-12 col-form-label">{{ __('home.Tên người bán') }}</label>
                                 <div class="col-md-9 col-12">
                                     <input type="text" class="form-control" id="staticEmail" required name="name"
                                            value="{{ $user->name ?? ''}}">
@@ -97,28 +97,28 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <label for="day" class="col-md-3 col-12 col-form-label">Quốc gia</label>
+                        <label for="day" class="col-md-3 col-12 col-form-label">{{ __('home.Quốc gia') }}</label>
                         <div class="col-md-9 col-12">
                             <select style="display: block!important;" class="form-control" id="country" name="region">
                             </select>
                         </div>
                     </div>
                     <div class="row form-group">
-                        <label for="day" class="col-md-3 col-12 col-form-label">Mã số thuế</label>
+                        <label for="day" class="col-md-3 col-12 col-form-label">{{ __('home.Mã số thuế') }}</label>
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" name="rental_code"
                                    value="{{ $shop_infos->masothue ?? ''}}">
                         </div>
                     </div>
                     <div class="row form-group">
-                        <label for="day" class="col-md-3 col-12 col-form-label">Tên sản phẩm đăng ký</label>
+                        <label for="day" class="col-md-3 col-12 col-form-label">{{ __('home.Tên sản phẩm đăng ký') }}</label>
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" required name="product_name"
                                    value="{{ $shop_infos->product_name ?? '' }}">
                         </div>
                     </div>
                     <div class="row form-group">
-                        <label for="day" class="col-md-3 col-12 col-form-label">Mã sản phẩm đăng ký</label>
+                        <label for="day" class="col-md-3 col-12 col-form-label">{{ __('home.Mã sản phẩm đăng ký') }}</label>
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" required name="product_code"
@@ -126,7 +126,7 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <label for="day" class="col-md-3 col-12 col-form-label">Diện tích sàn(㎡)</label>
+                        <label for="day" class="col-md-3 col-12 col-form-label">{{ __('home.Diện tích sàn(㎡)') }}</label>
 
                         <div class="col-md-9 col-12">
                             <input type="number" class="form-control" name="acreage"
@@ -134,7 +134,7 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <label for="day" class="col-md-3 col-12 col-form-label">Dây chuyền sản xuất</label>
+                        <label for="day" class="col-md-3 col-12 col-form-label">{{ __('home.Dây chuyền sản xuất') }}</label>
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" name="machine_number"
@@ -142,7 +142,7 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <label for="day" class="col-md-3 col-12 col-form-label">Tổng sản lượng hằng năm(đơn vị)</label>
+                        <label for="day" class="col-md-3 col-12 col-form-label">{{ __('home.Tổng sản lượng hằng năm(đơn vị)') }}</label>
 
                         <div class="col-md-9 col-12">
                             <input type="number" class="form-control" required name="annual_output"
@@ -151,7 +151,7 @@
                     </div>
 
                     <div class="row form-group">
-                        <label for="day" class="col-md-3 col-12 col-form-label">Năm trong ngành</label>
+                        <label for="day" class="col-md-3 col-12 col-form-label">{{ __('home.Năm trong ngành') }}</label>
 
                         <div class="col-md-9 col-12">
                             <input type="number" class="form-control" required name="industry_year"
@@ -159,7 +159,7 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <label for="day" class="col-md-3 col-12 col-form-label">Thị trường chính</label>
+                        <label for="day" class="col-md-3 col-12 col-form-label">{{ __('home.Thị trường chính') }}</label>
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" required name="marketing"
@@ -167,7 +167,7 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <label for="day" class="col-md-3 col-12 col-form-label">Đối tác chuỗi cung ứng</label>
+                        <label for="day" class="col-md-3 col-12 col-form-label">{{ __('home.Đối tác chuỗi cung ứng') }}</label>
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" name="partner"
@@ -175,7 +175,7 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <label for="day" class="col-md-3 col-12 col-form-label">Các loại khách hàng chính</label>
+                        <label for="day" class="col-md-3 col-12 col-form-label">{{ __('home.Các loại khách hàng chính') }}</label>
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" required name="customers"
@@ -184,7 +184,7 @@
                     </div>
 
                     <div class="row form-group">
-                        <label for="day" class="col-md-3 col-12 col-form-label">Phương pháp kiểm tra sản phẩm</label>
+                        <label for="day" class="col-md-3 col-12 col-form-label">{{ __('home.Phương pháp kiểm tra sản phẩm') }}</label>
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" name="test_method"
@@ -192,7 +192,7 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <label for="day" class="col-md-3 col-12 col-form-label">Nhân viên kiểm tra </label>
+                        <label for="day" class="col-md-3 col-12 col-form-label">{{ __('home.Nhân viên kiểm tra') }} </label>
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" name="inspection_staff"
@@ -201,7 +201,7 @@
                     </div>
 
                     <div class="row form-group">
-                        <label for="day" class="col-md-3 col-12 col-form-label">Ngành sản phẩm đăng ký</label>
+                        <label for="day" class="col-md-3 col-12 col-form-label">{{ __('home.Ngành sản phẩm đăng ký') }}</label>
 
                         <div class="col-md-9 col-12">
                             <input type="text" class="form-control" required name="industry"
@@ -209,7 +209,7 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <label for="short_description" class="col-md-3 col-12 col-form-label">Thông tin công ty</label>
+                        <label for="short_description" class="col-md-3 col-12 col-form-label">{{ __('home.Thông tin công ty') }}</label>
                         <div class="col-md-9 col-12">
                             <textarea class="form-control description" name="information" rows="5">
                                     {{$shop_infos->information ?? '' }}
@@ -217,18 +217,18 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <label for="day" class="col-md-3 col-12 col-form-label">Ảnh giấy phép kinh doanh</label>
+                        <label for="day" class="col-md-3 col-12 col-form-label">{{ __('home.Ảnh giấy phép kinh doanh') }}</label>
 
                         <div class="col-md-9 col-12">
                             <input type="file" class="form-control" name="image" accept="image/*">
-                            <img src="{{ asset('storage/' . $user->image) }}" alt="Ảnh giấy phép kinh doanh"
+                            <img src="{{ asset('storage/' . $user->image) }}" alt={{ __('home.Ảnh giấy phép kinh doanh') }}
                                  height="100" width="100">
                         </div>
                     </div>
                     <div class="row pl-2 pt-3">
                         <label for="day" class="col-sm-3 col-form-label col-12"></label>
                         <div class="col-md-9 col-12">
-                            <button class="btn btn-outline-primary align-center" type="submit">Lưu</button>
+                            <button class="btn btn-outline-primary align-center" type="submit">{{ __('home.Lưu') }}</button>
                         </div>
                     </div>
                 </form>

@@ -93,7 +93,7 @@
                                                 @endif
                                             </h4>
                                             <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="#">Action</a>
+                                                <a class="dropdown-item" href="#">{{ __('home.Action') }}</a>
                                                 <a class="dropdown-item" href="#">Another action</a>
                                                 <form action="{{ route('logout') }}" method="POST">
                                                     @csrf

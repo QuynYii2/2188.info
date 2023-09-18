@@ -8,8 +8,26 @@ use Illuminate\Support\Facades\Cache;
 if (!function_exists('convertCurrency')) {
     function convertCurrency($from, $to, $amount)
     {
-        $rate = convertCurrencyDB($from, $to, $amount);
-        return $rate * $amount;
+        switch ($from) {
+            case 'vi':
+                $currentFrom = 'VND';
+                break;
+            case 'kr':
+                $currentFrom = 'KRW';
+                break;
+            case 'cn':
+                $currentFrom = 'CNY';
+                break;
+            default:
+                $currentFrom = 'USD';
+        }
+//        $rate = convertCurrencyDB($currentFrom, $to, $amount);
+//        if ($rate != 1) {
+//            return $rate * $amount;
+//        } else {
+        $rate = subConvertCurrencyDB($currentFrom, $to, $amount);
+        return $rate*$amount;
+//        }
     }
 
     function convertCurrencyDB($from, $to, $amount)
@@ -47,12 +65,43 @@ if (!function_exists('convertCurrency')) {
         return $cachedRate;
     }
 
+    function subConvertCurrencyDB($from, $to, $amount)
+    {
+        $item = Currency::where([
+            ['from', $from],
+            ['to', $to],
+        ])->first();
+
+        if ($item) {
+            $createTime = Carbon::parse($item->updated_at)->addDay();
+            $currentTime = Carbon::now();
+            if ($createTime < $currentTime) {
+                $rate = subGetExchangeRate($from, $to, $amount);
+                $item->updated_at = Carbon::now()->addHours(7);
+                $item->rate = $rate;
+                $item->save();
+            } else {
+                $rate = $item->rate;
+            }
+//            $rate = $item->rate;
+        } else {
+            $rate = subGetExchangeRate($from, $to, $amount);
+            $currency = new Currency();
+            $currency->from = $from;
+            $currency->to = $to;
+            $currency->rate = $rate;
+            $currency->save();
+        }
+        return $rate;
+    }
+
 
     function getExchangeRate($from, $to, $amount)
     {
+
         $client = new \GuzzleHttp\Client();
 
-        $response = $client->request('GET', 'https://currency-conversion-and-exchange-rates.p.rapidapi.com/convert?from='.$from.'&to='.$to.'&amount='.$amount, [
+        $response = $client->request('GET', 'https://currency-conversion-and-exchange-rates.p.rapidapi.com/convert?from=' . $from . '&to=' . $to . '&amount=' . $amount, [
             'headers' => [
                 'X-RapidAPI-Host' => 'currency-conversion-and-exchange-rates.p.rapidapi.com',
                 'X-RapidAPI-Key' => 'eb9ba2aa18msh85ccd247d114b7bp125ddfjsndcb93a58ed8f',
@@ -61,7 +110,29 @@ if (!function_exists('convertCurrency')) {
 
         $responseBody = $response->getBody()->getContents();
         $data = json_decode($responseBody, true);
-        $rate = $data['info']['rate'];
+        $rate = null;
+        if ($data['success'] == true) {
+            $rate = $data['info']['rate'];
+        }
+
         return $rate;
+    }
+
+    function subGetExchangeRate($from, $to, $amount)
+    {
+        $client = new \GuzzleHttp\Client();
+        $amount = 1;
+        $url = 'https://currency-converter-by-api-ninjas.p.rapidapi.com/v1/convertcurrency?have=' . $from . '&want=' . $to . '&amount=' . $amount;
+        $response = $client->request('GET', $url, [
+            'headers' => [
+                'X-RapidAPI-Host' => 'currency-converter-by-api-ninjas.p.rapidapi.com',
+                'X-RapidAPI-Key' => '317cde09cdmsh1e9ff616e329ff6p1b3edejsnacd94136c963',
+            ],
+        ]);
+        $item = $response->getBody();
+        $jsonData = $item->getContents();
+        $data = json_decode($jsonData, true);
+        $new_amount = $data['new_amount'];
+        return $new_amount;
     }
 }

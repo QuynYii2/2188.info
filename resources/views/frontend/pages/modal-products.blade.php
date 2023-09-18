@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="grid product">
+                <div class="grid product" style="border-bottom: 1px solid white">
                     <div class="column-xs-12 column-md-5">
                         <div class="product-gallery">
                             <div class="product-image">
@@ -47,7 +47,7 @@
                                 <span>Còn lại: </span>
                                 <label for="qty" id="qty"></label>
                             </div>
-                            <div class="d-flex buy justify-content-around">
+                            <div class="d-flex buy justify-content-center">
                                 <div>
                                     <input type="number" name="quantity" class="input" min="" value="" >
                                     <div class="spinner">

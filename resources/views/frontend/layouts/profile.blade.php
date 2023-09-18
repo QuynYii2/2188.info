@@ -11,21 +11,18 @@
     @php
         (new \App\Http\Controllers\Frontend\HomeController())->createStatistic();
     @endphp
-    @php
-
-    @endphp
     <style>
         body {
             background-color: #ebebeb;
         }
     </style>
 
-    <div class="container-fluid">
+    <div class="container-fluid pb-4 pt-3">
         <div class="row">
-            <div class="col-6 col-md-4 col-12 col-sm-12 col-lg-3">
+            <div class="col-2 col-md-4 col-sm-12 col-lg-2">
                 @include('frontend.pages.profile.side-bar')
             </div>
-            <div class="col-6 col-md-8 col-12 col-sm-12 col-lg-9">
+            <div class="col-10 col-md-8 col-sm-12 col-lg-10">
                 <div class="dropdown mobile-button">
                     <h6 style="text-align: center">{{ __('home.account of') }} <span style="font-size: 1.25rem">{{ ($user->name) }}</span></h6>
                     <div class="dropdown-content" style="width: 90vw">

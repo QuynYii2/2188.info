@@ -19,35 +19,27 @@
                         data-target="#exampleModal">{{ __('home.Quick view') }}</button>
             </div>
             <div class="text">
+                <div class="text-sale">
+                    {{ __('home.sales') }}
+                </div>
                 <div class="text-new">
-                    New
+                    {{ __('home.new') }}
                 </div>
             </div>
         </div>
     @endif
     <div class="item-body">
-        <div class="card-rating">
-            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-            <span>(1)</span>
-        </div>
         @php
             $nameSeller = DB::table('users')->where('id', $product->user_id)->first();
         @endphp
-        <div class="card-brand">
-            @if(Auth::check())
-                <a href="{{route('shop.information.show', $nameSeller->id)}}">{{($nameSeller->name)}}</a>
-            @else
-                <a class="check_url">{{($nameSeller->name)}}</a>
-            @endif
-{{--            <a href="{{route('shop.information.show', $nameSeller->id)}}">--}}
-{{--            {{($nameSeller->name)}}--}}
-{{--            </a>--}}
-        </div>
-        <div class="card-title">
+{{--        <div class="card-brand">--}}
+{{--            @if(Auth::check())--}}
+{{--                <a href="{{route('shop.information.show', $nameSeller->id)}}">{{($nameSeller->name)}}</a>--}}
+{{--            @else--}}
+{{--                <a class="check_url">{{($nameSeller->name)}}</a>--}}
+{{--            @endif--}}
+{{--        </div>--}}
+        <div class="card-title1">
             @if(Auth::check())
                 <a href="{{route('detail_product.show', $product->id)}}">
                     @if(locationHelper() == 'kr')
@@ -63,34 +55,43 @@
                     @endif
                 </a>
             @else
-                <a class="check_url">{{($product->name_ko)}}</a>
+                <a href="#">
+                    @if(locationHelper() == 'kr')
+                        {{ ($product->name_ko) }}
+                    @elseif(locationHelper() == 'cn')
+                        {{ ($product->name_zh) }}
+                    @elseif(locationHelper() == 'jp')
+                        {{ ($product->name_ja) }}
+                    @elseif(locationHelper() == 'vi')
+                        {{ ($product->name_vi) }}
+                    @else
+                        {{ ($product->name_en) }}
+                    @endif
+                </a>
             @endif
         </div>
-
         @if($product->price)
-            <div class="card-price d-flex justify-content-between">
+            <div class="card-price">
                 @if($product->price != null)
                     <div class="price-sale">
-                        <strong> {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strong>
+                        <strong> {{ number_format(convertCurrency($product->location, $currency,$product->price), 0, ',', '.') }} {{$currency}}</strong>
                     </div>
                     <div class="price-cost">
-                        <strike>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
+                        <strike>{{ number_format(convertCurrency($product->location, $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
                     </div>
                 @else
                     <div class="price-sale">
-                        <strong>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strong>
+                        <strong>{{ number_format(convertCurrency($product->location, $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strong>
                     </div>
                 @endif
             </div>
         @endif
-
-
         <div class="card-bottom d-flex justify-content-between">
             <div class="card-bottom--left">
                 @if(Auth::check())
                     <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
                 @else
-                    <a class="check_url">{{ __('home.Choose Options') }}</a>
+                    <a>{{ __('home.Choose Options') }}</a>
                 @endif
             </div>
             <div class="card-bottom--right " id-product="{{$product->id}}">

@@ -2,17 +2,17 @@
 @section('title', 'List Banner Setup')
 @section('content')
     <h3 class="text-center">List Banner Setup</h3>
-    <a href="{{ route('admin.banners.processCreate') }}" class="btn btn-success">Thêm mới</a>
+    <a href="{{ route('admin.banners.processCreate') }}" class="btn btn-success">{{ __('home.thêm mới') }}</a>
     <div class="card">
         <table class="table table-bordered">
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Thumbnails</th>
+                <th scope="col">{{ __('home.thumbnail') }}</th>
                 <th scope="col">Sub thumbnails</th>
-                <th scope="col">Status</th>
+                <th scope="col">{{ __('home.Status') }}</th>
                 <th scope="col">Details</th>
-                <th scope="col">Action</th>
+                <th scope="col">{{ __('home.Action') }}</th>
             </tr>
             </thead>
             <tbody>

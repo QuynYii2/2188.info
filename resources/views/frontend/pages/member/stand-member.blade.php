@@ -4,12 +4,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
     <style>
-        body{
-            background: #f5f5f5;
+        body {
+            background: #F5F5F5;
         }
-        .size{
+
+        .size {
             font-size: 17px;
         }
+
         :root {
             --color-white: #ffffff;
             --color-black: #000000;
@@ -50,7 +52,7 @@
             object-fit: cover;
         }
 
-        .modal-header{
+        .modal-header {
             border: none;
         }
 
@@ -64,7 +66,7 @@
             box-shadow: none;
         }
 
-        .modal-header{
+        .modal-header {
             padding-bottom: 0;
         }
     </style>
@@ -86,6 +88,8 @@
         @if($company)
             @php
                 $memberAccounts = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->get();
+                $companyPerson = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->first();
+                $oldUser = \App\Models\User::where('email', $companyPerson->email)->first();
                 if (!$memberAccounts->isEmpty()){
                   $products = \App\Models\Product::where(function ($query) use ($company, $memberAccounts){
                         if (count($memberAccounts) == 2){
@@ -111,45 +115,50 @@
             <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
             <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
             <div class="d-flex justify-content-between align-items-center p-3">
-                <a href="{{ route('stand.register.member.index', $company->id) }}" class="btn btn-primary">{{ __('home.Booth') }}</a>
-                <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">{{ __('home.Partner List') }}</a>
-                <a href="{{route('chat.message.received')}}" class="btn btn-primary">{{ __('home.Message received') }}</a>
-                <a href="{{route('chat.message.sent')}}" class="btn btn-warning">{{ __('home.Message sent') }}</a>
-                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
-                <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
+                <div>
+                    <a href=" @if($company->member == "LOGISTIC") {{ route('list.products.shop.show', $oldUser->id) }} @endif "
+                       class="btn btn-primary mr-2">{{ __('home.Booth') }}</a>
+                    <a href="{{route('partner.register.member.index')}}"
+                       class="btn btn-warning">{{ __('home.Partner List') }}</a>
+                </div>
+                <div>
+                    <a href="{{route('chat.message.received')}}"
+                       class="btn btn-primary mr-2">{{ __('home.Message received') }}</a>
+                    <a href="{{route('chat.message.sent')}}" style=""
+                       class="btn btn-primary mr-2">{{ __('home.Message sent') }}</a>
+                    <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
+                       data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
+                    <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
+                       data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
+                </div>
             </div>
             <div class="row m-0">
                 <div class="col-md-6 border">
                     <div class="row">
-                        <div class="col-md-12 border">
-                            <div class="mb-3">
-                                @if(locationHelper() == 'kr')
-                                    {{ ($company->name_ko) }}
-                                @elseif(locationHelper() == 'cn')
-                                    {{ ($company->name_zh) }}
-                                @elseif(locationHelper() == 'jp')
-                                    {{ ($company->name_ja) }}
-                                @elseif(locationHelper() == 'vi')
-                                    {{ ($company->name_vi) }}
-                                @else
-                                    {{ ($company->name_en) }}
-                                @endif
+                        <div class="col-md-12 border" style="border-right: 1px solid white!important">
+                            <div class="mt-2">
+                                <h5 class="mb-3">
+                                    {{ ($company->name) }}
+                                </h5>
                             </div>
                         </div>
                         <div class="row p-2">
                             <div class="col-md-6">
                                 <div class="mt-2">
-                                    <div class="mb-3 size"><b>{{ __('home.Company code') }}: </b> {{ ($company->code_business) }}</div>
+                                    <div class="mb-3 size"><b>{{ __('home.Company code') }}
+                                            : </b> {{ ($company->code_business) }}</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mt-2">
-                                    <div class="mb-3 size"><b>{{ __('home.Elite enterprise') }}: </b> {{ ($company->member) }}</div>
+                                    <div class="mb-3 size"><b>{{ __('home.Elite enterprise') }}
+                                            : </b> {{ ($company->member) }}</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mt-2">
-                                    <div class="mb-3 size"><b>{{ __('home.Membership classification') }}: </b> {{ ($company->member) }}</div>
+                                    <div class="mb-3 size"><b>{{ __('home.Membership classification') }}
+                                            : </b> {{ ($company->member) }}</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -162,7 +171,7 @@
                 </div>
                 <div class="col-md-6 border">
                     <div class="row">
-                        <div class="col-md-12 border">
+                        <div class="col-md-12 border" style="border-left: 1px solid white!important">
                             <div class="mt-2">
                                 <h5 class="mb-3">{{ __('home.Specified products') }}</h5>
                             </div>
@@ -214,19 +223,19 @@
                                ['status', \App\Enums\MemberPartnerStatus::ACTIVE],
                              ])->first();
                         }
-                        @endphp
-                        @if(!$oldItem)
-                            @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
-                                <form method="post" action="{{route('stands.register.member')}}" hidden>
-                                    @csrf
-                                    <input type="text" name="company_id_source" class="d-none" value="{{$company->id}}">
-                                    <input type="text" name="price" class="d-none" value="{{$firstProduct->price ?? ''}}">
-                                    <button class="btn btn-primary" id="btnFollow" type="submit">
-                                        Follow
-                                    </button>
-                                </form>
-                            @endif
+                    @endphp
+                    @if(!$oldItem)
+                        @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
+                            <form method="post" action="{{route('stands.register.member')}}" hidden>
+                                @csrf
+                                <input type="text" name="company_id_source" class="d-none" value="{{$company->id}}">
+                                <input type="text" name="price" class="d-none" value="{{$firstProduct->price ?? ''}}">
+                                <button class="btn btn-primary" id="btnFollow" type="submit">
+                                    Follow
+                                </button>
+                            </form>
                         @endif
+                    @endif
                 </div>
             </div>
     </div>
@@ -246,7 +255,7 @@
                                         {{ ($product->name_en) }}
                                     @endif
                          ">
-                <div class="standsMember-item section"  style="background-color: white">
+                <div class="standsMember-item section" style="background-color: white">
                     <img data-id="{{$product->id}}"
                          src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
                          class="thumbnailProduct" data-value="{{$product}}"
@@ -271,7 +280,7 @@
                         </div>
                         <div class="card-title text-left">
                             @if(Auth::check())
-                                <a href="{{route('detail_product.show', $product->id)}}">
+                                <a>
                                     @if(locationHelper() == 'kr')
                                         {{ ($product->name_ko) }}
                                     @elseif(locationHelper() == 'cn')
@@ -285,7 +294,7 @@
                                     @endif
                                 </a>
                             @else
-                                <a class="check_url">
+                                <a>
                                     @if(locationHelper() == 'kr')
                                         {{ ($product->name_ko) }}
                                     @elseif(locationHelper() == 'cn')
@@ -319,7 +328,7 @@
                                 @endif
                             </div>
                         @endif
-                        <div class="card-bottom--left">
+                        <div class="card-bottom--left" hidden="">
                             @if(Auth::check())
                                 <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
                             @else
@@ -409,11 +418,6 @@
                                             @endforeach
                                         @endif
                                     </div>
-                                    <button id="btnViewAttribute" data-id="{{$firstProduct->id}}" type="button"
-                                            class="btn" data-toggle="modal"
-                                            data-target="#modal-show-att">
-                                        {{ __('home.Xem thuộc tính') }}
-                                    </button>
                                 </div>
 
                                 <h6 class="text-center mt-2">{{ __('home.Xem chi tiết các hình ảnh khác') }}</h6>
@@ -461,7 +465,8 @@
                                             <tr>
                                                 <td>{{$price_sale->quantity}}</td>
                                                 <td>{{($prises - ($prises * $discount / 100)) * $quantity}}</td>
-                                                <td class="2323" ></td>{{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
+                                                <td class="2323"></td>
+                                                {{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
                                             </tr>
                                         @endforeach
                                     @endif
@@ -485,7 +490,8 @@
 
                                 @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
                                     <button class="btn btn-success partnerBtn float-right" id="partnerBtn"
-                                            data-value="{{ $firstProduct->id }}" data-count="100">{{ __('home.Tiếp nhận đặt hàng') }}
+                                            data-value="{{ $firstProduct->id }}"
+                                            data-count="100">{{ __('home.Tiếp nhận đặt hàng') }}
                                     </button>
                                 @endif
                             </div>
@@ -579,9 +585,9 @@
                 </div>
                 <div id="body-modal-att"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="selectAttProduct()">
-                        Lưu
+                        {{ __('home.Save') }}
                     </button>
                 </div>
             </div>

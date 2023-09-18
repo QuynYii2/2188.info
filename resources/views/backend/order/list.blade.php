@@ -3,12 +3,12 @@
 @section('content')
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title">Đơn hàng</h5>
+            <h5 class="card-title">{{ __('home.Đơn hàng') }}</h5>
         </div>
         <form action="{{ route('seller.search.order.list') }}" class="row my-2 pl-3">
             @csrf
             <div class="col-sm-2">
-                <input placeholder="Full Name" type="text" class="form-control" id="fullName" name="fullName"
+                <input placeholder={{ __('home.full name') }} type="text" class="form-control" id="fullName" name="fullName"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
@@ -20,15 +20,15 @@
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <input placeholder="Từ ngày" type="date" class="form-control" id="from-date" name="from-date"
+                <input placeholder={{ __('home.từ ngày') }}"" type="date" class="form-control" id="from-date" name="from-date"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <input placeholder="Đến ngày" type="date" class="form-control" id="to-date" name="to-date"
+                <input placeholder={{ __('home.đến ngày') }} type="date" class="form-control" id="to-date" name="to-date"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <button type="submit" class="btn btn-success position-absolute" style="bottom: 0">Search</button>
+                <button type="submit" class="btn btn-success position-absolute" style="bottom: 0">{{ __('home.search') }}</button>
             </div>
         </form>
         <form action="{{ route('order.manage.export.excel') }}" class="pl-3" method="post" id="formExportAll">
@@ -71,7 +71,10 @@
                                 {{$loop->index+1}}
                             </th>
                             <td>
-                                {{$order->fullname}}
+                                @php
+                                    $ld = new \App\Http\Controllers\TranslateController();
+                                @endphp
+                                {{ $ld->translateText($order->fullname, locationPermissionHelper()) }}
                             </td>
                             <td>
                                 {{$order->phone}}
@@ -83,7 +86,10 @@
                                 {{$order->total}}
                             </td>
                             <td>
-                                {{$order->status}}
+                                @php
+                                    $ld = new \App\Http\Controllers\TranslateController();
+                                @endphp
+                                {{ $ld->translateText($order->status, locationPermissionHelper()) }}
                             </td>
                             <td>
                                 <a href="{{route('seller.order.detail', $order->id)}}"

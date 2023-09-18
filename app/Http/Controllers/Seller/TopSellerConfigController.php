@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Seller;
 
+use App\Enums\CategoryStatus;
 use App\Enums\CoinStatus;
 use App\Enums\OrderMethod;
 use App\Enums\OrderStatus;
@@ -20,15 +21,17 @@ use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class TopSellerConfigController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+
+        (new HomeController())->getLocale($request);
         $configs = TopSellerConfig::where('user_id', Auth::user()->id)->get();
         return view('backend.top-seller-config.list', compact('configs'));
     }
 
     public function processCreate()
     {
-        $categories = Category::all();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $reflector = new \ReflectionClass('App\Enums\TopSellerConfigLocation');
         $options = $reflector->getConstants();
         return view('backend.top-seller-config.create', compact('categories', 'options'));
@@ -36,6 +39,7 @@ class TopSellerConfigController extends Controller
 
     public function create(Request $request)
     {
+        (new HomeController())->getLocale($request);
         try {
             $arrayProduct = $request->input('arrayProduct');
             $listProduct = implode(',', $arrayProduct);
@@ -73,8 +77,9 @@ class TopSellerConfigController extends Controller
         }
     }
 
-    public function delete($id)
+    public function delete(Request $request,$id)
     {
+        (new HomeController())->getLocale($request);
         try {
             TopSellerConfig::where('id', $id)->delete();
             alert()->success('Success', 'Delete success!');

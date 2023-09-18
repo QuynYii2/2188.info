@@ -329,7 +329,7 @@
 
 <button type="button" class="btn btn-primary" data-toggle="modal"
         data-target="#galleryModal" id="button-open-modal">
-    Chọn ảnh
+    {{ __('home.Chọn ảnh') }}
 </button>
 
 <div class="modal fade" id="galleryModal" style="z-index: 99999; display: none" tabindex="-1"
@@ -337,7 +337,7 @@
     <div class="modal-dialog h-100" style="max-width: 60%; max-height: 80%">
         <div class="modal-content h-100">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Modal title') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -346,12 +346,12 @@
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="upload-tab" data-toggle="tab" data-target="#upload-media"
-                                type="button" role="tab" aria-controls="home" aria-selected="true">Upload File
+                                type="button" role="tab" aria-controls="home" aria-selected="true">{{ __('home.Upload File') }}
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="media-tab" data-toggle="tab" data-target="#list-media"
-                                type="button" role="tab" aria-controls="profile" aria-selected="false">Media
+                                type="button" role="tab" aria-controls="profile" aria-selected="false">{{ __('home.Media') }}
                         </button>
                     </li>
                 </ul>
@@ -370,11 +370,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="choseImageToUse(1)">Chọn
-                    làm ảnh Thumbnail
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="choseImageToUse(1)">{{ __('home.Chọn làm ảnh Thumbnail') }}
                 </button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="choseImageToUse(2)">Chọn làm
-                    ảnh Gallery
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="choseImageToUse(2)">{{ __('home.Chọn làm ảnh Gallery') }}
                 </button>
             </div>
         </div>

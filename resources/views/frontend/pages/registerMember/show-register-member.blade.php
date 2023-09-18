@@ -12,89 +12,82 @@
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <div class="start-page mb-3">
         <div class="background container-fluid pt-3 justify-content-center pb-3">
-            <div class="row card border">
-                <div class="form-title text-center pt-2">
-                    <div class="title">{{ __('home.sign up member') }}</div>
+            <div class="form-title text-center">
+                <h3>{{ __('home.sign up member') }}</h3>
+            </div>
+            <div class="mt-3">
+                <div class="text-center mb-4">
+                    {{ __('home.Agree to the terms and conditions of the member') }} {{$member->name}}
                 </div>
-                <div class="mt-5">
-                    <div class="card border">
-                        <h3 class="text-center">
-                            {{ __('home.Agree to the terms and conditions of the member') }} {{$member->name}}
-                        </h3>
-                        <div class="row ml-3 mr-3">
-                            <div class="col-md-6 border">
-                                <h5 class="text-center">{{ __('home.Check the rules you must agree to below') }}</h5>
-                                <div class="rules" onclick="validateAll()">
-                                    <p class="text-warning">
-                                        {{ __('home.Agree to the terms and conditions that we provide') }}
-                                    </p>
-                                    <input type="checkbox" id="rules" name="rules" required>
-                                    <label for="rules"> {{ __('home.Trust') }}</label><br>
-                                </div>
-                                <div class="getInfo" onclick="validateAll()">
-                                    <p class="text-warning">
-                                        {{ __('home.Permission to collect information') }}
-                                    </p>
-                                    <input type="checkbox" id="getInfo" name="getInfo" required>
-                                    <label for="getInfo"> {{ __('home.Trust') }}</label><br>
-                                </div>
-                                <div class="all" onclick="validate()">
-                                    <p class="text-warning">
-                                        {{ __('home.Agree all') }}
-                                    </p>
-                                    <input type="checkbox" id="all" name="all">
-                                    <label for="all"> {{ __('home.all') }}</label><br>
-                                </div>
-                            </div>
-                            <div class="col-md-6 border">
-                                <h5 class="text-center">{{ __('home.Main function only for members') }}</h5>
-                                @php
-                                    $listPermissionID = $member->permission_id;
-                                    $arrayPermissionID = null;
-                                    if ($listPermissionID){
-                                        $arrayPermissionID = explode(',', $listPermissionID);
-                                    }
-                                @endphp
-                                <ol class="text-success">
-                                    @if($arrayPermissionID)
-                                        @foreach($arrayPermissionID as $permissionID)
-                                            <li>
-
-                                                @php
-                                                    $permission = \App\Models\Permission::find($permissionID);
-                                                    $ld = new \App\Http\Controllers\TranslateController();
-                                                @endphp
-                                                {{ $ld->translateText($permission->name, locationPermissionHelper()) }}
-                                            </li>
-                                        @endforeach
-                                    @endif
-                                </ol>
-                            </div>
+                <div class="row ml-3 mr-3">
+                    <div class="col-md-6 border pt-4">
+                        <h5 class="text-center">{{ __('home.Check the rules you must agree to below') }}</h5>
+                        <div class="rules" onclick="validateAll()">
+                            <p class="text-warning">
+                                {{ __('home.Agree to Terms') }}
+                            </p>
+                            <input type="checkbox" id="rules" name="rules" required>
+                            <label for="rules">  {{ __('home.I agree to the above Terms') }}</label><br>
                         </div>
-                        <input type="text" hidden="" id="price" name="price"
-                               value="0">
-                        <p class="bg-success full-width p-3 ml-3 mr-3"></p>
-                        <div class="mt-3 mb-3">
-                            <h5 class="text-center">
-                                {{ __('home.Join member') }} {{$member->name}}
-                                <p class="text-danger text-center">{{ __('home.Price') }}:
-                                    ${{$member->price}}</p>
-                            </h5>
+                        <div class="getInfo" onclick="validateAll()">
+                            <p class="text-warning">
+                                {{ __('home.Agree to the Information Collection Policy') }}
+                            </p>
+                            <input type="checkbox" id="getInfo" name="getInfo" required>
+                            <label for="getInfo"> {{ __('home.I agree to the above Terms') }}</label><br>
                         </div>
-                        <div class="row text-center">
-                            <div class="col-md-6">
-                            </div>
-                            <div class="col-md-6">
-                                <a href="{{route('show.register.member.info', $member->id)}}"
-                                   id="register" class="d-none btn btn-success mr-3">
-                                    {{ __('home.sign up') }}
-                                </a>
-                                <button id="register-btn" class="btn-hidden btn btn-secondary mr-3">
-                                    {{ __('home.sign up') }}
-                                </button>
-                            </div>
+                        <div class="trustInfo" onclick="validateAll()">
+                            <p class="text-warning">
+                                {{ __('home.Agree to the Terms of Information Use') }}
+                            </p>
+                            <input type="checkbox" id="trustInfo" name="trustInfo" required>
+                            <label for="getInfo"> {{ __('home.I agree to the above Terms') }}</label><br>
                         </div>
-                        <p class="bg-success mt-3 full-width p-3 ml-3 mr-3"></p>
+                        <div class="all" onclick="validate()">
+                            <p class="text-warning">
+                                {{ __('home.Agree all') }}
+                            </p>
+                            <input type="checkbox" id="all" name="all">
+                            <label for="all"> {{ __('home.all') }}</label><br>
+                        </div>
+                    </div>
+                    <div class="col-md-6 border pt-4">
+                        <h5 class="text-center">{{ __('home.Main function only for members') }}</h5>
+                        @php
+                            $listPermissionID = $member->permission_id;
+                            $arrayPermissionID = null;
+                            if ($listPermissionID){
+                                $arrayPermissionID = explode(',', $listPermissionID);
+                            }
+                        @endphp
+                        <ol class="text-success">
+                            <li>{{__('home.permission_one')}}</li>
+                            <li>{{__('home.permission_two')}}</li>
+                            <li>{{__('home.permission_there')}}</li>
+                        </ol>
+                    </div>
+                </div>
+                <input type="text" hidden="" id="price" name="price"
+                       value="0">
+                <p class="bg-success full-width p-3 ml-3 mr-3"></p>
+                <div class="mt-3 mb-3">
+                    <h5 class="text-center">
+                        {{ __('home.Join member') }} {{$member->name}}
+                        <p class="text-danger text-center">{{ __('home.Price') }}:
+                            ${{$member->price}}</p>
+                    </h5>
+                </div>
+                <div class="row text-center">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{{route('show.register.member.info', $member->id)}}"
+                           id="register" class="d-none btn btn-success mr-3">
+                            {{ __('home.sign up') }}
+                        </a>
+                        <button id="register-btn" class="btn-hidden btn btn-secondary mr-3">
+                            {{ __('home.sign up') }}
+                        </button>
                     </div>
                 </div>
             </div>
@@ -108,9 +101,11 @@
         if (all.checked) {
             document.getElementById("rules").checked = true;
             document.getElementById("getInfo").checked = true;
+            document.getElementById("trustInfo").checked = true;
         } else {
             document.getElementById("rules").checked = false;
             document.getElementById("getInfo").checked = false;
+            document.getElementById("trustInfo").checked = false;
         }
 
         toggle();
@@ -120,7 +115,8 @@
         var all = document.getElementById("all");
         var rules = document.getElementById("rules");
         var getInfo = document.getElementById("getInfo");
-        all.checked = !!(rules.checked && getInfo.checked);
+        var trustInfo = document.getElementById("trustInfo");
+        all.checked = !!(rules.checked && getInfo.checked && trustInfo.checked);
 
         toggle();
     }

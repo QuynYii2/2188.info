@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\NotificationStatus;
 use App\Enums\PermissionUserStatus;
 use App\Enums\TimeLevelStatus;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Libraries\GeoIP;
 use App\Models\Category;
 use App\Models\Notification;
@@ -29,7 +30,7 @@ class UserController extends Controller
 {
     public function store(Request $request)
     {
-
+        (new HomeController())->getLocale($request);
         $ipAddress = $request->ip();
         $validator = Validator::make($request->all(), []);
         $geoIp = new GeoIP();
@@ -252,6 +253,7 @@ class UserController extends Controller
 
     public function changePassword(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $oldPassword = Auth::user()->password;
         $currentPassword = $request->input('current-password');
         $check = Hash::check($currentPassword, $oldPassword);
@@ -277,6 +279,7 @@ class UserController extends Controller
 
     public function changeEmail(Request $request)
     {
+        (new HomeController())->getLocale($request);
         try {
             $user = Auth::user();
             $email = $request->input('edit-email');
@@ -302,6 +305,7 @@ class UserController extends Controller
 
     public function changePhoneNumber(Request $request)
     {
+        (new HomeController())->getLocale($request);
         try {
             $user = Auth::user();
             $user->phone = $request->input('edit-phone');
@@ -319,6 +323,7 @@ class UserController extends Controller
 
     public function updateInfo(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $user = Auth::user();
         $listParam = $request->input();
 
@@ -346,8 +351,9 @@ class UserController extends Controller
 
     }
 
-    public function myVoucher()
+    public function myVoucher(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $listVouchers = Voucher::all();
         $sellerIds = DB::table('role_user')->where('role_id', '=', '2')->get(); // Lấy tất cả ca user_id là seller trong bảng role_user
         $adminIds = DB::table('role_user')->where('role_id', '=', '1')->get(); // Lấy tất cả ca user_id là admin  trong bảng role_user

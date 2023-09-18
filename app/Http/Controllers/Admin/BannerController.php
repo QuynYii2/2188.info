@@ -4,24 +4,28 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\BannerStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Banner;
 use Illuminate\Http\Request;
 
 class BannerController extends Controller
 {
-    public function index()
+    public function index( Request $request)
     {
+        (new HomeController())->getLocale($request);
         $banners = Banner::where('status', '!=', BannerStatus::DELETED)->get();
         return view('admin.banner.list', compact('banners'));
     }
 
-    public function processCreate()
+    public function processCreate( Request $request)
     {
+        (new HomeController())->getLocale($request);
         return view('admin.banner.create');
     }
 
     public function create(Request $request)
     {
+        (new HomeController())->getLocale($request);
         try {
             $item = new Banner();
             $arrayThumbnails = null;
@@ -58,8 +62,9 @@ class BannerController extends Controller
         }
     }
 
-    public function update($id)
+    public function update( Request $request,$id)
     {
+        (new HomeController())->getLocale($request);
         try {
             $banner = Banner::find($id);
             if (!$banner || $banner->status == BannerStatus::DELETED) {
@@ -79,8 +84,9 @@ class BannerController extends Controller
         }
     }
 
-    public function delete($id)
+    public function delete( Request $request,$id)
     {
+        (new HomeController())->getLocale($request);
         try {
             $banner = Banner::find($id);
             if (!$banner || $banner->status == BannerStatus::DELETED) {

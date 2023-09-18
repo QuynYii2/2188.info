@@ -16,35 +16,49 @@
             <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/category-banner-top-layout-2.jpg"
                  alt="">
             <div class="category-name">
-                ELECTRONICS
+                @if(locationHelper() == 'kr')
+                    {{ ($category->name_ko) }}
+                @elseif(locationHelper() == 'cn')
+                    {{ ($category->name_zh) }}
+                @elseif(locationHelper() == 'jp')
+                    {{ ($category->name_ja) }}
+                @elseif(locationHelper() == 'vi')
+                    {{ ($category->name_vi) }}
+                @else
+                    {{ ($category->name_en) }}
+                @endif
             </div>
+            <div class="breadcrumbs">
+{{--                {!! getBreadcrumbs('category', $category) !!}--}}
+            </div>
+
         </div>
-{{--        <section class="section container-fluid">--}}
-{{--            <div class="content">{{ __('home.Jump to') }}:</div>--}}
-{{--            <div class="swiper CategoriesOne category-item">--}}
-{{--                <div class="swiper-wrapper">--}}
-{{--                    @php--}}
-{{--                        $listCate = DB::table('categories')->where('parent_id', null)->get();--}}
-{{--                    @endphp--}}
-{{--                    @foreach($listCate as $cate)--}}
-{{--                        <div class="swiper-slide">--}}
-{{--                            <a href="{{ route('category.show', $cate->id) }}">--}}
-{{--                                <div class="img">--}}
-{{--                                    <img src="{{ asset('storage/' . $cate->thumbnail) }}"--}}
-{{--                                         alt="">--}}
-{{--                                </div>--}}
-{{--                                <div class="text">--}}
-{{--                                    {{($cate->{'name' . $langDisplay->getLangDisplay()})}}--}}
-{{--                                </div>--}}
-{{--                            </a>--}}
-{{--                        </div>--}}
-{{--                    @endforeach--}}
-{{--                </div>--}}
-{{--                <div class="swiper-button-next"></div>--}}
-{{--                <div class="swiper-button-prev"></div>--}}
-{{--                <div class="swiper-pagination"></div>--}}
-{{--            </div>--}}
-{{--        </section>--}}
+        <section class="section container-fluid">
+            <div class="content">{{ __('home.Jump to') }}:</div>
+            <div class="swiper CategoriesOne category-item">
+                <div class="swiper-wrapper">
+                    @php
+                        $listCate = DB::table('categories')->where('parent_id', null)->get();
+                    @endphp
+                    @foreach($childCategories as $cate)
+                        <div class="swiper-slide">
+                            <a href="{{ route('category.show', $cate->id) }}">
+                                <div class="img">
+                                    <img src="{{ asset('storage/' . $cate->thumbnail) }}"
+                                         alt="">
+                                </div>
+                                <div class="text">
+                                    {{($cate->{'name' . $langDisplay->getLangDisplay()})}}
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
         <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
         <div class="category-header align-items-center mt-4 mb-3 container-fluid d-flex justify-content-between">
             <div class="category-header--left">
@@ -71,150 +85,16 @@
                         <option value="price desc">{{ __('home.Price: Descending') }}</option>
                     </select>
                 </div>
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item layout-horizontal">
-                        <a class="nav-link active" data-toggle="tab" href="#home"><i class="fa-solid fa-grip"></i></a>
-                    </li>
-                    <li class="nav-item layout-vertical">
-                        <a class="nav-link" data-toggle="tab" href="#menu1"><i class="fa-solid fa-list"></i></a>
-                    </li>
-                </ul>
             </div>
         </div>
         <div class="category-body container-fluid">
-{{--            <div class="row">--}}
-{{--                <div class="col-xl-2 category-body-left">--}}
-{{--                    <div class="content">{{ __('home.PAYMENT METHODS') }}</div>--}}
-{{--                    @foreach($listPayment as $payment)--}}
-{{--                        <div class="OptionContainer">--}}
-{{--                            <div class="OptionHead">--}}
-{{--                                <input type="checkbox" class="payment-checkbox" value="{{ $payment->id }}">{{(($payment->name))}}--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    @endforeach--}}
-{{--                    <hr>--}}
-{{--                    <div class="content">{{ __('home.SHIPPING METHODS') }}</div>--}}
-{{--                    @foreach($listTransport as $transport)--}}
-{{--                        <div class="OptionContainer">--}}
-{{--                            <div class="OptionHead">--}}
-{{--                                <input type="checkbox" class="transport-checkbox"--}}
-{{--                                       value="{{ $transport->id }}">{{ ($transport->name) }}--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    @endforeach--}}
-{{--                    <div class="MenuContainer"></div>--}}
-{{--                    <hr>--}}
-{{--                    <input type="checkbox" class="mr-2" value="" id="check_sale" onchange="checkSale(this)">{{ __('home.Products on sale') }}--}}
-{{--                    <hr>--}}
-{{--                    <div class="content">{{ __('home.PRICE') }}</div>--}}
-{{--                    <div class="category-price">--}}
-{{--                        <div class="wrapper">--}}
-{{--                            <div class="price-input d-flex">--}}
-{{--                                <div class="field">--}}
-{{--                                    <div>{{ __('home.Min') }}</div>--}}
-{{--                                    <input type="number" class="input-min" id="price-min" value="0">--}}
-{{--                                </div>--}}
-{{--                                <div class="separator">-</div>--}}
-{{--                                <div class="field">--}}
-{{--                                    <div>{{ __('home.Max') }}</div>--}}
-{{--                                    <input type="number" class="input-max" id="price-max" value="{{ $priceProductOfCategory->maxPrice }}">--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <div class="slider">--}}
-{{--                                <div class="progress"></div>--}}
-{{--                            </div>--}}
-{{--                            <div class="range-input">--}}
-{{--                                <input type="range" class="range-min" min="0" max="{{ $priceProductOfCategory->maxPrice }}" value="0" step="1">--}}
-{{--                                <input type="range" class="range-max" min="0" max="{{ $priceProductOfCategory->maxPrice }}" value="{{ $priceProductOfCategory->maxPrice }}" step="1">--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                    <hr>--}}
-{{--                    <div class="content">{{ __('home.ORIGIN') }}</div>--}}
-{{--                    <input type="text" value="" class="w-100" id="search-origin" onchange="searchOrigin(this)" >{{ __('home.Products by origin') }}--}}
-
-{{--                </div>--}}
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <div id="home" class="tab-pane active "><br>
-                        <div class="row" id="renderProduct">
-                            @foreach($listProduct as $product)
-                                <div class="col-xl-2 col-md-3 col-6 section mb-4">
-                                    @include('frontend.pages.list-product')
-                                </div>
-                            @endforeach
-                        </div>
+            <div class="row" id="renderProduct">
+                @foreach($listProduct as $product)
+                    <div class="col-xl-2 col-md-3 col-6 section mb-4">
+                        @include('frontend.pages.list-product')
                     </div>
-                    <div id="menu1" class="tab-pane fade"><br>
-                        @foreach($listProduct as $product)
-                            <div class="mt-3 category-list section">
-                                <div class="item row">
-                                    <div class="item-img col-md-3 col-5">
-                                        <img src="{{ asset('storage/' . $product->thumbnail) }}"
-                                             alt="">
-                                        <div class="button-view">
-                                            <button type="button" class="btn view_modal" data-toggle="modal"
-                                                    data-value="{{$product}}"
-                                                    data-target="#exampleModal">{{ __('home.Quick view') }}</button>
-                                        </div>
-                                        <div class="text">
-                                            <div class="text-sale">
-                                                Sale
-                                            </div>
-                                            <div class="text-new">
-                                                New
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item-body col-md-9 col-7">
-                                        <div class="card-rating">
-                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                            <span>(1)</span>
-                                        </div>
-                                        @php
-                                            $namenewProduct = DB::table('users')->where('id', $product->user_id)->first();
-                                        @endphp
-                                        <div class="card-brand">
-                                            {{($namenewProduct->name)}}
-                                        </div>
-                                        <div class="card-title-list">
-                                            <a href="{{route('detail_product.show', $product->id)}}">{{  ($product->name)}}</a>
-                                        </div>
-                                        <div class="card-price d-flex">
-                                            @if($product->price)
-                                                <div class="card-price d-flex justify-content-between">
-                                                    @if($product->price != null)
-                                                        <div id="productPrice" class="price">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</div>
-                                                        <strike id="productOldPrice">{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
-                                                    @else
-                                                        <strike id="productOldPrice">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strike>
-                                                    @endif
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <div class="card-desc">
-                                            {{ $product->description }}
-                                        </div>
-                                        <div class="card-bottom d-flex mt-3">
-                                            <div class="card-bottom--left mr-4">
-                                                <a href="{{route('detail_product.show', $product->id)}}">Choose
-                                                    Options</a>
-                                            </div>
-                                            <div class="card-bottom--right">
-                                                <i class="item-icon fa-regular fa-heart"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-{{--            </div>--}}
+                @endforeach
+            </div>
         </div>
     </div>
     @include('frontend.pages.modal-products')

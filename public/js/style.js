@@ -209,6 +209,72 @@ new Swiper(".HotDeals", {
     keyboard: true,
 });
 
+new Swiper(".advertisementBanner",{
+    pagination: {
+        el: ".swiper-pagination",
+        dynamicBullets: true,
+    },
+});
+
+new Swiper(".swipertopSearch", {
+    slidesPerView: 5,
+    spaceBetween: 30,
+    breakpoints: {
+        300: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+        },
+        600: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+        },
+        900: {
+            slidesPerView: 5,
+            spaceBetween: 10,
+        },
+    },
+    pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+},
+});
+
+new Swiper(".secondrightSwiper",{
+    slidesPerView: 4,
+    grid: {
+        rows: 2,
+    },
+    spaceBetween: 10,
+    pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+    },
+});
+
+new Swiper(".HotDeal", {
+    cssMode: true,
+    navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+    },
+    breakpoints: {
+        300: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+        },
+        600: {
+            slidesPerView: 5,
+            spaceBetween: 10,
+        },
+        900: {
+            slidesPerView: 6,
+            spaceBetween: 10,
+        },
+    },
+    mousewheel: true,
+    keyboard: true,
+});
+
 new Swiper(".listProduct", {
     slidesPerView: 5,
     spaceBetween: 40,

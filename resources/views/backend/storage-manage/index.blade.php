@@ -153,32 +153,32 @@
     <div class="container-fluid">
 
         {{--        <a href="{{ route('storage.manage.export.pdf') }}"><button>Pdf</button></a>--}}
-        <h2>                                                Quản lý kho hàng</h2>
+        <h2>{{ __('home.quản lý kho hàng') }}</h2>
 
         <form action="{{ route('storage.manage.search') }}" class="row my-2 ">
             @csrf
             <div class="col-sm-2">
-                <input placeholder="Tên sản phẩm" type="text" class="form-control" id="name-search" name="name-search"
+                <input placeholder={{ __('home.Tên sản phẩm') }} type="text" class="form-control" id="name-search" name="name-search"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <input placeholder="Giá bán" type="number" class="form-control" id="price-search" name="price-search"
+                <input placeholder={{ __('home.Giá bán') }} type="number" class="form-control" id="price-search" name="price-search"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <input placeholder="Xuất xứ" type="text" class="form-control" id="origin-search" name="origin-search"
+                <input placeholder={{ __('home.Xuất xứ') }} type="text" class="form-control" id="origin-search" name="origin-search"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <input placeholder="Từ ngày" type="date" class="form-control" id="from-date" name="from-date"
+                <input placeholder={{ __('home.từ ngày') }} type="date" class="form-control" id="from-date" name="from-date"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <input placeholder="Đến ngày" type="date" class="form-control" id="to-date" name="to-date"
+                <input placeholder={{ __('home.đến ngày') }} type="date" class="form-control" id="to-date" name="to-date"
                        data-date-split-input="true">
             </div>
             <div class="col-sm-2">
-                <button type="submit" class="btn btn-success position-absolute" style="bottom: 0">Search</button>
+                <button type="submit" class="btn btn-success position-absolute" style="bottom: 0">{{ __('home.search') }}</button>
             </div>
         </form>
         <form action="{{ route('storage.manage.export.excel') }}" method="post">
@@ -190,13 +190,13 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>Tên sản phẩm</th>
-                <th>Giá bán</th>
-                <th>Số lượng</th>
-                <th>Xuất xứ</th>
-                <th>Người nhập kho</th>
-                <th>Ngày nhập kho</th>
-                <th>Hành động</th>
+                <th>{{ __('home.Tên sản phẩm') }}</th>
+                <th>{{ __('home.Giá bán') }}</th>
+                <th>{{ __('home.Số lượng') }}</th>
+                <th>{{ __('home.Xuất xứ') }}</th>
+                <th>{{ __('home.người nhập kho') }}</th>
+                <th>{{ __('home.ngày nhập kho') }}</th>
+                <th>{{ __('home.hành động') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -206,10 +206,19 @@
                 @endphp
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $storage->name }}</td>
+                    <td>
+                        @php
+                            $ld = new \App\Http\Controllers\TranslateController();
+                        @endphp
+                        {{ $ld->translateText($storage->name, locationPermissionHelper()) }}
+                    </td>
                     <td>{{ $storage->price }}</td>
                     <td>{{ $storage->quantity }}</td>
-                    <td>{{ $storage->origin }}</td>
+                    <td>
+                        @php
+                        @endphp
+                        {{ $ld->translateText($storage->origin, locationPermissionHelper()) }}
+                       </td>
                     <td>{{ $username === null ? "" : $storage->create_by. ' - ' . $username->name }}</td>
                     <td>{{ $storage->created_at }}</td>
                     <td class="">

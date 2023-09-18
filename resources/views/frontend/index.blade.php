@@ -12,7 +12,24 @@
             .col-xl-8{
                 max-width: 72%;
             }
+        }
+        .swiper {
+            width: 100%;
+            height: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
+        .swiper-slide1 {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            height: calc((100% - 30px) / 2) !important;
+
+            /* Center slide text vertically */
+            display: grid;
+            justify-content: center;
+            align-items: center;
         }
     </style>
     @php
@@ -23,95 +40,95 @@
     <div class="body" id="body-content">
         <section class="section-First pt-3 pb-3 container-fluid">
             <div class="row m-0">
-                <div class="section-First-left section-First-hd col-xl-2 col-12">
-                    <span class="content">{{ __('home.SHOP BY CATEGORIES') }}</span>
-                    <hr>
-                    <div class="row list">
-                        @php
-                            $listCate = DB::table('categories')->where('parent_id', null)->get();
-                            $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
-                        @endphp
-                        @if(count($listCate)>10)
-                            @for($i =0; $i <10; $i ++)
-                                <div class="col-lg-6 item item-left text-center">
-                                    @if(Auth::check())
-                                        <a href="{{ route('category.show', $listCate[$i]->id) }}">
-                                            <div class="text">
-                                                @if(locationHelper() == 'kr')
-                                                    <div class="text">{{ $listCate[$i]->name_ko }}</div>
-                                                @elseif(locationHelper() == 'cn')
-                                                    <div class="text">{{$listCate[$i]->name_zh}}</div>
-                                                @elseif(locationHelper() == 'jp')
-                                                    <div class="text">{{$listCate[$i]->name_ja}}</div>
-                                                @elseif(locationHelper() == 'vi')
-                                                    <div class="text">{{$listCate[$i]->name_vi}}</div>
-                                                @else
-                                                    <div class="text">{{$listCate[$i]->name_en}}</div>
-                                                @endif
-                                            </div>
-                                        </a>
-                                    @else
-                                        <a class="check_url">
-                                            @if(locationHelper() == 'kr')
-                                                <div class="text">{{ $listCate[$i]->name_ko }}</div>
-                                            @elseif(locationHelper() == 'cn')
-                                                <div class="text">{{$listCate[$i]->name_zh}}</div>
-                                            @elseif(locationHelper() == 'jp')
-                                                <div class="text">{{$listCate[$i]->name_ja}}</div>
-                                            @elseif(locationHelper() == 'vi')
-                                                <div class="text">{{$listCate[$i]->name_vi}}</div>
-                                            @else
-                                                <div class="text">{{$listCate[$i]->name_en}}</div>
-                                            @endif
-                                        </a>
-                                    @endif
-                                </div>
-                            @endfor
-                        @else
-                            @foreach($listCate as $cate)
-                                <div class="col-lg-6 item item-left text-center">
-                                    @if(Auth::check())
-                                        <a href="{{ route('category.show', $cate->id) }}">
-                                             <img class="icon_i" alt="">
-                                            <div class="text">{{($cate->{'name_' .$langDisplay->getLangDisplay()})}}</div>
-                                        </a>
-                                    @else
-                                        <a class="check_url">
-                                             <img class="icon_i" alt="">
-                                            <div class="text">{{($cate->{'name_' .$langDisplay->getLangDisplay()})}}</div>
-                                        </a>
-                                    @endif
-                                </div>
-                            @endforeach
-                        @endif
-                    </div>
-                </div>
-                <div class="section-First-left section-First-mobile col-12">
-                    <span class="content">SHOP BY CATEGORIES</span>
-                    <hr>
-                    <div class="list d-flex justify-content-center">
-                        @php
-                            $listCate = DB::table('categories')->where('parent_id', null)->get();
-                        @endphp
-                        @foreach($listCate as $cate)
-                            <div class="item item-left text-center">
-                                @if(Auth::check())
-                                    <a href="{{ route('category.show', $cate->id) }}">
-                                        <img src="{{ asset('storage/' . $cate->thumbnail) }}"
-                                             alt="">
-                                        <div class="text">{{($cate->{'name' . $langDisplay->getLangDisplay()})}}</div>
-                                    </a>
-                                @else
-                                    <a class="check_url">
-                                        <img src="{{ asset('storage/' . $cate->thumbnail) }}"
-                                             alt="">
-                                        <div class="text">{{($cate->{'name' . $langDisplay->getLangDisplay()})}}</div>
-                                    </a>
-                                @endif
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
+{{--                <div class="section-First-left section-First-hd col-xl-2 col-12">--}}
+{{--                    <span class="content">{{ __('home.SHOP BY CATEGORIES') }}</span>--}}
+{{--                    <hr>--}}
+{{--                    <div class="row list">--}}
+{{--                        @php--}}
+{{--                            $listCate = DB::table('categories')->where('parent_id', null)->get();--}}
+{{--                            $langDisplay = new \App\Http\Controllers\Frontend\HomeController();--}}
+{{--                        @endphp--}}
+{{--                        @if(count($listCate)>10)--}}
+{{--                            @for($i =0; $i <10; $i ++)--}}
+{{--                                <div class="col-lg-6 item item-left text-center">--}}
+{{--                                    @if(Auth::check())--}}
+{{--                                        <a href="{{ route('category.show', $listCate[$i]->id) }}">--}}
+{{--                                            <div class="text">--}}
+{{--                                                @if(locationHelper() == 'kr')--}}
+{{--                                                    <div class="text">{{ $listCate[$i]->name_ko }}</div>--}}
+{{--                                                @elseif(locationHelper() == 'cn')--}}
+{{--                                                    <div class="text">{{$listCate[$i]->name_zh}}</div>--}}
+{{--                                                @elseif(locationHelper() == 'jp')--}}
+{{--                                                    <div class="text">{{$listCate[$i]->name_ja}}</div>--}}
+{{--                                                @elseif(locationHelper() == 'vi')--}}
+{{--                                                    <div class="text">{{$listCate[$i]->name_vi}}</div>--}}
+{{--                                                @else--}}
+{{--                                                    <div class="text">{{$listCate[$i]->name_en}}</div>--}}
+{{--                                                @endif--}}
+{{--                                            </div>--}}
+{{--                                        </a>--}}
+{{--                                    @else--}}
+{{--                                        <a class="check_url">--}}
+{{--                                            @if(locationHelper() == 'kr')--}}
+{{--                                                <div class="text">{{ $listCate[$i]->name_ko }}</div>--}}
+{{--                                            @elseif(locationHelper() == 'cn')--}}
+{{--                                                <div class="text">{{$listCate[$i]->name_zh}}</div>--}}
+{{--                                            @elseif(locationHelper() == 'jp')--}}
+{{--                                                <div class="text">{{$listCate[$i]->name_ja}}</div>--}}
+{{--                                            @elseif(locationHelper() == 'vi')--}}
+{{--                                                <div class="text">{{$listCate[$i]->name_vi}}</div>--}}
+{{--                                            @else--}}
+{{--                                                <div class="text">{{$listCate[$i]->name_en}}</div>--}}
+{{--                                            @endif--}}
+{{--                                        </a>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+{{--                            @endfor--}}
+{{--                        @else--}}
+{{--                            @foreach($listCate as $cate)--}}
+{{--                                <div class="col-lg-6 item item-left text-center">--}}
+{{--                                    @if(Auth::check())--}}
+{{--                                        <a href="{{ route('category.show', $cate->id) }}">--}}
+{{--                                             <img class="icon_i" alt="">--}}
+{{--                                            <div class="text">{{($cate->{'name_' .$langDisplay->getLangDisplay()})}}</div>--}}
+{{--                                        </a>--}}
+{{--                                    @else--}}
+{{--                                        <a class="check_url">--}}
+{{--                                             <img class="icon_i" alt="">--}}
+{{--                                            <div class="text">{{($cate->{'name_' .$langDisplay->getLangDisplay()})}}</div>--}}
+{{--                                        </a>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+{{--                            @endforeach--}}
+{{--                        @endif--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="section-First-left section-First-mobile col-12">--}}
+{{--                    <span class="content">SHOP BY CATEGORIES</span>--}}
+{{--                    <hr>--}}
+{{--                    <div class="list d-flex justify-content-center">--}}
+{{--                        @php--}}
+{{--                            $listCate = DB::table('categories')->where('parent_id', null)->get();--}}
+{{--                        @endphp--}}
+{{--                        @foreach($listCate as $cate)--}}
+{{--                            <div class="item item-left text-center">--}}
+{{--                                @if(Auth::check())--}}
+{{--                                    <a href="{{ route('category.show', $cate->id) }}">--}}
+{{--                                        <img src="{{ asset('storage/' . $cate->thumbnail) }}"--}}
+{{--                                             alt="">--}}
+{{--                                        <div class="text">{{($cate->{'name' . $langDisplay->getLangDisplay()})}}</div>--}}
+{{--                                    </a>--}}
+{{--                                @else--}}
+{{--                                    <a class="check_url">--}}
+{{--                                        <img src="{{ asset('storage/' . $cate->thumbnail) }}"--}}
+{{--                                             alt="">--}}
+{{--                                        <div class="text">{{($cate->{'name' . $langDisplay->getLangDisplay()})}}</div>--}}
+{{--                                    </a>--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
+{{--                        @endforeach--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <div class="section-First-middle col-xl-6 col-md-8 col-12">
                     <!-- Swiper -->
                     <div class="swiper mySwiper">
@@ -146,23 +163,31 @@
                         <div class="swiper-pagination"></div>
                     </div>
                 </div>
-                <div class="section-First-right col-xl-4 col-md-4">
+                <div class="section-First-right col-xl-6 col-md-4">
                     <div class="row">
                         @if(!$banner)
-                            <div class="col-6 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-1.png"
                                      alt="">
                             </div>
-                            <div class="col-6 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-2.png"
                                      alt="">
                             </div>
-                            <div class="col-6 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-3.png"
                                      alt="">
                             </div>
-                            <div class="col-6 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-4.png"
+                                     alt="">
+                            </div>
+                            <div class="col-md-4 col-6 item">
+                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-1.png"
+                                     alt="">
+                            </div>
+                            <div class="col-md-4 col-6 item">
+                                <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-2.png"
                                      alt="">
                             </div>
                         @else
@@ -189,10 +214,6 @@
                 </div>
             </div>
         </section>
-        <section class="section-Second pt-3 pb-3 container-fluid text-center">
-            <img src="https://cdn11.bigcommerce.com/s-cas40rmoh/product_images/uploaded_images/banner-custom-home-2.png"
-                 alt="">
-        </section>
         <div class="section margin-layout-index container-fluid mt-3">
             <div class="row">
                 <div class="col-md-3 col-xl-2">
@@ -206,17 +227,18 @@
                                     <img src="{{ asset('storage/' . $detailMarketing[$i]->thumbnail) }}"
                                          alt="">
                                     <span class="section-left--name">
-                                        {{ $detailMarketing[$i]->name }}
+                                        @php
+                                            $ld = new \App\Http\Controllers\TranslateController();
+                                        @endphp
+                                        {{ $ld->translateText($detailMarketing[$i]->name, locationPermissionHelper()) }}
                                     </span>
-                                    {{--                                    <span class="button section-left--name">--}}
-                                    {{--                                        Xem ngay--}}
-                                    {{--                                    </span>--}}
                                 </a>
                             </div>
                         @endif
                     @endfor
                 </div>
                 <div class="col-12 col-md-9 col-xl-8">
+
                     <section class="section-Fourth section">
                         <div class="content">{{ __('home.New Products') }}</div>
                         <div class="swiper NewProducts row">
@@ -259,10 +281,9 @@
                                         </div>
                                     @endforeach
                                 @endforeach
-
-                                <div class="swiper-button-next"></div>
-                                <div class="swiper-button-prev"></div>
                             </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
                         </div>
                     </section>
                     <div class="category-img section pt-3 pb-3">
@@ -357,11 +378,11 @@
                                     <img src="{{ asset('storage/' . $detailMarketing[$i]->thumbnail) }}"
                                          alt="">
                                     <span class="section-left--name">
-                                        {{ $detailMarketing[$i]->name }}
+                                        @php
+                                            $ld = new \App\Http\Controllers\TranslateController();
+                                        @endphp
+                                        {{ $ld->translateText($detailMarketing[$i]->name, locationPermissionHelper()) }}
                                     </span>
-{{--                                    <span class="button section-left--name">--}}
-{{--                                        Xem ngay--}}
-{{--                                    </span>--}}
                                 </a>
                             </div>
                         @endif
@@ -378,77 +399,6 @@
                     </span>
                 </p>
                 <button onclick="myFunction()" id="myBtn">{{ __('home.Show More') }}</button>
-            </div>
-        </section>
-        <section class="section-Eight">
-            <img class="img"
-                 src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/bg-with-us2.jpg"
-                 alt="">
-            <div class="section-content">
-                <div class="content">
-                    {{ __('home. Why shop with us?') }}
-                </div>
-                <div class="list d-flex justify-content-center">
-                    <div class="item">
-                        <div class="item-img">
-                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png" alt="">
-                        </div>
-                        <div class="item-content">
-                            {{ __('home.QUALITY AND SAVING') }}
-                        </div>
-                        <div class="item-text">
-                            {{ __('home.Comprehensive quality control and affordable prices') }}
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="item-img">
-                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png"
-                                 alt="">
-                        </div>
-                        <div class="item-content">
-                            {{ __('home.QUALITY AND SAVING') }}
-                        </div>
-                        <div class="item-text">
-                            {{ __('home.Comprehensive quality control and affordable prices') }}
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="item-img">
-                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png"
-                                 alt="">
-                        </div>
-                        <div class="item-content">
-                            {{ __('home.QUALITY AND SAVING') }}
-                        </div>
-                        <div class="item-text">
-                            {{ __('home.Comprehensive quality control and affordable prices') }}
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="item-img">
-                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png"
-                                 alt="">
-                        </div>
-                        <div class="item-content">
-                            {{ __('home.QUALITY AND SAVING') }}
-                        </div>
-                        <div class="item-text">
-                            {{ __('home.Comprehensive quality control and affordable prices') }}
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="item-img">
-                            <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/icon-with-us1.png"
-                                 alt="">
-                        </div>
-                        <div class="item-content">
-                            {{ __('home.QUALITY AND SAVING') }}
-                        </div>
-                        <div class="item-text">
-                            {{ __('home.Comprehensive quality control and affordable prices') }}
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
         @include('frontend.pages.modal-products')

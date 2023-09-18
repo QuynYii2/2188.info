@@ -13,6 +13,9 @@
      }
 @endphp
 <style>
+    .categorySearch{
+        cursor: pointer;
+    }
     .custom_flag {
         width: 100px;
         height: 66px;
@@ -78,6 +81,7 @@
 @php
     $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
     $locale = app()->getLocale();
+    $company = null;
 @endphp
 <header class="header">
     <div class="header-pc halo-header">
@@ -94,35 +98,37 @@
                         @endif
                     </div>
                     <div class="header-top-middle col-xl-5 col-md-4 " id="in-search">
-                        <form class="search-wrapper">
-                            <input type="text" placeholder="{{ __('home.placeholder search') }}"
+                        <form class="search-wrapper" method="get" action="{{route('search.products.name')}}">
+                            <input type="text" name="key_search" placeholder="{{ __('home.placeholder search') }}"
                                    style="box-shadow: none">
+                            <input hidden="" type="text" id="category_search" name="category_search" value="0">
 
-                            <button class="button-right" type="submit"
+                            <button class="button-right search_header" type="submit"
                                     onclick="<?php echo $checkBuyer ? 'showAlert(1)' : (Auth::check() ? '' : 'showAlert(2)') ?>">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
+
                             <div class="category-drop input-group-prepend">
-                                <button class="btn-all btn-outline-secondary dropdown-toggle" type="button"
+                                <button class="dropdown-toggle" type="button"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{ __('home.all') }}
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">{{ __('home.all') }}</a>
+                                    <a class="dropdown-item categorySearch" data-id="0">{{ __('home.all') }}</a>
                                     @php
                                         $listCate = DB::table('categories')->where('parent_id', null)->get();
                                     @endphp
                                     @foreach($listCate as $cate)
-                                        <a class="item-hd dropdown-item "
-                                           href="">-- {{($cate->{'name' . $langDisplay->getLangDisplay()})}}</a>
+                                        <a class="item-hd dropdown-item categorySearch"
+                                           data-id="{{$cate->id}}">-- {{($cate->{'name' . $langDisplay->getLangDisplay()})}}</a>
                                         @if(!$listCate->isEmpty())
                                             <ul class="hd_dropdown--right row">
                                                 @php
                                                     $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
                                                 @endphp
                                                 @foreach($listChild as $child)
-                                                    <a class="dropdown-item"
-                                                       href="">––– {{($child->{'name' . $langDisplay->getLangDisplay()})}}</a>
+                                                    <a class="dropdown-item categorySearch"
+                                                       data-id="{{$child->id}}">––– {{($child->{'name' . $langDisplay->getLangDisplay()})}}</a>
                                                 @endforeach
                                             </ul>
                                         @endif
@@ -131,7 +137,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="header-top-right col-xl-5 col-md-6 d-flex text-center justify-content-end">
+                    <div class="header-top-right col-xl-5 col-md-6 d-flex text-center justify-content-end align-items-center">
                         @if(Auth::check())
                             <div class="item button_seller align-center d-flex">
                                 <button type="button" class="full-width cursor-pointer" data-toggle="modal"
@@ -179,15 +185,27 @@
                             @endphp
 
                             <div class="item user">
-                                <button class="btn btn-primary" style="box-shadow: none" onclick="signIn()"><i
-                                            class="item-icon fa-regular fa-user"></i>
-                                    <div class="item-text">{{Auth::user()->name}}</div>
+                                <button class="btn btn-primary user_login" style="box-shadow: none" onclick="signIn()">
+                                    <i class="item-icon fa-regular fa-user"></i>
+                                    <div class="name_and_package_member">
+                                        <div class="item-text">{{Auth::user()->name}}</div>
+                                        @if($company)
+                                            <span class="package_member">( {{__('home.Member')}} : {{$company->member}} )</span>
+                                        @endif
+                                    </div>
+
                                 </button>
                                 <div class="signMenu" id="signMenu">
                                     <div class="name">
                                         <a href="{{route('profile.show')}}">{{Auth::user()->name}}</a>
-                                        <a href="{{route('process.register.member')}}"
-                                           class="">{{ __('home.Membership upgrade') }}</a>
+                                        @if($company && $company->member == \App\Enums\RegisterMember::LOGISTIC)
+                                            <a href="{{route('process.register.member')}}" hidden=""
+                                               class="">{{ __('home.Membership upgrade') }}</a>
+                                        @else
+                                            <a href="{{route('process.register.member')}}"
+                                               class="">{{ __('home.Membership upgrade') }}</a>
+                                        @endif
+
                                     </div>
                                     <hr>
                                     @php
@@ -211,23 +229,13 @@
                                             onclick="logout()">{{ __('home.Sign Out') }}</button>
                                 </div>
                                 <div class="hover-list">
-{{--                                    <a href="{{route('profile.show')}}" class="none_decoration">--}}
-{{--                                        <div class="drop-item">--}}
-{{--                                            {{ __('home.profile') }}--}}
-{{--                                        </div>--}}
-{{--                                    </a>--}}
+                                    <a href="{{route('profile.show')}}" class="none_decoration">
+                                        <div class="drop-item">
+                                            {{ __('home.profile') }}
+                                        </div>
+                                    </a>
 
                                     @if(!$checkBuyer)
-                                        {{--                                        @if($coin)--}}
-                                        {{--                                            <div class="drop-item">--}}
-                                        {{--                                                <a href="">Coins: {{$coin->quantity}}</a>--}}
-                                        {{--                                            </div>--}}
-                                        {{--                                        @endif--}}
-                                        <a href="{{route('wish.list.index')}}" class="none_decoration">
-                                            <div class="drop-item">
-                                                {{ __('home.Wish Lists') }}
-                                            </div>
-                                        </a>
                                         @php
                                             $user = Auth::user()->id;
                                             $role_id = DB::table('role_user')->where('user_id', $user)->get();
@@ -249,7 +257,7 @@
                                         @endphp
                                         @if(($isAdmin == true || $locale != 'vn') && !$checkTrust)
                                             <div class="drop-item">
-                                                <a href="{{ route('seller.products.home') }}">{{ __('home.Seller channel') }}</a>
+                                                <a href="{{ route('seller.products.home') }}">{{ __('home.Product Management') }}</a>
                                             </div>
                                         @endif
                                         @php
@@ -271,21 +279,20 @@
 
                                             $isValid = (new \App\Http\Controllers\Frontend\HomeController())->checkSellerOrAdmin();
                                         @endphp
-                                        @if($isMember && $member->member != \App\Enums\RegisterMember::TRUST)
+                                        @if($isMember && $member->member == \App\Enums\RegisterMember::LOGISTIC)
                                             <div class="drop-item">
                                                 <a href="{{ route('stand.register.member.index', $member->id) }}">{{ __('home.Shop') }}</a>
                                             </div>
                                         @elseif($isMember && $member->member == \App\Enums\RegisterMember::TRUST)
                                             <div class="drop-item">
-                                                <a href="{{ route('trust.register.member.index') }}">{{ __('home.Shop') }}</a>
+                                                <a href="{{ route('trust.register.member.index') }}">{{ __('home.Partner List') }}</a>
                                             </div>
                                         @endif
-                                        @if(!$checkTrust && $isValid==true)
-                                            <div class="drop-item">
-                                                <a href="{{route('shop.list.products')}}">{{ __('home.Product Management') }}</a>
-                                            </div>
-                                        @endif
-
+                                        {{--                                        @if(!$checkTrust && $isValid==true)--}}
+                                        {{--                                            <div class="drop-item">--}}
+                                        {{--                                                <a href="{{route('shop.list.products')}}">{{ __('home.Product Management') }}</a>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        @endif--}}
 
                                         @php
                                             $exitMemberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
@@ -926,23 +933,25 @@
             </div>
             <div onclick="closeMobile()" class="opacity_menu"></div>
             <div class="hd-mobile_menu" id="search">
-                <button class="btn-all btn-outline-secondary dropdown-toggle" type="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All
-                </button>
+                <div class="dropdown-toggle" type="button"
+                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All
+                </div>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">All</a>
+                    <a class="dropdown-item categorySearch" data-id="0">All</a>
                     @php
                         $listCate = DB::table('categories')->where('parent_id', null)->get();
                     @endphp
                     @foreach($listCate as $cate)
-                        <a class="item-hd dropdown-item " href="">-- {{ ($cate->name) }}</a>
+                        <a class="item-hd dropdown-item categorySearch"
+                           data-id="{{$cate->id}}">-- {{ ($cate->name) }}</a>
                         @if(!$listCate->isEmpty())
                             <ul class="hd_dropdown--right row">
                                 @php
                                     $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
                                 @endphp
                                 @foreach($listChild as $child)
-                                    <a class="dropdown-item" href="">––– {{ ($child->name) }}</a>
+                                    <a class="dropdown-item categorySearch"
+                                       data-id="{{$child->id}}">––– {{ ($child->name) }}</a>
                                 @endforeach
                             </ul>
                         @endif
@@ -965,7 +974,7 @@
                         </button>
                     </div>
                     <div class="signMenuM" id="signMenuM">
-{{--                        <div class="name"><a href="{{route('profile.show')}}">{{Auth::user()->name}}</a></div>--}}
+                        {{--                        <div class="name"><a href="{{route('profile.show')}}">{{Auth::user()->name}}</a></div>--}}
                         <hr>
                         <button class="signOut" href="#" onclick="logout()">Log Out</button>
                     </div>
@@ -1141,7 +1150,7 @@
                     </a>
                     <a href="https://shipgo.biz/en">
                         <div class="custom_flag">
-                            <img class="w-70 h-70 p-2" src="{{ asset('flag/us.svg') }}" alt="">
+                            <img class="w-70 h-90 p-2" src="{{ asset('flag/us.svg') }}" alt="">
                         </div>
                     </a>
                     <a href="https://shipgo.biz/cn">
@@ -1170,25 +1179,37 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="d-flex justify-content-center align-items-center">
-                    <a href="{{route('parent.register.member.locale', 'kr')}}">
-                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
-                             src="{{ asset('images/korea.png') }}"
-                             alt="">
-                    </a>
-                    <a href="{{route('parent.register.member.locale', 'jp')}}">
-                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
-                             src="{{ asset('images/japan.webp') }}"
-                             alt="">
-                    </a>
-                    <a href="{{route('parent.register.member.locale', 'cn')}}">
-                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
-                             src="{{ asset('images/china.webp') }}"
-                             alt="">
-                    </a>
-                </div>
-            </div>
+            @if($company)
+                @if($company->member == \App\Enums\RegisterMember::TRUST)
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{{route('trust.register.member.locale', 'kr')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt="">
+                            </a>
+                            <a href="{{route('trust.register.member.locale', 'jp')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt="">
+                            </a>
+                            <a href="{{route('trust.register.member.locale', 'cn')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                @elseif($company->member == \App\Enums\RegisterMember::LOGISTIC)
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{{route('parent.register.member.locale', 'kr')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt="">
+                            </a>
+                            <a href="{{route('parent.register.member.locale', 'jp')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt="">
+                            </a>
+                            <a href="{{route('parent.register.member.locale', 'cn')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                @endif
+            @endif
         </div>
     </div>
 </div>
@@ -1224,19 +1245,37 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="d-flex justify-content-between align-items-center">
-                    <a href="{{route('trust.register.member.locale', 'kr')}}">
-                        <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt="">
-                    </a>
-                    <a href="{{route('trust.register.member.locale', 'jp')}}">
-                        <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt="">
-                    </a>
-                    <a href="{{route('trust.register.member.locale', 'cn')}}">
-                        <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt="">
-                    </a>
-                </div>
-            </div>
+            @if($company)
+                @if($company->member == \App\Enums\RegisterMember::TRUST)
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{{route('trust.register.member.locale', 'kr')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt="">
+                            </a>
+                            <a href="{{route('trust.register.member.locale', 'jp')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt="">
+                            </a>
+                            <a href="{{route('trust.register.member.locale', 'cn')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                @elseif($company->member == \App\Enums\RegisterMember::LOGISTIC)
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{{route('parent.register.member.locale', 'kr')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt="">
+                            </a>
+                            <a href="{{route('parent.register.member.locale', 'jp')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt="">
+                            </a>
+                            <a href="{{route('parent.register.member.locale', 'cn')}}">
+                                <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt="">
+                            </a>
+                        </div>
+                    </div>
+                @endif
+            @endif
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{ __('home.Close') }}</button>
             </div>
@@ -1245,35 +1284,15 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-{{--<script>--}}
-{{--    // variable to store our intervalID--}}
-{{--    let nIntervId;--}}
-
-{{--    function changeColor() {--}}
-{{--        // check if an interval has already been set up--}}
-{{--        if (!nIntervId) {--}}
-{{--            nIntervId = setInterval(flashText, 1500);--}}
-{{--        }--}}
-{{--    }--}}
-
-{{--    function flashText() {--}}
-{{--        const oElem = document.getElementById("popup-alert");--}}
-{{--        if (oElem.className == 'd-none') {--}}
-{{--            oElem.className = 'd-block'--}}
-{{--        } else {--}}
-{{--            oElem.className = 'd-none'--}}
-{{--        }--}}
-{{--    }--}}
-
-{{--    function stopTextColor() {--}}
-{{--        clearInterval(nIntervId);--}}
-{{--        // release our intervalID from the variable--}}
-{{--        nIntervId = null;--}}
-{{--    }--}}
-
-{{--    changeColor();--}}
-{{--</script>--}}
 <script>
+    $(document).ready(function () {
+        $('.categorySearch').on('click', function () {
+            let id = $(this).data('id');
+            console.log(id);
+            $('#category_search').val(id);
+        })
+    })
+
     // Hàm logout
     function logout() {
         {{--let productIDs = localStorage.getItem('productIDs');--}}

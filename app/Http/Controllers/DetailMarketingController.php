@@ -14,6 +14,7 @@ class DetailMarketingController extends Controller
 {
     public function index($id, Request $request)
     {
+        (new HomeController())->getLocale($request);
         $currency = (new HomeController())->getLocation($request);
         $listPayment = PaymentMethod::all();
         $listTransport = TransportMethod::all();

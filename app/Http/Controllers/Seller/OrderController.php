@@ -29,6 +29,7 @@ class OrderController extends Controller
 
     public function search(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $query = [];
         $fullName = $request->input('fullName');
         $phoneNumber = $request->input('phoneNumber');

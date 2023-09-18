@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Enums\AttributeProductStatus;
 use App\Enums\AttributeStatus;
+use App\Enums\CategoryStatus;
 use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\OrderStatus;
 use App\Enums\ProductStatus;
@@ -29,9 +30,10 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
+        (new HomeController())->getLocale($request);
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $isAdmin = (new HomeController())->checkAdmin();
         if ($isAdmin) {
             $products = Product::where('status', '!=', ProductStatus::DELETED)->orderByDesc('id')->get();
@@ -46,8 +48,9 @@ class ProductController extends Controller
         return view('backend/products/index', ['products' => $products, 'categories' => $categories]);
     }
 
-    public function home()
+    public function home(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $productProcessings = DB::table('order_items')
             ->join('orders', 'orders.id', '=', 'order_items.order_id')
             ->join('products', 'products.id', '=', 'order_items.product_id')
@@ -96,8 +99,9 @@ class ProductController extends Controller
             'promotions'));
     }
 
-    public function toggleProduct($id)
+    public function toggleProduct(Request $request, $id)
     {
+        (new HomeController())->getLocale($request);
         $product = Product::find($id);
         if ($product->status == ProductStatus::ACTIVE) {
             $product->status = ProductStatus::INACTIVE;
@@ -111,6 +115,7 @@ class ProductController extends Controller
 
     public function getProductsViews(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $user = Auth::user()->id;
         $role_id = DB::table('role_user')->where('user_id', $user)->get();
         $isAdmin = false;
@@ -170,9 +175,10 @@ class ProductController extends Controller
     }
 
 
-    public function create()
+    public function create(Request $request )
     {
-        $categories = Category::all();
+        (new HomeController())->getLocale($request);
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', Auth::user()->id]])->get();
 
         $id = Auth::user()->id;
@@ -194,6 +200,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        (new HomeController())->getLocale($request);
         try {
             $maxProduct = Product::where([
                 ['user_id', Auth::user()->id],
@@ -324,19 +331,21 @@ class ProductController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-
+        (new HomeController())->getLocale($request);
         $product = Product::findOrFail($id);
-        $categories = Category::all();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', \Illuminate\Support\Facades\Auth::user()->id]])->get();
         $att_of_product = DB::table('product_attribute')->where('product_id', $product->id)->get();
         $productDetails = Variation::where([['product_id', $id], ['status', VariationStatus::ACTIVE]])->get();
+        $price_sales = ProductSale::where('product_id',$id)->get();
 
         return view('backend.products.edit', compact(
             'categories',
             'att_of_product',
             'attributes',
+            'price_sales',
             'product',
             'productDetails'));
 
@@ -344,6 +353,7 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
+        (new HomeController())->getLocale($request);
         try {
             $product = Product::findOrFail($id);
 
@@ -497,6 +507,7 @@ class ProductController extends Controller
                 return back();
             }
         } catch (\Exception $exception) {
+            dd($exception);
             alert()->error('Error', 'Error, please try again');
             return back();
         }
@@ -531,8 +542,9 @@ class ProductController extends Controller
         }
     }
 
-    public function setHotProduct($id)
+    public function setHotProduct(Request $request ,$id)
     {
+        (new HomeController())->getLocale($request);
         try {
             $product = Product::find($id);
             if ($product->hot == 1) {
@@ -547,8 +559,9 @@ class ProductController extends Controller
         }
     }
 
-    public function setFeatureProduct($id)
+    public function setFeatureProduct(Request $request ,$id)
     {
+        (new HomeController())->getLocale($request);
         try {
             $product = Product::find($id);
             if ($product->feature == 1) {
@@ -565,6 +578,7 @@ class ProductController extends Controller
 
     private function updateProduct($product, $request, $number)
     {
+        (new HomeController())->getLocale($request);
         if ($request->hasFile('thumbnail')) {
             $thumbnail = $request->file('thumbnail');
             $thumbnailPath = $thumbnail->store('thumbnails', 'public');
@@ -573,7 +587,7 @@ class ProductController extends Controller
 
         $arrayIDs = $this->getCategory($request);
         if (!$arrayIDs || count($arrayIDs) == 0) {
-            $categories = Category::all();
+            $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
             $category = $categories[0];
             $arrayIDs[] = $category->id;
         }
@@ -638,6 +652,7 @@ class ProductController extends Controller
 
     private function getAttributeProperty(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $proAtt = $request->input('attribute_property');
 
         if ($proAtt === null) {
@@ -666,8 +681,9 @@ class ProductController extends Controller
         return $newArray;
     }
 
-    private function createAttributeProduct(Product $product, $newArray)
+    private function createAttributeProduct(Product $request, $product, $newArray)
     {
+        (new HomeController())->getLocale($request);
         if ($newArray != null) {
             for ($i = 0; $i < count($newArray); $i++) {
                 $myArray = array();
@@ -689,9 +705,10 @@ class ProductController extends Controller
 
     private function createProduct($product, $request, $number)
     {
+        (new HomeController())->getLocale($request);
         $arrayIDs = $this->getCategory($request);
         if (!$arrayIDs || count($arrayIDs) == 0) {
-            $categories = Category::all();
+            $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
             $category = $categories[0];
             $arrayIDs[] = $category->id;
         }
@@ -796,8 +813,9 @@ class ProductController extends Controller
         return $success;
     }
 
-    private function mergeArray($array1, $array2)
+    private function mergeArray(Request $request,$array1, $array2)
     {
+        (new HomeController())->getLocale($request);
         $arrayList = [];
         for ($j = 0; $j < count($array1); $j++) {
             for ($z = 0; $z < count($array2); $z++) {
@@ -807,8 +825,9 @@ class ProductController extends Controller
         return $arrayList;
     }
 
-    private function getArray($array)
+    private function getArray(Request $request,$array)
     {
+        (new HomeController())->getLocale($request);
         if ($array) {
             if (count($array) == 1) {
                 return $array;
@@ -823,10 +842,11 @@ class ProductController extends Controller
         }
     }
 
-    private function getCategory($request)
+    private function getCategory(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $listIDs = null;
-        $categories = Category::all();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $listCategoryName[] = null;
         foreach ($categories as $category) {
             $name = 'category-' . $category->id;

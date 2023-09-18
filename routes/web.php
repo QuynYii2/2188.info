@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Member\RegisterMemberController;
+use App\Http\Controllers\Member\RegisterMemberSuccessController;
 use App\Http\Controllers\Member\TrustMemberController;
 use App\Http\Controllers\MemberPartnerController;
 use App\Http\Controllers\PaypalPaymentController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\RevenusController;
 use App\Http\Controllers\SampleController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\Seller\AttributeController;
 use App\Http\Controllers\Seller\CategoryController;
 use App\Http\Controllers\Seller\ExportFileController;
@@ -100,58 +102,71 @@ Route::middleware('auth.product')->group(function () {
 
 Route::get(
     '/register-member',
-    [AuthController::class, 'processRegisterMember']
+    [RegisterMemberController::class, 'processRegisterMember']
 )->name('process.register.member');
 Route::get(
     '/register-member/{registerMember}',
-    [AuthController::class, 'showRegisterMember']
+    [RegisterMemberController::class, 'showRegisterMember']
 )->name('show.register.member');
 Route::get(
     '/register-member-info/{registerMember}',
-    [AuthController::class, 'showRegisterMemberInfo']
+    [RegisterMemberController::class, 'showRegisterMemberInfo']
 )->name('show.register.member.info');
 Route::get(
     '/register-member-person-source/{member_id}/{registerMember}',
-    [AuthController::class, 'showRegisterMemberPerson']
+    [RegisterMemberController::class, 'showRegisterMemberPerson']
 )->name('show.register.member.person.source');
 Route::get(
     '/verify-register-member-person-source/{email}',
-    [AuthController::class, 'processVerifyEmail']
+    [RegisterMemberController::class, 'processVerifyEmail']
 )->name('show.verify.register.member');
 Route::get(
     '/register-member-person-source-represent/{person_id}/{registerMember}',
-    [AuthController::class, 'showRegisterMemberPersonRepresent']
+    [RegisterMemberController::class, 'showRegisterMemberPersonRepresent']
 )->name('show.register.member.person.represent');
 Route::get(
     '/payment-register-member/{registerMember}',
-    [AuthController::class, 'showPaymentMember']
+    [RegisterMemberController::class, 'showPaymentMember']
 )->name('show.payment.member');
 Route::get(
     '/payment-register-member-success/{registerMember}',
-    [AuthController::class, 'successRegisterMember']
+    [RegisterMemberController::class, 'successRegisterMember']
 )->name('show.success.payment.member');
-//Route::get('/register-member/{registerMember}', [AuthController::class, 'showRegisterMember'])->name('show.register.member');
+Route::get(
+    '/register-member-ship/{member}',
+    [RegisterMemberController::class, 'registerMemberShip']
+)->name('show.register.member.ship');
+Route::get(
+    '/congratulation-register-member/{member}',
+    [RegisterMemberController::class, 'congratulationRegisterMember']
+)->name('show.register.member.congratulation');
+//Route::get('/register-member/{registerMember}', [RegisterMemberController::class, 'showRegisterMember'])->name('show.register.member');
+Route::post(
+    '/register-member-buyer',
+    [RegisterMemberController::class, 'registerMemberBuyer']
+)->name('register.member.buyer');
 Route::post(
     '/register-member-info',
-    [AuthController::class, 'registerMemberInfo']
+    [RegisterMemberController::class, 'registerMemberInfo']
 )->name('register.member.info');
 Route::post(
     '/register-member-source',
-    [AuthController::class, 'registerMemberPerson']
+    [RegisterMemberController::class, 'registerMemberPerson']
 )->name('register.member.source');
 Route::post(
     '/verify-register-member-person-source',
-    [AuthController::class, 'verifyEmail']
+    [RegisterMemberController::class, 'verifyEmail']
 )->name('verify.register.member');
 Route::post(
     '/register-member-person-source-represent',
-    [AuthController::class, 'registerMemberPersonRepresent']
+    [RegisterMemberController::class, 'registerMemberPersonRepresent']
 )->name('register.member.represent');
 Route::post(
     '/payment-register-member',
-    [AuthController::class, 'paymentMember']
+    [RegisterMemberController::class, 'paymentMember']
 )->name('payment.member');
 
+// End register member
 
 Route::get('/location-nation', [AuthController::class, 'getListNation'])->name('location.nation.get');
 Route::get('/location-state/{id}', [AuthController::class, 'getListStateByNation'])->name('location.state.get');
@@ -176,22 +191,28 @@ Route::get('/products/location/{locale}', [\App\Http\Controllers\ProductControll
 Route::get('/products-shop/{id}', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByShops'])->name('list.products.shop.show');
 Route::get('/products-shop-category/{category}/{shop}', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByCategoryAndShops'])->name('list.products.shop.category.show');
 
-Route::middleware(['auth'])->group(callback: function () {
-    //Chat message
-    Route::get('/chat-message', [SampleController::class, 'chat'])->name('chat.message.show');
-    Route::get('/chat-message-sent', [SampleController::class, 'getListMessageSent'])->name('chat.message.sent');
-    Route::get('/chat-message-received', [SampleController::class, 'getListMessageReceived'])->name('chat.message.received');
-    //Setup marketing
+Route::get('/chat-message/{from}/{to}', [SampleController::class, 'findAllMessage'])->name('chat.message.show.to.way');
+//Detail marketing
+Route::get('/detail-marketing/{id}', [\App\Http\Controllers\DetailMarketingController::class, 'index'])->name('detail-marketing.show');
+Route::delete('/detail-marketing/{id}/{product}', [\App\Http\Controllers\DetailMarketingController::class, 'delete'])->name('detail-marketing.delete');
+
+Route::group(['middleware' => 'role.admin'], function () {
     Route::get('/setup-marketing/', [\App\Http\Controllers\SetupMarketingController::class, 'index'])->name('setup-marketing.show');
     Route::get('/setup-marketing/create', [\App\Http\Controllers\SetupMarketingController::class, 'create'])->name('create-setup-marketing');
     Route::post('/setup-marketing/create', [\App\Http\Controllers\SetupMarketingController::class, 'store'])->name('store-setup-marketing');
     Route::delete('/setup-marketing/create/{id}', [\App\Http\Controllers\SetupMarketingController::class, 'delete'])->name('setup-marketing.delete');
     Route::get('/setup-marketing/edit/{id}', [\App\Http\Controllers\SetupMarketingController::class, 'edit'])->name('setup-marketing.edit');
     Route::post('/setup-marketing/update/{id}', [\App\Http\Controllers\SetupMarketingController::class, 'update'])->name('setup-marketing.update');
+});
 
-    //Detail marketing
-    Route::get('/detail-marketing/{id}',[\App\Http\Controllers\DetailMarketingController::class, 'index'])->name('detail-marketing.show');
-    Route::delete('/detail-marketing/{id}/{product}', [\App\Http\Controllers\DetailMarketingController::class, 'delete'])->name('detail-marketing.delete');
+Route::middleware(['auth'])->group(callback: function () {
+    //Chat message
+    Route::get('/chat-message', [SampleController::class, 'chat'])->name('chat.message.show');
+    Route::get('/chat-message-sent', [SampleController::class, 'getListMessageSent'])->name('chat.message.sent');
+    Route::get('/chat-message-received', [SampleController::class, 'getListMessageReceived'])->name('chat.message.received');
+    //Setup marketing
+    // Product member
+    Route::get('/member/product-buy-lot/attribute/{id}', [\App\Http\Controllers\Frontend\ProductController::class, 'detailProduct'])->name('detail_product.member.attribute');
 
 // End register member
     //View member
@@ -205,11 +226,14 @@ Route::middleware(['auth'])->group(callback: function () {
 //    Route::get('/address-book/', [\App\Http\Controllers\ProfileController::class, 'address_book']);
     Route::get('/payment-information/', [ProfileController::class, 'payment_information']);
     Route::get('/product-evaluation/', [ProfileController::class, 'product_evaluation']);
+    Route::get('/product-evaluation/delete/{id}', [EvaluateProductController::class, 'destroy'])->name('product_evaluation.delete');
     Route::get('/favorite-product/', [ProfileController::class, 'favorite_product']);
     Route::get('/product-viewed/', [ProfileController::class, 'product_viewed']);
     Route::get('/my-review/', [ProfileController::class, 'my_review']);
     // Đánh giá sản phẩm
     Route::post('/evaluate', [EvaluateProductController::class, 'store'])->name('create.evaluate');
+    Route::get('/evaluate/{id}', [EvaluateProductController::class, 'show'])->name('find.evaluate.id');
+    Route::post('/evaluate/update', [EvaluateProductController::class, 'update'])->name('update.evaluate.id');
     // Address Controller
     Route::get('/address-book', [AddressController::class, 'index'])->name('address.show');
     Route::post('/address', [AddressController::class, 'store'])->name('address.create');
@@ -265,6 +289,11 @@ Route::group(['middleware' => 'role.admin'], function () {
     Route::get('/admin/configs/{id}', [ConfigProjectController::class, 'detail'])->name('admin.configs.detail');
     Route::put('/admin/configs/{id}', [ConfigProjectController::class, 'update'])->name('admin.configs.update');
     Route::delete('/admin/configs/{id}', [ConfigProjectController::class, 'delete'])->name('admin.configs.delete');
+    // Top seller config
+    Route::get('/seller-configs', [TopSellerConfigController::class, 'index'])->name('seller.config.show');
+    Route::get('/seller-config/create', [TopSellerConfigController::class, 'processCreate'])->name('seller.config.processCreate');
+    Route::post('/seller-config', [TopSellerConfigController::class, 'create'])->name('seller.config.create');
+    Route::delete('/seller-config/{id}', [TopSellerConfigController::class, 'delete'])->name('seller.config.delete');
     // Admin banner
     Route::get('/admin/banners', [BannerController::class, 'index'])->name('admin.banners.show');
     Route::get('/admin/banners/create', [BannerController::class, 'processCreate'])->name('admin.banners.processCreate');
@@ -306,7 +335,7 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     //
     //
     Route::get('/attributes/properties/{attributeID}', [PropertiesController::class, 'index'])->name('properties.index');
-    Route::get('/properties/create', [Propertientroller::class, 'create'])->name('properties.create');
+    Route::get('/properties/create', [PropertiesController::class, 'create'])->name('properties.create');
     Route::post('/properties', [PropertiesController::class, 'store'])->name('properties.store');
     //
     Route::get('/properties/{id}', [PropertiesController::class, 'show'])->name('properties.detail');
@@ -400,11 +429,6 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     Route::post('/seller-setup', [RankUserSellerController::class, 'createSetup'])->name('seller.setup.create');
     Route::get('/seller-setup/{id}', [RankUserSellerController::class, 'detailSetup'])->name('seller.setup.detail');
     Route::post('/seller-setup/{id}', [RankUserSellerController::class, 'updateSetUp'])->name('seller.setup.update');
-    // Top seller config
-    Route::get('/seller-configs', [TopSellerConfigController::class, 'index'])->name('seller.config.show');
-    Route::get('/seller-config/create', [TopSellerConfigController::class, 'processCreate'])->name('seller.config.processCreate');
-    Route::post('/seller-config', [TopSellerConfigController::class, 'create'])->name('seller.config.create');
-    Route::delete('/seller-config/{id}', [TopSellerConfigController::class, 'delete'])->name('seller.config.delete');
     // Order
     Route::get('/order-managers', [\App\Http\Controllers\Seller\OrderController::class, 'index'])->name('seller.order.list');
     Route::get('/order-managers-search', [\App\Http\Controllers\Seller\OrderController::class, 'search'])->name('seller.search.order.list');
@@ -419,17 +443,14 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     // Product Shop
     Route::get('/list-products-shop', [\App\Http\Controllers\ProductController::class, 'getListProductShop'])->name('shop.list.products');
     // Register member
-//    Route::get('/products-register-member', [RegisterMemberController::class, 'index'])->name('products.register.member.index');
-    Route::get('/stands-register-member/{id}', [RegisterMemberController::class, 'memberStand'])->name('stand.register.member.index');
-    Route::get('/parents-register-member', [RegisterMemberController::class, 'memberPartner'])->name('partner.register.member.index');
-    Route::get('/parents-register-member/{locale}', [RegisterMemberController::class, 'memberPartnerLocale'])->name('parent.register.member.locale');
-    Route::post('/products-register-member', [RegisterMemberController::class, 'saveProduct'])->name('products.register.member.create');
+//    Route::get('/products-register-member', [RegisterMemberSuccessController::class, 'index'])->name('products.register.member.index');
+    Route::get('/stands-register-member/{id}', [RegisterMemberSuccessController::class, 'memberStand'])->name('stand.register.member.index');
+    Route::get('/parents-register-member', [RegisterMemberSuccessController::class, 'memberPartner'])->name('partner.register.member.index');
+    Route::get('/parents-register-member/{locale}', [RegisterMemberSuccessController::class, 'memberPartnerLocale'])->name('parent.register.member.locale');
+    Route::post('/products-register-member', [RegisterMemberSuccessController::class, 'saveProduct'])->name('products.register.member.create');
     Route::post('/add-to-cart-register-member/{product}', [CartController::class, 'addToCartApi'])->name('cart.api');
     Route::post('/stands-register-member', [MemberPartnerController::class, 'store'])->name('stands.register.member');
     Route::post('/stands-unregister-member/{id}', [MemberPartnerController::class, 'delete'])->name('stands.unregister.member');
-    //
-    Route::get('/trusts-register-member', [TrustMemberController::class, 'memberStand'])->name('trust.register.member.index');
-    Route::get('/trusts-register-member/{locale}', [TrustMemberController::class, 'memberPartnerLocale'])->name('trust.register.member.locale');
 });
 
 Route::group(['middleware' => 'role.buyer'], function () {
@@ -444,6 +465,13 @@ Route::get('/product', [\App\Http\Controllers\Frontend\ProductController::class,
 Route::get('/product-variable/{id}/{value}', [\App\Http\Controllers\ProductController::class, 'getVariable']);
 // Cart
 Route::middleware(['auth'])->group(function () {
+    // Search products
+    Route::get('/search-products/category={id}', [SearchController::class, 'searchByCategory'])->name('search.products.category');
+    Route::get('/search-products/name', [SearchController::class, 'searchByNameProducts'])->name('search.products.name');
+
+    // Member trust
+    Route::get('/trusts-register-member', [TrustMemberController::class, 'memberStand'])->name('trust.register.member.index');
+    Route::get('/trusts-register-member/{locale}', [TrustMemberController::class, 'memberPartnerLocale'])->name('trust.register.member.locale');
     // Cart
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/add-to-cart/{product}', [CartController::class, 'addToCart'])->name('cart.add');
@@ -470,9 +498,20 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add-cart/{product}/{percent}', [CartController::class, 'addToCartPromotion'])->name('cart.add.promotion');
     //
     Route::get('/product-views', [\App\Http\Controllers\Frontend\ProductController::class, 'getListByViews'])->name('product.views');
+
 });
 
 // Backend v2
 Route::group(['prefix' => 'seller', 'middleware' => 'role.seller-or-admin'], function () {
     require_once __DIR__ . '/backend.php';
+});
+
+// Admin
+Route::group(['prefix' => 'admin', 'middleware' => 'role.admin'], function () {
+    require_once __DIR__ . '/admin.php';
+});
+
+// Seller
+Route::group(['prefix' => 'seller', 'middleware' => 'role.seller-or-admin'], function () {
+    require_once __DIR__ . '/seller.php';
 });

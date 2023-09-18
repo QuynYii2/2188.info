@@ -5,25 +5,25 @@
 @section('content')
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title">Danh sách khuyến mãi</h5>
-            <a href="{{ route('seller.promotion.create.process') }}" class="btn btn-primary">Thêm mới</a>
+            <h5 class="card-title">{{ __('home.Danh sách khuyến mãi') }}</h5>
+            <a href="{{ route('seller.promotion.create.process') }}" class="btn btn-primary">{{ __('home.thêm mới') }}</a>
         </div>
         @if($promotions->isEmpty())
-            Không có khuyến mãi nào được tạo
+            {{ __('home.không có khuyến mãi nào được tạo') }}
         @else
             <div class="card-body">
                 <table class="table">
                     <thead>
                     <tr class="text-center">
                         <th scope="col">#</th>
-                        <th>Tên khuyến mãi</th>
-                        <th>Mã</th>
-                        <th>Phần trăm giảm giá</th>
-                        <th>Áp dụng</th>
-                        <th>Ngày bắt đầu</th>
-                        <th>Ngày hết hạn</th>
-                        <th>Trạng thái</th>
-                        <th>Thêm</th>
+                        <th>{{ __('home.Tên khuyến mãi') }}</th>
+                        <th>{{ __('home.Mã') }}</th>
+                        <th>{{ __('home.Phần trăm giảm giá') }}</th>
+                        <th>{{ __('home.Áp dụng') }}</th>
+                        <th>{{ __('home.ngày bắt đầu') }}</th>
+                        <th>{{ __('home.ngày hết hạn') }}</th>
+                        <th>{{ __('home.Trạng thái') }}</th>
+                        <th>{{ __('home.Thêm') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -45,7 +45,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger">
-                                        Xoá khuyến mãi
+                                        {{ __('home.Xoá khuyến mãi') }}
                                     </button>
                                 </form>
                             </td>

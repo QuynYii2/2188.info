@@ -4,9 +4,9 @@
             $product = \App\Models\Product::find($price_sale->product_id);
         @endphp
         <tr>
-            <td class="12">{{$price_sale->quantity}}</td>
-            <td>{{ number_format(convertCurrency('USD', $currency,($product->price - ($product->price * $price_sale->sales / 100)) * $price_sale->quantity), 0, ',', '.') }} {{$currency}}</td>
-            <td>{{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
+            <td class="">{{$price_sale->quantity}}</td>
+            <td>-{{ number_format(convertCurrency('USD', $currency,($product->price * $price_sale->sales / 100) * $price_sale->quantity), 0, ',', '.') }} {{$currency}} </td>
+            <td class="">{{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
         </tr>
     @endforeach
 @endif

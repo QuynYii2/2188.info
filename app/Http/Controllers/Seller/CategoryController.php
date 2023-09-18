@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Seller;
 
+use App\Enums\CategoryStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\TranslateController;
@@ -12,18 +13,20 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
+        (new HomeController())->getLocale($request);
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         return view('backend/categories/index', [
             'categories' => $categories
         ]);
 
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        $categories = Category::all();
+        (new HomeController())->getLocale($request);
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         return view('backend/categories/create', [
             'categories' => $categories
         ]);
@@ -32,6 +35,7 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
+        (new HomeController())->getLocale($request);
         try {
             $validatedData = $request->validate([
                 'category_name' => 'required',
@@ -95,15 +99,17 @@ class CategoryController extends Controller
     }
 
 
-    public function show(Category $category)
+    public function show(Category $request, $category)
     {
+        (new HomeController())->getLocale($request);
         return view('backend/categories/edit', compact('category'));
     }
 
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        $categories = Category::all();
+        (new HomeController())->getLocale($request);
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $category = Category::find($id);
         if (!$category) {
             return back();
@@ -114,6 +120,7 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
+        (new HomeController())->getLocale($request);
 
         try {
             $category = Category::find($id);
@@ -182,18 +189,28 @@ class CategoryController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        (new HomeController())->getLocale($request);
         try {
             $category = Category::find($id);
             if (!$category) {
                 return back();
             }
-            if ($category->user_id != Auth::user()->id) {
-                alert()->error('Error', 'Không thể xoá, Vui lòng thử lại');
-                return redirect()->route('seller.categories.index');
+            $isAdmin = (new HomeController())->checkAdmin();
+            if ($isAdmin == false) {
+                if ($category->user_id != Auth::user()->id) {
+                    alert()->error('Error', 'Không thể xoá, Vui lòng thử lại');
+                    return redirect()->route('seller.categories.index');
+                }
             }
-            $category->delete();
+            $category->status = CategoryStatus::DELETED;
+            $categories = Category::where('parent_id', $id)->get();
+            $category->save();
+            foreach ($categories as $item) {
+                $item = Category::where('parent_id', $id)->get();
+                $item->save();
+            }
             alert()->success('Success', 'Category đã được xóa thành công!');
             return redirect()->route('seller.categories.index');
         } catch (\Exception $exception) {

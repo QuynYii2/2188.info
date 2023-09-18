@@ -11,7 +11,9 @@ class MemberPartner extends Model
 
     protected $fillable = [
         'id',
+        // member được follow
         'company_id_source',
+        // member đi follow
         'company_id_follow',
         'quantity',
         'price',
