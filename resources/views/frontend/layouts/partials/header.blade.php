@@ -632,7 +632,7 @@
                                                 <a class="item d-flex" href="{{ route('category.show', $cate->id) }}">
                                                     <i class="fa-solid fa-tv"></i>
                                                     @if(locationHelper() == 'kr')
-                                                        <div class="item-text">{{ $cate->name_ko }}</div>
+                                                        <div class="item-text">{{ $cate->name }}</div>
                                                     @elseif(locationHelper() == 'cn')
                                                         <div class="item-text">{{$cate->name_zh}}</div>
                                                     @elseif(locationHelper() == 'jp')
