@@ -42,7 +42,11 @@ class CategoryController extends Controller
                 'category_parentID' => 'nullable',
             ]);
 
-            $categoryOld = DB::table('categories')->where([['name', $validatedData['category_name']], ['parent_id', $validatedData['category_parentID']]])->first();
+            $categoryOld = DB::table('categories')->where([
+                ['name', $validatedData['category_name']],
+                ['parent_id', $validatedData['category_parentID']],
+                ['status', '!=', CategoryStatus::DELETED],
+            ])->first();
             if ($categoryOld) {
                 alert()->error('Error', 'Tên chuyên mục tồn tại');
                 return back();
