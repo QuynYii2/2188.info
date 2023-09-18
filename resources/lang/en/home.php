@@ -501,7 +501,7 @@ return [
     'Wholesale price list' => 'Bảng giá sỉ',
     'Price list' => 'Bảng giá',
     'Month' => 'Tháng',
-    '19 customers are viewing this product' => '19 khách hàng đang xem sản phẩm này',
+    '19 customers are viewing this product' => ' Lượt xem',
     'The minimum order quantity is 2 pair' => 'Số lượng đặt hàng tối thiểu là 2 đôi',
     'pair' => 'đôi',
     'Lead time' => 'Thời gian thực hiện',

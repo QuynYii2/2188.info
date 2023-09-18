@@ -253,7 +253,7 @@
         <div class="grid second-nav">
             <div class="column-xs-12">
                 <nav>
-{{--                    {!! getBreadcrumbs('product', $product) !!}--}}
+                    {{--                    {!! getBreadcrumbs('product', $product) !!}--}}
                 </nav>
             </div>
         </div>
@@ -301,38 +301,78 @@
                         @else
                             <div class="item-text">{{$product->name_en}}</div>
                         @endif</div>
-                    <div class="product-origin">{{ __('home.ORIGIN') }}:
-                        @php
-                            $ld = new \App\Http\Controllers\TranslateController();
-                        @endphp
-                        {{ $ld->translateText($product->origin, locationPermissionHelper()) }}
+                    <div class="d-flex">
+                        <div class="product-origin">{{ __('home.ORIGIN') }}:
+                            @php
+                                $ld = new \App\Http\Controllers\TranslateController();
+                            @endphp
+                            {{ $ld->translateText($product->origin, locationPermissionHelper()) }}
+                        </div>
+                        <div class="card-rating text-left ml-3">
+                            @php
+                                $ratings = \App\Models\EvaluateProduct::where('product_id', $product->id)->get();
+                                $totalRatings = $ratings->count();
+                                $totalStars = 0;
+                                foreach ($ratings as $rating) {
+                                    $totalStars += $rating->star_number;
+                                }
+                                $averageRating = $totalRatings > 0 ? $totalStars / $totalRatings : 0;
+                                $averageRatingsFormatted = number_format($averageRating, 2);
+                            @endphp
+
+                            @for ($i = 1; $i <= 5; $i++)
+                                <i class="fa-solid fa-star"
+                                   style="color: {{ $i <= $averageRating ? '#fac325' : '#ccc' }}"></i>
+                            @endfor
+
+                            <span>{{ $averageRatingsFormatted }} ({{ $totalRatings }})</span>
+                        </div>
+                        <div class="eyes ml-3"><i
+                                    class="fa-regular fa-eye"></i>{{$product->views}}{{ __('home.19 customers are viewing this product') }}
+                        </div>
                     </div>
-                    <div class="card-rating text-left">
-                        @php
-                            $ratings = \App\Models\EvaluateProduct::where('product_id', $product->id)->get();
-                            $totalRatings = $ratings->count();
-                            $totalStars = 0;
-                            foreach ($ratings as $rating) {
-                                $totalStars += $rating->star_number;
-                            }
-                            $averageRating = $totalRatings > 0 ? $totalStars / $totalRatings : 0;
-                            $averageRatingsFormatted = number_format($averageRating, 2);
-                        @endphp
-
-                        @for ($i = 1; $i <= 5; $i++)
-                            <i class="fa-solid fa-star" style="color: {{ $i <= $averageRating ? '#fac325' : '#ccc' }}"></i>
-                        @endfor
-
-                        <span>{{ $averageRatingsFormatted }} ({{ $totalRatings }})</span>
+                    <div class="column-xs-12 column-md-10 layout-fixed_rm">
+                        <div class="main-actions">
+                            <form action="">
+                                <div class="express-header">
+                                    @php
+                                        $price_sales = \App\Models\ProductSale::where('product_id', '=', $product->id)->get();
+                                    @endphp
+                                    @if(!$price_sales->isEmpty())
+                                        @foreach($price_sales as $price_sale)
+                                            @php
+                                                $product = \App\Models\Product::find($price_sale->product_id);
+                                            @endphp
+                                            <tr>
+{{--                                                <p>{{ __('home.The minimum order quantity is 2 pair') }} {{$price_sale->quantity}} {{ __('home.pair') }}</p>--}}
+                                                <div class="item-center d-flex justify-content-between">
+                                                    <span> {{$price_sale->quantity}} {{ __('home.pair') }}</span>
+                                                    @if($product->price != null)
+                                                        <div id="productPrice"
+                                                             class="price">{{ __('home.from') }}{{$price_sale->sales}}</div>
+                                                    @else
+                                                        <strike id="productOldPrice"> {{ __('home.from') }}{{ number_format(convertCurrency('USD', $currency,($product->price * $price_sale->sales / 100) * $price_sale->quantity), 0, ',', '.') }} {{$currency}}</strike>
+                                                    @endif
+                                                </div>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </form>
+                        </div>
                     </div>
 
                     <div class="product-price d-flex" style="gap: 3rem">
                         @if($product->price != null)
-                            <strike class="productOldPrice" id="productOldPrice">({{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}})</strike>
+                            <strike class="productOldPrice"
+                                    id="productOldPrice">({{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}
+                                )</strike>
                             <div id="productPrice"
                                  class="price">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</div>
                         @else
-                            <strike class="productOldPrice" id="productOldPrice">({{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}})</strike>
+                            <strike class="productOldPrice"
+                                    id="productOldPrice">({{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}
+                                )</strike>
                         @endif
                     </div>
                     <div class="description-text">
@@ -357,9 +397,9 @@
                                     $arrayAtt = array();
                                     $arrayAtt = explode(',', $properties_id);
                                 @endphp
-                                <div class="col-sm-6 col-6">
+                                <div class="col-sm-6 col-6 d-flex">
                                     <label>{{($att->{'name' . $langDisplay->getLangDisplay()})}}</label>
-                                    <div class="radio-toolbar">
+                                    <div class="radio-toolbar ml-3">
                                         @foreach($arrayAtt as $data)
                                             @php
                                                 $property = Properties::find($data);
@@ -379,8 +419,8 @@
                                 </div>
                             @endforeach
                         </div>
-                        <a id="resetSelect" class="btn btn-dark mt-3 "
-                           style="color: white">{{ __('home.Reset select') }}</a>
+                        {{--                        <a id="resetSelect" class="btn btn-dark mt-3 "--}}
+                        {{--                           style="color: white">{{ __('home.Reset select') }}</a>--}}
                     @endif
                     <div class="">
                         <input id="product_id" hidden value="{{$product->id}}">
@@ -390,19 +430,19 @@
                         @endif
 
                     </div>
-                    <div class="count__wrapper count__wrapper--ml mt-3">
-                        <label for="qty">{{ __('home.remaining') }}<span
-                                    id="productQuantity">{{$product->qty}}</span></label>
-                    </div><!-- Button to trigger modal -->
+                    {{--                    <div class="count__wrapper count__wrapper--ml mt-3">--}}
+                    {{--                        <label for="qty">{{ __('home.remaining') }}<span--}}
+                    {{--                                    id="productQuantity">{{$product->qty}}</span></label>--}}
+                    {{--                    </div><!-- Button to trigger modal -->--}}
                     <!-- Button trigger modal -->
                     @php
                         $price_sales = \App\Models\ProductSale::where('product_id', '=', $product->id)->get();
                     @endphp
-                    @if($price_sales)
-                        <a class="p-2 btn-light" style="cursor: pointer" data-toggle="modal" data-target="#priceList">
-                            {{ __('home.Wholesale price list') }}
-                        </a>
-                    @endif
+                    {{--                    @if($price_sales)--}}
+                    {{--                        <a class="p-2 btn-light" style="cursor: pointer" data-toggle="modal" data-target="#priceList">--}}
+                    {{--                            {{ __('home.Wholesale price list') }}--}}
+                    {{--                        </a>--}}
+                    {{--                    @endif--}}
                     <!-- Modal -->
                     <div class="modal fade" id="priceList" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -458,9 +498,6 @@
                         <button class="share"><i class="fa-regular fa-heart"></i></button>
                         <button class="share"><i class="fa-solid fa-share-nodes"></i></button>
                     </div>
-                    <div class="eyes"><i
-                                class="fa-regular fa-eye"></i> {{ __('home.19 customers are viewing this product') }}
-                    </div>
                 </form>
             </div>
             <div class="column-xs-12 column-md-3 layout-fixed">
@@ -496,9 +533,9 @@
                             </div>
                         </div>
                         <div class="express-footer">
-{{--                            <a href="#">--}}
-{{--                                <div class="button-start">{{ __('home.Start orde') }}</div>--}}
-{{--                            </a>--}}
+                            {{--                            <a href="#">--}}
+                            {{--                                <div class="button-start">{{ __('home.Start orde') }}</div>--}}
+                            {{--                            </a>--}}
                             <a href="{{ route('shop.information.show', $name->id) }}">
                                 <div class="button-call"><i
                                             class="fa-solid fa-envelope"></i> {{ __('home.Contact supplier') }}</div>
@@ -515,31 +552,31 @@
                     $shopInformation = \App\Models\ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first()
                 @endphp
                 @if($shopInformation)
-                <div class="detail-module">
-                    <form action="">
-                        <div class="widget-supplier-card company-card-integrated company-card-integrated-lite has-ta origin gps-background ilvietnam-0-0-1 snipcss-Kyhj9 style-v8cHz"
-                             data-role="widget-supplier-card" data-aui="supplier-card" id="style-v8cHz">
-                            <div class="card-central-logo ilvietnam-1-1-2">
-                                <a href="" target="_blank" data-aui="ta-ordered"
-                                   rel="nofollow" class="ilvietnam-2-2-3">
-                                    <img src="https://img.alicdn.com/imgextra/i1/O1CN01AOhmtZ1HQ08UWY7sf_!!6000000000751-2-tps-266-54.png_240x240.jpg"
-                                         class="ilvietnam-3-3-4 style-q27At" id="style-q27At">
-                                </a>
-                            </div>
-                            <div class="company-name-container ilvietnam-1-1-5">
-                                <a class="company-name company-name-lite-vb ilvietnam-2-5-6"
-                                   href="{{ route('shop.information.show', $name->id) }}"
-                                   target="_blank" title="Tên công ty"
-                                   data-aui="company-name" data-domdot="id:3317">
-                                    {{$name->name}}
-                                </a>
-                            </div>
-                            <div class="company-brand ilvietnam-1-1-7">
+                    <div class="detail-module">
+                        <form action="">
+                            <div class="widget-supplier-card company-card-integrated company-card-integrated-lite has-ta origin gps-background ilvietnam-0-0-1 snipcss-Kyhj9 style-v8cHz"
+                                 data-role="widget-supplier-card" data-aui="supplier-card" id="style-v8cHz">
+                                <div class="card-central-logo ilvietnam-1-1-2">
+                                    <a href="" target="_blank" data-aui="ta-ordered"
+                                       rel="nofollow" class="ilvietnam-2-2-3">
+                                        <img src="https://img.alicdn.com/imgextra/i1/O1CN01AOhmtZ1HQ08UWY7sf_!!6000000000751-2-tps-266-54.png_240x240.jpg"
+                                             class="ilvietnam-3-3-4 style-q27At" id="style-q27At">
+                                    </a>
+                                </div>
+                                <div class="company-name-container ilvietnam-1-1-5">
+                                    <a class="company-name company-name-lite-vb ilvietnam-2-5-6"
+                                       href="{{ route('shop.information.show', $name->id) }}"
+                                       target="_blank" title="Tên công ty"
+                                       data-aui="company-name" data-domdot="id:3317">
+                                        {{$name->name}}
+                                    </a>
+                                </div>
+                                <div class="company-brand ilvietnam-1-1-7">
                                 <span class="ilvietnam-2-7-8">
                                     {{ __('home.Producer') }} {{$shopInformation->product_name}}
                                 </span>
-                            </div>
-                            <div class="card-supplier card-icons-lite ilvietnam-1-1-9">
+                                </div>
+                                <div class="card-supplier card-icons-lite ilvietnam-1-1-9">
                                 <span class="company-name-country ilvietnam-2-9-10">
                                     <i class="icbu-icon-flag icbu-icon-flag-cn ilvietnam-3-10-11">
 
@@ -548,7 +585,7 @@
                                        {{$shopInformation->country}}
                                     </span>
                                 </span>
-                                <a class="verify-info ilvietnam-2-9-13" data-aui="ggs-icon" rel="nofollow">
+                                    <a class="verify-info ilvietnam-2-9-13" data-aui="ggs-icon" rel="nofollow">
                                     <span class="join-year ilvietnam-3-13-14">
                                         <span class="value ilvietnam-4-14-15">{{$shopInformation->industry_year}}
                                         </span>
@@ -556,138 +593,138 @@
                                             YRS
                                         </span>
                                     </span>
-                                </a>
-                            </div>
-                            <div class="ability ilvietnam-1-1-17">
-                                <img src="https://img.alicdn.com/imgextra/i3/O1CN015NySK71aBmY1PTG9K_!!6000000003292-2-tps-28-28.png"
-                                     class="ilvietnam-2-17-18">
-                                {{ __('home.Registered Trademark') }} (1)
-                            </div>
-                            <div class="company-basicCapacity ilvietnam-1-1-19">
-                                <a href=""
-                                   class="attr-item ilvietnam-2-19-20" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-title ilvietnam-3-20-21">
-                                        {{ __('home.Store Rating') }}
-                                    </div>
-                                    <div class="attr-content ilvietnam-3-20-22" title="4,7(21)">
-                                        @php
-                                            $userId = $name->id;
-                                            $evaluates = DB::table('evaluate_products')
-                                                ->join('products', 'products.id', '=', 'evaluate_products.product_id')
-                                                ->where('products.user_id', $userId)
-                                                ->select('evaluate_products.star_number')
-                                                ->get();
-                                            $totalRating = $evaluates->count();
-                                            $totalStars = 0;
-                                            foreach ($evaluates as $evaluate) {
-                                                $totalStars += $evaluate->star_number;
-                                            }
-                                            $averageRatings = $totalRating > 0 ? $totalStars / $totalRating : 0;
-                                            $averageRatingsFormatted = number_format($averageRatings, 2);
-                                        @endphp
-                                        {{ $averageRatingsFormatted }} ({{ $totalRating }})
+                                    </a>
+                                </div>
+                                <div class="ability ilvietnam-1-1-17">
+                                    <img src="https://img.alicdn.com/imgextra/i3/O1CN015NySK71aBmY1PTG9K_!!6000000003292-2-tps-28-28.png"
+                                         class="ilvietnam-2-17-18">
+                                    {{ __('home.Registered Trademark') }} (1)
+                                </div>
+                                <div class="company-basicCapacity ilvietnam-1-1-19">
+                                    <a href=""
+                                       class="attr-item ilvietnam-2-19-20" aria-haspopup="true" aria-expanded="false">
+                                        <div class="attr-title ilvietnam-3-20-21">
+                                            {{ __('home.Store Rating') }}
+                                        </div>
+                                        <div class="attr-content ilvietnam-3-20-22" title="4,7(21)">
+                                            @php
+                                                $userId = $name->id;
+                                                $evaluates = DB::table('evaluate_products')
+                                                    ->join('products', 'products.id', '=', 'evaluate_products.product_id')
+                                                    ->where('products.user_id', $userId)
+                                                    ->select('evaluate_products.star_number')
+                                                    ->get();
+                                                $totalRating = $evaluates->count();
+                                                $totalStars = 0;
+                                                foreach ($evaluates as $evaluate) {
+                                                    $totalStars += $evaluate->star_number;
+                                                }
+                                                $averageRatings = $totalRating > 0 ? $totalStars / $totalRating : 0;
+                                                $averageRatingsFormatted = number_format($averageRatings, 2);
+                                            @endphp
+                                            {{ $averageRatingsFormatted }} ({{ $totalRating }})
 
+                                        </div>
+                                    </a>
+                                    <div class="attr-item ilvietnam-2-19-23" aria-haspopup="true" aria-expanded="false">
+                                        <div class="attr-title ilvietnam-3-23-24">
+                                            {{ __('home.On-time delivery rate') }}
+                                        </div>
+                                        <div class="attr-content ilvietnam-3-23-25" title="95,6%">
+                                            95,6%
+                                        </div>
+                                    </div>
+                                    <div class="attr-item ilvietnam-2-19-26" aria-haspopup="true" aria-expanded="false">
+                                        <div class="attr-title ilvietnam-3-26-27">
+                                            {{ __('home.Response time') }}
+                                        </div>
+                                        <div class="attr-content ilvietnam-3-26-28" title="≤3h">
+                                            ≤3h
+                                        </div>
+                                    </div>
+                                    <div class="attr-item ilvietnam-2-19-29" aria-haspopup="true" aria-expanded="false">
+                                        <div class="attr-title ilvietnam-3-29-30">
+                                            {{ __('home.Online revenue') }}
+                                        </div>
+                                        <div class="attr-content ilvietnam-3-29-31" title="$480,000+">
+                                            ${{$shopInformation->annual_output}}+
+                                        </div>
+                                    </div>
+                                    <div class="attr-item ilvietnam-2-19-32" aria-haspopup="true" aria-expanded="false">
+                                        <div class="attr-title ilvietnam-3-32-33">
+                                            {{ __('home.Floor space') }}
+                                        </div>
+                                        <div class="attr-content ilvietnam-3-32-34" title="1000m²">
+                                            {{$shopInformation->acreage}}m²
+                                        </div>
+                                    </div>
+                                    <div class="attr-item ilvietnam-2-19-35" aria-haspopup="true" aria-expanded="false">
+                                        <div class="attr-title ilvietnam-3-35-36">
+                                            {{ __('home.Staff') }}
+                                        </div>
+                                        <div class="attr-content ilvietnam-3-35-37" title="14">
+                                            {{$shopInformation->inspection_staff}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="company-productionServiceCapacity service-2 ilvietnam-1-1-38">
+                                    <div class="attr-title ilvietnam-2-38-39">
+                                        {{ __('home.Service') }}
+                                    </div>
+                                    <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
+                                        <div class="attr-content ilvietnam-3-40-41" title="tùy chỉnh nhỏ">
+                                            {{ __('home.Small customization') }}
+                                        </div>
+                                    </div>
+                                    <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
+                                        <div class="attr-content ilvietnam-3-42-43" title="Tùy chỉnh dựa trên thiết kế">
+                                            {{ __('home.Customization based on design') }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="company-productionServiceCapacity service-2 ilvietnam-1-1-38">
+                                    <div class="attr-title ilvietnam-2-38-39">
+                                        {{ __('home.Quality control') }}
+                                    </div>
+                                    <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
+                                        <div class="attr-content ilvietnam-3-40-41"
+                                             title="Nhận dạng truy xuất nguồn gốc nguyên liệu">
+                                            {{ __('home.Identification of traceability of raw materials') }}
+                                        </div>
+                                    </div>
+                                    <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
+                                        <div class="attr-content ilvietnam-3-42-43" title="Kiểm tra thành phẩm">
+                                            {{ __('home.Finished product inspection') }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="attr-title ilvietnam-2-38-39">{{ __('home.Certificate') }}
+                                </div>
+                                <a href="{{ route('shop.information.show', $name->id) }}"
+                                   class="company-qualificationCertificate service-4 ilvietnam-1-1-50">
+                                    <div class="attr-item ilvietnam-2-50-53" aria-haspopup="true" aria-expanded="false">
+                                        <div class="attr-content ilvietnam-3-53-54">
+                                            {{ __('home.Certificate') }}
+                                        </div>
                                     </div>
                                 </a>
-                                <div class="attr-item ilvietnam-2-19-23" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-title ilvietnam-3-23-24">
-                                        {{ __('home.On-time delivery rate') }}
-                                    </div>
-                                    <div class="attr-content ilvietnam-3-23-25" title="95,6%">
-                                        95,6%
-                                    </div>
-                                </div>
-                                <div class="attr-item ilvietnam-2-19-26" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-title ilvietnam-3-26-27">
-                                        {{ __('home.Response time') }}
-                                    </div>
-                                    <div class="attr-content ilvietnam-3-26-28" title="≤3h">
-                                        ≤3h
-                                    </div>
-                                </div>
-                                <div class="attr-item ilvietnam-2-19-29" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-title ilvietnam-3-29-30">
-                                        {{ __('home.Online revenue') }}
-                                    </div>
-                                    <div class="attr-content ilvietnam-3-29-31" title="$480,000+">
-                                        ${{$shopInformation->annual_output}}+
-                                    </div>
-                                </div>
-                                <div class="attr-item ilvietnam-2-19-32" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-title ilvietnam-3-32-33">
-                                        {{ __('home.Floor space') }}
-                                    </div>
-                                    <div class="attr-content ilvietnam-3-32-34" title="1000m²">
-                                        {{$shopInformation->acreage}}m²
-                                    </div>
-                                </div>
-                                <div class="attr-item ilvietnam-2-19-35" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-title ilvietnam-3-35-36">
-                                        {{ __('home.Staff') }}
-                                    </div>
-                                    <div class="attr-content ilvietnam-3-35-37" title="14">
-                                        {{$shopInformation->inspection_staff}}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="company-productionServiceCapacity service-2 ilvietnam-1-1-38">
-                                <div class="attr-title ilvietnam-2-38-39">
-                                    {{ __('home.Service') }}
-                                </div>
-                                <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-content ilvietnam-3-40-41" title="tùy chỉnh nhỏ">
-                                        {{ __('home.Small customization') }}
-                                    </div>
-                                </div>
-                                <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-content ilvietnam-3-42-43" title="Tùy chỉnh dựa trên thiết kế">
-                                        {{ __('home.Customization based on design') }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="company-productionServiceCapacity service-2 ilvietnam-1-1-38">
-                                <div class="attr-title ilvietnam-2-38-39">
-                                    {{ __('home.Quality control') }}
-                                </div>
-                                <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-content ilvietnam-3-40-41"
-                                         title="Nhận dạng truy xuất nguồn gốc nguyên liệu">
-                                        {{ __('home.Identification of traceability of raw materials') }}
-                                    </div>
-                                </div>
-                                <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-content ilvietnam-3-42-43" title="Kiểm tra thành phẩm">
-                                        {{ __('home.Finished product inspection') }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="attr-title ilvietnam-2-38-39">{{ __('home.Certificate') }}
-                            </div>
-                            <a href="{{ route('shop.information.show', $name->id) }}"
-                               class="company-qualificationCertificate service-4 ilvietnam-1-1-50">
-                                <div class="attr-item ilvietnam-2-50-53" aria-haspopup="true" aria-expanded="false">
-                                    <div class="attr-content ilvietnam-3-53-54">
-                                        {{ __('home.Certificate') }}
-                                    </div>
-                                </div>
-                            </a>
-                            <div class="company-profile ilvietnam-1-1-55">
-                                <a href="{{ route('shop.information.show', $name->id) }}"
-                                   class="detail-next-btn detail-next-medium detail-next-btn-normal ilvietnam-2-55-56 attr-item">
+                                <div class="company-profile ilvietnam-1-1-55">
+                                    <a href="{{ route('shop.information.show', $name->id) }}"
+                                       class="detail-next-btn detail-next-medium detail-next-btn-normal ilvietnam-2-55-56 attr-item">
                                     <span class="detail-next-btn-helper ilvietnam-3-56-57">
                                        {{ __('home.company profile') }}
                                     </span>
-                                </a>
-                                <a href="{{ route('shop.information.show', $name->id) }}"
-                                   class="detail-next-btn detail-next-medium detail-next-btn-normal ilvietnam-2-55-56 attr-item">
+                                    </a>
+                                    <a href="{{ route('shop.information.show', $name->id) }}"
+                                       class="detail-next-btn detail-next-medium detail-next-btn-normal ilvietnam-2-55-56 attr-item">
                                     <span class="detail-next-btn-helper ilvietnam-3-58-59">
                                         {{ __('home.Visit the store') }}
                                     </span>
-                                </a>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
+                        </form>
+                    </div>
                 @endif
             </div>
         </div>
@@ -821,7 +858,8 @@
                                     @if($res->user_id == Auth::user()->id)
                                         <td>
                                             <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#edit-comment" onclick="getCommentById({{ $res->id }})">
+                                                    data-target="#edit-comment"
+                                                    onclick="getCommentById({{ $res->id }})">
                                                 {{ __('home.edit-comment') }}
                                             </button>
                                         </td>
@@ -953,19 +991,19 @@
                         <div class="rating">
                             <input type="radio" name="star_number" id="star-edit-1" value="1" hidden="">
                             <label for="star-edit-1" onclick="starCheckEdit(1)"><i id="icon-star-edit-1"
-                                                                         class="fa fa-star"></i></label>
+                                                                                   class="fa fa-star"></i></label>
                             <input type="radio" name="star_number" id="star-edit-2" value="2" hidden="">
                             <label for="star-edit-2" onclick="starCheckEdit(2)"><i id="icon-star-edit-2"
-                                                                         class="fa fa-star"></i></label>
+                                                                                   class="fa fa-star"></i></label>
                             <input type="radio" name="star_number" id="star-edit-3" value="3" hidden="">
                             <label for="star-edit-3" onclick="starCheckEdit(3)"><i id="icon-star-edit-3"
-                                                                         class="fa fa-star"></i></label>
+                                                                                   class="fa fa-star"></i></label>
                             <input type="radio" name="star_number" id="star-edit-4" value="4" hidden="">
                             <label for="star-edit-4" onclick="starCheckEdit(4)"><i id="icon-star-edit-4"
-                                                                         class="fa fa-star"></i></label>
+                                                                                   class="fa fa-star"></i></label>
                             <input type="radio" name="star_number" id="star-edit-5" value="5" hidden="" checked>
                             <label for="star-edit-5" onclick="starCheckEdit(5)"><i id="icon-star-edit-5"
-                                                                         class="fa fa-star"></i></label>
+                                                                                   class="fa fa-star"></i></label>
                         </div>
                         <input id="input-star-edit" value="0" hidden="">
                         <div id="text-message" class="text-danger d-none">{{ __('home.Please select star rating') }}
