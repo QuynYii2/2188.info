@@ -57,20 +57,47 @@ class CategoryController extends Controller
             if (!$slug) {
                 $slug = \Str::slug($name);
             }
+            $ld = new TranslateController();
 
             $category = new Category();
-            $category->name = $name;
+            switch (locationHelper()) {
+                case 'kr';
+                    $category->name = $name;
+                    $category->name_vi = $ld->translateText($name, 'vi');
+                    $category->name_ja = $ld->translateText($name, 'ja');
+                    $category->name_ko = $name;
+                    $category->name_en = $ld->translateText($name, 'en');
+                    $category->name_zh = $ld->translateText($name, 'zh-CN');
+                    break;
+                case 'cn';
+                    $category->name = $name;
+                    $category->name_vi = $ld->translateText($name, 'vi');
+                    $category->name_ja = $ld->translateText($name, 'ja');
+                    $category->name_ko = $ld->translateText($name, 'ko');
+                    $category->name_en = $ld->translateText($name, 'en');
+                    $category->name_zh = $name;
+                    break;
+                case 'jp';
+                    $category->name = $name;
+                    $category->name_vi = $ld->translateText($name, 'vi');
+                    $category->name_ja = $name;
+                    $category->name_ko = $ld->translateText($name, 'ko');
+                    $category->name_en = $ld->translateText($name, 'en');
+                    $category->name_zh = $ld->translateText($name, 'zh-CN');
+                    break;
+                case 'vi';
+                    $category->name = $name;
+                    $category->name_vi = $name;
+                    $category->name_ja = $ld->translateText($name, 'ja');
+                    $category->name_ko = $ld->translateText($name, 'ko');
+                    $category->name_en = $ld->translateText($name, 'en');
+                    $category->name_zh = $ld->translateText($name, 'zh-CN');
+                    break;
+            }
+
             $category->user_id = Auth::user()->id;
             $category->slug = $slug;
             $category->description = $request->input('category_description');
-
-            $ld = new TranslateController();
-
-            $category->name_vi = $ld->translateText($name, 'vi');
-            $category->name_ja = $ld->translateText($name, 'ja');
-            $category->name_ko = $ld->translateText($name, 'ko');
-            $category->name_en = $ld->translateText($name, 'en');
-            $category->name_zh = $ld->translateText($name, 'zh-CN');
 
             if ($request->hasFile('thumbnail')) {
                 $thumbnail = $request->file('thumbnail');
