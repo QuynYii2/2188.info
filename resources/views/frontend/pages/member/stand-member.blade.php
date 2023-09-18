@@ -87,36 +87,49 @@
     <div class="container-fluid">
         @if($company)
             @php
-                $memberAccounts = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->get();
-                $companyPerson = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->first();
-                $oldUser = \App\Models\User::where('email', $companyPerson->email)->first();
-                if (!$memberAccounts->isEmpty()){
-                  $products = \App\Models\Product::where(function ($query) use ($company, $memberAccounts){
-                        if (count($memberAccounts) == 2){
-                            $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
-                            $user2 = \App\Models\User::where('email', $memberAccounts[1]->email)->first();
-                        } else{
-                            $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
-                            $user2 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
-                        }
+                if (Auth::check()){
+                                                $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                                                  $isMember = null;
+                                                if ($memberPerson){
+                                                    $member = \App\Models\MemberRegisterInfo::where([
+                                                        ['id', $memberPerson->member_id],
+                                                        ['status', \App\Enums\MemberRegisterInfoStatus::ACTIVE]
+                                                    ])->first();
+                                                    if ($member){
+                                                        $isMember = true;
+                                                    }
+                                                }
+                                            }
+                    $memberAccounts = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->get();
+                    $companyPerson = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->first();
+                    $oldUser = \App\Models\User::where('email', $companyPerson->email)->first();
+                    if (!$memberAccounts->isEmpty()){
+                      $products = \App\Models\Product::where(function ($query) use ($company, $memberAccounts){
+                            if (count($memberAccounts) == 2){
+                                $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
+                                $user2 = \App\Models\User::where('email', $memberAccounts[1]->email)->first();
+                            } else{
+                                $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
+                                $user2 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
+                            }
 
-                        $query->where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])
-                              ->orWhere([['user_id', $user1->id], ['status', \App\Enums\ProductStatus::ACTIVE]])
-                              ->orWhere([['user_id', $user2->id], ['status', \App\Enums\ProductStatus::ACTIVE]]);
-                        })->get();
-                } else{
-                    $products = \App\Models\Product::where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])->get();
-                }
-                $firstProduct = null;
-                if (!$products->isEmpty()){
-                 $firstProduct = $products[0];
-                }
+                            $query->where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])
+                                  ->orWhere([['user_id', $user1->id], ['status', \App\Enums\ProductStatus::ACTIVE]])
+                                  ->orWhere([['user_id', $user2->id], ['status', \App\Enums\ProductStatus::ACTIVE]]);
+                            })->get();
+                    } else{
+                        $products = \App\Models\Product::where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])->get();
+                    }
+                    $firstProduct = null;
+                    if (!$products->isEmpty()){
+                     $firstProduct = $products[0];
+                    }
             @endphp
             <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
-{{--            <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>--}}
+            {{--            <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>--}}
             <div class="d-flex justify-content-between align-items-center p-3">
                 <div>
-                    <a href=" @if($company->member == "LOGISTIC") {{ route('list.products.shop.show', $oldUser->id) }} @endif "
+                    <a href=" {{ route('stand.register.member.index', $member->id) }}"
                        class="btn btn-primary mr-2">{{ __('home.상품 전시장') }}</a>
                     <a href="{{route('partner.register.member.index')}}"
                        class="btn btn-warning">{{ __('home.Partner List') }}</a>
