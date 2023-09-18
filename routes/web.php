@@ -211,7 +211,8 @@ Route::middleware(['auth'])->group(callback: function () {
     Route::get('/chat-message-sent', [SampleController::class, 'getListMessageSent'])->name('chat.message.sent');
     Route::get('/chat-message-received', [SampleController::class, 'getListMessageReceived'])->name('chat.message.received');
     //Setup marketing
-
+    // Product member
+    Route::get('/member/product-buy-lot/attribute/{id}', [\App\Http\Controllers\Frontend\ProductController::class, 'detailProduct'])->name('detail_product.member.attribute');
 
 // End register member
     //View member
@@ -334,7 +335,7 @@ Route::group(['middleware' => 'role.seller-or-admin'], function () {
     //
     //
     Route::get('/attributes/properties/{attributeID}', [PropertiesController::class, 'index'])->name('properties.index');
-    Route::get('/properties/create', [Propertientroller::class, 'create'])->name('properties.create');
+    Route::get('/properties/create', [PropertiesController::class, 'create'])->name('properties.create');
     Route::post('/properties', [PropertiesController::class, 'store'])->name('properties.store');
     //
     Route::get('/properties/{id}', [PropertiesController::class, 'show'])->name('properties.detail');
@@ -508,4 +509,9 @@ Route::group(['prefix' => 'seller', 'middleware' => 'role.seller-or-admin'], fun
 // Admin
 Route::group(['prefix' => 'admin', 'middleware' => 'role.admin'], function () {
     require_once __DIR__ . '/admin.php';
+});
+
+// Seller
+Route::group(['prefix' => 'seller', 'middleware' => 'role.seller-or-admin'], function () {
+    require_once __DIR__ . '/seller.php';
 });

@@ -418,11 +418,6 @@
                                             @endforeach
                                         @endif
                                     </div>
-                                    <button id="btnViewAttribute" data-id="{{$firstProduct->id}}" type="button"
-                                            class="btn" data-toggle="modal"
-                                            data-target="#modal-show-att">
-                                        {{ __('home.Xem thuộc tính') }}
-                                    </button>
                                 </div>
 
                                 <h6 class="text-center mt-2">{{ __('home.Xem chi tiết các hình ảnh khác') }}</h6>
