@@ -83,7 +83,7 @@
         padding-top: .625rem;
         padding-bottom: .625rem;
         flex: none;
-        flex-basis: 50%;
+        flex-basis: 30%;
         overflow: hidden;
     }
 
@@ -368,10 +368,10 @@
     @php
 
             @endphp
-    <div class="shop-page__info snipcss-sPWYr">
-        <div class="section-seller-overview-horizontal container">
+    <div class="shop-page__info">
+        <div class="section-seller-overview-horizontal container max-width">
             <div class="section-seller-overview-horizontal__leading row">
-                <div class="section-seller-overview-horizontal__leading-background style-8dPYj" id="style-8dPYj">
+                <div class="section-seller-overview-horizontal__leading-background">
                 </div>
                 <div class="section-seller-overview-horizontal__leading-background-mask">
                 </div>
@@ -599,6 +599,69 @@
                         </div>
                     </div>
                 </div>
+                <div class="section-seller-overview__item">
+                    <div class="section-seller-overview__item-icon-wrapper">
+                        <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0" class="shopee-svg-icon">
+                            <g>
+                                <circle cx="6.8" cy="4.2" fill="none" r="3.8" stroke-miterlimit="10">
+                                </circle>
+                                <polyline fill="none" points="9.2 12.5 11.2 14.5 14.2 11" stroke-linecap="round"
+                                          stroke-linejoin="round" stroke-miterlimit="10">
+                                </polyline>
+                                <path d="m .8 14c0-3.3 2.7-6 6-6 2.1 0 3.9 1 5 2.6" fill="none" stroke-linecap="round"
+                                      stroke-miterlimit="10">
+                                </path>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="section-seller-overview__item-text">
+                        <div class="section-seller-overview__item-text-name">
+                            Người theo dõi:&nbsp;
+                        </div>
+                        <div class="section-seller-overview__item-text-value">
+                            @php
+                                $member_partners = null;
+                                $member_partners = \App\Models\MemberPartner::where('company_id_follow','=',$company->id)->get()
+                            @endphp
+                            {{--                            @dd($member_partners)--}}
+                            @if(!$member_partners)
+                                0
+                            @else
+                                {{$member_partners->count()}}
+                            @endif
+
+                        </div>
+                    </div>
+                </div>
+                <div class="section-seller-overview__item">
+                    <div class="section-seller-overview__item-icon-wrapper">
+                        <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0" class="shopee-svg-icon">
+                            <g>
+                                <circle cx="6.8" cy="4.2" fill="none" r="3.8" stroke-miterlimit="10">
+                                </circle>
+                                <polyline fill="none" points="9.2 12.5 11.2 14.5 14.2 11" stroke-linecap="round"
+                                          stroke-linejoin="round" stroke-miterlimit="10">
+                                </polyline>
+                                <path d="m .8 14c0-3.3 2.7-6 6-6 2.1 0 3.9 1 5 2.6" fill="none" stroke-linecap="round"
+                                      stroke-miterlimit="10">
+                                </path>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <div class="section-seller-overview__item-text">
+                        <div class="section-seller-overview__item-text-name">
+                            {{ __('home.join') }}:&nbsp;
+                        </div>
+                        <div class="section-seller-overview__item-text-value">
+                            @if(!$shopInformation)
+                                0
+                            @else
+                                {{$shopInformation->industry_year}} {{ __('home.Năm trong ngành') }}
+                            @endif
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -606,12 +669,12 @@
             <div class="row">
 
                 <div class="productView-description">
-{{--                    <ul class="nav nav-tabs container-fluid pt-4" id="myTab" role="tablist">--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#product" role="tab"--}}
-{{--                               aria-controls="profile" aria-selected="false">{{ __('home.All products') }}</a>--}}
-{{--                        </li>--}}
-{{--                    </ul>--}}
+                    {{--                    <ul class="nav nav-tabs container-fluid pt-4" id="myTab" role="tablist">--}}
+                    {{--                        <li class="nav-item">--}}
+                    {{--                            <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#product" role="tab"--}}
+                    {{--                               aria-controls="profile" aria-selected="false">{{ __('home.All products') }}</a>--}}
+                    {{--                        </li>--}}
+                    {{--                    </ul>--}}
                     <div class="tab-content container-fluid" id="myTabContent">
                         <div class="tab-pane fade show active" id="product" role="tabpanel"
                              aria-labelledby="profile-tab">
