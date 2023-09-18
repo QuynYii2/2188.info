@@ -498,7 +498,7 @@ return [
     'Wholesale price list' => '도매가격',
     'Price list' => '가격표',
     'Month' => '월',
-    '19 customers are viewing this product' => '19명의 고객이 이 제품을 보고 있습니다.',
+    '19 customers are viewing this product' => ' 조회수.',
     'The minimum order quantity is 2 pair' => '최소 주문 수량은 두 켤레입니다.',
     'pair' => '켤레',
     'Lead time' => '리드타임',

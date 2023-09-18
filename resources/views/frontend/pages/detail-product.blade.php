@@ -301,29 +301,51 @@
                         @else
                             <div class="item-text">{{$product->name_en}}</div>
                         @endif</div>
-                    <div class="product-origin">{{ __('home.ORIGIN') }}:
-                        @php
-                            $ld = new \App\Http\Controllers\TranslateController();
-                        @endphp
-                        {{ $ld->translateText($product->origin, locationPermissionHelper()) }}
+                    <div class="d-flex">
+                        <div class="product-origin">{{ __('home.ORIGIN') }}:
+                            @php
+                                $ld = new \App\Http\Controllers\TranslateController();
+                            @endphp
+                            {{ $ld->translateText($product->origin, locationPermissionHelper()) }}
+                        </div>
+                        <div class="card-rating text-left ml-3">
+                            @php
+                                $ratings = \App\Models\EvaluateProduct::where('product_id', $product->id)->get();
+                                $totalRatings = $ratings->count();
+                                $totalStars = 0;
+                                foreach ($ratings as $rating) {
+                                    $totalStars += $rating->star_number;
+                                }
+                                $averageRating = $totalRatings > 0 ? $totalStars / $totalRatings : 0;
+                                $averageRatingsFormatted = number_format($averageRating, 2);
+                            @endphp
+
+                            @for ($i = 1; $i <= 5; $i++)
+                                <i class="fa-solid fa-star" style="color: {{ $i <= $averageRating ? '#fac325' : '#ccc' }}"></i>
+                            @endfor
+
+                            <span>{{ $averageRatingsFormatted }} ({{ $totalRatings }})</span>
+                        </div>
+                        <div class="eyes ml-3"><i class="fa-regular fa-eye"></i>{{$product->views}}{{ __('home.19 customers are viewing this product') }} </div>
                     </div>
-                    <div class="card-rating text-left">
-                        @php
-                            $ratings = \App\Models\EvaluateProduct::where('product_id', $product->id)->get();
-                            $totalRatings = $ratings->count();
-                            $totalStars = 0;
-                            foreach ($ratings as $rating) {
-                                $totalStars += $rating->star_number;
-                            }
-                            $averageRating = $totalRatings > 0 ? $totalStars / $totalRatings : 0;
-                            $averageRatingsFormatted = number_format($averageRating, 2);
-                        @endphp
+                    <div class="column-xs-12 column-md-11 layout-fixed_rm">
+                        <div class="main-actions">
+                            <form action="">
+                                <div class="express-header">
+                                    <p>{{ __('home.The minimum order quantity is 2 pair') }} {{$product->min}} {{ __('home.pair') }}</p>
+                                    <div class="item-center d-flex justify-content-between">
+                                        <span> {{$product->min}} {{ __('home.pair') }}</span>
 
-                        @for ($i = 1; $i <= 5; $i++)
-                            <i class="fa-solid fa-star" style="color: {{ $i <= $averageRating ? '#fac325' : '#ccc' }}"></i>
-                        @endfor
-
-                        <span>{{ $averageRatingsFormatted }} ({{ $totalRatings }})</span>
+                                        @if($product->price != null)
+                                            <div id="productPrice"
+                                                 class="price">{{ __('home.from') }}{{ number_format(convertCurrency('USD', $currency,$product->price * $product->min) , 0, ',', '.')}}{{$currency}}</div>
+                                        @else
+                                            <strike id="productOldPrice"> {{ __('home.from') }} {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strike>
+                                        @endif
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
 
                     <div class="product-price d-flex" style="gap: 3rem">
@@ -357,9 +379,9 @@
                                     $arrayAtt = array();
                                     $arrayAtt = explode(',', $properties_id);
                                 @endphp
-                                <div class="col-sm-6 col-6">
+                                <div class="col-sm-6 col-6 d-flex">
                                     <label>{{($att->{'name' . $langDisplay->getLangDisplay()})}}</label>
-                                    <div class="radio-toolbar">
+                                    <div class="radio-toolbar ml-3">
                                         @foreach($arrayAtt as $data)
                                             @php
                                                 $property = Properties::find($data);
@@ -379,8 +401,8 @@
                                 </div>
                             @endforeach
                         </div>
-                        <a id="resetSelect" class="btn btn-dark mt-3 "
-                           style="color: white">{{ __('home.Reset select') }}</a>
+{{--                        <a id="resetSelect" class="btn btn-dark mt-3 "--}}
+{{--                           style="color: white">{{ __('home.Reset select') }}</a>--}}
                     @endif
                     <div class="">
                         <input id="product_id" hidden value="{{$product->id}}">
@@ -390,19 +412,19 @@
                         @endif
 
                     </div>
-                    <div class="count__wrapper count__wrapper--ml mt-3">
-                        <label for="qty">{{ __('home.remaining') }}<span
-                                    id="productQuantity">{{$product->qty}}</span></label>
-                    </div><!-- Button to trigger modal -->
+{{--                    <div class="count__wrapper count__wrapper--ml mt-3">--}}
+{{--                        <label for="qty">{{ __('home.remaining') }}<span--}}
+{{--                                    id="productQuantity">{{$product->qty}}</span></label>--}}
+{{--                    </div><!-- Button to trigger modal -->--}}
                     <!-- Button trigger modal -->
                     @php
                         $price_sales = \App\Models\ProductSale::where('product_id', '=', $product->id)->get();
                     @endphp
-                    @if($price_sales)
-                        <a class="p-2 btn-light" style="cursor: pointer" data-toggle="modal" data-target="#priceList">
-                            {{ __('home.Wholesale price list') }}
-                        </a>
-                    @endif
+{{--                    @if($price_sales)--}}
+{{--                        <a class="p-2 btn-light" style="cursor: pointer" data-toggle="modal" data-target="#priceList">--}}
+{{--                            {{ __('home.Wholesale price list') }}--}}
+{{--                        </a>--}}
+{{--                    @endif--}}
                     <!-- Modal -->
                     <div class="modal fade" id="priceList" tabindex="-1" role="dialog"
                          aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -457,9 +479,6 @@
                         @endif
                         <button class="share"><i class="fa-regular fa-heart"></i></button>
                         <button class="share"><i class="fa-solid fa-share-nodes"></i></button>
-                    </div>
-                    <div class="eyes"><i
-                                class="fa-regular fa-eye"></i> {{ __('home.19 customers are viewing this product') }}
                     </div>
                 </form>
             </div>

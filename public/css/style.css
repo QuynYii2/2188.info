@@ -53,6 +53,12 @@ input.qtyminus {
   z-index: 10;
 }
 
+.layout-fixed_rm .main-actions {
+  border-radius: 15px;
+  padding: 15px 20px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
 .layout-fixed .main-actions {
   border-radius: 15px;
   padding: 15px 20px;
@@ -482,12 +488,8 @@ input.qtyminus {
   font-size: 14px;
 }
 .detail .product .eyes {
-  margin: 15px 0;
   font-size: 16px;
   color: gray;
-}
-.detail .product .eyes i {
-  margin-right: 10px;
 }
 .detail .product .buy {
   margin-top: 20px;
