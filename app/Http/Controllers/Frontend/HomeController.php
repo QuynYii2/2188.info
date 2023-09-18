@@ -351,6 +351,14 @@ class HomeController extends Controller
         return $currency;
     }
 
+    //Api convert currency
+    public function convertCurrency(Request $request, $total)
+    {
+        $currency = $this->getLocation($request);
+        $totalConvert = number_format(convertCurrency('USD', $currency, $total), 0, ',', '.');
+        return $totalConvert;
+    }
+
     //Start import user form nn21
     public function createMultilNewUser()
     {

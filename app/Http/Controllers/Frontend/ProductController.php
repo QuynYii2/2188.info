@@ -3,13 +3,18 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Enums\AttributeProductStatus;
+use App\Enums\CartStatus;
 use App\Enums\ProductStatus;
+use App\Enums\VariationStatus;
 use App\Http\Controllers\Controller;
 use App\Libraries\GeoIP;
 use App\Models\Attribute;
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Variation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
@@ -135,6 +140,115 @@ class ProductController extends Controller
         $testArray = $this->getArray($testArray);
 
         return view('frontend.pages.member.member-table-order', compact('product', 'currency', 'testArray', 'listAtt'));
+    }
+
+    public function orderMemberProduct(Request $request, $product)
+    {
+        $productID = $product;
+
+        $product = Product::find($productID);
+        if (!$product) {
+            return response('not found', 404);
+        }
+
+        $productInfo = $request->productInfo;
+
+//        dd($productInfo);
+
+        $valid = false;
+        $oldCarts = Cart::where([
+            ['user_id', '=', Auth::user()->id],
+            ['product_id', '=', $productID],
+            ['status', '=', CartStatus::WAIT_ORDER]
+        ])->get();
+
+        if ($productInfo) {
+            $arrayProductInfo = explode('#', $productInfo);
+            foreach ($arrayProductInfo as $productInfoItem) {
+                $array_quantity_variable = explode('&', $productInfoItem);
+                $quantity = $array_quantity_variable[0];
+                $value = $array_quantity_variable[1];
+
+                foreach ($oldCarts as $oldCart) {
+                    if ($oldCart->values == $value) {
+                        $valid = true;
+                        break;
+                    }
+                }
+
+                if ($valid == true) {
+                    $variation = Variation::where('product_id', $productID)
+                        ->where('variation', $value)
+                        ->where('status', VariationStatus::ACTIVE)
+                        ->first();
+
+                    if ($variation) {
+                        $price = $variation->price;
+                    } else {
+                        $price = $product->price;
+                    }
+
+                    $oldCart = Cart::where([
+                        ['user_id', '=', Auth::user()->id],
+                        ['product_id', '=', $productID],
+                        ['values', '=', $value],
+                        ['status', '=', CartStatus::WAIT_ORDER]
+                    ])->first();
+
+                    if ($oldCart) {
+                        $oldCart->price = $price;
+                        $total = (int)$oldCart->quantity + (int)$quantity;
+                        $oldCart->quantity = $total;
+                        $oldCart->save();
+                    } else {
+                        $cart = [
+                            'user_id' => Auth::user()->id,
+                            'product_id' => $product->id,
+                            'price' => $price,
+                            'values' => $value,
+                            'member' => 1,
+                            'quantity' => $quantity,
+                            'status' => CartStatus::WAIT_ORDER,
+                        ];
+                        Cart::create($cart);
+                    }
+
+//                    if (!$variation) {
+//                        $variation->quantity = $variation->quantity - $quantity;
+//                        $variation->save();
+//                    }
+                } else {
+                    $variation = Variation::where('product_id', $productID)
+                        ->where('variation', $value)
+                        ->where('status', VariationStatus::ACTIVE)
+                        ->first();
+
+                    if ($variation) {
+                        $price = $variation->price;
+                    } else {
+                        $price = $product->price;
+                    }
+
+                    $cart = [
+                        'user_id' => Auth::user()->id,
+                        'product_id' => $product->id,
+                        'price' => $price,
+                        'values' => $value,
+                        'member' => 1,
+                        'quantity' => $quantity,
+                        'status' => CartStatus::WAIT_ORDER,
+                    ];
+                    Cart::create($cart);
+
+//                    if (!$variation) {
+//                        $variation->quantity = $variation->quantity - $quantity;
+//                        $variation->save();
+//                    }
+                }
+            }
+        }
+
+        return redirect(route('checkout.show'));
     }
 
     private function mergeArray($array1, $array2)

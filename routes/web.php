@@ -98,6 +98,9 @@ Route::middleware('auth.product')->group(function () {
     Route::get('/product/{id}', 'ProductController@show')->name('product.show');
 });
 
+// Convert currency
+Route::get('/convert-currency/{total}', [HomeController::class, 'convertCurrency'])->name('convert.currency');
+
 // Start register member
 
 Route::get(
@@ -213,6 +216,7 @@ Route::middleware(['auth'])->group(callback: function () {
     //Setup marketing
     // Product member
     Route::get('/member/product-buy-lot/attribute/{id}', [\App\Http\Controllers\Frontend\ProductController::class, 'detailProduct'])->name('detail_product.member.attribute');
+    Route::post('/member-add-to-cart/{product}', [\App\Http\Controllers\Frontend\ProductController::class, 'orderMemberProduct'])->name('member.add.cart');
 
 // End register member
     //View member
