@@ -205,8 +205,12 @@ class CategoryController extends Controller
                 }
             }
             $category->status = CategoryStatus::DELETED;
-            Category::where('parent_id', $id)->update(['status', CategoryStatus::DELETED]);
+            $categories = Category::where('parent_id', $id)->get();
             $category->save();
+            foreach ($categories as $item) {
+                $item = Category::where('parent_id', $id)->get();
+                $item->save();
+            }
             alert()->success('Success', 'Category đã được xóa thành công!');
             return redirect()->route('seller.categories.index');
         } catch (\Exception $exception) {

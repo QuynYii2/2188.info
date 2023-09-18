@@ -2536,12 +2536,13 @@ hr{
       .card-title1 {
 
         a {
-          height: 25px;
+          height: 24px;
           font-size: 15px;
           -webkit-line-clamp: 1;
           display: -webkit-box;
           -webkit-box-orient: vertical;
           overflow: hidden;
+          margin-bottom: 5px;
         }
 
         &:hover {
