@@ -577,8 +577,8 @@ return [
     'Career' => '업종선택',
     // nganh hang
     'Industry' => '품목선택',
-    'Address English' => '사업장주소영문',
-    'Address Korea' => '사업장주소한글',
+    'Address English' => '사업장주소(영문)',
+    'Address Korea' => '사업장주소(한글)',
     'Address detail' => '상세주소',
     // so dang ky kinh odanh
     'Business registration number' => '사업자등록번호',
@@ -595,9 +595,9 @@ return [
     '4th classification' => '4차분류',
     'Phone Number' => '전화',
     // Nganh hang kinh doanh
-    'Business industry' => '사업종목품목',
+    'Business industry' => '사업품목',
     // Nganh nghe kinh doanh
-    'Business' => '사업종목업종',
+    'Business' => '사업품목',
     // Chuc vu
     'Position company' => '직무',
     'Responsibility company' => '직책',
