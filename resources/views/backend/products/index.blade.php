@@ -709,6 +709,19 @@
         </div>
     </div>
     <script>
+        // $(document).ready(function(){
+        //     $('.inputHotCheckbox').click(function(){
+        //         abc = 1;
+        //         if (abc==1) {
+        //             $('.inputHotCheckbox').prop('checked', true);
+        //             console.log('121')
+        //         } else {
+        //             $('.inputHotCheckbox').prop('checked', false);
+        //             console.log('999')
+        //         }
+        //     });
+        // });
+
         document.addEventListener('DOMContentLoaded', function () {
             var checkboxes = document.querySelectorAll('.inputHotCheckbox');
 
@@ -718,25 +731,6 @@
                     var checkboxId = 'inputHot-' + this.value;
                     var originalChecked = this.checked; // Lưu trạng thái ban đầu của checkbox
 
-                    if (this.checked) {
-                        var modal = document.getElementById(modalId);
-                        $(modal).modal('show');
-
-                        var confirmButton = document.querySelector('#' + modalId + ' .btn-primary');
-                        confirmButton.addEventListener('click', function () {
-                            var checkbox = document.getElementById(checkboxId);
-                            checkbox.checked = true;
-                            $(modal).modal('hide');
-                        });
-
-                        // Xử lý sự kiện đóng Modal
-                        $(modal).on('hidden.bs.modal', function () {
-                            var checkbox = document.getElementById(checkboxId);
-                            if (checkbox.checked !== originalChecked) {
-                                checkbox.checked = originalChecked;
-                            }
-                        });
-                    }
                 });
             });
         });
@@ -745,7 +739,8 @@
         $(document).ready(function () {
             $(".inputHotCheckbox").click(function () {
                 var productID = jQuery(this).val();
-
+                var modalId = 'exampleModal-' + this.value;
+                var checkboxId = 'inputHot-' + this.value;
                 async function setProductHots(productID) {
                     let url = '{{ route('seller.products.hot', ['id' => ':productID']) }}';
                     url = url.replace(':productID', productID);
@@ -759,6 +754,25 @@
                             },
                             success: function (response) {
                                 console.log('success')
+                                if (this.checked) {
+                                    var modal = document.getElementById(modalId);
+                                    $(modal).modal('show');
+
+                                    var confirmButton = document.querySelector('#' + modalId + ' .btn-primary');
+                                    confirmButton.addEventListener('click', function () {
+                                        var checkbox = document.getElementById(checkboxId);
+                                        checkbox.checked = true;
+                                        $(modal).modal('hide');
+                                    });
+
+                                    // Xử lý sự kiện đóng Modal
+                                    $(modal).on('hidden.bs.modal', function () {
+                                        var checkbox = document.getElementById(checkboxId);
+                                        if (checkbox.checked !== originalChecked) {
+                                            checkbox.checked = originalChecked;
+                                        }
+                                    });
+                                }
                             },
                             error: function (exception) {
                                 console.log(exception)
