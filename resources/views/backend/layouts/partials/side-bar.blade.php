@@ -138,7 +138,7 @@
             <li>
                 <a class="sidebar item" href='#'><i class="fa-solid fa-chart-line"></i> {{ __('home.Dữ Liệu') }}</a>
                 <ul class='sub-items pl-3'>
-                    <li><a class="sidebarUrl" href="">{{ __('home.Phân Tích Bán Hàng') }}</a>
+                    <li><a class="sidebarUrl" href="#!">{{ __('home.Phân Tích Bán Hàng') }}</a>
                     </li>
                     <li><a class="sidebarUrl" href="#!">{{ __('home.Thống kê') }}</a>
                     </li>
