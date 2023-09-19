@@ -427,45 +427,17 @@
                                             {{ __('home.Order conditions') }}
                                         </h5>
                                     </div>
-                                    <table class="table table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">{{ __('home.quantity') }}</th>
-                                            <th scope="col"> Giảm giá</th>
-                                            <th scope="col">{{ __('home.ngày kể từ ngày đặt hàng') }}</th>
-                                        </tr>
-                                        </thead>
-
-                                        <tbody id="tablebodyProductSale">
-                                        @if(!$price_sales->isEmpty())
-                                            @foreach($price_sales as $price_sale)
-                                                <tr>
-                                                    <td>{{$price_sale->quantity}}</td>
-                                                    <td>-{{$price_sale->sales}} %</td>
-                                                    <td>{{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
-                                                </tr>
-                                            @endforeach
-                                        @endif
-                                        </tbody>
-                                    </table>
-
+                                    <div id="tablebodyProductSale">
+                                    </div>
                                     <p>{{ __('home.đơn giá phía trên là điều kiện FOB/TT') }}</p>
+                                    <div id="tableMemberOrderCart">
+                                    </div>
                                     <h5 class="text-center">{{ __('home.Đặt hàng') }}</h5>
-
                                     <div id="tableMemberOrder">
-
                                     </div>
                                 </div>
 
                             @endif
-                            <div class="container">
-                                <h3 class="text-center mt-3">Sản phẩm đã thêm vào giỏ hàng</h3>
-
-                                <div id="tableMemberOrderCart">
-
-                                </div>
-
-                            </div>
                         </div>
                     </div>
                 </div>
