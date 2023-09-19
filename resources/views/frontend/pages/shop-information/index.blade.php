@@ -612,9 +612,11 @@
                         <div class="section-seller-overview__item-text-value">
                             @php
                                 $member_partners = null;
-                                $member_partners = \App\Models\MemberPartner::where('company_id_follow','=',$company->id)->get()
+                                $member_partners = \App\Models\MemberPartner::where([
+                                    ['company_id_source','=',$company->id],
+                                    ['status', \App\Enums\MemberPartnerStatus::ACTIVE]
+                                    ])->get()
                             @endphp
-                            {{--                            @dd($member_partners)--}}
                             @if(!$member_partners)
                                 0
                             @else
