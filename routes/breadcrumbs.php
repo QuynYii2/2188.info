@@ -1,15 +1,52 @@
 <?php
 use DaveJamesMiller\Breadcrumbs\Facades\Breadcrumbs;
 
+
+
 Breadcrumbs::for('category', function ($trail, $category) {
-    $trail->push('Home', route('home'));
+    switch (locationHelper()) {
+        case 'kr';
+            $categoryName = $category->name_ko;
+        break;
+        case 'cn';
+            $categoryName = $category->name_zh;
+        break;
+        case 'jp';
+            $categoryName = $category->name_ja;
+        break;
+        case 'vi';
+            $categoryName = $category->name_vi;
+        break;
+    }
+
+    $trail->push(__('home.Home'), route('home'));
 
     while ($category) {
-        $trail->push($category->name, route('category.show', $category));
+        $trail->push($categoryName, route('category.show', $category));
         $category = $category->parent;
     }
 });
 Breadcrumbs::for('product', function ($trail, $product) {
-    $trail->push('Home', route('home'));
-    $trail->push($product->name, route('product.show', $product));
+    switch (locationHelper()) {
+        case 'kr':
+            $productName = $product->name_ko;
+            $categoryName = $product->category->name_ko;
+            break;
+        case 'cn':
+            $productName = $product->name_zh;
+            $categoryName = $product->category->name_zh;
+            break;
+        case 'jp':
+            $productName = $product->name_ja;
+            $categoryName = $product->category->name_ja;
+            break;
+        case 'vi':
+            $productName = $product->name_vi;
+            $categoryName = $product->category->name_vi;
+            break;
+    }
+
+    $trail->push(__('home.Home'), route('home'));
+    $trail->push($categoryName, route('category.show', $product->category));
+    $trail->push($productName, route('product.show', $product));
 });

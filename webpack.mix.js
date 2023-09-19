@@ -21,4 +21,5 @@ mix.js('resources/js/app.js', 'public/js');
 
 mix.sass('resources/scss/custom.scss', 'public/css');
 mix.sass('resources/scss/index.scss', 'public/css');
+mix.sass('resources/scss/style.scss', 'public/css');
 

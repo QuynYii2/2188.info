@@ -253,7 +253,7 @@
         <div class="grid second-nav">
             <div class="column-xs-12">
                 <nav>
-                    {{--                    {!! getBreadcrumbs('product', $product) !!}--}}
+                    {!! getBreadcrumbs('product', $product) !!}
                 </nav>
             </div>
         </div>

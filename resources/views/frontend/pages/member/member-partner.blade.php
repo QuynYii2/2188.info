@@ -10,7 +10,7 @@
         <div class=" d-flex justify-content-between align-items-center p-3">
             <div>
                 <a href="{{route('stand.register.member.index', $company->id)}}"
-                   class="btn btn-primary mr-2">{{ __('home.Shop') }}</a>
+                   class="btn btn-primary mr-2">{{ __('home.상품 전시장') }}</a>
                 <a href="{{route('partner.register.member.index')}}"
                    class="btn btn-warning">{{ __('home.Partner List') }}</a>
             </div>
