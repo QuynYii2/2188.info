@@ -892,5 +892,14 @@ return [
     'Nhập id mxh' =>   'Nhập id mxh',
     'Nhập mật khẩu' =>   'Nhập mật khẩu',
     'Nhập tên mã giảm giá' => 'Nhập tên mã giảm giá',
-    'Xoá mã giảm giá' =>  'Xoá mã giảm giá'
+    'Xoá mã giảm giá' =>  'Xoá mã giảm giá',
+    'Bạn có muốn nâng cấp sản phẩm không' => 'Bạn có muốn nâng cấp sản phẩm không',
+    'nhập số thứ tự' => 'nhập số thứ tự',
+    'Nhập tên setup marketing' => 'Nhập tên setup marketing',
+    'Nhập số tài khoản' => 'Nhập tên tài khoản',
+    'Nhập tên ngân hàng' =>'Nhập tên ngân hàng',
+    'Nhập số điện thoại' =>'Nhập số điện thoại',
+    'Nhập mã OTP' =>  'Nhập mã OTP',
+    'Nhập số tiền' => '금액을 입력하세요',
+
 ];

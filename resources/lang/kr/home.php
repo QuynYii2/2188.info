@@ -950,6 +950,15 @@ return [
     'info_company' => '회사정보 보기',
     'detail_account' => '계정 정보',
     'edit_user_up' => '계정 정보',
+    'Bạn có muốn nâng cấp sản phẩm không' => '제품을 업그레이드 하시겠습니까?',
+    'nhập số thứ tự' => '일련번호를 입력하세요',
+    'Nhập tên setup marketing' => '마케팅 설정 이름을 입력하세요',
+    'Nhập  tài khoản' => '계좌번호를 입력하세요',
+    'Nhập tên ngân hàng' =>'은행명을 입력하세요',
+    'Nhập số điện thoại' =>'전화번호를 입력하세요',
+    'Nhập mã OTP' => 'OTP 코드를 입력하세요',
+    'Nhập tên khuyến mãi' => '프로모션 이름을 입력하세요'
+
 
 
 
