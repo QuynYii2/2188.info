@@ -51,8 +51,7 @@
         "files": [
             "app/helpers.php",
             "app/Hepper/location_helper.php",
-            "app/Hepper/money_helper.php",
-            "app/Hepper/BreadcrumbsHelper.php"
+            "app/Hepper/money_helper.php"
         ]
     },
     "autoload-dev": {
