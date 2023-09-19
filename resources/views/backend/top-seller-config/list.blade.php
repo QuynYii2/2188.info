@@ -77,42 +77,42 @@
                                                 style="width: 100%; height: 20px"
                                                 id="cardnumber"
                                                 type="text"
-                                                placeholder="Nhập tên tài khoản" required
+                                                placeholder={{ __('home.Nhập tên tài khoản') }} required
                                         />
                                         <h2>{{ __('home.Tên ngân hàng') }}</h2>
                                         <input
                                                 style="width: 100%; height: 20px"
                                                 id="cardnumber"
                                                 type="text"
-                                                placeholder="Nhập tên ngân hàng" required
+                                                placeholder={{ __('home.Nhập tên ngân hàng') }} required
                                         />
                                         <h2>{{ __('home.Số tài khoản') }}</h2>
                                         <input
                                                 style="width: 100%; height: 20px"
                                                 id="cardnumber"
                                                 type="number"
-                                                placeholder="Nhập số tài khoản" required
+                                                placeholder={{ __('home.Nhập số tài khoản') }} required
                                         />
                                         <h2>{{ __('home.Số điện thoại') }}</h2>
                                         <input
                                                 style="width: 100%; height: 20px"
                                                 id="cardnumber"
                                                 type="number"
-                                                placeholder="Nhập số điện thoại" required
+                                                placeholder={{ __('home.Nhập số điện thoại') }} required
                                         />
                                         <h2>{{ __('home.Số tiền') }}</h2>
                                         <input
                                                 style="width: 100%; height: 20px"
                                                 id="cardnumber"
                                                 type="number"
-                                                placeholder="Nhập số tiền" required
+                                                placeholder={{ __('home.Nhập số tiền') }} required
                                         />
                                         <h2>{{ __('home.Nhập mã OTP') }}</h2>
                                         <input
                                                 style="width: 100%; height: 20px"
                                                 id="cardnumber"
                                                 type="number"
-                                                placeholder="Nhập mã OTP" required
+                                                placeholder={{ __('home.Nhập mã OTP') }} required
                                         />
                                         <div class="text-center mt-3">
 {{--                                            <input class="btn btn-success" onclick="location();" type="button" name="thanhtoan" value="Thanh toán" />--}}

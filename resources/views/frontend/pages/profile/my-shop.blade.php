@@ -23,6 +23,7 @@
                     </div>
                 @endforeach
             @endif
+
         </div>
     </div>
     @include('frontend.pages.modal-products')
