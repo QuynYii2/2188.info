@@ -47,13 +47,11 @@
         @endforeach
     @endif
     </tbody>
-    <a href="{{route('checkout.show')}}" class="btn btn-primary">Checkout now</a>
 </table>
 <script>
     var priceCart = '#priceCart';
     var totalCart = '#totalCart';
-    var currencies = document.getElementsByClassName('currency');
-    var currency = currencies[0].innerText;
+    var currency = $('.currency').first().text();
     $(document).ready(function () {
         $('.input-number-cart').on('change', function () {
             let cartID = $(this).data('id');

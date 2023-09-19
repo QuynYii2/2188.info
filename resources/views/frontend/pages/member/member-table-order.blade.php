@@ -1,7 +1,7 @@
 <table class="table" id="table-selected-att">
     <thead>
     <tr>
-        <th scope="col">Mã SP</th>
+        <th scope="col">Image</th>
         <th scope="col">Thuộc tính</th>
         <th scope="col">Số lượng</th>
         <th scope="col">Đơn giá</th>
@@ -31,8 +31,11 @@
                         ])->first();
                     @endphp
                     <tr>
-                        <th scope="row">{{$product->product_code}}</th>
+                        <th scope="row">
+                            <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
+                        </th>
                         <td>
+                            <p>{{$product->name}}</p>
                             @if($attribue)
                                 {{$attribue->name}}:
                                 @if($property)
@@ -76,8 +79,11 @@
                     @endphp
                     @foreach($item as $key => $attpro)
                         <tr>
-                            <th scope="row">{{$product->product_code}}</th>
+                            <th scope="row">
+                                <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
+                            </th>
                             <td>
+                                <p>{{$product->name}}</p>
                                 @php
                                     $attproArray =  explode('-', $attpro);
                                     $attribute = \App\Models\Attribute::find($attproArray[0]);
@@ -91,7 +97,8 @@
                                 @endif
                             </td>
                             <td>
-                                <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]" class="input_quantity"
+                                <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                                       class="input_quantity"
                                        data-id="{{$loop->index + 1}}" data-variable="{{$attpro}}">
                             </td>
                             <td>
@@ -127,8 +134,11 @@
                             ])->first();
                 @endphp
                 <tr>
-                    <th scope="row">{{$product->product_code}}</th>
+                    <th scope="row">
+                        <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
+                    </th>
                     <td>
+                        <p>{{$product->name}}</p>
                         @foreach($myArray as $item)
                             @php
                                 $attribue_property = explode('-', $item);
@@ -144,7 +154,8 @@
                         @endforeach
                     </td>
                     <td>
-                        <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]" class="input_quantity" data-id="0"
+                        <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                               class="input_quantity" data-id="0"
                                data-variable="{{$item}}">
                     </td>
                     <td>
@@ -177,8 +188,11 @@
                             ])->first();
                 @endphp
                 <tr>
-                    <th scope="row">{{$product->product_code}}</th>
+                    <th scope="row">
+                        <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
+                    </th>
                     <td>
+                        <p>{{$product->name}}</p>
                         @php
                             $items = null;
                             $items = explode(',', $productAttribute);
@@ -200,7 +214,8 @@
                     </td>
 
                     <td>
-                        <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]" class="input_quantity"
+                        <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                               class="input_quantity"
                                data-id="{{$loop->index + 1}}" data-variable="{{$productAttribute}}">
                     </td>
                     <td>
@@ -227,11 +242,13 @@
                 </tr>
             @endforeach
         @endif
-        <button id="supBtnOrder" type="button"
-                class="btn btn-success float-right">{{ __('home.Tiếp nhận đặt hàng') }}</button>
     @endif
     </tbody>
 </table>
+@if($testArray)
+    <button id="supBtnOrder" type="button"
+            class="btn btn-success float-right">{{ __('home.Tiếp nhận đặt hàng') }}</button>
+@endif
 <div class="d-none">
     <form action="{{route('member.add.cart', $product)}}" method="post" id="formOrderMember">
         @csrf
