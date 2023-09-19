@@ -752,7 +752,7 @@ class ProductController extends Controller
         $success = Product::create($newProductData);
         $product = Product::where('user_id', Auth::user()->id)->orderByDesc('id')->first();
 
-        $quantity = $request->input('quantity');
+        $quantity = $request->input('ends');
         $sales = $request->input('sales');
         $days = $request->input('days');
 
