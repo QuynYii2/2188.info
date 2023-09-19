@@ -13,7 +13,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-8">
                         <label for="name">{{ __('home.Tên khuyến mãi') }}</label>
-                        <input type="text" class="form-control" required name="name" id="name" placeholder="Nhập tên khuyến mãi">
+                        <input type="text" class="form-control" required name="name" id="name" placeholder={{ __('home.Nhập tên khuyến mãi') }}>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="percent">{{ __('home.Phần trăm khuyến mãi') }}</label>
