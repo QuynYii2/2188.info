@@ -71,27 +71,33 @@
         </table>
     </div>
 @endsection
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>j
 <script>
     $(document).ready(function () {
         $(".inputCheckbox").click(function () {
             var banner = jQuery(this).val();
 
-            function toggleAttribute(banner) {
-                $.ajax({
-                    url: '/admin/banners/' + banner,
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function (response) {
-                        let status = document.getElementById('status' + banner)
-                        status.innerText = response['status'];
-                    },
-                    error: function (exception) {
-                        console.log(exception)
-                    }
-                });
+            async function toggleAttribute(banner) {
+                let url = '{{ route('admin.banners.update', ['id' => ':banner']) }}';
+                url = url.replace(':banner', banner);
+
+                try {
+                    await $.ajax({
+                        url: url,
+                        method: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function (response) {
+                            let status = document.getElementById('status' + banner)
+                            status.innerText = response['status'];
+                        },
+                        error: function (exception) {
+                            console.log(exception)
+                        }
+                    });
+                } catch (error) {
+                    throw error;
+                }
             }
 
             toggleAttribute(banner);

@@ -8,6 +8,7 @@ use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\RevenusController;
 use App\Http\Controllers\Seller\AttributeController;
 use App\Http\Controllers\Seller\ExportFileController;
+use App\Http\Controllers\Seller\OrderController;
 use App\Http\Controllers\Seller\ProductController;
 use App\Http\Controllers\Seller\PropertiesController;
 use App\Http\Controllers\Seller\RankUserSellerController;
@@ -112,7 +113,7 @@ Route::post('/storage-manage/update/{id}', [StorageController::class, 'update'])
 Route::post('/storage-manage/store', [StorageController::class, 'store'])->name('storage.manage.store');
 Route::get('/storage-manage/search', [StorageController::class, 'searchStorage'])->name('storage.manage.search');
 Route::post('/warehouse-export-excel', [ExportFileController::class, 'exportExcel'])->name('storage.manage.export.excel');
-Route::get('/export-pdf', [ExportFileController::class, 'exportToPDF'])->name('storage.manage.export.pdf');
+//Route::get('/export-pdf', [ExportFileController::class, 'exportToPDF'])->name('storage.manage.export.pdf');
 
 // Rank setup
 Route::get('/rank-setups', [RankUserSellerController::class, 'index'])->name('seller.rank.setup.show');
@@ -128,9 +129,9 @@ Route::post('/seller-setup', [RankUserSellerController::class, 'createSetup'])->
 Route::get('/seller-setup/{id}', [RankUserSellerController::class, 'detailSetup'])->name('seller.setup.detail');
 Route::post('/seller-setup/{id}', [RankUserSellerController::class, 'updateSetUp'])->name('seller.setup.update');
 // Order
-Route::get('/order-managers', [\App\Http\Controllers\Seller\OrderController::class, 'index'])->name('seller.order.list');
-Route::get('/order-managers-search', [\App\Http\Controllers\Seller\OrderController::class, 'search'])->name('seller.search.order.list');
-Route::get('/order-managers/{id}', [\App\Http\Controllers\Seller\OrderController::class, 'detail'])->name('seller.order.detail');
+Route::get('/order-managers', [OrderController::class, 'index'])->name('seller.order.list');
+Route::get('/order-managers-search', [OrderController::class, 'search'])->name('seller.search.order.list');
+Route::get('/order-managers/{id}', [OrderController::class, 'detail'])->name('seller.order.detail');
 Route::post('/export-excel', [ExportFileController::class, 'exportExcelOrder'])->name('order.manage.export.excel');
 Route::post('/export-excel-detail', [ExportFileController::class, 'exportExcelOrderDetail'])->name('order.manage.export.excel.detail');
 // Statistic
@@ -150,7 +151,7 @@ Route::post('/add-to-cart-register-member/{product}', [CartController::class, 'a
 Route::post('/stands-register-member', [MemberPartnerController::class, 'store'])->name('stands.register.member');
 Route::post('/stands-unregister-member/{id}', [MemberPartnerController::class, 'delete'])->name('stands.unregister.member');
 //
-Route::post('/product-viewed', [ProductController::class, 'productViewed'])->name('product.viewed');
+Route::post('/product-viewed', [\App\Http\Controllers\ProductController::class, 'productViewed'])->name('product.viewed');
 Route::post('/vouchers-item', [VoucherController::class, 'createVoucherItems'])->name('vouchers.item.create');
 Route::post('/promotions-item', [PromotionController::class, 'createPromotionItems'])->name('promotions.item.create');
 Route::get('/promotion', [PromotionController::class, 'index'])->name('promotions.index');
