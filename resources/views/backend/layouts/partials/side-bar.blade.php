@@ -56,17 +56,17 @@
             <a class="sidebar item" href='#'><i class="fa-solid fa-bars-progress"></i> {{ __('home.quản lý sản phẩm') }}
             </a>
             <ul class='sub-items pl-3'>
-                <li><a class="sidebarUrl" href="/products">{{ __('home.Tất Cả Sản Phẩm') }}</a>
+                <li><a class="sidebarUrl" href="{{route('seller.products.index')}}">{{ __('home.Tất Cả Sản Phẩm') }}</a>
                 </li>
                 @if(!$check_ctv_shop)
-                    <li><a class="sidebarUrl" href="/products/create">{{ __('home.Thêm mới sản phẩm') }}</a>
+                    <li><a class="sidebarUrl" href="{{route('seller.products.create')}}">{{ __('home.Thêm mới sản phẩm') }}</a>
                     </li>
                 @endif
                 <li><a class="sidebarUrl"
                        href="{{route('seller.products.views')}}">{{ __('home.Sắp xếp theo lượt xem') }}</a>
                 </li>
                 @if($isAdmin == true)
-                    <li><a class="sidebarUrl" href="/categories">{{ __('home.chuyên mục') }}</a>
+                    <li><a class="sidebarUrl" href="{{route('seller.categories.index')}}">{{ __('home.chuyên mục') }}</a>
                     </li>
                 @endif
             </ul>
@@ -138,7 +138,7 @@
             <li>
                 <a class="sidebar item" href='#'><i class="fa-solid fa-chart-line"></i> {{ __('home.Dữ Liệu') }}</a>
                 <ul class='sub-items pl-3'>
-                    <li><a class="sidebarUrl" href="#">{{ __('home.Phân Tích Bán Hàng') }}</a>
+                    <li><a class="sidebarUrl" href="">{{ __('home.Phân Tích Bán Hàng') }}</a>
                     </li>
                     <li><a class="sidebarUrl" href="#!">{{ __('home.Thống kê') }}</a>
                     </li>

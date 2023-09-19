@@ -284,7 +284,7 @@
             console.log(productID)
             function setProductFeatures(productID) {
                 $.ajax({
-                    url: '/toggle-products-all/' + productID,
+                    url: '/admin/toggle-products-all/' + productID,
                     method: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}'

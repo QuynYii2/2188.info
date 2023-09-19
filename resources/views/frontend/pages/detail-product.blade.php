@@ -259,6 +259,7 @@
         </div>
         @php
             $name = DB::table('users')->where('id', $product->user_id)->first();
+            $productID = $product->id;
             $productDetails = \App\Models\Variation::where('product_id', $product->id)->get();
             $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
         @endphp
@@ -344,7 +345,7 @@
                                                 $product = \App\Models\Product::find($price_sale->product_id);
                                             @endphp
                                             <tr>
-{{--                                                <p>{{ __('home.The minimum order quantity is 2 pair') }} {{$price_sale->quantity}} {{ __('home.pair') }}</p>--}}
+                                                {{--                                                <p>{{ __('home.The minimum order quantity is 2 pair') }} {{$price_sale->quantity}} {{ __('home.pair') }}</p>--}}
                                                 <div class="item-center d-flex justify-content-between">
                                                     <span> {{$price_sale->quantity}} {{ __('home.pair') }}</span>
                                                     @if($product->price != null)
@@ -359,6 +360,9 @@
                                     @endif
                                 </div>
                             </form>
+                        </div>
+                        <div class="main-actions" id="productMainOrder">
+
                         </div>
                     </div>
 
@@ -1036,8 +1040,6 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-
     <script>
         function toggleContent(contentId, btnId) {
             var content = document.getElementById(contentId);
@@ -1434,7 +1436,7 @@
             percentPrice.innerText = percent + '%'
         }
 
-        getPercent();
+        // getPercent();
 
         async function getCommentById(id) {
             let url = '{{ route('find.evaluate.id', ['id' => ':id']) }}';
@@ -1450,6 +1452,29 @@
                 starCheckEdit(data[0].star_number)
             }
         }
+    </script>
+    <script>
+        function renderProduct(product) {
+            let url = '{{ route('detail_product.member.attribute', ['id' => ':id']) }}';
+            url = url.replace(':id', product);
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+
+            console.log(urlParams)
+
+            $.ajax({
+                url: url,
+                method: 'GET',
+            })
+                .done(function (response) {
+                    $('#productMainOrder').empty().append(response);
+                })
+                .fail(function (_, textStatus) {
+                    console.log(textStatus)
+                });
+        }
+
+        renderProduct({{$productID}})
     </script>
 @endsection
 

@@ -752,7 +752,7 @@
                 var checkboxId = 'inputHot-' + this.value;
                 function setProductHots(productID) {
                     $.ajax({
-                        url: '/toggle-products-hot/' + productID,
+                        url: '/seller/toggle-products-hot/' + productID,
                         method: 'POST',
                         data: {
                             _token: '{{ csrf_token() }}'
