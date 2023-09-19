@@ -60,7 +60,8 @@
                                 }
                             @endphp
                             <td>
-                                <input type="checkbox" class="toggleProduct" value="{{$productAllItem->id}}" {{ $isChecked ? 'checked' : '' }}>
+                                <input type="checkbox" class="toggleProduct"
+                                       value="{{$productAllItem->id}}" {{ $isChecked ? 'checked' : '' }}>
                             </td>
                         </tr>
                     @endforeach
@@ -76,19 +77,22 @@
                     <div class="border w-50">
                         <div class="smail">{{ __('home.lượt truy cập') }}</div>
                         <h3 id="countAccess">0</h3>
-                        <p class="text-warning">{{ __('home.Vs hôm qua') }} <span id="countAccessPercent">0,00</span>% --</p>
+                        <p class="text-warning">{{ __('home.Vs hôm qua') }} <span id="countAccessPercent">0,00</span>%
+                            --</p>
                     </div>
                     <div class="border w-50">
                         <div class="smail">{{ __('home.Lượt xem') }}</div>
                         <h3 id="countViews">0</h3>
-                        <p class="text-warning">{{ __('home.Vs hôm qua') }} <span id="countViewPercent">0,00</span>% --</p>
+                        <p class="text-warning">{{ __('home.Vs hôm qua') }} <span id="countViewPercent">0,00</span>% --
+                        </p>
                     </div>
                 </div>
                 <div class="d-flex text-center">
                     <div class="border w-50">
                         <div class="smail">{{ __('home.Đơn hàng') }}</div>
                         <h3 id="countOrders">0</h3>
-                        <p class="text-warning">{{ __('home.Vs hôm qua') }} <span id="countOrderPercent">0,00</span>% --</p>
+                        <p class="text-warning">{{ __('home.Vs hôm qua') }} <span id="countOrderPercent">0,00</span>% --
+                        </p>
                     </div>
                     <div class="border w-50">
                         <div class="smail">{{ __('home.tỷ lệ chuyển đổi') }}</div>
@@ -174,7 +178,8 @@
         </div>
         <div class="todo_list mb-5">
             <div class="title">{{ __('home.hiệu quả hoạt động') }}</div>
-            <div class="title-small">{{ __('home.bảng hiệu quả hoạt động giúp người bán hiểu rõ hơn về hoạt động buôn bán của shop mình dựa trên những chỉ tiêu sau') }}:
+            <div class="title-small">{{ __('home.bảng hiệu quả hoạt động giúp người bán hiểu rõ hơn về hoạt động buôn bán của shop mình dựa trên những chỉ tiêu sau') }}
+                :
             </div>
             <ul class="nav" id="myTab" role="tablist">
                 <li class="nav-item">
@@ -277,29 +282,35 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
         $(".toggleProduct").click(function () {
             var productID = $(this).val();
-            console.log(productID)
-            function setProductFeatures(productID) {
-                $.ajax({
-                    url: '/toggle-products-all/' + productID,
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function (response) {
-                        let status = document.getElementById('productStatus' + productID)
-                        status.innerText = response['status'];
-                    },
-                    error: function (exception) {
-                        console.log(exception)
-                    }
-                });
+
+            async function setProduct(productID) {
+                let url = '{{ route('admin.toggle.products', ['id' => ':productID']) }}';
+                url = url.replace(':productID', productID);
+
+                try {
+                    await $.ajax({
+                        url: url,
+                        method: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function (response) {
+                            let status = document.getElementById('productStatus' + productID)
+                            status.innerText = response['status'];
+                        },
+                        error: function (exception) {
+                            console.log(exception)
+                        }
+                    });
+                } catch (error) {
+                    throw error;
+                }
             }
 
-            setProductFeatures(productID);
+            setProduct(productID);
         });
     </script>
     <script>

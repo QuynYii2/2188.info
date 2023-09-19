@@ -708,7 +708,6 @@
             </table>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var checkboxes = document.querySelectorAll('.inputHotCheckbox');
@@ -742,31 +741,32 @@
             });
         });
     </script>
-
-    </script>
-
-
-
     <script>
         $(document).ready(function () {
             $(".inputHotCheckbox").click(function () {
                 var productID = jQuery(this).val();
-                console.log(productID);
 
-                function setProductHots(productID) {
-                    $.ajax({
-                        url: '/toggle-products-hot/' + productID,
-                        method: 'POST',
-                        data: {
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function (response) {
-                            console.log('success')
-                        },
-                        error: function (exception) {
-                            console.log(exception)
-                        }
-                    });
+                async function setProductHots(productID) {
+                    let url = '{{ route('seller.products.hot', ['id' => ':productID']) }}';
+                    url = url.replace(':productID', productID);
+
+                    try {
+                       await $.ajax({
+                            url: url,
+                            method: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function (response) {
+                                console.log('success')
+                            },
+                            error: function (exception) {
+                                console.log(exception)
+                            }
+                        });
+                    } catch (error) {
+                        throw error;
+                    }
                 }
 
                 setProductHots(productID);
@@ -775,20 +775,27 @@
             $(".inputFeatureCheckbox").click(function () {
                 var productID = jQuery(this).val();
 
-                function setProductFeatures(productID) {
-                    $.ajax({
-                        url: '/toggle-products-feature/' + productID,
-                        method: 'POST',
-                        data: {
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function (response) {
-                            console.log('success')
-                        },
-                        error: function (exception) {
-                            console.log(exception)
-                        }
-                    });
+                async function setProductFeatures(productID) {
+                    let url = '{{ route('seller.products.feature', ['id' => ':productID']) }}';
+                    url = url.replace(':productID', productID);
+
+                    try {
+                        await $.ajax({
+                            url: url,
+                            method: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function (response) {
+                                console.log('success')
+                            },
+                            error: function (exception) {
+                                console.log(exception)
+                            }
+                        });
+                    } catch (error) {
+                        throw error;
+                    }
                 }
 
                 setProductFeatures(productID);
