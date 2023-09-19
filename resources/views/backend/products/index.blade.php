@@ -741,38 +741,32 @@
                 });
             });
         });
+    </script>
 
     </script>
+
+
 
     <script>
         $(document).ready(function () {
             $(".inputHotCheckbox").click(function () {
                 var productID = jQuery(this).val();
-                var modalId = 'exampleModal-' + this.value;
-                var checkboxId = 'inputHot-' + this.value;
+                console.log(productID);
+
                 function setProductHots(productID) {
                     $.ajax({
-                        url: '/seller/toggle-products-hot/' + productID,
+                        url: '/toggle-products-hot/' + productID,
                         method: 'POST',
                         data: {
                             _token: '{{ csrf_token() }}'
                         },
                         success: function (response) {
-                            $(this).prop('checked', true);
-                            var modal = document.getElementById(modalId);
-                            $(modal).modal('show');
-
-                            var confirmButton = document.querySelector('#' + modalId + ' .btn-primary');
-                            confirmButton.addEventListener('click', function () {
-                                var checkbox = document.getElementById(checkboxId);
-                                checkbox.checked = true;
-                                $(modal).modal('hide');
-                            });
+                            console.log('success')
                         },
                         error: function (exception) {
                             console.log(exception)
                         }
-                    })
+                    });
                 }
 
                 setProductHots(productID);

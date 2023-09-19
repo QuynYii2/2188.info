@@ -440,14 +440,17 @@
                 renderProduct(product);
             });
 
-            function renderProduct(product) {
+            async function renderProduct(product) {
                 const requestData = {
                     _token: '{{ csrf_token() }}',
                     quantity: 100,
                 };
 
-                $.ajax({
-                    url: `/add-to-cart-register-member/${product}`,
+                let url = '{{ route('cart.api', ['id' => ':product']) }}';
+                url = url.replace(':product', product);
+
+                await $.ajax({
+                    url: url,
                     method: 'POST',
                     data: requestData,
                 })

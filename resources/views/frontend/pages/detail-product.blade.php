@@ -1189,7 +1189,7 @@
     <script>
         function createVoucherItems(id) {
             $.ajax({
-                url: '/vouchers-item',
+                url: `{{route('vouchers.item.create')}}`,
                 method: 'POST',
                 data: {
                     'voucher_id': id,
