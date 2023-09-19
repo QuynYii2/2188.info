@@ -45,7 +45,19 @@
                                     </option>
                                     @foreach($categories as $category)
                                         <option value="{{$category->id}}">
-                                            {{$category->name}}
+                                            @if(locationHelper() == 'kr')
+                                                <div class="item-text">{{ $category->name_ko }}</div>
+                                            @elseif(locationHelper() == 'cn')
+                                                <div class="item-text">{{$category->name_zh}}</div>
+                                            @elseif(locationHelper() == 'jp')
+                                                <div class="item-text">{{$category->name_ja}}</div>
+                                            @elseif(locationHelper() == 'vi')
+                                                <div class="item-text">{{$category->name_vi}}</div>
+                                            @else
+                                                <div class="item-text">{{$category->name_en}}</div>
+                                            @endif
+
+
                                         </option>
                                     @endforeach
                                 </select>
@@ -132,7 +144,17 @@
                                                 <span aria-hidden="true">—</span>
                                             @endif
                                             <a href="{{route('seller.categories.edit', $category->id)}}">
-                                                {{$category->name}}
+                                                @if(locationHelper() == 'kr')
+                                                    <div class="item-text">{{$category->name_ko }}</div>
+                                                @elseif(locationHelper() == 'cn')
+                                                    <div class="item-text">{{$category->name_zh}}</div>
+                                                @elseif(locationHelper() == 'jp')
+                                                    <div class="item-text">{{$category->name_ja}}</div>
+                                                @elseif(locationHelper() == 'vi')
+                                                    <div class="item-text">{{$category->name_vi}}</div>
+                                                @else
+                                                    <div class="item-text">{{$category->name_en}}</div>
+                                                @endif
                                             </a>
                                         </strong>
                                         <div class="row-actions">
@@ -161,7 +183,19 @@
                                                                 <div class="modal-content">
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title" id="exampleModalLabel">
-                                                                        {{ __('home.update') }} {{$category->name}}
+                                                                        {{ __('home.update') }}
+                                                                        @if(locationHelper() == 'kr')
+                                                                            <div class="item-text">{{$category->name_ko }}</div>
+                                                                        @elseif(locationHelper() == 'cn')
+                                                                            <div class="item-text">{{$category->name_zh}}</div>
+                                                                        @elseif(locationHelper() == 'jp')
+                                                                            <div class="item-text">{{$category->name_ja}}</div>
+                                                                        @elseif(locationHelper() == 'vi')
+                                                                            <div class="item-text">{{$category->name_vi}}</div>
+                                                                        @else
+                                                                            <div class="item-text">{{$category->name_en}}</div>
+                                                                        @endif
+
                                                                     </h5>
                                                                     <button type="button" class="close"
                                                                             data-dismiss="modal" aria-label="Close">

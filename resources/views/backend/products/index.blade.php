@@ -638,7 +638,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                Bạn có muốn nâng cấp sản phẩm không
+                                                {{ __('home.Bạn có muốn nâng cấp sản phẩm không') }}
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"

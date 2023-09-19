@@ -907,5 +907,14 @@ return [
     'detail_account' => 'Chi tiết tài khoản',
     'edit_user_up' => '고급 정보 편집',
     '상품 전시장' => 'Gian hàng',
-    '해외 B2B 도매상 명단' => 'Danh sách nhà bán sỉ B2B'
+    '해외 B2B 도매상 명단' => 'Danh sách nhà bán sỉ B2B',
+    'Bạn có muốn nâng cấp sản phẩm không' => 'Bạn có muốn nâng cấp sản phẩm không',
+    'nhập số thứ tự' => 'nhập số thứ tự',
+    'Nhập tên setup marketing' => 'Nhập tên setup marketing',
+    'Nhập sô tài khoản' => 'Nhập tên tài khoản',
+    'Nhập tên ngân hàng' =>'Nhập tên ngân hàng',
+    'Nhập số điện thoại' =>'Nhập số điện thoại',
+    'Nhập mã OTP' =>  'Nhập mã OTP',
+    'Nhập tên khuyến mãi' => '프로모션 이름을 입력합니다
+'
 ];
