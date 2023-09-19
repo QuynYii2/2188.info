@@ -31,7 +31,7 @@
                         ])->first();
                     @endphp
                     <tr>
-                        <th scope="row">1</th>
+                        <th scope="row">{{$product->product_code}}</th>
                         <td>
                             @if($attribue)
                                 {{$attribue->name}}:
@@ -41,7 +41,8 @@
                             @endif
                         </td>
                         <td>
-                            <input type="number" min="0" value="0" name="quantity[]" class="input_quantity"
+                            <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                                   class="input_quantity"
                                    data-id="0" data-variable="{{$item[0]}}">
                         </td>
 
@@ -63,7 +64,7 @@
                             </span>
                         </td>
                         <td id="discount-price0">0</td>
-                        <td id="total-price0">0</td>
+                        <td id="total-price0">{{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}</td>
                     </tr>
                 @else
                     @php
@@ -75,7 +76,7 @@
                     @endphp
                     @foreach($item as $key => $attpro)
                         <tr>
-                            <th scope="row">{{$loop->index + 1}}</th>
+                            <th scope="row">{{$product->product_code}}</th>
                             <td>
                                 @php
                                     $attproArray =  explode('-', $attpro);
@@ -90,7 +91,7 @@
                                 @endif
                             </td>
                             <td>
-                                <input type="number" min="0" value="0" name="quantity[]" class="input_quantity"
+                                <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]" class="input_quantity"
                                        data-id="{{$loop->index + 1}}" data-variable="{{$attpro}}">
                             </td>
                             <td>
@@ -112,7 +113,7 @@
                                 </span>
                             </td>
                             <td id="discount-price{{$loop->index + 1}}">0</td>
-                            <td id="total-price{{$loop->index + 1}}">0</td>
+                            <td id="total-price{{$loop->index + 1}}">{{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}</td>
                         </tr>
                     @endforeach
                 @endif
@@ -126,7 +127,7 @@
                             ])->first();
                 @endphp
                 <tr>
-                    <th scope="row">1</th>
+                    <th scope="row">{{$product->product_code}}</th>
                     <td>
                         @foreach($myArray as $item)
                             @php
@@ -143,7 +144,7 @@
                         @endforeach
                     </td>
                     <td>
-                        <input type="number" min="0" value="0" name="quantity[]" class="input_quantity" data-id="0"
+                        <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]" class="input_quantity" data-id="0"
                                data-variable="{{$item}}">
                     </td>
                     <td>
@@ -163,7 +164,7 @@
                         </span>
                     </td>
                     <td id="discount-price0">0</td>
-                    <td id="total-price0">0</td>
+                    <td id="total-price0">{{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}</td>
                 </tr>
             @endif
         @else
@@ -176,7 +177,7 @@
                             ])->first();
                 @endphp
                 <tr>
-                    <th scope="row">{{$loop->index + 1}}</th>
+                    <th scope="row">{{$product->product_code}}</th>
                     <td>
                         @php
                             $items = null;
@@ -199,7 +200,7 @@
                     </td>
 
                     <td>
-                        <input type="number" min="0" value="0" name="quantity[]" class="input_quantity"
+                        <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]" class="input_quantity"
                                data-id="{{$loop->index + 1}}" data-variable="{{$productAttribute}}">
                     </td>
                     <td>
@@ -222,7 +223,7 @@
                         </span>
                     </td>
                     <td id="discount-price{{$loop->index + 1}}">0</td>
-                    <td id="total-price{{$loop->index + 1}}">0</td>
+                    <td id="total-price{{$loop->index + 1}}">{{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}</td>
                 </tr>
             @endforeach
         @endif
