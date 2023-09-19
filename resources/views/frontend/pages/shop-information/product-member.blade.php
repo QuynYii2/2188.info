@@ -234,7 +234,7 @@
                             @csrf
                             <input type="text" name="company_id_source"
                                    value="{{ $company->id }}" hidden>
-                            <button class="btn btn-danger" id="btnUnfollow" type="submit">
+                            <button class="btn btn-danger" id="btnUnfollow" type="submit" hidden="">
                                 Unfollow
                             </button>
                         </form>

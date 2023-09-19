@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Pontano+Sans);
+@import url("https://fonts.googleapis.com/css?family=Pontano+Sans");
 body {
   font-family: "DM Sans", sans-serif;
 }
@@ -277,8 +277,7 @@ input.qtyminus {
 .cart .pagelist .img-product img {
   height: 100%;
   width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .cart .pagelist .text-secondary {
   font-size: 15px;
@@ -603,10 +602,6 @@ a {
 
 .category-price {
   /* Support */
-}
-.category-price ::-moz-selection {
-  color: #fff;
-  background: #17a2b8;
 }
 .category-price ::selection {
   color: #fff;
@@ -1280,8 +1275,7 @@ a {
 .header .header-pc .header-bottom-left .header_bottom--one .drop-menu .drop-relative .header_bottom--one--list--item .hd_dropdown--right .list-product .list-product--swiper .item-img img {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .header .header-pc .header-bottom-left .header_bottom--one .drop-menu .drop-relative .header_bottom--one--list--item .hd_dropdown--right .list-product .list-product--swiper .item-img .button-view {
   display: none;
@@ -1418,8 +1412,7 @@ a {
 .header .header-pc .header-bottom-left .header_bottom--one .drop-menu .drop-relative .header_bottom--one--list--item .hd_dropdown--right .list-product .img img {
   width: 100%;
   height: auto;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .header .header-pc .header-bottom-left .header_bottom--one .drop-menu .drop-relative .header_bottom--one--list--item:hover {
   background: #fd6506;
@@ -2128,8 +2121,7 @@ hr {
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .section .item {
   background-color: white;
@@ -2143,8 +2135,7 @@ hr {
 .section .item-img img {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .section .item-img .button-view {
   display: none;
@@ -2244,7 +2235,6 @@ hr {
   padding: 0 15px;
   font-weight: 600;
   font-size: 13px;
-  text-align: center;
 }
 .section .item-body .card-bottom--left:hover {
   background-color: #fd6506;
@@ -2282,8 +2272,7 @@ hr {
 .section-left img {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .section .brand-item {
   margin: 8px 0;
@@ -2319,7 +2308,12 @@ hr {
 
 .card-container {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
@@ -2358,8 +2352,7 @@ hr {
 }
 .banner_categories img {
   height: 85%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   width: auto;
   width: 100%;
 }
@@ -2436,8 +2429,7 @@ hr {
   display: block;
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border-radius: 10px;
 }
 .body .section-First-right {
@@ -3396,8 +3388,7 @@ img {
 }
 .grid.product .product-image img {
   width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   height: 100%;
 }
 
@@ -3419,8 +3410,7 @@ footer {
 
 .product-image img {
   width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   height: 100%;
 }
 
@@ -3432,8 +3422,7 @@ footer {
 }
 .product-image img {
   width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   height: 100%;
 }
 
@@ -3473,8 +3462,7 @@ footer {
   transition: opacity 0.3s ease;
   cursor: pointer;
   border: 1px solid black;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 
 .image-list img:hover {
@@ -3507,6 +3495,15 @@ nav ul {
 
 .flex-nav ul li:nth-child(4) {
   margin: 0;
+}
+
+@-webkit-keyframes fadeImg {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 @keyframes fadeImg {
   from {
@@ -3550,8 +3547,7 @@ nav ul {
 .standsMember-item img {
   width: 100%;
   height: 200px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .standsMember p {
   height: 50px;
@@ -3612,3 +3608,5 @@ nav ul {
 .max-width {
   max-width: 92%;
 }
+
+/*# sourceMappingURL=style.css.map */

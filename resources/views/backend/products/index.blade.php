@@ -741,18 +741,15 @@
                 });
             });
         });
-    </script>
 
     </script>
-
-
 
     <script>
         $(document).ready(function () {
             $(".inputHotCheckbox").click(function () {
                 var productID = jQuery(this).val();
-                console.log(productID);
-
+                var modalId = 'exampleModal-' + this.value;
+                var checkboxId = 'inputHot-' + this.value;
                 function setProductHots(productID) {
                     $.ajax({
                         url: '/toggle-products-hot/' + productID,
@@ -761,12 +758,21 @@
                             _token: '{{ csrf_token() }}'
                         },
                         success: function (response) {
-                            console.log('success')
+                            $(this).prop('checked', true);
+                            var modal = document.getElementById(modalId);
+                            $(modal).modal('show');
+
+                            var confirmButton = document.querySelector('#' + modalId + ' .btn-primary');
+                            confirmButton.addEventListener('click', function () {
+                                var checkbox = document.getElementById(checkboxId);
+                                checkbox.checked = true;
+                                $(modal).modal('hide');
+                            });
                         },
                         error: function (exception) {
                             console.log(exception)
                         }
-                    });
+                    })
                 }
 
                 setProductHots(productID);
