@@ -113,7 +113,7 @@
             $firstProduct = $products->first();
         @endphp
 
-{{--        <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>--}}
+        {{--        <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>--}}
         <div class="d-flex justify-content-between align-items-center p-3">
             <div>
                 <a href="{{ route('list.products.shop.show', $oldUser->id) }}"
@@ -188,7 +188,7 @@
                                 @endphp
                                 <div class="col-md-6">
                                     <div class="mt-2 d-flex">
-                                        <div  class="mb-3 size">
+                                        <div class="mb-3 size">
                                             @if(locationHelper() == 'kr')
                                                 {{ ($category->name_ko) }}
                                             @elseif(locationHelper() == 'cn')
@@ -298,7 +298,7 @@
                                                 {{$product->name_vi}}
                                             @else
                                                 {{$product->name_en}}</div>
-                                             @endif
+                                    @endif
                                     @else
                                         <a class="check_url">{{($product->name)}}</a>
                                     @endif
@@ -458,6 +458,14 @@
                                 </div>
 
                             @endif
+                            <div class="container">
+                                <h3 class="text-center mt-3">Sản phẩm đã thêm vào giỏ hàng</h3>
+
+                                <div id="tableMemberOrderCart">
+
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -554,13 +562,13 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    var renderInputAttribute = $('#renderProductMember');
 
+<script>
+    var renderInputAttribute = $('#renderProductMember'), productMin, product, productName;
     $('.thumbnailProduct').on('click', function () {
-        let product = $(this).data('value');
-        let productName = product['name'];
+        product = $(this).data('value');
+        productName = product['name'];
+        productMin = product['min'];
         let imageUrl = '{{ asset('storage/') }}';
         let imgMain = product['thumbnail'];
         imageUrl = imageUrl + '/' + imgMain;
@@ -589,10 +597,11 @@
         let gallery = product['gallery']
         let arrayGallery = gallery.split(',');
 
-        let partnerBtn = document.getElementById('partnerBtn');
-        partnerBtn.setAttribute('data-value', product['id']);
+        // let partnerBtn = document.getElementById('partnerBtn');
+        // partnerBtn.setAttribute('data-value', product['id']);
 
         $('#btnViewAttribute').data('id', product['id']);
+        renderCart();
     });
 
     $('.thumbnailProductGallery').on('click', function () {
@@ -613,42 +622,42 @@
         link.href = url;
     }
 
-    $(document).ready(function () {
-        const $document = $(document);
+    {{--$(document).ready(function () {--}}
+    {{--    const $document = $(document);--}}
 
-        $document.on('click', '#partnerBtn', function () {
-            const product = $(this).data('value');
+    {{--    $document.on('click', '#partnerBtn', function () {--}}
+    {{--        const product = $(this).data('value');--}}
 
-            renderProduct(product);
-        });
+    {{--        renderProduct(product);--}}
+    {{--    });--}}
 
-        function renderProduct(product) {
-            let listInputQuantity = document.querySelectorAll('.input-quantity');
-            let listQuantity = '';
-            listInputQuantity.forEach(input => {
-                listQuantity += input.value + ',';
-            });
-            listQuantity = JSON.stringify(listQuantity.slice(0, -1));
-            const requestData = {
-                _token: '{{ csrf_token() }}',
-                quantity: listQuantity,
-                value: JSON.stringify(localStorage.getItem('listID')),
-            };
+    {{--    function renderProduct(product) {--}}
+    {{--        let listInputQuantity = document.querySelectorAll('.input-quantity');--}}
+    {{--        let listQuantity = '';--}}
+    {{--        listInputQuantity.forEach(input => {--}}
+    {{--            listQuantity += input.value + ',';--}}
+    {{--        });--}}
+    {{--        listQuantity = JSON.stringify(listQuantity.slice(0, -1));--}}
+    {{--        const requestData = {--}}
+    {{--            _token: '{{ csrf_token() }}',--}}
+    {{--            quantity: listQuantity,--}}
+    {{--            value: JSON.stringify(localStorage.getItem('listID')),--}}
+    {{--        };--}}
 
-            $.ajax({
-                url: `/add-to-cart-register-member/${product}`,
-                method: 'POST',
-                data: requestData,
-            })
-                .done(function (response) {
-                    alert('Success!');
-                    localStorage.removeItem('listID')
-                    window.location.reload();
-                })
-                .fail(function (_, textStatus) {
-                });
-        }
-    });
+    {{--        $.ajax({--}}
+    {{--            url: `/add-to-cart-register-member/${product}`,--}}
+    {{--            method: 'POST',--}}
+    {{--            data: requestData,--}}
+    {{--        })--}}
+    {{--            .done(function (response) {--}}
+    {{--                alert('Success!');--}}
+    {{--                localStorage.removeItem('listID')--}}
+    {{--                window.location.reload();--}}
+    {{--            })--}}
+    {{--            .fail(function (_, textStatus) {--}}
+    {{--            });--}}
+    {{--    }--}}
+    {{--});--}}
 
     $(document).ready(function () {
         $('#btnViewAttribute').on('click', function () {
@@ -707,6 +716,25 @@
                 console.log(textStatus)
             });
     }
+
+    function renderCart() {
+        //member.view.carts
+        const requestData = {
+            _token: '{{ csrf_token() }}',
+        };
+        $.ajax({
+            url: `{{route('member.view.carts')}}`,
+            method: 'GET',
+            data: requestData,
+        })
+            .done(function (response) {
+                $('#tableMemberOrderCart').empty().append(response);
+            })
+            .fail(function (_, textStatus) {
+            });
+    }
+
+    renderCart();
 </script>
 
 <script>

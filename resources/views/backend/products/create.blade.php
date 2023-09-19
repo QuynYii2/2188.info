@@ -216,13 +216,19 @@
                                         <div class="form-group form-group-price">
                                             <div class="d-flex align-items-center">
                                                 <div class="">
-                                                    <input type="number" class="form-control form-price" name="quantity[]" placeholder={{ __('home.Từ (sản phẩm)') }}>
+                                                    <input type="number" class="form-control form-price" name="starts[]" placeholder={{ __('home.Từ (sản phẩm)') }}>
+                                                </div>
+                                                <div class="">
+                                                    <input type="number" class="form-control form-price" name="ends[]" placeholder={{ __('home.Đến (sản phẩm)') }}>
                                                 </div>
                                                 <div class="">
                                                     <input type="number" class="form-control form-price" name="sales[]" placeholder={{ __('home.Giảm %') }}>
                                                 </div>
                                                 <div class="">
                                                     <input type="number" class="form-control form-price" name="days[]" placeholder={{ __('home.Ngày giao hàng dự kiến') }}>
+                                                </div>
+                                                <div class="">
+                                                    <input type="number" class="form-control form-price" name="ships[]" placeholder={{ __('home.Ngày giao hàng dự kiến') }}>
                                                 </div>
                                                 <div class="">
                                                     <button type="button" class="btn remove-form-field"><i class="fa-regular fa-trash-can"></i></button>

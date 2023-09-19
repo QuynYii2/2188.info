@@ -78,7 +78,7 @@ class ProductController extends Controller
         (new HomeController())->getLocale($request);
         $value = $this->findProduct(1, $id);
 
-        $currency = (new \App\Http\Controllers\Frontend\HomeController())->getLocation($request);
+        $currency = (new HomeController())->getLocation($request);
         return view('frontend/pages/detail-product', $value)->with('currency', $currency);
     }
 
@@ -184,7 +184,7 @@ class ProductController extends Controller
 
     public function getProductSale(Request $request, $id){
         $price_sales = ProductSale::where('product_id', $id)->get();
-        $currency = (new \App\Http\Controllers\Frontend\HomeController())->getLocation($request);
+        $currency = (new HomeController())->getLocation($request);
         return view('frontend/pages/member/product-sales', compact('price_sales', 'currency'));
     }
 
