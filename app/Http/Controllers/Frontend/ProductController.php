@@ -251,6 +251,17 @@ class ProductController extends Controller
         return redirect(route('checkout.show'));
     }
 
+    public function cartMemberProduct(Request $request)
+    {
+        $carts = Cart::where([
+            ['user_id', '=', Auth::user()->id],
+            ['values', '!=', null],
+            ['status', '=', CartStatus::WAIT_ORDER]
+        ])->get();
+        $currency = (new HomeController())->getLocation($request);
+        return view('frontend.pages.member.member-table-cart', compact('carts', 'currency'));
+    }
+
     private function mergeArray($array1, $array2)
     {
         $arrayList = [];
