@@ -361,9 +361,9 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="main-actions" id="productMainOrder">
+{{--                        <div class="main-actions" id="productMainOrder">--}}
 
-                        </div>
+{{--                        </div>--}}
                     </div>
 
                     <div class="product-price d-flex" style="gap: 3rem">

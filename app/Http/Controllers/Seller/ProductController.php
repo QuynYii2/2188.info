@@ -173,7 +173,7 @@ class ProductController extends Controller
         return view('backend/products/views', compact('products', 'isAdmin', 'listUserId'));
     }
 
-    public function create(Request $request )
+    public function create(Request $request)
     {
         (new HomeController())->getLocale($request);
         $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
@@ -337,7 +337,7 @@ class ProductController extends Controller
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', \Illuminate\Support\Facades\Auth::user()->id]])->get();
         $att_of_product = DB::table('product_attribute')->where('product_id', $product->id)->get();
         $productDetails = Variation::where([['product_id', $id], ['status', VariationStatus::ACTIVE]])->get();
-        $price_sales = ProductSale::where('product_id',$id)->get();
+        $price_sales = ProductSale::where('product_id', $id)->get();
 
         return view('backend.products.edit', compact(
             'categories',
@@ -752,19 +752,32 @@ class ProductController extends Controller
         $success = Product::create($newProductData);
         $product = Product::where('user_id', Auth::user()->id)->orderByDesc('id')->first();
 
-        $quantity = $request->input('ends');
+        $starts = $request->input('starts');
+        $ends = $request->input('ends');
+
         $sales = $request->input('sales');
         $days = $request->input('days');
 
-        $counts = count($quantity);
+        $ships = $request->input('ships');
+
+        $counts = count($starts);
         for ($i = 0; $i < $counts; $i++) {
             $newProductSale = null;
+            if (!$starts[$i]){
+                $starts[$i] = $product->min;
+            }
+            if (!$ends[$i]){
+                $quantity = $starts[$i];
+            } else {
+                $quantity = $starts[$i] . '-' . $ends[$i];
+            }
             $newProductSale = [
                 'user_id' => $product->user_id,
                 'product_id' => $product->id,
-                'quantity' => $quantity[$i],
+                'quantity' => $quantity,
                 'sales' => $sales[$i],
                 'days' => $days[$i],
+                'ship' => $ships[$i],
             ];
             ProductSale::create($newProductSale);
         }

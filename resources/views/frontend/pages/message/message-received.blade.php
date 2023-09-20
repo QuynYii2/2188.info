@@ -14,7 +14,7 @@
             <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
             <div class="d-flex justify-content-between align-items-center p-3">
                 <div>
-                    <a href="{{ route('list.products.shop.show', $oldUser->id) }}"
+                    <a href="{{route('partner.register.member.index')}}"
                        class="btn btn-primary mr-2">{{ __('home.Booth') }}</a>
                     <a href="{{route('partner.register.member.index')}}"
                        class="btn btn-warning">{{ __('home.Partner List') }}</a>

@@ -12,6 +12,7 @@ use App\Models\Attribute;
 use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductSale;
 use App\Models\Variation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -260,6 +261,25 @@ class ProductController extends Controller
         ])->get();
         $currency = (new HomeController())->getLocation($request);
         return view('frontend.pages.member.member-table-cart', compact('carts', 'currency'));
+    }
+
+    public function getPriceSale(Request $request)
+    {
+        $id = $request->input('productID');
+        $quantity = $request->input('quantity');
+
+        $sales = null;
+        $productSales = ProductSale::where('product_id', $id)->get();
+        foreach ($productSales as $productSale) {
+            $listQuantity = $productSale->quantity;
+            $arrayQuantity = explode('-', $listQuantity);
+            $compare = $arrayQuantity[0];
+            if ($quantity >= $compare) {
+                $sales = $productSale;
+                break;
+            }
+        }
+        return $sales;
     }
 
     private function mergeArray($array1, $array2)

@@ -1,11 +1,10 @@
 <table class="table" id="table-selected-att">
     <thead>
     <tr>
-        <th scope="col">Mã SP</th>
+        <th scope="col">Image</th>
         <th scope="col">Thuộc tính</th>
         <th scope="col">Số lượng</th>
         <th scope="col">Đơn giá</th>
-        <th scope="col">Giảm giá</th>
         <th scope="col">Thành tiền</th>
     </tr>
     </thead>
@@ -31,8 +30,11 @@
                         ])->first();
                     @endphp
                     <tr>
-                        <th scope="row">{{$product->product_code}}</th>
+                        <th scope="row">
+                            <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
+                        </th>
                         <td>
+                            <p>{{$product->name}}</p>
                             @if($attribue)
                                 {{$attribue->name}}:
                                 @if($property)
@@ -42,7 +44,7 @@
                         </td>
                         <td>
                             <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
-                                   class="input_quantity"
+                                   class="input_quantity" data-product="{{$product}}"
                                    data-id="0" data-variable="{{$item[0]}}">
                         </td>
 
@@ -50,11 +52,15 @@
                             <span>
                                 <span>
                                       @if($productVariable)
-                                        {{ number_format(convertCurrency('USD', $currency,$productVariable->price), 0, ',', '.') }}
+                                        <span id="textPrice0">
+                                            {{ number_format(convertCurrency('USD', $currency,$productVariable->price), 0, ',', '.') }}
+                                        </span>
                                         <input class="d-none" value="{{$productVariable->price}}"
                                                id="productPrice0">
                                     @else
-                                        {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
+                                        <span id="textPrice0">
+                                            {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
+                                        </span>
                                         <input class="d-none" value="{{$product->price}}" id="productPrice0">
                                     @endif
                                 </span>
@@ -63,7 +69,6 @@
                                  </span>
                             </span>
                         </td>
-                        <td id="discount-price0">0</td>
                         <td id="total-price0">{{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}</td>
                     </tr>
                 @else
@@ -76,8 +81,11 @@
                     @endphp
                     @foreach($item as $key => $attpro)
                         <tr>
-                            <th scope="row">{{$product->product_code}}</th>
+                            <th scope="row">
+                                <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
+                            </th>
                             <td>
+                                <p>{{$product->name}}</p>
                                 @php
                                     $attproArray =  explode('-', $attpro);
                                     $attribute = \App\Models\Attribute::find($attproArray[0]);
@@ -91,18 +99,23 @@
                                 @endif
                             </td>
                             <td>
-                                <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]" class="input_quantity"
-                                       data-id="{{$loop->index + 1}}" data-variable="{{$attpro}}">
+                                <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                                       class="input_quantity"
+                                       data-id="{{$loop->index + 1}}" data-product="{{$product}}"  data-variable="{{$attpro}}">
                             </td>
                             <td>
                                 <span>
                                     <span>
                                           @if($productVariable)
-                                            {{ number_format(convertCurrency('USD', $currency,$productVariable->price), 0, ',', '.') }}
+                                            <span id="textPrice{{$loop->index + 1}}">
+                                                {{ number_format(convertCurrency('USD', $currency,$productVariable->price), 0, ',', '.') }}
+                                            </span>
                                             <input class="d-none" value="{{$productVariable->price}}"
                                                    id="productPrice{{$loop->index + 1}}">
                                         @else
-                                            {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
+                                            <span id="textPrice{{$loop->index + 1}}">
+                                                {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
+                                            </span>
                                             <input class="d-none" value="{{$product->price}}"
                                                    id="productPrice{{$loop->index + 1}}">
                                         @endif
@@ -112,7 +125,6 @@
                                      </span>
                                 </span>
                             </td>
-                            <td id="discount-price{{$loop->index + 1}}">0</td>
                             <td id="total-price{{$loop->index + 1}}">{{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}</td>
                         </tr>
                     @endforeach
@@ -127,8 +139,11 @@
                             ])->first();
                 @endphp
                 <tr>
-                    <th scope="row">{{$product->product_code}}</th>
+                    <th scope="row">
+                        <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
+                    </th>
                     <td>
+                        <p>{{$product->name}}</p>
                         @foreach($myArray as $item)
                             @php
                                 $attribue_property = explode('-', $item);
@@ -144,17 +159,22 @@
                         @endforeach
                     </td>
                     <td>
-                        <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]" class="input_quantity" data-id="0"
+                        <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                               class="input_quantity" data-id="0" data-product="{{$product}}"
                                data-variable="{{$item}}">
                     </td>
                     <td>
                         <span>
                             <span>
                                   @if($productVariable)
-                                    {{ number_format(convertCurrency('USD', $currency,$productVariable->price), 0, ',', '.') }}
+                                    <span id="textPrice0">
+                                        {{ number_format(convertCurrency('USD', $currency,$productVariable->price), 0, ',', '.') }}
+                                    </span>
                                     <input class="d-none" value="{{$productVariable->price}}" id="productPrice0">
                                 @else
-                                    {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
+                                    <span id="textPrice0">
+                                        {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
+                                    </span>
                                     <input class="d-none" value="{{$product->price}}" id="productPrice0">
                                 @endif
                             </span>
@@ -163,7 +183,6 @@
                             </span>
                         </span>
                     </td>
-                    <td id="discount-price0">0</td>
                     <td id="total-price0">{{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}</td>
                 </tr>
             @endif
@@ -177,8 +196,11 @@
                             ])->first();
                 @endphp
                 <tr>
-                    <th scope="row">{{$product->product_code}}</th>
+                    <th scope="row">
+                        <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
+                    </th>
                     <td>
+                        <p>{{$product->name}}</p>
                         @php
                             $items = null;
                             $items = explode(',', $productAttribute);
@@ -200,19 +222,24 @@
                     </td>
 
                     <td>
-                        <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]" class="input_quantity"
-                               data-id="{{$loop->index + 1}}" data-variable="{{$productAttribute}}">
+                        <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                               class="input_quantity"
+                               data-id="{{$loop->index + 1}}" data-product="{{$product}}"  data-variable="{{$productAttribute}}">
                     </td>
                     <td>
 
                         <span>
                             <span>
                                   @if($productVariable)
-                                    {{ number_format(convertCurrency('USD', $currency,$productVariable->price), 0, ',', '.') }}
+                                    <span id="textPrice{{$loop->index + 1}}">
+                                        {{ number_format(convertCurrency('USD', $currency,$productVariable->price), 0, ',', '.') }}
+                                    </span>
                                     <input class="d-none" value="{{$productVariable->price}}"
                                            id="productPrice{{$loop->index + 1}}">
                                 @else
-                                    {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
+                                    <span id="textPrice{{$loop->index + 1}}">
+                                        {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
+                                    </span>
                                     <input class="d-none" value="{{$product->price}}"
                                            id="productPrice{{$loop->index + 1}}">
                                 @endif
@@ -222,16 +249,17 @@
                             </span>
                         </span>
                     </td>
-                    <td id="discount-price{{$loop->index + 1}}">0</td>
                     <td id="total-price{{$loop->index + 1}}">{{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}</td>
                 </tr>
             @endforeach
         @endif
-        <button id="supBtnOrder" type="button"
-                class="btn btn-success float-right">{{ __('home.Tiếp nhận đặt hàng') }}</button>
     @endif
     </tbody>
 </table>
+@if($testArray)
+    <button id="supBtnOrder" type="button"
+            class="btn btn-success float-right">{{ __('home.Tiếp nhận đặt hàng') }}</button>
+@endif
 <div class="d-none">
     <form action="{{route('member.add.cart', $product)}}" method="post" id="formOrderMember">
         @csrf
@@ -246,29 +274,60 @@
             let number = $(this).data('id');
             // get price
             let idPrice = 'productPrice' + number;
-            let price = $('#' + idPrice).val();
-            // get price discount
-            let idPriceDiscount = 'productPrice' + number;
-            let priceDiscount = $('#' + idPriceDiscount).text();
-            //total
-            let total = parseFloat(price) * $(this).val() - priceDiscount;
+            let textPrice = 'textPrice' + number;
 
-            let currencies = document.getElementsByClassName('currency');
-            let currency = currencies[0].innerText;
+            let itemValue = $(this).val();
 
-            // using function convertCurrency(total);
-            async function main() {
+            let product = $(this).data('product');
+
+            let priceOld = product['price'];
+
+            // get product sale
+            async function getSales() {
                 try {
-                    let result = await convertCurrency(total);
-                    let totalConvert = result + ' ' + currency;
-                    $('#total-price' + number).text(totalConvert);
+                    let productSale = await getProductSale(itemValue);
+                    if (productSale) {
+                        let priceSale = productSale['sales'];
+                        $('#' + textPrice).text(priceSale);
+                        $('#' + idPrice).val(priceSale);
+                        changeDataTotal();
+                    } else {
+                        let result = await convertCurrency(priceOld);
+                        $('#' + textPrice).text(result);
+                        $('#' + idPrice).val(priceOld);
+                        changeDataTotal();
+                    }
                 } catch (error) {
                     console.error(error);
                 }
             }
 
-            // render total
-            main();
+            getSales();
+
+            function changeDataTotal() {
+                let price = $('#' + idPrice).val();
+                //total
+                let total = parseFloat(price) * itemValue;
+
+                let currencies = document.getElementsByClassName('currency');
+                let currency = currencies[0].innerText;
+
+                // using function convertCurrency(total);
+                async function main() {
+                    try {
+                        let result = await convertCurrency(total);
+                        let totalConvert = result + ' ' + currency;
+                        $('#total-price' + number).text(totalConvert);
+                    } catch (error) {
+                        console.error(error);
+                    }
+                }
+
+                // render total
+                main();
+            }
+
+            changeDataTotal();
 
             // order
             let variable = $(this).data('variable');
@@ -303,6 +362,8 @@
             }
 
             $('#productInfo').val(value);
+
+
         })
 
         // call api convert currency
@@ -316,6 +377,26 @@
                     method: 'GET',
                 });
                 return response;
+            } catch (error) {
+                throw error;
+            }
+        }
+
+        async function getProductSale(quantity) {
+            const requestData = {
+                _token: '{{ csrf_token() }}',
+                productID: `{{$product->id}}`,
+                quantity: quantity,
+            };
+
+            try {
+                let productSale = await $.ajax({
+                    url: `{{route('member.product.sales')}}`,
+                    method: 'GET',
+                    data: requestData,
+                    body: JSON.stringify(requestData),
+                })
+                return productSale;
             } catch (error) {
                 throw error;
             }
