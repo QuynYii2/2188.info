@@ -35,16 +35,6 @@
                                 ['product_id', $cartItem->product->id],
                                 ['variation', $cartItem->values]
                                 ])->first();
-
-                            $sales = \App\Models\ProductSale::where([
-                                ['product_id', $cartItem->product->id],
-                                ['quantity','<=', $cartItem->quantity]
-                                ])->orderBy('sales', 'desc')->first();
-
-                            $percent = null;
-                            if ($sales){
-                                $percent = $sales->sales;
-                            }
                         @endphp
                         <tr style="border-bottom: 1px solid #dbdbdb">
                             <div class="row">
@@ -178,7 +168,8 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer justify-content-center align-items-center">
-                                                                <button type="button" class=" text-center btn btn-primary">
+                                                                <button type="button"
+                                                                        class=" text-center btn btn-primary">
                                                                     Save
                                                                 </button>
                                                             </div>
@@ -191,29 +182,21 @@
                                 </td>
                                 <td class="price col-md-2" style="vertical-align: middle;"
                                     id="price-{{ $cartItem->id }}">{{ number_format(convertCurrency('USD', $currency,$cartItem->price), 0, ',', '.') }} {{$currency}}</td>
-                                <td class="quantity col-md-1"  style="vertical-align: middle;">
+                                <td class="quantity col-md-1" style="vertical-align: middle;">
                                     <form>
                                         <input type="text" id="id-cart" value="{{ $cartItem->id }}" hidden/>
                                         <input type="text" id="id-link" value="{{ asset('/') }}" hidden/>
                                         <input class="input-number" type="number" id="quantity-{{ $cartItem->id }}"
                                                name="quantity" style="border-radius: 30px; border-color: #ccc"
                                                value="{{ $cartItem->quantity }}"
-                                               onchange="myfunction({{ $cartItem->id }}); "
+                                               data-id="{{ $cartItem->id }}" data-value="{{ $cartItem }}"
                                                min="{{$cartItem->product->min}}"/>
                                     </form>
                                 </td>
-                                <input hidden="" type="text" id="price-percent-{{ $cartItem->id }}"
-                                       value="{{ $percent }}">
-                                @if($percent)
-                                    <td class="col-md-2" id="total-quantity-{{ $cartItem->id }}" style="vertical-align: middle;">
-                                        {{ number_format(convertCurrency('USD', $currency,($cartItem->price*$cartItem->quantity) - ($cartItem->price*$cartItem->quantity)*$percent/100), 0, ',', '.') }} {{$currency}}
-                                    </td>
-                                @else
-                                    <td class="col-md-2" id="total-quantity-{{ $cartItem->id }}" style="vertical-align: middle;">
-                                        {{ number_format(convertCurrency('USD', $currency,$cartItem->price*$cartItem->quantity), 0, ',', '.') }} {{$currency}}
-                                    </td>
-                                @endif
-
+                                <td class="col-md-2" id="total-quantity-{{ $cartItem->id }}"
+                                    style="vertical-align: middle;">
+                                    {{ number_format(convertCurrency('USD', $currency,$cartItem->price*$cartItem->quantity), 0, ',', '.') }} {{$currency}}
+                                </td>
                                 <td class="col-md-1" style="vertical-align: middle;">
                                     <form action="{{ route('cart.delete', $cartItem->id) }}"
                                           method="POST">
@@ -290,7 +273,8 @@
                                            placeholder="{{ __('home.Zip/Postcode') }}">
                                 </div>
                             </div>
-                            <button type="submit" class="btn mb-2 submit float-right submit-60">{{ __('home.Estimate Shipping') }}
+                            <button type="submit"
+                                    class="btn mb-2 submit float-right submit-60">{{ __('home.Estimate Shipping') }}
                             </button>
                         </form>
                     </div>
@@ -307,75 +291,109 @@
                         <span> <span id="max-total"> {{ $cartItem->price*$cartItem->quantity }}</span></span>
                     </div>
                     <a href="{{route('checkout.show')}}">
-                        <button type="submit" class="btn mb-2 submit float-right submit-100">{{ __('home.Check out') }}</button>
+                        <button type="submit"
+                                class="btn mb-2 submit float-right submit-100">{{ __('home.Check out') }}</button>
                     </a>
                 </div>
             </div>
 
         @endif
     </div>
-    <script>
-        function myfunction(id) {
-
-            let quantity = document.getElementById('quantity-' + id).value;
-            let totalQuantity = document.getElementById('total-quantity-' + id);
-            let price = document.getElementById('price-' + id).innerText;
-            let percent = document.getElementById('price-percent-' + id).value;
-            let link = document.getElementById('id-link').value;
-
-            const data = {
-                quantity: quantity,
-            };
-
-            fetch(link + 'api/cart/update/' + id, {
-                method: 'PUT',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify(data),
-            }).then(response => {
-                if (response.status == 200) {
-                    totalQuantity.innerText = parseFloat(price) * parseFloat(quantity) - (parseFloat(price) * parseFloat(quantity)) * parseFloat(percent) / 100
-
-                    getAllTotal();
+    <div class="d-none">
+        @if ($cartItems->isNotEmpty())
+            @php
+                $totalCart = null;
+                foreach ($cartItems as $item){
+                    $totalCart = (int)$totalCart + (int)$item->price * (int)$item->quantity ;
                 }
-                // window.location.reload()
-            }).catch(error => console.log(error));
-        }
+            @endphp
+            <p id="totalItemCart">{{$totalCart}}</p>
+        @else
+            <p id="totalItemCart">0</p>
+        @endif
+        <p id="currencyCart">{{$currency}}</p>
+    </div>
+    <script>
+        let currency = $('#currencyCart').text();
+        $(document).ready(function () {
+            $('.input-number').on('change', function () {
+                let id = $(this).data('id');
+                let quantity = $(this).val();
+                let totalQuantity = document.getElementById('total-quantity-' + id);
+                let link = document.getElementById('id-link').value;
 
-        function parseCurrencyString(currencyString) {
-            return parseFloat(currencyString.replace(/[^\d.-]/g, '').replace('.', ''));
-        }
+                let cartItem = $(this).data('value');
 
-        function formatCurrency(number) {
-            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number);
-        }
+                async function getItem() {
+                    const data = {
+                        quantity: quantity,
+                    };
 
-        function getAllTotal() {
-            let totalMax = document.getElementById('max-total');
-            let firstCells = document.querySelectorAll('#table-cart td:nth-child(4)');
-            let cellValues = [];
+                    await fetch(link + 'api/cart/update/' + id, {
+                        method: 'PUT',
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        body: JSON.stringify(data),
+                    }).then(response => {
+                        if (response.status == 200) {
+                            changeTotal(totalQuantity, cartItem, quantity);
+                            calculationTotalCart();
+                        }
 
-            firstCells.forEach(function(singleCell) {
-                cellValues.push(singleCell.innerText);
-            });
+                    }).catch(error => console.log(error));
+                }
 
+                getItem();
+            })
+        })
+
+        async function calculationTotalCart() {
+            let results = await getAllCart();
             let total = 0;
-
-            for (let i = 0; i < cellValues.length; i++) {
-                let price = parseCurrencyString(cellValues[i]);
-                total += price;
+            for (let i = 0; i < results.length; i++) {
+                total = total + results[i]['price'] * results[i]['quantity'];
             }
-
-            total = formatCurrency(total);
-            console.log(total)
-            let newArray = total.split(' ₫');
-            total = newArray[0] + '.000' + ' VND'
-            totalMax.innerText = total;
+            let result = await convertCurrency(parseFloat(total));
+            let totalText = result + ' ' + currency;
+            $('#max-total').text(totalText);
         }
 
-        getAllTotal();
+        calculationTotalCart();
 
+        async function changeTotal(totalQuantity, cartItem, quantity) {
+            let total = cartItem['price'] * parseFloat(quantity);
+            let result = await convertCurrency(parseFloat(total));
+            totalQuantity.innerText = result + ' ' + currency;
+        }
 
+        async function convertCurrency(total) {
+            let url = '{{ route('convert.currency', ['total' => ':total']) }}';
+            url = url.replace(':total', total);
+
+            try {
+                let response = await $.ajax({
+                    url: url,
+                    method: 'GET',
+                });
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        }
+
+        async function getAllCart() {
+            let url = '{{ route('member.all.cart') }}';
+
+            try {
+                let response = await $.ajax({
+                    url: url,
+                    method: 'GET',
+                });
+                return response;
+            } catch (error) {
+                throw error;
+            }
+        }
     </script>
 @endsection

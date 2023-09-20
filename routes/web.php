@@ -191,6 +191,7 @@ Route::middleware(['auth'])->group(function () {
     // Product member
     Route::get('/member/product-buy-lot/attribute/{id}', [ProductController::class, 'detailProduct'])->name('detail_product.member.attribute');
     Route::post('/member-add-to-cart/{product}', [ProductController::class, 'orderMemberProduct'])->name('member.add.cart');
+    Route::get('/member-get-all-cart', [CartController::class, 'getAllCarts'])->name('member.all.cart');
 
 // End register member
     //View member

@@ -183,6 +183,7 @@ class ProductController extends Controller
     }
 
     public function getProductSale(Request $request, $id){
+        (new HomeController())->getLocale($request);
         $price_sales = ProductSale::where('product_id', $id)->get();
         $currency = (new HomeController())->getLocation($request);
         return view('frontend/pages/member/product-sales', compact('price_sales', 'currency'));
