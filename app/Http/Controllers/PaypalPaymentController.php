@@ -80,7 +80,7 @@ class PaypalPaymentController extends Controller
             'status' => PermissionUserStatus::ACTIVE
         ]);
         alert()->success('Success', 'Success');
-        return redirect(route('profile.show'));
+        return redirect(route('seller.products.index'));
     }
 
 
