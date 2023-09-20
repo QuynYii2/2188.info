@@ -281,6 +281,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product-views', [ProductController::class, 'getListByViews'])->name('product.views');
     // Member
     Route::get('/member-view-carts', [ProductController::class, 'cartMemberProduct'])->name('member.view.carts');
+    Route::get('/member-get-product-sales', [ProductController::class, 'getPriceSale'])->name('member.product.sales');
 });
 
 // Backend v2
