@@ -2,10 +2,10 @@
     <thead>
     <tr>
         <th scope="col">#</th>
-        <th scope="col">ProductName</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Price</th>
-        <th scope="col">Total</th>
+        <th scope="col">{{ __('home.Product Name') }}</th>
+        <th scope="col">{{ __('home.quantity') }}</th>
+        <th scope="col">{{ __('home.Price') }}</th>
+        <th scope="col">{{ __('home.Grand Total') }}</th>
     </tr>
     </thead>
     <tbody>
@@ -14,7 +14,17 @@
             <tr>
                 <th scope="row">{{$loop->index + 1}}</th>
                 <td>
-                    {{$cart->product->name}}
+                    @if(locationHelper() == 'kr')
+                        {{$cart->product->name_ko}}
+                    @elseif(locationHelper() == 'cn')
+                        {{$cart->product->name_zh}}
+                    @elseif(locationHelper() == 'jp')
+                        {{$cart->product->name_ja}}
+                    @elseif(locationHelper() == 'vi')
+                        {{$cart->product->name_vi}}
+                    @else
+                        {{$cart->product->name_en}}
+                    @endif
                     <p class="small text-secondary">
                         @php
                             $arrayValues = explode(',', $cart->values);
@@ -25,7 +35,32 @@
                                 $attribute = \App\Models\Attribute::find($attribute_property[0]);
                                 $property = \App\Models\Properties::find($attribute_property[1]);
                             @endphp
-                            <span>{{$attribute->name}}:{{$property->name}},</span>
+                            <span>
+                                @if(locationHelper() == 'kr')
+                                    {{$attribute->name_ko}}
+                                @elseif(locationHelper() == 'cn')
+                                    {{$attribute->name_zh}}
+                                @elseif(locationHelper() == 'jp')
+                                    {{$attribute->name_ja}}
+                                @elseif(locationHelper() == 'vi')
+                                    {{$attribute->name_vi}}
+                                @else
+                                    {{$attribute->name_en}}
+                                @endif
+                                :
+                                @if(locationHelper() == 'kr')
+                                    {{$property->name_ko}}
+                                @elseif(locationHelper() == 'cn')
+                                    {{$property->name_zh}}
+                                @elseif(locationHelper() == 'jp')
+                                    {{$property->name_ja}}
+                                @elseif(locationHelper() == 'vi')
+                                    {{$property->name_vi}}
+                                @else
+                                    {{$property->name_en}}
+                                @endif
+                                    ,
+                            </span>
                         @endforeach
                     </p>
                 </td>

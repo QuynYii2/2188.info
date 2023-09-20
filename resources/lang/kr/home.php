@@ -105,7 +105,7 @@ return [
     'international logistics co' => '(주)국제종합물류',
     'online shopping center' => '온라인 쇼핑 센터',
     'settled' => '입주',
-    'sales' => 'SALE',
+    'sales' => '할인',
     'new' => 'NEW',
     'management' => '관리',
     'overseas customer development' => '해외 고객 개발',
@@ -213,6 +213,7 @@ return [
     'purchase' => '구매',
     'all_categories' => '모든 카테고리',
 
+    'property' => '속성',
 
     'Cart' => '장바구니',
     'Product Name' => '상품명',
