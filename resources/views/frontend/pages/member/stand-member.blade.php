@@ -458,32 +458,8 @@
                                         {{ __('home.Order conditions') }}
                                     </h5>
                                 </div>
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">{{ __('home.quantity') }}</th>
-                                        <th scope="col">{{ __('home.Unit price') }}</th>
-                                        <th scope="col">{{ __('home.Ngày dự kiến xuất kho') }}</th>
-                                    </tr>
-                                    </thead>
+                                <table class="table table-bordered" id="tablebodyProductSale">
 
-                                    <tbody id="tablebodyProductSale">
-                                    @if(!$price_sales->isEmpty())
-                                        @foreach($price_sales as $price_sale)
-                                            @php
-                                                $quantity = $price_sale->quantity;
-                                                $discount = $price_sale->sales;
-                                                $prises = $product->old_price;
-                                            @endphp
-                                            <tr>
-                                                <td>{{$price_sale->quantity}}</td>
-                                                <td>{{($prises - ($prises * $discount / 100)) * $quantity}}</td>
-                                                <td class="2323"></td>
-                                                {{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
-                                    </tbody>
                                 </table>
 
                                 <p>{{ __('home.đơn giá phía trên là điều kiện FOB/TT') }}</p>
