@@ -417,18 +417,20 @@
                                             @php
                                                 $arrayProductImgThumbnail = explode(',', $productGallery);
                                             @endphp
-                                            @foreach($arrayProductImgThumbnail as $productImg)
-                                                <div class="item-card d-none">
-                                                    <div class="card-image">
-                                                        <a href="{{ asset('storage/' . $productImg) }}"
-                                                           data-fancybox="gallery"
-                                                           data-caption="{{$firstProduct->name}}">
-                                                            <img src="{{ asset('storage/' . $productImg) }}"
-                                                                 class="thumbnailProductMain" alt="">
-                                                        </a>
+                                            <div class="" id="productImgThumbnail">
+                                                @foreach($arrayProductImgThumbnail as $productImg)
+                                                    <div class="item-card d-none">
+                                                        <div class="card-image">
+                                                            <a href="{{ asset('storage/' . $productImg) }}"
+                                                               data-fancybox="gallery"
+                                                               data-caption="{{$firstProduct->name}}">
+                                                                <img src="{{ asset('storage/' . $productImg) }}"
+                                                                     class="thumbnailProductMain" alt="">
+                                                            </a>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            @endforeach
+                                                @endforeach
+                                            </div>
                                         @endif
                                     </div>
                                 </div>
@@ -438,7 +440,7 @@
                                     @php
                                         $arrayProductImg = explode(',', $productGallery);
                                     @endphp
-                                    <div class="row thumbnailSupGallery">
+                                    <div class="row thumbnailSupGallery" id="productThumbnail">
                                         @foreach($arrayProductImg as $productImg)
                                             <div class="col-md-3 thumbnailSupGallery-img">
                                                 <img src="{{ asset('storage/' . $productImg) }}" alt=""
@@ -569,10 +571,9 @@
         $('.thumbnailProduct').on('click', function () {
             let product = $(this).data('value');
             let productName = $(this).data('name');
-            console.log(productName);
-            let imageUrl = '{{ asset('storage/') }}';
+            let imageUrlMain = '{{ asset('storage/') }}';
             let imgMain = product['thumbnail'];
-            imageUrl = imageUrl + '/' + imgMain;
+            let imageUrl = imageUrlMain + '/' + imgMain;
             let idImg = '#imgProductMain';
             let linkImg = '#linkProductImg';
             changeImage(idImg, imageUrl);
@@ -598,21 +599,44 @@
 
             let gallery = product['gallery']
             let arrayGallery = gallery.split(',');
+            let arrayUrlImg = []
+            for (let i = 0; i < arrayGallery.length; i++) {
+                arrayUrlImg.push(imageUrlMain + '/' + arrayGallery[i])
+            }
+
+            let string = '';
+            let viewImg = '';
+            for (let i = 0; i < arrayUrlImg.length; i++) {
+                string = string + `<div class="col-md-3 thumbnailSupGallery-img">
+                <img src="${arrayUrlImg[i]}" alt="" class="thumbnailProductGallery " data-id="${productID}"></div>`;
+
+                viewImg = viewImg + `<div class="item-card d-none"> <div class="card-image"> <a href="${arrayUrlImg[i]}"
+                data-fancybox="gallery" data-caption="${productName}"> <img src="${arrayUrlImg[i]}" class="thumbnailProductMain" alt="">
+                </a> </div> </div>`;
+            }
+
+            $('#productThumbnail').empty().append(string);
+            $('#productImgThumbnail').empty().append(viewImg);
+            clickImg();
 
             // $('#partnerBtn').data('value', product['id']);
-            let partnerBtn = document.getElementById('partnerBtn');
-            partnerBtn.setAttribute('data-value', product['id']);
+            // let partnerBtn = document.getElementById('partnerBtn');
+            // partnerBtn.setAttribute('data-value', product['id']);
 
             $('#btnViewAttribute').data('id', product['id']);
         });
 
-        $('.thumbnailProductGallery').on('click', function () {
-            let imageUrl = $(this).attr('src');
-            let idImg = '#imgProductMain'
-            let linkImg = '#linkProductImg';
-            changeImage(idImg, imageUrl);
-            changeUrl(linkImg, imageUrl);
-        });
+        function clickImg() {
+            $('.thumbnailProductGallery').on('click', function () {
+                let imageUrl = $(this).attr('src');
+                let idImg = '#imgProductMain'
+                let linkImg = '#linkProductImg';
+                changeImage(idImg, imageUrl);
+                changeUrl(linkImg, imageUrl);
+            });
+        }
+
+        clickImg();
 
         function changeImage(id, imageSrc) {
             const sky = document.querySelector(id);

@@ -2,12 +2,12 @@
     <thead>
     <tr>
         <th scope="col">{{ __('home.quantity') }}</th>
-        <th scope="col"> Giảm giá</th>
+        <th scope="col">{{ __('home.sales') }}</th>
         <th scope="col">{{ __('home.ngày kể từ ngày đặt hàng') }}</th>
         <th scope="col">{{ __('home.Ship') }}</th>
     </tr>
     </thead>
-    <tbody >
+    <tbody>
     @if(!$price_sales->isEmpty())
         @foreach($price_sales as $price_sale)
             @php
@@ -16,7 +16,8 @@
             <tr>
                 <td class="">{{$price_sale->quantity}}</td>
                 <td>
-                    {{ number_format(convertCurrency('USD', $currency,$price_sale->sales), 0, ',', '.') }} {{$currency}}/product
+                    {{ number_format(convertCurrency('USD', $currency,$price_sale->sales), 0, ',', '.') }} {{$currency}}
+                    /{{ __('home.Product') }}
                 </td>
                 <td class="">{{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
                 <td class="">{{ number_format(convertCurrency('USD', $currency,$price_sale->ship), 0, ',', '.') }} {{$currency}}</td>

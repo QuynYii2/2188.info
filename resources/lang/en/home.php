@@ -213,6 +213,8 @@ return [
     'purchase' => 'Bán hàng',
     'all_categories' => 'Tất cả danh mục',
 
+    'property' => 'property',
+
     // giỏ hàng, tên sản phẩm, số lượng, giá, tổng số tiền, hành động, xóa, làm trống giỏ hàng, thanh toán,
     // địa chỉ thanh toán, thẻ được chấp nhận, Thanh toán, tên trên thẻ, số thẻ, Tháng hết hạn, năm hết hạn,
     //tổng tiền hàng, phí vận chuyển, giảm giá, tổng thanh toán, thanh toán ngay, sử dụng địa chỉ mặc định, sử dụng địa chỉ khác,

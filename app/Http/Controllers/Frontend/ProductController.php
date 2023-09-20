@@ -271,6 +271,7 @@ class ProductController extends Controller
 
     public function cartMemberProduct(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $carts = Cart::where([
             ['user_id', '=', Auth::user()->id],
             ['values', '!=', null],
