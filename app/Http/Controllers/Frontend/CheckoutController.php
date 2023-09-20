@@ -93,7 +93,7 @@ class CheckoutController extends Controller
             if ($cart->member == 1) {
                 $productCart = Product::find($cart->product_id);
                 $user = User::find($productCart->user_id);
-                $memberPerson = MemberRegisterPersonSource::where('email', $user->email)->get();
+                $memberPerson = MemberRegisterPersonSource::where('email', $user->email)->first();
                 $memberProduct = null;
                 if ($memberPerson) {
                     $memberProduct = MemberRegisterInfo::where([
@@ -103,7 +103,7 @@ class CheckoutController extends Controller
                 }
                 if ($memberProduct) {
                     $userCurrent = Auth::user();
-                    $memberPersonCurrent = MemberRegisterPersonSource::where('email', $userCurrent->email)->get();
+                    $memberPersonCurrent = MemberRegisterPersonSource::where('email', $userCurrent->email)->first();
                     $memberCurrent = null;
                     $memberCurrent = MemberRegisterInfo::where([
                         ['id', $memberPersonCurrent->member_id],

@@ -97,6 +97,7 @@ class ProductController extends Controller
 
     public function detailProduct($id, Request $request)
     {
+        (new HomeController())->getLocale($request);
         $currency = (new HomeController())->getLocation($request);
         $product = Product::find($id);
         $productAttributes = DB::table('product_attribute')
@@ -199,9 +200,20 @@ class ProductController extends Controller
                     if ($oldCart) {
                         $oldCart->price = $price;
                         $total = (int)$oldCart->quantity + (int)$quantity;
+
+                        $sales = $this->getSales($productID, $total);
+                        if ($sales) {
+                            $oldCart->price = $sales->sales;
+                        }
+
                         $oldCart->quantity = $total;
                         $oldCart->save();
                     } else {
+                        $sales = $this->getSales($productID, $quantity);
+                        if ($sales) {
+                            $price = $sales->sales;
+                        }
+
                         $cart = [
                             'user_id' => Auth::user()->id,
                             'product_id' => $product->id,
@@ -228,6 +240,11 @@ class ProductController extends Controller
                         $price = $variation->price;
                     } else {
                         $price = $product->price;
+                    }
+
+                    $sales = $this->getSales($productID, $quantity);
+                    if ($sales) {
+                        $price = $sales->sales;
                     }
 
                     $cart = [
@@ -267,7 +284,12 @@ class ProductController extends Controller
     {
         $id = $request->input('productID');
         $quantity = $request->input('quantity');
+        $sales = $this->getSales($id, $quantity);
+        return $sales;
+    }
 
+    private function getSales($id, $quantity)
+    {
         $sales = null;
         $productSales = ProductSale::where('product_id', $id)->get();
         foreach ($productSales as $productSale) {
@@ -281,6 +303,7 @@ class ProductController extends Controller
         }
         return $sales;
     }
+
 
     private function mergeArray($array1, $array2)
     {

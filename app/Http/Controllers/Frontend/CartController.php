@@ -274,4 +274,13 @@ class CartController extends Controller
         }
         return $cart;
     }
+
+    public function getAllCarts()
+    {
+        $carts = Cart::where([
+            ['user_id', Auth::user()->id],
+            ['status', CartStatus::WAIT_ORDER]
+        ])->get();
+        return $carts;
+    }
 }

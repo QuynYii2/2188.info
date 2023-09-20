@@ -79,7 +79,8 @@
                                                         {{($voucher->name)}} - {{$voucher->code}}
                                                     </option>
                                                 @else
-                                                    <option disabled>{{(($voucher->name))}} - {{ __('home.Không thể sử dụng') }}</option>
+                                                    <option disabled>{{(($voucher->name))}}
+                                                        - {{ __('home.Không thể sử dụng') }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
@@ -140,17 +141,6 @@
                                 </div>
                                 <div class="orderSummary-body ">
                                     @foreach ($carts as $cartItem)
-                                        @php
-                                            $sales = \App\Models\ProductSale::where([
-                                                ['product_id', $cartItem->product->id],
-                                                ['quantity','<=', $cartItem->quantity]
-                                                ])->orderBy('sales', 'desc')->first();
-
-                                            $percent = null;
-                                            if ($sales){
-                                                $percent = $sales->sales;
-                                            }
-                                        @endphp
                                         <div class="mb-3 row">
                                             <div class="col-3 img">
                                                 <img src="{{ asset('storage/' . $cartItem->product->thumbnail) }}">
@@ -158,30 +148,15 @@
                                             <div class="col-5 name d-flex">
                                                 {{ $cartItem->quantity }} x {{ ($cartItem->product->name) }}
                                             </div>
-                                            <input hidden="" type="text" id="price-percent-{{ $cartItem->id }}"
-                                                   value="{{ $percent }}">
                                             @php
                                                 $currencyController = new \App\Http\Controllers\CurrencyController();
+                                                $currencyValue = $currencyController->getCurrency(request(), $cartItem->price*$cartItem->quantity);
                                             @endphp
-                                            @if($percent)
-                                                @php
-                                                    $currencyValue = $currencyController->getCurrency(request(), ($cartItem->price*$cartItem->quantity) - ($cartItem->price*$cartItem->quantity)*$percent/100);
-                                                @endphp
-                                                <div class="col-4 price d-flex" style="color:black">
-                                                    <span>{{ $currencyValue }}</span>
-                                                </div>
-                                                <span class="price-quantity d-none"
-                                                      id="total-quantity-{{ $cartItem->id }}">{{ ($cartItem->price*$cartItem->quantity) - ($cartItem->price*$cartItem->quantity)*$percent/100 }}</span>
-                                            @else
-                                                @php
-                                                    $currencyValue = $currencyController->getCurrency(request(), $cartItem->price*$cartItem->quantity);
-                                                @endphp
-                                                <div class="col-4 price d-flex" style="color:black">
-                                                    <span>{{ $currencyValue }}</span>
-                                                </div>
-                                                <span class="price-quantity d-none"
-                                                      id="total-quantity-{{ $cartItem->id }}">{{ $cartItem->price*$cartItem->quantity }}</span>
-                                            @endif
+                                            <div class="col-4 price d-flex" style="color:black">
+                                                <span>{{ $currencyValue }}</span>
+                                            </div>
+                                            <span class="price-quantity d-none"
+                                                  id="total-quantity-{{ $cartItem->id }}">{{ $cartItem->price*$cartItem->quantity }}</span>
                                         </div>
                                     @endforeach
                                 </div>
@@ -221,115 +196,172 @@
             </div>
         </div>
     </div>
+    <div class="d-none">
+        @php
+            $homeController = new \App\Http\Controllers\Frontend\HomeController();
+            $currency = $homeController->getLocation(request());
+        @endphp
+        <p id="valueCurrency">{{$currency}}</p>
+    </div>
 
 
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
-        function getvoucher() {
-            $('#voucher option').each(function () {
-                if ($(this).is(':selected')) {
-                    let myArray = this.value.split("-");
-                    let arrayProducts = myArray[0].split(",");
-                    let arrayPrice = [];
-                    for (let i = 0; i < arrayProducts.length; i++) {
-                        var url = document.getElementById('url').value;
+        let currency = $('#valueCurrency').text();
+        $(document).ready(function () {
+            function getvoucher() {
+                $('#voucher option').each(function () {
+                    if ($(this).is(':selected')) {
+                        let myArray = this.value.split("-");
+                        let arrayProducts = myArray[0].split(",");
+                        let arrayPrice = [];
+                        for (let i = 0; i < arrayProducts.length; i++) {
+                            var url = document.getElementById('url').value;
 
-                        function myfunction(id) {
-                            fetch(url + '/' + id, {
-                                method: 'GET'
-                            })
-                                .then(response => {
-                                    if (response.status == 200) {
-                                        console.log(response);
-                                        return response.json();
-                                    }
+                            function myfunction(id) {
+                                fetch(url + '/' + id, {
+                                    method: 'GET'
                                 })
-                                .then((response) => {
-                                    console.log(response)
-                                    let price = response['price'];
-                                    let pricePercent = price * myArray[1] / 100;
-                                    arrayPrice.push(pricePercent)
-                                    let totalPriceDiscount = 0;
-                                    for (let i = 0; i < arrayPrice.length; i++) {
-                                        totalPriceDiscount = parseFloat(totalPriceDiscount) + parseFloat(arrayPrice[i]);
-                                    }
-                                    let salePrice = document.getElementById('voucher_discount_price');
-                                    salePrice.value = totalPriceDiscount;
+                                    .then(response => {
+                                        if (response.status == 200) {
+                                            console.log(response);
+                                            return response.json();
+                                        }
+                                    })
+                                    .then((response) => {
+                                        console.log(response)
+                                        let price = response['price'];
+                                        let pricePercent = price * myArray[1] / 100;
+                                        arrayPrice.push(pricePercent)
+                                        let totalPriceDiscount = 0;
+                                        for (let i = 0; i < arrayPrice.length; i++) {
+                                            totalPriceDiscount = parseFloat(totalPriceDiscount) + parseFloat(arrayPrice[i]);
+                                        }
+                                        let salePrice = document.getElementById('voucher_discount_price');
+                                        salePrice.value = totalPriceDiscount;
 
-                                    let voucherID = document.getElementById('voucher_id');
-                                    voucherID.value = myArray[2];
+                                        let voucherID = document.getElementById('voucher_id');
+                                        voucherID.value = myArray[2];
 
-                                    getAllTotal();
+                                        getAllTotal();
 
-                                })
-                                .catch(error => console.log(error));
+                                    })
+                                    .catch(error => console.log(error));
+                            }
+
+                            myfunction(arrayProducts[i]);
                         }
+                    }
+                })
+            }
 
-                        myfunction(arrayProducts[i]);
+            function getAllTotal() {
+                let totalMax = document.getElementById('max-total');
+                let totalPrice = document.getElementById('total-price');
+                let shippingPrice = document.getElementById('shipping-price');
+                let salePrice = document.getElementById('sale-price');
+                let salePriceByRank = document.getElementById('discount_price_by_rank');
+                let salePriceByVoucher = document.getElementById('voucher_discount_price');
+                let checkOutPrice = document.getElementById('checkout-price');
+                let valuePrice = document.getElementsByClassName('price-quantity');
+
+
+            }
+
+            getAllTotal();
+
+            getvoucher();
+
+            let textSalePrice = $('#sale-price');
+            let textCheckoutPrice = $('#checkout-price');
+            let inputTotalPrice = $('#total_price');
+            let textShipPrice = $('#shipping-price');
+            let inputShipPrice = $('#shipping_price');
+            let inputDiscountPrice = $('#discount_price');
+            let inputPriceId = $('#price_id');
+
+            async function calculationTotalCart() {
+                let results = await getAllCart();
+                let total = 0;
+                let ship = 0;
+                let sales = 0;
+                for (let i = 0; i < results.length; i++) {
+                    total = total + results[i]['price'] * results[i]['quantity'];
+                    let productSale = await getProductSale(results[i]['product_id'], results[i]['quantity']);
+                    if (productSale) {
+                        ship = ship + productSale['ship'];
                     }
                 }
-            })
-        }
-
-        function parseCurrencyString(currencyString) {
-            return parseFloat(currencyString.replace(/[^\d.-]/g, '').replace('.', ''));
-        }
-
-        function formatCurrency(number) {
-            return new Intl.NumberFormat('vi-VN', {style: 'currency', currency: 'VND'}).format(number);
-        }
-
-        function getAllTotal() {
-            let totalMax = document.getElementById('max-total');
-            let totalPrice = document.getElementById('total-price');
-            let shippingPrice = document.getElementById('shipping-price').innerText;
-            let salePrice = document.getElementById('sale-price');
-            let salePriceByRank = document.getElementById('discount_price_by_rank');
-            let salePriceByVoucher = document.getElementById('voucher_discount_price');
-            let checkOutPrice = document.getElementById('checkout-price');
-            let valuePrice = document.getElementsByClassName('price-quantity');
-            // var firstCells = document.querySelectorAll('#table-checkout td:nth-child(4)');
-            // var cellValues = [];
-            // firstCells.forEach(function (singleCell) {
-            //     cellValues.push(singleCell.innerText);
-            // });
-            let i, total = 0;
-            for (i = 0; i < valuePrice.length; i++) {
-                total = parseFloat(total) + parseFloat(valuePrice[i].innerText);
+                inputShipPrice.val(ship);
+                inputDiscountPrice.val(sales);
+                inputTotalPrice.val(total);
+                let checkout = total + ship - sales;
+                inputPriceId.val(checkout);
+                let result = await convertCurrency(parseFloat(total));
+                let totalText = result + ' ' + currency;
+                let shipPrice = await convertCurrency(parseFloat(ship));
+                let shipPriceText = shipPrice + ' ' + currency;
+                let salePrice = await convertCurrency(parseFloat(sales));
+                let salePriceText = salePrice + ' ' + currency;
+                let checkoutPrice = await convertCurrency(parseFloat(checkout));
+                let checkoutPriceText = checkoutPrice + ' ' + currency;
+                textShipPrice.text(shipPriceText)
+                textSalePrice.text(salePriceText)
+                textCheckoutPrice.text(checkoutPriceText);
+                $('#max-total').text(totalText);
             }
 
-            var value = '';
+            calculationTotalCart();
 
-            getCurrency(total);
+            async function convertCurrency(total) {
+                let url = '{{ route('convert.currency', ['total' => ':total']) }}';
+                url = url.replace(':total', total);
 
-            async function getCurrency(total) {
-                let url = '{{asset('convert-currency')}}' + '/' + total;
-                const response = await fetch(url);
-                value = await response.text();
-                totalMax.innerText = value;
+                try {
+                    let response = await $.ajax({
+                        url: url,
+                        method: 'GET',
+                    });
+                    return response;
+                } catch (error) {
+                    throw error;
+                }
             }
 
-            salePrice.innerText = parseFloat(salePriceByRank.value) + parseFloat(salePriceByVoucher.value);
-            let max = parseFloat(total) - parseFloat(salePrice.innerText)
+            async function getAllCart() {
+                let url = '{{ route('member.all.cart') }}';
 
-            getCurrencyMax(max);
-
-            async function getCurrencyMax(total) {
-                let url = '{{asset('convert-currency')}}' + '/' + total;
-                const response = await fetch(url);
-                value = await response.text();
-                checkOutPrice.innerHTML = value;
+                try {
+                    let response = await $.ajax({
+                        url: url,
+                        method: 'GET',
+                    });
+                    return response;
+                } catch (error) {
+                    throw error;
+                }
             }
 
-            let price = document.getElementById('price_id');
-            price.value = checkOutPrice.innerHTML;
-            let discount_price = document.getElementById('discount_price');
-            discount_price.value = salePriceByRank.value;
-        }
+            async function getProductSale(product, quantity) {
+                const requestData = {
+                    _token: '{{ csrf_token() }}',
+                    productID: product,
+                    quantity: quantity,
+                };
 
-        getAllTotal();
-
-        getvoucher();
+                try {
+                    let productSale = await $.ajax({
+                        url: `{{route('member.product.sales')}}`,
+                        method: 'GET',
+                        data: requestData,
+                        body: JSON.stringify(requestData),
+                    })
+                    return productSale;
+                } catch (error) {
+                    throw error;
+                }
+            }
+        })
 
         $(document).ready(function () {
             if ($("#order-by-immediate").prop("checked")) {
