@@ -5,6 +5,7 @@
         <th scope="col">Thuộc tính</th>
         <th scope="col">Số lượng</th>
         <th scope="col">Đơn giá</th>
+        <th scope="col">Vận chuyển</th>
         <th scope="col">Thành tiền</th>
     </tr>
     </thead>
@@ -43,9 +44,16 @@
                             @endif
                         </td>
                         <td>
-                            <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
-                                   class="input_quantity" data-product="{{$product}}"
-                                   data-id="0" data-variable="{{$item[0]}}">
+                            @if($productVariable)
+                                <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                                       class="input_quantity"
+                                       data-id="0" data-product="{{$productVariable}}"
+                                       data-variable="{{$item[0]}}">
+                            @else
+                                <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                                       class="input_quantity" data-id="0" data-product="{{$product}}"
+                                       data-variable="{{$item[0]}}">
+                            @endif
                         </td>
 
                         <td>
@@ -69,7 +77,14 @@
                                  </span>
                             </span>
                         </td>
-                        <td id="total-price0">{{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}</td>
+                        <td class="priceTransport">0</td>
+                        <td id="total-price0">
+                            @if($productVariable)
+                                {{ number_format(convertCurrency('USD', $currency,$productVariable->price*$product->min), 0, ',', '.') }}  {{$currency}}
+                            @else
+                                {{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}
+                            @endif
+                        </td>
                     </tr>
                 @else
                     @php
@@ -99,9 +114,19 @@
                                 @endif
                             </td>
                             <td>
-                                <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
-                                       class="input_quantity"
-                                       data-id="{{$loop->index + 1}}" data-product="{{$product}}"  data-variable="{{$attpro}}">
+                                @if($productVariable)
+                                    <input type="number" min="{{$product->min}}" value="{{$product->min}}"
+                                           name="quantity[]"
+                                           class="input_quantity"
+                                           data-id="{{$loop->index + 1}}" data-product="{{$productVariable}}"
+                                           data-variable="{{$attpro}}">
+                                @else
+                                    <input type="number" min="{{$product->min}}" value="{{$product->min}}"
+                                           name="quantity[]"
+                                           class="input_quantity" data-id="{{$loop->index + 1}}"
+                                           data-product="{{$product}}"
+                                           data-variable="{{$attpro}}">
+                                @endif
                             </td>
                             <td>
                                 <span>
@@ -125,7 +150,14 @@
                                      </span>
                                 </span>
                             </td>
-                            <td id="total-price{{$loop->index + 1}}">{{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}</td>
+                            <td class="priceTransport">0</td>
+                            <td id="total-price{{$loop->index + 1}}">
+                                @if($productVariable)
+                                    {{ number_format(convertCurrency('USD', $currency,$productVariable->price*$product->min), 0, ',', '.') }}  {{$currency}}
+                                @else
+                                    {{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 @endif
@@ -159,9 +191,16 @@
                         @endforeach
                     </td>
                     <td>
-                        <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
-                               class="input_quantity" data-id="0" data-product="{{$product}}"
-                               data-variable="{{$item}}">
+                        @if($productVariable)
+                            <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                                   class="input_quantity"
+                                   data-id="0" data-product="{{$productVariable}}"
+                                   data-variable="{{$item}}">
+                        @else
+                            <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                                   class="input_quantity" data-id="0" data-product="{{$product}}"
+                                   data-variable="{{$item}}">
+                        @endif
                     </td>
                     <td>
                         <span>
@@ -183,7 +222,14 @@
                             </span>
                         </span>
                     </td>
-                    <td id="total-price0">{{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}</td>
+                    <td class="priceTransport">0</td>
+                    <td id="total-price0">
+                        @if($productVariable)
+                            {{ number_format(convertCurrency('USD', $currency,$productVariable->price*$product->min), 0, ',', '.') }}  {{$currency}}
+                        @else
+                            {{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}
+                        @endif
+                    </td>
                 </tr>
             @endif
         @else
@@ -222,9 +268,17 @@
                     </td>
 
                     <td>
-                        <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
-                               class="input_quantity"
-                               data-id="{{$loop->index + 1}}" data-product="{{$product}}"  data-variable="{{$productAttribute}}">
+                        @if($productVariable)
+                            <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                                   class="input_quantity"
+                                   data-id="{{$loop->index + 1}}" data-product="{{$productVariable}}"
+                                   data-variable="{{$productAttribute}}">
+                        @else
+                            <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                                   class="input_quantity"
+                                   data-id="{{$loop->index + 1}}" data-product="{{$product}}"
+                                   data-variable="{{$productAttribute}}">
+                        @endif
                     </td>
                     <td>
 
@@ -238,8 +292,8 @@
                                            id="productPrice{{$loop->index + 1}}">
                                 @else
                                     <span id="textPrice{{$loop->index + 1}}">
-                                        {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
-                                    </span>
+                                            {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
+                                        </span>
                                     <input class="d-none" value="{{$product->price}}"
                                            id="productPrice{{$loop->index + 1}}">
                                 @endif
@@ -249,7 +303,14 @@
                             </span>
                         </span>
                     </td>
-                    <td id="total-price{{$loop->index + 1}}">{{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}</td>
+                    <td class="priceTransport">0</td>
+                    <td id="total-price{{$loop->index + 1}}">
+                        @if($productVariable)
+                            {{ number_format(convertCurrency('USD', $currency,$productVariable->price*$product->min), 0, ',', '.') }}  {{$currency}}
+                        @else
+                            {{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}
+                        @endif
+                    </td>
                 </tr>
             @endforeach
         @endif
@@ -272,6 +333,7 @@
     $(document).ready(function () {
         $('.input_quantity').on('change', function () {
             let number = $(this).data('id');
+            let tdParent = $(this).parent().siblings(".priceTransport");
             // get price
             let idPrice = 'productPrice' + number;
             let textPrice = 'textPrice' + number;
@@ -282,20 +344,28 @@
 
             let priceOld = product['price'];
 
+            let currencies = document.getElementsByClassName('currency');
+            let currency = currencies[0].innerText;
+
             // get product sale
             async function getSales() {
                 try {
                     let productSale = await getProductSale(itemValue);
                     if (productSale) {
                         let priceSale = productSale['sales'];
-                        $('#' + textPrice).text(priceSale);
+                        let result = await convertCurrency(priceSale);
+                        $('#' + textPrice).text(result);
                         $('#' + idPrice).val(priceSale);
-                        changeDataTotal();
+                        let priceShip = await convertCurrency(productSale['ship']);
+                        let priceShipText = priceShip + ' ' + currency;
+                        tdParent.text(priceShipText)
+                        changeDataTotal(productSale['ship']);
                     } else {
                         let result = await convertCurrency(priceOld);
                         $('#' + textPrice).text(result);
                         $('#' + idPrice).val(priceOld);
-                        changeDataTotal();
+                        tdParent.text(0);
+                        changeDataTotal(0);
                     }
                 } catch (error) {
                     console.error(error);
@@ -304,13 +374,10 @@
 
             getSales();
 
-            function changeDataTotal() {
+            function changeDataTotal(ship) {
                 let price = $('#' + idPrice).val();
                 //total
-                let total = parseFloat(price) * itemValue;
-
-                let currencies = document.getElementsByClassName('currency');
-                let currency = currencies[0].innerText;
+                let total = parseFloat(price) * itemValue + ship;
 
                 // using function convertCurrency(total);
                 async function main() {
@@ -322,12 +389,11 @@
                         console.error(error);
                     }
                 }
-
                 // render total
                 main();
             }
 
-            changeDataTotal();
+            changeDataTotal(0);
 
             // order
             let variable = $(this).data('variable');
@@ -362,7 +428,6 @@
             }
 
             $('#productInfo').val(value);
-
 
         })
 
