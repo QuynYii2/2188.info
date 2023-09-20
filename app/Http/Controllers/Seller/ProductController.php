@@ -506,7 +506,6 @@ class ProductController extends Controller
                 return back();
             }
         } catch (\Exception $exception) {
-            dd($exception);
             alert()->error('Error', 'Error, please try again');
             return back();
         }
@@ -545,7 +544,7 @@ class ProductController extends Controller
     {
         $user = User::find(Auth::id());
         $hasPermission = $user->permissions()->wherePivot('permission_id', 9)->where('status', PermissionUserStatus::ACTIVE)->get();
-        if ($hasPermission->isNotEmpty()) {
+        if ($hasPermission->isNotEmpty() || checkAdmin()) {
             try {
                 $product = Product::find($id);
                 if ($product->hot == 1) {
@@ -567,7 +566,7 @@ class ProductController extends Controller
     {
         $user = User::find(Auth::id());
         $hasPermission = $user->permissions()->wherePivot('permission_id', 10)->where('status', PermissionUserStatus::ACTIVE)->get();
-        if ($hasPermission->isNotEmpty()) {
+        if ($hasPermission->isNotEmpty() || checkAdmin()) {
             try {
                 $product = Product::find($id);
                 if ($product->feature == 1) {

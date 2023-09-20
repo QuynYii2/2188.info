@@ -598,7 +598,6 @@
                                 @endforeach
                             </td>
                             <td class="hot column-hot" data-colname="Hot">
-                                @if($isAdmin == true)
                                     @if($product->hot == 1)
                                         <label class="switch">
                                             <input value="{{$product->id}}" class="inputHotCheckbox"
@@ -614,17 +613,6 @@
                                             <span class="slider round"></span>
                                         </label>
                                     @endif
-                                @else
-                                    <label class="switch">
-                                        <input value="{{$product->id}}" class="inputHotCheckbox"
-                                               name="inputHot-{{$product->id}}"
-                                               id="inputHot-{{$product->id}}"
-                                               type="checkbox"
-                                               @if($product->hot == 1) checked @endif
-                                        >
-                                        <span class="slider round"></span>
-                                    </label>
-                                @endif
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModal-{{$product->id}}" tabindex="-1" role="dialog"
                                      aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
@@ -653,7 +641,6 @@
                                 </div>
                             </td>
                             <td class="featured column-featured" data-colname="Featured">
-                                @if($isAdmin == true)
                                     @if($product->feature == 1)
                                         <label class="switch">
                                             <input value="{{$product->id}}" class="inputFeatureCheckbox"
@@ -671,16 +658,6 @@
                                             <span class="slider round"></span>
                                         </label>
                                     @endif
-                                @else
-                                    <label class="switch">
-                                        <input value="{{$product->id}}" class="inputFeatureCheckbox"
-                                               name="inputFeature-{{$product->id}}"
-                                               id="inputFeature-{{$product->id}}"
-                                               type="checkbox"
-                                               @if($product->hot == 1) checked @endif>
-                                        <span class="slider round"></span>
-                                    </label>
-                                @endif
                             </td>
                             <td>
                                 {{ __('home.Đã xuất bản') }} <br>
@@ -698,9 +675,10 @@
     <script>
         $(document).ready(function () {
             $(".inputHotCheckbox").click(function () {
-                var productID = jQuery(this).val();
+                var productID = $(this).val();
                 var modalId = 'exampleModal-' + this.value;
                 var checkboxId = 'inputHot-' + this.value;
+                var unCheck = document.getElementById(checkboxId);
                 var originalChecked = this.checked;
                 var modal = document.getElementById(modalId);
                 async function setProductHots(productID) {
@@ -733,7 +711,7 @@
                                         if (checkbox.checked !== originalChecked) {
                                             checkbox.checked = originalChecked;
                                         }
-                                        $('.inputHotCheckbox').prop('checked', false);
+                                        $(unCheck).prop('checked', false);
 
                                     });
                                 }
@@ -753,6 +731,7 @@
                 var productID = jQuery(this).val();
                 var modalId = 'exampleModal-' + this.value;
                 var checkboxId = 'inputFeature-' + this.value;
+                var unCheck = document.getElementById(checkboxId);
                 var originalChecked = this.checked;
                 var modal = document.getElementById(modalId);
                 async function setProductFeatures(productID) {
@@ -785,7 +764,7 @@
                                         if (checkbox.checked !== originalChecked) {
                                             checkbox.checked = originalChecked;
                                         }
-                                        $('.inputFeatureCheckbox').prop('checked', false);
+                                        $(unCheck).prop('checked', false);
 
                                     });
                                 }
