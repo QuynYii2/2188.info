@@ -458,31 +458,11 @@
                                         {{ __('home.Order conditions') }}
                                     </h5>
                                 </div>
-                                <table class="table table-bordered" id="tablebodyProductSale">
-
-                                </table>
-
+                                <div id="tablebodyProductSale"></div>
+                                <div id="tableMemberOrderCart"></div>
                                 <p>{{ __('home.đơn giá phía trên là điều kiện FOB/TT') }}</p>
                                 <h5 class="text-center">{{ __('home.Đặt hàng') }}</h5>
-                                <table class="table table-bordered" id="table-selected-att">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">{{ __('home.Thuộc tính') }}</th>
-                                        <th scope="col">{{ __('home.Số lượng') }}</th>
-                                        <th scope="col">{{ __('home.Unit price') }}</th>
-                                        <th scope="col">{{ __('home.Thành tiền') }}</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-
-                                @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
-                                    <button class="btn btn-success partnerBtn float-right" id="partnerBtn"
-                                            data-value="{{ $firstProduct->id }}"
-                                            data-count="100">{{ __('home.Tiếp nhận đặt hàng') }}
-                                    </button>
-                                @endif
+                                <div id="tableMemberOrder"></div>
                             </div>
 
                         @endif
@@ -604,7 +584,10 @@
             }
 
             let productID = product['id'];
+
             getProductSale(productID);
+
+            renderProduct(productID);
 
             async function getProductSale(id) {
                 let url = '{{asset('get-products-sale')}}' + '/' + id;
@@ -714,6 +697,46 @@
             listItem = listIDs;
             localStorage.setItem('listID', listItem);
         }
+
+        $(document).ready(function () {
+            let id = {{$firstProduct->id}};
+            renderProduct(id);
+        })
+
+        function renderProduct(product) {
+            let url = '{{ route('detail_product.member.attribute', ['id' => ':id']) }}';
+            url = url.replace(':id', product);
+
+            $.ajax({
+                url: url,
+                method: 'GET',
+            })
+                .done(function (response) {
+                    $('#tableMemberOrder').empty().append(response);
+                })
+                .fail(function (_, textStatus) {
+                    console.log(textStatus)
+                });
+        }
+
+        function renderCart() {
+            //member.view.carts
+            const requestData = {
+                _token: '{{ csrf_token() }}',
+            };
+            $.ajax({
+                url: `{{route('member.view.carts')}}`,
+                method: 'GET',
+                data: requestData,
+            })
+                .done(function (response) {
+                    $('#tableMemberOrderCart').empty().append(response);
+                })
+                .fail(function (_, textStatus) {
+                });
+        }
+
+        renderCart();
     </script>
 
     <script>
