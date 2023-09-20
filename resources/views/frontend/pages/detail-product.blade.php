@@ -361,9 +361,9 @@
                                 </div>
                             </form>
                         </div>
-{{--                        <div class="main-actions" id="productMainOrder">--}}
+                        <div class="main-actions" id="productMainOrder">
 
-{{--                        </div>--}}
+                        </div>
                     </div>
 
                     <div class="product-price d-flex" style="gap: 3rem">
@@ -393,7 +393,7 @@
                         @endif
                     </div>
                     @if(!$attributes->isEmpty())
-                        <div class="row">
+                        <div class="row d-none" >
                             @foreach($attributes as $attribute)
                                 @php
                                     $att = Attribute::find($attribute->attribute_id);
@@ -401,17 +401,18 @@
                                     $arrayAtt = array();
                                     $arrayAtt = explode(',', $properties_id);
                                 @endphp
-                                <div class="col-sm-6 col-6 d-flex">
+                                <div class="col-sm-6 col-6 d-flex" >
                                     <label>{{($att->{'name' . $langDisplay->getLangDisplay()})}}</label>
                                     <div class="radio-toolbar ml-3">
-                                        @foreach($arrayAtt as $data)
+                                        @foreach($arrayAtt as $index => $data)
+
                                             @php
                                                 $property = Properties::find($data);
                                             @endphp
                                             <input class="inputRadioButton"
                                                    id="input-{{$attribute->attribute_id}}-{{$loop->index+1}}"
                                                    name="inputProperty-{{$attribute->attribute_id}}" type="radio"
-                                                   value="{{$attribute->attribute_id}}-{{$property->id}}">
+                                                   value="{{$attribute->attribute_id}}-{{$property->id}}" @if($index ==0 )checked @endif>
                                             <label for="input-{{$attribute->attribute_id}}-{{$loop->index+1}}">
                                                 @php
                                                     $ld = new \App\Http\Controllers\TranslateController();
@@ -484,18 +485,18 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex buy">
-                        <div>
-                            <input min="{{$product->min}}" value="{{$product->min}}" type="number" class="input"
-                                   name="quantity">
-                            <div class="spinner">
-                                <button type="button" class="up button">&rsaquo;</button>
-                                <button type="button" class="down button">&lsaquo;</button>
-                            </div>
-                        </div>
+                    <div class="d-flex buy justify-content-center">
+{{--                        <div hidden="">--}}
+{{--                            <input min="{{$product->min}}" value="{{$product->min}}" type="number" class="input"--}}
+{{--                                   name="quantity">--}}
+{{--                            <div class="spinner">--}}
+{{--                                <button type="button" class="up button">&rsaquo;</button>--}}
+{{--                                <button type="button" class="down button">&lsaquo;</button>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         @if(!$attributes->isEmpty())
                             <button type="submit" id="btnAddCard"
-                                    class="add-to-cart">{{ __('home.Add To Cart') }}</button>
+                                    class="add-to-cart mr-3">{{ __('home.Add To Cart') }}</button>
                         @else
                             <button type="submit" class="add-to-cart">{{ __('home.Add To Cart') }}</button>
                         @endif
@@ -1029,7 +1030,7 @@
                                     <textarea onclick="checkStar()" class="form-control" id="content-edit"
                                               name="content"
                                               placeholder="{{ __('home.your review') }}"
-                                              rows="3" required></textarea>
+                                              rows="3" required></textarea>0
                             </div>
                         </div>
                     </div>
@@ -1454,15 +1455,12 @@
         }
     </script>
     <script>
-        function renderProduct(product) {
+       async function renderProduct(product) {
             let url = '{{ route('detail_product.member.attribute', ['id' => ':id']) }}';
             url = url.replace(':id', product);
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
-
-            console.log(urlParams)
-
-            $.ajax({
+           await $.ajax({
                 url: url,
                 method: 'GET',
             })

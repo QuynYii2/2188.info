@@ -638,7 +638,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                Bạn có muốn nâng cấp sản phẩm không
+                                                {{ __('home.Bạn có muốn nâng cấp sản phẩm không') }}
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
@@ -646,6 +646,7 @@
                                                 <button type="button" class="btn btn-primary"><a
                                                             href="{{route('permission.list.show')}}">{{ __('home.Sign up to upgrade') }}</a>
                                                 </button>
+
                                             </div>
                                         </div>
                                     </div>
@@ -709,38 +710,13 @@
         </div>
     </div>
     <script>
-        // $(document).ready(function(){
-        //     $('.inputHotCheckbox').click(function(){
-        //         abc = 1;
-        //         if (abc==1) {
-        //             $('.inputHotCheckbox').prop('checked', true);
-        //             console.log('121')
-        //         } else {
-        //             $('.inputHotCheckbox').prop('checked', false);
-        //             console.log('999')
-        //         }
-        //     });
-        // });
-
-        document.addEventListener('DOMContentLoaded', function () {
-            var checkboxes = document.querySelectorAll('.inputHotCheckbox');
-
-            checkboxes.forEach(function (checkbox) {
-                checkbox.addEventListener('change', function () {
-                    var modalId = 'exampleModal-' + this.value;
-                    var checkboxId = 'inputHot-' + this.value;
-                    var originalChecked = this.checked; // Lưu trạng thái ban đầu của checkbox
-
-                });
-            });
-        });
-    </script>
-    <script>
         $(document).ready(function () {
             $(".inputHotCheckbox").click(function () {
                 var productID = jQuery(this).val();
                 var modalId = 'exampleModal-' + this.value;
                 var checkboxId = 'inputHot-' + this.value;
+                var originalChecked = this.checked;
+                var modal = document.getElementById(modalId);
                 async function setProductHots(productID) {
                     let url = '{{ route('seller.products.hot', ['id' => ':productID']) }}';
                     url = url.replace(':productID', productID);
@@ -754,7 +730,7 @@
                             },
                             success: function (response) {
                                 console.log('success')
-                                if (this.checked) {
+                                if (!response.id) {
                                     var modal = document.getElementById(modalId);
                                     $(modal).modal('show');
 
@@ -771,6 +747,8 @@
                                         if (checkbox.checked !== originalChecked) {
                                             checkbox.checked = originalChecked;
                                         }
+                                        $('.inputHotCheckbox').prop('checked', false);
+
                                     });
                                 }
                             },

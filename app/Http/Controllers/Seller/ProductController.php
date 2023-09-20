@@ -7,6 +7,7 @@ use App\Enums\AttributeStatus;
 use App\Enums\CategoryStatus;
 use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\OrderStatus;
+use App\Enums\PermissionUserStatus;
 use App\Enums\ProductStatus;
 use App\Enums\PromotionStatus;
 use App\Enums\RegisterMember;
@@ -16,12 +17,12 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\TranslateController;
 use App\Models\Attribute;
 use App\Models\Category;
-use App\Models\MemberRegisterInfo;
 use App\Models\Product;
 use App\Models\ProductSale;
 use App\Models\Promotion;
 use App\Models\StaffUsers;
 use App\Models\StorageProduct;
+use App\Models\User;
 use App\Models\Variation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -542,33 +543,45 @@ class ProductController extends Controller
 
     public function setHotProduct($id)
     {
-        try {
-            $product = Product::find($id);
-            if ($product->hot == 1) {
-                $product->hot = 0;
-            } else {
-                $product->hot = 1;
+        $user = User::find(Auth::id());
+        $hasPermission = $user->permissions()->wherePivot('permission_id', 9)->where('status', PermissionUserStatus::ACTIVE)->get();
+        if ($hasPermission->isNotEmpty()) {
+            try {
+                $product = Product::find($id);
+                if ($product->hot == 1) {
+                    $product->hot = 0;
+                } else {
+                    $product->hot = 1;
+                }
+                $product->save();
+                return $product;
+            } catch (\Exception $exception) {
+                return $exception;
             }
-            $product->save();
-            return $product;
-        } catch (\Exception $exception) {
-            return $exception;
+        } else {
+            return false;
         }
     }
 
     public function setFeatureProduct($id)
     {
-        try {
-            $product = Product::find($id);
-            if ($product->feature == 1) {
-                $product->feature = 0;
-            } else {
-                $product->feature = 1;
+        $user = User::find(Auth::id());
+        $hasPermission = $user->permissions()->wherePivot('permission_id', 10)->where('status', PermissionUserStatus::ACTIVE)->get();
+        if ($hasPermission->isNotEmpty()) {
+            try {
+                $product = Product::find($id);
+                if ($product->feature == 1) {
+                    $product->feature = 0;
+                } else {
+                    $product->feature = 1;
+                }
+                $product->save();
+                return $product;
+            } catch (\Exception $exception) {
+                return $exception;
             }
-            $product->save();
-            return $product;
-        } catch (\Exception $exception) {
-            return $exception;
+        } else {
+            return false;
         }
     }
 
