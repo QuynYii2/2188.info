@@ -53,29 +53,34 @@ class PaypalPaymentController extends Controller
 
     public function processTransaction(Request $request)
     {
-        $permissions = DB::table('permission_user')->where([['user_id', Auth::user()->id], ['status', PermissionUserStatus::INACTIVE]])->get();
-
-        $number = count($permissions);
-
-        $response = $this->paypalTotal($request, $number * 10, route('successTransaction'));
-
-        if (isset($response['id']) && $response['id'] != null) {
-            // redirect to approve href
-            foreach ($response['links'] as $links) {
-                if ($links['rel'] == 'approve') {
-                    return redirect()->away($links['href']);
-                }
-            }
-
-            return redirect()
-                ->route('payment.show')
-                ->with('error', 'Something went wrong.');
-
-        } else {
-            return redirect()
-                ->route('payment.show')
-                ->with('error', $response['message'] ?? 'Something went wrong.');
-        }
+//        $permissions = DB::table('permission_user')->where([['user_id', Auth::user()->id], ['status', PermissionUserStatus::INACTIVE]])->get();
+//
+//        $number = count($permissions);
+//
+//        $response = $this->paypalTotal($request, $number * 10, route('successTransaction'));
+//
+//        if (isset($response['id']) && $response['id'] != null) {
+//            // redirect to approve href
+//            foreach ($response['links'] as $links) {
+//                if ($links['rel'] == 'approve') {
+//                    return redirect()->away($links['href']);
+//                }
+//            }
+//
+//            return redirect()
+//                ->route('payment.show')
+//                ->with('error', 'Something went wrong.');
+//
+//        } else {
+//            return redirect()
+//                ->route('payment.show')
+//                ->with('error', $response['message'] ?? 'Something went wrong.');
+//        }
+        DB::table('permission_user')->where([['user_id', Auth::user()->id], ['status', PermissionUserStatus::INACTIVE]])->update([
+            'status' => PermissionUserStatus::ACTIVE
+        ]);
+        alert()->success('Success', 'Success');
+        return redirect(route('profile.show'));
     }
 
 
