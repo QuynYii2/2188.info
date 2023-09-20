@@ -72,6 +72,11 @@ class HomeController extends Controller
 
 
         $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
+        $categories = DB::table('categories')
+            ->where([
+                ['status', CategoryStatus::ACTIVE],
+            ])
+            ->get();
 
         $locations = ['vi', 'kr', 'jp', 'cn', 'en'];
 
