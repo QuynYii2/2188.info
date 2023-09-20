@@ -672,28 +672,14 @@
                                         </label>
                                     @endif
                                 @else
-                                    @for($i = 0; $i< count($permissionUsers); $i++)
-                                        @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm nổi bật')
-                                            @if($product->feature == 1)
-                                                <label class="switch">
-                                                    <input value="{{$product->id}}" class="inputFeatureCheckbox"
-                                                           name="inputFeature-{{$product->id}}"
-                                                           id="inputFeature-{{$product->id}}"
-                                                           type="checkbox" checked>
-                                                    <span class="slider round"></span>
-                                                </label>
-                                            @else
-                                                <label class="switch">
-                                                    <input value="{{$product->id}}" class="inputFeatureCheckbox"
-                                                           name="inputFeature-{{$product->id}}"
-                                                           id="inputFeature-{{$product->id}}"
-                                                           type="checkbox">
-                                                    <span class="slider round"></span>
-                                                </label>
-                                            @endif
-                                            @break
-                                        @endif
-                                    @endfor
+                                    <label class="switch">
+                                        <input value="{{$product->id}}" class="inputFeatureCheckbox"
+                                               name="inputFeature-{{$product->id}}"
+                                               id="inputFeature-{{$product->id}}"
+                                               type="checkbox"
+                                               @if($product->hot == 1) checked @endif>
+                                        <span class="slider round"></span>
+                                    </label>
                                 @endif
                             </td>
                             <td>
@@ -763,10 +749,12 @@
 
                 setProductHots(productID);
             });
-
             $(".inputFeatureCheckbox").click(function () {
                 var productID = jQuery(this).val();
-
+                var modalId = 'exampleModal-' + this.value;
+                var checkboxId = 'inputFeature-' + this.value;
+                var originalChecked = this.checked;
+                var modal = document.getElementById(modalId);
                 async function setProductFeatures(productID) {
                     let url = '{{ route('seller.products.feature', ['id' => ':productID']) }}';
                     url = url.replace(':productID', productID);
@@ -780,6 +768,27 @@
                             },
                             success: function (response) {
                                 console.log('success')
+                                if (!response.id) {
+                                    var modal = document.getElementById(modalId);
+                                    $(modal).modal('show');
+
+                                    var confirmButton = document.querySelector('#' + modalId + ' .btn-primary');
+                                    confirmButton.addEventListener('click', function () {
+                                        var checkbox = document.getElementById(checkboxId);
+                                        checkbox.checked = true;
+                                        $(modal).modal('hide');
+                                    });
+
+                                    // Xử lý sự kiện đóng Modal
+                                    $(modal).on('hidden.bs.modal', function () {
+                                        var checkbox = document.getElementById(checkboxId);
+                                        if (checkbox.checked !== originalChecked) {
+                                            checkbox.checked = originalChecked;
+                                        }
+                                        $('.inputFeatureCheckbox').prop('checked', false);
+
+                                    });
+                                }
                             },
                             error: function (exception) {
                                 console.log(exception)
@@ -792,6 +801,34 @@
 
                 setProductFeatures(productID);
             });
+            {{--$(".inputFeatureCheckbox").click(function () {--}}
+            {{--    var productID = jQuery(this).val();--}}
+
+            {{--    async function setProductFeatures(productID) {--}}
+            {{--        let url = '{{ route('seller.products.feature', ['id' => ':productID']) }}';--}}
+            {{--        url = url.replace(':productID', productID);--}}
+
+            {{--        try {--}}
+            {{--            await $.ajax({--}}
+            {{--                url: url,--}}
+            {{--                method: 'POST',--}}
+            {{--                data: {--}}
+            {{--                    _token: '{{ csrf_token() }}'--}}
+            {{--                },--}}
+            {{--                success: function (response) {--}}
+            {{--                    console.log('success')--}}
+            {{--                },--}}
+            {{--                error: function (exception) {--}}
+            {{--                    console.log(exception)--}}
+            {{--                }--}}
+            {{--            });--}}
+            {{--        } catch (error) {--}}
+            {{--            throw error;--}}
+            {{--        }--}}
+            {{--    }--}}
+
+            {{--    setProductFeatures(productID);--}}
+            {{--});--}}
         });
     </script>
     <script>
