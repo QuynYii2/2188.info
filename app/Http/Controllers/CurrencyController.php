@@ -21,12 +21,4 @@ class CurrencyController extends Controller
         $str = $total . ' ' . $currency;
         return $str;
     }
-
-    public function getTextCurrency(Request $request, $amount)
-    {
-        $currency = (new HomeController())->getLocation($request);
-        $total = number_format(convertCurrency('USD', $currency, $amount), 0, ',', '.');
-        $str = $total . ' ' . $currency;
-        return $str;
-    }
 }
