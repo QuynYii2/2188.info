@@ -123,6 +123,56 @@ input.qtyminus {
   z-index: 10;
 }
 
+.scrollbox {
+  height: 250px;
+  overflow: scroll;
+}
+
+input.input_quantity {
+  max-width: 100px;
+  width: 60px;
+}
+
+td.priceTransport {
+  max-width: 100px;
+  width: 60px;
+}
+
+.buy-pd {
+  margin-top: 20px;
+  height: 60px;
+}
+
+.payment {
+  border-radius: 30px;
+  background: #fd6506;
+  color: #fff;
+  border: none;
+  padding: 17px 0;
+  width: 50%;
+  font-size: 1rem;
+  cursor: pointer;
+  transform: translateZ(0);
+  transition: color 0.3s ease;
+  letter-spacing: 0.0625rem;
+  font-weight: 700;
+  margin-right: 10px;
+}
+.payment:hover {
+  transform: scaleX(1);
+  border: 1px solid #fd6506;
+  background: white;
+  color: #fd6506;
+}
+
+.table_element {
+  padding: 30px 15px 0px 0px;
+}
+.table_element th {
+  background: #fd6506;
+  color: #FFFFFF;
+}
+
 .layout-fixed_rm .main-actions {
   border-radius: 15px;
   padding: 15px 20px;
