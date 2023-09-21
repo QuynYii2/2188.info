@@ -109,12 +109,13 @@
 @section('content')
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
+    <h3 class="text-center" style="font-size: 36px">{{ __('home.Sign up company') }}</h3>
     <div class="start-page mb-3">
-        <div class="background container-fluid pt-3 justify-content-center pb-3">
-            <div class="form-title text-center pt-2">
-                <div class="title">{{ __('home.Sign up for information') }}</div>
+        <div class="background container pt-3 justify-content-center pb-3">
+            <div class="form-title text-center pt-2 solid pb-3 bg-member-green" style="font-size: 35px; font-weight: 600">
+                <div class="title text-primary">{{ __('home.Sign up company information') }}</div>
             </div>
-            <div class="mt-4">
+            <div class="">
                 @if($member->name == \App\Enums\RegisterMember::BUYER)
                     @include('frontend.pages.registerMember.buyer')
                 @else
@@ -125,7 +126,6 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
             $('.inputCheckboxCategory').on('click', function () {

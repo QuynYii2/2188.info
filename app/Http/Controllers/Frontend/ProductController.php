@@ -299,7 +299,6 @@ class ProductController extends Controller
             $compare = $arrayQuantity[0];
             if ($quantity >= $compare) {
                 $sales = $productSale;
-                break;
             }
         }
         return $sales;

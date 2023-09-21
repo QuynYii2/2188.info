@@ -1,23 +1,55 @@
-<form class="p-3" action="{{route('register.member.info')}}" method="post"
+<form class="solid-2x " action="{{route('register.member.info')}}" method="post"
+
       enctype="multipart/form-data">
     @csrf
     <input type="text" class="d-none" name="member_id" value="{{ $member->id }}">
     <input type="text" class="d-none" name="member" value="{{ ($member->name) }}">
     {{--        {{ __('home.all') }} --}}
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="datetime_register"> {{ __('home.Day register') }}: </label>
+    <div class="row mix-3 align-items-center" style="margin: 0">
+        <div class="col-md-1 text-center mix-2 p-3">
+            <label>{{ __('home.Day register') }}</label>
+        </div>
+        <div class="col-md-5 text-center pt-3">
             <input type="text" class="form-control" id="datetime_register"
                    name="datetime_register" disabled>
         </div>
-        <div class="form-group col-md-6">
-            <label for="number_clearance"> {{ __('home.Number clearance') }}: </label>
+        <div class="col-md-1 text-center solid-2x p-3">
+            <label for="number_clearance">{{ __('home.Number clearance')}}</label>
+        </div>
+        <div class="col-md-5">
+            <input type="number" class="form-control" id="number_clearance"
+                   value="{{ $exitsMember ? $exitsMember->number_clearance : old('number_clearance') }}"
+                   name="number_clearance">
+        </div>
+    </div>
+
+    <div class="row mix-3 align-items-center" style="margin: 0">
+        <div class="col-md-1 text-center mix-2 pt-5 pb-5">
+            <label>{{ __('home.company information') }}</label>
+        </div>
+        <div class="col-md-5 pt-3 pb-3">
+            <div class="form-group">
+                <input type="text" class="form-control" id="name_en"
+                       value="{{ $exitsMember ? $exitsMember->name_en : old('name_en') }}"
+                       name="name_en" placeholder="Tên cty Tiếng anh/English only" required>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="name_kr"
+                       value="{{ $exitsMember ? $exitsMember->name_kr : old('name_kr') }}"
+                       name="name_kr" placeholder="Tên cty Tiếng Hàn/Local language" required>
+            </div>
+        </div>
+        <div class="col-md-1 text-center solid-2x pt-5 pb-5">
+            <label for="phone">{{ __('home.Phone Number') }}:</label>
+        </div>
+        <div class="col-md-5">
             <input type="text" class="form-control" id="number_clearance"
                    value="{{ $exitsMember ? $exitsMember->number_clearance : old('number_clearance') }}"
                    name="number_clearance">
         </div>
     </div>
-    <div class="form-row">
+
+    <div class="form-row pt-4 pb-4 ml-0 mr-0 mix-3 ">
         <div class="form-group col-md-6">
             <label for="name_en"> {{ __('home.Name company English') }}:</label>
             <input type="text" class="form-control" id="name_en"
@@ -32,8 +64,7 @@
                    name="name_kr" required>
         </div>
     </div>
-
-    <div class="form-row">
+    <div class="form-row pt-4 pb-4 ml-0 mr-0 mix-3">
         <div class="form-group col-md-6">
             <label for="phone">{{ __('home.Phone Number') }}:</label>
             <input type="text" class="form-control" id="phone"
@@ -47,7 +78,7 @@
                    name="fax">
         </div>
     </div>
-    <div class="form-row">
+    <div class="form-row pt-4 pb-4 ml-0 mr-0 mix-3">
         <div class="form-group col-md-6">
             <label for="number_business">{{ __('home.Business registration number') }}:</label>
             <input type="text" class="form-control" id="number_business"
@@ -60,7 +91,7 @@
                    name="giay_phep_kinh_doanh" {{ $exitsMember ? '' : 'required' }}">
         </div>
     </div>
-    <div class="form-row">
+    <div class="form-row pt-4 pb-4 ml-0 mr-0 mix-3">
         <div class="form-group col-md-3">
             <label for="type_business">{{ __('home.Business') }}:</label>
             <div class="multiselect" style="position: relative">
@@ -344,7 +375,7 @@
         </div>
     </div>
     <h6 class="">{{ __('home.Address English') }}:</h6>
-    <div class="form-row">
+    <div class="form-row pt-4 pb-4 ml-0 mr-0 mix-3">
         <div class="form-group col-md-2">
             <label for="countries-select">{{ __('home.Select country') }}:</label>
             <select class="form-control" id="countries-select" name="countries-select"
@@ -372,7 +403,7 @@
         </div>
     </div>
     <h6 class="">{{ __('home.Address Korea') }}:</h6>
-    <div class="form-row">
+    <div class="form-row pt-4 pb-4 ml-0 mr-0 mix-3">
         <div class="form-group col-md-2">
             <label for="countries-select-1">{{ __('home.Select country') }}:</label>
             <select class="form-control" id="countries-select-1" name="countries-select-1"
@@ -400,7 +431,7 @@
         </div>
     </div>
     <h6 class="">{{ __('home.PLU') }}:</h6>
-    <div class="form-row">
+    <div class="form-row pt-4 pb-4 ml-0 mr-0 mix-3">
         <div class="form-group col-md-3">
             <label for="code_1">{{ __('home.1st classification') }}:</label>
             <input type="text" class="form-control" id="code_1"
@@ -428,3 +459,5 @@
     </div>
     <button type="submit" class="btn btn-primary">{{ __('home.sign up') }}</button>
 </form>
+
+
