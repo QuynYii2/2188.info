@@ -162,6 +162,7 @@ Route::get('/convert-currency/{amount}', [CurrencyController::class, 'getCurrenc
 Route::get('/get-products-sale/{id}', [\App\Http\Controllers\ProductController::class, 'getProductSale'])->name('get.products.sale');
 
 Route::get('/product-detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
+Route::get('/product-attribute/{id}', [\App\Http\Controllers\ProductController::class, 'orderProduct'])->name('order_product.attribute');
 Route::get('/product/att/{id}', [\App\Http\Controllers\ProductController::class, 'getDataToModalAtt'])->name('detail_product.data.modal');
 Route::get('/shop/information/{id}', [ShopInformationController::class, 'index'])->name('shop.information.show');
 Route::get('/shop/product/{id}', [ShopInformationController::class, 'index'])->name('shop.product.show');
