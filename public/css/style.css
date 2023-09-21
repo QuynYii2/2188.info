@@ -88,6 +88,9 @@ body {
   border: 1px dotted #ccc;
   margin: 2%;
 }
+#booth {
+  margin-top: 50px;
+}
 
 .qty {
   width: 40px;
