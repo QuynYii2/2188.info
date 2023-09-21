@@ -17,6 +17,8 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\TranslateController;
 use App\Models\Attribute;
 use App\Models\Category;
+use App\Models\MemberRegisterInfo;
+use App\Models\MemberRegisterPersonSource;
 use App\Models\Product;
 use App\Models\ProductSale;
 use App\Models\Promotion;
@@ -178,6 +180,15 @@ class ProductController extends Controller
     {
         (new HomeController())->getLocale($request);
         $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
+        $registerCate = MemberRegisterPersonSource::where('email', Auth::user()->email)->get();
+        $registerCategories = MemberRegisterInfo::where('id', $registerCate[0]['member_id'])->get();
+        $categoriesRegister =[];
+        $arrayCategory = explode(',', $registerCategories[0]['category_id']);
+        foreach($arrayCategory as $registerCategor){
+//            $exitsCategories = in_array($registerCategor, [1,2,36,37,38,39]);
+            array_push($categoriesRegister, $registerCategor);
+        }
+
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', Auth::user()->id]])->get();
 
         $id = Auth::user()->id;
@@ -193,7 +204,9 @@ class ProductController extends Controller
         return view('backend/products/create', [
             'categories' => $categories,
             'attributes' => $attributes,
-            'storages' => $storages
+            'storages' => $storages,
+            'categoriesRegister' => $categoriesRegister,
+
         ]);
     }
 

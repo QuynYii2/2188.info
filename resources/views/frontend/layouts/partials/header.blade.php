@@ -647,30 +647,7 @@
                                                     <ul class="hd_dropdown--right">
                                                         <div class="list-category">
                                                             @php
-                                                            if (!Auth::check()){
                                                                 $listChild = DB::table('categories')->where('status', \App\Enums\CategoryStatus::ACTIVE)->where('parent_id', $cate->id)->get();
-                                                            }else{
-                                                                $arrayCategory = null;
-                                                            if (Auth::check()) {
-                                                                $personMember = \Illuminate\Support\Facades\DB::table('member_register_person_sources')
-                                                                ->where('email', Auth::user()->email)->first();
-                                                                $member = \Illuminate\Support\Facades\DB::table('member_register_infos')
-                                                                ->find($personMember->member_id);
-                                                                $itemCategory = $member->category_id;
-                                                                $arrayID = explode(',', $itemCategory);
-                                                                foreach ($arrayID as $id) {
-                                                                    $category = \Illuminate\Support\Facades\DB::table('categories')
-                                                                    ->where([
-                                                                        ['id', $id],
-                                                                        ['status', \App\Enums\CategoryStatus::ACTIVE]
-                                                                    ])->first();
-                                                                    if ($category) {
-                                                                        $arrayCategory[] = $category;
-                                                                    }
-                                                                }
-                                                            }
-                                                            $categories = collect($arrayCategory);
-                                                            }
                                                             @endphp
                                                             @foreach($listChild as $child)
                                                                 <div class="colum d-block">
