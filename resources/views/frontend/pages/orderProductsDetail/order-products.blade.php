@@ -1,4 +1,4 @@
-<div class="scrollbox">
+<div class="container-with-scroll">
     <table class="table table-products" id="table-selected-att">
         <thead>
         <tr>
@@ -32,7 +32,7 @@
                             ])->first();
                         @endphp
                         <tr>
-                            <td scope="row">
+                            <td scope="row" style="width: 111px;">
                                 <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
                             </td>
                             <td>
@@ -131,7 +131,7 @@
                         @endphp
                         @foreach($item as $key => $attpro)
                             <tr>
-                                <td scope="row">
+                                <td scope="row" style="width: 111px;">
                                     <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
                                 </td>
                                 <td>
@@ -240,7 +240,7 @@
                                 ])->first();
                     @endphp
                     <tr>
-                        <td scope="row">
+                        <td scope="row" style="width: 111px;">
                             <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
                         </td>
                         <td>
@@ -345,7 +345,7 @@
                                 ])->first();
                     @endphp
                     <tr>
-                        <td scope="row">
+                        <td scope="row" style="width: 111px;">
                             <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
                         </td>
                         <td>
