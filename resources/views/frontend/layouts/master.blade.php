@@ -1,4 +1,8 @@
-@php use App\Http\Controllers\Frontend\HomeController;use Illuminate\Support\Facades\Auth; @endphp
+@php use App\Http\Controllers\Frontend\HomeController;use Illuminate\Support\Facades\Auth;
+ $currentRouteName = Route::getCurrentRoute()->getName();
+ $arrNameNeedHid = ['stand.register.member.index', 'partner.register.member.index', 'parent.register.member.locale'];
+$isRoute = in_array($currentRouteName, $arrNameNeedHid);
+@endphp
 
         <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -82,7 +86,7 @@
 <body>
 
 <!-- Header -->
-@include('frontend.layouts.partials.header', ['infoUser' => $infoUser ?? ''])
+@include('frontend.layouts.partials.header', ['infoUser' => $infoUser ?? '', 'isRoute' => $isRoute ])
 @include('sweetalert::alert')
 
 <div id="mt-body">
@@ -93,7 +97,7 @@
 </div>
 
 <!-- Footer -->
-@include('frontend.layouts.partials.footer')
+@include('frontend.layouts.partials.footer', ['isRoute' => $isRoute])
 
 <!-- Back to top -->
 <div class="btn-back-to-top" id="myBtn">
