@@ -76,14 +76,12 @@
         text-decoration: none !important;
     }
 </style>
-
-
 @php
     $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
     $locale = app()->getLocale();
     $company = null;
 @endphp
-<header class="header">
+<header class="header @php echo ($isRoute ? 'd-none' : '') @endphp">
     <div class="header-pc halo-header">
         <div class="header-top text-center">
             <div class="container-fluid">
