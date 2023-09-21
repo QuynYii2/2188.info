@@ -332,40 +332,6 @@
                                     class="fa-regular fa-eye"></i>{{$product->views}}{{ __('home.19 customers are viewing this product') }}
                         </div>
                     </div>
-                    <div class="column-xs-12 column-md-10 layout-fixed_rm">
-                        <div class="main-actions">
-                            <form action="">
-                                <div class="express-header">
-                                    @php
-                                        $price_sales = \App\Models\ProductSale::where('product_id', '=', $product->id)->get();
-                                    @endphp
-                                    @if(!$price_sales->isEmpty())
-                                        @foreach($price_sales as $price_sale)
-                                            @php
-                                                $product = \App\Models\Product::find($price_sale->product_id);
-                                            @endphp
-                                            <tr>
-                                                {{--                                                <p>{{ __('home.The minimum order quantity is 2 pair') }} {{$price_sale->quantity}} {{ __('home.pair') }}</p>--}}
-                                                <div class="item-center d-flex justify-content-between">
-                                                    <span> {{$price_sale->quantity}} {{ __('home.pair') }}</span>
-                                                    @if($product->price != null)
-                                                        <div id="productPrice"
-                                                             class="price">{{ __('home.from') }}{{$price_sale->sales}}</div>
-                                                    @else
-                                                        <strike id="productOldPrice"> {{ __('home.from') }}{{ number_format(convertCurrency('USD', $currency,($product->price * $price_sale->sales / 100) * $price_sale->quantity), 0, ',', '.') }} {{$currency}}</strike>
-                                                    @endif
-                                                </div>
-                                            </tr>
-                                        @endforeach
-                                    @endif
-                                </div>
-                            </form>
-                        </div>
-                        <div class="main-actions" id="productMainOrder">
-
-                        </div>
-                    </div>
-
                     <div class="product-price d-flex" style="gap: 3rem">
                         @if($product->price != null)
                             <strike class="productOldPrice"
@@ -393,7 +359,7 @@
                         @endif
                     </div>
                     @if(!$attributes->isEmpty())
-                        <div class="row d-none" >
+                        <div class="row d-none">
                             @foreach($attributes as $attribute)
                                 @php
                                     $att = Attribute::find($attribute->attribute_id);
@@ -401,7 +367,7 @@
                                     $arrayAtt = array();
                                     $arrayAtt = explode(',', $properties_id);
                                 @endphp
-                                <div class="col-sm-6 col-6 d-flex" >
+                                <div class="col-sm-6 col-6 d-flex">
                                     <label>{{($att->{'name' . $langDisplay->getLangDisplay()})}}</label>
                                     <div class="radio-toolbar ml-3">
                                         @foreach($arrayAtt as $index => $data)
@@ -412,7 +378,8 @@
                                             <input class="inputRadioButton"
                                                    id="input-{{$attribute->attribute_id}}-{{$loop->index+1}}"
                                                    name="inputProperty-{{$attribute->attribute_id}}" type="radio"
-                                                   value="{{$attribute->attribute_id}}-{{$property->id}}" @if($index ==0 )checked @endif>
+                                                   value="{{$attribute->attribute_id}}-{{$property->id}}"
+                                                   @if($index ==0 )checked @endif>
                                             <label for="input-{{$attribute->attribute_id}}-{{$loop->index+1}}">
                                                 @php
                                                     $ld = new \App\Http\Controllers\TranslateController();
@@ -485,15 +452,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex buy justify-content-center">
-{{--                        <div hidden="">--}}
-{{--                            <input min="{{$product->min}}" value="{{$product->min}}" type="number" class="input"--}}
-{{--                                   name="quantity">--}}
-{{--                            <div class="spinner">--}}
-{{--                                <button type="button" class="up button">&rsaquo;</button>--}}
-{{--                                <button type="button" class="down button">&lsaquo;</button>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
+                    <div class=" buy justify-content-center d-none">
+                        {{--                        <div hidden="">--}}
+                        {{--                            <input min="{{$product->min}}" value="{{$product->min}}" type="number" class="input"--}}
+                        {{--                                   name="quantity">--}}
+                        {{--                            <div class="spinner">--}}
+                        {{--                                <button type="button" class="up button">&rsaquo;</button>--}}
+                        {{--                                <button type="button" class="down button">&lsaquo;</button>--}}
+                        {{--                            </div>--}}
+                        {{--                        </div>--}}
                         @if(!$attributes->isEmpty())
                             <button type="submit" id="btnAddCard"
                                     class="add-to-cart mr-3">{{ __('home.Add To Cart') }}</button>
@@ -503,6 +470,11 @@
                         <button class="share"><i class="fa-regular fa-heart"></i></button>
                         <button class="share"><i class="fa-solid fa-share-nodes"></i></button>
                     </div>
+                    <div class="column-xs-12 column-md-12 layout-fixed_rm table_element">
+                        @include('frontend.pages.orderProductsDetail.tab-price-table')
+                        <div class="" id="productMainOrder"></div>
+                    </div>
+
                 </form>
             </div>
             <div class="column-xs-12 column-md-3 layout-fixed">
@@ -1455,12 +1427,12 @@
         }
     </script>
     <script>
-       async function renderProduct(product) {
-            let url = '{{ route('detail_product.member.attribute', ['id' => ':id']) }}';
+        async function renderProduct(product) {
+            let url = '{{ route('order_product.attribute', ['id' => ':id']) }}';
             url = url.replace(':id', product);
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
-           await $.ajax({
+            await $.ajax({
                 url: url,
                 method: 'GET',
             })
