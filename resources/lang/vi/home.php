@@ -216,6 +216,10 @@ return [
     'all_categories' => 'Tất cả danh mục',
 
     'property' => 'Thuộc tính',
+    'commit member' => '회원약관동의',
+    'commit member logistic' => '물류회원 약관동의',
+    'commit member trust' => '성실회원 약관동의',
+    'commit member buyer' => '구매회원 약관동의',
 
     // giỏ hàng, tên sản phẩm, số lượng, giá, tổng số tiền, hành động, xóa, làm trống giỏ hàng, thanh toán,
     // địa chỉ thanh toán, thẻ được chấp nhận, Thanh toán, tên trên thẻ, số thẻ, Tháng hết hạn, năm hết hạn,
