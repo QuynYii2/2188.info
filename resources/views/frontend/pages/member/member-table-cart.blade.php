@@ -1,4 +1,4 @@
-<table class="table">
+<table class="table table-bordered">
     <thead>
     <tr>
         <th scope="col">#</th>
@@ -67,10 +67,10 @@
                 <td class="quantity col-md-1" style="vertical-align: middle;">
                     <form>
                         <input class="input-number-cart" type="number" id="quantity{{ $cart->id }}"
-                               name="quantity" style="border-radius: 30px; border-color: #ccc"
+                               name="quantity" style="border-radius: 30px; border-color: #ccc; width: 55px; "
                                value="{{ $cart->quantity }}"
                                data-id="{{ $cart->id }}"
-                               min="{{$cart->product->min}}"/>
+                               min="{{$cart->product->min}}" />
                     </form>
                 </td>
                 <td>

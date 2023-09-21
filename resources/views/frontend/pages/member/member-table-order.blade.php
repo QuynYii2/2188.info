@@ -1,7 +1,7 @@
-<table class="table" id="table-selected-att">
+<table class="table table-bordered" id="table-selected-att">
     <thead>
     <tr>
-        <th scope="col">{{ __('home.thumbnail') }}</th>
+        <th scope="col"  style="    width: 80px; text-align: center;">{{ __('home.thumbnail') }}</th>
         <th scope="col">{{ __('home.property') }}</th>
         <th scope="col">{{ __('home.quantity') }}</th>
         <th scope="col">{{ __('home.Unit price') }}</th>
@@ -82,11 +82,11 @@
                                 <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
                                        class="input_quantity"
                                        data-id="0" data-product="{{$productVariable}}"
-                                       data-variable="{{$item[0]}}">
+                                       data-variable="{{$item[0]}}" style="width: 55px;">
                             @else
                                 <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
                                        class="input_quantity" data-id="0" data-product="{{$product}}"
-                                       data-variable="{{$item[0]}}">
+                                       data-variable="{{$item[0]}}" style="width: 55px;">
                             @endif
                         </td>
 

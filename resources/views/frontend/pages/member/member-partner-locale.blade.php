@@ -5,7 +5,7 @@
         $memberPer = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->first();
         $mentor = \App\Models\User::where('email', $memberPer->email)->first();
     @endphp
-    <div class="container-fluid">
+    <div class="container">
         <h3 class="text-center">{{ __('home.해외 B2B 도매상 명단') }}</h3>
         <div class=" d-flex justify-content-between align-items-center p-3">
             <div>
