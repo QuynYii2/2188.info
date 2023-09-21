@@ -214,6 +214,12 @@ return [
     'all_categories' => '모든 카테고리',
 
     'property' => '속성',
+    'commit member' => '회원약관동의',
+    'commit member logistic' => '물류회원 약관동의',
+    'commit member trust' => '성실회원 약관동의',
+    'commit member buyer' => '구매회원 약관동의',
+    'Sign up company' => '회사등록',
+    'Sign up company information' => '회사자료등록',
 
     'Cart' => '장바구니',
     'Product Name' => '상품명',

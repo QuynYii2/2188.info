@@ -28,7 +28,9 @@
                             <div class="card">
                                 <div class="card-body">
                                     <h3 class="card-title text-danger text-center">
-                                        ${{$member->price}}
+                                        @if($member->price > 0)
+                                            ${{$member->price}}
+                                        @endif
                                     </h3>
                                     <h6 class="card-subtitle mb-2 text-muted">
                                         @if(locationHelper() == 'kr')
