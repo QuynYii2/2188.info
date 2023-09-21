@@ -45,7 +45,7 @@ class RegisterMemberController extends Controller
         $members = [];
         for ($i = $index; $i < sizeof($members1); $i++) {
             array_push($members, $members1[$i]);
-        };
+        }
 
         return view('frontend/pages/registerMember/member-register', compact('members'));
     }
@@ -155,13 +155,6 @@ class RegisterMemberController extends Controller
 
             $password = Hash::make($password);
 
-            $code = (new  HomeController())->generateRandomString(6);
-
-            $data = array('mail' => $email, 'name' => $email, 'code' => $code);
-
-//            $id = Auth::user()->id;
-            $id = 0;
-
             $price = 0;
 
             // Công ty
@@ -193,7 +186,6 @@ class RegisterMemberController extends Controller
                 return back();
             }
 
-//            $id = Auth::user()->id;
             $id = 0;
 
             $status = MemberRegisterInfoStatus::ACTIVE;
@@ -246,12 +238,12 @@ class RegisterMemberController extends Controller
                 'member_id' => $newMember->id,
                 'sns_account' => $sns_account,
                 'type' => MemberRegisterType::SOURCE,
-                'verifyCode' => $code,
+                'verifyCode' => '',
                 'isVerify' => 0,
                 'price' => $price,
                 'datetime_register' => $datetime_register,
                 'name_en' => $name_en,
-                'status' => MemberRegisterPersonSourceStatus::INACTIVE
+                'status' => MemberRegisterPersonSourceStatus::ACTIVE
             ];
 
             $userOld = User::where('email', $email)->first();
@@ -266,13 +258,17 @@ class RegisterMemberController extends Controller
                 return back();
             }
 
-            $this->sendMail($data, $email);
             $this->createUser($fullName, $email, $phoneNumber, $password, RegisterMember::BUYER);
             $save = MemberRegisterPersonSource::create($memberRegister);
 
+            $member = MemberRegisterPersonSource::where([
+                ['email', $email],
+                ['isVerify', 0]
+            ])->first();
+
             if ($save) {
                 alert()->success('Success', 'Success, Create success! Please continue next steps');
-                return redirect(route('show.verify.register.member', $email));
+                return redirect(route('show.register.member.congratulation', $member->id));
             }
             alert()->error('Error', 'Error, Create error!');
             return back();
@@ -438,14 +434,6 @@ class RegisterMemberController extends Controller
                     ['member', $registerMember],
                 ])->orderBy('created_at', 'desc')->first();
             }
-//            if ($exitsMember) {
-//                alert()->error('Error', 'Error, Đã tồn tại hội viên, không thể thêm mới!');
-//                return redirect(route('member.registered.detail'));
-//            }
-
-//            $user = Auth::user();
-//            $user->member = $registerMember;
-//            $user->save();
             if ($success) {
                 alert()->success('Success', 'Success, Create success! Please continue next steps');
                 return redirect(route('show.register.member.person.source', [
@@ -487,11 +475,6 @@ class RegisterMemberController extends Controller
 
             $password = Hash::make($password);
 
-            $code = (new  HomeController())->generateRandomString(6);
-
-            $data = array('mail' => $email, 'name' => $email, 'code' => $code);
-
-//            $id = Auth::user()->id;
             $id = 0;
 
             $newID = (integer)$member;
@@ -538,7 +521,7 @@ class RegisterMemberController extends Controller
                 'member_id' => $member,
                 'sns_account' => $sns_account,
                 'type' => MemberRegisterType::SOURCE,
-                'verifyCode' => $code,
+                'verifyCode' => '',
                 'isVerify' => 0,
                 'price' => $price,
                 'datetime_register' => $datetime_register,
@@ -546,7 +529,7 @@ class RegisterMemberController extends Controller
                 'responsibility' => $responsibility,
                 'position' => $position,
                 'code' => $codeItem,
-                'status' => MemberRegisterPersonSourceStatus::INACTIVE
+                'status' => MemberRegisterPersonSourceStatus::ACTIVE
             ];
 
             $userOld = User::where('email', $email)->first();
@@ -569,7 +552,7 @@ class RegisterMemberController extends Controller
 
 
                 if ($email == $memberPersonSource->email) {
-                    if ($exitsMember->member != RegisterMember::TRUST){
+                    if ($exitsMember->member != RegisterMember::TRUST) {
                         DB::table('role_user')->insert([
                             'role_id' => 2,
                             'user_id' => $user->id
@@ -596,18 +579,18 @@ class RegisterMemberController extends Controller
                         alert()->error('Error', 'Error, Email in member used!');
                         return back();
                     }
-                    if ($exitsMember->member != RegisterMember::TRUST){
+                    if ($exitsMember->member != RegisterMember::TRUST) {
                         DB::table('role_user')->insert([
                             'role_id' => 2,
                             'user_id' => $user->id
                         ]);
                     }
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
-                    $memberPersonSource->status = MemberRegisterPersonSourceStatus::INACTIVE;
+                    $memberPersonSource->status = MemberRegisterPersonSourceStatus::ACTIVE;
                     $memberPersonSource->email = $email;
-                    $this->sendMail($data, $email);
+
                     $memberPersonSource->isVerify = 0;
-                    $memberPersonSource->verifyCode = $code;
+                    $memberPersonSource->verifyCode = '';
                     $success = $memberPersonSource->save();
                 }
             } else {
@@ -620,15 +603,22 @@ class RegisterMemberController extends Controller
                     alert()->error('Error', 'Error, Email in member used!');
                     return back();
                 }
-
-                $this->sendMail($data, $email);
                 $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member);
                 $success = MemberRegisterPersonSource::create($create);
             }
 
+            $register = MemberRegisterInfo::find($member);
+            $member = MemberRegisterPersonSource::where([
+                ['email', $email],
+                ['isVerify', 0]
+            ])->first();
+
             if ($success) {
                 alert()->success('Success', 'Success, Create success! Please continue next steps');
-                return redirect(route('show.verify.register.member', $email));
+                return redirect(route('show.register.member.person.represent', [
+                    'person_id' => $member->id,
+                    'registerMember' => $register->member
+                ]));
             }
             alert()->error('Error', 'Error, Create error!');
             return back();
@@ -685,11 +675,6 @@ class RegisterMemberController extends Controller
 
             $password = Hash::make($password);
 
-            $code = (new  HomeController())->generateRandomString(6);
-
-            $data = array('mail' => $email, 'name' => $email, 'code' => $code);
-
-//            $id = Auth::user()->id;
             $id = 0;
 
             $memberBefore = MemberRegisterPersonSource::where('id', $personSource)->first();
@@ -708,7 +693,7 @@ class RegisterMemberController extends Controller
                 'rank' => '0',
                 'sns_account' => $sns_account,
                 'type' => MemberRegisterType::REPRESENT,
-                'verifyCode' => $code,
+                'verifyCode' => '',
                 'isVerify' => 0,
 
                 'datetime_register' => $datetime_register,
@@ -717,7 +702,7 @@ class RegisterMemberController extends Controller
                 'position' => $position,
                 'code' => $codeItem,
 
-                'status' => MemberRegisterPersonSourceStatus::INACTIVE
+                'status' => MemberRegisterPersonSourceStatus::ACTIVE
             ];
 
             $exitMemberPerson = null;
@@ -754,7 +739,7 @@ class RegisterMemberController extends Controller
                 $memberPerson->position = $position;
                 $memberPerson->responsibility = $responsibility;
 
-                $memberPerson->status = MemberRegisterPersonSourceStatus::INACTIVE;
+                $memberPerson->status = MemberRegisterPersonSourceStatus::ACTIVE;
                 if ($email == $memberPerson->email) {
                     $memberPerson->status = MemberRegisterPersonSourceStatus::ACTIVE;
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
@@ -773,9 +758,8 @@ class RegisterMemberController extends Controller
                     }
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
                     $memberPerson->email = $email;
-                    $this->sendMail($data, $email);
                     $memberPerson->isVerify = 0;
-                    $memberPerson->verifyCode = $code;
+                    $memberPerson->verifyCode = '';
                     $success = $memberPerson->save();
                 }
             } else {
@@ -787,14 +771,18 @@ class RegisterMemberController extends Controller
                     alert()->error('Error', 'Error, Email in member used!');
                     return back();
                 }
-                $this->sendMail($data, $email);
                 $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member);
-
                 $success = MemberRegisterPersonSource::create($create);
             }
+
+            $member = MemberRegisterPersonSource::where([
+                ['email', $email],
+                ['isVerify', 0]
+            ])->first();
+
             if ($success) {
                 alert()->success('Success', 'Success, Create success! Please continue next steps');
-                return redirect(route('show.verify.register.member', $email));
+                return redirect(route('show.register.member.congratulation', $member->id));
             }
             alert()->error('Error', 'Error, Create error!');
             return back();
