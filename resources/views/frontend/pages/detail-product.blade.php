@@ -12,7 +12,7 @@
             margin-bottom: 0;
         }
 
-        #mt-body {
+        .marginTop-body {
             background: white !important;
         }
 

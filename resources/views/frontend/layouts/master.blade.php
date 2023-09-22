@@ -89,7 +89,7 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
 @include('frontend.layouts.partials.header', ['infoUser' => $infoUser ?? '', 'isRoute' => $isRoute ])
 @include('sweetalert::alert')
 
-<div style="margin-top: 75px" id="mt-body {{ $isRoute ? ' booth' : '' }} ">
+<div class="marginTop-body" id="mt-body {{ $isRoute ? ' booth' : '' }} ">
     @yield('content')
 </div>
 

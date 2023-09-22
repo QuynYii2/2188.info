@@ -47,6 +47,7 @@ return [
     'voucher management' => 'Quản lý mã giảm giá',
     'product multilviews' => 'Lượt xem cao nhất',
     'category interest' => 'Danh mục quan tâm',
+    'ID Kakao Talk' => 'ID Kakao Talk',
 
     //thông tin cá nhân, họ và tên, nickname, ngày sinh, giới tính, quốc tịch, số điện thoại và email, số điện thoại, địa chỉ email, bảo mật, đổi mật khẩu, thiết lập mã pin, liên kết mạng xã hội, lưu thay đổi, địa chỉ
     'personal information' => 'Thông tin cá nhân',
@@ -554,6 +555,8 @@ return [
     'Day register' => 'Ngày đăng kí ',
     'Number clearance' => 'Số thông quan',
     'Name company English' => 'Tên công ty Tiếng Anh',
+    'English only' => 'Tên Tiếng Anh',
+    'Local language' =>	'Tiếng địa phương',
     'Name company Korea' => 'Tên công ty Tiếng Hàn',
     // nganh nghe
     'Career' => 'Ngành nghề',
@@ -584,6 +587,7 @@ return [
     'Position company' => 'Chức vụ',
     'Responsibility company' => 'Chức trách',
     'Name English' => 'Họ và tên Tiếng Anh',
+    'Full Name' => 'Họ và tên',
     'Name Korea' => 'Họ và tên Tiếng Hàn',
     'ID' => 'ID',
     'Congratulations, you have registered as a member' => 'Chúc mừng bạn đã đăng ký hội viên',
@@ -921,6 +925,17 @@ return [
     'Nhập tên ngân hàng' =>'Nhập tên ngân hàng',
     'Nhập số điện thoại' =>'Nhập số điện thoại',
     'Nhập mã OTP' =>  'Nhập mã OTP',
-    'Nhập tên khuyến mãi' => '프로모션 이름을 입력합니다
-'
+    'Nhập số tiền' => 'Nhập số tiền',
+
+
+
+    'Please enter express delivery or receiving address' => 'Vui lòng nhập địa chỉ giao hoặc nhận hàng',
+    'Allow receiving notifications via SMS message' => 'Cho phép gửi tin nhắn',
+    'Allow receiving notifications via Email' => 'Cho phép gửi Email',
+
+
+
+
+
+
 ];

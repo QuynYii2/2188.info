@@ -35,10 +35,20 @@ $color-main: #fd6506;
   border: 3px solid;
 }
 
+.element-bordered th.item,
+.element-bordered td.item{
+  border: 1px solid;
+}
+
+.element-bordered th.width,
+.element-bordered td.width{
+  width: 5%;
+}
 .element-bordered thead th,
 .element-bordered thead td {
   border-bottom-width: 2px;
 }
+
 
 .solid {
   border: 3px solid;
@@ -94,7 +104,7 @@ $color-main: #fd6506;
   font-size: 24px;
 }
 
-#mt-body {
+.marginTop-body {
   margin-top: 190px;
 }
 
