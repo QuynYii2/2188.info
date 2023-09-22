@@ -5,148 +5,153 @@
 @section('content')
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <div class="start-page mb-3">
-        <div class="background container-fluid pt-3 justify-content-center pb-3">
-            <div class="form-title text-center pt-2">
-                <div class="title">{{ __('home.Register registrant information for members') }} {{ ($registerMember) }}</div>
+        <div class="form-title text-center">
+            <h3 style="font-size: 36px">{{ __('home.Register represent information for members') }}</h3>
+        </div>
+        <div class="background container pt-3 justify-content-center pb-3">
+            <div class="form-title text-center pt-2 solid-3x bg-member-green" style="font-size: 35px; font-weight: 600">
+                <div class="title">{{ __('home.Register represent information for members') }}</div>
             </div>
-            <div class="mt-5">
-                <form class="p-3" action="{{route('register.member.represent')}}" method="post">
-                    @csrf
-                    <input type="text" class="form-control" name="person" value="{{ ($person) }}" hidden="">
-                    @if($memberPerson)
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="position">{{ __('home.Position') }}:</label>
-                                <input type="text" class="form-control" id="position" name="position"
-                                       value="{{$memberPerson->position}}" required>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="responsibility">{{ __('home.Responsibility') }}:</label>
-                                <input type="text" class="form-control" id="responsibility" name="responsibility"
-                                       value="{{$memberPerson->responsibility}}"
-                                       required>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="rank">{{ __('home.Rank') }}:</label>
-                                <select id="rank" name="rank" class="form-control">
-                                    <option value="staff">{{ __('home.Staff') }}</option>
-                                    <option value="seo">SEO</option>
-                                    <option value="other">{{ __('home.Other') }}:</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="name_en">{{ __('home.Name English') }}:</label>
+            <div class="">
+                <table class="table element-bordered align-middle" align="center">
+
+                    <form class="p-3" action="{{route('register.member.represent')}}" method="post">
+                        @csrf
+                        <input type="text" class="form-control" name="person" value="{{ ($person) }}" hidden="">
+                        {{--                    $memberPerson--}}
+
+                        <tbody>
+                        <tr>
+                            <th scope="row">
+                                <label for="datetime_register">{{ __('home.Day register') }}</label>
+                            </th>
+                            <td colspan="4">
+                                <input type="text" class="form-control" id="datetime_register"
+                                       name="datetime_register" disabled>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th rowspan="2">
+                                <label for="name_en">{{ __('home.full name') }}</label>
+                            </th>
+                            <th>
+                                <label>{{ __('home.Name English') }}</label>
+                            </th>
+                            <td colspan="3">
                                 <input type="text" class="form-control" id="name_en" name="name_en"
-                                       value="{{$memberPerson->name_en}}" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="name">{{ __('home.Name Korea') }}:</label>
+                                       placeholder="{{ __('home.Name English') }}"
+                                       value="{{$memberPerson ? $memberPerson->name_en : ''}}" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label>{{ __('home.Name Default') }}</label>
+                            </th>
+                            <td colspan="3">
                                 <input type="text" class="form-control" id="name" name="name"
-                                       value="{{$memberPerson->name}}" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="phoneNumber">{{ __('home.phone number') }}:</label>
-                                <input type="text" class="form-control" id="phoneNumber"
-                                       value="{{$memberPerson->phone}}" name="phoneNumber"
-                                       required>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="email">{{ __('home.email') }}:</label>
-                                <input type="email" class="form-control" id="email" value="{{$memberPerson->email}}"
-                                       name="email" required>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="sns_account">{{ __('home.SNS Account') }}:</label>
-                                <input type="text" class="form-control" id="sns_account" name="sns_account"
-                                       value="{{$memberPerson->sns_account}}" required>
-                            </div>
-                        </div>
-                    @else
-                        <div class="form-group">
-                            <label for="datetime_register">{{ __('home.Day register') }}:</label>
-                            <input type="text" class="form-control" id="datetime_register" name="datetime_register"
-                                   disabled>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="position">{{ __('home.Position') }}:</label>
-                                <input type="text" class="form-control" id="position" name="position"
-                                       required>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="responsibility">{{ __('home.Responsibility') }}:</label>
-                                <input type="text" class="form-control" id="responsibility" name="responsibility"
-                                       required>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="rank">{{ __('home.Rank') }}:</label>
-                                <select id="rank" name="rank" class="form-control">
-                                    <option value="staff">{{ __('home.Staff') }}</option>
-                                    <option value="seo">SEO</option>
-                                    <option value="other">{{ __('home.Other') }}:</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="name_en">{{ __('home.Name English') }}:</label>
-                                <input type="text" class="form-control" id="name_en" name="name_en" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="name">{{ __('home.Name Korea') }}:</label>
-                                <input type="text" class="form-control" id="name" name="name" required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="code">{{ __('home.ID') }}: </label>
-                                <input type="text" class="form-control" id="code" name="code" required>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="password">{{ __('home.Password') }}:</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="passwordConfirm">{{ __('home.Password') }}
-                                    : {{ __('home.Confirm') }}</label>
+                                       placeholder="{{ __('home.Name Default') }}"
+                                       value="{{$memberPerson ? $memberPerson->name : ''}}" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th rowspan="2">
+                                <label for="code">{{ __('home.ID') }}</label>
+                            </th>
+                            <td rowspan="2">
+                                <input type="text" class="form-control" id="code" name="code"
+                                       placeholder="{{ __('home.ID') }}" required>
+                            </td>
+                            <th rowspan="2">
+                                <label for="password">{{ __('home.Duplicate') }}</label>
+                            </th>
+                            <th>
+                                <label for="password">{{ __('home.Password') }}</label>
+                            </th>
+                            <td>
+                                <input type="password" class="form-control" id="password" name="password"
+                                       placeholder="{{ __('home.Password') }}" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label for="passwordConfirm">{{ __('home.Re-Password') }}</label>
+                            </th>
+                            <td>
                                 <input type="password" class="form-control" id="passwordConfirm"
-                                       name="passwordConfirm"
+                                       name="passwordConfirm" placeholder="{{ __('home.Re-Password') }}"
                                        required>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label for="phoneNumber">{{ __('home.phone number') }}:</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th rowspan="2">
+                                <label>{{ __('home.Phone Number') }}</label>
+                            </th>
+                            <td colspan="2">
                                 <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                                       placeholder="{{ __('home.Phone Number') }}"
+                                       value="{{$memberPerson ? $memberPerson->phone : ''}}"
                                        required>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="email">{{ __('home.email') }}:</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="sns_account">{{ __('home.SNS Account') }}:</label>
+                            </td>
+                            <td>
+                                <input type="checkbox" id="checkBoxPhone">
+                            </td>
+                            <td>
+                                <label for="checkBoxPhone">{{ __('home.Apply notification SMS') }}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <label for="checkBoxPhone">{{ __('home.Confirm apply notification SMS') }}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th rowspan="2">
+                                <label>{{ __('home.email') }}</label>
+                            </th>
+                            <td colspan="2">
+                                <input type="email" class="form-control" id="email" name="email"
+                                       placeholder="{{ __('home.email') }}"
+                                       value="{{$memberPerson ? $memberPerson->email : ''}}"
+                                       required>
+                            </td>
+                            <td>
+                                <input type="checkbox" id="checkBoxEmail">
+                            </td>
+                            <td>
+                                <label for="checkBoxEmail">{{ __('home.Apply notification Email') }}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <label for="checkBoxEmail">{{ __('home.Confirm apply notification Email') }}</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                <label for="sns_account">{{ __('home.SNS Account') }}</label>
+                            </th>
+                            <td colspan="4">
                                 <input type="text" class="form-control" id="sns_account" name="sns_account"
-                                       required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="checkbox" value="" id="register_membership">
-                            <label for="register_membership">
-                                {{ __('home.Employee registration') }}
-                            </label>
-                        </div>
-                    @endif
-                    <button type="submit" class="btn btn-primary">{{ __('home.sign up') }}</button>
-                </form>
+                                       placeholder="{{ __('home.SNS Account') }}"
+                                       value="{{$memberPerson ? $memberPerson->sns_account : ''}}" required>
+                            </td>
+                        </tr>
+                        <tr class="">
+                            <td colspan="6" class="bg-member-green">
+                                <button type="button" id="buttonRegister"
+                                        class="btn btn-warning mr-3 btn-register">{{ __('home.Confirm') }}</button>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                        <button class="d-none" id="btnSubmitFormRegister" type="submit">Done</button>
+                    </form>
+                </table>
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
     <script>
         $(document).ready(function () {
             $('#register_membership').on('change', function () {
@@ -164,6 +169,13 @@
         }
 
         getDate();
+
+        $(document).ready(function () {
+            $('#buttonRegister').on('click', function () {
+                // $('#formRegisterMember').trigger('submit');
+                $('#btnSubmitFormRegister').trigger('click');
+            })
+        })
     </script>
 @endsection
 
