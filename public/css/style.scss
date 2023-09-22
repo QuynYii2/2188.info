@@ -26,6 +26,20 @@ $color-main: #fd6506;
   width: 50%;
 }
 
+ .element-bordered {
+   border: 3px solid;
+ }
+
+.element-bordered th,
+.element-bordered td {
+  border: 3px solid;
+}
+
+.element-bordered thead th,
+.element-bordered thead td {
+  border-bottom-width: 2px;
+}
+
 .solid {
   border: 3px solid;
 
@@ -43,6 +57,11 @@ $color-main: #fd6506;
 
 .solid-3 {
   border-style: none solid solid solid;
+  border-width: 3px;
+}
+
+.solid-3x {
+  border-style: solid solid none solid;
   border-width: 3px;
 }
 
