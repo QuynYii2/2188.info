@@ -84,7 +84,7 @@
             protect: true
         });
     </script>
-    <div class="container-fluid">
+    <div class="container">
         @if($company)
             @php
                 if (Auth::check()){
@@ -252,10 +252,11 @@
                 </div>
             </div>
     </div>
-    <div class="mt-3 row container-fluid">
-        @foreach($products as $product)
-            <button type="button" class="btn thumbnailProduct col-xl-2 col-md-3" data-toggle="modal"
-                    data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}" data-name="
+    <div class="mt-3 container">
+        <div class="row">
+            @foreach($products as $product)
+                <button type="button" class="btn thumbnailProduct col-xl-4 col-md-3" data-toggle="modal"
+                        data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}" data-name="
                          @if(locationHelper() == 'kr')
                                         {{ ($product->name_ko) }}
                                     @elseif(locationHelper() == 'cn')
@@ -268,90 +269,92 @@
                                         {{ ($product->name_en) }}
                                     @endif
                          ">
-                <div class="standsMember-item section" style="background-color: white">
-                    <img data-id="{{$product->id}}"
-                         src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
-                         class="thumbnailProduct" data-value="{{$product}}"
+                    <div class="standsMember-item section" style="background-color: white">
+                        <img data-id="{{$product->id}}"
+                             src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
+                             class="thumbnailProduct" data-value="{{$product}}"
 
-                         width="150px" height="150px">
-                    <div class="item-body">
-                        <div class="card-rating text-left">
-                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                            <span>(1)</span>
-                        </div>
-                        @php
-                            $nameSeller = DB::table('users')->where('id', $product->user_id)->first();
-                        @endphp
-                        <div class="card-brand text-left">
-                            <a href="{{route('shop.information.show', $nameSeller->id)}}">
-                                {{($nameSeller->name)}}
-                            </a>
-                        </div>
-                        <div class="card-title text-left">
-                            @if(Auth::check())
-                                <a>
-                                    @if(locationHelper() == 'kr')
-                                        {{ ($product->name_ko) }}
-                                    @elseif(locationHelper() == 'cn')
-                                        {{ ($product->name_zh) }}
-                                    @elseif(locationHelper() == 'jp')
-                                        {{ ($product->name_ja) }}
-                                    @elseif(locationHelper() == 'vi')
-                                        {{ ($product->name_vi) }}
-                                    @else
-                                        {{ ($product->name_en) }}
-                                    @endif
+                             width="150px" height="150px">
+                        <div class="item-body">
+                            <div class="card-rating text-left">
+                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                <span>(1)</span>
+                            </div>
+                            @php
+                                $nameSeller = DB::table('users')->where('id', $product->user_id)->first();
+                            @endphp
+                            <div class="card-brand text-left">
+                                <a href="{{route('shop.information.show', $nameSeller->id)}}">
+                                    {{($nameSeller->name)}}
                                 </a>
-                            @else
-                                <a>
-                                    @if(locationHelper() == 'kr')
-                                        {{ ($product->name_ko) }}
-                                    @elseif(locationHelper() == 'cn')
-                                        {{ ($product->name_zh) }}
-                                    @elseif(locationHelper() == 'jp')
-                                        {{ ($product->name_ja) }}
-                                    @elseif(locationHelper() == 'vi')
-                                        {{ ($product->name_vi) }}
-                                    @else
-                                        {{ ($product->name_en) }}
-                                    @endif
-                                </a>
-                            @endif
-                        </div>
-                        @if($product->price)
-                            <div class="card-price text-left">
-                                @php
-                                    $prises = $product->old_price;
-                                @endphp
-                                @if($product->price != null)
-                                    <div class="price-sale">
-                                        <strong> {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strong>
-                                    </div>
-                                    <div class="price-cost">
-                                        <strike>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
-                                    </div>
+                            </div>
+                            <div class="card-title text-left">
+                                @if(Auth::check())
+                                    <a>
+                                        @if(locationHelper() == 'kr')
+                                            {{ ($product->name_ko) }}
+                                        @elseif(locationHelper() == 'cn')
+                                            {{ ($product->name_zh) }}
+                                        @elseif(locationHelper() == 'jp')
+                                            {{ ($product->name_ja) }}
+                                        @elseif(locationHelper() == 'vi')
+                                            {{ ($product->name_vi) }}
+                                        @else
+                                            {{ ($product->name_en) }}
+                                        @endif
+                                    </a>
                                 @else
-                                    <div class="price-sale">
-                                        <strong>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strong>
-                                    </div>
+                                    <a>
+                                        @if(locationHelper() == 'kr')
+                                            {{ ($product->name_ko) }}
+                                        @elseif(locationHelper() == 'cn')
+                                            {{ ($product->name_zh) }}
+                                        @elseif(locationHelper() == 'jp')
+                                            {{ ($product->name_ja) }}
+                                        @elseif(locationHelper() == 'vi')
+                                            {{ ($product->name_vi) }}
+                                        @else
+                                            {{ ($product->name_en) }}
+                                        @endif
+                                    </a>
                                 @endif
                             </div>
-                        @endif
-                        <div class="card-bottom--left" hidden="">
-                            @if(Auth::check())
-                                <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
-                            @else
-                                <a class="check_url">{{ __('home.Choose Options') }}</a>
+                            @if($product->price)
+                                <div class="card-price text-left">
+                                    @php
+                                        $prises = $product->old_price;
+                                    @endphp
+                                    @if($product->price != null)
+                                        <div class="price-sale">
+                                            <strong> {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strong>
+                                        </div>
+                                        <div class="price-cost">
+                                            <strike>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
+                                        </div>
+                                    @else
+                                        <div class="price-sale">
+                                            <strong>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strong>
+                                        </div>
+                                    @endif
+                                </div>
                             @endif
+                            <div class="card-bottom--left" hidden="">
+                                @if(Auth::check())
+                                    <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
+                                @else
+                                    <a class="check_url">{{ __('home.Choose Options') }}</a>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
-            </button>
-        @endforeach
+                </button>
+            @endforeach
+        </div>
+
     </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">

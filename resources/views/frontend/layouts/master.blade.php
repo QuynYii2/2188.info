@@ -89,7 +89,7 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
 @include('frontend.layouts.partials.header', ['infoUser' => $infoUser ?? '', 'isRoute' => $isRoute ])
 @include('sweetalert::alert')
 
-<div id="mt-body">
+<div id="mt-body {{ $isRoute ? ' booth' : '' }} ">
     @php
     (new HomeController())->createStatistic();
     @endphp

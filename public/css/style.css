@@ -88,6 +88,9 @@ body {
   border: 1px dotted #ccc;
   margin: 2%;
 }
+#booth {
+  margin-top: 50px;
+}
 
 .qty {
   width: 40px;
@@ -123,9 +126,43 @@ input.qtyminus {
   z-index: 10;
 }
 
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #336699;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.container-with-scroll {
+  height: 250px;
+  overflow: scroll;
+}
+.container-with-scroll ::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+.container-with-scroll ::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.container-with-scroll:hover ::-webkit-scrollbar-thumb {
+  background-color: #336699;
+}
+.container-with-scroll:hover ::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
 .scrollbox {
   height: 250px;
   overflow: scroll;
+}
+.scrollbox ::-webkit-scrollbar-thumb {
+  background-color: #000000; /* Màu nền của phần nút kéo */
+  border-radius: 6px; /* Bo góc của phần nút kéo */
 }
 
 input.input_quantity {
