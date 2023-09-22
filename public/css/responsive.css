@@ -360,7 +360,7 @@ body {
   .header .header-mobile {
     display: block;
   }
-  #mt-body {
+  .marginTop-body {
     margin-top: 40px;
   }
   .image-list li {

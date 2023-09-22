@@ -16,7 +16,7 @@
                 <label for="number_clearance">{{ __('home.Number clearance')}}</label>
             </th>
             <td>
-                <input type="text" class="form-control" id="number_clearance"
+                <input type="number" class="form-control" id="number_clearance"
                        value="{{ $exitsMember ? $exitsMember->number_clearance : old('number_clearance') }}"
                        name="number_clearance" placeholder="{{ __('home.Number clearance')}}">
             </td>
@@ -34,7 +34,7 @@
                 <label for="phone">{{ __('home.Phone Number') }}</label>
             </td>
             <td>
-                <input type="text" class="form-control" id="phone"
+                <input type="number" class="form-control" id="phone"
                        value="{{ $exitsMember ? $exitsMember->phone : old('phone') }}"
                        name="phone" placeholder="{{ __('home.Phone Number') }}" required>
             </td>
@@ -49,21 +49,20 @@
                 <label for="fax">{{ __('home.Fax') }}</label>
             </td>
             <td>
-                <input type="text" class="form-control" id="fax"
+                <input type="number" class="form-control" id="fax"
                        value="{{ $exitsMember ? $exitsMember->fax : old('fax') }}"
                        name="fax" placeholder="{{ __('home.Fax') }}">
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <input type="text" class="form-control" id="number_business"
+                <input type="number" class="form-control" id="number_business"
                        value="{{ $exitsMember ? $exitsMember->number_business : old('number_business') }}"
                        name="number_business" placeholder="{{ __('home.Business registration number') }}" required>
             </td>
             <td colspan="2">
-                <input type="text" class="form-control" id="number_business"
-                       value="{{ $exitsMember ? $exitsMember->number_business : old('number_business') }}"
-                       name="number_business" placeholder="{{ __('home.Business license') }}" required>
+                <input type="file" class="form-control" id="giay_phep_kinh_doanh"
+                       name="giay_phep_kinh_doanh" {{ $exitsMember ? '' : 'required' }}">
             </td>
         </tr>
         <tr>
@@ -467,12 +466,11 @@
             </td>
         </tr>
         <tr class="">
-            <td colspan="6" class="bg-member-green">
+            <td colspan="6" class="text-center">
                 <button type="button" id="buttonRegister"
-                        class="btn btn-warning mr-3 btn-register">{{ __('home.sign up') }}</button>
+                        class="btn bg-member-green solid mr-3 btn-register">{{ __('home.next') }}</button>
             </td>
         </tr>
-
         </tbody>
         <button class="d-none" id="btnSubmitFormRegister" type="submit">Done</button>
     </form>

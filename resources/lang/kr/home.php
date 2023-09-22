@@ -47,6 +47,7 @@ return [
     'voucher management' => '바우처 관리',
     'product multilviews' => '제품 멀티뷰',
     'category interest' => '관심있는 카테고리',
+    'ID Kakao Talk' => '카카오톡 아이디',
 
 
     //thông tin cá nhân, họ và tên, nickname, ngày sinh, giới tính, quốc tịch, số điện thoại và email, số điện thoại, địa chỉ email, bảo mật, đổi mật khẩu, thiết lập mã pin, liên kết mạng xã hội, lưu thay đổi, địa chỉ
@@ -581,6 +582,8 @@ return [
     'Day register' => '등록일시',
     'Number clearance' => '통관번호',
     'Name company English' => '성명 (영문)',
+    'Local language' =>	'자국어',
+    'English only' => '영문',
     'Name company Korea' => '성명 (자국어)',
     // nganh nghe
     'Career' => '업종선택',
@@ -611,6 +614,7 @@ return [
     'Position company' => '직무',
     'Responsibility company' => '직책',
     'Name English' => '성명 (영문)',
+    'Full Name' => '성명',
     'Name Korea' => '성명 (자국어)',
     'ID' => '아이디',
     'Congratulations, you have registered as a member' => '회원으로 가입 되신 것을 축하합니다',
@@ -964,8 +968,13 @@ return [
     'Nhập tên ngân hàng' =>'은행명을 입력하세요',
     'Nhập số điện thoại' =>'전화번호를 입력하세요',
     'Nhập mã OTP' => 'OTP 코드를 입력하세요',
-    'Nhập tên khuyến mãi' => '프로모션 이름을 입력하세요'
+    'Nhập tên khuyến mãi' => '프로모션 이름을 입력하세요',
 
+
+
+    'Please enter express delivery or receiving address' => ' 상품을 발송하거나 수취할수 있는 주소를 등록하세요',
+    'Allow receiving notifications via SMS message' => '를 수신합니다',
+    'Allow receiving notifications via Email' => '을 수신합니다',
 
 
 
