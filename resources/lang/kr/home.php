@@ -991,6 +991,17 @@ return [
     'Employee registed manager' => '관리자 등록현황',
     'Employee registed staff' => '업무자 등록',
     'Employee registration' => '직원등록현황',
+    'Registrator Information' => '등록인정보',
+    'Representative Information' => '대표자정보',
+    'Staffs Information' => '직원정보 ',
+    'Customs clearance number (enter numbers only)' => '통관고유번호(숫자만 입력하세요)',
+
+
+
+
+
+
+
 
     'giay_phep_kinh_doanh' => '사업자 사본 ',
 

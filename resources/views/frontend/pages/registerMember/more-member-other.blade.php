@@ -18,20 +18,20 @@
             <td>
                 <input type="number" class="form-control" id="number_clearance"
                        value="{{ $exitsMember ? $exitsMember->number_clearance : old('number_clearance') }}"
-                       name="number_clearance" placeholder="{{ __('home.Number clearance')}}">
+                       name="number_clearance" placeholder="{{ __('home.Customs clearance number (enter numbers only)')}}">
             </td>
         </tr>
         <tr>
             <th rowspan="4">
-                <label>{{ __('home.company information') }}</label>
+                <label>{{ __('home.Company Name') }}</label>
             </th>
             <td>
-                <label for="name_en">{{ __('home.Company Name') }}</label>
+                <label for="name_en">{{ __('home.English only') }}</label>
             </td>
             <td>
                 <input type="text" class="form-control" id="name_en"
                        value="{{ $exitsMember ? $exitsMember->name_kr : old('name_kr') }}"
-                       name="name_en" placeholder="{{ __('home.Name English') }}" required>
+                       name="name_en" required>
             </td>
             <td>
                 <label for="phone">{{ __('home.Phone Number') }}</label>
@@ -44,12 +44,12 @@
         </tr>
         <tr>
             <td>
-                <label for="name_kr">{{ __('home.Company Name') }}</label>
+                <label for="name_kr">{{ __('home.Name Korea')}}</label>
             </td>
             <td>
                 <input type="text" class="form-control" id="name_kr"
                        value="{{ $exitsMember ? $exitsMember->name_kr : old('name_kr') }}"
-                       name="name_kr" placeholder="{{ __('home.Name Korea') }}" required>
+                       name="name_kr" required>
             </td>
             <td>
                 <label for="fax">{{ __('home.Fax') }}</label>

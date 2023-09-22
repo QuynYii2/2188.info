@@ -18,6 +18,18 @@
     max-width: 100%;
 }
 
+
+.multiselect #checkboxes{
+    position: absolute;
+    background: white;
+    top: 32px;
+    left: 0;
+    right: 0;
+    height: 40vh;
+    overflow-y: auto;
+    z-index: 10;
+}
+
 .selectBox {
     position: relative;
 }
@@ -48,3 +60,5 @@
 #checkboxes label:hover {
     background-color: #cccccc;
 }
+
+
