@@ -935,6 +935,7 @@ return [
     'Registrator Information' => 'Thông tin người đăng ký',
     'Representative Information' => 'Thông tin người đại diện',
     'Staffs Information' => 'Thông tin nhân viên ',
+    'Customs clearance number (enter numbers only)' => 'Số thông quan (chỉ cho phép nhập chữ số)',
 
 
 

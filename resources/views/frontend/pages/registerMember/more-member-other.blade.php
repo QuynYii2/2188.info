@@ -18,17 +18,20 @@
             <td>
                 <input type="number" class="form-control" id="number_clearance"
                        value="{{ $exitsMember ? $exitsMember->number_clearance : old('number_clearance') }}"
-                       name="number_clearance" placeholder="{{ __('home.Number clearance')}}">
+                       name="number_clearance" placeholder="{{ __('home.Customs clearance number (enter numbers only)')}}">
             </td>
         </tr>
         <tr>
-            <th rowspan="3">
-                <label>{{ __('home.company information') }}</label>
+            <th rowspan="4">
+                <label>{{ __('home.Company Name') }}</label>
             </th>
-            <td colspan="2">
+            <td>
+                <label for="name_en">{{ __('home.English only') }}</label>
+            </td>
+            <td>
                 <input type="text" class="form-control" id="name_en"
                        value="{{ $exitsMember ? $exitsMember->name_kr : old('name_kr') }}"
-                       name="name_en" placeholder="{{ __('home.Name company English') }}" required>
+                       name="name_en" required>
             </td>
             <td>
                 <label for="phone">{{ __('home.Phone Number') }}</label>
@@ -40,10 +43,13 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2">
+            <td>
+                <label for="name_kr">{{ __('home.Name Korea')}}</label>
+            </td>
+            <td>
                 <input type="text" class="form-control" id="name_kr"
                        value="{{ $exitsMember ? $exitsMember->name_kr : old('name_kr') }}"
-                       name="name_kr" placeholder="{{ __('home.Name company Korea') }}" required>
+                       name="name_kr" required>
             </td>
             <td>
                 <label for="fax">{{ __('home.Fax') }}</label>
@@ -55,12 +61,36 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2">
+            <td>
+                <label for="homepage">{{ __('home.Home') }}</label>
+            </td>
+            <td>
+                <input type="text" class="form-control" id="homepage"
+                       value="{{ $exitsMember ? $exitsMember->homepage : old('homepage') }}"
+                       name="name_kr" placeholder="{{ __('home.Home') }}" required>
+            </td>
+            <td>
+                <label for="email">{{ __('home.email') }}</label>
+            </td>
+            <td>
+                <input type="email" class="form-control" id="email"
+                       value="{{ $exitsMember ? $exitsMember->email : old('email') }}"
+                       name="fax" placeholder="{{ __('home.email') }}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="number_business">{{ __('home.Business registration number') }}</label>
+            </td>
+            <td>
                 <input type="number" class="form-control" id="number_business"
                        value="{{ $exitsMember ? $exitsMember->number_business : old('number_business') }}"
                        name="number_business" placeholder="{{ __('home.Business registration number') }}" required>
             </td>
-            <td colspan="2">
+            <td>
+                <label for="giay_phep_kinh_doanh">{{ __('home.giay_phep_kinh_doanh') }}</label>
+            </td>
+            <td>
                 <input type="file" class="form-control" id="giay_phep_kinh_doanh"
                        name="giay_phep_kinh_doanh" {{ $exitsMember ? '' : 'required' }}">
             </td>
@@ -99,6 +129,7 @@
                 </div>
             </td>
         </tr>
+
         <tr>
             <td colspan="4">
                 <div class="row">
@@ -130,8 +161,9 @@
                 </div>
             </td>
         </tr>
+
         <tr>
-            <th rowspan="2">
+            <th>
                 <label>{{ __('home.Business industry') }}</label>
             </th>
             <td>
@@ -150,7 +182,7 @@
                             $listCategory = $exitsMember->type_business;
                             $arrayCategory = explode(',', $listCategory);
                         @endphp
-                        <div id="type_business_checkboxes" class="mt-1  checkboxes">
+                        <div id="type_business_checkboxes" class="mt-1 checkboxes">
                             @foreach($categories as $category)
                                 @if(!$category->parent_id)
                                     @foreach($arrayCategory as $item)
@@ -213,16 +245,6 @@
                     @endif
                 </div>
             </td>
-            <td>
-                <label for="status_business">{{ __('home.Company status') }}</label>
-            </td>
-            <td>
-                <input type="text" class="form-control" id="status_business"
-                       value="{{ $exitsMember ? $exitsMember->name : old('status_business') }}"
-                       name="status_business" placeholder="{{ __('home.Company status') }}" required>
-            </td>
-        </tr>
-        <tr>
             <td>
                 <label for="">{{ __('home.Business industry') }}</label>
             </td>
@@ -418,14 +440,8 @@
                     @endif
                 </div>
             </td>
-            <td>
-                <label for="certify_business">{{ __('home.Industry Certificate') }}</label>
-            </td>
-            <td>
-                <input type="file" class="form-control" id="certify_business"
-                       name="certify_business" {{ $exitsMember ? '' : 'required' }}">
-            </td>
         </tr>
+
         <tr>
             <th rowspan="2">
                 <label>{{ __('home.PLU') }}</label>
@@ -456,13 +472,7 @@
                        value="{{ $exitsMember ? $exitsMember->code_2 : old('code_2') }}"
                        name="code_2" required>
             </td>
-            <td>
-                <label for="code_4">{{ __('home.4th classification') }}</label>
-            </td>
-            <td>
-                <input type="text" class="form-control" id="code_4"
-                       value="{{ $exitsMember ? $exitsMember->code_4 : old('code_4') }}"
-                       name="code_4" required>
+            <td colspan="2">
             </td>
         </tr>
         <tr class="">

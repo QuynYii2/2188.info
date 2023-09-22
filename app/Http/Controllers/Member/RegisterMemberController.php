@@ -613,12 +613,18 @@ class RegisterMemberController extends Controller
                 ['isVerify', 0]
             ])->first();
 
+            $checkMember = $request->input('checkMember');
+
             if ($success) {
                 alert()->success('Success', 'Success, Create success! Please continue next steps');
-                return redirect(route('show.register.member.person.represent', [
-                    'person_id' => $member->id,
-                    'registerMember' => $register->member
-                ]));
+                if ($checkMember){
+                    return redirect(route('show.register.member.ship', $member->id));
+                }
+                return redirect(route('subscription.options.member.person', $member->id));
+//                return redirect(route('show.register.member.person.represent', [
+//                    'person_id' => $member->id,
+//                    'registerMember' => $register->member
+//                ]));
             }
             alert()->error('Error', 'Error, Create error!');
             return back();
@@ -626,6 +632,17 @@ class RegisterMemberController extends Controller
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
+    }
+
+    public function showSubscriptionOptions(Request $request, $member)
+    {
+        (new HomeController())->getLocale($request);
+        $member = MemberRegisterPersonSource::find($member);
+        if (!$member) {
+            return back();
+        }
+        $register = MemberRegisterInfo::find($member->member_id);
+        return view('frontend.pages.registerMember.subscription-options', compact('member', 'register'));
     }
 
     /*Show form đăng kí thông tin người đại diện*/
@@ -782,7 +799,7 @@ class RegisterMemberController extends Controller
 
             if ($success) {
                 alert()->success('Success', 'Success, Create success! Please continue next steps');
-                return redirect(route('show.register.member.congratulation', $member->id));
+                return redirect(route('show.register.member.ship', $member->id));
             }
             alert()->error('Error', 'Error, Create error!');
             return back();

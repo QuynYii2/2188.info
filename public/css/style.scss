@@ -99,6 +99,10 @@ $color-main: #fd6506;
   background-color: #4CFF4C !important;
 }
 
+.bg-member-yellow {
+  background-color: #eecf33 !important;
+}
+
 .btn-register {
   padding: 8px 24px;
   font-size: 24px;
@@ -150,7 +154,7 @@ input.qtyminus {
   right: 0;
   height: 40vh;
   overflow-y: auto;
-  z-index: 10;
+  z-index: 100;
 }
 ::-webkit-scrollbar {
   width: 12px;
@@ -4574,6 +4578,7 @@ nav ul {
       background: white;
       height: 30vh;
       overflow-y: auto;
+      z-index: 100!important;
     }
   }
 

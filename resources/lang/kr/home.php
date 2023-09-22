@@ -415,7 +415,7 @@ return [
     'Staff' => '직원',
     'SNS Account' => 'SNS 계정',
     'Other' => '기타',
-    'Register registrant information for members' => '회원등록정보를 등록합니다.',
+//    'Register registrant information for members' => '회원등록정보를 등록합니다.',
     'Confirm' => '확인',
     'information verification' => '정보 확인',
     'Verify Code' => '확인 코드',
@@ -613,15 +613,15 @@ return [
     // Chuc vu
     'Position company' => '직무',
     'Responsibility company' => '직책',
-    'Name English' => '성명 (영문)',
+    'Name English' => '영문',
     'Full Name' => '성명',
-    'Name Korea' => '성명 (자국어)',
+    'Name Korea' => '자국어',
     'ID' => '아이디',
     'Congratulations, you have registered as a member' => '회원으로 가입 되신 것을 축하합니다',
     'Representative member' => '대표회원',
     'Registered member' => '등록회원',
     'Log in now' => '지금 로그인하십시오',
-    'Employee registration' => '직원 등록',
+//    'Employee registration' => '직원 등록',
     'Registration order' => '등록순서',
     'List of registered managers' => '등록된 관리자 목록',
     'Sign up for more' => '더 많이 구독하세요',
@@ -970,14 +970,31 @@ return [
     'Nhập mã OTP' => 'OTP 코드를 입력하세요',
     'Nhập tên khuyến mãi' => '프로모션 이름을 입력하세요',
 
-
-
     'Please enter express delivery or receiving address' => ' 상품을 발송하거나 수취할수 있는 주소를 등록하세요',
     'Allow receiving notifications via SMS message' => '를 수신합니다',
     'Allow receiving notifications via Email' => '을 수신합니다',
+
+    'Register registrant information for members' => '회원등록정보를 등록합니다',
+    'Register source information for members' => '등록인정보 등록',
+    'Register represent information for members' => '대표자 정보등록',
+    'Checkbox compare source and represent' => '등록인이 대표자 인경우 첵크하세요',
+    'Apply notification SMS' => 'SNS를 수신합니다',
+    'Apply notification Email' => 'E-mail을 수신합니다',
+    'Confirm apply notification SMS' => '*여기 등록된 핸드폰 번호로 로그인 인증번호가 전달되니 정확하게 입력하여야 합니다',
+    'Confirm apply notification Email' => '*아이디나 비번을 분실했을때 임시비번을 여기 등록된 메일주소로 전달받게 됩니다',
+    'Duplicate' => '중복확인',
+    'Subscription options' => '아래에서 등록항목을 선택하세요',
+    'Registered staff' => '직원을 등록 하겠습니다',
+    'Registered member represent' => '대표자  정보등록을 등록인이 대리하겠습니다',
+    'Re-Password' => '비번확인',
+    'Name Default' => '자국어',
+    'Employee registed manager' => '관리자 등록현황',
+    'Employee registed staff' => '업무자 등록',
+    'Employee registration' => '직원등록현황',
     'Registrator Information' => '등록인정보',
     'Representative Information' => '대표자정보',
     'Staffs Information' => '직원정보 ',
+    'Customs clearance number (enter numbers only)' => '통관고유번호(숫자만 입력하세요)',
 
 
 
@@ -986,27 +1003,6 @@ return [
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    'giay_phep_kinh_doanh' => '사업자 사본 ',
 
 ];
