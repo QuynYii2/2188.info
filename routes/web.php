@@ -101,6 +101,12 @@ Route::get(
     '/register-member-person-source/{member_id}/{registerMember}',
     [RegisterMemberController::class, 'showRegisterMemberPerson']
 )->name('show.register.member.person.source');
+
+Route::get(
+    '/subscription-options-member-person/{member_id}',
+    [RegisterMemberController::class, 'showSubscriptionOptions']
+)->name('subscription.options.member.person');
+
 Route::get(
     '/verify-register-member-person-source/{email}',
     [RegisterMemberController::class, 'processVerifyEmail']
