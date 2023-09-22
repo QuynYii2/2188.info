@@ -913,6 +913,7 @@ return [
     'Please enter express delivery or receiving address' => 'Please enter express delivery or receiving address',
     'Allow receiving notifications via SMS message' => 'Allow receiving notifications via SMS message',
     'Allow receiving notifications via Email' => 'Allow receiving notifications via Email',
-
-
+    'Registrator Information' => 'Registrator Information',
+    'Representative Information' => 'Representative Information',
+    'Staffs Information' => 'Staffs Information',
 ];

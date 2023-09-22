@@ -932,6 +932,9 @@ return [
     'Please enter express delivery or receiving address' => 'Vui lòng nhập địa chỉ giao hoặc nhận hàng',
     'Allow receiving notifications via SMS message' => 'Cho phép gửi tin nhắn',
     'Allow receiving notifications via Email' => 'Cho phép gửi Email',
+    'Registrator Information' => 'Thông tin người đăng ký',
+    'Representative Information' => 'Thông tin người đại diện',
+    'Staffs Information' => 'Thông tin nhân viên ',
 
 
 

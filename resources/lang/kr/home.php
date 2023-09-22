@@ -975,7 +975,9 @@ return [
     'Please enter express delivery or receiving address' => ' 상품을 발송하거나 수취할수 있는 주소를 등록하세요',
     'Allow receiving notifications via SMS message' => '를 수신합니다',
     'Allow receiving notifications via Email' => '을 수신합니다',
-
+    'Registrator Information' => '등록인정보',
+    'Representative Information' => '대표자정보',
+    'Staffs Information' => '직원정보 ',
 
 
 
