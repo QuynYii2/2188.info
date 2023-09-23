@@ -286,6 +286,7 @@ class RegisterMemberController extends Controller
 
             $address = $request->input('wards-select') . ', ' . $request->input('provinces-select') . ', ' . $request->input('cities-select') . ', ' . $request->input('countries-select');
             $companyName = $request->input('name_en');
+            $email = $request->input('email');
             $numberBusiness = $request->input('number_business');
             $phoneNumber = $request->input('phone');
             $fax = $request->input('fax');
@@ -372,6 +373,7 @@ class RegisterMemberController extends Controller
 
                 $exitsMember->user_id = $id;
                 $exitsMember->name = $companyName;
+                $exitsMember->email = $email;
                 $exitsMember->phone = $phoneNumber;
                 $exitsMember->category_id = $categories;
                 $exitsMember->number_business = $numberBusiness;
@@ -403,6 +405,7 @@ class RegisterMemberController extends Controller
                     'name' => $companyName,
                     'phone' => $phoneNumber,
                     'fax' => $fax,
+                    'email' => $email,
                     'code_fax' => 'default',
                     'category_id' => $categories,
                     'code_business' => $codeBusiness,
@@ -613,12 +616,20 @@ class RegisterMemberController extends Controller
                 ['isVerify', 0]
             ])->first();
 
+            $checkMember = $request->input('checkMember');
+
             if ($success) {
                 alert()->success('Success', 'Success, Create success! Please continue next steps');
-                return redirect(route('show.register.member.person.represent', [
-                    'person_id' => $member->id,
-                    'registerMember' => $register->member
-                ]));
+                if ($typeMember == RegisterMember::TRUST) {
+                    return redirect(route('show.register.member.person.represent', [
+                        'person_id' => $member->id,
+                        'registerMember' => $register->member
+                    ]));
+                }
+                if ($checkMember) {
+                    return redirect(route('show.register.member.ship', $member->id));
+                }
+                return redirect(route('subscription.options.member.person', $member->id));
             }
             alert()->error('Error', 'Error, Create error!');
             return back();
@@ -626,6 +637,17 @@ class RegisterMemberController extends Controller
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
+    }
+
+    public function showSubscriptionOptions(Request $request, $member)
+    {
+        (new HomeController())->getLocale($request);
+        $member = MemberRegisterPersonSource::find($member);
+        if (!$member) {
+            return back();
+        }
+        $register = MemberRegisterInfo::find($member->member_id);
+        return view('frontend.pages.registerMember.subscription-options', compact('member', 'register'));
     }
 
     /*Show form đăng kí thông tin người đại diện*/
@@ -779,10 +801,13 @@ class RegisterMemberController extends Controller
                 ['email', $email],
                 ['isVerify', 0]
             ])->first();
-
+            $register = MemberRegisterInfo::find($member->member_id);
             if ($success) {
                 alert()->success('Success', 'Success, Create success! Please continue next steps');
-                return redirect(route('show.register.member.congratulation', $member->id));
+                if ($register->member == RegisterMember::TRUST) {
+                    return redirect(route('show.register.member.congratulation', $member->id));
+                }
+                return redirect(route('show.register.member.ship', $member->id));
             }
             alert()->error('Error', 'Error, Create error!');
             return back();

@@ -47,6 +47,7 @@ return [
     'voucher management' => 'Quản lý mã giảm giá',
     'product multilviews' => 'Lượt xem cao nhất',
     'category interest' => 'Danh mục quan tâm',
+    'ID Kakao Talk' => 'ID Kakao Talk',
 
     //thông tin cá nhân, họ và tên, nickname, ngày sinh, giới tính, quốc tịch, số điện thoại và email, số điện thoại, địa chỉ email, bảo mật, đổi mật khẩu, thiết lập mã pin, liên kết mạng xã hội, lưu thay đổi, địa chỉ
     'personal information' => 'Personal info',
@@ -547,6 +548,8 @@ return [
     'Day register' => 'Day register',
     'Number clearance' => 'Number clearance',
     'Name company English' => 'Name company English',
+    'Local language' =>	'Local language',
+    'English only' => 'English only',
     'Name company Korea' => 'Name company Korea',
     // nganh nghe
     'Career' => 'Career',
@@ -577,6 +580,7 @@ return [
     'Position company' => 'Position company',
     'Responsibility company' => 'Responsibility company',
     'Name English' => 'Name English',
+    'Full Name' => 'Full Name',
     'Name Korea' => 'Name Korea',
     'ID' => 'ID',
     'Congratulations, you have registered as a member' => 'Congratulations, you have registered as a member',
@@ -904,4 +908,12 @@ return [
     'Nhập mã OTP' =>  'Nhập mã OTP',
     'Nhập số tiền' => '금액을 입력하세요',
 
+
+    'Customs clearance number (enter numbers only)' => 'Customs clearance number (enter numbers only)',
+    'Please enter express delivery or receiving address' => 'Please enter express delivery or receiving address',
+    'Allow receiving notifications via SMS message' => 'Allow receiving notifications via SMS message',
+    'Allow receiving notifications via Email' => 'Allow receiving notifications via Email',
+    'Registrator Information' => 'Registrator Information',
+    'Representative Information' => 'Representative Information',
+    'Staffs Information' => 'Staffs Information',
 ];

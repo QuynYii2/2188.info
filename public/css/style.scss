@@ -35,10 +35,20 @@ $color-main: #fd6506;
   border: 3px solid;
 }
 
+.element-bordered th.item,
+.element-bordered td.item{
+  border: 1px solid;
+}
+
+.element-bordered th.width,
+.element-bordered td.width{
+  width: 5%;
+}
 .element-bordered thead th,
 .element-bordered thead td {
   border-bottom-width: 2px;
 }
+
 
 .solid {
   border: 3px solid;
@@ -89,12 +99,16 @@ $color-main: #fd6506;
   background-color: #4CFF4C !important;
 }
 
+.bg-member-yellow {
+  background-color: #eecf33 !important;
+}
+
 .btn-register {
   padding: 8px 24px;
   font-size: 24px;
 }
 
-#mt-body {
+.marginTop-body {
   margin-top: 190px;
 }
 
@@ -140,7 +154,7 @@ input.qtyminus {
   right: 0;
   height: 40vh;
   overflow-y: auto;
-  z-index: 10;
+  z-index: 100;
 }
 ::-webkit-scrollbar {
   width: 12px;
@@ -4564,6 +4578,7 @@ nav ul {
       background: white;
       height: 30vh;
       overflow-y: auto;
+      z-index: 100!important;
     }
   }
 

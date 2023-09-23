@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\NotificationController;
 use App\Http\Controllers\Frontend\OrderController;
 use App\Http\Controllers\Frontend\ProductController;
+use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Member\RegisterMemberController;
 use App\Http\Controllers\Member\TrustMemberController;
 use App\Http\Controllers\PaypalPaymentController;
@@ -101,6 +102,12 @@ Route::get(
     '/register-member-person-source/{member_id}/{registerMember}',
     [RegisterMemberController::class, 'showRegisterMemberPerson']
 )->name('show.register.member.person.source');
+
+Route::get(
+    '/subscription-options-member-person/{member_id}',
+    [RegisterMemberController::class, 'showSubscriptionOptions']
+)->name('subscription.options.member.person');
+
 Route::get(
     '/verify-register-member-person-source/{email}',
     [RegisterMemberController::class, 'processVerifyEmail']
@@ -150,7 +157,6 @@ Route::post(
     '/payment-register-member',
     [RegisterMemberController::class, 'paymentMember']
 )->name('payment.member');
-
 // End register member
 
 Route::get('/location-nation', [AuthController::class, 'getListNation'])->name('location.nation.get');
@@ -194,7 +200,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/member-add-to-cart/{product}', [ProductController::class, 'orderMemberProduct'])->name('member.add.cart');
     Route::get('/member-get-all-cart', [CartController::class, 'getAllCarts'])->name('member.all.cart');
 
-// End register member
+    //Start update member
+    Route::get('/member-detail-company/{id}', [MemberController::class, 'detailCompany'])->name('member.detail.company');
+    Route::put('/member-update-company/{id}', [MemberController::class, 'updateCompany'])->name('member.update.company');
+    //End update member
+
     //View member
     Route::get('/member-registered', [UpdateRankController::class, 'detail'])->name('member.registered.detail');
     Route::post('/member-registered', [UpdateRankController::class, 'updateMember'])->name('member.registered.update');
