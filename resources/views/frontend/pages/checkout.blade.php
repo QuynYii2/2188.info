@@ -372,7 +372,7 @@
                 $('#checkout-form').attr('action', '{{route('checkout.create.imm')}}');
             } else if ($("#order-by-e-wallet").is(":checked")) {
                 $("#payment-info").addClass("d-none");
-                $('#checkout-form').attr('action', '{{route('checkout.create.paypal')}}');
+                $('#checkout-form').attr('action', '{{route('checkout.create.vnpay')}}');
             } else if ($("#order-by-coin").is(":checked")) {
                 $("#payment-info").addClass("d-none");
                 $('#checkout-form').attr('action', '{{route('checkout.create.coin')}}');
@@ -388,7 +388,7 @@
                 $('#checkout-form').attr('action', '{{route('checkout.create.imm')}}');
             } else if ($("#order-by-e-wallet").is(":checked")) {
                 $("#payment-info").addClass("d-none");
-                $('#checkout-form').attr('action', '{{route('checkout.create.paypal')}}');
+                $('#checkout-form').attr('action', '{{route('checkout.create.vnpay')}}');
             } else if ($("#order-by-coin").is(":checked")) {
                 $("#payment-info").addClass("d-none");
                 $('#checkout-form').attr('action', '{{route('checkout.create.coin')}}');
