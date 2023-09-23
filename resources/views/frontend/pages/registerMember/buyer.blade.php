@@ -27,8 +27,8 @@
                 <label for="name_en">{{ __('home.Full Name') }}:</label>
             </th>
             <td colspan="4">
-                <input type="text" class="form-control mb-2" id="name_en" name="name_en" value="{{ __('home.English only') }}" required>
-                <input type="text" class="form-control" id="name" name="name" value="{{ __('home.Local language') }}" required>
+                <input type="text" class="form-control mb-2" id="name_en" name="name_en" placeholder="{{ __('home.English only') }}" required>
+                <input type="text" class="form-control" id="name" name="name" placeholder="{{ __('home.Local language') }}" required>
             </td>
         </tr>
         <tr>
@@ -87,7 +87,7 @@
                 <label for="sns_account">{{ __('home.SNS Account') }}:</label>
             </th>
             <td colspan="4" class="item">
-                <input type="text" class="form-control" id="sns_account" name="sns_account" value="{{ __('home.ID Kakao Talk') }}" required>
+                <input type="text" class="form-control" id="sns_account" name="sns_account" placeholder="{{ __('home.ID Kakao Talk') }}" required>
             </td>
         </tr>
         <tr>
@@ -448,7 +448,7 @@
             </td>
         </tr>
     </tbody>
-    <button type="submit" class="d-none btn btn-primary">{{ __('home.sign up') }}</button>
+    <button type="submit" id="btnSubmitFormRegister" class="d-none btn btn-primary">{{ __('home.sign up') }}</button>
 </form>
 </table>
 <script>
