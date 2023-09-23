@@ -338,47 +338,25 @@ class CheckoutController extends Controller
         return redirect()->route('checkout.show')->with('error', 'Checkout fail');
     }
 
-    public function checkoutByVNPay()
+    public function checkoutByVNPay(Request $request)
     {
-        $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = route('home');
-        $vnp_TmnCode = "DX99JC99";//Mã website tại VNPAY
+        session(['cost_id' => $request->id]);
+        session(['url_prev' => url()->previous()]);
+        $vnp_TmnCode = "DX99JC99"; //Mã website tại VNPAY
         $vnp_HashSecret = "NTMFIAYIYAEFEAMZVWNCESERJMBVROKS"; //Chuỗi bí mật
+        $vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+        $vnp_Returnurl = route('home');
+        $vnp_TxnRef = date("YmdHis"); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        $vnp_OrderInfo = "Thanh toán hóa đơn phí dich vụ";
+        $vnp_OrderType = 'billpayment';
+        $vnp_Amount = $request->input('checkout-price') * 100;
+        $vnp_Locale = 'vn';
+        $vnp_IpAddr = request()->ip();
 
-        $vnp_TxnRef = $_POST['order_id']; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
-        $vnp_OrderInfo = $_POST['order_desc'];
-        $vnp_OrderType = $_POST['order_type'];
-        $vnp_Amount = $_POST['amount'] * 100;
-        $vnp_Locale = $_POST['language'];
-        $vnp_BankCode = $_POST['bank_code'];
-        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
-//Add Params of 2.0.1 Version
-        $vnp_ExpireDate = $_POST['txtexpire'];
-//Billing
-        $vnp_Bill_Mobile = $_POST['txt_billing_mobile'];
-        $vnp_Bill_Email = $_POST['txt_billing_email'];
-        $fullName = trim($_POST['txt_billing_fullname']);
-        if (isset($fullName) && trim($fullName) != '') {
-            $name = explode(' ', $fullName);
-            $vnp_Bill_FirstName = array_shift($name);
-            $vnp_Bill_LastName = array_pop($name);
-        }
-        $vnp_Bill_Address=$_POST['txt_inv_addr1'];
-        $vnp_Bill_City=$_POST['txt_bill_city'];
-        $vnp_Bill_Country=$_POST['txt_bill_country'];
-        $vnp_Bill_State=$_POST['txt_bill_state'];
-// Invoice
-        $vnp_Inv_Phone=$_POST['txt_inv_mobile'];
-        $vnp_Inv_Email=$_POST['txt_inv_email'];
-        $vnp_Inv_Customer=$_POST['txt_inv_customer'];
-        $vnp_Inv_Address=$_POST['txt_inv_addr1'];
-        $vnp_Inv_Company=$_POST['txt_inv_company'];
-        $vnp_Inv_Taxcode=$_POST['txt_inv_taxcode'];
-        $vnp_Inv_Type=$_POST['cbo_inv_type'];
         $inputData = array(
             "vnp_Version" => "2.1.0",
             "vnp_TmnCode" => $vnp_TmnCode,
-            "vnp_Amount" => $vnp_Amount,
+            "checkout-price" => $vnp_Amount,
             "vnp_Command" => "pay",
             "vnp_CreateDate" => date('YmdHis'),
             "vnp_CurrCode" => "VND",
@@ -388,40 +366,20 @@ class CheckoutController extends Controller
             "vnp_OrderType" => $vnp_OrderType,
             "vnp_ReturnUrl" => $vnp_Returnurl,
             "vnp_TxnRef" => $vnp_TxnRef,
-            "vnp_ExpireDate"=>$vnp_ExpireDate,
-            "vnp_Bill_Mobile"=>$vnp_Bill_Mobile,
-            "vnp_Bill_Email"=>$vnp_Bill_Email,
-            "vnp_Bill_FirstName"=>$vnp_Bill_FirstName,
-            "vnp_Bill_LastName"=>$vnp_Bill_LastName,
-            "vnp_Bill_Address"=>$vnp_Bill_Address,
-            "vnp_Bill_City"=>$vnp_Bill_City,
-            "vnp_Bill_Country"=>$vnp_Bill_Country,
-            "vnp_Inv_Phone"=>$vnp_Inv_Phone,
-            "vnp_Inv_Email"=>$vnp_Inv_Email,
-            "vnp_Inv_Customer"=>$vnp_Inv_Customer,
-            "vnp_Inv_Address"=>$vnp_Inv_Address,
-            "vnp_Inv_Company"=>$vnp_Inv_Company,
-            "vnp_Inv_Taxcode"=>$vnp_Inv_Taxcode,
-            "vnp_Inv_Type"=>$vnp_Inv_Type
         );
 
         if (isset($vnp_BankCode) && $vnp_BankCode != "") {
             $inputData['vnp_BankCode'] = $vnp_BankCode;
         }
-        if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
-            $inputData['vnp_Bill_State'] = $vnp_Bill_State;
-        }
-
-//var_dump($inputData);
         ksort($inputData);
         $query = "";
         $i = 0;
         $hashdata = "";
         foreach ($inputData as $key => $value) {
             if ($i == 1) {
-                $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+                $hashdata .= '&' . $key . "=" . $value;
             } else {
-                $hashdata .= urlencode($key) . "=" . urlencode($value);
+                $hashdata .= $key . "=" . $value;
                 $i = 1;
             }
             $query .= urlencode($key) . "=" . urlencode($value) . '&';
@@ -429,19 +387,13 @@ class CheckoutController extends Controller
 
         $vnp_Url = $vnp_Url . "?" . $query;
         if (isset($vnp_HashSecret)) {
-            $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
-            $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+            // $vnpSecureHash = md5($vnp_HashSecret . $hashdata);
+            $vnpSecureHash = hash('sha256', $vnp_HashSecret . $hashdata);
+            $vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
         }
-        $returnData = array('code' => '00'
-        , 'message' => 'success'
-        , 'data' => $vnp_Url);
-        if (isset($_POST['redirect'])) {
-            header('Location: ' . $vnp_Url);
-            die();
-        } else {
-            echo json_encode($returnData);
-        }
-        // vui lòng tham khảo thêm tại code demo
+        alert()->success('Success', 'Payment success!');
+        return redirect($vnp_Url);
+
     }
     public function checkoutByPaypal(Request $request)
     {
