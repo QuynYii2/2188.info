@@ -338,6 +338,96 @@ class CheckoutController extends Controller
         return redirect()->route('checkout.show')->with('error', 'Checkout fail');
     }
 
+    public function returnCheckout(Request $request)
+    {
+        // Xử lý dữ liệu từ VNPay và lấy thông tin giao dịch
+        $vnpResponse = $request->all();
+
+        // Kiểm tra tính hợp lệ của dữ liệu (kiểm tra vnp_ResponseCode)
+        if ($vnpResponse['vnp_ResponseCode'] == '00') {
+            // Lấy thông tin giao dịch từ dữ liệu VNPay
+            $transactionInfo = [
+                'transaction_id' => $vnpResponse['vnp_TxnRef'],
+                'amount' => $vnpResponse['vnp_Amount'] / 100,
+                'bank_code' => $vnpResponse['vnp_BankCode'],
+                'payment_status' => 'success', // Hoặc có thể sử dụng giá trị khác để biểu thị trạng thái khác
+                // Thêm các thông tin khác tùy theo yêu cầu của bạn
+            ];
+
+            // Lưu thông tin giao dịch vào cơ sở dữ liệu
+            Transaction::create($transactionInfo);
+
+            // Hiển thị thông báo thành công
+            alert()->success('Success', 'Payment success!');
+        } else {
+            // Xử lý khi thanh toán thất bại
+            alert()->error('Error', 'Payment failed!');
+        }
+
+        // Chuyển hướng người dùng đến trang chính hoặc trang cần thiết
+        return redirect(session('url_prev', route('checkout.create.vnpay')));
+
+    }
+    public function checkoutByVNPay(Request $request)
+    {
+        $money = $request->input('priceID') * 24372;
+        session(['cost_id' => $request->id]);
+        session(['url_prev' => url()->previous()]);
+        $vnp_TmnCode = "DX99JC99";
+        $vnp_HashSecret = "NTMFIAYIYAEFEAMZVWNCESERJMBVROKS";
+        $vnp_Returnurl = route('home');
+        $vnp_TxnRef = date("YmdHis");
+        $vnp_Amount = $money * 100;
+        $vnp_Locale = 'vn';
+        $vnp_IpAddr = request()->ip();
+
+        $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+        $vnp_apiUrl = "http://sandbox.vnpayment.vn/merchant_webapi/merchant.html";
+        $apiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
+
+        $startTime = date("YmdHis");
+        $expire = date('YmdHis',strtotime('+15 minutes',strtotime($startTime)));
+
+        $inputData = array(
+            "vnp_Version" => "2.1.0",
+            "vnp_TmnCode" => $vnp_TmnCode,
+            "vnp_Amount" => $vnp_Amount,
+            "vnp_Command" => "pay",
+            "vnp_CreateDate" => date('YmdHis'),
+            "vnp_CurrCode" => "VND",
+            "vnp_IpAddr" => $vnp_IpAddr,
+            "vnp_Locale" => $vnp_Locale,
+            "vnp_OrderInfo" => "Thanh toan GD:" . $vnp_TxnRef,
+            "vnp_OrderType" => "other",
+            "vnp_ReturnUrl" => $vnp_Returnurl,
+            "vnp_TxnRef" => $vnp_TxnRef,
+        );
+        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+            $inputData['vnp_BankCode'] = $vnp_BankCode;
+        }
+        ksort($inputData);
+        $query = "";
+        $i = 0;
+        $hashdata = "";
+        foreach ($inputData as $key => $value) {
+            if ($i == 1) {
+                $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+            } else {
+                $hashdata .= urlencode($key) . "=" . urlencode($value);
+                $i = 1;
+            }
+            $query .= urlencode($key) . "=" . urlencode($value) . '&';
+        }
+
+        $vnp_Url = $vnp_Url . "?" . $query;
+        if (isset($vnp_HashSecret)) {
+            $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
+            $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+        }
+        alert()->success('Success', 'Payment success!');
+        return redirect($vnp_Url);
+
+    }
     public function checkoutByPaypal(Request $request)
     {
         $idVoucher = $request->input('voucherID');
