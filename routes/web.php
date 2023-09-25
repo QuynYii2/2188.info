@@ -201,6 +201,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/member-get-all-cart', [CartController::class, 'getAllCarts'])->name('member.all.cart');
 
     //Start update member
+    Route::get('/member-info', [ProfileController::class, 'memberInfo'])->name('member.info');
     Route::get('/member-detail-company/{id}', [MemberController::class, 'detailCompany'])->name('member.detail.company');
     Route::put('/member-update-company/{id}', [MemberController::class, 'updateCompany'])->name('member.update.company');
     //End update member
