@@ -3,17 +3,19 @@
 @section('title', 'Login')
 
 <style>
-    .login-tags{
+    .login-tags {
         display: inline-block;
         margin: auto;
     }
-    .link-tabs{
+
+    .link-tabs {
         color: #cccccc;
         background-color: #f9f9f9 !important;
     }
 
-    .link-tabs:hover{
-        color: #c69500;!important;
+    .link-tabs:hover {
+        color: #c69500;
+    !important;
         background-color: #f7f7f7;
     }
 </style>
@@ -33,19 +35,26 @@
                         <div class="col-md-11 login-tags">
                             <nav>
                                 <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                                    <a class="nav-item nav-link active link-tabs" id="nav-buyer-tab" data-toggle="tab" href="#nav-buyer"
+                                    <a class="nav-item nav-link active link-tabs" id="nav-buyer-tab" data-toggle="tab"
+                                       href="#nav-buyer"
                                        role="tab" aria-controls="nav-buyer">{{ __('home.buyer') }}</a>
-                                    <a class="nav-item nav-link link-tabs" id="nav-seller-tab" data-toggle="tab" href="#nav-seller" role="tab"
+                                    <a class="nav-item nav-link link-tabs" id="nav-seller-tab" data-toggle="tab"
+                                       href="#nav-seller" role="tab"
                                        aria-controls="nav-seller">{{ __('home.seller') }}</a>
+                                    <a class="nav-item nav-link link-tabs" id="nav-member-tab" data-toggle="tab"
+                                       href="#nav-member" role="tab"
+                                       aria-controls="nav-member">{{ __('home.Member') }}</a>
                                 </div>
                             </nav>
                             <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-                                <div class="tab-pane fade show active" id="nav-buyer" role="tabpanel" aria-labelledby="nav-buyer-tab">
+                                <div class="tab-pane fade show active" id="nav-buyer" role="tabpanel"
+                                     aria-labelledby="nav-buyer-tab">
                                     <form method="post" action="{{ route('login.submit') }}">
                                         @csrf
                                         <div class="form-group">
-                                            <input id="login_field" type="text" class="form-control" name="login_field"
-                                                   placeholder="{{ __('home.input username') }}" value="{{ old('login_field') }}" required autofocus>
+                                            <input id="login_field" type="email" class="form-control" name="login_field"
+                                                   placeholder="{{ __('home.input username') }}"
+                                                   value="{{ old('login_field') }}" required autofocus>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control" name="password"
@@ -54,11 +63,13 @@
 
                                         <div class="">
                                             <div class="float-left">
-                                                <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                                <input type="checkbox" name="remember"
+                                                       id="remember" {{ old('remember') ? 'checked' : '' }}>
                                                 <label for="remember">{{ __('home.save login') }}</label>
                                             </div>
                                             <div class="float-right">
-                                                <a class="tabs-product-detail" href="{{route('register.show')}}">{{ __('home.sign up') }}</a>
+                                                <a class="tabs-product-detail"
+                                                   href="{{route('register.show')}}">{{ __('home.sign up') }}</a>
                                             </div>
                                         </div>
                                         <button type="submit"
@@ -71,12 +82,14 @@
 
                                     </form>
                                 </div>
-                                <div class="tab-pane fade" id="nav-seller" role="tabpanel" aria-labelledby="nav-seller-tab">
+                                <div class="tab-pane fade" id="nav-seller" role="tabpanel"
+                                     aria-labelledby="nav-seller-tab">
                                     <form method="post" action="{{ route('login.submit') }}">
                                         @csrf
                                         <div class="form-group">
-                                            <input id="login_field" type="text" class="form-control" name="login_field"
-                                                   placeholder="{{ __('home.input username') }}" value="{{ old('login_field') }}" required autofocus>
+                                            <input id="login_field" type="email" class="form-control" name="login_field"
+                                                   placeholder="{{ __('home.input username') }}"
+                                                   value="{{ old('login_field') }}" required autofocus>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control" name="password"
@@ -84,11 +97,13 @@
                                         </div>
                                         <div class="">
                                             <div class="float-left">
-                                                <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                                <input type="checkbox" name="remember"
+                                                       id="remember" {{ old('remember') ? 'checked' : '' }}>
                                                 <label for="remember">{{ __('home.save login') }}</label>
                                             </div>
                                             <div class="float-right">
-                                                <a class="tabs-product-detail" href="{{route('register.show')}}">{{ __('home.sign up') }}</a>
+                                                <a class="tabs-product-detail"
+                                                   href="{{route('register.show')}}">{{ __('home.sign up') }}</a>
                                             </div>
                                         </div>
                                         <button type="submit"
@@ -96,7 +111,80 @@
                                         </button>
                                     </form>
                                 </div>
-{{--                                <div class="text-center text-muted delimiter">{{ __('home.or use a social network') }}</div>--}}
+                                <div class="tab-pane fade" id="nav-member" role="tabpanel"
+                                     aria-labelledby="nav-member-tab">
+                                    <table class="table element-bordered-pink align-middle" align="center">
+                                        <form method="post" action="{{ route('login.submit') }}">
+                                            @csrf
+                                            <tbody>
+                                            <tr>
+                                                <th scope="row">
+                                                    <label for="login_email">{{ __('home.ID') }}: </label>
+                                                </th>
+                                                <td colspan="2">
+                                                    <input id="login_email" type="email" class="form-control"
+                                                           name="login_field"
+                                                           placeholder="{{ __('home.input username') }}"
+                                                           value="{{ old('login_field') }}" required autofocus>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <label for="password">{{ __('home.Password') }}: </label>
+                                                </th>
+                                                <td colspan="2">
+                                                    <input type="password" class="form-control" name="password"
+                                                           id="login_email"
+                                                           placeholder="{{ __('home.input password') }}" required>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <label for="login_phone">{{ __('home.Phone Number') }}: </label>
+                                                </th>
+                                                <td>
+                                                    <input id="login_phone" type="text" class="form-control"
+                                                           name="login_phone"
+                                                           placeholder="{{ __('home.input phone') }}"
+                                                           value="{{ old('login_phone') }}" required>
+                                                </td>
+                                                <td>
+                                                    <button type="button" id="btnVerify" onclick="clickBtn();"
+                                                            class="btn btn-warning">{{ __('home.information verification') }}
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <label for="verify_code">{{ __('home.Verify Code') }}: </label>
+                                                </th>
+                                                <td colspan="2">
+                                                    <input id="verify_code" type="text" class="form-control"
+                                                           name="verify_code"
+                                                           placeholder="{{ __('home.Verify Code') }}"
+                                                           value="{{ old('verify_code') }}" required>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row" colspan="3">
+                                                    <button type="submit"
+                                                            class="btn btn-info btn-block btn-round">{{ __('home.sign in') }}
+                                                    </button>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">
+                                                    <a href="{{route('register.show')}}">{{ __('home.sign up') }}</a>
+                                                </th>
+                                                <th scope="row" colspan="2">
+                                                    <a href="#">{{ __('home.change password') }}</a>
+                                                </th>
+                                            </tr>
+                                            </tbody>
+                                        </form>
+                                    </table>
+                                </div>
+                                {{--                                <div class="text-center text-muted delimiter">{{ __('home.or use a social network') }}</div>--}}
                                 <div class="d-flex justify-content-center social-buttons form-group">
                                     <button type="button" class="button btn mg-icon mr-2"
                                             data-toggle="tooltip"
@@ -115,9 +203,9 @@
                                     <button type="button" class="button btn mg-icon"
                                             data-toggle="tooltip"
                                             data-placement="top" title="Kakao Talk">
-                                        <a href="{{ route('login.kakaotalk') }}">  <img class="custom-icon"
-                                                                                        src="data:image/png;base64,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"
-                                                                                        alt=""></a>
+                                        <a href="{{ route('login.kakaotalk') }}"> <img class="custom-icon"
+                                                                                       src="data:image/png;base64,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"
+                                                                                       alt=""></a>
                                     </button>
                                 </div>
                             </div>
@@ -132,6 +220,11 @@
         function clearLocal() {
             localStorage.clear();
         }
+
         clearLocal();
+
+        function clickBtn() {
+            alert('Verify code sending...')
+        }
     </script>
 @endsection
