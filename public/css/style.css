@@ -50,6 +50,30 @@ body {
   border-bottom-width: 2px;
 }
 
+.element-bordered-pink {
+  border: 3px solid rgb(241, 172, 139);
+}
+
+.element-bordered-pink th,
+.element-bordered-pink td {
+  border: 3px solid rgb(241, 172, 139);
+}
+
+.element-bordered-pink th.item,
+.element-bordered-pink td.item {
+  border: 1px solid rgb(241, 172, 139);
+}
+
+.element-bordered-pink th.width,
+.element-bordered-pink td.width {
+  width: 5%;
+}
+
+.element-bordered-pink thead th,
+.element-bordered-pink thead td {
+  border-bottom-width: 2px;
+}
+
 .solid {
   border: 3px solid;
 }
