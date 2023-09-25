@@ -92,7 +92,7 @@
                 <label for="giay_phep_kinh_doanh">{{ __('home.giay_phep_kinh_doanh') }}</label>
             </td>
             <td>
-                <input type="file" class="form-control" id="giay_phep_kinh_doanh" accept="image/*" style="visibility:hidden;"
+                <input type="file" class="form-control" id="giay_phep_kinh_doanh" accept="image/*"
                        name="giay_phep_kinh_doanh" {{ $exitsMember ? '' : 'required' }}">
                 @if($exitsMember)
                     <img src="{{ asset('storage/'.$exitsMember->giay_phep_kinh_doanh) }}" alt="" width="60px"
