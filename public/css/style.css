@@ -3811,4 +3811,14 @@ nav ul {
   max-width: 92%;
 }
 
+.stand-text-secondary {
+  height: 40px;
+  font-size: 15px !important;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
 /*# sourceMappingURL=style.css.map */

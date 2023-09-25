@@ -35,7 +35,7 @@
                             <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
                         </th>
                         <td>
-                            <p>
+                            <div class="stand-text-secondary">
                                 @if(locationHelper() == 'kr')
                                     {{$product->name_ko}}
                                 @elseif(locationHelper() == 'cn')
@@ -47,35 +47,37 @@
                                 @else
                                     {{$product->name_en}}
                                 @endif
-                            </p>
-                            @if($attribute)
-                                @if(locationHelper() == 'kr')
-                                    {{$attribute->name_ko}}
-                                @elseif(locationHelper() == 'cn')
-                                    {{$attribute->name_zh}}
-                                @elseif(locationHelper() == 'jp')
-                                    {{$attribute->name_ja}}
-                                @elseif(locationHelper() == 'vi')
-                                    {{$attribute->name_vi}}
-                                @else
-                                    {{$attribute->name_en}}
-                                @endif
-                                :
-                                @if($property)
+                            </div>
+                            <div class="small text-secondary">
+                                @if($attribute)
                                     @if(locationHelper() == 'kr')
-                                        {{$property->name_ko}}
+                                        {{$attribute->name_ko}}
                                     @elseif(locationHelper() == 'cn')
-                                        {{$property->name_zh}}
+                                        {{$attribute->name_zh}}
                                     @elseif(locationHelper() == 'jp')
-                                        {{$property->name_ja}}
+                                        {{$attribute->name_ja}}
                                     @elseif(locationHelper() == 'vi')
-                                        {{$property->name_vi}}
+                                        {{$attribute->name_vi}}
                                     @else
-                                        {{$property->name_en}}
+                                        {{$attribute->name_en}}
                                     @endif
-                                    ,
+                                    :
+                                    @if($property)
+                                        @if(locationHelper() == 'kr')
+                                            {{$property->name_ko}}
+                                        @elseif(locationHelper() == 'cn')
+                                            {{$property->name_zh}}
+                                        @elseif(locationHelper() == 'jp')
+                                            {{$property->name_ja}}
+                                        @elseif(locationHelper() == 'vi')
+                                            {{$property->name_vi}}
+                                        @else
+                                            {{$property->name_en}}
+                                        @endif
+                                        ,
+                                    @endif
                                 @endif
-                            @endif
+                            </div>
                         </td>
                         <td>
                             @if($productVariable)
@@ -134,7 +136,7 @@
                                 <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
                             </th>
                             <td>
-                                <p>
+                                <div class="stand-text-secondary">
                                     @if(locationHelper() == 'kr')
                                         {{$product->name_ko}}
                                     @elseif(locationHelper() == 'cn')
@@ -146,40 +148,42 @@
                                     @else
                                         {{$product->name_en}}
                                     @endif
-                                </p>
+                                </div>
                                 @php
                                     $attproArray =  explode('-', $attpro);
                                     $attribute = \App\Models\Attribute::find($attproArray[0]);
                                     $property = \App\Models\Properties::find($attproArray[1]);
                                 @endphp
-                                @if($attribute)
-                                    @if(locationHelper() == 'kr')
-                                        {{$attribute->name_ko}}
-                                    @elseif(locationHelper() == 'cn')
-                                        {{$attribute->name_zh}}
-                                    @elseif(locationHelper() == 'jp')
-                                        {{$attribute->name_ja}}
-                                    @elseif(locationHelper() == 'vi')
-                                        {{$attribute->name_vi}}
-                                    @else
-                                        {{$attribute->name_en}}
-                                    @endif
-                                    :
-                                    @if($property)
+                                <div class="small text-secondary">
+                                    @if($attribute)
                                         @if(locationHelper() == 'kr')
-                                            {{$property->name_ko}}
+                                            {{$attribute->name_ko}}
                                         @elseif(locationHelper() == 'cn')
-                                            {{$property->name_zh}}
+                                            {{$attribute->name_zh}}
                                         @elseif(locationHelper() == 'jp')
-                                            {{$property->name_ja}}
+                                            {{$attribute->name_ja}}
                                         @elseif(locationHelper() == 'vi')
-                                            {{$property->name_vi}}
+                                            {{$attribute->name_vi}}
                                         @else
-                                            {{$property->name_en}}
+                                            {{$attribute->name_en}}
                                         @endif
-                                        ,
+                                        :
+                                        @if($property)
+                                            @if(locationHelper() == 'kr')
+                                                {{$property->name_ko}}
+                                            @elseif(locationHelper() == 'cn')
+                                                {{$property->name_zh}}
+                                            @elseif(locationHelper() == 'jp')
+                                                {{$property->name_ja}}
+                                            @elseif(locationHelper() == 'vi')
+                                                {{$property->name_vi}}
+                                            @else
+                                                {{$property->name_en}}
+                                            @endif
+                                            ,
+                                        @endif
                                     @endif
-                                @endif
+                                </div>
                             </td>
                             <td>
                                 @if($productVariable)
@@ -243,7 +247,7 @@
                         <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
                     </th>
                     <td>
-                        <p>
+                        <div class="stand-text-secondary">
                             @if(locationHelper() == 'kr')
                                 {{$product->name_ko}}
                             @elseif(locationHelper() == 'cn')
@@ -255,42 +259,44 @@
                             @else
                                 {{$product->name_en}}
                             @endif
-                        </p>
-                        @foreach($myArray as $item)
-                            @php
-                                $attribute_property = explode('-', $item);
-                                $attribute = \App\Models\Attribute::find($attribute_property[0]);
-                                $property = \App\Models\Properties::find($attribute_property[1]);
-                            @endphp
-                            @if($attribute)
-                                @if(locationHelper() == 'kr')
-                                    {{$attribute->name_ko}}
-                                @elseif(locationHelper() == 'cn')
-                                    {{$attribute->name_zh}}
-                                @elseif(locationHelper() == 'jp')
-                                    {{$attribute->name_ja}}
-                                @elseif(locationHelper() == 'vi')
-                                    {{$attribute->name_vi}}
-                                @else
-                                    {{$attribute->name_en}}
-                                @endif
-                                :
-                                @if($property)
+                        </div>
+                        <div class="small text-secondary">
+                            @foreach($myArray as $item)
+                                @php
+                                    $attribute_property = explode('-', $item);
+                                    $attribute = \App\Models\Attribute::find($attribute_property[0]);
+                                    $property = \App\Models\Properties::find($attribute_property[1]);
+                                @endphp
+                                @if($attribute)
                                     @if(locationHelper() == 'kr')
-                                        {{$property->name_ko}}
+                                        {{$attribute->name_ko}}
                                     @elseif(locationHelper() == 'cn')
-                                        {{$property->name_zh}}
+                                        {{$attribute->name_zh}}
                                     @elseif(locationHelper() == 'jp')
-                                        {{$property->name_ja}}
+                                        {{$attribute->name_ja}}
                                     @elseif(locationHelper() == 'vi')
-                                        {{$property->name_vi}}
+                                        {{$attribute->name_vi}}
                                     @else
-                                        {{$property->name_en}}
+                                        {{$attribute->name_en}}
                                     @endif
-                                    ,
+                                    :
+                                    @if($property)
+                                        @if(locationHelper() == 'kr')
+                                            {{$property->name_ko}}
+                                        @elseif(locationHelper() == 'cn')
+                                            {{$property->name_zh}}
+                                        @elseif(locationHelper() == 'jp')
+                                            {{$property->name_ja}}
+                                        @elseif(locationHelper() == 'vi')
+                                            {{$property->name_vi}}
+                                        @else
+                                            {{$property->name_en}}
+                                        @endif
+                                        ,
+                                    @endif
                                 @endif
-                            @endif
-                        @endforeach
+                            @endforeach
+                        </div>
                     </td>
                     <td>
                         @if($productVariable)
@@ -348,7 +354,7 @@
                         <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
                     </th>
                     <td>
-                        <p>
+                        <div class="stand-text-secondary">
                             @if(locationHelper() == 'kr')
                                 {{$product->name_ko}}
                             @elseif(locationHelper() == 'cn')
@@ -360,47 +366,49 @@
                             @else
                                 {{$product->name_en}}
                             @endif
-                        </p>
+                        </div>
                         @php
                             $items = null;
                             $items = explode(',', $productAttribute);
                         @endphp
-                        @foreach($items as $item)
-                            @php
-                                $attribute_property = null;
-                                $attribute_property = explode('-', $item);
-                                $attribute = \App\Models\Attribute::find($attribute_property[0]);
-                                $property = \App\Models\Properties::find($attribute_property[1]);
-                            @endphp
-                            @if($attribute)
-                                @if(locationHelper() == 'kr')
-                                    {{$attribute->name_ko}}
-                                @elseif(locationHelper() == 'cn')
-                                    {{$attribute->name_zh}}
-                                @elseif(locationHelper() == 'jp')
-                                    {{$attribute->name_ja}}
-                                @elseif(locationHelper() == 'vi')
-                                    {{$attribute->name_vi}}
-                                @else
-                                    {{$attribute->name_en}}
-                                @endif
-                                :
-                                @if($property)
+                        <div class="small text-secondary">
+                            @foreach($items as $item)
+                                @php
+                                    $attribute_property = null;
+                                    $attribute_property = explode('-', $item);
+                                    $attribute = \App\Models\Attribute::find($attribute_property[0]);
+                                    $property = \App\Models\Properties::find($attribute_property[1]);
+                                @endphp
+                                @if($attribute)
                                     @if(locationHelper() == 'kr')
-                                        {{$property->name_ko}}
+                                        {{$attribute->name_ko}}
                                     @elseif(locationHelper() == 'cn')
-                                        {{$property->name_zh}}
+                                        {{$attribute->name_zh}}
                                     @elseif(locationHelper() == 'jp')
-                                        {{$property->name_ja}}
+                                        {{$attribute->name_ja}}
                                     @elseif(locationHelper() == 'vi')
-                                        {{$property->name_vi}}
+                                        {{$attribute->name_vi}}
                                     @else
-                                        {{$property->name_en}}
+                                        {{$attribute->name_en}}
                                     @endif
-                                    ,
+                                    :
+                                    @if($property)
+                                        @if(locationHelper() == 'kr')
+                                            {{$property->name_ko}}
+                                        @elseif(locationHelper() == 'cn')
+                                            {{$property->name_zh}}
+                                        @elseif(locationHelper() == 'jp')
+                                            {{$property->name_ja}}
+                                        @elseif(locationHelper() == 'vi')
+                                            {{$property->name_vi}}
+                                        @else
+                                            {{$property->name_en}}
+                                        @endif
+                                        ,
+                                    @endif
                                 @endif
-                            @endif
-                        @endforeach
+                            @endforeach
+                        </div>
                     </td>
 
                     <td>
