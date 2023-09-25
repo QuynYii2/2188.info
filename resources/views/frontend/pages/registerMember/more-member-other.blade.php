@@ -92,7 +92,7 @@
                 <label for="giay_phep_kinh_doanh">{{ __('home.giay_phep_kinh_doanh') }}</label>
             </td>
             <td>
-                <input type="file" class="form-control" id="giay_phep_kinh_doanh" accept="image/*"
+                <input type="file" class="form-control" id="giay_phep_kinh_doanh" accept="image/*" style="visibility:hidden;"
                        name="giay_phep_kinh_doanh" {{ $exitsMember ? '' : 'required' }}">
                 @if($exitsMember)
                     <img src="{{ asset('storage/'.$exitsMember->giay_phep_kinh_doanh) }}" alt="" width="60px"
@@ -237,7 +237,6 @@
                 </select>
             </td>
         </tr>
-
         <tr>
             <th rowspan="2">
                 <label>{{ __('home.PLU') }}</label>
@@ -512,6 +511,8 @@
             distributive.addClass('d-none');
             manufacture.removeClass('d-none');
         }
+
+
     })
 </script>
 
