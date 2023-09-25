@@ -1,7 +1,5 @@
 @extends('frontend.layouts.master')
-
 @section('title', 'Buy Coin')
-
 @section('content')
     <div style="background-color: #f7f7f7">
         <div class="container-fluid mb-2">
@@ -71,22 +69,4 @@
             </div>
         </div>
     </div>
-    <script>
-        function checkCoin(value, size) {
-            var coins = document.getElementById('number-coin-' + value)
-            var inputValue = document.getElementById('input-coin-' + value)
-            var number = parseInt(value) * 10 + parseInt(value)+ parseInt(size);
-            coins.innerText = number;
-            inputValue.value = number;
-        }
-
-        function next() {
-            var i = 0;
-            var array = [10, 50, 100, 200, 500, 1000];
-            for (i; i < 6; i++) {
-                checkCoin(array[i], i);
-            }
-        }
-        next();
-    </script>
 @endsection

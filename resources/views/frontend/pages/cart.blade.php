@@ -1,7 +1,5 @@
 @extends('frontend.layouts.master')
-
 @section('title', 'View Cart')
-
 @section('content')
     <div class="container-fluid cart">
         <div class="pagetitle">

@@ -70,20 +70,6 @@
             padding-bottom: 0;
         }
     </style>
-    <script>
-        $('[data-fancybox="gallery"]').fancybox({
-            buttons: [
-                "slideShow",
-                "thumbs",
-                "zoom",
-                "fullScreen",
-                "share",
-                "close"
-            ],
-            loop: false,
-            protect: true
-        });
-    </script>
     <div class="container">
         @if($company)
             @php
@@ -567,7 +553,7 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
         var renderInputAttribute = $('#renderProductMember');
 
@@ -760,7 +746,20 @@
 
         renderCart();
     </script>
-
+    <script>
+        $('[data-fancybox="gallery"]').fancybox({
+            buttons: [
+                "slideShow",
+                "thumbs",
+                "zoom",
+                "fullScreen",
+                "share",
+                "close"
+            ],
+            loop: false,
+            protect: true
+        });
+    </script>
     <script>
         let listChecked = [];
 

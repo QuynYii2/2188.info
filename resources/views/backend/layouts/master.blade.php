@@ -23,8 +23,8 @@
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
 {{--    <script> CKEDITOR.replace('editor1'); </script>--}}
     <link rel="stylesheet" href="{{ mix('css/custom.css') }}">
-    <link rel="stylesheet" href="{{asset('css/style_backend.css')}}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{asset('css/style_backend.css')}}">
 </head>
 <body>
 @include('sweetalert::alert')
@@ -74,6 +74,7 @@
 <script src="{{ asset('js/vendor/jquery-3.3.1.min.js') }}"></script>
 <script src="{{ asset('js/vendor/bootstrap.min.js') }}"></script>
 <script src="{{ asset('mail/jqBootstrapValidation.min.js') }}"></script>
+<script src="{{ asset('js/style.js') }}"></script>
 
 </body>
 </html>
