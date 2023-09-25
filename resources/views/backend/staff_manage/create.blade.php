@@ -2,12 +2,6 @@
     use Illuminate\Support\Facades\DB;
     use App\Enums\PropertiStatus;
 @endphp
-
-<style>
-
-
-
-</style>
 @extends('backend.layouts.master')
 
 @section('content')

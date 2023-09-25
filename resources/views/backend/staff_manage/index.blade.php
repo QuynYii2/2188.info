@@ -183,7 +183,8 @@
                                 <span class="status text-success">&bull;</span>{{ $user->status }}
                             @else
                                 <span class="status text-danger">&bull;</span>{{ $user->status }}
-                            @endif</td>
+                            @endif
+                        </td>
                         <td>{{ $users->parent_user_id . ' - ' . $parentUser->name }}</td>
                         <td>
                             <a href="{{ route('staff.manage.delete', $user->id) }}" class="delete" onclick="return confirmDelete()" title="Delete" data-toggle="tooltip"><i
@@ -193,14 +194,6 @@
                 @endforeach
                 </tbody>
             </table>
-{{--            <div class="clearfix">--}}
-{{--                <div class="hint-text">Showing <b>10</b> out of <b>{{ $getAllUser->total() }}</b> entries</div>--}}
-{{--                <ul class="pagination">--}}
-{{--                    @foreach($getAllUser->links()->elements[0] as $index => $page)--}}
-{{--                        <li class="page-item"><a class="page-link" href="{{ $page }}">{{ $index }}</a></li>--}}
-{{--                    @endforeach--}}
-{{--                </ul>--}}
-{{--            </div>--}}
         </div>
     </div>
 

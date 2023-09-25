@@ -344,36 +344,6 @@
             <img src="http://2188.info/images/img/payment-method.png">
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    {{--    <script>--}}
-    {{--        $(document).ready(function () {--}}
-    {{--            $('.thumbnailProduct').on('click', function () {--}}
-    {{--                let id = $(this).data('id');--}}
-    {{--                renderProduct(id);--}}
-    {{--                function renderProduct(id) {--}}
-    {{--                    var request = $.ajax({--}}
-    {{--                        url: '{{ route('products.register.member.create') }}',--}}
-    {{--                        method: "POST",--}}
-    {{--                        data: {--}}
-    {{--                            _token: '{{ csrf_token() }}',--}}
-    {{--                            'idProduct': id,--}}
-    {{--                        },--}}
-    {{--                        dataType: "html"--}}
-    {{--                    });--}}
-
-    {{--                    request.done(function (response) {--}}
-    {{--                        console.log(response);--}}
-    {{--                        $('#renderProductMember').empty().append(response);--}}
-    {{--                    });--}}
-
-    {{--                    request.fail(function (jqXHR, textStatus) {--}}
-    {{--                        console.error("Request failed:", textStatus);--}}
-    {{--                        $('#renderProductMember').empty().append('<h3>Error</h3>');--}}
-    {{--                    });--}}
-    {{--                }--}}
-    {{--            });--}}
-    {{--        });--}}
-    {{--    </script>--}}
     <script>
         var renderInputAttribute = $('#renderProductMember');
 

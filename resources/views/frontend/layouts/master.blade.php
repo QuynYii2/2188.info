@@ -138,6 +138,7 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="{{ asset('js/style.js') }}"></script>
 </body>
 </html>

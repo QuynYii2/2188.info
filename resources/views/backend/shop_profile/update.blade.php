@@ -1,85 +1,8 @@
 @extends('backend.layouts.master')
 @section('title', 'Information')
 @section('content')
-    <style>
-        #dateOfBirth select {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-        }
-
-        .size-img {
-            width: 20px;
-            height: 20px;
-        }
-
-        .avatar-upload img {
-            max-width: none;
-        }
-
-        @media (max-width: 991px) {
-            .border-right {
-                border-right: none !important;
-            }
-
-            #form-info {
-                padding-bottom: 3rem;
-            }
-        }
-
-        @media (min-width: 992px) {
-            .border-bottom {
-                border-bottom: none !important;
-            }
-        }
-
-        .cus-mr-modal {
-        }
-
-        @media (max-width: 575px) {
-            .list-group .list-group-item {
-                padding: 0.75rem 0;
-            }
-
-            .cus-mr-modal {
-                width: 100vw;
-                margin: 0 !important;
-            }
-        }
-
-        @media (max-width: 481px) {
-            .avatar-upload .preview, .image-upload .preview {
-                width: 60px;
-                height: 60px;
-                position: relative;
-                border: 6px solid #c9c9c9;
-                box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
-            }
-
-            .avatar-upload .avatar-edit input + label, .image-upload .image-edit input + label {
-                display: inline-block;
-                width: 15px;
-                height: 15px;
-                margin-bottom: 0;
-                border-radius: 100%;
-                background: #e0dfdf;
-                border: 1px solid;
-                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.12);
-                cursor: pointer;
-                font-weight: normal;
-                transition: all 0.2s ease-in-out;
-            }
-
-            .size-img {
-                width: 10px;
-                height: 10px;
-                display: flex;
-            }
-        }
-
-    </style>
-    <div class="container rounded mt-5 bg-white m-auto">
-        <div class="row my-5">
+    <div class="rounded bg-white m-auto">
+        <div class="row my-3 p-3">
             <div id="form-info" class="col-sm-12 col-12 border-bottom border-right">
                 <form action="{{ route('profile.shop.update') }}" method="post" enctype="multipart/form-data">
                     @csrf
@@ -235,7 +158,6 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function previewImage(event) {
             var reader = new FileReader();
