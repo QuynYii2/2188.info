@@ -995,14 +995,22 @@ return [
     'Representative Information' => '대표자정보',
     'Staffs Information' => '직원정보 ',
     'Customs clearance number (enter numbers only)' => '통관고유번호(숫자만 입력하세요)',
-
-
-
-
-
-
-
-
     'giay_phep_kinh_doanh' => '사업자 사본 ',
 
+    'distributive' => '유통',
+    'manufacture' => '생산',
+
+    // BAN SI
+    'wholesale' => '도매업',
+    // ban le
+    'retail' => '소매업',
+    // thuong mai dien tu
+    'ecommerce' => '전자상거래',
+    'home shopping' =>'홈쇼핑업',
+    // thuong mai
+    'commerce' =>'무역업',
+    // lap rap
+    'assemble' => '조립',
+    // Gia cong
+    'machining' => '가공',
 ];

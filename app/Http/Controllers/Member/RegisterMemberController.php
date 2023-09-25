@@ -82,8 +82,40 @@ class RegisterMemberController extends Controller
                 ])->first();
             }
         }
+
+        $categories_no_parent = Category::where([
+            ['status', CategoryStatus::ACTIVE],
+            ['parent_id', null]
+        ])->get();
+
+        $categories_one_parent_array = null;
+        foreach ($categories_no_parent as $category) {
+            $categories_oneparent = Category::where([
+                ['status', CategoryStatus::ACTIVE],
+                ['parent_id', $category->id]
+            ])->get();
+            foreach ($categories_oneparent as $item) {
+                $categories_one_parent_array[] = $item;
+            }
+        }
+
+        $categories_one_parent = collect($categories_one_parent_array);
+
+        $categories_two_parent_array = null;
+        foreach ($categories_one_parent as $category) {
+            $categories_twoparent = Category::where([
+                ['status', CategoryStatus::ACTIVE],
+                ['parent_id', $category->id]
+            ])->get();
+            foreach ($categories_twoparent as $item) {
+                $categories_two_parent_array[] = $item;
+            }
+        }
+
+        $categories_two_parent = collect($categories_two_parent_array);
         return view('frontend/pages/registerMember/show-register-member-info', compact(
-            'registerMember', 'categories', 'member', 'exitsMember'
+            'registerMember', 'categories', 'member', 'exitsMember',
+            'categories_no_parent', 'categories_one_parent', 'categories_two_parent'
         ));
     }
 
@@ -287,6 +319,7 @@ class RegisterMemberController extends Controller
             $address = $request->input('wards-select') . ', ' . $request->input('provinces-select') . ', ' . $request->input('cities-select') . ', ' . $request->input('countries-select');
             $companyName = $request->input('name_en');
             $email = $request->input('email');
+            $homepage = $request->input('homepage');
             $numberBusiness = $request->input('number_business');
             $phoneNumber = $request->input('phone');
             $fax = $request->input('fax');
@@ -310,11 +343,11 @@ class RegisterMemberController extends Controller
             }
 
             $status_business = $request->input('status_business');
+
             $code_1 = $request->input('code_1');
             $code_2 = $request->input('code_2');
             $code_3 = $request->input('code_3');
             $code_4 = $request->input('code_4');
-
 
             if ($request->hasFile('giay_phep_kinh_doanh')) {
                 $gpkd = $request->file('giay_phep_kinh_doanh');
@@ -323,33 +356,41 @@ class RegisterMemberController extends Controller
                 $gpkdPath = '';
             }
 
-            $arrayIds = $this->getArrayIds($request, 'category-');
-            if ($arrayIds) {
-                try {
-                    $categories = implode(',', $arrayIds);
-                } catch (\Exception $exception) {
-                    alert()->error('Error', 'Error, Please choosing your apply category!');
-                    return back();
-                }
-            } else {
-                alert()->error('Error', 'Error, Please choosing your apply category!');
-                return back();
-            }
+            $code_business = $request->input('code_business');
+            $type_business = $request->input('type_business');
 
-            $codeBusiness = $categories;
+            $categoryIds = implode(',', $code_1) . ',' . implode(',', $code_2) . ',' . implode(',', $code_3);
+            $arrayCategoryID = explode(',', $categoryIds);
+            sort($arrayCategoryID);
+            $categoryIds = implode(',', $arrayCategoryID);
 
-            $arrayIds = $this->getArrayIds($request, 'type_business-');
-            if ($arrayIds) {
-                try {
-                    $type_business = implode(',', $arrayIds);
-                } catch (\Exception $exception) {
-                    alert()->error('Error', 'Error, Please choosing your apply!');
-                    return back();
-                }
-            } else {
-                alert()->error('Error', 'Error, Please choosing your apply!');
-                return back();
-            }
+//            $arrayIds = $this->getArrayIds($request, 'category-');
+//            if ($arrayIds) {
+//                try {
+//                    $categories = implode(',', $arrayIds);
+//                } catch (\Exception $exception) {
+//                    alert()->error('Error', 'Error, Please choosing your apply category!');
+//                    return back();
+//                }
+//            } else {
+//                alert()->error('Error', 'Error, Please choosing your apply category!');
+//                return back();
+//            }
+//
+//            $codeBusiness = $categories;
+//
+//            $arrayIds = $this->getArrayIds($request, 'type_business-');
+//            if ($arrayIds) {
+//                try {
+//                    $type_business = implode(',', $arrayIds);
+//                } catch (\Exception $exception) {
+//                    alert()->error('Error', 'Error, Please choosing your apply!');
+//                    return back();
+//                }
+//            } else {
+//                alert()->error('Error', 'Error, Please choosing your apply!');
+//                return back();
+//            }
 
 //            $id = Auth::user()->id;
             $id = 0;
@@ -365,6 +406,10 @@ class RegisterMemberController extends Controller
                 $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
             }
 
+            $code_1_item = implode(',', $code_1);
+            $code_2_item = implode(',', $code_2);
+            $code_3_item = implode(',', $code_3);
+
             if ($exitMemberPerson) {
                 $exitsMember = MemberRegisterInfo::where([
                     ['id', $exitMemberPerson->member_id],
@@ -375,10 +420,10 @@ class RegisterMemberController extends Controller
                 $exitsMember->name = $companyName;
                 $exitsMember->email = $email;
                 $exitsMember->phone = $phoneNumber;
-                $exitsMember->category_id = $categories;
+                $exitsMember->category_id = $categoryIds;
                 $exitsMember->number_business = $numberBusiness;
                 $exitsMember->type_business = $type_business;
-                $exitsMember->code_business = $codeBusiness;
+                $exitsMember->code_business = $code_business;
                 $exitsMember->giay_phep_kinh_doanh = $gpkdPath;
                 $exitsMember->address = $address;
                 $exitsMember->member_id = $memberID;
@@ -392,10 +437,11 @@ class RegisterMemberController extends Controller
                 $exitsMember->address_kr = $address_kr;
                 $exitsMember->certify_business = $certify_business;
                 $exitsMember->status_business = $status_business;
-                $exitsMember->code_1 = $code_1;
-                $exitsMember->code_2 = $code_2;
-                $exitsMember->code_3 = $code_3;
+                $exitsMember->code_1 = $code_1_item;
+                $exitsMember->code_2 = $code_2_item;
+                $exitsMember->code_3 = $code_3_item;
                 $exitsMember->code_4 = $code_4;
+                $exitsMember->homepage = $homepage;
 
                 $success = $exitsMember->save();
                 $newUser = $exitsMember;
@@ -406,9 +452,10 @@ class RegisterMemberController extends Controller
                     'phone' => $phoneNumber,
                     'fax' => $fax,
                     'email' => $email,
+                    'homepage' => $homepage,
                     'code_fax' => 'default',
-                    'category_id' => $categories,
-                    'code_business' => $codeBusiness,
+                    'category_id' => $categoryIds,
+                    'code_business' => $code_business,
                     'number_business' => $numberBusiness,
                     'type_business' => $type_business,
                     'member' => $registerMember,
@@ -425,9 +472,9 @@ class RegisterMemberController extends Controller
                     'address_kr' => $address_kr,
                     'certify_business' => $certify_business,
                     'status_business' => $status_business,
-                    'code_1' => $code_1,
-                    'code_2' => $code_2,
-                    'code_3' => $code_3,
+                    'code_1' => $code_1_item,
+                    'code_2' => $code_2_item,
+                    'code_3' => $code_3_item,
                     'code_4' => $code_4,
                 ];
 
@@ -447,6 +494,7 @@ class RegisterMemberController extends Controller
             alert()->error('Error', 'Error, Create error!');
             return back();
         } catch (\Exception $exception) {
+            dd($exception);
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
