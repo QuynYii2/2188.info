@@ -18,21 +18,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function getDate() {
-            let nowTime = new Date().toLocaleDateString('en-GB');
-            $('#datetime_register').val(nowTime);
-        }
-
-        getDate();
-
-        $(document).ready(function () {
-            $('#buttonRegister').on('click', function () {
-                // $('#formRegisterMember').trigger('submit');
-                $('#btnSubmitFormRegister').trigger('click');
-            })
-        })
-    </script>
 @endsection
 

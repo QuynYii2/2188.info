@@ -710,7 +710,7 @@ return [
     'Quản lí thuộc tính con' => '하위 속성 관리',
     'Kênh Marketing' => '마케팅 채널',
     'Quản Lí Marketing' => '마케팅 관리',
-    'Setup Marketing' =>'마케팅 관리',
+    'Setup Marketing' => '마케팅 관리',
     'Mã Giảm Giá' => '할인코드',
     'Tạo Mã Giảm Giá' => '할인코드 생성',
     'Danh sách khuyến mãi' => '프로모션',
@@ -739,8 +739,8 @@ return [
     'Thiết Lập Shop' => '상점 설정',
     'Cấu hình chung' => '기본 설정',
     'Kênh người bán' => '판매자 페이지',
-    'Xem trang chủ' =>'홈으로 돌아가기',
-    'Detail Đơn hàng' =>'주문 보기',
+    'Xem trang chủ' => '홈으로 돌아가기',
+    'Detail Đơn hàng' => '주문 보기',
     'Đơn hàng' => '주문',
     'Mã sản phẩm' => '상품 코드',
     'Mô tả ngắn' => '내용',
@@ -786,7 +786,7 @@ return [
     'choosing sort views' => '정렬 기준 선택',
     'From low to high' => '낮은 것부터 높은 것까지',
     'From high to low' => '높은 것에서 낮은 것까지',
-    'Reset' =>'초기화',
+    'Reset' => '초기화',
     'sellerName' => '판매자 이름 ',
     'views' => '회',
     'location' => '위치',
@@ -816,7 +816,7 @@ return [
     'Danh sách setup' => '리스트',
     'Không có rank nào được tạo' => '생성된 랭크가 없습니다',
     'Thêm mới mã giảm giá' => '할인코드 생성',
-    'Chọn rank áp dụng'=>'적용 상품',
+    'Chọn rank áp dụng' => '적용 상품',
     'danh sách sale' => '프로모션',
     'Áp dụng' => '적용',
     'Xoá rank' => '재설정',
@@ -845,7 +845,7 @@ return [
     'Thị trường chính' => '주요 시장',
     'Đối tác chuỗi cung ứng' => '공급 파트너',
     'Các loại khách hàng chính' => '주요 고객 유형',
-    'Phương pháp kiểm tra sản phẩm' =>'상품 확인',
+    'Phương pháp kiểm tra sản phẩm' => '상품 확인',
     'Nhân viên kiểm tra' => '확인자',
     'Ngành sản phẩm đăng ký' => '등록된 품목',
     'Thông tin công ty' => '회사 정보',
@@ -861,7 +861,7 @@ return [
     'Product' => '제품',
     'danh sách marketing' => '특별 전시장 관리',
     'Thông tin thanh toán' => '수량',
-    'Số điện thoại' =>'전화번호',
+    'Số điện thoại' => '전화번호',
     'Trang Admin' => '관리자 페이지',
     'Vui lòng thanh toán trước khi tạo' => '결제를 먼저 하시기 바랍니다',
     'Tên tài khoản' => '계좌주',
@@ -874,7 +874,7 @@ return [
     'Qty Products' => '수량',
     'atc' => 'atc',
     'báo cáo thống kê' => '통계 정보',
-    'toàn bộ thống kê chi tiết' =>'상세 보기',
+    'toàn bộ thống kê chi tiết' => '상세 보기',
     'lưu lượng người truy cập' => '접속자 수량',
     'Tổng số doanh thu' => '매출 관리',
     'tỉ lệ khách hàng' => '고객 비율',
@@ -883,7 +883,7 @@ return [
     'phân tích bán hàng' => '판매분석',
     'phân tích bán hàng chi tiết' => '상세 보기',
     'lượt truy cập' => '접근량',
-    'Vs hôm qua' =>'어제와 대비',
+    'Vs hôm qua' => '어제와 대비',
     'Lượt xem' => '매출',
     'tỷ lệ chuyển đổi' => '전환율',
     'Danh sách cần làm' => '할 일 목록',
@@ -922,7 +922,7 @@ return [
     'Detail Order' => '세부사항 순서',
     'Edit attribute' => '속성 설정',
     'Terms' => '이용약관',
-    'Đơn huỷ' =>'취소된 주문',
+    'Đơn huỷ' => '취소된 주문',
     'Bạn có chắc chắn muốn xoá thuộc tính' => '속성을 지우시겠습니까?',
     'Nếu xoá bạn sẽ không thể không thể tìm thấy nó! Chúng tôi sẽ không chịu trách nhiệm cho việc này' => '영원히 지우게 될 것입니다.  저희가 이 행동에 대해서 책임을 지지 않겠습니다',
     'danh sách mã giảm giá' => '나의 할인코드',
@@ -961,18 +961,12 @@ return [
     'nhập số thứ tự' => '일련번호를 입력하세요',
     'Nhập tên setup marketing' => '마케팅 설정 이름을 입력하세요',
     'Nhập  tài khoản' => '계좌번호를 입력하세요',
-    'Nhập tên ngân hàng' =>'은행명을 입력하세요',
-    'Nhập số điện thoại' =>'전화번호를 입력하세요',
+    'Nhập tên ngân hàng' => '은행명을 입력하세요',
+    'Nhập số điện thoại' => '전화번호를 입력하세요',
     'Nhập mã OTP' => 'OTP 코드를 입력하세요',
     'Nhập tên khuyến mãi' => '프로모션 이름을 입력하세요',
     'Nhập tên khuyến mãi' => '프로모션 이름을 입력하세요',
     'giảm giá' => '할인',
-
-
-
-
-
-
 
 
     'Please enter express delivery or receiving address' => ' 상품을 발송하거나 수취할수 있는 주소를 등록하세요',
@@ -1011,11 +1005,15 @@ return [
     'retail' => '소매업',
     // thuong mai dien tu
     'ecommerce' => '전자상거래',
-    'home shopping' =>'홈쇼핑업',
+    'home shopping' => '홈쇼핑업',
     // thuong mai
-    'commerce' =>'무역업',
+    'commerce' => '무역업',
     // lap rap
     'assemble' => '조립',
     // Gia cong
     'machining' => '가공',
+
+    //
+    'Update information register member' => '등록인 정보',
+    'Update information represent member' => '등록인 정보'
 ];
