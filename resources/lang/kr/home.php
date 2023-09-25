@@ -1015,5 +1015,5 @@ return [
 
     //
     'Update information register member' => '등록인 정보',
-    'Update information represent member' => '등록인 정보'
+    'Update information represent member' => '대표자 등록정보'
 ];
