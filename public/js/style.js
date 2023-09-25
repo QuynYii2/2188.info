@@ -422,55 +422,23 @@ setBackgroundColors();
 })
 
     // Hàm logout
-    function logout() {
-
-    // Tạo một form
+function logout(url, token) {
     var form = document.createElement('form');
 
-    // Đặt thuộc tính action và method cho form
-    form.action = "{{ route('logout') }}";
-    form.method = "POST";
+    form.action = url;
+    form.method = 'POST';
 
-    // Tạo một input hidden để chứa CSRF token
     var csrfTokenInput = document.createElement('input');
-    csrfTokenInput.type = "hidden";
-    csrfTokenInput.name = "_token";
-    csrfTokenInput.value = "{{ csrf_token() }}";
+    csrfTokenInput.type = 'hidden';
+    csrfTokenInput.name = '_token';
+    csrfTokenInput.value = token;
 
-    // Thêm input hidden vào form
     form.appendChild(csrfTokenInput);
 
-    // Thêm form vào body
     document.body.appendChild(form);
 
-    // Gửi form để thực hiện logout
     form.submit();
 }
-
-
-
-
-
-
-
-//BUY COIN
-function checkCoin(value, size) {
-    var coins = document.getElementById('number-coin-' + value)
-    var inputValue = document.getElementById('input-coin-' + value)
-    var number = parseInt(value) * 10 + parseInt(value)+ parseInt(size);
-    coins.innerText = number;
-    inputValue.value = number;
-}
-
-function next() {
-    var i = 0;
-    var array = [10, 50, 100, 200, 500, 1000];
-    for (i; i < 6; i++) {
-        checkCoin(array[i], i);
-    }
-}
-next();
-
 
 
 

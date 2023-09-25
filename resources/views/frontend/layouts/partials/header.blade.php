@@ -224,7 +224,7 @@
                                         <hr>
                                     @endif
                                     <button class="signOut" href="#"
-                                            onclick="logout()">{{ __('home.Sign Out') }}</button>
+                                            onclick="logout(`{{ route('logout') }}`,`{{ csrf_token() }}`)">{{ __('home.Sign Out') }}</button>
                                 </div>
                                 <div class="hover-list">
                                     <a href="{{route('profile.show')}}" class="none_decoration">
@@ -314,7 +314,7 @@
                                         <a href="{{route('chat.message.show')}}">{{ __('home.Message') }}</a>
                                     </div>
 
-                                    <div class="drop-item -hand-pointer" onclick="logout()">
+                                    <div class="drop-item -hand-pointer" onclick="logout(`{{ route('logout') }}`,`{{ csrf_token() }}`)">
                                         <button>{{ __('home.Log out') }}</button>
                                     </div>
                                 </div>
