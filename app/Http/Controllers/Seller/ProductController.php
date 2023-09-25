@@ -410,7 +410,7 @@ class ProductController extends Controller
 
 
             $product->origin = $request->input('origin');
-            $product->min = $request->input('min');
+            $product-> min = $request->input('min');
 
             $ld = new TranslateController();
 
