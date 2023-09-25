@@ -927,8 +927,6 @@ return [
     'Nhập mã OTP' =>  'Nhập mã OTP',
     'Nhập số tiền' => 'Nhập số tiền',
 
-
-
     'Please enter express delivery or receiving address' => 'Vui lòng nhập địa chỉ giao hoặc nhận hàng',
     'Allow receiving notifications via SMS message' => 'Cho phép gửi tin nhắn',
     'Allow receiving notifications via Email' => 'Cho phép gửi Email',
@@ -938,8 +936,20 @@ return [
     'Customs clearance number (enter numbers only)' => 'Số thông quan (chỉ cho phép nhập chữ số)',
 
 
+    'distributive' => 'Phân phối',
+    'manufacture' => 'Sản xuất',
 
-
-
-
+    // BAN SI
+    'wholesale' => 'Bán sỉ',
+    // ban le
+    'retail' => 'Bán lẻ',
+    // thuong mai dien tu
+    'ecommerce' => 'Thương mại điện tử',
+    'home shopping' =>'Home shopping',
+    // thuong mai
+    'commerce' =>'Thương mại',
+    // lap rap
+    'assemble' => 'Lắp ráp',
+    // Gia cong
+    'machining' => 'Gia công',
 ];

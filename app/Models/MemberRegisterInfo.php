@@ -52,5 +52,8 @@ class MemberRegisterInfo extends Model
         'code_2',
         'code_3',
         'code_4',
+
+        'email',
+        'homepage',
     ];
 }
