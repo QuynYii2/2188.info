@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Route;
 
 class RegisterMemberController extends Controller
 {
@@ -338,7 +339,7 @@ class RegisterMemberController extends Controller
                 $gpkd = $request->file('giay_phep_kinh_doanh');
                 $gpkdPath = $gpkd->store('giay_phep_kinh_doanh', 'public');
             } else {
-                $gpkdPath = '';
+                $gpkdPath = null;
             }
 
             $code_business = $request->input('code_business');
@@ -350,12 +351,6 @@ class RegisterMemberController extends Controller
             $categoryIds = implode(',', $arrayCategoryID);
 
             $id = 0;
-
-            $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
-            if ($memberOld) {
-                alert()->error('Error', 'Error, Email in member used!');
-                return back();
-            }
 
             if ($registerMember == RegisterMember::LOGISTIC || $registerMember == RegisterMember::TRUST || $registerMember == RegisterMember::BUYER) {
                 $status = MemberRegisterInfoStatus::ACTIVE;
@@ -377,6 +372,10 @@ class RegisterMemberController extends Controller
                     ['id', $exitMemberPerson->member_id],
                     ['status', MemberRegisterInfoStatus::ACTIVE]
                 ])->first();
+
+                if (!$gpkdPath) {
+                    $gpkdPath = $exitsMember->giay_phep_kinh_doanh;
+                }
 
                 $exitsMember->user_id = $id;
                 $exitsMember->name = $companyName;
@@ -406,8 +405,20 @@ class RegisterMemberController extends Controller
                 $exitsMember->homepage = $homepage;
 
                 $success = $exitsMember->save();
-                $newUser = $exitsMember;
+                if ($success) {
+                    alert()->success('Success', 'Success, Update success!');
+                    return back();
+                }
+                alert()->error('Error', 'Error, Create error!');
+                return back();
+
             } else {
+                $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
+                if ($memberOld) {
+                    alert()->error('Error', 'Error, Email in member used!');
+                    return back();
+                }
+
                 $create = [
                     'user_id' => $id,
                     'name' => $companyName,
@@ -547,6 +558,9 @@ class RegisterMemberController extends Controller
             $userOld = User::where('email', $email)->first();
             $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
 
+            $url = url()->previous();
+            $route = app('router')->getRoutes($url)->match(app('request')->create($url))->getName();
+
             if ($memberPersonSource) {
                 $user = User::where('email', $memberPersonSource->email)->first();
                 $memberPersonSource->user_id = $id;
@@ -576,6 +590,12 @@ class RegisterMemberController extends Controller
                     $memberPersonSource->save();
 
                     $register = MemberRegisterInfo::find($member);
+
+                    if ($route == 'profile.member.person') {
+                        alert()->success('Success', 'Success, Update success!');
+                        return back();
+                    }
+
                     alert()->success('Success', 'Success, Create success! Please continue next steps');
                     return redirect(route('show.register.member.person.represent', [
                         'person_id' => $memberPersonSource->id,
@@ -604,6 +624,11 @@ class RegisterMemberController extends Controller
                     $memberPersonSource->isVerify = 0;
                     $memberPersonSource->verifyCode = '';
                     $success = $memberPersonSource->save();
+
+                    if ($route == 'profile.member.person') {
+                        alert()->success('Success', 'Success, Update success!');
+                        return back();
+                    }
                 }
             } else {
                 if ($userOld) {
@@ -756,6 +781,11 @@ class RegisterMemberController extends Controller
 
             $userOld = User::where('email', $email)->first();
             $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
+
+            // Get previous url
+            $url = url()->previous();
+            $route = app('router')->getRoutes($url)->match(app('request')->create($url))->getName();
+
             if ($memberPerson) {
                 $user = User::where('email', $memberPerson->email)->first();
                 $memberPerson->user_id = $id;
@@ -776,6 +806,12 @@ class RegisterMemberController extends Controller
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
                     $memberPerson->email = $email;
                     $memberPerson->save();
+
+                    if ($route == 'profile.member.represent') {
+                        alert()->success('Success', 'Success, Update success!');
+                        return back();
+                    }
+
                     alert()->success('Success', 'Success');
                     return redirect(route('show.register.member.ship', $memberBefore->member_id));
                 } else {
@@ -792,6 +828,10 @@ class RegisterMemberController extends Controller
                     $memberPerson->isVerify = 0;
                     $memberPerson->verifyCode = '';
                     $success = $memberPerson->save();
+                    if ($route == 'profile.member.represent') {
+                        alert()->success('Success', 'Success, Update success!');
+                        return back();
+                    }
                 }
             } else {
                 if ($userOld) {
