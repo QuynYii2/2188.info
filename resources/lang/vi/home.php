@@ -555,8 +555,6 @@ return [
     'Day register' => 'Ngày đăng kí ',
     'Number clearance' => 'Số thông quan',
     'Name company English' => 'Tên công ty Tiếng Anh',
-    'English only' => 'Tên Tiếng Anh',
-    'Local language' =>	'Tiếng địa phương',
     'Name company Korea' => 'Tên công ty Tiếng Hàn',
     // nganh nghe
     'Career' => 'Ngành nghề',
@@ -587,7 +585,6 @@ return [
     'Position company' => 'Chức vụ',
     'Responsibility company' => 'Chức trách',
     'Name English' => 'Họ và tên Tiếng Anh',
-    'Full Name' => 'Họ và tên',
     'Name Korea' => 'Họ và tên Tiếng Hàn',
     'ID' => 'ID',
     'Congratulations, you have registered as a member' => 'Chúc mừng bạn đã đăng ký hội viên',
@@ -952,4 +949,8 @@ return [
     'assemble' => 'Lắp ráp',
     // Gia cong
     'machining' => 'Gia công',
+
+    //
+    'Update information register member' => 'Thông tin người đăng ký',
+    'Update information represent member' => 'Thông tin người đại diện'
 ];

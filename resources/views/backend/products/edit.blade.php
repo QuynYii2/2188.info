@@ -310,34 +310,34 @@
                     </div>
                     <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
                         <div class="form-group">
-                            <div class="name">Giá bán</div>
+                            <div class="name">{{ __('home.Giá bán') }}</div>
                             <input type="number" class="form-control" name="giaban" id="name"
                                    placeholder="Nhập giá bán" value="{{$product->old_price}}"
                                    required min="1">
                         </div>
                         <div class="form-group">
-                            <div class="name">Nhập giá khuyến mãi(nếu có)</div>
+                            <div class="name">{{ __('home.Nhập giá khuyến mãi(nếu có)') }}</div>
                             <input type="number" class="form-control" name="giakhuyenmai" id="name"
                                    placeholder="Nhập giá khuyến mãi" value="{{$product->price}}" min="1">
                         </div>
                         <div class="form-group">
-                            <div class="name">Nhập số lượng</div>
+                            <div class="name">{{ __('home.Nhập số lượng') }}</div>
                             <input type="number" class="form-control" name="qty" id="qty"
                                    placeholder="Nhập giá khuyến mãi" value="{{$product->qty}}" min="1">
                         </div>
                         <div class="form-group">
-                            <div class="name">Xuất xứ</div>
+                            <div class="name">{{ __('home.Xuất xứ') }}</div>
                             <input type="text" class="form-control" name="origin" id="origin" placeholder="Nhập xuất xứ"
                                    value="{{$product->origin}}">
                         </div>
                         <div class="form-group">
-                            <div class="name">Sản phẩm tối thiểu</div>
+                            <div class="name">{{ __('home.Sản phẩm tối thiểu') }}</div>
                             <input type="number" value="{{$product->min}}" class="form-control" name="min" id="min"
                                    placeholder="Nhập số lượng tối thiểu" min="1">
                         </div>
                         <div class="form-group">
                             <div class="d-flex">
-                                <div class="name">Mua nhiều giảm giá</div>
+                                <div class="name">{{ __('home.Mua nhiều giảm giá') }}</div>
                             </div>
                             <div>
                                 <div class="">
@@ -347,7 +347,7 @@
 
                                         </div>
                                         <button type="button" class="btn add-form-field"><i
-                                                    class="fa-solid fa-plus"></i> Thêm khoảng giá
+                                                    class="fa-solid fa-plus"></i> {{ __('home.Thêm khoảng giá') }}
                                         </button>
                                     </div>
                                     <div id="base-package-fields" hidden>

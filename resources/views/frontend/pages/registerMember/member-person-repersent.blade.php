@@ -44,28 +44,32 @@
             </th>
             <td rowspan="2">
                 <input type="text" class="form-control" id="code" name="code"
-                       placeholder="{{ __('home.ID') }}" required>
+                       placeholder="{{ __('home.ID') }}"  value="{{$memberPerson ? $memberPerson->code : ''}}" required>
             </td>
             <th rowspan="2">
                 <label for="password">{{ __('home.Duplicate') }}</label>
             </th>
-            <th>
-                <label for="password">{{ __('home.Password') }}</label>
-            </th>
-            <td>
-                <input type="password" class="form-control" id="password" name="password"
-                       placeholder="{{ __('home.Password') }}" required>
-            </td>
+            @if(!Auth::check())
+                <th>
+                    <label for="password">{{ __('home.Password') }}</label>
+                </th>
+                <td>
+                    <input type="password" class="form-control" id="password" name="password"
+                           placeholder="{{ __('home.Password') }}" required>
+                </td>
+            @endif
         </tr>
         <tr>
-            <th>
-                <label for="passwordConfirm">{{ __('home.Re-Password') }}</label>
-            </th>
-            <td>
-                <input type="password" class="form-control" id="passwordConfirm"
-                       name="passwordConfirm" placeholder="{{ __('home.Re-Password') }}"
-                       required>
-            </td>
+            @if(!Auth::check())
+                <th>
+                    <label for="passwordConfirm">{{ __('home.Re-Password') }}</label>
+                </th>
+                <td>
+                    <input type="password" class="form-control" id="passwordConfirm"
+                           name="passwordConfirm" placeholder="{{ __('home.Re-Password') }}"
+                           required>
+                </td>
+            @endif
         </tr>
         <tr>
             <th rowspan="2">
@@ -132,3 +136,18 @@
         <button class="d-none" id="btnSubmitFormRegister" type="submit">Done</button>
     </form>
 </table>
+<script>
+    function getDate() {
+        let nowTime = new Date().toLocaleDateString('en-GB');
+        $('#datetime_register').val(nowTime);
+    }
+
+    getDate();
+
+    $(document).ready(function () {
+        $('#buttonRegister').on('click', function () {
+            // $('#formRegisterMember').trigger('submit');
+            $('#btnSubmitFormRegister').trigger('click');
+        })
+    })
+</script>

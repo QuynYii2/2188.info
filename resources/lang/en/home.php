@@ -907,6 +907,7 @@ return [
     'Nhập số điện thoại' =>'Nhập số điện thoại',
     'Nhập mã OTP' =>  'Nhập mã OTP',
     'Nhập số tiền' => '금액을 입력하세요',
+    'giảm giá' => 'giảm giá',
 
 
     'Customs clearance number (enter numbers only)' => 'Customs clearance number (enter numbers only)',
