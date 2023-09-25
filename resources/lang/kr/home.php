@@ -580,8 +580,8 @@ return [
     'I agree to the above Terms' => '위 약관에 동의합니다',
     'Day register' => '등록일시',
     'Number clearance' => '통관번호',
-    'Name company English' => '성명 (영문)',
-    'Name company Korea' => '성명 (자국어)',
+    'Name company English' => '영문',
+    'Name company Korea' => '자국어',
     // nganh nghe
     'Career' => '업종선택',
     // nganh hang
@@ -610,8 +610,8 @@ return [
     // Chuc vu
     'Position company' => '직무',
     'Responsibility company' => '직책',
-    'Name English' => '성명 (영문)',
-    'Name Korea' => '성명 (자국어)',
+    'Name English' => '영문',
+    'Name Korea' => '자국어',
     'ID' => '아이디',
     'Congratulations, you have registered as a member' => '회원으로 가입 되신 것을 축하합니다',
     'Representative member' => '대표회원',

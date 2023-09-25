@@ -549,7 +549,7 @@ return [
     'Number clearance' => 'Number clearance',
     'Name company English' => 'Name company English',
     'Local language' =>	'Local language',
-    'English only' => 'English only',
+    'English only' => '영문',
     'Name company Korea' => 'Name company Korea',
     // nganh nghe
     'Career' => 'Career',
