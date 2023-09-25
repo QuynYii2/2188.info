@@ -196,6 +196,7 @@
             </div>
         </div>
     </div>
+{{--    <button class="btn btn-primary" id="GetProductPrice">Get Profile</button>--}}
     <div class="d-none">
         @php
             $homeController = new \App\Http\Controllers\Frontend\HomeController();

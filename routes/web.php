@@ -287,6 +287,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/checkout-coin', [CheckoutController::class, 'checkoutByCoin'])->name('checkout.create.coin');
     Route::post('/checkout-paypal', [CheckoutController::class, 'checkoutByPaypal'])->name('checkout.create.paypal');
     Route::post('/checkout-vnpay', [CheckoutController::class, 'checkoutByVNPay'])->name('checkout.create.vnpay');
+    Route::post('/payment-methods', [CheckoutController::class, 'paymentMethods'])->name('checkout.payment.methods');
+    Route::get('/return-checkout', [CheckoutController::class, 'returnCheckout'])->name('return.checkout.payment');
     // Order Controller
     Route::get('/order-management/', [OrderController::class, 'index'])->name('order.show');
     Route::delete('/order-delete/{id}', [OrderController::class, 'cancel'])->name('order.cancel');

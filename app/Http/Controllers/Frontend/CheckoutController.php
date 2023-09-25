@@ -338,15 +338,46 @@ class CheckoutController extends Controller
         return redirect()->route('checkout.show')->with('error', 'Checkout fail');
     }
 
+    public function returnCheckout(Request $request)
+    {
+        // Xử lý dữ liệu từ VNPay và lấy thông tin giao dịch
+        $vnpResponse = $request->all();
+
+        // Kiểm tra tính hợp lệ của dữ liệu (kiểm tra vnp_ResponseCode)
+        if ($vnpResponse['vnp_ResponseCode'] == '00') {
+            // Lấy thông tin giao dịch từ dữ liệu VNPay
+            $transactionInfo = [
+                'transaction_id' => $vnpResponse['vnp_TxnRef'],
+                'amount' => $vnpResponse['vnp_Amount'] / 100,
+                'bank_code' => $vnpResponse['vnp_BankCode'],
+                'payment_status' => 'success', // Hoặc có thể sử dụng giá trị khác để biểu thị trạng thái khác
+                // Thêm các thông tin khác tùy theo yêu cầu của bạn
+            ];
+
+            // Lưu thông tin giao dịch vào cơ sở dữ liệu
+            Transaction::create($transactionInfo);
+
+            // Hiển thị thông báo thành công
+            alert()->success('Success', 'Payment success!');
+        } else {
+            // Xử lý khi thanh toán thất bại
+            alert()->error('Error', 'Payment failed!');
+        }
+
+        // Chuyển hướng người dùng đến trang chính hoặc trang cần thiết
+        return redirect(session('url_prev', route('checkout.create.vnpay')));
+
+    }
     public function checkoutByVNPay(Request $request)
     {
+        $money = $request->input('priceID') * 24372;
         session(['cost_id' => $request->id]);
         session(['url_prev' => url()->previous()]);
-        $vnp_TmnCode = "DX99JC99"; //Mã website tại VNPAY
-        $vnp_HashSecret = "NTMFIAYIYAEFEAMZVWNCESERJMBVROKS"; //Chuỗi bí mật
+        $vnp_TmnCode = "DX99JC99";
+        $vnp_HashSecret = "NTMFIAYIYAEFEAMZVWNCESERJMBVROKS";
         $vnp_Returnurl = route('home');
-        $vnp_TxnRef = date("YmdHis"); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
-        $vnp_Amount = $request->input('checkout-price') * 100;
+        $vnp_TxnRef = date("YmdHis");
+        $vnp_Amount = $money * 100;
         $vnp_Locale = 'vn';
         $vnp_IpAddr = request()->ip();
 
