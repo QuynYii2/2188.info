@@ -210,6 +210,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/member-registered', [UpdateRankController::class, 'updateMember'])->name('member.registered.update');
     //
     Route::get('/info/', [ProfileController::class, 'info'])->name('profile.show');
+
+    Route::get('/info-member-person', [ProfileController::class, 'memberPerson'])->name('profile.member.person');
+    Route::get('/info-member-represent', [ProfileController::class, 'memberRepresent'])->name('profile.member.represent');
 //    Route::get('/my-notification/', [\App\Http\Controllers\ProfileController::class, 'my_notification']);
 //    Route::get('/order-management/', [\App\Http\Controllers\ProfileController::class, 'order_management']);
     Route::get('/return-management/', [ProfileController::class, 'return_management']);

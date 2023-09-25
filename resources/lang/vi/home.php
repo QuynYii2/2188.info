@@ -555,8 +555,6 @@ return [
     'Day register' => 'Ngày đăng kí ',
     'Number clearance' => 'Số thông quan',
     'Name company English' => 'Tên công ty Tiếng Anh',
-    'English only' => 'Tên Tiếng Anh',
-    'Local language' =>	'Tiếng địa phương',
     'Name company Korea' => 'Tên công ty Tiếng Hàn',
     // nganh nghe
     'Career' => 'Ngành nghề',
@@ -587,7 +585,6 @@ return [
     'Position company' => 'Chức vụ',
     'Responsibility company' => 'Chức trách',
     'Name English' => 'Họ và tên Tiếng Anh',
-    'Full Name' => 'Họ và tên',
     'Name Korea' => 'Họ và tên Tiếng Hàn',
     'ID' => 'ID',
     'Congratulations, you have registered as a member' => 'Chúc mừng bạn đã đăng ký hội viên',
@@ -927,8 +924,6 @@ return [
     'Nhập mã OTP' =>  'Nhập mã OTP',
     'Nhập số tiền' => 'Nhập số tiền',
 
-
-
     'Please enter express delivery or receiving address' => 'Vui lòng nhập địa chỉ giao hoặc nhận hàng',
     'Allow receiving notifications via SMS message' => 'Cho phép gửi tin nhắn',
     'Allow receiving notifications via Email' => 'Cho phép gửi Email',
@@ -938,8 +933,24 @@ return [
     'Customs clearance number (enter numbers only)' => 'Số thông quan (chỉ cho phép nhập chữ số)',
 
 
+    'distributive' => 'Phân phối',
+    'manufacture' => 'Sản xuất',
 
+    // BAN SI
+    'wholesale' => 'Bán sỉ',
+    // ban le
+    'retail' => 'Bán lẻ',
+    // thuong mai dien tu
+    'ecommerce' => 'Thương mại điện tử',
+    'home shopping' =>'Home shopping',
+    // thuong mai
+    'commerce' =>'Thương mại',
+    // lap rap
+    'assemble' => 'Lắp ráp',
+    // Gia cong
+    'machining' => 'Gia công',
 
-
-
+    //
+    'Update information register member' => 'Thông tin người đăng ký',
+    'Update information represent member' => 'Thông tin người đại diện'
 ];

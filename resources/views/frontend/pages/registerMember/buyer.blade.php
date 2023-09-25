@@ -96,7 +96,7 @@
             </th>
             <td colspan="4">
                 <div class="multiselect" style="position: relative">
-                    <div class="selectBox" style="position: relative" id="type_business_click" onclick="showCheckboxes1()">
+                    <div class="selectBox" style="position: relative" id="code_2_item" onclick="showCheckboxes2()">
                         <select>
                             <option>{{ __('home.Select the applicable category') }}</option>
                         </select>
@@ -107,7 +107,7 @@
                             $listCategory = $exitsMember->type_business;
                             $arrayCategory = explode(',', $listCategory);
                         @endphp
-                        <div id="type_business_checkboxes">
+                        <div id="code_2">
                             @foreach($categories as $category)
                                 @if(!$category->parent_id)
                                     @foreach($arrayCategory as $item)
@@ -119,9 +119,9 @@
                                             }
                                         @endphp
                                     @endforeach
-                                    <label class="ml-2 d-flex align-items-center" for="type_business-{{$category->id}}">
-                                        <input type="checkbox" id="type_business-{{$category->id}}"
-                                               name="type_business-{{$category->id}}"
+                                    <label class="ml-2 d-flex align-items-center" for="code_2-{{$category->id}}">
+                                        <input type="checkbox" id="code_2-{{$category->id}}"
+                                               name="code_2[]"
                                                value="{{ ($category->id) }}"
                                                {{ $isChecked ? 'checked' : '' }}
                                                class="inputCheckboxCategory mr-2 p-3"/>
@@ -142,16 +142,16 @@
                             @endforeach
                         </div>
                     @else
-                        <div id="type_business_checkboxes" class="mt-1 checkboxes">
+                        <div id="code_2" class="mt-1 checkboxes">
                             @foreach($categories as $category)
                                 @if(!$category->parent_id)
-                                    <label class="ml-2 d-flex align-items-center" for="type_business-{{$category->id}}">
-                                        <input type="checkbox" id="type_business-{{$category->id}}"
-                                               name="type_business-{{$category->id}}"
+                                    <label class="ml-2 d-flex align-items-center" for="code_2-{{$category->id}}">
+                                        <input type="checkbox" id="code_2-{{$category->id}}"
+                                               name="code_2[]"
                                                value="{{ ($category->id) }}"
                                                class="inputCheckboxCategory mr-2 p-3"/>
                                         <span class="labelCheckboxCategory ">
-                                                                @if(locationHelper() == 'kr')
+                                            @if(locationHelper() == 'kr')
                                                 <div class="item-text">{{ $category->name_ko }}</div>
                                             @elseif(locationHelper() == 'cn')
                                                 <div class="item-text">{{$category->name_zh}}</div>
@@ -162,7 +162,7 @@
                                             @else
                                                 <div class="item-text">{{$category->name_en}}</div>
                                             @endif
-                                                            </span>
+                                        </span>
                                     </label>
                                 @endif
                             @endforeach
@@ -177,7 +177,7 @@
             </th>
             <td colspan="4">
                 <div class="multiselect" style="position: relative">
-                    <div class="selectBox" style="position: relative" id="div-click" onclick="showCheckboxes()">
+                    <div class="selectBox" style="position: relative" id="code_1_item" onclick="showCheckboxes()">
                         <select>
                             <option>{{ __('home.Select the applicable category') }}</option>
                         </select>
@@ -188,7 +188,7 @@
                             $listCategory = $exitsMember->code_business;
                             $arrayCategory = explode(',', $listCategory);
                         @endphp
-                        <div id="checkboxes" class="mt-1  checkboxes">
+                        <div id="code_1" class="mt-1  checkboxes">
                             @foreach($categories as $category)
                                 @if(!$category->parent_id)
                                     @foreach($arrayCategory as $item)
@@ -200,9 +200,9 @@
                                             }
                                         @endphp
                                     @endforeach
-                                    <label class="ml-2 d-flex align-items-center" for="category-{{$category->id}}">
-                                        <input type="checkbox" id="category-{{$category->id}}"
-                                               name="category-{{$category->id}}"
+                                    <label class="ml-2 d-flex align-items-center" for="code_1-{{$category->id}}">
+                                        <input type="checkbox" id="code_1-{{$category->id}}"
+                                               name="code_1[]"
                                                value="{{ ($category->id) }}"
                                                {{ $isChecked ? 'checked' : '' }}
                                                class="inputCheckboxCategory1 mr-2 p-3"/>
@@ -233,9 +233,9 @@
                                                     }
                                                 @endphp
                                             @endforeach
-                                            <label class="ml-4 d-flex align-items-center" for="category-{{$child->id}}">
-                                                <input type="checkbox" id="category-{{$child->id}}"
-                                                       name="category-{{$child->id}}"
+                                            <label class="ml-4 d-flex align-items-center" for="code_1-{{$child->id}}">
+                                                <input type="checkbox" id="code_1-{{$child->id}}"
+                                                       name="code_1[]"
                                                        value="{{$child->id}}"
                                                        {{ $isChecked1 ? 'checked' : '' }}
                                                        class="inputCheckboxCategory1 mr-2 p-3"/>
@@ -265,9 +265,9 @@
                                                     @endphp
                                                 @endforeach
                                                 <label class="ml-5 d-flex align-items-center"
-                                                       for="category-{{$child2->id}}">
-                                                    <input type="checkbox" id="category-{{$child2->id}}"
-                                                           name="category-{{$child2->id}}"
+                                                       for="code_1-{{$child2->id}}">
+                                                    <input type="checkbox" id="code_1-{{$child2->id}}"
+                                                           name="code_1[]"
                                                            value="{{$child2->id}}"
                                                            {{ $isChecked2 ? 'checked' : '' }}
                                                            class="inputCheckboxCategory1 mr-2 p-3"/>
@@ -290,12 +290,12 @@
                             @endforeach
                         </div>
                     @else
-                        <div id="checkboxes" class="mt-1  checkboxes">
+                        <div id="code_1" class="mt-1  checkboxes">
                             @foreach($categories as $category)
                                 @if(!$category->parent_id)
-                                    <label class="ml-2 d-flex align-items-center" for="category-{{$category->id}}">
-                                        <input type="checkbox" id="category-{{$category->id}}"
-                                               name="category-{{$category->id}}"
+                                    <label class="ml-2 d-flex align-items-center" for="code_1-{{$category->id}}">
+                                        <input type="checkbox" id="code_1-{{$category->id}}"
+                                               name="code_1[]"
                                                value="{{ ($category->id) }}"
                                                class="inputCheckboxCategory1 mr-2 p-3"/>
                                         <span class="labelCheckboxCategory ">
@@ -317,9 +317,9 @@
                                             $categories = DB::table('categories')->where('parent_id', $category->id)->get();
                                         @endphp
                                         @foreach($categories as $child)
-                                            <label class="ml-4 d-flex align-items-center " for="category-{{$child->id}}">
-                                                <input type="checkbox" id="category-{{$child->id}}"
-                                                       name="category-{{$child->id}}"
+                                            <label class="ml-4 d-flex align-items-center " for="code_1-{{$child->id}}">
+                                                <input type="checkbox" id="code_1-{{$child->id}}"
+                                                       name="code_1[]"
                                                        value="{{$child->id}}"
                                                        class="inputCheckboxCategory1 mr-2 p-3"/>
                                                 <span class="labelCheckboxCategory ">
@@ -341,9 +341,9 @@
                                             @endphp
                                             @foreach($listChild2 as $child2)
                                                 <label class="ml-5 d-flex align-items-center"
-                                                       for="category-{{$child2->id}}">
-                                                    <input type="checkbox" id="category-{{$child2->id}}"
-                                                           name="category-{{$child2->id}}"
+                                                       for="code_1-{{$child2->id}}">
+                                                    <input type="checkbox" id="code_1-{{$child2->id}}"
+                                                           name="code_1[]"
                                                            value="{{$child2->id}}"
                                                            class="inputCheckboxCategory1 mr-2 p-3"/>
                                                     <span class="labelCheckboxCategory ">@if(locationHelper() == 'kr')

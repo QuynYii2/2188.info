@@ -92,16 +92,42 @@
         text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
     }
 
-    #type_business_checkboxes {
+    #code_1 {
         display: none;
         border: 1px #dadada solid;
     }
 
-    #type_business_checkboxes label {
+    #code_1 label {
         display: block;
     }
 
-    #type_business_checkboxes label:hover {
+    #code_1 label:hover {
+        background-color: #cccccc;
+    }
+
+    #code_2 {
+        display: none;
+        border: 1px #dadada solid;
+    }
+
+    #code_2 label {
+        display: block;
+    }
+
+    #code_2 label:hover {
+        background-color: #cccccc;
+    }
+
+    #code_3 {
+        display: none;
+        border: 1px #dadada solid;
+    }
+
+    #code_3 label {
+        display: block;
+    }
+
+    #code_3 label:hover {
         background-color: #cccccc;
     }
 
@@ -114,7 +140,8 @@
         <div class="start-page mb-3">
             <div class="background container pt-3 justify-content-center pb-3">
                 <div class="form-title text-center solid-3x pt-2 pb-3 bg-member-green">
-                    <div class="title text-primary" style="font-size: 35px; font-weight: 600">{{ __('home.Sign up company information') }}</div>
+                    <div class="title text-primary"
+                         style="font-size: 35px; font-weight: 600">{{ __('home.Sign up company information') }}</div>
                 </div>
                 <div class="">
                     @if($member->name == \App\Enums\RegisterMember::BUYER)
@@ -147,6 +174,15 @@
                     $('.inputCheckboxCategory1:checkbox:not(:checked)').prop('disabled', false);
                 }
             })
+
+            $('.inputCheckboxCategory2').on('click', function () {
+                let count = document.querySelectorAll('.inputCheckboxCategory2:checked').length
+                if (count > 3) {
+                    $('.inputCheckboxCategory2:checkbox:not(:checked)').prop('disabled', true);
+                } else {
+                    $('.inputCheckboxCategory2:checkbox:not(:checked)').prop('disabled', false);
+                }
+            })
         })
 
         function getDate() {
@@ -157,66 +193,93 @@
         getDate();
     </script>
     <script>
-        var expanded = false;
+        var expanded = false, expanded1 = false, expanded2 = false;
 
         function showCheckboxes() {
-            var checkboxes = document.getElementById("checkboxes");
+            var code_1 = document.getElementById("code_1");
             if (!expanded) {
                 window.addEventListener('click', function (e) {
-                    var div = document.getElementById('div-click');
-                    if (checkboxes.contains(e.target) || div.contains(e.target)) {
-                        $('#div-click').on('click', function () {
+                    var code_1_item = document.getElementById('code_1_item');
+                    if (code_1.contains(e.target) || code_1_item.contains(e.target)) {
+                        $('#code_1_item').on('click', function () {
                             if (!expanded) {
-                                checkboxes.style.display = "block";
+                                code_1.style.display = "block";
                                 expanded = true;
                             } else {
-                                checkboxes.style.display = "none";
+                                code_1.style.display = "none";
                                 expanded = false;
                             }
                         });
                     } else {
-                        checkboxes.style.display = "none";
+                        code_1.style.display = "none";
                         expanded = false;
                     }
                 })
-                checkboxes.style.display = "block";
+                code_1.style.display = "block";
                 expanded = true;
             } else {
-                checkboxes.style.display = "none";
+                code_1.style.display = "none";
                 expanded = false;
             }
         }
-
-        var expanded1 = false;
 
         function showCheckboxes1() {
-            var checkboxes1 = document.getElementById("type_business_checkboxes");
-            if (!expanded) {
+            var code_3 = document.getElementById("code_3");
+            if (!expanded1) {
                 window.addEventListener('click', function (e) {
-                    let div = document.getElementById('type_business_click');
-                    if (checkboxes1.contains(e.target) || div.contains(e.target)) {
-                        $('#type_business_click').on('click', function () {
-                            if (!expanded) {
-                                checkboxes1.style.display = "block";
-                                expanded = true;
+                    let code_3_item = document.getElementById('code_3_item');
+                    if (code_3.contains(e.target) || code_3_item.contains(e.target)) {
+                        $('#code_3_item').on('click', function () {
+                            if (!expanded1) {
+                                code_3.style.display = "block";
+                                expanded1 = true;
                             } else {
-                                checkboxes1.style.display = "none";
-                                expanded = false;
+                                code_3.style.display = "none";
+                                expanded1 = false;
                             }
                         });
                     } else {
-                        checkboxes1.style.display = "none";
-                        expanded = false;
+                        code_3.style.display = "none";
+                        expanded1 = false;
                     }
                 })
-                checkboxes1.style.display = "block";
-                expanded = true;
+                code_3.style.display = "block";
+                expanded1 = true;
             } else {
-                checkboxes1.style.display = "none";
-                expanded = false;
+                code_3.style.display = "none";
+                expanded1 = false;
             }
         }
 
+        function showCheckboxes2() {
+            var code_2 = document.getElementById("code_2");
+            if (!expanded2) {
+                window.addEventListener('click', function (e) {
+                    let code_2_item = document.getElementById('code_2_item');
+                    if (code_2.contains(e.target) || code_2_item.contains(e.target)) {
+                        $('#code_2_item').on('click', function () {
+                            if (!expanded2) {
+                                code_2.style.display = "block";
+                                expanded2 = true;
+                            } else {
+                                code_2.style.display = "none";
+                                expanded2 = false;
+                            }
+                        });
+                    } else {
+                        code_2.style.display = "none";
+                        expanded2 = false;
+                    }
+                })
+                code_2.style.display = "block";
+                expanded2 = true;
+            } else {
+                code_2.style.display = "none";
+                expanded2 = false;
+            }
+        }
+    </script>
+    <script>
         const ID_COUNTRY = 'countries-select'
         const ID_STATE = 'cities-select'
         const ID_CITY = 'provinces-select'
@@ -373,76 +436,6 @@
         }
 
     </script>
-
-    {{--    <script>--}}
-    {{--        $(function () {--}}
-    {{--            "use strict";--}}
-
-    {{--            // Hide URL/FileReader API requirement message in capable browsers:--}}
-    {{--            if (--}}
-    {{--                window.createObjectURL ||--}}
-    {{--                window.URL ||--}}
-    {{--                window.webkitURL ||--}}
-    {{--                window.FileReader--}}
-    {{--            ) {--}}
-    {{--                $(".browser").hide();--}}
-    {{--                $(".preview").children().show();--}}
-    {{--            }--}}
-
-    {{--            function isDataURL(s) {--}}
-    {{--                return !!s.match(isDataURL.regex);--}}
-    {{--            }--}}
-
-    {{--            isDataURL.regex = /^\s*data:([a-z]+\/[a-z]+(;[a-z\-]+\=[a-z\-]+)?)?(;base64)?,[a-z0-9\!\$\&\'\,\(\)\*\+\,\;\=\-\.\_\~\:\@\/\?\%\s]*\s*$/i;--}}
-
-    {{--            function readURL(input) {--}}
-    {{--                if (input.files && input.files[0]) {--}}
-    {{--                    var reader = new FileReader();--}}
-    {{--                    var preview = $(input).data("preview");--}}
-    {{--                    var _invalid = $(input).parent().parent().find(".invalid-file");--}}
-
-    {{--                    reader.onload = function (e) {--}}
-    {{--                        if (isDataURL(e.target.result)) {--}}
-    {{--                            _invalid.hide();--}}
-    {{--                            $("#" + preview).css(--}}
-    {{--                                "background-image",--}}
-    {{--                                "url(" + e.target.result + ")"--}}
-    {{--                            );--}}
-    {{--                            $("#" + preview).hide();--}}
-    {{--                            $("#" + preview).fadeIn(650);--}}
-    {{--                        } else {--}}
-    {{--                            $("#" + preview).hide();--}}
-
-    {{--                            _invalid.html(--}}
-    {{--                                '<div class="alert alert-danger"><strong>Error!</strong> Invalid image file.</div>'--}}
-    {{--                            );--}}
-    {{--                            _invalid.show();--}}
-    {{--                        }--}}
-    {{--                    };--}}
-
-    {{--                    reader.readAsDataURL(input.files[0]);--}}
-    {{--                }--}}
-    {{--            }--}}
-
-    {{--            $(".imageUpload").bind("change", function (e) {--}}
-    {{--                e.preventDefault();--}}
-
-    {{--                readURL(this);--}}
-    {{--            });--}}
-    {{--        });--}}
-
-    {{--    </script>--}}
-    {{--    <script>--}}
-    {{--        window.onbeforeunload = function (e) {--}}
-    {{--            var y = window.event.clientY;--}}
-    {{--            if (y < 0) {--}}
-    {{--                return 'Window closed';--}}
-    {{--            }--}}
-    {{--            else {--}}
-    {{--                return 'Window refreshed';--}}
-    {{--            }--}}
-    {{--        };--}}
-    {{--    </script>--}}
 @endsection
 
 
