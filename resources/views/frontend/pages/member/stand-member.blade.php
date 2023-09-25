@@ -725,11 +725,6 @@
             localStorage.setItem('listID', listItem);
         }
 
-        $(document).ready(function () {
-            let id = {{$firstProduct->id}};
-            renderProduct(id);
-        })
-
         function renderProduct(product) {
             let url = '{{ route('detail_product.member.attribute', ['id' => ':id']) }}';
             url = url.replace(':id', product);
