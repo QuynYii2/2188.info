@@ -224,7 +224,7 @@
                                         <hr>
                                     @endif
                                     <button class="signOut" href="#"
-                                            onclick="logout()">{{ __('home.Sign Out') }}</button>
+                                            onclick="logout(`{{ route('logout') }}`,`{{ csrf_token() }}`)">{{ __('home.Sign Out') }}</button>
                                 </div>
                                 <div class="hover-list">
                                     <a href="{{route('profile.show')}}" class="none_decoration">
@@ -314,7 +314,7 @@
                                         <a href="{{route('chat.message.show')}}">{{ __('home.Message') }}</a>
                                     </div>
 
-                                    <div class="drop-item -hand-pointer" onclick="logout()">
+                                    <div class="drop-item -hand-pointer" onclick="logout(`{{ route('logout') }}`,`{{ csrf_token() }}`)">
                                         <button>{{ __('home.Log out') }}</button>
                                     </div>
                                 </div>
@@ -1118,15 +1118,6 @@
             </div>
         </div>
     </div>
-    {{--    <div class="position-relative" id="popup-alert">--}}
-    {{--        <div class="col-md-2 position-fixed" style="z-index: 100; top: 0">--}}
-    {{--            <div class="alert">--}}
-    {{--                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>--}}
-    {{--                <strong>Hello world!</strong> <a class="text-decoration-none text-white"--}}
-    {{--                                                 href="{{route('promotions.index')}}">Review now</a>.--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
 </header>
 
 <div class="modal fade" id="modal-flag-header" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1275,80 +1266,9 @@
                 @endif
             @endif
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{ __('home.Close') }}</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}</button>
             </div>
         </div>
     </div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('.categorySearch').on('click', function () {
-            let id = $(this).data('id');
-            console.log(id);
-            $('#category_search').val(id);
-        })
-    })
-
-    // Hàm logout
-    function logout() {
-        {{--let productIDs = localStorage.getItem('productIDs');--}}
-
-        {{--$.ajax({--}}
-        {{--    url: '/product-viewed',--}}
-        {{--    method: 'POST',--}}
-        {{--    data: {--}}
-        {{--        productIds: productIDs,--}}
-        {{--        _token: '{{ csrf_token() }}'--}}
-        {{--    },--}}
-        {{--    success: function (response) {--}}
-        {{--        localStorage.clear();--}}
-        {{--        console.log(response);--}}
-        {{--    },--}}
-        {{--    error: function (response) {--}}
-        {{--        console.log(response)--}}
-        {{--    }--}}
-        {{--});--}}
-
-        // Tạo một form
-        var form = document.createElement('form');
-
-        // Đặt thuộc tính action và method cho form
-        form.action = "{{ route('logout') }}";
-        form.method = "POST";
-
-        // Tạo một input hidden để chứa CSRF token
-        var csrfTokenInput = document.createElement('input');
-        csrfTokenInput.type = "hidden";
-        csrfTokenInput.name = "_token";
-        csrfTokenInput.value = "{{ csrf_token() }}";
-
-        // Thêm input hidden vào form
-        form.appendChild(csrfTokenInput);
-
-        // Thêm form vào body
-        document.body.appendChild(form);
-
-        // Gửi form để thực hiện logout
-        form.submit();
-    }
-
-    {{--function showAlert(role = 2) {--}}
-    {{--    event.preventDefault();--}}
-    {{--    switch (role) {--}}
-    {{--        case 1:--}}
-    {{--            if (confirm('Bạn phải nâng cấp quyền để thực hiện thao tác này.')) {--}}
-    {{--                return window.location.href = '{{ route('process.register.member') }}'--}}
-    {{--            }--}}
-    {{--            break;--}}
-    {{--        case 2:--}}
-    {{--            if (confirm('Bạn phải đăng nhập để thực hiện thao tác này.')) {--}}
-    {{--                return window.location.href = '{{ route('login') }}'--}}
-    {{--            }--}}
-    {{--            break;--}}
-    {{--    }--}}
-
-    {{--}--}}
-</script>
 

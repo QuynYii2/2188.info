@@ -44,9 +44,9 @@ return [
     'discount code' => '할인 코드',
     'my coin management' => '나의 코인 관리',
     'my bookcare' => '나의 bookcare',
-    'voucher management' => '바우처 관리',
-    'product multilviews' => '제품 멀티뷰',
-    'category interest' => '관심있는 카테고리',
+    'voucher management'=>'바우처 관리',
+    'product multilviews'=>'제품 멀티뷰',
+    'category interest'=>'관심있는 카테고리',
 
 
     //thông tin cá nhân, họ và tên, nickname, ngày sinh, giới tính, quốc tịch, số điện thoại và email, số điện thoại, địa chỉ email, bảo mật, đổi mật khẩu, thiết lập mã pin, liên kết mạng xã hội, lưu thay đổi, địa chỉ
@@ -80,10 +80,10 @@ return [
     'shipping' => '배송 중',
     'delivered' => '배달 완료',
     'canceled' => '취소됨',
-    'all' => '전체',
+    'all' => '모두',
     'Cancel' => '취소',
     'Back' => '돌아가기',
-    'OrderID' => '주문 ID',
+    'OrderID' =>'주문 ID',
     'in progress' => '진행 중',
     'done' => '완료',
     'add address' => '주소 추가',
@@ -105,7 +105,7 @@ return [
     'international logistics co' => '(주)국제종합물류',
     'online shopping center' => '온라인 쇼핑 센터',
     'settled' => '입주',
-    'sales' => '할인',
+    'sales' => 'SALE',
     'new' => 'NEW',
     'management' => '관리',
     'overseas customer development' => '해외 고객 개발',
@@ -213,13 +213,6 @@ return [
     'purchase' => '구매',
     'all_categories' => '모든 카테고리',
 
-    'property' => '속성',
-    'commit member' => '회원약관동의',
-    'commit member logistic' => '물류회원 약관동의',
-    'commit member trust' => '성실회원 약관동의',
-    'commit member buyer' => '구매회원 약관동의',
-    'Sign up company' => '회사등록',
-    'Sign up company information' => '회사자료등록',
 
     'Cart' => '장바구니',
     'Product Name' => '상품명',
@@ -261,24 +254,22 @@ return [
     'payment management' => '결제 관리',
     'account manage' => '계정 관리',
     'shop by categories' => '카테고리별로 쇼핑하기',
-    'Lookbook' => '매뉴얼',
-    'Shipping & Returns' => '배송 및 반품',
-    'Contact Us' => '연락처',
-    'Blog' => '블로그',
-    'Gift Cards' => '기프트 카드',
-    'Wish Lists' => '위시리스트',
-    'Help' => '지원센터',
-    'upgrade' => '업그레이드',
-    'Seller channel' => '판매자 통계',
-    'Shop' => '상점',
-    'Log out' => '로그아웃',
-    'Category' => '카테고리',
-    'About Us' => '회사 소개',
-    'Buy Superkart' => '쇼핑',
-    'Theme FAQs' => '자주 묻는 질문',
-    'SHOP BY CATEGORIES' => '카테고리별 쇼핑',
-    '해외 B2B 도매상 명단' => '해외 B2B 도매상 명단',
-    '상품 전시장' => '상품 전시장',
+    'Lookbook'=> '매뉴얼',
+    'Shipping & Returns'=>'배송 및 반품',
+    'Contact Us'=>'연락처',
+    'Blog'=>'블로그',
+    'Gift Cards'=>'기프트 카드',
+    'Wish Lists'=>'위시리스트',
+    'Help'=>'지원센터',
+    'upgrade'=>'업그레이드',
+    'Seller channel'=>'판매자 통계',
+    'Shop'=>'상점',
+    'Log out'=>'로그아웃',
+    'Category'=>'카테고리',
+    'About Us'=>'회사 소개',
+    'Buy Superkart'=>'쇼핑',
+    'Theme FAQs'=>'자주 묻는 질문',
+    'SHOP BY CATEGORIES'=>'카테고리별 쇼핑',
     'New Products' => '신제품',
     'Hot Deals' => 'Hot Deals',
     'Top Brands' => 'TOP 브랜드',
@@ -318,7 +309,7 @@ return [
     'Price: Descending' => '가격: 내림차순',
     'Jump to' => '이동',
     'Electronics' => '전자제품',
-    'Home' => '홈',
+    'Home' => '홈피',
     'Min' => '최소',
     'Max' => '최대',
     'Related Products' => '관련 상품',
@@ -326,14 +317,14 @@ return [
     'Customers Also Viewed' => '고객도 조회',
     'remaining' => '잔고',
     'Household Plants' => '가정용 식물',
-    'Bonsai' => '분재',
+    'Bonsai' => '화분',
     'Quick view' => '퀵뷰',
     'LOGIN' => '로그인',
     'If you are already registered, please log in' => '이미 등록한 경우 로그인하십시오',
     'Email Address' => '이메일 주소:',
     'Password' => '비밀번호',
     'Sign In' => '로그인',
-    'Create your account and enjoy a new shopping experience' => '회원가입 하시고 새로운 쇼핑 경험을 즐기십시오',
+    'Create your account and enjoy a new shopping experience' => '회원가입 하시고 새로운 쇼핑 경험을 즐겨보십시오',
     'Create A New Account' => '새 계정 생성',
     'Sign up for membership' => '회원가입',
     'Sign in' => '로그인',
@@ -343,10 +334,10 @@ return [
     'POWER VENDOR' => '파워벤더회원',
     'PRODUCTION' => '생산회원',
     'POWER PRODUCTION ' => '파워생산회원',
-    'Member' => '회원등급',
+    'Member' =>'회원',
     'Member booth' => '회원 상점 ',
     'Booth' => '상품 전시장',
-    'Partner List' => '지정거래처',
+    'Partner List' => '지정 거래처',
     'Message received' => '받은 문서',
     'Message sent' => '보낸 문서',
     'Purchase' => '구매대행',
@@ -358,7 +349,7 @@ return [
     'Specified products' => '지정 상품',
     'Watch product videos' => '제품 동영상 보기',
     'Order conditions' => '주문 조건',
-    'Ngày dự kiến xuất kho' => '예상 출고 날짜',
+    'Ngày dự kiến xuất kho' => '출고예정일',
     'Unit price' => '단가',
     'ngày kể từ ngày đặt hàng' => '주문일로부터 ...일',
     'đơn giá phía trên là điều kiện FOB/TT' => '위 단가는 FOB/TT 조건입니다.',
@@ -391,20 +382,20 @@ return [
     'View Cart' => '장바구니 보기',
     'Grand Total' => '총계',
     'Xem chi tiết' => '자세히 보기',
-    'Sign up now' => '회원가입',
+    'Sign up now' => '지금 회원가입 하십시오',
     'Product Management' => '제품 관리',
     'Agree to the terms and conditions of the member' => '회원약관에 동의합니다',
     'Check the rules you must agree to below' => '아래에서 동의해야 하는 규칙을 확인하세요',
     'Trust' => '동의합니다',
     'Agree to the terms and conditions that we provide' => '우리가 제공하는 이용 약관에 동의합니다',
     'Permission to collect information' => '정보수집에 대한 허가',
-    'Agree all' => '전체 동의합니다',
+    'Agree all' => '모두 동의합니다',
     'Main function only for members' => '회원만을 위한 주요 기능',
     'Join member' => '회원가입',
     'Sign up for information' => '정보를 얻으려면 가입하십시오',
-    'Company Name' => '상호',
-    'Code Business' => '사업자등록번호',
-    'Select the applicable category' => '해당 카테고리를 선택하십시오',
+    'Company Name' => '회사 이름',
+    'Code Business' => '사업자 등록번호',
+    'Select the applicable category' => '해당 카테고리를 선택하세요.',
     'Your browser does not support' => '귀하의 브라우저는 지원하지 않습니다',
     'Select ward/commune' => '구/면을 선택하세요',
     'Select district/district' => '지역 선택',
@@ -414,7 +405,6 @@ return [
     'Staff' => '직원',
     'SNS Account' => 'SNS 계정',
     'Other' => '기타',
-    'Register registrant information for members' => '회원등록정보를 등록합니다.',
     'Confirm' => '확인',
     'information verification' => '정보 확인',
     'Verify Code' => '확인 코드',
@@ -439,9 +429,9 @@ return [
     'Please upgrade your membership to use' => '회원등업후 이용 가능합니다.',
     'Close' => '닫기',
     'Create your account and enjoy a new shopping experience.' => '계정을 만들고 새로운 쇼핑 경험을 즐겨보십시오.',
-    'Follow' => '지정거래처로 등록',
+    'Follow' => '팔로우',
     // ban dich moi
-    //'Membership Level' => '회원 등급',
+    'Membership Level' => '회원 등급',
     'Customer code' => '고객번호',
     'Nation' => '국가',
     'Area' => '지역',
@@ -451,7 +441,7 @@ return [
     'Unfollow' => '지정거래처 등록 취소',
     'Online 4 minutes ago' => '4분 전 온라인',
     'chat' => '채팅',
-    '4.9 (387k reviews)' => '4.9 (후기의 회수: 387k)',
+    '4.9 (387k reviews)' => '4.9 (후기의 횟수: 387k)',
     'Chat response rate' => '채팅 응답률',
     '99% (within hours)' => '99% (몇 시간 내에)',
     'join' => '참가',
@@ -503,11 +493,11 @@ return [
     'Sign up to upgrade' => '회원등업',
     'List of customers' => '지정 거래처',
     'Product details' => '제품 내역',
-    'Reset select' => '원태 복귀',
+    'Reset select' => '상태 초기화',
     'Wholesale price list' => '도매가격',
     'Price list' => '가격표',
     'Month' => '월',
-    '19 customers are viewing this product' => ' 조회수.',
+    '19 customers are viewing this product' => '19명의 고객이 이 제품을 보고 있습니다.',
     'The minimum order quantity is 2 pair' => '최소 주문 수량은 두 켤레입니다.',
     'pair' => '켤레',
     'Lead time' => '리드타임',
@@ -540,6 +530,7 @@ return [
     'GIFT CERTIFICATE' => '상품권',
     'SHIPPING' => '배송 중',
     'Country' => '국가 선택',
+    'VietNam' => '베트남',
     'TrungQuoc' => '중국',
     'Han Quoc' => '한국',
     'State/Province' => 'State/Province',
@@ -567,6 +558,7 @@ return [
     'received-by' => '받은 사람: ',
     'posted-by' => '보낸 사람: ',
     'time' => '시간: ',
+
     'from' => '~에서',
 
     'edit-comment' => '편집',
@@ -610,14 +602,13 @@ return [
     // Chuc vu
     'Position company' => '직무',
     'Responsibility company' => '직책',
-    'Name English' => '성명 (영문)',
-    'Name Korea' => '성명 (자국어)',
+    'Name English' => '영문',
+    'Name Korea' => '자국어',
     'ID' => '아이디',
     'Congratulations, you have registered as a member' => '회원으로 가입 되신 것을 축하합니다',
     'Representative member' => '대표회원',
     'Registered member' => '등록회원',
     'Log in now' => '지금 로그인하십시오',
-    'Employee registration' => '직원 등록',
     'Registration order' => '등록순서',
     'List of registered managers' => '등록된 관리자 목록',
     'Sign up for more' => '더 많이 구독하세요',
@@ -710,7 +701,7 @@ return [
     'Quản lí thuộc tính con' => '하위 속성 관리',
     'Kênh Marketing' => '마케팅 채널',
     'Quản Lí Marketing' => '마케팅 관리',
-    'Setup Marketing' =>'마케팅 관리',
+    'Setup Marketing' => '마케팅 관리',
     'Mã Giảm Giá' => '할인코드',
     'Tạo Mã Giảm Giá' => '할인코드 생성',
     'Danh sách khuyến mãi' => '프로모션',
@@ -739,8 +730,8 @@ return [
     'Thiết Lập Shop' => '상점 설정',
     'Cấu hình chung' => '기본 설정',
     'Kênh người bán' => '판매자 페이지',
-    'Xem trang chủ' =>'홈으로 돌아가기',
-    'Detail Đơn hàng' =>'주문 보기',
+    'Xem trang chủ' => '홈으로 돌아가기',
+    'Detail Đơn hàng' => '주문 보기',
     'Đơn hàng' => '주문',
     'Mã sản phẩm' => '상품 코드',
     'Mô tả ngắn' => '내용',
@@ -786,7 +777,7 @@ return [
     'choosing sort views' => '정렬 기준 선택',
     'From low to high' => '낮은 것부터 높은 것까지',
     'From high to low' => '높은 것에서 낮은 것까지',
-    'Reset' =>'초기화',
+    'Reset' => '초기화',
     'sellerName' => '판매자 이름 ',
     'views' => '회',
     'location' => '위치',
@@ -816,7 +807,7 @@ return [
     'Danh sách setup' => '리스트',
     'Không có rank nào được tạo' => '생성된 랭크가 없습니다',
     'Thêm mới mã giảm giá' => '할인코드 생성',
-    'Chọn rank áp dụng'=>'적용 상품',
+    'Chọn rank áp dụng' => '적용 상품',
     'danh sách sale' => '프로모션',
     'Áp dụng' => '적용',
     'Xoá rank' => '재설정',
@@ -826,12 +817,10 @@ return [
     'seller name' => '판매자 이름',
     'Quốc gia' => '국가',
     'All' => '전체 보기',
-    'VietNam' => '베트남',
     'Korea' => '한국',
     'China' => '중국',
     'Japan' => '일본',
     'Excel' => '엑셀',
-    'search' => '검색',
     'Xếp hạng' => 'Rank',
     'Ngày' => '날짜',
     'Tên người bán' => '판매자',
@@ -845,7 +834,7 @@ return [
     'Thị trường chính' => '주요 시장',
     'Đối tác chuỗi cung ứng' => '공급 파트너',
     'Các loại khách hàng chính' => '주요 고객 유형',
-    'Phương pháp kiểm tra sản phẩm' =>'상품 확인',
+    'Phương pháp kiểm tra sản phẩm' => '상품 확인',
     'Nhân viên kiểm tra' => '확인자',
     'Ngành sản phẩm đăng ký' => '등록된 품목',
     'Thông tin công ty' => '회사 정보',
@@ -861,20 +850,19 @@ return [
     'Product' => '제품',
     'danh sách marketing' => '특별 전시장 관리',
     'Thông tin thanh toán' => '수량',
-    'Số điện thoại' =>'전화번호',
+    'Số điện thoại' => '전화번호',
     'Trang Admin' => '관리자 페이지',
     'Vui lòng thanh toán trước khi tạo' => '결제를 먼저 하시기 바랍니다',
     'Tên tài khoản' => '계좌주',
     'Tên ngân hàng' => '은행명',
     'Số tài khoản' => '은행계좌번호',
     'Số tiền' => '금액',
-    'Nhập mã OTP' => 'OTP 코드',
     'Không có configs nào được tạo' => '전화번호',
     'Thanh toán' => '결제',
     'Qty Products' => '수량',
     'atc' => 'atc',
     'báo cáo thống kê' => '통계 정보',
-    'toàn bộ thống kê chi tiết' =>'상세 보기',
+    'toàn bộ thống kê chi tiết' => '상세 보기',
     'lưu lượng người truy cập' => '접속자 수량',
     'Tổng số doanh thu' => '매출 관리',
     'tỉ lệ khách hàng' => '고객 비율',
@@ -883,7 +871,7 @@ return [
     'phân tích bán hàng' => '판매분석',
     'phân tích bán hàng chi tiết' => '상세 보기',
     'lượt truy cập' => '접근량',
-    'Vs hôm qua' =>'어제와 대비',
+    'Vs hôm qua' => '어제와 대비',
     'Lượt xem' => '매출',
     'tỷ lệ chuyển đổi' => '전환율',
     'Danh sách cần làm' => '할 일 목록',
@@ -922,7 +910,7 @@ return [
     'Detail Order' => '세부사항 순서',
     'Edit attribute' => '속성 설정',
     'Terms' => '이용약관',
-    'Đơn huỷ' =>'취소된 주문',
+    'Đơn huỷ' => '취소된 주문',
     'Bạn có chắc chắn muốn xoá thuộc tính' => '속성을 지우시겠습니까?',
     'Nếu xoá bạn sẽ không thể không thể tìm thấy nó! Chúng tôi sẽ không chịu trách nhiệm cho việc này' => '영원히 지우게 될 것입니다.  저희가 이 행동에 대해서 책임을 지지 않겠습니다',
     'danh sách mã giảm giá' => '나의 할인코드',
@@ -931,7 +919,6 @@ return [
     'assign to' => '적용 대상',
     'Nhập Họ tên' => '입력하십시오',
     'Nhập biệt danh' => '입력하십시오',
-    'Nhập số điện thoại' => '입력하십시오',
     'Nhập email' => '입력하십시오',
     'Nhập id mxh' => '입력하십시오',
     'Nhập mật khẩu' => '입력하십시오',
@@ -961,19 +948,11 @@ return [
     'nhập số thứ tự' => '일련번호를 입력하세요',
     'Nhập tên setup marketing' => '마케팅 설정 이름을 입력하세요',
     'Nhập  tài khoản' => '계좌번호를 입력하세요',
-    'Nhập tên ngân hàng' =>'은행명을 입력하세요',
-    'Nhập số điện thoại' =>'전화번호를 입력하세요',
+    'Nhập tên ngân hàng' => '은행명을 입력하세요',
+    'Nhập số điện thoại' => '전화번호를 입력하세요',
     'Nhập mã OTP' => 'OTP 코드를 입력하세요',
     'Nhập tên khuyến mãi' => '프로모션 이름을 입력하세요',
-    'Nhập tên khuyến mãi' => '프로모션 이름을 입력하세요',
     'giảm giá' => '할인',
-
-
-
-
-
-
-
 
     'Please enter express delivery or receiving address' => ' 상품을 발송하거나 수취할수 있는 주소를 등록하세요',
     'Allow receiving notifications via SMS message' => '를 수신합니다',
@@ -1011,11 +990,55 @@ return [
     'retail' => '소매업',
     // thuong mai dien tu
     'ecommerce' => '전자상거래',
-    'home shopping' =>'홈쇼핑업',
+    'home shopping' => '홈쇼핑업',
     // thuong mai
-    'commerce' =>'무역업',
+    'commerce' => '무역업',
     // lap rap
     'assemble' => '조립',
     // Gia cong
     'machining' => '가공',
+    'English only' => '영문',
+    //
+    'Update information register member' => '등록인 정보',
+    'Update information represent member' => '대표자 등록정보'
 ];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

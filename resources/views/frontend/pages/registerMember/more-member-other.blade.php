@@ -92,8 +92,12 @@
                 <label for="giay_phep_kinh_doanh">{{ __('home.giay_phep_kinh_doanh') }}</label>
             </td>
             <td>
-                <input type="file" class="form-control" id="giay_phep_kinh_doanh"
+                <input type="file" class="form-control" id="giay_phep_kinh_doanh" accept="image/*"
                        name="giay_phep_kinh_doanh" {{ $exitsMember ? '' : 'required' }}">
+                @if($exitsMember)
+                    <img src="{{ asset('storage/'.$exitsMember->giay_phep_kinh_doanh) }}" alt="" width="60px"
+                         height="60px">
+                @endif
             </td>
         </tr>
         <tr>
@@ -172,8 +176,16 @@
             </td>
             <td>
                 <select id="type_business" name="type_business" class="form-control">
-                    <option value="distributive">{{ __('home.distributive') }}</option>
-                    <option value="manufacture">{{ __('home.manufacture') }}</option>
+                    <option @if($exitsMember)
+                                @if($exitsMember->type_business == 'distributive')
+                                    selected
+                            @endif
+                            @endif value="distributive">{{ __('home.distributive') }}</option>
+                    <option @if($exitsMember)
+                                @if($exitsMember->type_business == 'manufacture')
+                                    selected
+                            @endif
+                            @endif value="manufacture">{{ __('home.manufacture') }}</option>
                 </select>
             </td>
             <td>
@@ -181,19 +193,50 @@
             </td>
             <td>
                 <select id="code_business" name="code_business" class="form-control">
-                    <option class="distributive" value="wholesale">{{ __('home.wholesale') }}</option>
-                    <option class="distributive" value="retail">{{ __('home.retail') }}</option>
-                    <option class="distributive" value="ecommerce">{{ __('home.ecommerce') }}</option>
-                    <option class="distributive" value="home shopping">{{ __('home.home shopping') }}</option>
-                    <option class="distributive" value="commerce">{{ __('home.commerce') }}</option>
+                    <option @if($exitsMember)
+                                @if($exitsMember->code_business == 'wholesale')
+                                    selected
+                            @endif
+                            @endif class="distributive" value="wholesale">{{ __('home.wholesale') }}</option>
+                    <option @if($exitsMember)
+                                @if($exitsMember->code_business == 'retail')
+                                    selected
+                            @endif
+                            @endif class="distributive" value="retail">{{ __('home.retail') }}</option>
+                    <option @if($exitsMember)
+                                @if($exitsMember->code_business == 'ecommerce')
+                                    selected
+                            @endif
+                            @endif class="distributive" value="ecommerce">{{ __('home.ecommerce') }}</option>
+                    <option @if($exitsMember)
+                                @if($exitsMember->code_business == 'home shopping')
+                                    selected
+                            @endif
+                            @endif class="distributive" value="home shopping">{{ __('home.home shopping') }}</option>
+                    <option @if($exitsMember)
+                                @if($exitsMember->code_business == 'commerce')
+                                    selected
+                            @endif
+                            @endif class="distributive" value="commerce">{{ __('home.commerce') }}</option>
 
-                    <option class="manufacture d-none" value="manufacture">{{ __('home.manufacture') }}</option>
-                    <option class="manufacture d-none" value="assemble">{{ __('home.assemble') }}</option>
-                    <option class="manufacture d-none" value="machining">{{ __('home.machining') }}</option>
+                    <option @if($exitsMember)
+                                @if($exitsMember->code_business == 'manufacture')
+                                    selected
+                            @endif
+                            @endif class="manufacture d-none" value="manufacture">{{ __('home.manufacture') }}</option>
+                    <option @if($exitsMember)
+                                @if($exitsMember->code_business == 'assemble')
+                                    selected
+                            @endif
+                            @endif class="manufacture d-none" value="assemble">{{ __('home.assemble') }}</option>
+                    <option @if($exitsMember)
+                                @if($exitsMember->code_business == 'machining')
+                                    selected
+                            @endif
+                            @endif class="manufacture d-none" value="machining">{{ __('home.machining') }}</option>
                 </select>
             </td>
         </tr>
-
         <tr>
             <th rowspan="2">
                 <label>{{ __('home.PLU') }}</label>
@@ -211,39 +254,39 @@
                     </div>
                     @if($exitsMember)
                         @php
-                            $listCategory = $exitsMember->type_business;
+                            $listCategory = $exitsMember->category_id;
                             $arrayCategory = explode(',', $listCategory);
                         @endphp
                         <div id="code_1" class="mt-1 checkboxes">
                             @foreach($categories_no_parent as $category)
-                                    @foreach($arrayCategory as $item)
-                                        @php
-                                            $isChecked = false;
-                                            if ($category->id == $item){
-                                                $isChecked = true;
-                                                break;
-                                            }
-                                        @endphp
-                                    @endforeach
-                                    <label class="ml-2 d-flex align-items-center" for="code_1-{{$category->id}}">
-                                        <input type="checkbox" id="code_1-{{$category->id}}"
-                                               name="code_1[]"
-                                               value="{{ ($category->id) }}"
-                                               {{ $isChecked ? 'checked' : '' }}
-                                               class="inputCheckboxCategory mr-2 p-3"/>
-                                        <span class="labelCheckboxCategory">
+                                @foreach($arrayCategory as $item)
+                                    @php
+                                        $isChecked = false;
+                                        if ($category->id == $item){
+                                            $isChecked = true;
+                                            break;
+                                        }
+                                    @endphp
+                                @endforeach
+                                <label class="ml-2 d-flex align-items-center" for="code_1-{{$category->id}}">
+                                    <input type="checkbox" id="code_1-{{$category->id}}"
+                                           name="code_1[]"
+                                           value="{{ ($category->id) }}"
+                                           {{ $isChecked ? 'checked' : '' }}
+                                           class="inputCheckboxCategory mr-2 p-3"/>
+                                    <span class="labelCheckboxCategory">
                                                             @if(locationHelper() == 'kr')
-                                                <div class="item-text">{{ $category->name_ko }}</div>
-                                            @elseif(locationHelper() == 'cn')
-                                                <div class="item-text">{{$category->name_zh}}</div>
-                                            @elseif(locationHelper() == 'jp')
-                                                <div class="item-text">{{$category->name_ja}}</div>
-                                            @elseif(locationHelper() == 'vi')
-                                                <div class="item-text">{{$category->name_vi}}</div>
-                                            @else
-                                                <div class="item-text">{{$category->name_en}}</div>
-                                            @endif</span>
-                                    </label>
+                                            <div class="item-text">{{ $category->name_ko }}</div>
+                                        @elseif(locationHelper() == 'cn')
+                                            <div class="item-text">{{$category->name_zh}}</div>
+                                        @elseif(locationHelper() == 'jp')
+                                            <div class="item-text">{{$category->name_ja}}</div>
+                                        @elseif(locationHelper() == 'vi')
+                                            <div class="item-text">{{$category->name_vi}}</div>
+                                        @else
+                                            <div class="item-text">{{$category->name_en}}</div>
+                                        @endif</span>
+                                </label>
                             @endforeach
                         </div>
                     @else
@@ -286,7 +329,7 @@
                     </div>
                     @if($exitsMember)
                         @php
-                            $listCategory = $exitsMember->code_business;
+                            $listCategory = $exitsMember->category_id;
                             $arrayCategory = explode(',', $listCategory);
                         @endphp
                         <div id="code_3" class="mt-1 checkboxes">
@@ -363,7 +406,7 @@
                     </div>
                     @if($exitsMember)
                         @php
-                            $listCategory = $exitsMember->code_business;
+                            $listCategory = $exitsMember->category_id;
                             $arrayCategory = explode(',', $listCategory);
                         @endphp
                         <div id="code_2" class="mt-1 checkboxes">
@@ -445,10 +488,12 @@
             $('#btnSubmitFormRegister').trigger('click');
         })
 
-        $('#type_business').on('change', function () {
+        let type_business = $('#type_business');
+        let manufacture = $('.manufacture');
+        let distributive = $('.distributive');
+
+        type_business.on('change', function () {
             let value = $(this).val();
-            let manufacture = $('.manufacture');
-            let distributive = $('.distributive');
             if (value == 'distributive') {
                 manufacture.addClass('d-none');
                 distributive.removeClass('d-none');
@@ -457,6 +502,17 @@
                 manufacture.removeClass('d-none');
             }
         })
+
+        let item = type_business.val();
+        if (item == 'distributive') {
+            manufacture.addClass('d-none');
+            distributive.removeClass('d-none');
+        } else {
+            distributive.addClass('d-none');
+            manufacture.removeClass('d-none');
+        }
+
+
     })
 </script>
 

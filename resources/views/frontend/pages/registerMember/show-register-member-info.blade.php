@@ -136,7 +136,6 @@
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
     <div class="container">
-        <h3 class="text-center" style="font-size: 36px">{{ __('home.Sign up company') }}</h3>
         <div class="start-page mb-3">
             <div class="background container pt-3 justify-content-center pb-3">
                 <div class="form-title text-center solid-3x pt-2 pb-3 bg-member-green">

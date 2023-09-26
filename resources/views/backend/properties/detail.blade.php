@@ -26,7 +26,7 @@
                         </td>
                     </tr>
                     <tr class="form-field term-slug-wrap">
-                        <th scope="row"><label for="property_slug">{{ __('home.Đường dẫn) }}</label></th>
+                        <th scope="row"><label for="property_slug">{{ __('home.Đường dẫn') }}</label></th>
                         <td><input name="property_slug" id="property_slug" type="text" value="{{$property->slug}}"
                                    aria-describedby="slug-description">
                         </td>

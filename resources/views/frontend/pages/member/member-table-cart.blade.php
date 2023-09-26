@@ -14,18 +14,20 @@
             <tr>
                 <th scope="row">{{$loop->index + 1}}</th>
                 <td>
-                    @if(locationHelper() == 'kr')
-                        {{$cart->product->name_ko}}
-                    @elseif(locationHelper() == 'cn')
-                        {{$cart->product->name_zh}}
-                    @elseif(locationHelper() == 'jp')
-                        {{$cart->product->name_ja}}
-                    @elseif(locationHelper() == 'vi')
-                        {{$cart->product->name_vi}}
-                    @else
-                        {{$cart->product->name_en}}
-                    @endif
-                    <p class="small text-secondary">
+                    <div class="stand-text-secondary">
+                        @if(locationHelper() == 'kr')
+                            {{$cart->product->name_ko}}
+                        @elseif(locationHelper() == 'cn')
+                            {{$cart->product->name_zh}}
+                        @elseif(locationHelper() == 'jp')
+                            {{$cart->product->name_ja}}
+                        @elseif(locationHelper() == 'vi')
+                            {{$cart->product->name_vi}}
+                        @else
+                            {{$cart->product->name_en}}
+                        @endif
+                    </div>
+                    <div class="small text-secondary">
                         @php
                             $arrayValues = explode(',', $cart->values);
                         @endphp
@@ -62,7 +64,7 @@
                                     ,
                             </span>
                         @endforeach
-                    </p>
+                    </div>
                 </td>
                 <td class="quantity col-md-1" style="vertical-align: middle;">
                     <form>

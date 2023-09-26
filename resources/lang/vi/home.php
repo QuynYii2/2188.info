@@ -949,4 +949,8 @@ return [
     'assemble' => 'Lắp ráp',
     // Gia cong
     'machining' => 'Gia công',
+
+    //
+    'Update information register member' => 'Thông tin người đăng ký',
+    'Update information represent member' => 'Thông tin người đại diện'
 ];

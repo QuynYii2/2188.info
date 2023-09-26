@@ -402,19 +402,6 @@
             </div>
         </section>
         @include('frontend.pages.modal-products')
-        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-
-        <script>
-            let side_cate = document.getElementById('side-cate');
-            let carousel_1 = document.getElementById('carousel__1');
-            let carousel_2 = document.getElementById('carousel__2');
-
-            let h_car_1 = carousel_1.offsetHeight;
-            let h_car_2 = carousel_2.offsetHeight;
-
-            let heightB = h_car_1 !== 0 ? h_car_1 : h_car_2;
-            side_cate.style.height = heightB + 'px';
-        </script>
         <script>
             $(document).ready(function ($) {
                 $(".card-bottom--right").click(function () {
