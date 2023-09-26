@@ -132,6 +132,11 @@ Route::get(
     '/congratulation-register-member/{member}',
     [RegisterMemberController::class, 'congratulationRegisterMember']
 )->name('show.register.member.congratulation');
+
+Route::get(
+    '/congratulation-register-member-logistic/{member}',
+    [RegisterMemberController::class, 'congratulationRegisterMemberLogistic']
+)->name('show.register.member.logistic.congratulation');
 //Route::get('/register-member/{registerMember}', [RegisterMemberController::class, 'showRegisterMember'])->name('show.register.member');
 Route::post(
     '/register-member-buyer',
@@ -321,4 +326,9 @@ Route::group(['prefix' => 'seller', 'middleware' => 'role.seller-or-admin'], fun
 // Buyer
 Route::group(['prefix' => 'buyer', 'middleware' => 'role.buyer'], function () {
     require_once __DIR__ . '/buyer.php';
+});
+
+//Test
+Route::get('/test', function () {
+   return view('backend.products.demo');
 });
