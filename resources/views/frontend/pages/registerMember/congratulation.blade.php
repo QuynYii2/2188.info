@@ -20,9 +20,18 @@
                             <li>
                                 @php
                                     $permission = \App\Models\Permission::find($permissionID);
-                                    $ld = new \App\Http\Controllers\TranslateController();
                                 @endphp
-                                {{ $ld->translateText($permission->name, locationPermissionHelper()) }}
+                                @if(locationHelper() == 'kr')
+                                    {{ ($permission->lang_kr) }}
+                                @elseif(locationHelper() == 'cn')
+                                    {{ ($permission->lang_cn) }}
+                                @elseif(locationHelper() == 'jp')
+                                    {{ ($permission->lang_jp) }}
+                                @elseif(locationHelper() == 'vi')
+                                    {{ ($permission->name) }}
+                                @else
+                                    {{ ($permission->lang_en) }}
+                                @endif
                             </li>
                         @endforeach
                     @endif
