@@ -63,9 +63,4 @@
         </div>
         <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
     </div>
-
-    <script>
-  
-    </script>
-
 @endsection

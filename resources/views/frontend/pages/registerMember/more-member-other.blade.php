@@ -237,7 +237,6 @@
                 </select>
             </td>
         </tr>
-
         <tr>
             <th rowspan="2">
                 <label>{{ __('home.PLU') }}</label>
@@ -512,6 +511,8 @@
             distributive.addClass('d-none');
             manufacture.removeClass('d-none');
         }
+
+
     })
 </script>
 

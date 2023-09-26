@@ -29,7 +29,7 @@
                             <label for="position">2. {{ __('home.Registered staff') }}</label>
                         </th>
                         <td>
-                            <a href="{{route('show.register.member.congratulation', $member->id)}}"
+                            <a href="{{route('show.register.member.ship', $member->id)}}"
                                class="btn btn-primary" style="font-size: 36px; font-weight: 600">
                                 {{ __('home.Confirm') }}
                             </a>

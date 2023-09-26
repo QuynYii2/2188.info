@@ -304,7 +304,7 @@
                         </div>
                         <div id="renderInputAttribute">
                         </div>
-                        <a id="btnSaveAttribute" class="btn btn-success mb-1 mt-1">SaveAttribute11</a>
+                        <a id="btnSaveAttribute" class="btn btn-success mb-1 mt-1">SaveAttribute</a>
                         <input type="text" hidden="" name="isNew" id="isNew" value="0">
 
                     </div>

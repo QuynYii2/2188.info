@@ -76,7 +76,6 @@
             display: inline-block;
             background-color: #f9f9f9;
             padding: 10px 20px;
-            font-family: sans-serif, Arial;
             font-size: 16px;
             border: 2px solid #f7f7f7;
             border-radius: 4px;
@@ -101,7 +100,6 @@
             font-size: 30px;
             font-weight: 400;
             font-style: normal;
-            font-family: "Roboto", helvetica, arial, sans-serif;
             text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
         }
 

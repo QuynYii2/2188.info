@@ -86,27 +86,35 @@
                         <th scope="col">{{ __('home.Name Korea') }}</th>
                     </tr>
                     @php
-                        $user1 = \App\Models\User::where('email', $memberSource->email)->first();
-                        $user2 = \App\Models\User::where('email', $memberRepresent->email)->first();
-                        $staffs = \App\Models\StaffUsers::where('parent_user_id', $user1->id)->orWhere('parent_user_id', $user2->id)->get();
+                        if ($memberSource){
+                          $user1 = \App\Models\User::where('email', $memberSource->email)->first();
+                        }
+                        $staffs = null;
+                        if ($memberRepresent && $memberSource){
+                            $user2 = \App\Models\User::where('email', $memberRepresent->email)->first();
+                            $staffs = \App\Models\StaffUsers::where('parent_user_id', $user1->id)->orWhere('parent_user_id', $user2->id)->get();
+                        }
                     @endphp
-                    @if($staffs->isNotEmpty())
-                        @foreach($staffs as $staff)
-                            <tr>
-                                <td>{{$staff->phu_trach}}</td>
-                                <td>{{$staff->staff}}</td>
-                                <td>{{$staff->name_en}}</td>
-                                <td>{{$staff->name}}</td>
-                                <td>{{$staff->code}}</td>
-                                <td>{{$staff->phone}}</td>
-                                <td>{{$staff->email}}</td>
-                                <td>{{$staff->sns_account}}</td>
-                            </tr>
-                        @endforeach
+                    @if($staffs)
+                        @if($staffs->isNotEmpty())
+                            @foreach($staffs as $staff)
+                                <tr>
+                                    <td>{{$staff->phu_trach}}</td>
+                                    <td>{{$staff->staff}}</td>
+                                    <td>{{$staff->name_en}}</td>
+                                    <td>{{$staff->name}}</td>
+                                    <td>{{$staff->code}}</td>
+                                    <td>{{$staff->phone}}</td>
+                                    <td>{{$staff->email}}</td>
+                                    <td>{{$staff->sns_account}}</td>
+                                </tr>
+                            @endforeach
+                        @endif
                     @endif
                     <tr class="">
                         <td colspan="9" class="">
-                            <a style="font-size: 32px; font-weight: 600" href="{{route('show.register.member.congratulation', $memberRepresent->id)}}"
+                            <a style="font-size: 32px; font-weight: 600"
+                               href="{{route('show.register.member.congratulation', $memberRepresent->id)}}"
                                class="btn btn-success mt-3 mb-5">{{ __('home.apply') }}</a>
                         </td>
                     </tr>

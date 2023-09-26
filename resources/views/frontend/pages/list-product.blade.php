@@ -70,33 +70,33 @@
                 </a>
             @endif
         </div>
-        @if($product->price)
-            <div class="card-price">
-                @if($product->price != null)
-                    <div class="price-sale">
-                        <strong> {{ number_format(convertCurrency($product->location, $currency,$product->price), 0, ',', '.') }} {{$currency}}</strong>
-                    </div>
-                    <div class="price-cost">
-                        <strike>{{ number_format(convertCurrency($product->location, $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
-                    </div>
-                @else
-                    <div class="price-sale">
-                        <strong>{{ number_format(convertCurrency($product->location, $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strong>
-                    </div>
-                @endif
-            </div>
-        @endif
-        <div class="card-bottom d-flex justify-content-between">
-            <div class="card-bottom--left">
-                @if(Auth::check())
-                    <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
-                @else
-                    <a>{{ __('home.Choose Options') }}</a>
-                @endif
-            </div>
-            <div class="card-bottom--right " id-product="{{$product->id}}">
-                <i class="item-icon fa-regular fa-heart"></i>
-            </div>
-        </div>
+{{--        @if($product->price)--}}
+{{--            <div class="card-price">--}}
+{{--                @if($product->price != null)--}}
+{{--                    <div class="price-sale">--}}
+{{--                        <strong> {{ number_format(convertCurrency($product->location, $currency,$product->price), 0, ',', '.') }} {{$currency}}</strong>--}}
+{{--                    </div>--}}
+{{--                    <div class="price-cost">--}}
+{{--                        <strike>{{ number_format(convertCurrency($product->location, $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>--}}
+{{--                    </div>--}}
+{{--                @else--}}
+{{--                    <div class="price-sale">--}}
+{{--                        <strong>{{ number_format(convertCurrency($product->location, $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strong>--}}
+{{--                    </div>--}}
+{{--                @endif--}}
+{{--            </div>--}}
+{{--        @endif--}}
+{{--        <div class="card-bottom d-flex justify-content-between">--}}
+{{--            <div class="card-bottom--left">--}}
+{{--                @if(Auth::check())--}}
+{{--                    <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>--}}
+{{--                @else--}}
+{{--                    <a>{{ __('home.Choose Options') }}</a>--}}
+{{--                @endif--}}
+{{--            </div>--}}
+{{--            <div class="card-bottom--right " id-product="{{$product->id}}">--}}
+{{--                <i class="item-icon fa-regular fa-heart"></i>--}}
+{{--            </div>--}}
+{{--        </div>--}}
     </div>
 </div>

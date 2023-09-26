@@ -201,6 +201,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/member-get-all-cart', [CartController::class, 'getAllCarts'])->name('member.all.cart');
 
     //Start update member
+    Route::get('/member-info', [ProfileController::class, 'memberInfo'])->name('member.info');
     Route::get('/member-detail-company/{id}', [MemberController::class, 'detailCompany'])->name('member.detail.company');
     Route::put('/member-update-company/{id}', [MemberController::class, 'updateCompany'])->name('member.update.company');
     //End update member
@@ -286,6 +287,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/checkout-imm', [CheckoutController::class, 'checkoutByImme'])->name('checkout.create.imm');
     Route::post('/checkout-coin', [CheckoutController::class, 'checkoutByCoin'])->name('checkout.create.coin');
     Route::post('/checkout-paypal', [CheckoutController::class, 'checkoutByPaypal'])->name('checkout.create.paypal');
+    Route::post('/checkout-vnpay', [CheckoutController::class, 'checkoutByVNPay'])->name('checkout.create.vnpay');
+    Route::post('/payment-methods', [CheckoutController::class, 'paymentMethods'])->name('checkout.payment.methods');
+    Route::get('/return-checkout', [CheckoutController::class, 'returnCheckout'])->name('return.checkout.payment');
     // Order Controller
     Route::get('/order-management/', [OrderController::class, 'index'])->name('order.show');
     Route::delete('/order-delete/{id}', [OrderController::class, 'cancel'])->name('order.cancel');

@@ -21,6 +21,12 @@ class ProfileController extends Controller
     public function info(Request $request)
     {
         (new HomeController())->getLocale($request);
+        return view('frontend/pages/profile/info');
+    }
+
+    public function memberInfo(Request $request)
+    {
+        (new HomeController())->getLocale($request);
         $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
         $company = MemberRegisterInfo::find($memberPerson->member_id);
         $member = Member::find($company->member_id);
@@ -56,7 +62,7 @@ class ProfileController extends Controller
         }
 
         $categories_two_parent = collect($categories_two_parent_array);
-        return view('frontend/pages/profile/info', compact('company', 'member', 'exitsMember',
+        return view('frontend/pages/profile/member', compact('company', 'member', 'exitsMember',
             'categories_no_parent', 'categories_one_parent', 'categories_two_parent'));
     }
 
