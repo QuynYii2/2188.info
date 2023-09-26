@@ -693,7 +693,7 @@
                                 _token: '{{ csrf_token() }}'
                             },
                             success: function (response) {
-                                console.log('success')
+
                                 if (!response.id) {
                                     var modal = document.getElementById(modalId);
                                     $(modal).modal('show');
@@ -717,7 +717,7 @@
                                 }
                             },
                             error: function (exception) {
-                                console.log(exception)
+
                             }
                         });
                     } catch (error) {
@@ -746,7 +746,7 @@
                                 _token: '{{ csrf_token() }}'
                             },
                             success: function (response) {
-                                console.log('success')
+
                                 if (!response.id) {
                                     var modal = document.getElementById(modalId);
                                     $(modal).modal('show');
@@ -770,7 +770,7 @@
                                 }
                             },
                             error: function (exception) {
-                                console.log(exception)
+
                             }
                         });
                     } catch (error) {
@@ -795,10 +795,10 @@
             {{--                    _token: '{{ csrf_token() }}'--}}
             {{--                },--}}
             {{--                success: function (response) {--}}
-            {{--                    console.log('success')--}}
+            {{--                    --}}
             {{--                },--}}
             {{--                error: function (exception) {--}}
-            {{--                    console.log(exception)--}}
+            {{--                    --}}
             {{--                }--}}
             {{--            });--}}
             {{--        } catch (error) {--}}
@@ -814,7 +814,7 @@
         function checkHotAndFeature(id) {
             var hot = document.getElementById('inputHotProduct' + id);
             var feature = document.getElementById('inputFeatureProduct' + id);
-            console.log(hot, feature);
+
             if (hot.value == 1) {
                 document.getElementById("hot_product" + id).checked = true;
             }

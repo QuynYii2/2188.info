@@ -260,7 +260,7 @@
                 tabs[i].setAttribute('aria-expanded', 'false');
                 items[i].classList.remove("show");
                 items[i].classList.add("in");
-                console.log('a')
+
             }
         }
     }
@@ -441,7 +441,7 @@
                 document.getElementById('renderProduct').innerHTML = response;
             },
             error: function (exception) {
-                console.log(exception)
+
             }
         });
     }

@@ -406,7 +406,7 @@
             $(document).ready(function ($) {
                 $(".card-bottom--right").click(function () {
                     var idProduct = $(this).attr('id-product');
-                    console.log(idProduct)
+
 
                     $.ajax({
                         url: '{{route('user.wish.lists')}}',
@@ -420,7 +420,7 @@
                             alert(response.message);
                         },
                         error: function (exception) {
-                            // console.log(exception)
+                            //
                         }
                     });
                 });

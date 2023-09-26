@@ -112,7 +112,7 @@
                     main(total, cartID);
                 })
                 .fail(function (_, textStatus) {
-                    console.log(textStatus)
+
                 });
 
             // using function convertCurrency(total);

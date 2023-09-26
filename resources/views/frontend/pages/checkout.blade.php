@@ -225,12 +225,12 @@
                                 })
                                     .then(response => {
                                         if (response.status == 200) {
-                                            console.log(response);
+
                                             return response.json();
                                         }
                                     })
                                     .then((response) => {
-                                        console.log(response)
+
                                         let price = response['price'];
                                         let pricePercent = price * myArray[1] / 100;
                                         arrayPrice.push(pricePercent)
@@ -247,7 +247,7 @@
                                         getAllTotal();
 
                                     })
-                                    .catch(error => console.log(error));
+                                    .catch(error => );
                             }
 
                             myfunction(arrayProducts[i]);

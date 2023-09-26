@@ -302,7 +302,7 @@
                             status.innerText = response['status'];
                         },
                         error: function (exception) {
-                            console.log(exception)
+
                         }
                     });
                 } catch (error) {
@@ -326,7 +326,7 @@
                     getChar(data[0], data[1])
                 },
                 error: function (exception) {
-                    console.log(exception)
+
                 }
             });
         }
@@ -394,7 +394,7 @@
                     getRevenueChar(data[0], data[1])
                 },
                 error: function (exception) {
-                    console.log(exception)
+
                 }
             });
 
@@ -468,13 +468,13 @@
                     localStorage.setItem('item', customerChart);
                 },
                 error: function (exception) {
-                    console.log(exception)
+
                 }
             });
         }
 
         var item = localStorage.getItem('item');
-        console.log(item)
+
         arrayItem = item.split(',');
 
         getCustomerChart(parseInt(arrayItem[0]), parseInt(arrayItem[1]));
@@ -526,7 +526,7 @@
 
                 },
                 error: function (exception) {
-                    console.log(exception)
+
                 }
             });
         }

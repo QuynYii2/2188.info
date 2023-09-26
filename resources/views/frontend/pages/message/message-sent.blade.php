@@ -188,10 +188,10 @@
                     }
                 })
                 .then((response) => {
-                    console.log('ádadad')
+
                     $('#chat_message').empty().append(response);
                 })
-                .catch(error => console.log(error));
+                .catch(error => );
         }
 
         function renderDefault() {

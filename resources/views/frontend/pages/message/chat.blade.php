@@ -28,10 +28,10 @@
 {{--   $(document).ready(function () {--}}
 {{--      $('#message_area').on('change', function () {--}}
 {{--         if ($(this).text() == '' || $(this).text() == null){--}}
-{{--            console.log('disabled')--}}
+{{--            --}}
 {{--            $('#send_button').attr('disabled', 'disabled');--}}
 {{--         } else {--}}
-{{--            console.log('un disabled')--}}
+{{--            --}}
 {{--            $('#send_button').removeAttr('disabled');--}}
 {{--         }--}}
 {{--      })--}}

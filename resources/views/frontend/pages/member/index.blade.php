@@ -372,7 +372,7 @@
             }
 
             {{--let productID = mainImg[0].getAttribute('data-id');--}}
-            {{--console.log(productID)--}}
+            {{----}}
             {{--let idImg = '#imgProductMain' + productID;--}}
             {{--changeImage(idImg, '{{asset('storage/')}}' + '/' + product['thumbnail']);--}}
 
@@ -425,7 +425,7 @@
                     data: requestData,
                 })
                     .done(function (response) {
-                        console.log(response);
+
                         alert('Success!');
                         window.location.reload();
                     })
