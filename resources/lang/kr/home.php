@@ -632,7 +632,7 @@ return [
     'Top Search' => '인기 상품',
     'See All' => '전체 보기',
     'permission_one' => '상품의 입출고 관리, 재고관리 및 영업관리',
-    'permission_two' => '전자상거래 및 전자상거래 상품관',
+    'permission_two' => '전자상점 개설 및 전자상거래 관리',
     'permission_there' => '화물(국제, 국내, 해상, 항공, 특송, 택배)의 발송, 수취',
     // end
     'số lượng' => '수량',
