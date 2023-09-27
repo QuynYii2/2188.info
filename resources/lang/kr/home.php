@@ -1015,44 +1015,9 @@ return [
     'Update information represent member' => '대표자 등록정보',
     'No received messages' => '받은 메시지가 없습니다',
     'No sent messages' => '보낸 메시지가 없습니다',
+    //
+    'Select file' => '파일선택 (사업자등록사본을 첨부하세요)',
+    'Address Business' => '사업장주소',
+    'Language English' => '영문',
+    'Language Local' => '영문',
 ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
