@@ -1,13 +1,18 @@
 @foreach($categories_two_parent as $category)
-    @foreach($arrayCategory as $item)
+    @if(is_array($arrayCategory))
         @php
             $isChecked = false;
-            if ($category->id == $item){
-                $isChecked = true;
-                break;
-            }
         @endphp
-    @endforeach
+        @dd($arrayCategory)
+        @foreach($arrayCategory as $item)
+            @php
+                if ($category->id == $item){
+                    $isChecked = true;
+                    break;
+                }
+            @endphp
+        @endforeach
+    @endif
     <label class="ml-2 d-flex align-items-center" for="code_3-{{$category->id}}">
         <input type="checkbox" id="code_3-{{$category->id}}"
                name="code_3[]"

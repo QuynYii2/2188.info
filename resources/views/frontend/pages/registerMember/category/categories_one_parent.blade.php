@@ -1,13 +1,17 @@
 @foreach($categories_one_parent as $category)
-    @foreach($arrayCategory as $item)
-        @php
-            $isChecked = false;
-            if ($category->id == $item){
-                $isChecked = true;
-                break;
-            }
-        @endphp
-    @endforeach
+    @php
+        $isChecked = null;
+    @endphp
+    @if(is_array($arrayCategory))
+        @foreach($arrayCategory as $item)
+            @php
+                if ($category->id == $item){
+                    $isChecked = true;
+                    break;
+                }
+            @endphp
+        @endforeach
+    @endif
     <label class="ml-2 d-flex align-items-center" for="code_2-{{$category->id}}">
         <input type="checkbox" id="code_2-{{$category->id}}"
                name="code_2[]"
@@ -66,9 +70,11 @@
 
         $.ajax({
             url: url,
-            method: 'GET',
+            method: 'POST',
             data: {
-                listCategoryID: value
+                listCategoryID: value,
+                arrayCategory: $('#inputArrayCategory').val(),
+                _token: '{{ csrf_token() }}',
             }
         })
             .done(function (response) {

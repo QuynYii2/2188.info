@@ -193,8 +193,8 @@ Route::get('/chat-message/{from}/{to}', [SampleController::class, 'findAllMessag
 // Product
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
 Route::get('/product-variable/{id}/{value}', [\App\Http\Controllers\ProductController::class, 'getVariable']);
-Route::get('/get-category-one-parent', [RegisterMemberController::class, 'getCategoryOneParent'])->name('get.category.one.parent');
-Route::get('/get-category-two-parent', [RegisterMemberController::class, 'getCategoryTwoParent'])->name('get.category.two.parent');
+Route::post('/get-category-one-parent', [RegisterMemberController::class, 'getCategoryOneParent'])->name('get.category.one.parent');
+Route::post('/get-category-two-parent', [RegisterMemberController::class, 'getCategoryTwoParent'])->name('get.category.two.parent');
 
 Route::middleware(['auth'])->group(function () {
     //Chat message
