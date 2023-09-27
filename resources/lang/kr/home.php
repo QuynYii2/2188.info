@@ -628,6 +628,7 @@ return [
     'Subscriber registration' => '회사등록 ',
     'Representative registration' => '대표등록 ',
     'Register as member' => '직원등록 ',
+    'Add' => '추가하다',
     'Search Results' => '검색 결과',
     'Top Search' => '인기 상품',
     'See All' => '전체 보기',

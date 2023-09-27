@@ -541,7 +541,7 @@ return [
     'received-by' => 'Đã nhận bởi: ',
     'posted-by' => 'Được gửi bởi: ',
     'time' => 'Thời gian: ',
-
+    'Gift Wrapping' => 'Gói quà',
     'edit-comment' => 'Sửa đánh giá',
     'content' => 'Nội dung',
     'star number' => 'Số sao',
@@ -601,6 +601,7 @@ return [
     'Subscriber registration' => 'Đăng ký người đăng ký ',
     'Representative registration' => 'Đăng ký người đại diện ',
     'Register as member' => 'Đăng ký nhân viên ',
+    'Add' => 'Thêm vào',
     'Search Results' => 'Kết quả tìm kiếm',
     'Top Search' => 'Tìm kiếm nhiều nhất',
     'See All' => 'Xem tất cả',
