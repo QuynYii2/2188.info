@@ -34,7 +34,6 @@
 html,
 body {
 	height: 100%;
-	font-family: "Muli", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	font-smoothing: antialiased;
 }
@@ -48,7 +47,6 @@ h6 {
 	margin: 0;
 	color: #111111;
 	font-weight: 400;
-	font-family: "Muli", sans-serif;
 }
 
 h1 {
@@ -77,7 +75,6 @@ h6 {
 
 p {
 	font-size: 16px;
-	font-family: "Muli", sans-serif;
 	color: #636363;
 	font-weight: 400;
 	line-height: 26px;
@@ -298,7 +295,6 @@ ol {
 
 .ht-right .lan-selector .ddcommon .ddTitle .ddArrow:before {
 	content: "";
-	font-family: "ElegantIcons";
 	font-size: 14px;
 	color: #636363;
 	float: right;
@@ -465,7 +461,6 @@ ol {
 	right: 11px;
 	top: 10px;
 	content: "";
-	font-family: "ElegantIcons";
 	font-size: 16px;
 	color: #b2b2b2;
 }
@@ -694,7 +689,6 @@ ol {
 	right: 20px;
 	top: 13px;
 	content: "";
-	font-family: FontAwesome;
 	font-size: 18px;
 }
 
@@ -1714,7 +1708,6 @@ ol {
 	right: -18px;
 	top: 0px;
 	content: "";
-	font-family: "FontAwesome";
 	font-size: 16px;
 	color: #b2b2b2;
 }
@@ -3745,7 +3738,6 @@ ol {
 .faq-accordin .card-heading a:after,
 .faq-accordin .card-heading>a.active[aria-expanded=false]:after {
 	content: "";
-	font-family: "FontAwesome";
 	font-size: 14px;
 	color: #404040;
 	height: 25px;
@@ -3762,7 +3754,6 @@ ol {
 .faq-accordin .card-heading a[aria-expanded=true]:after,
 .faq-accordin .card-heading>a.active:after {
 	content: "";
-	font-family: "FontAwesome";
 	float: left;
 	font-size: 13px;
 	color: #ffffff;
