@@ -35,83 +35,83 @@
                         <div class="col-md-11 login-tags">
                             <nav>
                                 <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                                    <a class="nav-item nav-link active link-tabs" id="nav-buyer-tab" data-toggle="tab"
-                                       href="#nav-buyer"
-                                       role="tab" aria-controls="nav-buyer">{{ __('home.buyer') }}</a>
-                                    <a class="nav-item nav-link link-tabs" id="nav-seller-tab" data-toggle="tab"
-                                       href="#nav-seller" role="tab"
-                                       aria-controls="nav-seller">{{ __('home.seller') }}</a>
-                                    <a class="nav-item nav-link link-tabs" id="nav-member-tab" data-toggle="tab"
+{{--                                    <a class="nav-item nav-link active link-tabs" id="nav-buyer-tab" data-toggle="tab"--}}
+{{--                                       href="#nav-buyer"--}}
+{{--                                       role="tab" aria-controls="nav-buyer">{{ __('home.buyer') }}</a>--}}
+{{--                                    <a class="nav-item nav-link link-tabs" id="nav-seller-tab" data-toggle="tab"--}}
+{{--                                       href="#nav-seller" role="tab"--}}
+{{--                                       aria-controls="nav-seller">{{ __('home.seller') }}</a>--}}
+                                    <a class="nav-item nav-link active link-tabs" id="nav-member-tab" data-toggle="tab"
                                        href="#nav-member" role="tab"
                                        aria-controls="nav-member">{{ __('home.Member') }}</a>
                                 </div>
                             </nav>
                             <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-                                <div class="tab-pane fade show active" id="nav-buyer" role="tabpanel"
-                                     aria-labelledby="nav-buyer-tab">
-                                    <form method="post" action="{{ route('login.submit') }}">
-                                        @csrf
-                                        <div class="form-group">
-                                            <input id="login_field" type="email" class="form-control" name="login_field"
-                                                   placeholder="{{ __('home.input username') }}"
-                                                   value="{{ old('login_field') }}" required autofocus>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control" name="password"
-                                                   placeholder="{{ __('home.input password') }}" required>
-                                        </div>
+{{--                                <div class="tab-pane fade show active" id="nav-buyer" role="tabpanel"--}}
+{{--                                     aria-labelledby="nav-buyer-tab">--}}
+{{--                                    <form method="post" action="{{ route('login.submit') }}">--}}
+{{--                                        @csrf--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <input id="login_field" type="email" class="form-control" name="login_field"--}}
+{{--                                                   placeholder="{{ __('home.input username') }}"--}}
+{{--                                                   value="{{ old('login_field') }}" required autofocus>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <input type="password" class="form-control" name="password"--}}
+{{--                                                   placeholder="{{ __('home.input password') }}" required>--}}
+{{--                                        </div>--}}
 
-                                        <div class="">
-                                            <div class="float-left">
-                                                <input type="checkbox" name="remember"
-                                                       id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                                <label for="remember">{{ __('home.save login') }}</label>
-                                            </div>
-                                            <div class="float-right">
-                                                <a class="tabs-product-detail"
-                                                   href="{{route('register.show')}}">{{ __('home.sign up') }}</a>
-                                            </div>
-                                        </div>
-                                        <button type="submit"
-                                                class="btn btn-info btn-block btn-round">{{ __('home.sign in') }}
-                                        </button>
+{{--                                        <div class="">--}}
+{{--                                            <div class="float-left">--}}
+{{--                                                <input type="checkbox" name="remember"--}}
+{{--                                                       id="remember" {{ old('remember') ? 'checked' : '' }}>--}}
+{{--                                                <label for="remember">{{ __('home.save login') }}</label>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="float-right">--}}
+{{--                                                <a class="tabs-product-detail"--}}
+{{--                                                   href="{{route('register.show')}}">{{ __('home.sign up') }}</a>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <button type="submit"--}}
+{{--                                                class="btn btn-info btn-block btn-round">{{ __('home.sign in') }}--}}
+{{--                                        </button>--}}
 
-                                        @if (session('error'))
-                                            <div>{{ session('error') }}</div>
-                                        @endif
+{{--                                        @if (session('error'))--}}
+{{--                                            <div>{{ session('error') }}</div>--}}
+{{--                                        @endif--}}
 
-                                    </form>
-                                </div>
-                                <div class="tab-pane fade" id="nav-seller" role="tabpanel"
-                                     aria-labelledby="nav-seller-tab">
-                                    <form method="post" action="{{ route('login.submit') }}">
-                                        @csrf
-                                        <div class="form-group">
-                                            <input id="login_field" type="email" class="form-control" name="login_field"
-                                                   placeholder="{{ __('home.input username') }}"
-                                                   value="{{ old('login_field') }}" required autofocus>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control" name="password"
-                                                   placeholder="{{ __('home.input password') }}" required>
-                                        </div>
-                                        <div class="">
-                                            <div class="float-left">
-                                                <input type="checkbox" name="remember"
-                                                       id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                                <label for="remember">{{ __('home.save login') }}</label>
-                                            </div>
-                                            <div class="float-right">
-                                                <a class="tabs-product-detail"
-                                                   href="{{route('register.show')}}">{{ __('home.sign up') }}</a>
-                                            </div>
-                                        </div>
-                                        <button type="submit"
-                                                class="btn btn-info btn-block btn-round">{{ __('home.sign in') }}
-                                        </button>
-                                    </form>
-                                </div>
-                                <div class="tab-pane fade" id="nav-member" role="tabpanel"
+{{--                                    </form>--}}
+{{--                                </div>--}}
+{{--                                <div class="tab-pane fade" id="nav-seller" role="tabpanel"--}}
+{{--                                     aria-labelledby="nav-seller-tab">--}}
+{{--                                    <form method="post" action="{{ route('login.submit') }}">--}}
+{{--                                        @csrf--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <input id="login_field" type="email" class="form-control" name="login_field"--}}
+{{--                                                   placeholder="{{ __('home.input username') }}"--}}
+{{--                                                   value="{{ old('login_field') }}" required autofocus>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="form-group">--}}
+{{--                                            <input type="password" class="form-control" name="password"--}}
+{{--                                                   placeholder="{{ __('home.input password') }}" required>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="">--}}
+{{--                                            <div class="float-left">--}}
+{{--                                                <input type="checkbox" name="remember"--}}
+{{--                                                       id="remember" {{ old('remember') ? 'checked' : '' }}>--}}
+{{--                                                <label for="remember">{{ __('home.save login') }}</label>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="float-right">--}}
+{{--                                                <a class="tabs-product-detail"--}}
+{{--                                                   href="{{route('register.show')}}">{{ __('home.sign up') }}</a>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <button type="submit"--}}
+{{--                                                class="btn btn-info btn-block btn-round">{{ __('home.sign in') }}--}}
+{{--                                        </button>--}}
+{{--                                    </form>--}}
+{{--                                </div>--}}
+                                <div class="tab-pane fade show active" id="nav-member" role="tabpanel"
                                      aria-labelledby="nav-member-tab">
                                     <table class="table element-bordered-pink align-middle" align="center">
                                         <form method="post" action="{{ route('login.submit') }}">
