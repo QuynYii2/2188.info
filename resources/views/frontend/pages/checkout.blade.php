@@ -196,7 +196,7 @@
             </div>
         </div>
     </div>
-{{--    <button class="btn btn-primary" id="GetProductPrice">Get Profile</button>--}}
+    {{--    <button class="btn btn-primary" id="GetProductPrice">Get Profile</button>--}}
     <div class="d-none">
         @php
             $homeController = new \App\Http\Controllers\Frontend\HomeController();
@@ -225,12 +225,12 @@
                                 })
                                     .then(response => {
                                         if (response.status == 200) {
-                                            console.log(response);
+
                                             return response.json();
                                         }
                                     })
                                     .then((response) => {
-                                        console.log(response)
+
                                         let price = response['price'];
                                         let pricePercent = price * myArray[1] / 100;
                                         arrayPrice.push(pricePercent)

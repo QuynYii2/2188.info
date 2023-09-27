@@ -294,7 +294,7 @@
         for (let i = 0; i < listUrl.length; i++) {
             let url = listUrl[i].href;
             if (currentUrl == url) {
-                console.log(listUrl[i].parentElement.parentElement.previousElementSibling)
+
                 let sideBarItem = listUrl[i].parentElement.parentElement.previousElementSibling;
                 let parentItem = listUrl[i].parentElement.parentElement;
                 sideBarItem.classList.add('expanded');

@@ -849,7 +849,7 @@
         $(document).ready(function () {
             $(".inputHotCheckbox").click(function () {
                 var productID = jQuery(this).val();
-                console.log(productID);
+
 
                 function setProductHots(productID) {
                     $.ajax({
@@ -859,10 +859,10 @@
                             _token: '{{ csrf_token() }}'
                         },
                         success: function (response) {
-                            console.log('success')
+
                         },
                         error: function (exception) {
-                            console.log(exception)
+
                         }
                     });
                 }
@@ -881,10 +881,10 @@
                             _token: '{{ csrf_token() }}'
                         },
                         success: function (response) {
-                            console.log('success')
+
                         },
                         error: function (exception) {
-                            console.log(exception)
+
                         }
                     });
                 }
@@ -897,7 +897,7 @@
         function checkHotAndFeature(id) {
             var hot = document.getElementById('inputHotProduct' + id);
             var feature = document.getElementById('inputFeatureProduct' + id);
-            console.log(hot, feature);
+
             if (hot.value == 1) {
                 document.getElementById("hot_product" + id).checked = true;
             }

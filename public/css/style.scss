@@ -1,4 +1,4 @@
-* {
+body {
   font-family: 'DM Sans', sans-serif;
 }
 
@@ -89,140 +89,6 @@ header {
 $color-main: #fd6506;
 .body {
   background-color: #f5f5f5;
-}
-
-.product-member {
-  .size {
-    font-size: 17px;
-  }
-
-  :root {
-    --color-white: #ffffff;
-    --color-black: #000000;
-    --color-light: #f5f7f8;
-    --color-dark: #333333;
-    --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
-  }
-
-  button:focus {
-    box-shadow: none;
-  }
-
-  .main .item-card {
-    border-radius: 2px;
-  }
-
-  .main .card-image {
-    display: block;
-    padding-top: 70%;
-    position: relative;
-    width: 100%;
-  }
-
-  .modal-dialog {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .main .card-image img {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .modal-header {
-    border: none;
-  }
-
-  .modal-content-css {
-    height: 85vh;
-    overflow-y: auto;
-  }
-
-  .btn:focus {
-    outline: 0;
-    box-shadow: none;
-  }
-
-  .modal-header {
-    padding-bottom: 0;
-  }
-}
-
-.stand-member {
-  body {
-    background: #F5F5F5;
-  }
-
-  .size {
-    font-size: 17px;
-  }
-
-  :root {
-    --color-white: #ffffff;
-    --color-black: #000000;
-    --color-light: #f5f7f8;
-    --color-dark: #333333;
-    --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
-  }
-
-  button:focus {
-    box-shadow: none;
-  }
-
-  .main {
-    .item-card {
-      border-radius: 2px;
-    }
-
-    .card-image {
-      display: block;
-      padding-top: 70%;
-      position: relative;
-      width: 100%;
-
-      img {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-  }
-
-  .modal-dialog {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .modal-header {
-    border: none;
-  }
-
-  .modal-content-css {
-    height: 85vh;
-    overflow-y: auto;
-  }
-
-  .btn:focus {
-    outline: 0;
-    box-shadow: none;
-  }
-
-  .modal-header {
-    padding-bottom: 0;
-  }
-
 }
 
 .w-50 {
@@ -2752,7 +2618,6 @@ a {
 .standsMember-item {
   border: 1px solid #e9e9e9;
   width: 100%;
-  box-shadow: 0 0 5px #d2d2d2, 0 0 7px #a894941c;
 
   .item-body {
     padding: 10px;
@@ -4924,10 +4789,11 @@ nav ul {
 }
 
 
+
 //CREATE PRODUCTS
 
 
-.stand-text-secondary {
+.stand-text-secondary{
   height: 40px;
   font-size: 15px !important;
   -webkit-line-clamp: 2;
@@ -4935,13 +4801,4 @@ nav ul {
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin-bottom: 10px;
-}
-
-.text-secondary{
-  font-size: 12px;
-  color: #6c757d!important;
-}
-
-.thumbnailProduct{
-  background-color: white;
 }

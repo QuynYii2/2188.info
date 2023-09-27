@@ -34,11 +34,11 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
                     if (data.address && data.address.country && data.address.country_code) {
                         const countryName = data.address.country;
                         const countryCode = data.address.country_code;
-                        console.log(data.address)
+
                         localStorage.setItem('location', countryName);
                         localStorage.setItem('countryCode', countryCode);
                     } else {
-                        console.log('Country not found or an error occurred.');
+
                     }
                 })
                 .catch(error => {

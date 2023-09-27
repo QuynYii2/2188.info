@@ -340,7 +340,7 @@
                 },
                 // dataType: 'json',
                 success: function (response) {
-                    console.log(response)
+
                     $('#removeInputAttribute').remove();
                     // var item = response;
                     renderInputAttribute.append(response);
@@ -401,7 +401,7 @@
         function checkHotAndFeature() {
             var hot = document.getElementById('inputHotProduct');
             var feature = document.getElementById('inputFeatureProduct');
-            console.log(hot, feature);
+
             if (hot.value == 1) {
                 document.getElementById("hot_product").checked = true;
             }
