@@ -342,8 +342,36 @@ class CheckoutController extends Controller
     {
         $url = session('url_prev','/');
         if($request->vnp_ResponseCode == "00") {
-            $this->apSer->thanhtoanonline(session('cost_id'));
-            return redirect($url)->with('success' ,'Đã thanh toán phí dịch vụ');
+            $vnpAmount = $request->input('vnp_Amount');
+            $vnpBankCode = $request->input('vnp_BankCode');
+            $vnpBankTranNo = $request->input('vnp_BankTranNo');
+            $time = $request->input('vnp_PayDate');
+            $responseCode = $request->input('vnp_ResponseCode');
+            $note = $request->input('vnp_OrderInfo');
+            $userId = Auth::user()->id;
+            $costId = $request->input('vnp_TxnRef');
+
+            DB::table('payments_vnpay')->insert([
+                'money' => $vnpAmount/100,
+                'code_bank' => $vnpBankCode,
+                'code_vnpay' => $vnpBankTranNo,
+                'time' => $time,
+                'vnp_response_code' => $responseCode,
+                'note' => $note,
+                'user_id' => $userId,
+                'cost_id' => $costId,
+            ]);
+            if (Auth::check()) {
+                DB::table('carts')->where([['user_id', Auth::user()->id], ['status', CartStatus::WAIT_ORDER]])->update([
+                    'status' => CartStatus::ORDERED
+                ]);
+                alert()->success('Success', 'Đã thanh toán phí dịch vụ');
+//                return redirect($url)->with('success' ,'Đã thanh toán phí dịch vụ');
+                return view('frontend.pages.PaymentMethods.vnpay_return');
+            }
+
+            alert()->error('errors', 'errors');
+            return redirect($url)->with('errors' ,'Lỗi trong quá trình thanh toán phí dịch vụ');
         }
         session()->forget('url_prev');
         return redirect($url)->with('errors' ,'Lỗi trong quá trình thanh toán phí dịch vụ');
@@ -404,7 +432,7 @@ class CheckoutController extends Controller
             $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
-        alert()->success('Success', 'Payment success!');
+        alert()->error('errors', 'Payment errors!');
         return redirect($vnp_Url);
 
     }
