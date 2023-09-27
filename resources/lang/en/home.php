@@ -920,4 +920,5 @@ return [
     'No received messages' => 'No received messages',
     'No sent messages' => 'No sent messages',
     'đơn giá' => 'đơn giá',
+    'xác nhận đăng ký' => 'xác nhận đăng ký'
 ];
