@@ -919,4 +919,5 @@ return [
     'Staffs Information' => 'Staffs Information',
     'No received messages' => 'No received messages',
     'No sent messages' => 'No sent messages',
+    'đơn giá' => 'đơn giá',
 ];

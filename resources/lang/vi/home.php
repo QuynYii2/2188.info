@@ -955,4 +955,5 @@ return [
 
     'No received messages' => 'Chưa nhận được tin nhắn',
     'No sent messages' => 'Chưa có tin nào được gửi đi',
+    'đơn giá' => 'đơn giá',
 ];
