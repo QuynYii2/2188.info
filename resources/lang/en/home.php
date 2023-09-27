@@ -344,7 +344,7 @@ return [
     'POWER PRODUCTION ' => 'POWER PRODUCTION ',
     'Member' => 'Hội viên ',
     'Member booth' => 'Gian hàng hội viên ',
-    'Booth' => 'Gian hàng',
+    'Booth' => 'Booth',
     'Partner List' => 'Partner List',
     'Message received' => 'Tin nhắn đã nhận',
     'Message sent' => 'Tin nhắn đã gửi',
@@ -917,4 +917,6 @@ return [
     'Registrator Information' => 'Registrator Information',
     'Representative Information' => 'Representative Information',
     'Staffs Information' => 'Staffs Information',
+    'No received messages' => 'No received messages',
+    'No sent messages' => 'No sent messages',
 ];

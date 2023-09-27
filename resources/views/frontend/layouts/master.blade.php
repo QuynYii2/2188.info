@@ -1,9 +1,8 @@
 @php use App\Http\Controllers\Frontend\HomeController;use Illuminate\Support\Facades\Auth;
  $currentRouteName = Route::getCurrentRoute()->getName();
- $arrNameNeedHid = ['stand.register.member.index', 'partner.register.member.index', 'parent.register.member.locale'];
+ $arrNameNeedHid = ['stand.register.member.index', 'partner.register.member.index', 'parent.register.member.locale', 'chat.message.received', 'chat.message.sent'];
 $isRoute = in_array($currentRouteName, $arrNameNeedHid);
 @endphp
-
         <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -90,7 +89,7 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
 @include('frontend.layouts.partials.header', ['infoUser' => $infoUser ?? '', 'isRoute' => $isRoute ])
 @include('sweetalert::alert')
 
-<div class="marginTop-body" id="mt-body {{ $isRoute ? ' booth' : '' }} ">
+<div class="{{ $isRoute ? ' mt-5' : 'marginTop-body' }}" id="mt-body {{ $isRoute ? ' booth' : '' }} ">
     @yield('content')
 </div>
 
@@ -103,13 +102,7 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
         <i class="zmdi zmdi-chevron-up"></i>
     </span>
 </div>
-<!-- Scripts -->
-{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>--}}
 <script src="{{ asset('js/vendor/jquery-3.3.1.min.js') }}"></script>
-{{--<script src="{{ asset('js/vendor/bootstrap.min.js') }}"></script>--}}
-{{--<script src="{{ asset('mail/jqBootstrapValidation.min.js') }}"></script>--}}
-
-{{--    <script src="{{ mix('js/app.js') }}" defer></script>--}}
 
 
 <script>
@@ -122,15 +115,6 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
         }
     });
 </script>
-
-{{--<script src="{{ asset('js/vendor/jquery-ui.min.js') }}"></script>--}}
-{{--<script src="{{ asset('js/vendor/jquery.countdown.min.js') }}"></script>--}}
-{{--<script src="{{ asset('js/vendor/jquery.nice-select.min.js') }}"></script>--}}
-{{--<script src="{{ asset('js/vendor/jquery.zoom.min.js') }}"></script>--}}
-{{--<script src="{{ asset('js/vendor/jquery.dd.min.js') }}"></script>--}}
-{{--<script src="{{ asset('js/vendor/jquery.slicknav.js') }}"></script>--}}
-{{--<script src="{{ asset('js/vendor/owl.carousel.min.js') }}"></script>--}}
-{{--<script src="{{ asset('js/mainV1.js') }}"></script>--}}
 
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
