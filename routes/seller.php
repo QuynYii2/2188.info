@@ -156,3 +156,10 @@ Route::post('/vouchers-item', [VoucherController::class, 'createVoucherItems'])-
 Route::post('/promotions-item', [PromotionController::class, 'createPromotionItems'])->name('promotions.item.create');
 Route::get('/promotion', [PromotionController::class, 'index'])->name('promotions.index');
 Route::post('/add-cart/{product}/{percent}', [CartController::class, 'addToCartPromotion'])->name('cart.add.promotion');
+// Property
+Route::get('/get-property-by-attribute/{id}', [AttributeController::class, 'getPropertyByAttribute'])->name('get.property.by.attribute');
+Route::get('/get-all-attribute', [AttributeController::class, 'getAllAttribute'])->name('get.all.attribute');
+Route::post('/create-attribute', [AttributeController::class, 'storeAttribute'])->name('create.attribute');
+Route::post('/create-property', [AttributeController::class, 'storeProperty'])->name('create.property');
+Route::post('/create-product-attribute', [ProductController::class, 'saveAttribute'])->name('product.create.attribute');
+

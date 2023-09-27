@@ -1,6 +1,6 @@
 <?php
 
-return [
+return array(
     'welcome' => 'Xin Chào',
     'about' => 'Giới thiệu',
     'contact' => 'Liên hệ',
@@ -952,5 +952,11 @@ return [
 
     //
     'Update information register member' => 'Thông tin người đăng ký',
-    'Update information represent member' => 'Thông tin người đại diện'
-];
+    'Update information represent member' => 'Thông tin người đại diện',
+    //
+    'Create new attribute'=>'Thêm mới thuộc tính',
+    'Save attribute'=>'Lưu thuộc tính',
+    'Create now'=>'Thêm ngay',
+    'Product attribute'=>'Thuộc tính sản phẩm',
+    'None'=>'Không có',
+);

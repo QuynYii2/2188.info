@@ -329,6 +329,4 @@ Route::group(['prefix' => 'buyer', 'middleware' => 'role.buyer'], function () {
 });
 
 //Test
-Route::get('/test', function () {
-   return view('backend.products.demo');
-});
+Route::get('/test', [\App\Http\Controllers\TestController::class, 'testAttribute']);

@@ -917,4 +917,10 @@ return [
     'Registrator Information' => 'Registrator Information',
     'Representative Information' => 'Representative Information',
     'Staffs Information' => 'Staffs Information',
+    //
+    'Create new attribute'=>'Create new attribute',
+    'Save attribute'=>'Save attribute',
+    'Create now'=>'Create now',
+    'Product attribute'=>'Product attribute',
+    'None'=>'None',
 ];

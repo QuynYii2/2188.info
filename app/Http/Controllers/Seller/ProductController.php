@@ -29,6 +29,7 @@ use App\Models\Variation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Mockery\Exception;
 
 
 class ProductController extends Controller
@@ -594,6 +595,35 @@ class ProductController extends Controller
             }
         } else {
             return false;
+        }
+    }
+
+    public function saveAttribute(Request $request)
+    {
+        try {
+            $newArray = $this->getAttributeProperty($request);
+
+            $testArray = null;
+            if ($newArray) {
+                foreach ($newArray as $myItem) {
+                    $key = explode("-", $myItem);
+                    $demoArray = null;
+                    for ($j = 1; $j < count($key); $j++) {
+                        $demoArray[] = $key[0] . '-' . $key[$j];
+                    }
+                    $testArray[] = $demoArray;
+                }
+            }
+            $testArray = $this->getArray($testArray);
+            session()->forget(['testArray', 'sourceArray']);
+            session()->push('sourceArray', $newArray);
+            session()->push('testArray', $testArray);
+            if (!$testArray || !$newArray) {
+                return view('backend.products.attributes.table-none-attribute');
+            }
+            return view('backend.products.attributes.table-attribute');
+        } catch (Exception $exception) {
+            return response($exception, 400);
         }
     }
 

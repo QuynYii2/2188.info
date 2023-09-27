@@ -1012,45 +1012,11 @@ return [
     'English only' => '영문',
     //
     'Update information register member' => '등록인 정보',
-    'Update information represent member' => '대표자 등록정보'
+    'Update information represent member' => '대표자 등록정보',
+    //
+    'Create new attribute'=>'속성 추가',
+    'Save attribute'=>'속성 저장',
+    'Create now'=>'바로 추가하기',
+    'Product attribute'=>'상품 속성',
+    'None'=>'없음',
 ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
