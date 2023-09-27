@@ -957,5 +957,10 @@ return [
     'No received messages' => 'Chưa nhận được tin nhắn',
     'No sent messages' => 'Chưa có tin nào được gửi đi',
     'đơn giá' => 'đơn giá',
-    'xác nhận đăng ký' => 'xác nhận đăng ký'
+    'xác nhận đăng ký' => 'xác nhận đăng ký',
+    //
+    'Select file' => 'Chọn file',
+    'Address Business' => 'Địa chỉ công ty',
+    'Language English' => 'Ngôn ngữ Tiếng Anh',
+    'Language Local' => 'Ngôn ngữ hiện tại',
 ];
