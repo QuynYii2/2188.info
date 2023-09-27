@@ -114,23 +114,22 @@
             </td>
             <td colspan="3">
                 <div class="row">
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-2" data-toggle="modal" data-target="#modal-address">
                         <label for="countries-select">{{ __('home.Select country') }}:</label>
                         <select class="form-control" id="countries-select" name="countries-select"
-                                onchange="getListState(this.value)" required>
+                                required>
                         </select>
                     </div>
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-2" data-toggle="modal" data-target="#modal-address">
                         <label for="cities-select">{{ __('home.Choose the city') }}:</label>
-                        <select class="form-control" id="cities-select" name="cities-select"
-                                onchange="getListCity(this.value)">
+                        <select class="form-control" id="cities-select" name="cities-select">
                             <option value="">-- {{ __('home.Choose the city') }} --</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-2" data-toggle="modal" data-target="#modal-address">
                         <label for="provinces-select">{{ __('home.Select district/district') }}:</label>
                         <select class="form-control" id="provinces-select" name="provinces-select"
-                                onchange="getListWard(this.value)">
+                        >
                             <option value="">-- {{ __('home.Select district/district') }} --</option>
                         </select>
                     </div>

@@ -142,7 +142,7 @@
                     <div class="title text-primary"
                          style="font-size: 35px; font-weight: 600">{{ __('home.Sign up company information') }}</div>
                 </div>
-                <div class="">
+                <div>
                     @if($member->name == \App\Enums\RegisterMember::BUYER)
                         @include('frontend.pages.registerMember.buyer')
                     @else
@@ -154,6 +154,27 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modal-address" tabindex="-1" aria-labelledby="modal-addressLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="height: 65vh; overflow-y: auto">
+                    @include('frontend.pages.registerMember.regionAddress')
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="r_getListNation()">
+                        Back
+                    </button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         $(document).ready(function () {
             $('.inputCheckboxCategory').on('click', function () {
@@ -418,6 +439,19 @@
             const optionSelect = document.getElementById(id_where);
             if (optionSelect.options.length > 0) {
                 optionSelect.options[0].selected = true;
+            }
+        }
+
+        function selectRegion(nation, province, district) {
+            console.log(nation, province, district)
+            if (nation) {
+                document.getElementById(ID_COUNTRY).value = nation;
+            }
+            if (province) {
+                document.getElementById(ID_STATE).value = province;
+            }
+            if (district) {
+                document.getElementById(ID_CITY).value = district;
             }
         }
 
