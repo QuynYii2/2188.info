@@ -89,11 +89,16 @@
                        name="number_business" placeholder="{{ __('home.Business registration number') }}" required>
             </td>
             <td>
-                <label for="giay_phep_kinh_doanh">{{ __('home.giay_phep_kinh_doanh') }}</label>
+                <label for="giay_phep_kinh_doanh"> {{ __('home.giay_phep_kinh_doanh') }} </label>
             </td>
             <td>
-                <input type="file" class="form-control" id="giay_phep_kinh_doanh" accept="image/*"
-                       name="giay_phep_kinh_doanh" {{ $exitsMember ? '' : 'required' }}">
+                <div>
+                    <label id="giay_phep_kinh_doanhLabel" for="giay_phep_kinh_doanh"
+                           class="btn btn-outline-secondary">{{ __('home.Select file') }}</label>
+                    <input type="file" class="form-control" id="giay_phep_kinh_doanh" accept="image/*"
+                           style="visibility:hidden;"
+                           name="giay_phep_kinh_doanh" {{ $exitsMember ? '' : 'required' }}">
+                </div>
                 @if($exitsMember)
                     <img src="{{ asset('storage/'.$exitsMember->giay_phep_kinh_doanh) }}" alt="" width="60px"
                          height="60px">
@@ -102,9 +107,12 @@
         </tr>
         <tr>
             <th rowspan="2">
-                <label>{{ __('home.address') }}</label>
+                <label>{{ __('home.Address Business') }}</label>
             </th>
-            <td colspan="4">
+            <td>
+                <label for="address_en"> {{ __('home.Language English') }} </label>
+            </td>
+            <td colspan="3">
                 <div class="row">
                     <div class="form-group col-md-2">
                         <label for="countries-select">{{ __('home.Select country') }}:</label>
@@ -136,7 +144,10 @@
         </tr>
 
         <tr>
-            <td colspan="4">
+            <td>
+                <label for="address_kr"> {{ __('home.Language Local') }} </label>
+            </td>
+            <td colspan="3">
                 <div class="row">
                     <div class="form-group col-md-2">
                         <label for="countries-select-1">{{ __('home.Select country') }}:</label>
@@ -512,7 +523,10 @@
             manufacture.removeClass('d-none');
         }
 
-
+        $("#giay_phep_kinh_doanh").change(function () {
+            filename = this.files[0].name;
+            $('#giay_phep_kinh_doanhLabel').text(filename);
+        });
     })
 </script>
 

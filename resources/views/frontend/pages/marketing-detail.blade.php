@@ -59,7 +59,7 @@
                             @endforeach
                         @else
                             <p>
-                                Chưa có sản phẩm nào
+                                {{ __('home.Chưa có sản phẩm nào') }}
                             </p>
                         @endif
                     </div>

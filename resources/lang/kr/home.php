@@ -360,7 +360,7 @@ return [
     'Order conditions' => '주문 조건',
     'Ngày dự kiến xuất kho' => '출고예정일',
     'Unit price' => '단가',
-    'ngày kể từ ngày đặt hàng' => '주문일로부터 ...일',
+    'ngày kể từ ngày đặt hàng' => '출고예정일',
     'đơn giá phía trên là điều kiện FOB/TT' => '위 단가는 FOB/TT 조건입니다.',
     'Đặt hàng' => '주문하기',
     'Thuộc tính' => '속성',
@@ -378,7 +378,7 @@ return [
     'Nickname' => '닉네임',
     'Responsibility' => '직책',
     'Manager' => '관리자',
-    'Position' => '직무',
+    'Position' => '소속',
     'Add new products' => '새 제품 추가',
     'social network id' => '소셜 네트워크 ID',
     'Retail' => '구매대행',
@@ -410,7 +410,7 @@ return [
     'Select district/district' => '지역 선택',
     'Choose the city' => '도시 선택',
     'Select country' => '국가 선택',
-    'Rank' => '등급',
+    'Rank' => '직책',
     'Staff' => '직원',
     'SNS Account' => 'SNS 계정',
     'Other' => '기타',
@@ -581,8 +581,8 @@ return [
     'I agree to the above Terms' => '위 약관에 동의합니다',
     'Day register' => '등록일시',
     'Number clearance' => '통관번호',
-    'Name company English' => '성명 (영문)',
-    'Name company Korea' => '성명 (자국어)',
+    'Name company English' => '영문',
+    'Name company Korea' => '자국어',
     // nganh nghe
     'Career' => '업종선택',
     // nganh hang
@@ -609,7 +609,7 @@ return [
     // Nganh nghe kinh doanh
     'Business' => '사업품목',
     // Chuc vu
-    'Position company' => '직무',
+    'Position company' => '소속',
     'Responsibility company' => '직책',
     'Name English' => '영문',
     'Name Korea' => '자국어',
@@ -668,7 +668,7 @@ return [
     'danh sách đánh giá' => '후기 보기',
     'Tên user' => '회원 이름',
     'ID sản phẩm' => '상품 ID',
-    'vận chuyển' => '배송',
+    'vận chuyển' => '배송비',
     'quản lý vận chuyển' => '배송 관리',
     'giao hàng loạt' => '빠른 배송',
     'cài đặt vận chuyển' => '배송 설정',
@@ -800,9 +800,9 @@ return [
     'stock' => '잔고s',
     'featured' => '내용',
     'Date' => '날짜',
-    'chọn' => '선택하다',
+    'chọn' => '선택',
     'đã bị khoá' => '잠겼습니다',
-    'chỉnh sửa' => '편집하다',
+    'chỉnh sửa' => '편집',
     'Sửa nhanh' => '빠른 수정',
     'Thêm mới setup rank' => '랭크 추가',
     'Hạn mức COPPER' => 'COPPER',
@@ -1012,45 +1012,13 @@ return [
     'English only' => '영문',
     //
     'Update information register member' => '등록인 정보',
-    'Update information represent member' => '대표자 등록정보'
+    'Update information represent member' => '대표자 등록정보',
+    'No received messages' => '받은 메시지가 없습니다',
+    'No sent messages' => '보낸 메시지가 없습니다',
+    //
+    'Select file' => '파일선택 (사업자등록사본을 첨부하세요)',
+    'Address Business' => '사업장주소',
+    'Language English' => '영문',
+    'Language Local' => '영문',
+    'đơn giá' => '단가',
 ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

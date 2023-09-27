@@ -429,7 +429,7 @@
                                         <thead>
                                         <tr>
                                             <th class="text-left">{{ __('home.Month') }}</th>
-                                            <th class="text-left">{{ __('home.sales') }}</th>
+                                            <th class="text-left">{{ __('home.sale') }}</th>
                                         </tr>
                                         </thead>
                                         <tbody class="table-hover">

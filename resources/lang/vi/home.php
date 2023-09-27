@@ -913,7 +913,6 @@ return [
     'info_company' => 'Thông tin chi tiết',
     'detail_account' => 'Chi tiết tài khoản',
     'edit_user_up' => '고급 정보 편집',
-    '상품 전시장' => 'Gian hàng',
     '해외 B2B 도매상 명단' => 'Danh sách nhà bán sỉ B2B',
     'Bạn có muốn nâng cấp sản phẩm không' => 'Bạn có muốn nâng cấp sản phẩm không',
     'nhập số thứ tự' => 'nhập số thứ tự',
@@ -952,5 +951,9 @@ return [
 
     //
     'Update information register member' => 'Thông tin người đăng ký',
-    'Update information represent member' => 'Thông tin người đại diện'
+    'Update information represent member' => 'Thông tin người đại diện',
+
+    'No received messages' => 'Chưa nhận được tin nhắn',
+    'No sent messages' => 'Chưa có tin nào được gửi đi',
+    'đơn giá' => 'đơn giá',
 ];

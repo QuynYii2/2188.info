@@ -9,7 +9,6 @@ Copyright Dave Gandy 2016. All rights reserved.
 <defs>
 <font id="FontAwesome" horiz-adv-x="1536" >
   <font-face 
-    font-family="FontAwesome"
     font-weight="400"
     font-stretch="normal"
     units-per-em="1792"

@@ -557,6 +557,7 @@ class RegisterMemberController extends Controller
 
             $userOld = User::where('email', $email)->first();
             $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
+            $memberOld_v2 = MemberRegisterPersonSource::where('code', $codeItem)->first();
 
             $url = url()->previous();
             $route = app('router')->getRoutes($url)->match(app('request')->create($url))->getName();
@@ -640,6 +641,12 @@ class RegisterMemberController extends Controller
                     alert()->error('Error', 'Error, Email in member used!');
                     return back();
                 }
+
+                if ($memberOld_v2) {
+                    alert()->error('Error', 'Error, Code in member used!');
+                    return back();
+                }
+
                 $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member);
                 $success = MemberRegisterPersonSource::create($create);
             }
@@ -781,6 +788,7 @@ class RegisterMemberController extends Controller
 
             $userOld = User::where('email', $email)->first();
             $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
+            $memberOld_v2 = MemberRegisterPersonSource::where('code', $codeItem)->first();
 
             // Get previous url
             $url = url()->previous();
@@ -840,6 +848,10 @@ class RegisterMemberController extends Controller
                 }
                 if ($memberOld) {
                     alert()->error('Error', 'Error, Email in member used!');
+                    return back();
+                }
+                if ($memberOld_v2) {
+                    alert()->error('Error', 'Error, Code in member used!');
                     return back();
                 }
                 $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member);

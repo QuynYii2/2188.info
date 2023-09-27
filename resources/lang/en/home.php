@@ -344,7 +344,7 @@ return [
     'POWER PRODUCTION ' => 'POWER PRODUCTION ',
     'Member' => 'Hội viên ',
     'Member booth' => 'Gian hàng hội viên ',
-    'Booth' => 'Gian hàng',
+    'Booth' => 'Booth',
     'Partner List' => 'Partner List',
     'Message received' => 'Tin nhắn đã nhận',
     'Message sent' => 'Tin nhắn đã gửi',
@@ -549,7 +549,7 @@ return [
     'Number clearance' => 'Number clearance',
     'Name company English' => 'Name company English',
     'Local language' =>	'Local language',
-    'English only' => 'English only',
+    'English only' => '영문',
     'Name company Korea' => 'Name company Korea',
     // nganh nghe
     'Career' => 'Career',
@@ -917,4 +917,7 @@ return [
     'Registrator Information' => 'Registrator Information',
     'Representative Information' => 'Representative Information',
     'Staffs Information' => 'Staffs Information',
+    'No received messages' => 'No received messages',
+    'No sent messages' => 'No sent messages',
+    'đơn giá' => 'đơn giá',
 ];
