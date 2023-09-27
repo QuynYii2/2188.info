@@ -621,7 +621,7 @@ return [
     'Employee registration' => '직원 등록',
     'Registration order' => '등록순서',
     'List of registered managers' => '등록된 관리자 목록',
-    'Sign up for more' => '더 많이 구독하세요',
+    'Sign up for more' => '등록추가',
     'Classification of members' => '등록순서',
     'Agree to terms' => '회원종류선택 ',
     'Company registration' => '약관동의 ',
@@ -657,7 +657,7 @@ return [
     'mã voucher đã được sao chép' => '할인코드가 복사되었습니다',
     'Avatar' => '프로필 사진',
     'Name' => '상품명',
-    'Tên sản phẩm' => '상품명',
+    'Tên sản phẩm' => '성명',
     'Danh sách sản phẩm' => '상품 목록',
     'Tác giả' => '게시자',
     'chuyên mục' => '카테고리',
@@ -819,7 +819,7 @@ return [
     'Thêm mới mã giảm giá' => '할인코드 생성',
     'Chọn rank áp dụng' => '적용 상품',
     'danh sách sale' => '프로모션',
-    'Áp dụng' => '적용',
+    'Áp dụng' => '등록확인',
     'Xoá rank' => '재설정',
     'Doanh thu' => '매출',
     'từ ngày' => '시작일',
@@ -1021,4 +1021,6 @@ return [
     'Language English' => '영문',
     'Language Local' => '영문',
     'đơn giá' => '단가',
+    'namess' => '성명',
+    'xác nhận đăng ký' => '등록확인'
 ];

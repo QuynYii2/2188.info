@@ -26,7 +26,7 @@
                     <tr>
                         <th rowspan="2" scope="col">{{ __('home.Responsibility') }}</th>
                         <th rowspan="2" scope="col">{{ __('home.Position') }}</th>
-                        <th colspan="2" scope="col">{{ __('home.Name') }}</th>
+                        <th colspan="2" scope="col">{{ __('home.namess') }}</th>
                         <th rowspan="2" scope="col">{{ __('home.ID') }}</th>
                         <th rowspan="2" scope="col">{{ __('home.Phone Number') }}</th>
                         <th rowspan="2" scope="col">{{ __('home.email') }}</th>
@@ -75,7 +75,7 @@
                     <tr>
                         <th rowspan="2" scope="col">{{ __('home.Responsibility') }}</th>
                         <th rowspan="2" scope="col">{{ __('home.Position') }}</th>
-                        <th colspan="2" scope="col">{{ __('home.Name') }}</th>
+                        <th colspan="2" scope="col">{{ __('home.namess') }}</th>
                         <th rowspan="2" scope="col">{{ __('home.ID') }}</th>
                         <th rowspan="2" scope="col">{{ __('home.Phone Number') }}</th>
                         <th rowspan="2" scope="col">{{ __('home.email') }}</th>
@@ -115,7 +115,7 @@
                         <td colspan="9" class="">
                             <a style="font-size: 32px; font-weight: 600"
                                href="{{route('show.register.member.logistic.congratulation', $memberRepresent->id)}}"
-                               class="btn btn-success mt-3 mb-5">{{ __('home.apply') }}</a>
+                               class="btn btn-success mt-3 mb-5">{{ __('home.xác nhận đăng ký') }}</a>
                         </td>
                     </tr>
                     </tbody>
