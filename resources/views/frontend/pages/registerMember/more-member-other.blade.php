@@ -371,6 +371,7 @@
                             $listCategory = $exitsMember->category_id;
                             $arrayCategory = explode(',', $listCategory);
                         @endphp
+                        <input value="{{$arrayCategory}}" id="inputArrayCategory" class="d-none">
                         <div id="code_2" class="mt-1 checkboxes">
 
                         </div>
@@ -468,9 +469,11 @@
 
             $.ajax({
                 url: url,
-                method: 'GET',
+                method: 'POST',
                 data: {
-                    listCategoryID: value
+                    listCategoryID: value,
+                    arrayCategory: $('#inputArrayCategory').val(),
+                    _token: '{{ csrf_token() }}',
                 }
             })
                 .done(function (response) {
