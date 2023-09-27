@@ -1012,7 +1012,9 @@ return [
     'English only' => '영문',
     //
     'Update information register member' => '등록인 정보',
-    'Update information represent member' => '대표자 등록정보'
+    'Update information represent member' => '대표자 등록정보',
+    'No received messages' => '받은 메시지가 없습니다',
+    'No sent messages' => '보낸 메시지가 없습니다',
 ];
 
 

@@ -4,3 +4,43 @@
     font-size: 26px;
     font-weight: 600;
 }
+
+ #code_1 {
+     display: none;
+     border: 1px #dadada solid;
+ }
+
+#code_1 label {
+    display: block;
+}
+
+#code_1 label:hover {
+    background-color: #cccccc;
+}
+
+#code_2 {
+    display: none;
+    border: 1px #dadada solid;
+}
+
+#code_2 label {
+    display: block;
+}
+
+#code_2 label:hover {
+    background-color: #cccccc;
+}
+
+#code_3 {
+    display: none;
+    border: 1px #dadada solid;
+}
+
+#code_3 label {
+    display: block;
+}
+
+#code_3 label:hover {
+    background-color: #cccccc;
+}
+

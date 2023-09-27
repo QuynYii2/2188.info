@@ -953,6 +953,20 @@ class RegisterMemberController extends Controller
             compact('memberRepresent', 'memberSource', 'company', 'member'));
     }
 
+    public function congratulationRegisterMemberLogistic($member, Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $memberRepresent = MemberRegisterPersonSource::find($member);
+        if (!$memberRepresent) {
+            return back();
+        }
+        $memberSource = MemberRegisterPersonSource::find($memberRepresent->person);
+        $company = MemberRegisterInfo::find($memberRepresent->member_id);
+        $member = Member::find($company->member_id);
+        return view('frontend.pages.registerMember.congratulation-logistic',
+            compact('memberRepresent', 'memberSource', 'company', 'member'));
+    }
+
     /*Show form nhập verify code để send mail*/
     public function processVerifyEmail($email, Request $request)
     {

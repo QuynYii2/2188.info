@@ -1,19 +1,9 @@
 @extends('frontend.layouts.master')
 @section('title', 'Trust Register Members')
 @section('content')
-    <div class="container-fluid">
+    <div class="container">
         <h3 class="text-center">{{ __('home.List of customers') }}</h3>
-        <div class="d-flex justify-content-between align-items-center p-3">
-            <div>
-                <a href="{{route('trust.register.member.index')}}" class="btn btn-warning">{{ __('home.Partner List') }}</a>
-            </div>
-            <div>
-                <a href="{{route('chat.message.received')}}" class="btn btn-primary mr-2">{{ __('home.Message received') }}</a>
-                <a href="{{route('chat.message.sent')}}" style="" class="btn btn-primary mr-2">{{ __('home.Message sent') }}</a>
-                <a href="#" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModal">{{ __('home.Purchase') }}</a>
-                <a href="#" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
-            </div>
-        </div>
+        @include('frontend.pages.member.header_member')
         @include('frontend.pages.member.tabs_info')
         <table class="table table-bordered">
             <thead>
@@ -100,63 +90,5 @@
             @endif
             </tbody>
         </table>
-    </div>
-    <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content" style="width: 30%">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <a href="https://shipgo.biz/kr">
-                            <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt="">
-                        </a>
-                        <a href="https://shipgo.biz/jp">
-                            <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt="">
-                        </a>
-                        <a href="https://shipgo.biz/cn">
-                            <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt="">
-                        </a>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="exampleModalBuyBulk" role="dialog" aria-labelledby="exampleModalBuyBulk"
-         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content" style="width: 30%;">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <a href="{{route('trust.register.member.locale', 'kr')}}">
-                            <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt="">
-                        </a>
-                        <a href="{{route('trust.register.member.locale', 'jp')}}">
-                            <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt="">
-                        </a>
-                        <a href="{{route('trust.register.member.locale', 'cn')}}">
-                            <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt="">
-                        </a>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
     </div>
 @endsection

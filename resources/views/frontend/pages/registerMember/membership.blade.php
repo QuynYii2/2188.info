@@ -114,7 +114,7 @@
                     <tr class="">
                         <td colspan="9" class="">
                             <a style="font-size: 32px; font-weight: 600"
-                               href="{{route('show.register.member.congratulation', $memberRepresent->id)}}"
+                               href="{{route('show.register.member.logistic.congratulation', $memberRepresent->id)}}"
                                class="btn btn-success mt-3 mb-5">{{ __('home.apply') }}</a>
                         </td>
                     </tr>

@@ -395,20 +395,7 @@ function setBackgroundColors(element){
 }
 
 setBackgroundColors();
-
-
-
-
-
-
 //WISH LIST
-
-
-
-
-
-
-
 
 
 
