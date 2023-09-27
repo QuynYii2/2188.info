@@ -360,7 +360,7 @@ return [
     'Order conditions' => '주문 조건',
     'Ngày dự kiến xuất kho' => '출고예정일',
     'Unit price' => '단가',
-    'ngày kể từ ngày đặt hàng' => '주문일로부터 ...일',
+    'ngày kể từ ngày đặt hàng' => '출고예정일',
     'đơn giá phía trên là điều kiện FOB/TT' => '위 단가는 FOB/TT 조건입니다.',
     'Đặt hàng' => '주문하기',
     'Thuộc tính' => '속성',
@@ -668,7 +668,7 @@ return [
     'danh sách đánh giá' => '후기 보기',
     'Tên user' => '회원 이름',
     'ID sản phẩm' => '상품 ID',
-    'vận chuyển' => '배송',
+    'vận chuyển' => '배송비',
     'quản lý vận chuyển' => '배송 관리',
     'giao hàng loạt' => '빠른 배송',
     'cài đặt vận chuyển' => '배송 설정',
@@ -1020,4 +1020,5 @@ return [
     'Address Business' => '사업장주소',
     'Language English' => '영문',
     'Language Local' => '영문',
+    'đơn giá' => '단가',
 ];
