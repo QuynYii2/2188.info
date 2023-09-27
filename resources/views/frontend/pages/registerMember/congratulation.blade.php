@@ -3,13 +3,6 @@
 @section('title', 'Register Member')
 @section('content')
     <div class="container-fluid">
-        <div class="d-flex">
-            <a href="{{route('login')}}" class="btn btn-success mr-3">{{ __('home.info_company') }}</a>
-            <a href="{{route('login')}}" class="btn btn-success mr-3">{{ __('home.Registrator Information') }}</a>
-            <a href="{{route('login')}}" class="btn btn-success mr-3">{{ __('home.Representative Information') }}</a>
-            <a href="{{route('login')}}" class="btn btn-success">{{ __('home.Staffs Information') }}</a>
-        </div>
-
         <h3 class="text-center mt-5">{{ __('home.Congratulations, you have registered as a member') }} {{$company->member}}</h3>
         <div class="d-flex justify-content-around mt-5">
             @php
@@ -19,39 +12,47 @@
                     $arrayPermissionID = explode(',', $listPermissionID);
                 }
             @endphp
-{{--            <div class="">--}}
-{{--                <p>{{ __('home.Membership benefits') }}</p>--}}
-{{--                <ol class="text-success">--}}
-{{--                    @if($arrayPermissionID)--}}
-{{--                        @foreach($arrayPermissionID as $permissionID)--}}
-{{--                            <li>--}}
+            <div class="">
+                <p>{{ __('home.Membership benefits') }}</p>
+                <ol class="text-success">
+                    @if($arrayPermissionID)
+                        @foreach($arrayPermissionID as $permissionID)
+                            <li>
+                                @php
+                                    $permission = \App\Models\Permission::find($permissionID);
+                                @endphp
+                                @if(locationHelper() == 'kr')
+                                    {{ ($permission->lang_kr) }}
+                                @elseif(locationHelper() == 'cn')
+                                    {{ ($permission->lang_cn) }}
+                                @elseif(locationHelper() == 'jp')
+                                    {{ ($permission->lang_jp) }}
+                                @elseif(locationHelper() == 'vi')
+                                    {{ ($permission->name) }}
+                                @else
+                                    {{ ($permission->lang_en) }}
+                                @endif
+                            </li>
+                        @endforeach
+                    @endif
+                </ol>
+            </div>
+            <div class="">
+                @if($memberSource)
+                    <p>{{ __('home.Representative member') }}:{{$memberSource->name}}</p>
+                @endif
 
-{{--                                @php--}}
-{{--                                    $permission = \App\Models\Permission::find($permissionID);--}}
-{{--                                    $ld = new \App\Http\Controllers\TranslateController();--}}
-{{--                                @endphp--}}
-{{--                                {{ $ld->translateText($permission->name, locationPermissionHelper()) }}--}}
-{{--                            </li>--}}
-{{--                        @endforeach--}}
-{{--                    @endif--}}
-{{--                </ol>--}}
-{{--            </div>--}}
-{{--            <div class="">--}}
-{{--                @if($memberSource)--}}
-{{--                    <p>{{ __('home.Representative member') }}:{{$memberSource->name}}</p>--}}
-{{--                @endif--}}
-
-{{--                @if($memberRepresent)--}}
-{{--                    <p>{{ __('home.Registered member') }}:{{$memberRepresent->name}}</p>--}}
-{{--                @endif--}}
-{{--                <p>--}}
-{{--                    <i class="fa-solid fa-star"></i>--}}
-{{--                    <i class="fa-solid fa-star"></i>--}}
-{{--                    <i class="fa-solid fa-star"></i>--}}
-{{--                    <i class="fa-solid fa-star"></i>--}}
-{{--                    <i class="fa-regular fa-star"></i>--}}
-{{--                </p>--}}
-{{--            </div>--}}
+                @if($memberRepresent)
+                    <p>{{ __('home.Registered member') }}:{{$memberRepresent->name}}</p>
+                @endif
+                <p>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                </p>
+            </div>
         </div>
     </div>
 @endsection
