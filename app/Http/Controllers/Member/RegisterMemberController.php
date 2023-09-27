@@ -1041,8 +1041,46 @@ class RegisterMemberController extends Controller
         }
     }
 
-    /*Private function*/
+    public function getCategoryOneParent(Request $request)
+    {
+        $listCategoryID = $request->input('listCategoryID');
 
+        $categories_one_parent_array = null;
+        foreach ($listCategoryID as $category) {
+            $categories_oneparent = Category::where([
+                ['status', CategoryStatus::ACTIVE],
+                ['parent_id', $category]
+            ])->get();
+            foreach ($categories_oneparent as $item) {
+                $categories_one_parent_array[] = $item;
+            }
+        }
+        $arrayCategory = $request->input('arrayCategory');
+        $categories_one_parent = collect($categories_one_parent_array);
+        return view('frontend.pages.registerMember.category.categories_one_parent', compact('categories_one_parent',
+            'arrayCategory'));
+    }
+
+    public function getCategoryTwoParent(Request $request)
+    {
+        $listCategoryID = $request->input('listCategoryID');
+        $categories_two_parent_array = null;
+        foreach ($listCategoryID as $category) {
+            $categories_twoparent = Category::where([
+                ['status', CategoryStatus::ACTIVE],
+                ['parent_id', $category]
+            ])->get();
+            foreach ($categories_twoparent as $item) {
+                $categories_two_parent_array[] = $item;
+            }
+        }
+
+        $categories_two_parent = collect($categories_two_parent_array);
+        $arrayCategory = $request->input('arrayCategory');
+        return view('frontend.pages.registerMember.category.categories_two_parent', compact('categories_two_parent', 'arrayCategory'));
+    }
+
+    /*Private function*/
     private function getArrayIds(Request $request, $input)
     {
         $listCategoryName[] = null;
