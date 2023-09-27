@@ -344,36 +344,6 @@
             <img src="http://2188.info/images/img/payment-method.png">
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    {{--    <script>--}}
-    {{--        $(document).ready(function () {--}}
-    {{--            $('.thumbnailProduct').on('click', function () {--}}
-    {{--                let id = $(this).data('id');--}}
-    {{--                renderProduct(id);--}}
-    {{--                function renderProduct(id) {--}}
-    {{--                    var request = $.ajax({--}}
-    {{--                        url: '{{ route('products.register.member.create') }}',--}}
-    {{--                        method: "POST",--}}
-    {{--                        data: {--}}
-    {{--                            _token: '{{ csrf_token() }}',--}}
-    {{--                            'idProduct': id,--}}
-    {{--                        },--}}
-    {{--                        dataType: "html"--}}
-    {{--                    });--}}
-
-    {{--                    request.done(function (response) {--}}
-    {{--                        console.log(response);--}}
-    {{--                        $('#renderProductMember').empty().append(response);--}}
-    {{--                    });--}}
-
-    {{--                    request.fail(function (jqXHR, textStatus) {--}}
-    {{--                        console.error("Request failed:", textStatus);--}}
-    {{--                        $('#renderProductMember').empty().append('<h3>Error</h3>');--}}
-    {{--                    });--}}
-    {{--                }--}}
-    {{--            });--}}
-    {{--        });--}}
-    {{--    </script>--}}
     <script>
         var renderInputAttribute = $('#renderProductMember');
 
@@ -402,7 +372,7 @@
             }
 
             {{--let productID = mainImg[0].getAttribute('data-id');--}}
-            {{--console.log(productID)--}}
+            {{----}}
             {{--let idImg = '#imgProductMain' + productID;--}}
             {{--changeImage(idImg, '{{asset('storage/')}}' + '/' + product['thumbnail']);--}}
 
@@ -440,19 +410,22 @@
                 renderProduct(product);
             });
 
-            function renderProduct(product) {
+            async function renderProduct(product) {
                 const requestData = {
                     _token: '{{ csrf_token() }}',
                     quantity: 100,
                 };
 
-                $.ajax({
-                    url: `/add-to-cart-register-member/${product}`,
+                let url = '{{ route('cart.api', ['id' => ':product']) }}';
+                url = url.replace(':product', product);
+
+                await $.ajax({
+                    url: url,
                     method: 'POST',
                     data: requestData,
                 })
                     .done(function (response) {
-                        console.log(response);
+
                         alert('Success!');
                         window.location.reload();
                     })

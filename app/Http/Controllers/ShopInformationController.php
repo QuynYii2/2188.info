@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\EvaluateProductStatus;
 use App\Enums\ProductStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\MemberRegisterInfo;
@@ -12,6 +13,7 @@ use App\Models\User;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ShopInformationController extends Controller
 {
@@ -43,7 +45,33 @@ class ShopInformationController extends Controller
             $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
         }
         $currency = (new \App\Http\Controllers\Frontend\HomeController())->getLocation($request);
-        return view('frontend/pages/shop-information/index', compact('listProduct', 'company', 'priceProductOfCategory', 'sellerInfo', 'countProductBySeller', 'listVouchers', 'shopInformation','currency' , 'id'));
+
+        $evaluates = DB::table('evaluate_products')
+            ->join('products', 'products.id', '=', 'evaluate_products.product_id')
+            ->where('products.user_id', $id)
+            ->where('evaluate_products.status', '!=', EvaluateProductStatus::DELETED)
+            ->select('evaluate_products.star_number')
+            ->get();
+        $totalRatings = $evaluates->count();
+        $totalStars = 0;
+        foreach ($evaluates as $evaluate) {
+            $totalStars += $evaluate->star_number;
+        }
+        $averageRating = $totalRatings > 0 ? $totalStars / $totalRatings : 0;
+        $averageRatingsFormatted = number_format($averageRating, 2);
+        return view('frontend/pages/shop-information/index', compact(
+            'listProduct',
+            'company',
+            'priceProductOfCategory',
+            'sellerInfo',
+            'countProductBySeller',
+            'listVouchers',
+            'shopInformation',
+            'currency',
+            'id',
+            'user',
+            'averageRatingsFormatted',
+            'totalRatings'));
     }
 
 
@@ -122,7 +150,7 @@ class ShopInformationController extends Controller
                 <div class="item-img">
                     <img src="' . asset('storage/' . $product['thumbnail']) . '" alt="">
                     <div class="button-view">
-                        <button class="quickView" onclick="clickImage(' . $product['id'] . ');" data-value="' . $product['id'] . '">Quick view3</button>
+                        <button class="quickView" onclick="clickImage(' . $product['id'] . ');" data-value="' . $product['id'] . '">Quick view</button>
                     </div>
                     <div class="text">
                         <div class="text-sale">
@@ -136,20 +164,10 @@ class ShopInformationController extends Controller
                 <input type="text" id="productThumbnail' . $product['id'] . '" class="d-none" value="' . $product['thumbnail'] . '">
                 <input type="text" id="productGallery' . $product['id'] . '" class="d-none" value="' . $product['gallery'] . '">
                 <div class="item-body">
-                    <div class="card-rating">
-                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                        <span>(1)</span>
-                    </div>
-                    <div class="card-brand">
-                    </div>
-                    <div class="card-title">
+                    <div class="card-title1">
                         <a href="' . route('detail_product.show', $product['id']) . '">' . $product['name'] . '</a>
                     </div>
-                    <div class="card-price d-flex justify-content-between">
+                    <div class="card-price">
                         <div class="price-sale">
                             <strong>' . $product['price'] . '</strong>
                         </div>
@@ -174,14 +192,14 @@ class ShopInformationController extends Controller
         return $str;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function productByShop(Request $request, $id)
     {
-        //
+        (new HomeController())->getLocale($request);
+        $products = Product::where([
+            ['status', ProductStatus::ACTIVE],
+            ['user_id', $id]
+        ])->get();
+        return view('frontend.pages.shop-information.product-shop', compact('products'));
     }
 
 

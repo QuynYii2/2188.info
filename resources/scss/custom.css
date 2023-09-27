@@ -1518,10 +1518,10 @@ pre code {
 }
 .table thead th {
   vertical-align: bottom;
-  border-bottom: 1px solid #dee2e6;
+  border-bottom: 2px solid #dee2e6;
 }
 .table tbody + tbody {
-  border-top: 1px solid #dee2e6;
+  border-top: 2px solid #dee2e6;
 }
 
 .table-sm th,
@@ -1538,14 +1538,14 @@ pre code {
 }
 .table-bordered thead th,
 .table-bordered thead td {
-  border-bottom-width: 1px;
+  border-bottom-width: 2px;
 }
 
 .table-borderless th,
 .table-borderless td,
 .table-borderless thead th,
 .table-borderless tbody + tbody {
-  border: 1px;
+  border: 0;
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
@@ -4184,7 +4184,6 @@ input[type=button].btn-block {
   padding: 0.75rem 1rem;
   margin-bottom: 1rem;
   list-style: none;
-  background-color: #e9ecef;
 }
 
 .breadcrumb-item {

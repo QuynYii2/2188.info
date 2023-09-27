@@ -10,24 +10,24 @@
     <div class="container">
         @if($isAdmin == true)
             <div class="todo_list">
-                <div class="title">Báo cáo thống kê</div>
-                <div class="title-small">Toàn bộ thống kê chi tiết</div>
+                <div class="title">{{ __('home.báo cáo thống kê') }}</div>
+                <div class="title-small">{{ __('home.toàn bộ thống kê chi tiết') }}</div>
                 <div class="card-body">
-                    <h3 class="text-center mt-3 mb-3">Lưu lượng người truy cập </h3>
+                    <h3 class="text-center mt-3 mb-3">{{ __('home.lưu lượng người truy cập') }} </h3>
                     <!-- Line Chart -->
                     <div id="reportsChart"></div>
                     <!-- End Line Chart -->
                 </div>
 
                 <div class="card-body">
-                    <h3 class="text-center mt-3 mb-3">Tổng số doanh thu</h3>
+                    <h3 class="text-center mt-3 mb-3">{{ __('home.Tổng số doanh thu') }}</h3>
                     <!-- Line Chart -->
                     <div id="revenueChart"></div>
                     <!-- End Line Chart -->
                 </div>
 
                 <div class="card-body">
-                    <h3 class="text-center mt-3 mb-3">Tỉ lệ khách hàng</h3>
+                    <h3 class="text-center mt-3 mb-3">{{ __('home.tỉ lệ khách hàng') }}</h3>
                     <!-- Line Chart -->
                     <div id="customerChart"></div>
                     <!-- End Line Chart -->
@@ -35,15 +35,15 @@
             </div>
 
             <div class="todo_list">
-                <div class="title">Duyệt sản phẩm</div>
+                <div class="title">{{ __('home.duyệt sản phẩm') }}</div>
                 <table class="table">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Product Name</th>
-                        <th scope="col">Shop Name</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Action</th>
+                        <th scope="col">{{ __('home.Product Name') }}</th>
+                        <th scope="col">{{ __('home.Shop Name') }}</th>
+                        <th scope="col">{{ __('home.Status') }}</th>
+                        <th scope="col">{{ __('home.Action') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -60,7 +60,8 @@
                                 }
                             @endphp
                             <td>
-                                <input type="checkbox" class="toggleProduct" value="{{$productAllItem->id}}" {{ $isChecked ? 'checked' : '' }}>
+                                <input type="checkbox" class="toggleProduct"
+                                       value="{{$productAllItem->id}}" {{ $isChecked ? 'checked' : '' }}>
                             </td>
                         </tr>
                     @endforeach
@@ -69,129 +70,132 @@
             </div>
         @endif
         <div class="todo_list">
-            <div class="title">Phân tích bán hàng</div>
-            <div class="title-small">Phân tích bán hàng chi tiết</div>
+            <div class="title">{{ __('home.phân tích bán hàng') }}</div>
+            <div class="title-small">{{ __('home.phân tích bán hàng chi tiết') }}</div>
             <div class="full-width" id="listTodoRender">
                 <div class="d-flex text-center">
                     <div class="border w-50">
-                        <div class="smail">Lượt truy cập</div>
+                        <div class="smail">{{ __('home.lượt truy cập') }}</div>
                         <h3 id="countAccess">0</h3>
-                        <p class="text-warning">Vs hôm qua <span id="countAccessPercent">0,00</span>% --</p>
+                        <p class="text-warning">{{ __('home.Vs hôm qua') }} <span id="countAccessPercent">0,00</span>%
+                            --</p>
                     </div>
                     <div class="border w-50">
-                        <div class="smail">Lượt xem</div>
+                        <div class="smail">{{ __('home.Lượt xem') }}</div>
                         <h3 id="countViews">0</h3>
-                        <p class="text-warning">Vs hôm qua <span id="countViewPercent">0,00</span>% --</p>
+                        <p class="text-warning">{{ __('home.Vs hôm qua') }} <span id="countViewPercent">0,00</span>% --
+                        </p>
                     </div>
                 </div>
                 <div class="d-flex text-center">
                     <div class="border w-50">
-                        <div class="smail">Đơn hàng</div>
+                        <div class="smail">{{ __('home.Đơn hàng') }}</div>
                         <h3 id="countOrders">0</h3>
-                        <p class="text-warning">Vs hôm qua <span id="countOrderPercent">0,00</span>% --</p>
+                        <p class="text-warning">{{ __('home.Vs hôm qua') }} <span id="countOrderPercent">0,00</span>% --
+                        </p>
                     </div>
                     <div class="border w-50">
-                        <div class="smail">Tỷ lệ chuyển đổi</div>
+                        <div class="smail">{{ __('home.tỷ lệ chuyển đổi') }}</div>
                         <h3>0</h3>
-                        <p class="text-warning">Vs hôm qua <span>0,00</span>% --</p>
+                        <p class="text-warning">{{ __('home.Vs hôm qua') }} <span>0,00</span>% --</p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="todo_list">
-            <div class="title">Danh sách cần làm</div>
-            <div class="title-small">Những việc cần phải làm</div>
+            <div class="title">{{ __('home.Danh sách cần làm') }}</div>
+            <div class="title-small">{{ __('home.Những việc cần phải làm') }}</div>
             <div class="row mt-4 todo_list--bottom">
                 <div class="col-md-3 col-6 list_item">
                     <span class="number">{{count($productWaitPayments)}}</span>
-                    <p>Chờ xác nhận</p>
+                    <p>{{ __('home.chờ xác nhận') }}</p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
                     <span class="number">{{count($productProcessings)}}</span>
-                    <p> Đã Xử Lý </p>
+                    <p>{{ __('home.đã xử lý') }}  </p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
                     <span class="number">{{count($productShippings)}}</span>
-                    <p> Đã Lấy Hàng </p>
+                    <p> {{ __('home.đã lấy hàng') }}</p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
                     <span class="number">{{count($productDelivereds)}}</span>
-                    <p> Đơn thành công </p>
+                    <p>{{ __('home.đơn thành công') }}  </p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
                     <span class="number">{{count($productCancels)}}</span>
-                    <p> Đơn Hủy </p>
+                    <p> {{ __('home.đơn hủy') }} </p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
                     <span class="number">{{count($productCancels)}}</span>
-                    <p> Trả Hàng / Hoàn Tiền Chờ Xử Lý </p>
+                    <p> {{ __('home.Trả Hàng / Hoàn Tiền Chờ Xử Lý') }} </p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
                     <span class="number">{{count($productPause)}}</span>
-                    <p> Sản Phẩm Hết Hàng </p>
+                    <p>{{ __('home.sản phẩm hết hàng') }}  </p>
                 </div>
                 <div class="col-md-3 col-6 list_item">
                     <span class="number">{{count($promotions)}}</span>
-                    <p>Chương Trình Khuyến Mãi Chờ Xử Lý</p>
+                    <p>{{ __('home.chương trình khuyến mãi chờ xử lý') }}</p>
                 </div>
             </div>
         </div>
         <div class="todo_list">
-            <div class="title">Kênh Marketing</div>
-            <div class="title-small">Công cụ Marketing & Đăng ký chương trình Khuyến Mãi</div>
+            <div class="title">{{ __('home.kênh marketing') }}</div>
+            <div class="title-small">{{ __('home.công cụ marketing & Đăng ký chương trình khuyến mãi') }}</div>
             <div class="row mt-4 todo_list--bottom">
                 <a href="{{route('seller.vouchers.list')}}" class="col-md-4 marketing list_item">
                     <div class="list_item--top">
                         <img src="https://deo.shopeemobile.com/shopee/shopee-seller-live-sg/rootpages/static/modules/marketing/module-icons/voucher.png"
                              alt="">
-                        <p>Mã Giảm Giá Của Shop</p>
+                        <p>{{ __('home.mã giảm giá của shop') }}</p>
                     </div>
                     <div class="list_item--bottom">
-                        <p>Công cụ tăng đơn hàng bằng cách tạo mã giảm giá tặng cho người mua</p>
+                        <p>{{ __('home.công cụ tăng đơn hàng bằng cách tạo mã giảm giá tặng cho người mua') }}</p>
                     </div>
                 </a>
                 <a href="{{route('seller.promotion.list')}}" class="col-md-4 marketing list_item">
                     <div class="list_item--top">
                         <img src="https://deo.shopeemobile.com/shopee/shopee-seller-live-sg/rootpages/static/modules/marketing/module-icons/discount.png"
                              alt="">
-                        <p> Chương Trình Của Shop </p>
+                        <p> {{ __('home.chương trình của shop') }}</p>
                     </div>
                     <div class="list_item--bottom">
-                        <p>Công cụ tăng đơn hàng bằng cách tạo chương trình giảm giá</p>
+                        <p>{{ __('home.công cụ tăng đơn hàng bằng cách tạo chương trình giảm giá') }}</p>
                     </div>
                 </a>
                 <a href="{{route('seller.promotion.list')}}" class="col-md-4 marketing list_item">
                     <div class="list_item--top">
                         <img src="https://deo.shopeemobile.com/shopee/shopee-seller-live-sg/rootpages/static/modules/marketing/module-icons/bundle.png"
                              alt="">
-                        <p> Combo Khuyến Mãi </p>
+                        <p> {{ __('home.Combo Khuyến Mãi ') }}</p>
                     </div>
                     <div class="list_item--bottom">
-                        <p>Tạo Combo Khuyến Mãi để tăng giá trị đơn hàng trên mỗi Người mua</p>
+                        <p>{{ __('home.tạo combo khuyến mãi để tăng giá trị đơn hàng trên mỗi người mua') }}</p>
                     </div>
                 </a>
             </div>
         </div>
         <div class="todo_list mb-5">
-            <div class="title">Hiệu Quả Hoạt Động</div>
-            <div class="title-small">Bảng Hiệu Quả Hoạt Động giúp Người Bán hiểu rõ hơn về hoạt động buôn bán của Shop
-                mình dựa trên những chỉ tiêu sau:
+            <div class="title">{{ __('home.hiệu quả hoạt động') }}</div>
+            <div class="title-small">{{ __('home.bảng hiệu quả hoạt động giúp người bán hiểu rõ hơn về hoạt động buôn bán của shop mình dựa trên những chỉ tiêu sau') }}
+                :
             </div>
             <ul class="nav" id="myTab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                       aria-controls="home" aria-selected="true">Vi phạm về đăng bán
+                       aria-controls="home" aria-selected="true">{{ __('home.vi phạm về đăng bán') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                       aria-controls="profile" aria-selected="false">Quản Lý Đơn Hàng
+                       aria-controls="profile" aria-selected="false">{{ __('home.quản lý đơn hàng') }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
                        aria-controls="contact" aria-selected="false">
-                        Chăm sóc khách hàng
+                        {{ __('home.Chăm sóc khách hàng') }}
                     </a>
                 </li>
             </ul>
@@ -200,24 +204,24 @@
                     <table class="table">
                         <thead class="thead-light">
                         <tr>
-                            <th scope="col-4">Tiêu Chí</th>
-                            <th scope="col-4">Shop của tôi</th>
-                            <th scope="col-4">Chỉ tiêu</th>
+                            <th scope="col-4">{{ __('home.tiêu chí') }}</th>
+                            <th scope="col-4">{{ __('home.shop của tôi') }}</th>
+                            <th scope="col-4">{{ __('home.chỉ tiêu') }}</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td>Sản phẩm bị khóa/xóa</td>
+                            <td>{{ __('home.Sản phẩm bị khóa/xóa') }}</td>
                             <td>0</td>
                             <td>0</td>
                         </tr>
                         <tr>
-                            <td>Tỉ lệ hàng đặt trước</td>
+                            <td>{{ __('home.tỉ lệ hàng đặt trước') }}</td>
                             <td>0.00%</td>
                             <td>≤10.00%</td>
                         </tr>
                         <tr>
-                            <td>Các vi phạm khác</td>
+                            <td>{{ __('home.các vi phạm khác') }}</td>
                             <td>0</td>
                             <td>0</td>
                         </tr>
@@ -228,24 +232,24 @@
                     <table class="table">
                         <thead class="thead-light">
                         <tr>
-                            <th scope="col-4">Tiêu Chí</th>
-                            <th scope="col-4">Shop của tôi</th>
-                            <th scope="col-4">Chỉ tiêu</th>
+                            <th scope="col-4">{{ __('home.tiêu chí') }}</th>
+                            <th scope="col-4">{{ __('home.shop của tôi') }}</th>
+                            <th scope="col-4">{{ __('home.chỉ tiêu') }}</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td>Tỉ lệ đơn không thành công</td>
+                            <td>{{ __('home.Tỉ lệ đơn không thành công') }}</td>
                             <td>-</td>
                             <td><10.00%</td>
                         </tr>
                         <tr>
-                            <td>Tỉ lệ hàng đặt trước</td>
+                            <td>{{ __('home.Tỉ lệ hàng đặt trước') }}</td>
                             <td>-</td>
                             <td><10.00%</td>
                         </tr>
                         <tr>
-                            <td>Thời gian chuẩn bị hàng</td>
+                            <td>{{ __('home.Thời gian chuẩn bị hàng') }}</td>
                             <td>-</td>
                             <td><1.50 days</td>
                         </tr>
@@ -256,19 +260,19 @@
                     <table class="table">
                         <thead class="thead-light">
                         <tr>
-                            <th scope="col-4">Tiêu Chí</th>
-                            <th scope="col-4">Shop của tôi</th>
-                            <th scope="col-4">Chỉ tiêu</th>
+                            <th scope="col-4">{{ __('home.tiêu chí') }}</th>
+                            <th scope="col-4">{{ __('home.shop của tôi') }}</th>
+                            <th scope="col-4">{{ __('home.chỉ tiêu') }}</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td>Tỉ lệ phản hồi</td>
+                            <td>{{ __('home.Tỉ lệ phản hồi') }}</td>
                             <td>57.00%</td>
                             <td>-</td>
                         </tr>
                         <tr>
-                            <td>Thời gian phản hồi</td>
+                            <td>{{ __('home.Thời gian phản hồi') }}</td>
                             <td>≥80.00%</td>
                             <td><0.50 days</td>
                         </tr>
@@ -278,29 +282,35 @@
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
         $(".toggleProduct").click(function () {
             var productID = $(this).val();
-            console.log(productID)
-            function setProductFeatures(productID) {
-                $.ajax({
-                    url: '/toggle-products-all/' + productID,
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function (response) {
-                        let status = document.getElementById('productStatus' + productID)
-                        status.innerText = response['status'];
-                    },
-                    error: function (exception) {
-                        console.log(exception)
-                    }
-                });
+
+            async function setProduct(productID) {
+                let url = '{{ route('admin.toggle.products', ['id' => ':productID']) }}';
+                url = url.replace(':productID', productID);
+
+                try {
+                    await $.ajax({
+                        url: url,
+                        method: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function (response) {
+                            let status = document.getElementById('productStatus' + productID)
+                            status.innerText = response['status'];
+                        },
+                        error: function (exception) {
+
+                        }
+                    });
+                } catch (error) {
+                    throw error;
+                }
             }
 
-            setProductFeatures(productID);
+            setProduct(productID);
         });
     </script>
     <script>
@@ -316,7 +326,7 @@
                     getChar(data[0], data[1])
                 },
                 error: function (exception) {
-                    console.log(exception)
+
                 }
             });
         }
@@ -384,7 +394,7 @@
                     getRevenueChar(data[0], data[1])
                 },
                 error: function (exception) {
-                    console.log(exception)
+
                 }
             });
 
@@ -458,13 +468,13 @@
                     localStorage.setItem('item', customerChart);
                 },
                 error: function (exception) {
-                    console.log(exception)
+
                 }
             });
         }
 
         var item = localStorage.getItem('item');
-        console.log(item)
+
         arrayItem = item.split(',');
 
         getCustomerChart(parseInt(arrayItem[0]), parseInt(arrayItem[1]));
@@ -516,7 +526,7 @@
 
                 },
                 error: function (exception) {
-                    console.log(exception)
+
                 }
             });
         }

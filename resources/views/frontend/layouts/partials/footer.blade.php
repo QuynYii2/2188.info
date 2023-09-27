@@ -2,10 +2,7 @@
     $config = \App\Models\ConfigProject::where('status', \App\Enums\ConfigProjectStatus::ACTIVE)->orderBy('created_at', 'desc')->limit(1)->get();
 @endphp
 
-@php
-
-        @endphp
-<footer class="footer">
+<footer class="footer @php echo ($isRoute ? 'd-none' : '') @endphp">
     <div class="footer-container">
         <div class="footer-top">
             <div class="footer-list">

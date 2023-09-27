@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Revenue;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -12,6 +13,7 @@ class RevenusController extends Controller
 {
     public function index(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $user = Auth::user()->id;
         $role_id = DB::table('role_user')->where('user_id', $user)->get();
         $isAdmin = false;

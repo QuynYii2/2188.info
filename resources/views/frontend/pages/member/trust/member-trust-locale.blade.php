@@ -1,51 +1,11 @@
 @extends('frontend.layouts.master')
 @section('title', 'Trust Register Members')
 @section('content')
-    <div class="container-fluid">
-        <h3 class="text-center">{{ __('home.List of customers') }}</h3>
-        <div class="border d-flex justify-content-between align-items-center bg-warning p-2">
-            <h5>{{$company->name}}</h5>
-            <div class="">
-                <span>ID</span>: {{$company->id}}
-            </div>
-            <div class="">
-                <span>{{ __('home.Membership classification') }}</span>: {{$company->member}}
-            </div>
-            <div class="">
-                <span>{{ __('home.Membership Level') }}</span>: {{$company->member}}
-            </div>
-            <div class="">
-                <span>{{ __('home.customer rating') }}</span>
-            </div>
-        </div>
-        @php
-            $listCategory = $company->category_id;
-            $arrayCategory  = explode(',', $listCategory);
-        @endphp
-        <div class="row">
-            <div class="col-md-4 border ml-3">
-                <div class="row text-center">
-                    @foreach($arrayCategory as $itemCategory)
-                        @php
-                            $category = \App\Models\Category::find($itemCategory);
-                        @endphp
-                        <div class="col-md-6">
-                            {{$category->name}}
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-            <div class="col-md-8 border mr-3">
 
-            </div>
-        </div>
-        <div class="border d-flex justify-content-between align-items-center p-5">
-            <a href="{{route('trust.register.member.index')}}" class="btn btn-warning">{{ __('home.List of customers') }}</a>
-            <a href="#" class="btn btn-primary">{{ __('home.Message received') }}</a>
-            <a href="#" class="btn btn-warning">{{ __('home.Tin nhắn đã gửi') }}</a>
-            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">{{ __('home.Purchase') }}</a>
-            <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
-        </div>
+    <div class="container">
+        <h3 class="text-center">{{ __('home.List of customers') }}</h3>
+        @include('frontend.pages.member.header_member')
+        @include('frontend.pages.member.tabs_info')
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -135,63 +95,5 @@
             @endif
             </tbody>
         </table>
-    </div>
-    <div class="modal fade" id="exampleModal" role="dialog" aria-labelledby="exampleModal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <a href="https://shipgo.biz/kr">
-                            <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt="">
-                        </a>
-                        <a href="https://shipgo.biz/jp">
-                            <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt="">
-                        </a>
-                        <a href="https://shipgo.biz/cn">
-                            <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt="">
-                        </a>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="exampleModalBuyBulk" role="dialog" aria-labelledby="exampleModalBuyBulk"
-         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <a href="{{route('trust.register.member.locale', 'kr')}}">
-                            <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt="">
-                        </a>
-                        <a href="{{route('trust.register.member.locale', 'jp')}}">
-                            <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt="">
-                        </a>
-                        <a href="{{route('trust.register.member.locale', 'cn')}}">
-                            <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt="">
-                        </a>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
     </div>
 @endsection

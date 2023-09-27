@@ -1,8 +1,7 @@
 <div id="formCreate1" class="">
     <div class="form-row">
         <div class="col-4 d-inline-block">
-            <label class="control-label small name" for="price">Giá
-                bán</label>
+            <label class="control-label small name" for="price">{{ __('home.Giá bán') }}</label>
             <input onchange="validInput(1);" type="number"
                    class="value-check form-control" required
                    name="old_price1"
@@ -10,8 +9,7 @@
                    placeholder="Nhập giá bán">
         </div>
         <div class="col-4 d-inline-block">
-            <label class="control-label small name" for="qty">Giá khuyến
-                mãi</label>
+            <label class="control-label small name" for="qty">{{ __('home.Giá khuyến mãi') }}</label>
             <input onchange="validInput(1);" type="number"
                    class="value-check form-control"
                    name="price1" id="qty1"
@@ -21,7 +19,7 @@
     <div class="form-row">
         <div class="col-4 d-inline-block">
             <label class="control-label small name"
-                   for="quantity1">Quantity</label>
+                   for="quantity1">{{ __('home.quantity') }}</label>
             <input type="number"
                    class="value-check form-control" required
                    name="quantity1"
@@ -31,7 +29,7 @@
     </div>
     <div class="form-group">
         <div class="form-group">
-            <label for="description-detail">Mô tả</label>
+            <label for="description-detail">{{ __('home.Mô tả') }}</label>
             <textarea class="form-control description"
                       name="description1"
                       rows="5"></textarea>
@@ -39,9 +37,9 @@
     </div>
     <div class="form-group">
         <div class="form-group col-12 col-sm-12 pt-3">
-            <label for="thumbnail">Ảnh đại diện:</label>
+            <label for="thumbnail">{{ __('home.Avatar') }}:</label>
             <label class='__lk-fileInput'>
-                <span data-default='Choose file'>Choose file</span>
+                <span data-default='Choose file'>{{ __('home.Choose file') }}</span>
                 <input type="file" id="thumbnail" class="img-cfg"
                        name="thumbnail1"
                        accept="image/*"

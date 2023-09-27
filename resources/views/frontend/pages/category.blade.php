@@ -6,174 +6,88 @@
     @php
         $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
     @endphp
-    <style>
-        body{
-            background: #f5f5f5;
-        }
-    </style>
     <div id="body-content">
         <div class="category-banner">
             <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/category-banner-top-layout-2.jpg"
                  alt="">
             <div class="category-name">
-                ELECTRONICS
+                @if(locationHelper() == 'kr')
+                    {{ ($category->name_ko) }}
+                @elseif(locationHelper() == 'cn')
+                    {{ ($category->name_zh) }}
+                @elseif(locationHelper() == 'jp')
+                    {{ ($category->name_ja) }}
+                @elseif(locationHelper() == 'vi')
+                    {{ ($category->name_vi) }}
+                @else
+                    {{ ($category->name_en) }}
+                @endif
             </div>
+
+
         </div>
-{{--        <section class="section container-fluid">--}}
-{{--            <div class="content">{{ __('home.Jump to') }}:</div>--}}
-{{--            <div class="swiper CategoriesOne category-item">--}}
-{{--                <div class="swiper-wrapper">--}}
-{{--                    @php--}}
-{{--                        $listCate = DB::table('categories')->where('parent_id', null)->get();--}}
-{{--                    @endphp--}}
-{{--                    @foreach($listCate as $cate)--}}
-{{--                        <div class="swiper-slide">--}}
-{{--                            <a href="{{ route('category.show', $cate->id) }}">--}}
-{{--                                <div class="img">--}}
-{{--                                    <img src="{{ asset('storage/' . $cate->thumbnail) }}"--}}
-{{--                                         alt="">--}}
-{{--                                </div>--}}
-{{--                                <div class="text">--}}
-{{--                                    {{($cate->{'name' . $langDisplay->getLangDisplay()})}}--}}
-{{--                                </div>--}}
-{{--                            </a>--}}
-{{--                        </div>--}}
-{{--                    @endforeach--}}
-{{--                </div>--}}
-{{--                <div class="swiper-button-next"></div>--}}
-{{--                <div class="swiper-button-prev"></div>--}}
-{{--                <div class="swiper-pagination"></div>--}}
-{{--            </div>--}}
-{{--        </section>--}}
+        <section class="section container-fluid">
+            <div class="swiper CategoriesOne category-item">
+                <div class="swiper-wrapper">
+                    @php
+                        $listCate = DB::table('categories')->where('parent_id', null)->get();
+                    @endphp
+                    @foreach($childCategories as $cate)
+                        <div class="swiper-slide">
+                            <a href="{{ route('category.show', $cate->id) }}">
+                                <div class="img">
+                                    <img src="{{ asset('storage/' . $cate->thumbnail) }}"
+                                         alt="">
+                                </div>
+                                <div class="text">
+                                    {{($cate->{'name' . $langDisplay->getLangDisplay()})}}
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
         <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
         <div class="category-header align-items-center mt-4 mb-3 container-fluid d-flex justify-content-between">
-            <div class="category-header--left">
-{{--                <a href="{{route('home')}}">{{ __('home.Home') }}</a> / <a href="#">{{ __('home.Electronics') }}</a>--}}
-            </div>
-            <div class="category-header--right">
-                <div class="show-item mr-4 align-items-center">
-                    <span class="mr-3">{{ __('home.Show') }}</span>
-                    <select class="drop btn dropdown-toggle" id="count-per-page" aria-label="Default select example">
-                        <option selected value="10">{{ __('home.10 products per page') }}</option>
-                        <option value="20">{{ __('home.20 products per page') }}</option>
-                        <option value="30">{{ __('home.30 products per page') }}</option>
-                        <option value="40">{{ __('home.40 products per page') }}</option>
-                        <option value="50">{{ __('home.50 products per page') }}</option>
-                    </select>
+            <div class="breadcrumbs_filter">
+                {!! getBreadcrumbs('category', $category) !!}
+                <div class="category-header--right">
+                    <div class="show-item mr-4 align-items-center">
+                        <span class="mr-3">{{ __('home.Show') }}</span>
+                        <select class="drop btn dropdown-toggle" id="count-per-page" aria-label="Default select example">
+                            <option selected value="10">{{ __('home.10 products per page') }}</option>
+                            <option value="20">{{ __('home.20 products per page') }}</option>
+                            <option value="30">{{ __('home.30 products per page') }}</option>
+                            <option value="40">{{ __('home.40 products per page') }}</option>
+                            <option value="50">{{ __('home.50 products per page') }}</option>
+                        </select>
+                    </div>
+                    <div class="SortBy align-items-center mr-4">
+                        <span class="mr-3">{{ __('home.Sort By') }}</span>
+                        <select class="drop btn dropdown-toggle" id="sort-by" aria-label="Default select example">
+                            <option value="created_at desc" selected>{{ __('home.Newest Items') }}</option>
+                            <option value="name asc">{{ __('home.Name: A to Z') }}</option>
+                            <option value="name desc">{{ __('home.Name: Z to A') }}</option>
+                            <option value="price asc">{{ __('home.Price: Ascending') }}</option>
+                            <option value="price desc">{{ __('home.Price: Descending') }}</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="SortBy align-items-center mr-4">
-                    <span class="mr-3">{{ __('home.Sort By') }}</span>
-                    <select class="drop btn dropdown-toggle" id="sort-by" aria-label="Default select example">
-                        <option value="created_at desc" selected>{{ __('home.Newest Items') }}</option>
-                        <option value="name asc">{{ __('home.Name: A to Z') }}</option>
-                        <option value="name desc">{{ __('home.Name: Z to A') }}</option>
-                        <option value="price asc">{{ __('home.Price: Ascending') }}</option>
-                        <option value="price desc">{{ __('home.Price: Descending') }}</option>
-                    </select>
-                </div>
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item layout-horizontal">
-                        <a class="nav-link active" data-toggle="tab" href="#home"><i class="fa-solid fa-grip"></i></a>
-                    </li>
-                    <li class="nav-item layout-vertical">
-                        <a class="nav-link" data-toggle="tab" href="#menu1"><i class="fa-solid fa-list"></i></a>
-                    </li>
-                </ul>
             </div>
+
         </div>
         <div class="category-body container-fluid">
-                <div class="tab-content">
-                    <div id="home" class="tab-pane active "><br>
-                        <div class="row" id="renderProduct">
-                            @foreach($listProduct as $product)
-                                <div class="col-xl-2 col-md-3 col-6 section mb-4">
-                                    @include('frontend.pages.list-product')
-                                </div>
-                            @endforeach
-                        </div>
+            <div class="row" id="renderProduct">
+                @foreach($listProduct as $product)
+                    <div class="col-xl-2 col-md-3 col-6 section mb-4">
+                        @include('frontend.pages.list-product')
                     </div>
-                    <div id="menu1" class="tab-pane fade"><br>
-                        @foreach($listProduct as $product)
-                            <div class="mt-3 category-list section">
-                                <div class="item row">
-                                    <div class="item-img col-md-3 col-5">
-                                        <img src="{{ asset('storage/' . $product->thumbnail) }}"
-                                             alt="">
-                                        <div class="button-view">
-                                            <button type="button" class="btn view_modal" data-toggle="modal"
-                                                    data-value="{{$product}}"
-                                                    data-target="#exampleModal">{{ __('home.Quick view') }}</button>
-                                        </div>
-                                        <div class="text">
-                                            <div class="text-sale">
-                                                {{ __('home.sales') }}
-                                            </div>
-                                            <div class="text-new">
-                                                {{ __('home.new') }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item-body col-md-9 col-7">
-                                        <div class="card-rating">
-                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                            <span>(1)</span>
-                                        </div>
-                                        @php
-                                            $namenewProduct = DB::table('users')->where('id', $product->user_id)->first();
-                                        @endphp
-                                        <div class="card-brand">
-                                            {{($namenewProduct->name)}}
-                                        </div>
-                                        <div class="card-title-list">
-                                            <a href="{{route('detail_product.show', $product->id)}}">
-                                                @if(locationHelper() == 'kr')
-                                                    <div class="item-text">{{ $product->name_ko }}</div>
-                                                @elseif(locationHelper() == 'cn')
-                                                    <div class="item-text">{{$product->name_zh}}</div>
-                                                @elseif(locationHelper() == 'jp')
-                                                    <div class="item-text">{{$product->name_ja}}</div>
-                                                @elseif(locationHelper() == 'vi')
-                                                    <div class="item-text">{{$product->name_vi}}</div>
-                                                @else
-                                                    <div class="item-text">{{$product->name_en}}</div>
-                                                @endif
-                                            </a>
-                                        </div>
-                                        <div class="card-price d-flex">
-                                            @if($product->price)
-                                                <div class="card-price d-flex justify-content-between">
-                                                    @if($product->price != null)
-                                                        <div id="productPrice" class="price">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</div>
-                                                        <strike id="productOldPrice">{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
-                                                    @else
-                                                        <strike id="productOldPrice">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strike>
-                                                    @endif
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <div class="card-desc">
-                                            {{ $product->description }}
-                                        </div>
-                                        <div class="card-bottom d-flex mt-3">
-                                            <div class="card-bottom--left mr-4">
-                                                <a href="{{route('detail_product.show', $product->id)}}">Choose
-                                                    Options</a>
-                                            </div>
-                                            <div class="card-bottom--right">
-                                                <i class="item-icon fa-regular fa-heart"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-{{--            </div>--}}
+                @endforeach
+            </div>
         </div>
     </div>
     @include('frontend.pages.modal-products')

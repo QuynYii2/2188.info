@@ -1,5 +1,8 @@
-@php use App\Http\Controllers\Frontend\HomeController;use Illuminate\Support\Facades\Auth; @endphp
-
+@php use App\Http\Controllers\Frontend\HomeController;use Illuminate\Support\Facades\Auth;
+ $currentRouteName = Route::getCurrentRoute()->getName();
+ $arrNameNeedHid = ['stand.register.member.index', 'partner.register.member.index', 'parent.register.member.locale', 'chat.message.received', 'chat.message.sent'];
+$isRoute = in_array($currentRouteName, $arrNameNeedHid);
+@endphp
         <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -31,11 +34,11 @@
                     if (data.address && data.address.country && data.address.country_code) {
                         const countryName = data.address.country;
                         const countryCode = data.address.country_code;
-                        console.log(data.address)
+
                         localStorage.setItem('location', countryName);
                         localStorage.setItem('countryCode', countryCode);
                     } else {
-                        console.log('Country not found or an error occurred.');
+
                     }
                 })
                 .catch(error => {
@@ -69,6 +72,7 @@
           rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <div class="d-none">
     @if(Auth::check())
@@ -82,32 +86,23 @@
 <body>
 
 <!-- Header -->
-@include('frontend.layouts.partials.header', ['infoUser' => $infoUser ?? ''])
+@include('frontend.layouts.partials.header', ['infoUser' => $infoUser ?? '', 'isRoute' => $isRoute ])
 @include('sweetalert::alert')
 
-<div id="mt-body">
-    @php
-    (new HomeController())->createStatistic();
-    @endphp
+<div class="{{ $isRoute ? ' mt-5' : 'marginTop-body' }}" id="mt-body {{ $isRoute ? ' booth' : '' }} ">
     @yield('content')
 </div>
 
 <!-- Footer -->
-@include('frontend.layouts.partials.footer')
+@include('frontend.layouts.partials.footer', ['isRoute' => $isRoute])
 
 <!-- Back to top -->
 <div class="btn-back-to-top" id="myBtn">
-            <span class="symbol-btn-back-to-top">
-                <i class="zmdi zmdi-chevron-up"></i>
-            </span>
+    <span class="symbol-btn-back-to-top">
+        <i class="zmdi zmdi-chevron-up"></i>
+    </span>
 </div>
-<!-- Scripts -->
-{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>--}}
 <script src="{{ asset('js/vendor/jquery-3.3.1.min.js') }}"></script>
-{{--<script src="{{ asset('js/vendor/bootstrap.min.js') }}"></script>--}}
-{{--<script src="{{ asset('mail/jqBootstrapValidation.min.js') }}"></script>--}}
-
-{{--    <script src="{{ mix('js/app.js') }}" defer></script>--}}
 
 
 <script>
@@ -121,21 +116,8 @@
     });
 </script>
 
-{{--<script src="{{ asset('js/vendor/jquery-ui.min.js') }}"></script>--}}
-{{--<script src="{{ asset('js/vendor/jquery.countdown.min.js') }}"></script>--}}
-{{--<script src="{{ asset('js/vendor/jquery.nice-select.min.js') }}"></script>--}}
-{{--<script src="{{ asset('js/vendor/jquery.zoom.min.js') }}"></script>--}}
-{{--<script src="{{ asset('js/vendor/jquery.dd.min.js') }}"></script>--}}
-{{--<script src="{{ asset('js/vendor/jquery.slicknav.js') }}"></script>--}}
-{{--<script src="{{ asset('js/vendor/owl.carousel.min.js') }}"></script>--}}
-{{--<script src="{{ asset('js/mainV1.js') }}"></script>--}}
-
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 <script src="{{ asset('js/style.js') }}"></script>
 </body>

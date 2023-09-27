@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Member;
 
+use App\Enums\CategoryStatus;
 use App\Enums\CoinStatus;
 use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\MemberRegisterPersonSourceStatus;
@@ -23,6 +24,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Route;
 
 class RegisterMemberController extends Controller
 {
@@ -44,7 +46,7 @@ class RegisterMemberController extends Controller
         $members = [];
         for ($i = $index; $i < sizeof($members1); $i++) {
             array_push($members, $members1[$i]);
-        };
+        }
 
         return view('frontend/pages/registerMember/member-register', compact('members'));
     }
@@ -65,7 +67,7 @@ class RegisterMemberController extends Controller
     public function showRegisterMemberInfo($registerMember, Request $request)
     {
         (new HomeController())->getLocale($request);
-        $categories = Category::all();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $member = Member::find($registerMember);
         if (!$member || $member->status != MemberStatus::ACTIVE) {
             alert()->error('Error', 'Error, Page not found');
@@ -81,8 +83,40 @@ class RegisterMemberController extends Controller
                 ])->first();
             }
         }
+
+        $categories_no_parent = Category::where([
+            ['status', CategoryStatus::ACTIVE],
+            ['parent_id', null]
+        ])->get();
+
+        $categories_one_parent_array = null;
+        foreach ($categories_no_parent as $category) {
+            $categories_oneparent = Category::where([
+                ['status', CategoryStatus::ACTIVE],
+                ['parent_id', $category->id]
+            ])->get();
+            foreach ($categories_oneparent as $item) {
+                $categories_one_parent_array[] = $item;
+            }
+        }
+
+        $categories_one_parent = collect($categories_one_parent_array);
+
+        $categories_two_parent_array = null;
+        foreach ($categories_one_parent as $category) {
+            $categories_twoparent = Category::where([
+                ['status', CategoryStatus::ACTIVE],
+                ['parent_id', $category->id]
+            ])->get();
+            foreach ($categories_twoparent as $item) {
+                $categories_two_parent_array[] = $item;
+            }
+        }
+
+        $categories_two_parent = collect($categories_two_parent_array);
         return view('frontend/pages/registerMember/show-register-member-info', compact(
-            'registerMember', 'categories', 'member', 'exitsMember'
+            'registerMember', 'categories', 'member', 'exitsMember',
+            'categories_no_parent', 'categories_one_parent', 'categories_two_parent'
         ));
     }
 
@@ -154,45 +188,21 @@ class RegisterMemberController extends Controller
 
             $password = Hash::make($password);
 
-            $code = (new  HomeController())->generateRandomString(6);
-
-            $data = array('mail' => $email, 'name' => $email, 'code' => $code);
-
-//            $id = Auth::user()->id;
-            $id = 0;
-
             $price = 0;
 
-            // Công ty
-            $arrayIds = $this->getArrayIds($request, 'category-');
-            if ($arrayIds) {
-                try {
-                    $categories = implode(',', $arrayIds);
-                } catch (\Exception $exception) {
-                    alert()->error('Error', 'Error, Please choosing your apply category!');
-                    return back();
-                }
-            } else {
-                alert()->error('Error', 'Error, Please choosing your apply category!');
-                return back();
-            }
+            $code_1 = $request->input('code_1');
+            $code_2 = $request->input('code_2');
+            $code_3 = $request->input('code_3');
+            $code_4 = $request->input('code_4');
 
-            $codeBusiness = $categories;
+            $categoryIds = implode(',', $code_1) . ',' . implode(',', $code_2);
+            $arrayCategoryID = explode(',', $categoryIds);
+            sort($arrayCategoryID);
+            $categoryIds = implode(',', $arrayCategoryID);
 
-            $arrayIds = $this->getArrayIds($request, 'type_business-');
-            if ($arrayIds) {
-                try {
-                    $type_business = implode(',', $arrayIds);
-                } catch (\Exception $exception) {
-                    alert()->error('Error', 'Error, Please choosing your apply!');
-                    return back();
-                }
-            } else {
-                alert()->error('Error', 'Error, Please choosing your apply!');
-                return back();
-            }
+            $code_1_item = implode(',', $code_1);
+            $code_2_item = implode(',', $code_2);
 
-//            $id = Auth::user()->id;
             $id = 0;
 
             $status = MemberRegisterInfoStatus::ACTIVE;
@@ -203,16 +213,16 @@ class RegisterMemberController extends Controller
                 'phone' => $phoneNumber,
                 'fax' => $fax,
                 'code_fax' => 'default',
-                'category_id' => $categories,
-                'code_business' => $codeBusiness,
+                'category_id' => $categoryIds,
+                'code_business' => $code_1_item,
                 'number_business' => $numberBusiness,
-                'type_business' => $type_business,
+                'type_business' => $code_2_item,
                 'member' => $registerMember,
                 'address' => $address,
                 'member_id' => $memberID,
                 'status' => $status,
                 'giay_phep_kinh_doanh' => $gpkdPath,
-
+                'email' => $email,
                 'datetime_register' => $datetime_register,
                 'number_clearance' => $number_clearance,
                 'name_en' => $name_en,
@@ -222,7 +232,20 @@ class RegisterMemberController extends Controller
                 'certify_business' => $certify_business,
             ];
 
+            $userOld = User::where('email', $email)->first();
+            if ($userOld) {
+                alert()->error('Error', 'Error, Email is user used!');
+                return back();
+            }
+
+            $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
+            if ($memberOld) {
+                alert()->error('Error', 'Error, Email in member used!');
+                return back();
+            }
+
             $success = MemberRegisterInfo::create($create);
+
             if (!$success) {
                 alert()->error('Error', 'Register error, Please try again!');
                 return back();
@@ -244,34 +267,26 @@ class RegisterMemberController extends Controller
                 'rank' => '',
                 'member_id' => $newMember->id,
                 'sns_account' => $sns_account,
-                'type' => MemberRegisterType::REPRESENT,
-                'verifyCode' => $code,
+                'type' => MemberRegisterType::SOURCE,
+                'verifyCode' => '',
                 'isVerify' => 0,
                 'price' => $price,
                 'datetime_register' => $datetime_register,
                 'name_en' => $name_en,
-                'status' => MemberRegisterPersonSourceStatus::INACTIVE
+                'status' => MemberRegisterPersonSourceStatus::ACTIVE
             ];
 
-            $userOld = User::where('email', $email)->first();
-            if ($userOld) {
-                alert()->error('Error', 'Error, Email is user used!');
-                return back();
-            }
-
-            $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
-            if ($memberOld) {
-                alert()->error('Error', 'Error, Email in member used!');
-                return back();
-            }
-
-            $this->sendMail($data, $email);
             $this->createUser($fullName, $email, $phoneNumber, $password, RegisterMember::BUYER);
             $save = MemberRegisterPersonSource::create($memberRegister);
 
+            $member = MemberRegisterPersonSource::where([
+                ['email', $email],
+                ['isVerify', 0]
+            ])->first();
+
             if ($save) {
                 alert()->success('Success', 'Success, Create success! Please continue next steps');
-                return redirect(route('show.verify.register.member', $email));
+                return redirect(route('show.register.member.congratulation', $member->id));
             }
             alert()->error('Error', 'Error, Create error!');
             return back();
@@ -289,6 +304,8 @@ class RegisterMemberController extends Controller
 
             $address = $request->input('wards-select') . ', ' . $request->input('provinces-select') . ', ' . $request->input('cities-select') . ', ' . $request->input('countries-select');
             $companyName = $request->input('name_en');
+            $email = $request->input('email');
+            $homepage = $request->input('homepage');
             $numberBusiness = $request->input('number_business');
             $phoneNumber = $request->input('phone');
             $fax = $request->input('fax');
@@ -312,48 +329,27 @@ class RegisterMemberController extends Controller
             }
 
             $status_business = $request->input('status_business');
+
             $code_1 = $request->input('code_1');
             $code_2 = $request->input('code_2');
             $code_3 = $request->input('code_3');
             $code_4 = $request->input('code_4');
 
-
             if ($request->hasFile('giay_phep_kinh_doanh')) {
                 $gpkd = $request->file('giay_phep_kinh_doanh');
                 $gpkdPath = $gpkd->store('giay_phep_kinh_doanh', 'public');
             } else {
-                $gpkdPath = '';
+                $gpkdPath = null;
             }
 
-            $arrayIds = $this->getArrayIds($request, 'category-');
-            if ($arrayIds) {
-                try {
-                    $categories = implode(',', $arrayIds);
-                } catch (\Exception $exception) {
-                    alert()->error('Error', 'Error, Please choosing your apply category!');
-                    return back();
-                }
-            } else {
-                alert()->error('Error', 'Error, Please choosing your apply category!');
-                return back();
-            }
+            $code_business = $request->input('code_business');
+            $type_business = $request->input('type_business');
 
-            $codeBusiness = $categories;
+            $categoryIds = implode(',', $code_1) . ',' . implode(',', $code_2) . ',' . implode(',', $code_3);
+            $arrayCategoryID = explode(',', $categoryIds);
+            sort($arrayCategoryID);
+            $categoryIds = implode(',', $arrayCategoryID);
 
-            $arrayIds = $this->getArrayIds($request, 'type_business-');
-            if ($arrayIds) {
-                try {
-                    $type_business = implode(',', $arrayIds);
-                } catch (\Exception $exception) {
-                    alert()->error('Error', 'Error, Please choosing your apply!');
-                    return back();
-                }
-            } else {
-                alert()->error('Error', 'Error, Please choosing your apply!');
-                return back();
-            }
-
-//            $id = Auth::user()->id;
             $id = 0;
 
             if ($registerMember == RegisterMember::LOGISTIC || $registerMember == RegisterMember::TRUST || $registerMember == RegisterMember::BUYER) {
@@ -367,19 +363,28 @@ class RegisterMemberController extends Controller
                 $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
             }
 
+            $code_1_item = implode(',', $code_1);
+            $code_2_item = implode(',', $code_2);
+            $code_3_item = implode(',', $code_3);
+
             if ($exitMemberPerson) {
                 $exitsMember = MemberRegisterInfo::where([
                     ['id', $exitMemberPerson->member_id],
                     ['status', MemberRegisterInfoStatus::ACTIVE]
                 ])->first();
 
+                if (!$gpkdPath) {
+                    $gpkdPath = $exitsMember->giay_phep_kinh_doanh;
+                }
+
                 $exitsMember->user_id = $id;
                 $exitsMember->name = $companyName;
+                $exitsMember->email = $email;
                 $exitsMember->phone = $phoneNumber;
-                $exitsMember->category_id = $categories;
-                $exitsMember->numberBusiness = $numberBusiness;
+                $exitsMember->category_id = $categoryIds;
+                $exitsMember->number_business = $numberBusiness;
                 $exitsMember->type_business = $type_business;
-                $exitsMember->code_business = $codeBusiness;
+                $exitsMember->code_business = $code_business;
                 $exitsMember->giay_phep_kinh_doanh = $gpkdPath;
                 $exitsMember->address = $address;
                 $exitsMember->member_id = $memberID;
@@ -393,22 +398,37 @@ class RegisterMemberController extends Controller
                 $exitsMember->address_kr = $address_kr;
                 $exitsMember->certify_business = $certify_business;
                 $exitsMember->status_business = $status_business;
-                $exitsMember->code_1 = $code_1;
-                $exitsMember->code_2 = $code_2;
-                $exitsMember->code_3 = $code_3;
+                $exitsMember->code_1 = $code_1_item;
+                $exitsMember->code_2 = $code_2_item;
+                $exitsMember->code_3 = $code_3_item;
                 $exitsMember->code_4 = $code_4;
+                $exitsMember->homepage = $homepage;
 
                 $success = $exitsMember->save();
-                $newUser = $exitsMember;
+                if ($success) {
+                    alert()->success('Success', 'Success, Update success!');
+                    return back();
+                }
+                alert()->error('Error', 'Error, Create error!');
+                return back();
+
             } else {
+                $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
+                if ($memberOld) {
+                    alert()->error('Error', 'Error, Email in member used!');
+                    return back();
+                }
+
                 $create = [
                     'user_id' => $id,
                     'name' => $companyName,
                     'phone' => $phoneNumber,
                     'fax' => $fax,
+                    'email' => $email,
+                    'homepage' => $homepage,
                     'code_fax' => 'default',
-                    'category_id' => $categories,
-                    'code_business' => $codeBusiness,
+                    'category_id' => $categoryIds,
+                    'code_business' => $code_business,
                     'number_business' => $numberBusiness,
                     'type_business' => $type_business,
                     'member' => $registerMember,
@@ -425,9 +445,9 @@ class RegisterMemberController extends Controller
                     'address_kr' => $address_kr,
                     'certify_business' => $certify_business,
                     'status_business' => $status_business,
-                    'code_1' => $code_1,
-                    'code_2' => $code_2,
-                    'code_3' => $code_3,
+                    'code_1' => $code_1_item,
+                    'code_2' => $code_2_item,
+                    'code_3' => $code_3_item,
                     'code_4' => $code_4,
                 ];
 
@@ -437,14 +457,6 @@ class RegisterMemberController extends Controller
                     ['member', $registerMember],
                 ])->orderBy('created_at', 'desc')->first();
             }
-//            if ($exitsMember) {
-//                alert()->error('Error', 'Error, Đã tồn tại hội viên, không thể thêm mới!');
-//                return redirect(route('member.registered.detail'));
-//            }
-
-//            $user = Auth::user();
-//            $user->member = $registerMember;
-//            $user->save();
             if ($success) {
                 alert()->success('Success', 'Success, Create success! Please continue next steps');
                 return redirect(route('show.register.member.person.source', [
@@ -486,11 +498,6 @@ class RegisterMemberController extends Controller
 
             $password = Hash::make($password);
 
-            $code = (new  HomeController())->generateRandomString(6);
-
-            $data = array('mail' => $email, 'name' => $email, 'code' => $code);
-
-//            $id = Auth::user()->id;
             $id = 0;
 
             $newID = (integer)$member;
@@ -537,7 +544,7 @@ class RegisterMemberController extends Controller
                 'member_id' => $member,
                 'sns_account' => $sns_account,
                 'type' => MemberRegisterType::SOURCE,
-                'verifyCode' => $code,
+                'verifyCode' => '',
                 'isVerify' => 0,
                 'price' => $price,
                 'datetime_register' => $datetime_register,
@@ -545,8 +552,15 @@ class RegisterMemberController extends Controller
                 'responsibility' => $responsibility,
                 'position' => $position,
                 'code' => $codeItem,
-                'status' => MemberRegisterPersonSourceStatus::INACTIVE
+                'status' => MemberRegisterPersonSourceStatus::ACTIVE
             ];
+
+            $userOld = User::where('email', $email)->first();
+            $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
+            $memberOld_v2 = MemberRegisterPersonSource::where('code', $codeItem)->first();
+
+            $url = url()->previous();
+            $route = app('router')->getRoutes($url)->match(app('request')->create($url))->getName();
 
             if ($memberPersonSource) {
                 $user = User::where('email', $memberPersonSource->email)->first();
@@ -563,49 +577,100 @@ class RegisterMemberController extends Controller
                 $memberPersonSource->position = $position;
                 $memberPersonSource->responsibility = $responsibility;
 
-                $memberPersonSource->status = MemberRegisterPersonSourceStatus::INACTIVE;
+
                 if ($email == $memberPersonSource->email) {
+                    if ($exitsMember->member != RegisterMember::TRUST) {
+                        DB::table('role_user')->insert([
+                            'role_id' => 2,
+                            'user_id' => $user->id
+                        ]);
+                    }
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
+                    $memberPersonSource->status = MemberRegisterPersonSourceStatus::ACTIVE;
                     $memberPersonSource->email = $email;
-                    $success = $memberPersonSource->save();
+                    $memberPersonSource->save();
+
                     $register = MemberRegisterInfo::find($member);
+
+                    if ($route == 'profile.member.person') {
+                        alert()->success('Success', 'Success, Update success!');
+                        return back();
+                    }
+
                     alert()->success('Success', 'Success, Create success! Please continue next steps');
                     return redirect(route('show.register.member.person.represent', [
                         'person_id' => $memberPersonSource->id,
                         'registerMember' => $register->member
                     ]));
                 } else {
+                    if ($userOld) {
+                        alert()->error('Error', 'Error, Email is user used!');
+                        return back();
+                    }
+
+                    if ($memberOld) {
+                        alert()->error('Error', 'Error, Email in member used!');
+                        return back();
+                    }
+                    if ($exitsMember->member != RegisterMember::TRUST) {
+                        DB::table('role_user')->insert([
+                            'role_id' => 2,
+                            'user_id' => $user->id
+                        ]);
+                    }
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
+                    $memberPersonSource->status = MemberRegisterPersonSourceStatus::ACTIVE;
                     $memberPersonSource->email = $email;
-                    $user = User::where('email', Auth::user()->email)->first();
-                    $user->email = $email;
-                    $this->sendMail($data, $email);
-                    $user->save();
+
                     $memberPersonSource->isVerify = 0;
-                    $memberPersonSource->verifyCode = $code;
+                    $memberPersonSource->verifyCode = '';
                     $success = $memberPersonSource->save();
+
+                    if ($route == 'profile.member.person') {
+                        alert()->success('Success', 'Success, Update success!');
+                        return back();
+                    }
                 }
             } else {
-                $userOld = User::where('email', $email)->first();
                 if ($userOld) {
                     alert()->error('Error', 'Error, Email is user used!');
                     return back();
                 }
 
-                $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
                 if ($memberOld) {
                     alert()->error('Error', 'Error, Email in member used!');
                     return back();
                 }
 
-                $this->sendMail($data, $email);
+                if ($memberOld_v2) {
+                    alert()->error('Error', 'Error, Code in member used!');
+                    return back();
+                }
+
                 $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member);
                 $success = MemberRegisterPersonSource::create($create);
             }
 
+            $register = MemberRegisterInfo::find($member);
+            $member = MemberRegisterPersonSource::where([
+                ['email', $email],
+                ['isVerify', 0]
+            ])->first();
+
+            $checkMember = $request->input('checkMember');
+
             if ($success) {
                 alert()->success('Success', 'Success, Create success! Please continue next steps');
-                return redirect(route('show.verify.register.member', $email));
+                if ($typeMember == RegisterMember::TRUST) {
+                    return redirect(route('show.register.member.person.represent', [
+                        'person_id' => $member->id,
+                        'registerMember' => $register->member
+                    ]));
+                }
+                if ($checkMember) {
+                    return redirect(route('show.register.member.ship', $member->id));
+                }
+                return redirect(route('subscription.options.member.person', $member->id));
             }
             alert()->error('Error', 'Error, Create error!');
             return back();
@@ -613,6 +678,17 @@ class RegisterMemberController extends Controller
             alert()->error('Error', 'Error, Please try again!');
             return back();
         }
+    }
+
+    public function showSubscriptionOptions(Request $request, $member)
+    {
+        (new HomeController())->getLocale($request);
+        $member = MemberRegisterPersonSource::find($member);
+        if (!$member) {
+            return back();
+        }
+        $register = MemberRegisterInfo::find($member->member_id);
+        return view('frontend.pages.registerMember.subscription-options', compact('member', 'register'));
     }
 
     /*Show form đăng kí thông tin người đại diện*/
@@ -662,11 +738,6 @@ class RegisterMemberController extends Controller
 
             $password = Hash::make($password);
 
-            $code = (new  HomeController())->generateRandomString(6);
-
-            $data = array('mail' => $email, 'name' => $email, 'code' => $code);
-
-//            $id = Auth::user()->id;
             $id = 0;
 
             $memberBefore = MemberRegisterPersonSource::where('id', $personSource)->first();
@@ -685,7 +756,7 @@ class RegisterMemberController extends Controller
                 'rank' => '0',
                 'sns_account' => $sns_account,
                 'type' => MemberRegisterType::REPRESENT,
-                'verifyCode' => $code,
+                'verifyCode' => '',
                 'isVerify' => 0,
 
                 'datetime_register' => $datetime_register,
@@ -694,7 +765,7 @@ class RegisterMemberController extends Controller
                 'position' => $position,
                 'code' => $codeItem,
 
-                'status' => MemberRegisterPersonSourceStatus::INACTIVE
+                'status' => MemberRegisterPersonSourceStatus::ACTIVE
             ];
 
             $exitMemberPerson = null;
@@ -715,6 +786,14 @@ class RegisterMemberController extends Controller
                 ])->first();
             }
 
+            $userOld = User::where('email', $email)->first();
+            $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
+            $memberOld_v2 = MemberRegisterPersonSource::where('code', $codeItem)->first();
+
+            // Get previous url
+            $url = url()->previous();
+            $route = app('router')->getRoutes($url)->match(app('request')->create($url))->getName();
+
             if ($memberPerson) {
                 $user = User::where('email', $memberPerson->email)->first();
                 $memberPerson->user_id = $id;
@@ -729,44 +808,67 @@ class RegisterMemberController extends Controller
                 $memberPerson->position = $position;
                 $memberPerson->responsibility = $responsibility;
 
-                $memberPerson->status = MemberRegisterPersonSourceStatus::INACTIVE;
+                $memberPerson->status = MemberRegisterPersonSourceStatus::ACTIVE;
                 if ($email == $memberPerson->email) {
+                    $memberPerson->status = MemberRegisterPersonSourceStatus::ACTIVE;
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
                     $memberPerson->email = $email;
-                    $success = $memberPerson->save();
+                    $memberPerson->save();
+
+                    if ($route == 'profile.member.represent') {
+                        alert()->success('Success', 'Success, Update success!');
+                        return back();
+                    }
+
                     alert()->success('Success', 'Success');
-                    return redirect(route('home'));
+                    return redirect(route('show.register.member.ship', $memberBefore->member_id));
                 } else {
+                    if ($userOld) {
+                        alert()->error('Error', 'Error, Email is user used!');
+                        return back();
+                    }
+                    if ($memberOld) {
+                        alert()->error('Error', 'Error, Email in member used!');
+                        return back();
+                    }
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
                     $memberPerson->email = $email;
-                    $user = User::where('email', Auth::user()->email)->first();
-                    $user->email = $email;
-                    $this->sendMail($data, $email);
-                    $user->save();
                     $memberPerson->isVerify = 0;
-                    $memberPerson->verifyCode = $code;
+                    $memberPerson->verifyCode = '';
                     $success = $memberPerson->save();
+                    if ($route == 'profile.member.represent') {
+                        alert()->success('Success', 'Success, Update success!');
+                        return back();
+                    }
                 }
             } else {
-                $userOld = User::where('email', $email)->first();
                 if ($userOld) {
                     alert()->error('Error', 'Error, Email is user used!');
                     return back();
                 }
-
-                $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
                 if ($memberOld) {
                     alert()->error('Error', 'Error, Email in member used!');
                     return back();
                 }
-                $this->sendMail($data, $email);
+                if ($memberOld_v2) {
+                    alert()->error('Error', 'Error, Code in member used!');
+                    return back();
+                }
                 $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member);
-
                 $success = MemberRegisterPersonSource::create($create);
             }
+
+            $member = MemberRegisterPersonSource::where([
+                ['email', $email],
+                ['isVerify', 0]
+            ])->first();
+            $register = MemberRegisterInfo::find($member->member_id);
             if ($success) {
                 alert()->success('Success', 'Success, Create success! Please continue next steps');
-                return redirect(route('show.verify.register.member', $email));
+                if ($register->member == RegisterMember::TRUST) {
+                    return redirect(route('show.register.member.congratulation', $member->id));
+                }
+                return redirect(route('show.register.member.ship', $member->id));
             }
             alert()->error('Error', 'Error, Create error!');
             return back();
@@ -863,6 +965,20 @@ class RegisterMemberController extends Controller
             compact('memberRepresent', 'memberSource', 'company', 'member'));
     }
 
+    public function congratulationRegisterMemberLogistic($member, Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $memberRepresent = MemberRegisterPersonSource::find($member);
+        if (!$memberRepresent) {
+            return back();
+        }
+        $memberSource = MemberRegisterPersonSource::find($memberRepresent->person);
+        $company = MemberRegisterInfo::find($memberRepresent->member_id);
+        $member = Member::find($company->member_id);
+        return view('frontend.pages.registerMember.congratulation-logistic',
+            compact('memberRepresent', 'memberSource', 'company', 'member'));
+    }
+
     /*Show form nhập verify code để send mail*/
     public function processVerifyEmail($email, Request $request)
     {
@@ -931,7 +1047,7 @@ class RegisterMemberController extends Controller
     {
         $listCategoryName[] = null;
         $arrayIds = null;
-        $categories = Category::all();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         foreach ($categories as $category) {
             $name = $input . $category->id;
             $listCategoryName[] = $name;
@@ -953,6 +1069,17 @@ class RegisterMemberController extends Controller
             return null;
         }
         return $arrayIds;
+    }
+
+    private function updateUser($user, $fullName, $email, $phoneNumber, $member)
+    {
+        if ($user) {
+            $user->name = $fullName;
+            $user->email = $email;
+            $user->phone = $phoneNumber;
+            $user->member = $member;
+            $user->save();
+        }
     }
 
     private function sendMail($data, $email)

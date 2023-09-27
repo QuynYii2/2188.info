@@ -25,6 +25,8 @@ class CategoryController extends Controller
     {
         (new HomeController())->getLocale($request);
         $categories = Category::get()->toTree();
+        $category = Category::find($id);
+        $childCategories = Category::where('parent_id', $id)->get();
         $listPayment = PaymentMethod::all();
         $listTransport = TransportMethod::all();
         $priceProductOfCategory = Product::selectRaw('MAX(price) AS maxPrice, MIN(price) AS minPrice')
@@ -38,7 +40,7 @@ class CategoryController extends Controller
             $priceProductOfCategory->minPrice = 0;
         }
         $listProduct = [];
-        return view('frontend/pages/category', compact('categories', 'listProduct', 'listPayment', 'listTransport', 'priceProductOfCategory'));
+        return view('frontend/pages/category', compact('categories', 'listProduct', 'listPayment', 'listTransport', 'priceProductOfCategory', 'category', 'childCategories'));
     }
 
     public function filterInCategory(Request $request, $id)
@@ -132,20 +134,10 @@ class CategoryController extends Controller
                     </div>
                 </div>
                 <div class="item-body">
-                    <div class="card-rating">
-                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                        <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                        <span>(1)</span>
-                    </div>
-                    <div class="card-brand">
-                    </div>
-                    <div class="card-title">
+                    <div class="card-title1">
                         <a href="' . route('detail_product.show', $product['id']) . '">' . $product['name'] . '</a>
                     </div>
-                    <div class="card-price d-flex justify-content-between">
+                    <div class="card-price">
                         <div class="price-sale">
                             <strong>' . number_format(convertCurrency('USD', $currency, $product['price']), 0, ',', '.') . $currency . '</strong>
                         </div>

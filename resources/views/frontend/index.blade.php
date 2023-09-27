@@ -166,27 +166,27 @@
                 <div class="section-First-right col-xl-6 col-md-4">
                     <div class="row">
                         @if(!$banner)
-                            <div class="col-4 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-1.png"
                                      alt="">
                             </div>
-                            <div class="col-4 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-2.png"
                                      alt="">
                             </div>
-                            <div class="col-4 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-3.png"
                                      alt="">
                             </div>
-                            <div class="col-4 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-4.png"
                                      alt="">
                             </div>
-                            <div class="col-4 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-1.png"
                                      alt="">
                             </div>
-                            <div class="col-4 item">
+                            <div class="col-md-4 col-6 item">
                                 <img src="https://cdn11.bigcommerce.com/s-3uw22zu194/product_images/uploaded_images/right-banner-home-2.png"
                                      alt="">
                             </div>
@@ -238,6 +238,7 @@
                     @endfor
                 </div>
                 <div class="col-12 col-md-9 col-xl-8">
+
                     <section class="section-Fourth section">
                         <div class="content">{{ __('home.New Products') }}</div>
                         <div class="swiper NewProducts row">
@@ -280,10 +281,9 @@
                                         </div>
                                     @endforeach
                                 @endforeach
-
-                                <div class="swiper-button-next"></div>
-                                <div class="swiper-button-prev"></div>
                             </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
                         </div>
                     </section>
                     <div class="category-img section pt-3 pb-3">
@@ -402,24 +402,11 @@
             </div>
         </section>
         @include('frontend.pages.modal-products')
-        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-
-        <script>
-            let side_cate = document.getElementById('side-cate');
-            let carousel_1 = document.getElementById('carousel__1');
-            let carousel_2 = document.getElementById('carousel__2');
-
-            let h_car_1 = carousel_1.offsetHeight;
-            let h_car_2 = carousel_2.offsetHeight;
-
-            let heightB = h_car_1 !== 0 ? h_car_1 : h_car_2;
-            side_cate.style.height = heightB + 'px';
-        </script>
         <script>
             $(document).ready(function ($) {
                 $(".card-bottom--right").click(function () {
                     var idProduct = $(this).attr('id-product');
-                    console.log(idProduct)
+
 
                     $.ajax({
                         url: '{{route('user.wish.lists')}}',
@@ -433,7 +420,7 @@
                             alert(response.message);
                         },
                         error: function (exception) {
-                            // console.log(exception)
+                            //
                         }
                     });
                 });

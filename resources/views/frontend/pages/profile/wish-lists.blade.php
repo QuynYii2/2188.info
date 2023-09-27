@@ -44,7 +44,7 @@
         $(document).ready(function ($) {
             $(".deleteButton--wish-list").click(function () {
                 var idWishList = $(this).data('value');
-                console.log(idWishList)
+
                 $.ajax({
                     url: "{{route('wish.list.delete', ['id'=>':id'])}}",
                     method: 'POST',

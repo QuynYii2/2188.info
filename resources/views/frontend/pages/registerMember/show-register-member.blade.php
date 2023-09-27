@@ -6,6 +6,12 @@
     .btn-hidden:hover {
         cursor: not-allowed !important;
     }
+
+    .border-bottom {
+        width: 100%;
+        border-bottom: 5px solid black;
+        margin-bottom: 16px;
+    }
 </style>
 
 @section('content')
@@ -13,46 +19,59 @@
     <div class="start-page mb-3">
         <div class="background container-fluid pt-3 justify-content-center pb-3">
             <div class="form-title text-center">
-                <h3>{{ __('home.sign up member') }}</h3>
+                <h3 style="font-size: 36px">{{ __('home.commit member') }}</h3>
             </div>
             <div class="mt-3">
-                <div class="text-center mb-4">
-                    {{ __('home.Agree to the terms and conditions of the member') }} {{$member->name}}
+                <div class="text-center solid p-3 ml-3 mr-3 " style="font-size: 35px; font-weight: 600">
+                    <p class="text-primary">
+                        @if($member->name == \App\Enums\RegisterMember::LOGISTIC)
+                            {{ __('home.commit member logistic') }}
+                        @elseif($member->name == \App\Enums\RegisterMember::TRUST)
+                            {{ __('home.commit member trust') }}
+                        @else
+                            {{ __('home.commit member buyer') }}
+                        @endif
+                    </p>
                 </div>
                 <div class="row ml-3 mr-3">
-                    <div class="col-md-6 border pt-4">
-                        <h5 class="text-center">{{ __('home.Check the rules you must agree to below') }}</h5>
-                        <div class="rules" onclick="validateAll()">
-                            <p class="text-warning">
-                                {{ __('home.Agree to Terms') }}
-                            </p>
-                            <input type="checkbox" id="rules" name="rules" required>
-                            <label for="rules">  {{ __('home.I agree to the above Terms') }}</label><br>
+                    <div class="col-md-6 solid-3 pt-4 pl-0 pr-0">
+                        <h5 class="text-center mix-3 pb-2">{{ __('home.Check the rules you must agree to below') }}</h5>
+                        <div class="rules mix-3 pb-5" onclick="validateAll()">
+                            <div class="ml-3">
+                                <p class="text-warning" style="font-size: 18px">
+                                    {{ __('home.Agree to Terms') }}
+                                </p>
+                                <p class="float-right mr-3">
+                                    <input type="checkbox" id="rules" name="rules" required>
+                                    <label for="rules">  {{ __('home.I agree to the above Terms') }}</label><br>
+                                </p>
+                            </div>
                         </div>
-                        <div class="getInfo" onclick="validateAll()">
-                            <p class="text-warning">
-                                {{ __('home.Agree to the Information Collection Policy') }}
-                            </p>
-                            <input type="checkbox" id="getInfo" name="getInfo" required>
-                            <label for="getInfo"> {{ __('home.I agree to the above Terms') }}</label><br>
+                        <div class="getInfo mix-3 pb-5 " onclick="validateAll()">
+                            <div class="ml-3">
+                                <p class="text-warning" style="font-size: 18px">
+                                    {{ __('home.Agree to the Information Collection Policy') }}
+                                </p>
+                                <p class="float-right mr-3">
+                                    <input type="checkbox" id="getInfo" name="getInfo" required>
+                                    <label for="getInfo"> {{ __('home.I agree to the above Terms') }}</label><br>
+                                </p>
+                            </div>
                         </div>
-                        <div class="trustInfo" onclick="validateAll()">
-                            <p class="text-warning">
-                                {{ __('home.Agree to the Terms of Information Use') }}
-                            </p>
-                            <input type="checkbox" id="trustInfo" name="trustInfo" required>
-                            <label for="getInfo"> {{ __('home.I agree to the above Terms') }}</label><br>
-                        </div>
-                        <div class="all" onclick="validate()">
-                            <p class="text-warning">
-                                {{ __('home.Agree all') }}
-                            </p>
-                            <input type="checkbox" id="all" name="all">
-                            <label for="all"> {{ __('home.all') }}</label><br>
+                        <div class="trustInfo pb-3" onclick="validateAll()">
+                            <div class="ml-3">
+                                <p class="text-warning" style="font-size: 18px">
+                                    {{ __('home.Agree to the Terms of Information Use') }}
+                                </p>
+                                <p class="float-right mr-3">
+                                    <input type="checkbox" id="trustInfo" name="trustInfo" required>
+                                    <label for="trustInfo"> {{ __('home.I agree to the above Terms') }}</label><br>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6 border pt-4">
-                        <h5 class="text-center">{{ __('home.Main function only for members') }}</h5>
+                    <div class="col-md-6 solid-2 pt-4 pl-0 pr-0">
+                        <h5 class="text-center mix-3 pb-2">{{ __('home.Main function only for members') }}</h5>
                         @php
                             $listPermissionID = $member->permission_id;
                             $arrayPermissionID = null;
@@ -61,43 +80,37 @@
                             }
                         @endphp
                         <ol class="text-success">
-                            @if($arrayPermissionID)
-                                @foreach($arrayPermissionID as $permissionID)
-                                    <li>
-
-                                        @php
-                                            $permission = \App\Models\Permission::find($permissionID);
-                                            $ld = new \App\Http\Controllers\TranslateController();
-                                        @endphp
-                                        {{ $ld->translateText($permission->name, locationPermissionHelper()) }}
-                                    </li>
-                                @endforeach
-                            @endif
+                            <li>{{__('home.permission_one')}}</li>
+                            <li>{{__('home.permission_two')}}</li>
+                            <li>{{__('home.permission_there')}}</li>
                         </ol>
                     </div>
                 </div>
                 <input type="text" hidden="" id="price" name="price"
                        value="0">
-                <p class="bg-success full-width p-3 ml-3 mr-3"></p>
-                <div class="mt-3 mb-3">
-                    <h5 class="text-center">
-                        {{ __('home.Join member') }} {{$member->name}}
-                        <p class="text-danger text-center">{{ __('home.Price') }}:
-                            ${{$member->price}}</p>
-                    </h5>
-                </div>
-                <div class="row text-center">
-                    <div class="col-md-6">
+                <div class="solid-3 ml-3 mr-3">
+                    <p class="bg-member-green p-4 mix-3"></p>
+                    <div class="row text-center p-3">
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="all" onclick="validate()">
+                            <span class="text-warning mr-4">
+                                {{ __('home.Agree all') }}
+                            </span>
+                                <input type="checkbox" id="all" name="all">
+                                <label for="all"> {{ __('home.all') }}</label><br>
+                            </div>
+                            <a href="{{route('show.register.member.info', $member->id)}}"
+                               id="register" class="d-none btn btn-success mr-3 btn-register">
+                                {{ __('home.sign up') }}
+                            </a>
+                            <button id="register-btn" class="btn-hidden btn btn-secondary mr-3 btn-register">
+                                {{ __('home.sign up') }}
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <a href="{{route('show.register.member.info', $member->id)}}"
-                           id="register" class="d-none btn btn-success mr-3">
-                            {{ __('home.sign up') }}
-                        </a>
-                        <button id="register-btn" class="btn-hidden btn btn-secondary mr-3">
-                            {{ __('home.sign up') }}
-                        </button>
-                    </div>
+                    <p class="bg-member-green p-4 mb-0 mt-3 "></p>
                 </div>
             </div>
         </div>

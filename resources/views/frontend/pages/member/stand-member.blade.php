@@ -3,125 +3,50 @@
 @section('content')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
-    <style>
-        body{
-            background: white;
-        }
-        .size{
-            font-size: 17px;
-        }
-        :root {
-            --color-white: #ffffff;
-            --color-black: #000000;
-            --color-light: #f5f7f8;
-            --color-dark: #333333;
-            --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
-        }
-
-        button:focus {
-            box-shadow: none;
-        }
-
-        .main .item-card {
-            border-radius: 2px;
-        }
-
-        .main .card-image {
-            display: block;
-            padding-top: 70%;
-            position: relative;
-            width: 100%;
-        }
-
-        .modal-dialog {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .main .card-image img {
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .modal-header{
-            border: none;
-        }
-
-        .modal-content-css {
-            height: 85vh;
-            overflow-y: auto;
-        }
-
-        .btn:focus {
-            outline: 0;
-            box-shadow: none;
-        }
-
-        .modal-header{
-            padding-bottom: 0;
-        }
-    </style>
-    <script>
-        $('[data-fancybox="gallery"]').fancybox({
-            buttons: [
-                "slideShow",
-                "thumbs",
-                "zoom",
-                "fullScreen",
-                "share",
-                "close"
-            ],
-            loop: false,
-            protect: true
-        });
-    </script>
-    <div class="container-fluid">
+    <div class="container stand-member">
         @if($company)
             @php
-                $memberAccounts = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->get();
-                if (!$memberAccounts->isEmpty()){
-                  $products = \App\Models\Product::where(function ($query) use ($company, $memberAccounts){
-                        if (count($memberAccounts) == 2){
-                            $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
-                            $user2 = \App\Models\User::where('email', $memberAccounts[1]->email)->first();
-                        } else{
-                            $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
-                            $user2 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
-                        }
+                if (Auth::check()){
+                                                $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                                                  $isMember = null;
+                                                if ($memberPerson){
+                                                    $member = \App\Models\MemberRegisterInfo::where([
+                                                        ['id', $memberPerson->member_id],
+                                                        ['status', \App\Enums\MemberRegisterInfoStatus::ACTIVE]
+                                                    ])->first();
+                                                    if ($member){
+                                                        $isMember = true;
+                                                    }
+                                                }
+                                            }
+                    $memberAccounts = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->get();
+                    $companyPerson = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->first();
+                    $oldUser = \App\Models\User::where('email', $companyPerson->email)->first();
+                    if (!$memberAccounts->isEmpty()){
+                      $products = \App\Models\Product::where(function ($query) use ($company, $memberAccounts){
+                            if (count($memberAccounts) == 2){
+                                $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
+                                $user2 = \App\Models\User::where('email', $memberAccounts[1]->email)->first();
+                            } else{
+                                $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
+                                $user2 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
+                            }
 
-                        $query->where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])
-                              ->orWhere([['user_id', $user1->id], ['status', \App\Enums\ProductStatus::ACTIVE]])
-                              ->orWhere([['user_id', $user2->id], ['status', \App\Enums\ProductStatus::ACTIVE]]);
-                        })->get();
-                } else{
-                    $products = \App\Models\Product::where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])->get();
-                }
-                $firstProduct = null;
-                if (!$products->isEmpty()){
-                 $firstProduct = $products[0];
-                }
+                            $query->where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])
+                                  ->orWhere([['user_id', $user1->id], ['status', \App\Enums\ProductStatus::ACTIVE]])
+                                  ->orWhere([['user_id', $user2->id], ['status', \App\Enums\ProductStatus::ACTIVE]]);
+                            })->get();
+                    } else{
+                        $products = \App\Models\Product::where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])->get();
+                    }
+                    $firstProduct = null;
+                    if (!$products->isEmpty()){
+                     $firstProduct = $products[0];
+                    }
             @endphp
             <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
-            <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
-            <div class="d-flex justify-content-between align-items-center p-3">
-                <div>
-                    <a href="{{ route('stand.register.member.index', $company->id) }}" class="btn btn-primary mr-2">{{ __('home.Booth') }}</a>
-                    <a href="{{route('partner.register.member.index')}}" class="btn btn-warning">{{ __('home.Partner List') }}</a>
-                </div>
-                <div>
-                    <a href="{{route('chat.message.received')}}" class="btn btn-primary mr-2">{{ __('home.Message received') }}</a>
-                    <a href="{{route('chat.message.sent')}}" style="" class="btn btn-primary mr-2">{{ __('home.Message sent') }}</a>
-                    <a href="#" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
-                    <a href="#" class="btn btn-primary mr-2" data-toggle="modal" data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
-                </div>
-            </div>
+            {{--            <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>--}}
+            @include('frontend.pages.member.header_member')
             <div class="row m-0">
                 <div class="col-md-6 border">
                     <div class="row">
@@ -129,34 +54,26 @@
                             <div class="mt-2">
                                 <h5 class="mb-3">
                                     {{ ($company->name) }}
-    {{--                                @if(locationHelper() == 'kr')--}}
-    {{--                                    {{ ($company->name_ko) }}--}}
-    {{--                                @elseif(locationHelper() == 'cn')--}}
-    {{--                                    {{ ($company->name_zh) }}--}}
-    {{--                                @elseif(locationHelper() == 'jp')--}}
-    {{--                                    {{ ($company->name_ja) }}--}}
-    {{--                                @elseif(locationHelper() == 'vi')--}}
-    {{--                                    {{ ($company->name_vi) }}--}}
-    {{--                                @else--}}
-    {{--                                    {{ ($company->name_en) }}--}}
-    {{--                                @endif--}}
                                 </h5>
                             </div>
                         </div>
                         <div class="row p-2">
                             <div class="col-md-6">
                                 <div class="mt-2">
-                                    <div class="mb-3 size"><b>{{ __('home.Company code') }}: </b> {{ ($company->code_business) }}</div>
+                                    <div class="mb-3 size"><b>{{ __('home.Company code') }}
+                                            : </b> {{ ($company->code_business) }}</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mt-2">
-                                    <div class="mb-3 size"><b>{{ __('home.Elite enterprise') }}: </b> {{ ($company->member) }}</div>
+                                    <div class="mb-3 size"><b>{{ __('home.Elite enterprise') }}
+                                            : </b> {{ ($company->member) }}</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mt-2">
-                                    <div class="mb-3 size"><b>{{ __('home.Membership classification') }}: </b> {{ ($company->member) }}</div>
+                                    <div class="mb-3 size"><b>{{ __('home.Membership classification') }}
+                                            : </b> {{ ($company->member) }}</div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -221,26 +138,27 @@
                                ['status', \App\Enums\MemberPartnerStatus::ACTIVE],
                              ])->first();
                         }
-                        @endphp
-                        @if(!$oldItem)
-                            @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
-                                <form method="post" action="{{route('stands.register.member')}}" hidden>
-                                    @csrf
-                                    <input type="text" name="company_id_source" class="d-none" value="{{$company->id}}">
-                                    <input type="text" name="price" class="d-none" value="{{$firstProduct->price ?? ''}}">
-                                    <button class="btn btn-primary" id="btnFollow" type="submit">
-                                        Follow
-                                    </button>
-                                </form>
-                            @endif
+                    @endphp
+                    @if(!$oldItem)
+                        @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
+                            <form method="post" action="{{route('stands.register.member')}}" hidden>
+                                @csrf
+                                <input type="text" name="company_id_source" class="d-none" value="{{$company->id}}">
+                                <input type="text" name="price" class="d-none" value="{{$firstProduct->price ?? ''}}">
+                                <button class="btn btn-primary" id="btnFollow" type="submit">
+                                    Follow
+                                </button>
+                            </form>
                         @endif
+                    @endif
                 </div>
             </div>
     </div>
-    <div class="mt-3 row container-fluid">
-        @foreach($products as $product)
-            <button type="button" class="btn thumbnailProduct col-xl-2 col-md-3" data-toggle="modal"
-                    data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}" data-name="
+    <div class="mt-3 container">
+        <div class="row">
+            @foreach($products as $product)
+                <button type="button" class="btn thumbnailProduct col-xl-4 col-md-3" data-toggle="modal"
+                        data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}" data-name="
                          @if(locationHelper() == 'kr')
                                         {{ ($product->name_ko) }}
                                     @elseif(locationHelper() == 'cn')
@@ -253,90 +171,92 @@
                                         {{ ($product->name_en) }}
                                     @endif
                          ">
-                <div class="standsMember-item section"  style="background-color: white">
-                    <img data-id="{{$product->id}}"
-                         src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
-                         class="thumbnailProduct" data-value="{{$product}}"
+                    <div class="standsMember-item section" style="background-color: white">
+                        <img data-id="{{$product->id}}"
+                             src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
+                             class="thumbnailProduct" data-value="{{$product}}"
 
-                         width="150px" height="150px">
-                    <div class="item-body">
-                        <div class="card-rating text-left">
-                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                            <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                            <span>(1)</span>
-                        </div>
-                        @php
-                            $nameSeller = DB::table('users')->where('id', $product->user_id)->first();
-                        @endphp
-                        <div class="card-brand text-left">
-                            <a href="{{route('shop.information.show', $nameSeller->id)}}">
-                                {{($nameSeller->name)}}
-                            </a>
-                        </div>
-                        <div class="card-title text-left">
-                            @if(Auth::check())
-                                <a href="{{route('detail_product.show', $product->id)}}">
-                                    @if(locationHelper() == 'kr')
-                                        {{ ($product->name_ko) }}
-                                    @elseif(locationHelper() == 'cn')
-                                        {{ ($product->name_zh) }}
-                                    @elseif(locationHelper() == 'jp')
-                                        {{ ($product->name_ja) }}
-                                    @elseif(locationHelper() == 'vi')
-                                        {{ ($product->name_vi) }}
-                                    @else
-                                        {{ ($product->name_en) }}
-                                    @endif
+                             width="150px" height="150px">
+                        <div class="item-body">
+                            <div class="card-rating text-left">
+                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
+                                <span>(1)</span>
+                            </div>
+                            @php
+                                $nameSeller = DB::table('users')->where('id', $product->user_id)->first();
+                            @endphp
+                            <div class="card-brand text-left">
+                                <a href="{{route('shop.information.show', $nameSeller->id)}}">
+                                    {{($nameSeller->name)}}
                                 </a>
-                            @else
-                                <a class="check_url">
-                                    @if(locationHelper() == 'kr')
-                                        {{ ($product->name_ko) }}
-                                    @elseif(locationHelper() == 'cn')
-                                        {{ ($product->name_zh) }}
-                                    @elseif(locationHelper() == 'jp')
-                                        {{ ($product->name_ja) }}
-                                    @elseif(locationHelper() == 'vi')
-                                        {{ ($product->name_vi) }}
-                                    @else
-                                        {{ ($product->name_en) }}
-                                    @endif
-                                </a>
-                            @endif
-                        </div>
-                        @if($product->price)
-                            <div class="card-price text-left">
-                                @php
-                                    $prises = $product->old_price;
-                                @endphp
-                                @if($product->price != null)
-                                    <div class="price-sale">
-                                        <strong> {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strong>
-                                    </div>
-                                    <div class="price-cost">
-                                        <strike>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
-                                    </div>
+                            </div>
+                            <div class="card-title text-left">
+                                @if(Auth::check())
+                                    <a>
+                                        @if(locationHelper() == 'kr')
+                                            {{ ($product->name_ko) }}
+                                        @elseif(locationHelper() == 'cn')
+                                            {{ ($product->name_zh) }}
+                                        @elseif(locationHelper() == 'jp')
+                                            {{ ($product->name_ja) }}
+                                        @elseif(locationHelper() == 'vi')
+                                            {{ ($product->name_vi) }}
+                                        @else
+                                            {{ ($product->name_en) }}
+                                        @endif
+                                    </a>
                                 @else
-                                    <div class="price-sale">
-                                        <strong>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strong>
-                                    </div>
+                                    <a>
+                                        @if(locationHelper() == 'kr')
+                                            {{ ($product->name_ko) }}
+                                        @elseif(locationHelper() == 'cn')
+                                            {{ ($product->name_zh) }}
+                                        @elseif(locationHelper() == 'jp')
+                                            {{ ($product->name_ja) }}
+                                        @elseif(locationHelper() == 'vi')
+                                            {{ ($product->name_vi) }}
+                                        @else
+                                            {{ ($product->name_en) }}
+                                        @endif
+                                    </a>
                                 @endif
                             </div>
-                        @endif
-                        <div class="card-bottom--left">
-                            @if(Auth::check())
-                                <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
-                            @else
-                                <a class="check_url">{{ __('home.Choose Options') }}</a>
+                            @if($product->price)
+                                <div class="card-price text-left">
+                                    @php
+                                        $prises = $product->old_price;
+                                    @endphp
+                                    @if($product->price != null)
+                                        <div class="price-sale">
+                                            <strong> {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strong>
+                                        </div>
+                                        <div class="price-cost">
+                                            <strike>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
+                                        </div>
+                                    @else
+                                        <div class="price-sale">
+                                            <strong>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strong>
+                                        </div>
+                                    @endif
+                                </div>
                             @endif
+                            <div class="card-bottom--left" hidden="">
+                                @if(Auth::check())
+                                    <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
+                                @else
+                                    <a class="check_url">{{ __('home.Choose Options') }}</a>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
-            </button>
-        @endforeach
+                </button>
+            @endforeach
+        </div>
+
     </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -347,7 +267,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body modal-member">
                     <div id="renderProductMember" class="row">
                         @if(!$products->isEmpty())
                             <div class="col-md-6">
@@ -402,25 +322,22 @@
                                             @php
                                                 $arrayProductImgThumbnail = explode(',', $productGallery);
                                             @endphp
-                                            @foreach($arrayProductImgThumbnail as $productImg)
-                                                <div class="item-card d-none">
-                                                    <div class="card-image">
-                                                        <a href="{{ asset('storage/' . $productImg) }}"
-                                                           data-fancybox="gallery"
-                                                           data-caption="{{$firstProduct->name}}">
-                                                            <img src="{{ asset('storage/' . $productImg) }}"
-                                                                 class="thumbnailProductMain" alt="">
-                                                        </a>
+                                            <div class="" id="productImgThumbnail">
+                                                @foreach($arrayProductImgThumbnail as $productImg)
+                                                    <div class="item-card d-none">
+                                                        <div class="card-image">
+                                                            <a href="{{ asset('storage/' . $productImg) }}"
+                                                               data-fancybox="gallery"
+                                                               data-caption="{{$firstProduct->name}}">
+                                                                <img src="{{ asset('storage/' . $productImg) }}"
+                                                                     class="thumbnailProductMain" alt="">
+                                                            </a>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            @endforeach
+                                                @endforeach
+                                            </div>
                                         @endif
                                     </div>
-                                    <button id="btnViewAttribute" data-id="{{$firstProduct->id}}" type="button"
-                                            class="btn" data-toggle="modal"
-                                            data-target="#modal-show-att">
-                                        {{ __('home.Xem thuộc tính') }}
-                                    </button>
                                 </div>
 
                                 <h6 class="text-center mt-2">{{ __('home.Xem chi tiết các hình ảnh khác') }}</h6>
@@ -428,7 +345,7 @@
                                     @php
                                         $arrayProductImg = explode(',', $productGallery);
                                     @endphp
-                                    <div class="row thumbnailSupGallery">
+                                    <div class="row thumbnailSupGallery" id="productThumbnail">
                                         @foreach($arrayProductImg as $productImg)
                                             <div class="col-md-3 thumbnailSupGallery-img">
                                                 <img src="{{ asset('storage/' . $productImg) }}" alt=""
@@ -448,53 +365,11 @@
                                         {{ __('home.Order conditions') }}
                                     </h5>
                                 </div>
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">{{ __('home.quantity') }}</th>
-                                        <th scope="col">{{ __('home.Unit price') }}</th>
-                                        <th scope="col">{{ __('home.Ngày dự kiến xuất kho') }}</th>
-                                    </tr>
-                                    </thead>
-
-                                    <tbody id="tablebodyProductSale">
-                                    @if(!$price_sales->isEmpty())
-                                        @foreach($price_sales as $price_sale)
-                                            @php
-                                                $quantity = $price_sale->quantity;
-                                                $discount = $price_sale->sales;
-                                                $prises = $product->old_price;
-                                            @endphp
-                                            <tr>
-                                                <td>{{$price_sale->quantity}}</td>
-                                                <td>{{($prises - ($prises * $discount / 100)) * $quantity}}</td>
-                                                <td class="2323" ></td>{{$price_sale->days}} {{ __('home.ngày kể từ ngày đặt hàng') }}</td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
-                                    </tbody>
-                                </table>
-
+                                <div id="tablebodyProductSale"></div>
+                                <div id="tableMemberOrderCart"></div>
                                 <p>{{ __('home.đơn giá phía trên là điều kiện FOB/TT') }}</p>
                                 <h5 class="text-center">{{ __('home.Đặt hàng') }}</h5>
-                                <table class="table table-bordered" id="table-selected-att">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">{{ __('home.Thuộc tính') }}</th>
-                                        <th scope="col">{{ __('home.Số lượng') }}</th>
-                                        <th scope="col">{{ __('home.Unit price') }}</th>
-                                        <th scope="col">{{ __('home.Thành tiền') }}</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-
-                                @if(!$newCompany || $newCompany->member != \App\Enums\RegisterMember::BUYER)
-                                    <button class="btn btn-success partnerBtn float-right" id="partnerBtn"
-                                            data-value="{{ $firstProduct->id }}" data-count="100">{{ __('home.Tiếp nhận đặt hàng') }}
-                                    </button>
-                                @endif
+                                <div id="tableMemberOrder"></div>
                             </div>
 
                         @endif
@@ -540,71 +415,16 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="exampleModalBuyBulk" role="dialog"
-         aria-labelledby="exampleModalBuyBulk"
-         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content p-4" style="width: auto">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="d-flex justify-content-center align-items-center">
-                        <a href="{{route('parent.register.member.locale', 'kr')}}">
-                            <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
-                                 src="{{ asset('images/korea.png') }}"
-                                 alt="">
-                        </a>
-                        <a href="{{route('parent.register.member.locale', 'jp')}}">
-                            <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
-                                 src="{{ asset('images/japan.webp') }}"
-                                 alt="">
-                        </a>
-                        <a href="{{route('parent.register.member.locale', 'cn')}}">
-                            <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
-                                 src="{{ asset('images/china.webp') }}"
-                                 alt="">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modal-show-att" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content" id="modal-select-att">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="body-modal-att"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="selectAttProduct()">
-                        {{ __('home.Save') }}
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
         var renderInputAttribute = $('#renderProductMember');
 
         $('.thumbnailProduct').on('click', function () {
             let product = $(this).data('value');
             let productName = $(this).data('name');
-            console.log(productName);
-            let imageUrl = '{{ asset('storage/') }}';
+            let imageUrlMain = '{{ asset('storage/') }}';
             let imgMain = product['thumbnail'];
-            imageUrl = imageUrl + '/' + imgMain;
+            let imageUrl = imageUrlMain + '/' + imgMain;
             let idImg = '#imgProductMain';
             let linkImg = '#linkProductImg';
             changeImage(idImg, imageUrl);
@@ -616,7 +436,10 @@
             }
 
             let productID = product['id'];
+
             getProductSale(productID);
+
+            renderProduct(productID);
 
             async function getProductSale(id) {
                 let url = '{{asset('get-products-sale')}}' + '/' + id;
@@ -627,21 +450,44 @@
 
             let gallery = product['gallery']
             let arrayGallery = gallery.split(',');
+            let arrayUrlImg = []
+            for (let i = 0; i < arrayGallery.length; i++) {
+                arrayUrlImg.push(imageUrlMain + '/' + arrayGallery[i])
+            }
+
+            let string = '';
+            let viewImg = '';
+            for (let i = 0; i < arrayUrlImg.length; i++) {
+                string = string + `<div class="col-md-3 thumbnailSupGallery-img">
+                <img src="${arrayUrlImg[i]}" alt="" class="thumbnailProductGallery " data-id="${productID}"></div>`;
+
+                viewImg = viewImg + `<div class="item-card d-none"> <div class="card-image"> <a href="${arrayUrlImg[i]}"
+                data-fancybox="gallery" data-caption="${productName}"> <img src="${arrayUrlImg[i]}" class="thumbnailProductMain" alt="">
+                </a> </div> </div>`;
+            }
+
+            $('#productThumbnail').empty().append(string);
+            $('#productImgThumbnail').empty().append(viewImg);
+            clickImg();
 
             // $('#partnerBtn').data('value', product['id']);
-            let partnerBtn = document.getElementById('partnerBtn');
-            partnerBtn.setAttribute('data-value', product['id']);
+            // let partnerBtn = document.getElementById('partnerBtn');
+            // partnerBtn.setAttribute('data-value', product['id']);
 
             $('#btnViewAttribute').data('id', product['id']);
         });
 
-        $('.thumbnailProductGallery').on('click', function () {
-            let imageUrl = $(this).attr('src');
-            let idImg = '#imgProductMain'
-            let linkImg = '#linkProductImg';
-            changeImage(idImg, imageUrl);
-            changeUrl(linkImg, imageUrl);
-        });
+        function clickImg() {
+            $('.thumbnailProductGallery').on('click', function () {
+                let imageUrl = $(this).attr('src');
+                let idImg = '#imgProductMain'
+                let linkImg = '#linkProductImg';
+                changeImage(idImg, imageUrl);
+                changeUrl(linkImg, imageUrl);
+            });
+        }
+
+        clickImg();
 
         function changeImage(id, imageSrc) {
             const sky = document.querySelector(id);
@@ -726,8 +572,56 @@
             listItem = listIDs;
             localStorage.setItem('listID', listItem);
         }
-    </script>
 
+        function renderProduct(product) {
+            let url = '{{ route('detail_product.member.attribute', ['id' => ':id']) }}';
+            url = url.replace(':id', product);
+
+            $.ajax({
+                url: url,
+                method: 'GET',
+            })
+                .done(function (response) {
+                    $('#tableMemberOrder').empty().append(response);
+                })
+                .fail(function (_, textStatus) {
+
+                });
+        }
+
+        function renderCart() {
+            //member.view.carts
+            const requestData = {
+                _token: '{{ csrf_token() }}',
+            };
+            $.ajax({
+                url: `{{route('member.view.carts')}}`,
+                method: 'GET',
+                data: requestData,
+            })
+                .done(function (response) {
+                    $('#tableMemberOrderCart').empty().append(response);
+                })
+                .fail(function (_, textStatus) {
+                });
+        }
+
+        renderCart();
+    </script>
+    <script>
+        $('[data-fancybox="gallery"]').fancybox({
+            buttons: [
+                "slideShow",
+                "thumbs",
+                "zoom",
+                "fullScreen",
+                "share",
+                "close"
+            ],
+            loop: false,
+            protect: true
+        });
+    </script>
     <script>
         let listChecked = [];
 

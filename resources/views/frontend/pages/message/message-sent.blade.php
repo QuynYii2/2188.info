@@ -3,29 +3,17 @@
 @section('title', 'List Message Sent')
 
 @section('content')
-    <h3 class="text-center">Tin nhắn đã gửi</h3>
+    <h3 class="text-center">{{ __('home.Message sent') }}</h3>
     @if($company)
-        <div class="container-fluid mb-2">
+        @php
+            $user = null;
+            $companyPerson = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->first();
+            $oldUser = \App\Models\User::where('email', $companyPerson->email)->first();
+        @endphp
+        <div class="container mb-2">
             <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
             <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
-            <div class="d-flex justify-content-between align-items-center pb-3">
-                <div>
-                    <a href="{{ route('stand.register.member.index', $company->id) }}"
-                       class="btn btn-primary mr-2">{{ __('home.Booth') }}</a>
-                    <a href="{{route('partner.register.member.index')}}"
-                       class="btn btn-warning">{{ __('home.Partner List') }}</a>
-                </div>
-                <div>
-                    <a href="{{route('chat.message.received')}}"
-                       class="btn btn-primary mr-2">{{ __('home.Message received') }}</a>
-                    <a href="{{route('chat.message.sent')}}" class="btn btn-primary mr-2">{{ __('home.Message sent') }}</a>
-                    <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
-                       data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
-                    <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
-                       data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
-                    <a href="{{route('chat.message.show')}}" class="btn btn-primary">Chat Now</a>
-                </div>
-            </div>
+            @include('frontend.pages.member.header_member')
             <div class="row m-0">
                 <div class="col-md-6 border">
                     <div class="row">
@@ -104,10 +92,10 @@
                     </div>
                 </div>
             </div>
+            @if(!$listMessage->isEmpty())
             <div class="row">
                 <div class="col-md-3">
                     <div class="card-body">
-                            @if(!$listMessage->isEmpty())
                                 @foreach($listMessage as $message)
                                     @php
                                         $user = \App\Models\User::find($message->to_user_id);
@@ -122,11 +110,9 @@
                                         </h5>
                                     </div>
                                 @endforeach
-                            @endif
                         </div>
                     {{--        {{ $listMessage->links() }}--}}
                 </div>
-                @if(!$listMessage->isEmpty())
                     @php
                         $user = \App\Models\User::find($listMessage[0]->to_user_id);
                     @endphp
@@ -136,31 +122,17 @@
                             <h5 id="chat_message">
 
                             </h5>
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Chat</button>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">{{ __('home.chat') }}</button>
                         </div>
                     </div>
-                @endif
             </div>
+            @else
+                <div class="text-center mt-4">
+                    {{ __('home.No sent messages') }}
+                </div>
+            @endif
         </div>
     @endif
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Chat</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    @include('frontend.pages.message.chat-detail')
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <script>
         $(document).ready(function () {
             $('.card-item-message').on('click', function () {
@@ -183,10 +155,10 @@
                     }
                 })
                 .then((response) => {
-                    console.log('ádadad')
+
                     $('#chat_message').empty().append(response);
                 })
-                .catch(error => console.log(error));
+                .catch(error => );
         }
 
         function renderDefault() {

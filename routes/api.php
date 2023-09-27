@@ -18,9 +18,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group([
-    'prefix' => 'cart'
-
-], function ($router) {
+Route::group(['prefix' => 'cart'], function ($router) {
     Route::put('/update/{id}', [\App\Http\Controllers\Frontend\CartController::class, 'change'])->name('cart.api.update');
 });

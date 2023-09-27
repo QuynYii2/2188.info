@@ -12,75 +12,12 @@
          $checkTrust = Auth::user()->member == \App\Enums\RegisterMember::TRUST;
      }
 @endphp
-<style>
-    .custom_flag {
-        width: 100px;
-        height: 66px;
-    }
-
-    .header-bottom-left--item.item-left--vi a:before {
-        display: block;
-        content: '';
-        background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png");
-        width: 30px;
-        height: 30px;
-        position: relative;
-        background-size: 30px;
-        background-repeat: no-repeat;
-    }
-
-    .modal-dialog {
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .header-bottom-left--item.item-left--cn a:before {
-        display: block;
-        content: '';
-        background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png");
-        width: 30px;
-        height: 30px;
-        position: relative;
-        background-size: 30px;
-        background-repeat: no-repeat;
-    }
-
-    .header-bottom-left--item.item-left--kr a:before {
-        display: block;
-        content: '';
-        background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png");
-        width: 30px;
-        height: 30px;
-        position: relative;
-        background-size: 30px;
-        background-repeat: no-repeat;
-    }
-
-    .header-bottom-left--item.item-left--jp a:before {
-        display: block;
-        content: '';
-        background-image: url("https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png");
-        width: 30px;
-        height: 30px;
-        position: relative;
-        background-size: 30px;
-        background-repeat: no-repeat;
-    }
-
-    .none_decoration {
-        text-decoration: none !important;
-    }
-</style>
-
-
 @php
     $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
     $locale = app()->getLocale();
     $company = null;
 @endphp
-<header class="header">
+<header class="header @php echo ($isRoute ? 'd-none' : '') @endphp">
     <div class="header-pc halo-header">
         <div class="header-top text-center">
             <div class="container-fluid">
@@ -95,35 +32,37 @@
                         @endif
                     </div>
                     <div class="header-top-middle col-xl-5 col-md-4 " id="in-search">
-                        <form class="search-wrapper">
-                            <input type="text" placeholder="{{ __('home.placeholder search') }}"
+                        <form class="search-wrapper" method="get" action="{{route('search.products.name')}}">
+                            <input type="text" name="key_search" placeholder="{{ __('home.placeholder search') }}"
                                    style="box-shadow: none">
+                            <input hidden="" type="text" id="category_search" name="category_search" value="0">
 
-                            <button class="button-right" type="submit"
+                            <button class="button-right search_header" type="submit"
                                     onclick="<?php echo $checkBuyer ? 'showAlert(1)' : (Auth::check() ? '' : 'showAlert(2)') ?>">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
+
                             <div class="category-drop input-group-prepend">
-                                <button class="btn-all btn-outline-secondary dropdown-toggle" type="button"
+                                <button class="dropdown-toggle" type="button"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{ __('home.all') }}
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">{{ __('home.all') }}</a>
+                                    <a class="dropdown-item categorySearch" data-id="0">{{ __('home.all') }}</a>
                                     @php
-                                        $listCate = DB::table('categories')->where('parent_id', null)->get();
+                                        $listCate = DB::table('categories')->where('parent_id', null)->where('status', \App\Enums\CategoryStatus::ACTIVE)->get();
                                     @endphp
                                     @foreach($listCate as $cate)
-                                        <a class="item-hd dropdown-item "
-                                           href="">-- {{($cate->{'name' . $langDisplay->getLangDisplay()})}}</a>
+                                        <a class="item-hd dropdown-item categorySearch"
+                                           data-id="{{$cate->id}}">-- {{($cate->{'name' . $langDisplay->getLangDisplay()})}}</a>
                                         @if(!$listCate->isEmpty())
                                             <ul class="hd_dropdown--right row">
                                                 @php
-                                                    $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
+                                                    $listChild = DB::table('categories')->where('status', \App\Enums\CategoryStatus::ACTIVE)->where('parent_id', $cate->id)->get();
                                                 @endphp
                                                 @foreach($listChild as $child)
-                                                    <a class="dropdown-item"
-                                                       href="">––– {{($child->{'name' . $langDisplay->getLangDisplay()})}}</a>
+                                                    <a class="dropdown-item categorySearch"
+                                                       data-id="{{$child->id}}">––– {{($child->{'name' . $langDisplay->getLangDisplay()})}}</a>
                                                 @endforeach
                                             </ul>
                                         @endif
@@ -221,7 +160,7 @@
                                         <hr>
                                     @endif
                                     <button class="signOut" href="#"
-                                            onclick="logout()">{{ __('home.Sign Out') }}</button>
+                                            onclick="logout(`{{ route('logout') }}`,`{{ csrf_token() }}`)">{{ __('home.Sign Out') }}</button>
                                 </div>
                                 <div class="hover-list">
                                     <a href="{{route('profile.show')}}" class="none_decoration">
@@ -278,10 +217,10 @@
                                             <div class="drop-item">
                                                 <a href="{{ route('stand.register.member.index', $member->id) }}">{{ __('home.Shop') }}</a>
                                             </div>
-                                            {{--                                        @elseif($isMember && $member->member == \App\Enums\RegisterMember::TRUST)--}}
-                                            {{--                                            <div class="drop-item">--}}
-                                            {{--                                                <a href="{{ route('trust.register.member.index') }}">{{ __('home.Shop') }}</a>--}}
-                                            {{--                                            </div>--}}
+                                        @elseif($isMember && $member->member == \App\Enums\RegisterMember::TRUST)
+                                            <div class="drop-item">
+                                                <a href="{{ route('trust.register.member.index') }}">{{ __('home.Partner List') }}</a>
+                                            </div>
                                         @endif
                                         {{--                                        @if(!$checkTrust && $isValid==true)--}}
                                         {{--                                            <div class="drop-item">--}}
@@ -311,7 +250,7 @@
                                         <a href="{{route('chat.message.show')}}">{{ __('home.Message') }}</a>
                                     </div>
 
-                                    <div class="drop-item -hand-pointer" onclick="logout()">
+                                    <div class="drop-item -hand-pointer" onclick="logout(`{{ route('logout') }}`,`{{ csrf_token() }}`)">
                                         <button>{{ __('home.Log out') }}</button>
                                     </div>
                                 </div>
@@ -617,7 +556,7 @@
                                 <i class="fa-solid fa-angle-down"></i>
                             </div>
                             @php
-                                $listCate = DB::table('categories')->where('parent_id', null)->get();
+                                $listCate = DB::table('categories')->where('status', \App\Enums\CategoryStatus::ACTIVE)->where('parent_id', null)->get();
                             @endphp
                             <div class="drop-menu">
                                 <div class="drop-relative">
@@ -644,7 +583,7 @@
                                                     <ul class="hd_dropdown--right">
                                                         <div class="list-category">
                                                             @php
-                                                                $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
+                                                                $listChild = DB::table('categories')->where('status', \App\Enums\CategoryStatus::ACTIVE)->where('parent_id', $cate->id)->get();
                                                             @endphp
                                                             @foreach($listChild as $child)
                                                                 <div class="colum d-block">
@@ -676,7 +615,7 @@
                                                                     @endif
 
                                                                     @php
-                                                                        $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
+                                                                        $listChild2 = DB::table('categories')->where('status', \App\Enums\CategoryStatus::ACTIVE)->where('parent_id', $child->id)->get();
                                                                     @endphp
                                                                     @foreach($listChild2 as $child2)
                                                                         @if(locationHelper() == 'kr')
@@ -890,7 +829,7 @@
                             @if(!$listCate->isEmpty())
                                 <div class="OptionBody">
                                     @php
-                                        $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
+                                        $listChild = DB::table('categories')->where('status', \App\Enums\CategoryStatus::ACTIVE)->where('parent_id', $cate->id)->get();
                                     @endphp
                                     @foreach($listChild as $child)
                                         <div class="OptionContainer">
@@ -907,7 +846,7 @@
                                             </div>
                                             <div class="OptionBody">
                                                 @php
-                                                    $listChild2 = DB::table('categories')->where('parent_id', $child->id)->get();
+                                                    $listChild2 = DB::table('categories')->where('status', \App\Enums\CategoryStatus::ACTIVE)->where('parent_id', $child->id)->get();
                                                 @endphp
                                                 @foreach($listChild2 as $child2)
                                                     <div class="OptionContainer">
@@ -928,23 +867,25 @@
             </div>
             <div onclick="closeMobile()" class="opacity_menu"></div>
             <div class="hd-mobile_menu" id="search">
-                <button class="btn-all btn-outline-secondary dropdown-toggle" type="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All
-                </button>
+                <div class="dropdown-toggle" type="button"
+                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All
+                </div>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">All</a>
+                    <a class="dropdown-item categorySearch" data-id="0">All</a>
                     @php
-                        $listCate = DB::table('categories')->where('parent_id', null)->get();
+                        $listCate = DB::table('categories')->where('status', \App\Enums\CategoryStatus::ACTIVE)->where('parent_id', null)->get();
                     @endphp
                     @foreach($listCate as $cate)
-                        <a class="item-hd dropdown-item " href="">-- {{ ($cate->name) }}</a>
+                        <a class="item-hd dropdown-item categorySearch"
+                           data-id="{{$cate->id}}">-- {{ ($cate->name) }}</a>
                         @if(!$listCate->isEmpty())
                             <ul class="hd_dropdown--right row">
                                 @php
-                                    $listChild = DB::table('categories')->where('parent_id', $cate->id)->get();
+                                    $listChild = DB::table('categories')->where('status', \App\Enums\CategoryStatus::ACTIVE)->where('parent_id', $cate->id)->get();
                                 @endphp
                                 @foreach($listChild as $child)
-                                    <a class="dropdown-item" href="">––– {{ ($child->name) }}</a>
+                                    <a class="dropdown-item categorySearch"
+                                       data-id="{{$child->id}}">––– {{ ($child->name) }}</a>
                                 @endforeach
                             </ul>
                         @endif
@@ -1113,15 +1054,6 @@
             </div>
         </div>
     </div>
-    {{--    <div class="position-relative" id="popup-alert">--}}
-    {{--        <div class="col-md-2 position-fixed" style="z-index: 100; top: 0">--}}
-    {{--            <div class="alert">--}}
-    {{--                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>--}}
-    {{--                <strong>Hello world!</strong> <a class="text-decoration-none text-white"--}}
-    {{--                                                 href="{{route('promotions.index')}}">Review now</a>.--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
 </header>
 
 <div class="modal fade" id="modal-flag-header" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -1270,72 +1202,9 @@
                 @endif
             @endif
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{ __('home.Close') }}</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}</button>
             </div>
         </div>
     </div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-<script>
-    // Hàm logout
-    function logout() {
-        {{--let productIDs = localStorage.getItem('productIDs');--}}
-
-        {{--$.ajax({--}}
-        {{--    url: '/product-viewed',--}}
-        {{--    method: 'POST',--}}
-        {{--    data: {--}}
-        {{--        productIds: productIDs,--}}
-        {{--        _token: '{{ csrf_token() }}'--}}
-        {{--    },--}}
-        {{--    success: function (response) {--}}
-        {{--        localStorage.clear();--}}
-        {{--        console.log(response);--}}
-        {{--    },--}}
-        {{--    error: function (response) {--}}
-        {{--        console.log(response)--}}
-        {{--    }--}}
-        {{--});--}}
-
-        // Tạo một form
-        var form = document.createElement('form');
-
-        // Đặt thuộc tính action và method cho form
-        form.action = "{{ route('logout') }}";
-        form.method = "POST";
-
-        // Tạo một input hidden để chứa CSRF token
-        var csrfTokenInput = document.createElement('input');
-        csrfTokenInput.type = "hidden";
-        csrfTokenInput.name = "_token";
-        csrfTokenInput.value = "{{ csrf_token() }}";
-
-        // Thêm input hidden vào form
-        form.appendChild(csrfTokenInput);
-
-        // Thêm form vào body
-        document.body.appendChild(form);
-
-        // Gửi form để thực hiện logout
-        form.submit();
-    }
-
-    {{--function showAlert(role = 2) {--}}
-    {{--    event.preventDefault();--}}
-    {{--    switch (role) {--}}
-    {{--        case 1:--}}
-    {{--            if (confirm('Bạn phải nâng cấp quyền để thực hiện thao tác này.')) {--}}
-    {{--                return window.location.href = '{{ route('process.register.member') }}'--}}
-    {{--            }--}}
-    {{--            break;--}}
-    {{--        case 2:--}}
-    {{--            if (confirm('Bạn phải đăng nhập để thực hiện thao tác này.')) {--}}
-    {{--                return window.location.href = '{{ route('login') }}'--}}
-    {{--            }--}}
-    {{--            break;--}}
-    {{--    }--}}
-
-    {{--}--}}
-</script>
 

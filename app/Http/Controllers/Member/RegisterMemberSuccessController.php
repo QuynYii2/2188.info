@@ -67,6 +67,10 @@ class RegisterMemberSuccessController extends Controller
         if ($memberPerson) {
             $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
 
+//            $memberList = MemberPartner::where('status', MemberPartnerStatus::ACTIVE)
+//                ->orWhere('company_id_source', $company->id)
+//                ->orWhere('company_id_follow', $company->id)->get();
+
             $memberList = MemberPartner::where([
                 ['company_id_source', $company->id],
                 ['status', MemberPartnerStatus::ACTIVE]
@@ -81,24 +85,38 @@ class RegisterMemberSuccessController extends Controller
 
     public function memberPartnerLocale($locale, Request $request)
     {
-        (new HomeController())->getLocale($request);
-        $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
-        $company = null;
-        $memberList = null;
-        if ($memberPerson) {
-            $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
+        $homeController = new HomeController();
+        $homeController->getLocale($request);
 
-            $memberList = MemberPartner::where([
-                ['company_id_source', $company->id],
-                ['status', MemberPartnerStatus::ACTIVE]
-            ])->get();
-        }
-        session()->forget('region');
-        session()->put('region', $locale);
-        if ($company && $company->member == RegisterMember::TRUST) {
+        $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        if (!$memberPerson) {
             return back();
         }
-        return view('frontend.pages.member.member-partner', compact('company', 'memberList'));
+
+        $company = MemberRegisterInfo::find($memberPerson->member_id);
+        if (!$company) {
+            return back();
+        }
+
+        if ($company->member == RegisterMember::TRUST || $company->member == RegisterMember::BUYER) {
+            return back();
+        }
+
+        $memberList = DB::table('member_register_infos')
+            ->join('member_register_person_sources', 'member_register_person_sources.member_id', '=', 'member_register_infos.id')
+            ->join('users', 'users.email', '=', 'member_register_person_sources.email')
+            ->where([
+                ['users.region', $locale],
+                ['member_register_infos.id', '!=', $company->id],
+                ['member_register_infos.member', $company->member],
+                ['member_register_infos.type_business', $company->type_business],
+                ['member_register_infos.status', MemberRegisterInfoStatus::ACTIVE]
+            ])
+            ->select('member_register_infos.*', 'users.region')
+            ->get();
+        $memberList = $memberList->unique();
+
+        return view('frontend.pages.member.member-partner-locale', compact('company', 'memberList', 'locale'));
     }
 
     public function saveProduct(Request $request)

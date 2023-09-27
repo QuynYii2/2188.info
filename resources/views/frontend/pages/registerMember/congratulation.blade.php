@@ -3,7 +3,7 @@
 @section('title', 'Register Member')
 @section('content')
     <div class="container-fluid">
-        <h3 class="text-center">{{ __('home.Congratulations, you have registered as a member') }} {{$company->member}}</h3>
+        <h3 class="text-center mt-5">{{ __('home.Congratulations, you have registered as a member') }} {{$company->member}}</h3>
         <div class="d-flex justify-content-around mt-5">
             @php
                 $listPermissionID = $member->permission_id;
@@ -18,12 +18,20 @@
                     @if($arrayPermissionID)
                         @foreach($arrayPermissionID as $permissionID)
                             <li>
-
                                 @php
                                     $permission = \App\Models\Permission::find($permissionID);
-                                    $ld = new \App\Http\Controllers\TranslateController();
                                 @endphp
-                                {{ $ld->translateText($permission->name, locationPermissionHelper()) }}
+                                @if(locationHelper() == 'kr')
+                                    {{ ($permission->lang_kr) }}
+                                @elseif(locationHelper() == 'cn')
+                                    {{ ($permission->lang_cn) }}
+                                @elseif(locationHelper() == 'jp')
+                                    {{ ($permission->lang_jp) }}
+                                @elseif(locationHelper() == 'vi')
+                                    {{ ($permission->name) }}
+                                @else
+                                    {{ ($permission->lang_en) }}
+                                @endif
                             </li>
                         @endforeach
                     @endif
@@ -46,9 +54,5 @@
                 </p>
             </div>
         </div>
-        <div class="d-flex justify-content-center">
-            <a href="{{route('login')}}" class="btn btn-success mb-5">{{ __('home.Log in now') }}</a>
-        </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @endsection

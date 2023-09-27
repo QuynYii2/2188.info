@@ -2,7 +2,7 @@
 @section('content')
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title">Danh sách setup</h5>
+            <h5 class="card-title">{{ __('home.Danh sách setup') }} </h5>
             @php
                 $check = true;
                 $rank = \App\Models\RankSetUpSeller::where('user_id', Auth::user()->id)->first();
@@ -11,19 +11,19 @@
                 }
             @endphp
             @if($check == true){
-            <a href="{{ route('seller.setup.processCreate') }}" class="btn btn-primary">Thêm mới</a>
+            <a href="{{ route('seller.setup.processCreate') }}" class="btn btn-primary">{{ __('home.thêm mới') }}</a>
             @endif
         </div>
         @if($rankSetups->isEmpty())
-            Không có rank nào được tạo
+            {{ __('home.Không có rank nào được tạo') }}
         @else
             <div class="card-body">
                 <table class="table text-center">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th>Áp dụng</th>
-                        <th>Thêm</th>
+                        <th>{{ __('home.Áp dụng') }}</th>
+                        <th>{{ __('home.Thêm') }}</th>
                     </tr>
                     </thead>
                     <tbody>

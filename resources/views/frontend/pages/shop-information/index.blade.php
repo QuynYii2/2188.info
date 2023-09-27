@@ -5,7 +5,6 @@
     }
 
     .shop-page__info {
-        background: #fff;
         padding: 1.25rem 0;
         box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
     }
@@ -83,7 +82,7 @@
         padding-top: .625rem;
         padding-bottom: .625rem;
         flex: none;
-        flex-basis: 50%;
+        flex-basis: 30%;
         overflow: hidden;
     }
 
@@ -213,10 +212,10 @@
     .shopee-button-outline {
         outline: none;
         cursor: pointer;
-        border: 1px solid rgba(0, 0, 0, .09);
+        border: 1px solid rgb(255 255 255);
         font-size: .875rem;
         font-weight: 300;
-        line-height: 1;
+        line-height: 0;
         letter-spacing: 0;
         display: flex;
         align-items: center;
@@ -224,7 +223,7 @@
         transition: background-color .1s cubic-bezier(.4, 0, .6, 1);
         border-radius: 2px;
         background: transparent;
-        color: rgba(0, 0, 0, .8);
+        color: rgb(255 255 255);
     }
 
     .shopee-button-outline--fill {
@@ -238,7 +237,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 1.5625rem;
         color: #fff;
         border-color: #fff;
         text-transform: uppercase;
@@ -337,6 +335,7 @@
     #style-8dPYj.style-8dPYj {
         background-image: url("https://down-ws-vn.img.susercontent.com/vn-11134210-7qukw-lhy85rv6ohola9_tn.webp");
     }
+
     .toggleBtn {
         width: 130px;
         background: #fd6506;
@@ -353,6 +352,7 @@
         max-height: 6em;
         overflow: hidden;
     }
+
     .productView-description {
         width: 100%;
     }
@@ -365,11 +365,11 @@
 @section('content')
     @php
 
-    @endphp
-    <div class="shop-page__info snipcss-sPWYr">
-        <div class="section-seller-overview-horizontal container">
+            @endphp
+    <div class="shop-page__info">
+        <div class="section-seller-overview-horizontal container max-width">
             <div class="section-seller-overview-horizontal__leading row">
-                <div class="section-seller-overview-horizontal__leading-background style-8dPYj" id="style-8dPYj">
+                <div class="section-seller-overview-horizontal__leading-background">
                 </div>
                 <div class="section-seller-overview-horizontal__leading-background-mask">
                 </div>
@@ -391,13 +391,6 @@
                             <img class="shopee-avatar__img"
                                  src="https://down-ws-vn.img.susercontent.com/02cc55b581a1da07745c4e19070c0f16_tn">
                         </div>
-                        <div class="section-seller-overview-horizontal__preferred-badge-wrapper">
-                            <div class="official-shop-new-badge">
-                                <img class="WgnEaf"
-                                     src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/483071c49603aa7163a7f51708bff61b.png"
-                                     loading="lazy" width="64" height="16">
-                            </div>
-                        </div>
                         <div class="section-seller-overview-horizontal__portrait-info">
                             <h1 class="section-seller-overview-horizontal__portrait-name">
                                 {{ $sellerInfo->name ?? 'Shop Name'}}
@@ -411,27 +404,96 @@
                     </div>
                     <div class="section-seller-overview-horizontal__buttons">
                         <a class="section-seller-overview-horizontal__button">
-                            <button class="shopee-button-outline shopee-button-outline--complement shopee-button-outline--fill">
-              <span class="section-seller-overview-horizontal__icon">
-                <svg enable-background="new 0 0 10 10" viewBox="0 0 10 10" x="0" y="0"
-                     class="shopee-svg-icon icon-plus-sign">
-                  <polygon points="10 4.5 5.5 4.5 5.5 0 4.5 0 4.5 4.5 0 4.5 0 5.5 4.5 5.5 4.5 10 5.5 10 5.5 5.5 10 5.5">
-                  </polygon>
-                </svg>
-              </span>
-                                {{ __('home.Follow') }}
-                            </button>
+                            @if(Auth::check())
+                                @if(Auth::user()->id == $id)
+                                    <button disabled class="shopee-button-outline
+                                    shopee-button-outline--complement
+                                    shopee-button-outline--fill text-secondary">
+                                  <span class="section-seller-overview-horizontal__icon">
+                                    <svg enable-background="new 0 0 10 10" viewBox="0 0 10 10" x="0" y="0"
+                                         class="shopee-svg-icon icon-plus-sign">
+                                      <polygon
+                                              points="10 4.5 5.5 4.5 5.5 0 4.5 0 4.5 4.5 0 4.5 0 5.5 4.5 5.5 4.5 10 5.5 10 5.5 5.5 10 5.5">
+                                      </polygon>
+                                    </svg>
+                                  </span>
+                                        {{ __('home.Follow') }}
+                                    </button>
+                                @else
+                                    @php
+                                        $companyPersonFollow = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                                        $companyPersonSource = \App\Models\MemberRegisterPersonSource::where('email', $user->email)->first();
+                                        $followed = null;
+                                        $companySource = null;
+                                        $companyFollow = null;
+                                        if ($companyPersonFollow && $companyPersonSource){
+                                               $companyFollow = \App\Models\MemberRegisterInfo::find($companyPersonFollow->member_id);
+                                               $companySource = \App\Models\MemberRegisterInfo::find($companyPersonSource->member_id);
+                                             $followed = \App\Models\MemberPartner::where([
+                                                ['company_id_follow', $companyFollow->id],
+                                                ['company_id_source', $companySource->id],
+                                                ['status', \App\Enums\MemberPartnerStatus::ACTIVE]
+                                            ])->first();
+                                        }
+                                    @endphp
+                                    @if($companySource)
+                                        @if(!$followed)
+                                            <form action="{{route('stands.register.member')}}" method="post">
+                                                @csrf
+                                                <input type="text" name="company_id_source"
+                                                       value="{{$companySource->id}} "
+                                                       hidden>
+                                                <button type="submit" class="shopee-button-outline
+                                                shopee-button-outline--complement
+                                                shopee-button-outline--fill">
+                                                <span class="section-seller-overview-horizontal__icon">
+                                                <svg enable-background="new 0 0 10 10" viewBox="0 0 10 10" x="0" y="0"
+                                                     class="shopee-svg-icon icon-plus-sign">
+                                                  <polygon
+                                                          points="10 4.5 5.5 4.5 5.5 0 4.5 0 4.5 4.5 0 4.5 0 5.5 4.5 5.5 4.5 10 5.5 10 5.5 5.5 10 5.5">
+                                                  </polygon>
+                                                </svg>
+                                              </span>
+                                                    {{ __('home.Follow') }}
+                                                </button>
+                                            </form>
+                                        @else
+                                            <form method="post"
+                                                  action="{{ route('stands.unregister.member', $companySource->id) }}">
+                                                @csrf
+                                                <input type="text" name="company_id_source"
+                                                       value="{{$companySource->id}} "
+                                                       hidden>
+                                                <button type="submit" class="shopee-button-outline
+                                                shopee-button-outline--complement
+                                                shopee-button-outline--fill">
+                                                <span class="section-seller-overview-horizontal__icon">
+                                                <svg enable-background="new 0 0 10 10" viewBox="0 0 10 10" x="0" y="0"
+                                                     class="shopee-svg-icon icon-plus-sign">
+                                                  <polygon
+                                                          points="10 4.5 5.5 4.5 5.5 0 4.5 0 4.5 4.5 0 4.5 0 5.5 4.5 5.5 4.5 10 5.5 10 5.5 5.5 10 5.5">
+                                                  </polygon>
+                                                </svg>
+                                              </span>
+                                                    {{ __('home.Unfollow') }}
+                                                </button>
+                                            </form>
+                                        @endif
+                                    @endif
+                                @endif
+                            @endif
+
                         </a>
-                        <a argettype="chatButton" class="section-seller-overview-horizontal__button">
+                        <a href="{{route('chat.message.show')}}" class="section-seller-overview-horizontal__button">
                             <button class="shopee-button-outline shopee-button-outline--complement shopee-button-outline--fill">
-              <span class="section-seller-overview-horizontal__icon">
-                <svg viewBox="0 0 16 16" class="shopee-svg-icon">
-                  <g fill-rule="evenodd">
-                    <path d="M15 4a1 1 0 01.993.883L16 5v9.932a.5.5 0 01-.82.385l-2.061-1.718-8.199.001a1 1 0 01-.98-.8l-.016-.117-.108-1.284 8.058.001a2 2 0 001.976-1.692l.018-.155L14.293 4H15zm-2.48-4a1 1 0 011 1l-.003.077-.646 8.4a1 1 0 01-.997.923l-8.994-.001-2.06 1.718a.5.5 0 01-.233.108l-.087.007a.5.5 0 01-.492-.41L0 11.732V1a1 1 0 011-1h11.52zM3.646 4.246a.5.5 0 000 .708c.305.304.694.526 1.146.682A4.936 4.936 0 006.4 5.9c.464 0 1.02-.062 1.608-.264.452-.156.841-.378 1.146-.682a.5.5 0 10-.708-.708c-.185.186-.445.335-.764.444a4.004 4.004 0 01-2.564 0c-.319-.11-.579-.258-.764-.444a.5.5 0 00-.708 0z">
-                    </path>
-                  </g>
-                </svg>
-              </span>
+                                  <span class="section-seller-overview-horizontal__icon">
+                                    <svg viewBox="0 0 16 16" class="shopee-svg-icon">
+                                      <g fill-rule="evenodd">
+                                        <path d="M15 4a1 1 0 01.993.883L16 5v9.932a.5.5 0 01-.82.385l-2.061-1.718-8.199.001a1 1 0 01-.98-.8l-.016-.117-.108-1.284 8.058.001a2 2 0 001.976-1.692l.018-.155L14.293 4H15zm-2.48-4a1 1 0 011 1l-.003.077-.646 8.4a1 1 0 01-.997.923l-8.994-.001-2.06 1.718a.5.5 0 01-.233.108l-.087.007a.5.5 0 01-.492-.41L0 11.732V1a1 1 0 011-1h11.52zM3.646 4.246a.5.5 0 000 .708c.305.304.694.526 1.146.682A4.936 4.936 0 006.4 5.9c.464 0 1.02-.062 1.608-.264.452-.156.841-.378 1.146-.682a.5.5 0 10-.708-.708c-.185.186-.445.335-.764.444a4.004 4.004 0 01-2.564 0c-.319-.11-.579-.258-.764-.444a.5.5 0 00-.708 0z">
+                                        </path>
+                                      </g>
+                                    </svg>
+                                  </span>
                                 {{ __('home.chat') }}
                             </button>
                         </a>
@@ -471,7 +533,7 @@
                             {{ __('home.review') }}:&nbsp;
                         </div>
                         <div class="section-seller-overview__item-text-value">
-                            {{ __('home.4.9 (387k reviews)') }}
+                            {{ $averageRatingsFormatted }}({{ $totalRatings }})
                         </div>
                     </div>
                 </div>
@@ -528,42 +590,85 @@
                         </div>
                     </div>
                 </div>
+                <div class="section-seller-overview__item">
+                    <div class="section-seller-overview__item-icon-wrapper">
+                        <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0" class="shopee-svg-icon">
+                            <g>
+                                <circle cx="6.8" cy="4.2" fill="none" r="3.8" stroke-miterlimit="10">
+                                </circle>
+                                <polyline fill="none" points="9.2 12.5 11.2 14.5 14.2 11" stroke-linecap="round"
+                                          stroke-linejoin="round" stroke-miterlimit="10">
+                                </polyline>
+                                <path d="m .8 14c0-3.3 2.7-6 6-6 2.1 0 3.9 1 5 2.6" fill="none" stroke-linecap="round"
+                                      stroke-miterlimit="10">
+                                </path>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="section-seller-overview__item-text">
+                        <div class="section-seller-overview__item-text-name">
+                            Người theo dõi:&nbsp;
+                        </div>
+                        <div class="section-seller-overview__item-text-value">
+                            @php
+                                $member_partners = null;
+                                $member_partners = \App\Models\MemberPartner::where([
+                                    ['company_id_source','=',$company->id],
+                                    ['status', \App\Enums\MemberPartnerStatus::ACTIVE]
+                                    ])->get()
+                            @endphp
+                            @if(!$member_partners)
+                                0
+                            @else
+                                {{$member_partners->count()}}
+                            @endif
+
+                        </div>
+                    </div>
+                </div>
+                <div class="section-seller-overview__item">
+                    <div class="section-seller-overview__item-icon-wrapper">
+                        <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0" class="shopee-svg-icon">
+                            <g>
+                                <circle cx="6.8" cy="4.2" fill="none" r="3.8" stroke-miterlimit="10">
+                                </circle>
+                                <polyline fill="none" points="9.2 12.5 11.2 14.5 14.2 11" stroke-linecap="round"
+                                          stroke-linejoin="round" stroke-miterlimit="10">
+                                </polyline>
+                                <path d="m .8 14c0-3.3 2.7-6 6-6 2.1 0 3.9 1 5 2.6" fill="none" stroke-linecap="round"
+                                      stroke-miterlimit="10">
+                                </path>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <div class="section-seller-overview__item-text">
+                        <div class="section-seller-overview__item-text-name">
+                            {{ __('home.join') }}:&nbsp;
+                        </div>
+                        <div class="section-seller-overview__item-text-value">
+                            @if(!$shopInformation)
+                                0
+                            @else
+                                {{$shopInformation->industry_year}} {{ __('home.Năm trong ngành') }}
+                            @endif
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
         <div class="container-fluid">
             <div class="row">
 
-                    <div class="productView-description">
-                        <ul class="nav nav-tabs container-fluid pt-4" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                                   aria-controls="home"
-                                   aria-selected="true">{{ __('home.Shop Information') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#product" role="tab"
-                                   aria-controls="profile" aria-selected="false">{{ __('home.All products') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#vouchers" role="tab"
-                                   aria-controls="contact" aria-selected="false">{{ __('home.Voucher Shop') }}</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content container-fluid" id="myTabContent">
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                    <div class="content" id="content2">@include('frontend.pages.shop-information.tabs_shop_info')</div>
-                                    <button id="toggleBtn2" class="toggleBtn" onclick="toggleContent('content2', 'toggleBtn2')">{{ __('home.Show More') }}</button>
-                            </div>
-
-                            <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="profile-tab">
-                                @include('frontend.pages.shop-information.product-member')
-                            </div>
-                            <div class="tab-pane fade" id="vouchers" role="tabpanel" aria-labelledby="contact-tab">
-                                @include('frontend.pages.shop-information.tabs_voucher')
-                            </div>
+                <div class="productView-description">
+                    <div class="tab-content container-fluid" id="myTabContent">
+                        <div class="tab-pane fade show active" id="product" role="tabpanel"
+                             aria-labelledby="profile-tab">
+                            @include('frontend.pages.shop-information.product-member')
                         </div>
                     </div>
+                </div>
 
             </div>
         </div>

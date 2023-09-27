@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Seller;
 
 use App\Enums\AttributeProductStatus;
 use App\Enums\AttributeStatus;
+use App\Enums\CategoryStatus;
 use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\OrderStatus;
+use App\Enums\PermissionUserStatus;
 use App\Enums\ProductStatus;
 use App\Enums\PromotionStatus;
 use App\Enums\RegisterMember;
@@ -16,11 +18,13 @@ use App\Http\Controllers\TranslateController;
 use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\MemberRegisterInfo;
+use App\Models\MemberRegisterPersonSource;
 use App\Models\Product;
 use App\Models\ProductSale;
 use App\Models\Promotion;
 use App\Models\StaffUsers;
 use App\Models\StorageProduct;
+use App\Models\User;
 use App\Models\Variation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,9 +33,10 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
+        (new HomeController())->getLocale($request);
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $isAdmin = (new HomeController())->checkAdmin();
         if ($isAdmin) {
             $products = Product::where('status', '!=', ProductStatus::DELETED)->orderByDesc('id')->get();
@@ -46,8 +51,9 @@ class ProductController extends Controller
         return view('backend/products/index', ['products' => $products, 'categories' => $categories]);
     }
 
-    public function home()
+    public function home(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $productProcessings = DB::table('order_items')
             ->join('orders', 'orders.id', '=', 'order_items.order_id')
             ->join('products', 'products.id', '=', 'order_items.product_id')
@@ -96,8 +102,9 @@ class ProductController extends Controller
             'promotions'));
     }
 
-    public function toggleProduct($id)
+    public function toggleProduct(Request $request, $id)
     {
+        (new HomeController())->getLocale($request);
         $product = Product::find($id);
         if ($product->status == ProductStatus::ACTIVE) {
             $product->status = ProductStatus::INACTIVE;
@@ -108,9 +115,9 @@ class ProductController extends Controller
         return $product;
     }
 
-
     public function getProductsViews(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $user = Auth::user()->id;
         $role_id = DB::table('role_user')->where('user_id', $user)->get();
         $isAdmin = false;
@@ -169,10 +176,19 @@ class ProductController extends Controller
         return view('backend/products/views', compact('products', 'isAdmin', 'listUserId'));
     }
 
-
-    public function create()
+    public function create(Request $request)
     {
-        $categories = Category::all();
+        (new HomeController())->getLocale($request);
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
+        $registerCate = MemberRegisterPersonSource::where('email', Auth::user()->email)->get();
+        $registerCategories = MemberRegisterInfo::where('id', $registerCate[0]['member_id'])->get();
+        $categoriesRegister =[];
+        $arrayCategory = explode(',', $registerCategories[0]['category_id']);
+        foreach($arrayCategory as $registerCategor){
+//            $exitsCategories = in_array($registerCategor, [1,2,36,37,38,39]);
+            array_push($categoriesRegister, $registerCategor);
+        }
+
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', Auth::user()->id]])->get();
 
         $id = Auth::user()->id;
@@ -188,12 +204,15 @@ class ProductController extends Controller
         return view('backend/products/create', [
             'categories' => $categories,
             'attributes' => $attributes,
-            'storages' => $storages
+            'storages' => $storages,
+            'categoriesRegister' => $categoriesRegister,
+
         ]);
     }
 
     public function store(Request $request)
     {
+        (new HomeController())->getLocale($request);
         try {
             $maxProduct = Product::where([
                 ['user_id', Auth::user()->id],
@@ -324,15 +343,15 @@ class ProductController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-
+        (new HomeController())->getLocale($request);
         $product = Product::findOrFail($id);
-        $categories = Category::all();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', \Illuminate\Support\Facades\Auth::user()->id]])->get();
         $att_of_product = DB::table('product_attribute')->where('product_id', $product->id)->get();
         $productDetails = Variation::where([['product_id', $id], ['status', VariationStatus::ACTIVE]])->get();
-        $price_sales = ProductSale::where('product_id',$id)->get();
+        $price_sales = ProductSale::where('product_id', $id)->get();
 
         return view('backend.products.edit', compact(
             'categories',
@@ -346,6 +365,7 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
+        (new HomeController())->getLocale($request);
         try {
             $product = Product::findOrFail($id);
 
@@ -390,7 +410,7 @@ class ProductController extends Controller
 
 
             $product->origin = $request->input('origin');
-            $product->min = $request->input('min');
+            $product-> min = $request->input('min');
 
             $ld = new TranslateController();
 
@@ -499,7 +519,6 @@ class ProductController extends Controller
                 return back();
             }
         } catch (\Exception $exception) {
-            dd($exception);
             alert()->error('Error', 'Error, please try again');
             return back();
         }
@@ -536,33 +555,45 @@ class ProductController extends Controller
 
     public function setHotProduct($id)
     {
-        try {
-            $product = Product::find($id);
-            if ($product->hot == 1) {
-                $product->hot = 0;
-            } else {
-                $product->hot = 1;
+        $user = User::find(Auth::id());
+        $hasPermission = $user->permissions()->wherePivot('permission_id', 9)->where('status', PermissionUserStatus::ACTIVE)->get();
+        if ($hasPermission->isNotEmpty() || checkAdmin()) {
+            try {
+                $product = Product::find($id);
+                if ($product->hot == 1) {
+                    $product->hot = 0;
+                } else {
+                    $product->hot = 1;
+                }
+                $product->save();
+                return $product;
+            } catch (\Exception $exception) {
+                return $exception;
             }
-            $product->save();
-            return $product;
-        } catch (\Exception $exception) {
-            return $exception;
+        } else {
+            return false;
         }
     }
 
     public function setFeatureProduct($id)
     {
-        try {
-            $product = Product::find($id);
-            if ($product->feature == 1) {
-                $product->feature = 0;
-            } else {
-                $product->feature = 1;
+        $user = User::find(Auth::id());
+        $hasPermission = $user->permissions()->wherePivot('permission_id', 10)->where('status', PermissionUserStatus::ACTIVE)->get();
+        if ($hasPermission->isNotEmpty() || checkAdmin()) {
+            try {
+                $product = Product::find($id);
+                if ($product->feature == 1) {
+                    $product->feature = 0;
+                } else {
+                    $product->feature = 1;
+                }
+                $product->save();
+                return $product;
+            } catch (\Exception $exception) {
+                return $exception;
             }
-            $product->save();
-            return $product;
-        } catch (\Exception $exception) {
-            return $exception;
+        } else {
+            return false;
         }
     }
 
@@ -576,7 +607,7 @@ class ProductController extends Controller
 
         $arrayIDs = $this->getCategory($request);
         if (!$arrayIDs || count($arrayIDs) == 0) {
-            $categories = Category::all();
+            $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
             $category = $categories[0];
             $arrayIDs[] = $category->id;
         }
@@ -641,6 +672,7 @@ class ProductController extends Controller
 
     private function getAttributeProperty(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $proAtt = $request->input('attribute_property');
 
         if ($proAtt === null) {
@@ -669,7 +701,7 @@ class ProductController extends Controller
         return $newArray;
     }
 
-    private function createAttributeProduct(Product $product, $newArray)
+    private function createAttributeProduct($product, $newArray)
     {
         if ($newArray != null) {
             for ($i = 0; $i < count($newArray); $i++) {
@@ -694,7 +726,7 @@ class ProductController extends Controller
     {
         $arrayIDs = $this->getCategory($request);
         if (!$arrayIDs || count($arrayIDs) == 0) {
-            $categories = Category::all();
+            $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
             $category = $categories[0];
             $arrayIDs[] = $category->id;
         }
@@ -745,19 +777,32 @@ class ProductController extends Controller
         $success = Product::create($newProductData);
         $product = Product::where('user_id', Auth::user()->id)->orderByDesc('id')->first();
 
-        $quantity = $request->input('quantity');
+        $starts = $request->input('starts');
+        $ends = $request->input('ends');
+
         $sales = $request->input('sales');
         $days = $request->input('days');
 
-        $counts = count($quantity);
+        $ships = $request->input('ships');
+
+        $counts = count($starts);
         for ($i = 0; $i < $counts; $i++) {
             $newProductSale = null;
+            if (!$starts[$i]){
+                $starts[$i] = $product->min;
+            }
+            if (!$ends[$i]){
+                $quantity = $starts[$i];
+            } else {
+                $quantity = $starts[$i] . '-' . $ends[$i];
+            }
             $newProductSale = [
                 'user_id' => $product->user_id,
                 'product_id' => $product->id,
-                'quantity' => $quantity[$i],
+                'quantity' => $quantity,
                 'sales' => $sales[$i],
                 'days' => $days[$i],
+                'ship' => $ships[$i],
             ];
             ProductSale::create($newProductSale);
         }
@@ -826,10 +871,10 @@ class ProductController extends Controller
         }
     }
 
-    private function getCategory($request)
+    private function getCategory(Request $request)
     {
         $listIDs = null;
-        $categories = Category::all();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $listCategoryName[] = null;
         foreach ($categories as $category) {
             $name = 'category-' . $category->id;

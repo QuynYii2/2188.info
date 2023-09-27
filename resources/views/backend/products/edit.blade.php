@@ -103,18 +103,18 @@
                     @endif
                     <div class="col-12 col-md-7 border-right mt-2 rm-pd-on-mobile">
                         <div class="form-group">
-                            <div class="name">Tên sản phẩm</div>
+                            <div class="name">{{ __('home.Tên sản phẩm') }}</div>
                             <input type="text" class="form-control" name="name" id="name"
                                    placeholder="Nhập tên sản phẩm" value="{{($product->name)}}"
                                    required>
                         </div>
                         <div class="form-group">
-                            <label for="short_description">Mô tả ngắn</label>
+                            <label for="short_description">{{ __('home.Mô tả ngắn') }}</label>
                             <textarea id="short_description" class="form-control description" name="short_description"
                                       rows="5">{{$product->short_description}}</textarea>
                         </div>
                         <div class="form-group">
-                            <label for="description">Mô tả chi tiết</label>
+                            <label for="description">{{ __('home.Mô tả chi tiết') }}</label>
                             <textarea id="description" class="form-control description" name="description"
                                       rows="5">{{$product->description}}</textarea>
                         </div>
@@ -124,7 +124,7 @@
                             @for($i = 0; $i< count($permissionUsers); $i++)
                                 @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm hot')
                                     <div class="col-4 d-flex align-items-center">
-                                        <label for="hot_product">Sản phẩm hot</label>
+                                        <label for="hot_product">{{ __('home.Sản phẩm hot') }}</label>
                                         <div class="col-4 col-sm-4">
                                             <input class="form-control" type="checkbox" id="hot_product"
                                                    name="hot_product">
@@ -136,7 +136,7 @@
                             @for($i = 0; $i< count($permissionUsers); $i++)
                                 @if($permissionUsers[$i]->name == 'Nâng cấp sản phẩm nổi bật')
                                     <div class="col-4 d-flex align-items-center">
-                                        <label for="feature_product" class="">Sản phẩm nổi bật</label>
+                                        <label for="feature_product" class="">{{ __('home.Sản phẩm nổi bật') }}</label>
                                         <div class="col-4 col-sm-4">
                                             <input class="form-control" type="checkbox" id="feature_product"
                                                    name="feature_product">
@@ -148,7 +148,7 @@
                         </div>
 
                         <div class="form-group col-12 col-sm-12 ">
-                            <label for="gallery">Thư viện ảnh:</label>
+                            <label for="gallery">{{ __('home.Thư viện ảnh') }}:</label>
                             @include('backend.products.modal-media')
                             @php
                                 $input = $product->gallery;
@@ -195,7 +195,7 @@
                                             @endforeach
                                         </div>
                                         <div class="form-group  col-6">
-                                            <label for="price">Giá bán</label>
+                                            <label for="price">{{ __('home.Giá bán') }}</label>
                                             <input type="number"
                                                    class="form-control"
                                                    id="price{{$productDetail->id}}"
@@ -212,7 +212,7 @@
                                                    value="{{$productDetail->price }}">
                                         </div>
 
-                                        <label for="thumbnail">Thumbnail</label>
+                                        <label for="thumbnail">{{ __('home.thumbnail') }}</label>
                                         <div class="form-group col-12">
                                             @if ($productDetail->thumbnail)
                                                 <img class="mt-2 mb-2"
@@ -304,40 +304,40 @@
                         </div>
                         <div id="renderInputAttribute">
                         </div>
-                        <a id="btnSaveAttribute" class="btn btn-success mb-1 mt-1">SaveAttribute11</a>
+                        <a id="btnSaveAttribute" class="btn btn-success mb-1 mt-1">SaveAttribute</a>
                         <input type="text" hidden="" name="isNew" id="isNew" value="0">
 
                     </div>
                     <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
                         <div class="form-group">
-                            <div class="name">Giá bán</div>
+                            <div class="name">{{ __('home.Giá bán') }}</div>
                             <input type="number" class="form-control" name="giaban" id="name"
                                    placeholder="Nhập giá bán" value="{{$product->old_price}}"
                                    required min="1">
                         </div>
                         <div class="form-group">
-                            <div class="name">Nhập giá khuyến mãi(nếu có)</div>
+                            <div class="name">{{ __('home.Nhập giá khuyến mãi(nếu có)') }}</div>
                             <input type="number" class="form-control" name="giakhuyenmai" id="name"
                                    placeholder="Nhập giá khuyến mãi" value="{{$product->price}}" min="1">
                         </div>
                         <div class="form-group">
-                            <div class="name">Nhập số lượng</div>
+                            <div class="name">{{ __('home.Nhập số lượng') }}</div>
                             <input type="number" class="form-control" name="qty" id="qty"
                                    placeholder="Nhập giá khuyến mãi" value="{{$product->qty}}" min="1">
                         </div>
                         <div class="form-group">
-                            <div class="name">Xuất xứ</div>
+                            <div class="name">{{ __('home.Xuất xứ') }}</div>
                             <input type="text" class="form-control" name="origin" id="origin" placeholder="Nhập xuất xứ"
                                    value="{{$product->origin}}">
                         </div>
                         <div class="form-group">
-                            <div class="name">Sản phẩm tối thiểu</div>
+                            <div class="name">{{ __('home.Sản phẩm tối thiểu') }}</div>
                             <input type="number" value="{{$product->min}}" class="form-control" name="min" id="min"
                                    placeholder="Nhập số lượng tối thiểu" min="1">
                         </div>
                         <div class="form-group">
                             <div class="d-flex">
-                                <div class="name">Mua nhiều giảm giá</div>
+                                <div class="name">{{ __('home.Mua nhiều giảm giá') }}</div>
                             </div>
                             <div>
                                 <div class="">
@@ -347,7 +347,7 @@
 
                                         </div>
                                         <button type="button" class="btn add-form-field"><i
-                                                    class="fa-solid fa-plus"></i> Thêm khoảng giá
+                                                    class="fa-solid fa-plus"></i> {{ __('home.Thêm khoảng giá') }}
                                         </button>
                                     </div>
                                     <div id="base-package-fields" hidden>
@@ -383,7 +383,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="name">Tất cả danh mục</div>
+                            <div class="name">{{ __('home.Tất cả danh mục') }}</div>
                             @php
                                 $categories = DB::table('categories')->where('parent_id', null)->get();
                                 $productListCategory = $product->list_category;
@@ -472,7 +472,7 @@
         <form action="#" id="formDeleteVariable" class="d-none" method="POST">
             @csrf
             @method('DELETE')
-            <button type="submit" id="btnDeleteVariable">Delete</button>
+            <button type="submit" id="btnDeleteVariable">{{ __('home.Delete') }}</button>
         </form>
     </div><!-- wpcontent -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -550,7 +550,7 @@
         function checkHotAndFeature() {
             var hot = document.getElementById('inputHotProduct');
             var feature = document.getElementById('inputFeatureProduct');
-            console.log(hot, feature);
+
             if (hot.value == 1) {
                 document.getElementById("hot_product").checked = true;
             }

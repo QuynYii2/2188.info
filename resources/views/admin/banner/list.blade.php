@@ -2,17 +2,17 @@
 @section('title', 'List Banner Setup')
 @section('content')
     <h3 class="text-center">List Banner Setup</h3>
-    <a href="{{ route('admin.banners.processCreate') }}" class="btn btn-success">Thêm mới</a>
+    <a href="{{ route('admin.banners.processCreate') }}" class="btn btn-success">{{ __('home.thêm mới') }}</a>
     <div class="card">
         <table class="table table-bordered">
             <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Thumbnails</th>
+                <th scope="col">{{ __('home.thumbnail') }}</th>
                 <th scope="col">Sub thumbnails</th>
-                <th scope="col">Status</th>
+                <th scope="col">{{ __('home.Status') }}</th>
                 <th scope="col">Details</th>
-                <th scope="col">Action</th>
+                <th scope="col">{{ __('home.Action') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -71,27 +71,33 @@
         </table>
     </div>
 @endsection
-<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>j
 <script>
     $(document).ready(function () {
         $(".inputCheckbox").click(function () {
             var banner = jQuery(this).val();
 
-            function toggleAttribute(banner) {
-                $.ajax({
-                    url: '/admin/banners/' + banner,
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function (response) {
-                        let status = document.getElementById('status' + banner)
-                        status.innerText = response['status'];
-                    },
-                    error: function (exception) {
-                        console.log(exception)
-                    }
-                });
+            async function toggleAttribute(banner) {
+                let url = '{{ route('admin.banners.update', ['id' => ':banner']) }}';
+                url = url.replace(':banner', banner);
+
+                try {
+                    await $.ajax({
+                        url: url,
+                        method: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function (response) {
+                            let status = document.getElementById('status' + banner)
+                            status.innerText = response['status'];
+                        },
+                        error: function (exception) {
+
+                        }
+                    });
+                } catch (error) {
+                    throw error;
+                }
             }
 
             toggleAttribute(banner);

@@ -92,6 +92,7 @@ class AuthController extends Controller
 
         $user = User::where($isEmail ? 'email' : 'phone', $loginField)->first();
 
+
         if ($user && $user->status !== UserStatus::ACTIVE) {
             toast('Tài khoản của bạn đã bị khóa.', 'error', 'top-right');
             return back();
@@ -125,7 +126,28 @@ class AuthController extends Controller
             $login = $request->session()->get('login');
             $token = md5(uniqid());
             User::where('id', Auth::id())->update(['token' => $token]);
-            return redirect()->route('home');
+
+            $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+            $isMember = null;
+            if ($memberPerson) {
+                $member = MemberRegisterInfo::where([
+                    ['id', $memberPerson->member_id],
+                    ['status', MemberRegisterInfoStatus::ACTIVE]
+                ])->first();
+                if ($member) {
+                    $isMember = true;
+                }
+//                dd($isMember, $member->member, RegisterMember::BUYER);
+                if ($isMember && $member->member == RegisterMember::LOGISTIC) {
+                    return redirect()->route('stand.register.member.index', ['id' => $member->id]);
+                }
+                elseif ($isMember && $member->member == RegisterMember::TRUST) {
+                    return redirect()->route('trust.register.member.index');
+                }
+                else {
+                    return redirect()->route('home');
+                }
+            }
         } else {
             toast('Tên đăng nhập hoặc mật khẩu không chính xác', 'error', 'top-right');
         }
@@ -226,7 +248,7 @@ class AuthController extends Controller
 
     public function getListNation()
     {
-        $listNation = DB::table('countries')->get(['name', 'iso2']);
+        $listNation = DB::table('countries')->orderBy('continents')->get(['name', 'iso2', 'continents']);
         return response()->json($listNation);
     }
 
@@ -234,7 +256,7 @@ class AuthController extends Controller
     {
         $listState = DB::table('states')
             ->where([['country_code', '=', $id]])
-            ->get(['name', 'state_code']);
+            ->get(['name', 'state_code', 'country_code']);
         return response()->json($listState);
     }
 
@@ -242,6 +264,7 @@ class AuthController extends Controller
     {
         $listCity = DB::table('cities')
             ->where([['state_code', '=', $id], ['country_code', '=', $code]])
+            ->orderBy('name')
             ->get(['name', 'city_code']);
         return response()->json($listCity);
     }
@@ -250,6 +273,7 @@ class AuthController extends Controller
     {
         $listWard = DB::table('wards')
             ->where([['city_code', '=', $id], ['country_code', '=', $code]])
+            ->orderBy('name')
             ->get(['name', 'id']);
         return response()->json($listWard);
     }
@@ -271,14 +295,5 @@ class AuthController extends Controller
             $locale = $locale['countryCode'];
         }
         return $locale;
-    }
-
-    private function updateUser($user, $fullName, $email, $phoneNumber, $member)
-    {
-        $user->name = $fullName;
-        $user->email = $email;
-        $user->phone = $phoneNumber;
-        $user->member = $member;
-        $user->save();
     }
 }

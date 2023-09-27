@@ -26,13 +26,13 @@
                         </td>
                     </tr>
                     <tr class="form-field term-slug-wrap">
-                        <th scope="row"><label for="property_slug">Đường dẫn</label></th>
+                        <th scope="row"><label for="property_slug">{{ __('home.Đường dẫn') }}</label></th>
                         <td><input name="property_slug" id="property_slug" type="text" value="{{$property->slug}}"
                                    aria-describedby="slug-description">
                         </td>
                     </tr>
                     <tr class="form-field term-description-wrap">
-                        <th scope="row"><label for="property_description">Mô tả</label></th>
+                        <th scope="row"><label for="property_description">{{ __('home.Mô tả') }}</label></th>
                         <td><textarea name="property_description" id="property_description" rows="5" cols="50"
                                       class="large-text"
                                       aria-describedby="description-description">{{$property->description}}</textarea>
@@ -44,8 +44,7 @@
                     <input type="submit" class="btn btn-primary" value="Cập nhật">
                     <span id="delete-link">
                             <a class="btn btn-danger delete" data-toggle="modal" data-target="#exampleModal">
-                                Xóa
-                            </a>
+                                {{ __('home.Xoá') }}
                     </span>
                 </div>
             </form>
@@ -72,7 +71,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary"
-                                    data-dismiss="modal">Close</button>
+                                    data-dismiss="modal">{{ __('home.Close') }}</button>
                             <button type="submit" class="btn btn-danger">Yes</button>
                         </div>
                     </div>

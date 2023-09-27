@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Seller;
 
+use App\Enums\CategoryStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\TranslateController;
@@ -12,18 +13,20 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
+        (new HomeController())->getLocale($request);
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         return view('backend/categories/index', [
             'categories' => $categories
         ]);
 
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        $categories = Category::all();
+        (new HomeController())->getLocale($request);
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         return view('backend/categories/create', [
             'categories' => $categories
         ]);
@@ -32,13 +35,18 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
+        (new HomeController())->getLocale($request);
         try {
             $validatedData = $request->validate([
                 'category_name' => 'required',
                 'category_parentID' => 'nullable',
             ]);
 
-            $categoryOld = DB::table('categories')->where([['name', $validatedData['category_name']], ['parent_id', $validatedData['category_parentID']]])->first();
+            $categoryOld = DB::table('categories')->where([
+                ['name', $validatedData['category_name']],
+                ['parent_id', $validatedData['category_parentID']],
+                ['status', '!=', CategoryStatus::DELETED],
+            ])->first();
             if ($categoryOld) {
                 alert()->error('Error', 'Tên chuyên mục tồn tại');
                 return back();
@@ -49,20 +57,47 @@ class CategoryController extends Controller
             if (!$slug) {
                 $slug = \Str::slug($name);
             }
+            $ld = new TranslateController();
 
             $category = new Category();
-            $category->name = $name;
+            switch (locationHelper()) {
+                case 'kr';
+                    $category->name = $name;
+                    $category->name_vi = $ld->translateText($name, 'vi');
+                    $category->name_ja = $ld->translateText($name, 'ja');
+                    $category->name_ko = $name;
+                    $category->name_en = $ld->translateText($name, 'en');
+                    $category->name_zh = $ld->translateText($name, 'zh-CN');
+                    break;
+                case 'cn';
+                    $category->name = $name;
+                    $category->name_vi = $ld->translateText($name, 'vi');
+                    $category->name_ja = $ld->translateText($name, 'ja');
+                    $category->name_ko = $ld->translateText($name, 'ko');
+                    $category->name_en = $ld->translateText($name, 'en');
+                    $category->name_zh = $name;
+                    break;
+                case 'jp';
+                    $category->name = $name;
+                    $category->name_vi = $ld->translateText($name, 'vi');
+                    $category->name_ja = $name;
+                    $category->name_ko = $ld->translateText($name, 'ko');
+                    $category->name_en = $ld->translateText($name, 'en');
+                    $category->name_zh = $ld->translateText($name, 'zh-CN');
+                    break;
+                case 'vi';
+                    $category->name = $name;
+                    $category->name_vi = $name;
+                    $category->name_ja = $ld->translateText($name, 'ja');
+                    $category->name_ko = $ld->translateText($name, 'ko');
+                    $category->name_en = $ld->translateText($name, 'en');
+                    $category->name_zh = $ld->translateText($name, 'zh-CN');
+                    break;
+            }
+
             $category->user_id = Auth::user()->id;
             $category->slug = $slug;
             $category->description = $request->input('category_description');
-
-            $ld = new TranslateController();
-
-            $category->name_vi = $ld->translateText($name, 'vi');
-            $category->name_ja = $ld->translateText($name, 'ja');
-            $category->name_ko = $ld->translateText($name, 'ko');
-            $category->name_en = $ld->translateText($name, 'en');
-            $category->name_zh = $ld->translateText($name, 'zh-CN');
 
             if ($request->hasFile('thumbnail')) {
                 $thumbnail = $request->file('thumbnail');
@@ -95,15 +130,17 @@ class CategoryController extends Controller
     }
 
 
-    public function show(Category $category)
+    public function show(Category $request, $category)
     {
+        (new HomeController())->getLocale($request);
         return view('backend/categories/edit', compact('category'));
     }
 
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        $categories = Category::all();
+        (new HomeController())->getLocale($request);
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $category = Category::find($id);
         if (!$category) {
             return back();
@@ -114,6 +151,7 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
+        (new HomeController())->getLocale($request);
 
         try {
             $category = Category::find($id);
@@ -182,18 +220,28 @@ class CategoryController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        (new HomeController())->getLocale($request);
         try {
             $category = Category::find($id);
             if (!$category) {
                 return back();
             }
-            if ($category->user_id != Auth::user()->id) {
-                alert()->error('Error', 'Không thể xoá, Vui lòng thử lại');
-                return redirect()->route('seller.categories.index');
+            $isAdmin = (new HomeController())->checkAdmin();
+            if ($isAdmin == false) {
+                if ($category->user_id != Auth::user()->id) {
+                    alert()->error('Error', 'Không thể xoá, Vui lòng thử lại');
+                    return redirect()->route('seller.categories.index');
+                }
             }
-            $category->delete();
+            $category->status = CategoryStatus::DELETED;
+            $categories = Category::where('parent_id', $id)->get();
+            $category->save();
+            foreach ($categories as $item) {
+                $item = Category::where('parent_id', $id)->get();
+                $item->save();
+            }
             alert()->success('Success', 'Category đã được xóa thành công!');
             return redirect()->route('seller.categories.index');
         } catch (\Exception $exception) {

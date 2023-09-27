@@ -5,23 +5,23 @@
     <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="card-title">Thêm mới mã giảm giá</h5>
+            <h5 class="card-title">{{ __('home.Thêm mới mã giảm giá') }}</h5>
         </div>
         <div class="container">
             <form action="{{route('seller.rank.setup.create')}}" method="post">
                 @csrf
                 <div class="form-row">
                     <div class="form-group col-md-3">
-                        <label for="percent">Phần trăm giảm giá</label>
+                        <label for="percent">{{ __('home.Phần trăm giảm giá') }}</label>
                         <input type="number" min="1" max="100" class="form-control" name="percent" id="percent"
                                placeholder="60">
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="apply">Apply</label>
+                        <label for="apply">app{{ __('home.apply') }}</label>
                         <div class="multiselect">
                             <div class="selectBox" id="div-click" onclick="showCheckboxes()">
                                 <select>
-                                    <option>Chọn rank áp dụng</option>
+                                    <option>{{ __('home.Chọn rank áp dụng') }}</option>
                                 </select>
                                 <div class="overSelect"></div>
                             </div>
@@ -43,7 +43,6 @@
             </form>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script>
         var expanded = false;
 
