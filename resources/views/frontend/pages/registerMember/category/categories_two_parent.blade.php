@@ -1,9 +1,8 @@
 @foreach($categories_two_parent as $category)
+    @php
+        $isChecked = false;
+    @endphp
     @if(is_array($arrayCategory))
-        @php
-            $isChecked = false;
-        @endphp
-        @dd($arrayCategory)
         @foreach($arrayCategory as $item)
             @php
                 if ($category->id == $item){
