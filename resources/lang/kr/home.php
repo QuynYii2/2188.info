@@ -1014,6 +1014,14 @@ return [
     //
     'Update information register member' => '등록인 정보',
     'Update information represent member' => '대표자 등록정보',
+
+    //
+    'Create new attribute'=>'속성 추가',
+    'Save attribute'=>'속성 저장',
+    'Create now'=>'바로 추가하기',
+    'Product attribute'=>'상품 속성',
+    'None'=>'없음',
+
     'No received messages' => '받은 메시지가 없습니다',
     'No sent messages' => '보낸 메시지가 없습니다',
     //
@@ -1024,4 +1032,5 @@ return [
     'đơn giá' => '단가',
     'namess' => '성명',
     'xác nhận đăng ký' => '등록확인'
+
 ];
