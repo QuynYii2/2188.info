@@ -23,9 +23,9 @@
         </div>
     @endif
     <div class="col-md-3">
-        <button type="button" class="btm btn-warning btnCreateProperty"
+        <a class="btm btn-warning btnCreateProperty"
                 data-id="{{$attribute->id}}">{{ __('home.Create now') }}
-        </button>
+        </a>
     </div>
 </div>
 <script>

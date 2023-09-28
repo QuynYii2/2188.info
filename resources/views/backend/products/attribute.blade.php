@@ -9,7 +9,7 @@
         @endforeach
     </select>
 </div>
-<button class="btn btn-warning" id="btnCreateAttribute" type="button"> {{ __('home.Create new attribute') }} </button>
+<a class="btn btn-warning" id="btnCreateAttribute"> {{ __('home.Create new attribute') }} </a>
 <script>
     $(document).ready(function () {
         let myArray = [];

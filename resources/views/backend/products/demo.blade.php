@@ -12,10 +12,10 @@
         <div class="col-md-6">
             <div class="card-header form-group mb-3">
                 <label for="attribute_name">{{ __('home.Tên thuộc tính') }}</label>
-                <input type="text" class="form-control" name="attribute_name" id="attribute_name" required>
+                <input type="text" class="form-control" name="attribute_name" id="attribute_name">
             </div>
-            <button type="button" class="btn btn-success" id="btnSubmitAttribute">{{ __('home.Tạo mới') }}</button>
-            <button type="button" class="btn btn-secondary" id="btnCloseAttribute">{{ __('home.Close') }}</button>
+            <a class="btn btn-success" id="btnSubmitAttribute">{{ __('home.Tạo mới') }}</a>
+            <a class="btn btn-secondary" id="btnCloseAttribute">{{ __('home.Close') }}</a>
         </div>
     </div>
 
@@ -23,7 +23,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label for="property_name">{{ __('home.Tên thuộc tính') }}</label>
-                <input type="text" class="form-control" name="property_name" id="property_name" required>
+                <input type="text" class="form-control" name="property_name" id="property_name">
             </div>
             <div class="form-group">
                 <label for="attribute_id">{{ __('home.Chọn thuộc tính cha') }}:</label>
@@ -34,7 +34,7 @@
                 </select>
             </div>
 
-            <button type="button" class="btn btn-success" id="btnSubmitProperty">{{ __('home.Tạo mới') }}</button>
+            <a class="btn btn-success" id="btnSubmitProperty">{{ __('home.Tạo mới') }}</a>
         </div>
     </div>
 
@@ -43,7 +43,7 @@
     </div>
 
     <div class="col mt-5">
-        <button type="button" id="btnSaveAttribute" class="btn btn-success mt-5">{{ __('home.Save attribute') }}</button>
+        <a id="btnSaveAttribute" class="btn btn-success mt-5">{{ __('home.Save attribute') }}</a>
     </div>
 </div>
 

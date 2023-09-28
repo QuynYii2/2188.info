@@ -308,9 +308,8 @@
                     </div>
                 </form>
             </div>
-        </div><!-- wpbody -->
-    </div><!-- wpcontent -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        </div>
+    </div>
     <script>
         $('#btnSaveAttribute').on('click', function () {
             let attribute = document.getElementById('input-form-create-attribute').value;
