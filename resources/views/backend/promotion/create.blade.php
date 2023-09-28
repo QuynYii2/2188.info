@@ -25,7 +25,7 @@
                     <div class="form-group col-md-6">
                         <label for="status">{{ __('home.apply') }}</label>
                         <div class="multiselect">
-                            <div class="selectBox" id="div-click" onclick="showCheckboxes()">
+                            <div class="selectBox" id="div-click" >
                                 <select>
                                     <option>{{ __('home.chọn sản phẩm áp dụng') }}</option>
                                 </select>
@@ -49,7 +49,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <label for="status">Status</label>
                         <select id="status" name="status" class="form-control">
                             <option value="{{\App\Enums\PromotionStatus::ACTIVE}}">{{\App\Enums\PromotionStatus::ACTIVE}}</option>
@@ -72,40 +72,9 @@
                     <textarea type="text" name="description" class="form-control" id="description"
                               placeholder="Description"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Create</button>
+                <button type="submit" class="btn btn-primary">{{ __('home.Create') }}</button>
             </form>
         </div>
     </div>
-    <script>
-        var expanded = false;
-
-        function showCheckboxes() {
-            var checkboxes = document.getElementById("checkboxes");
-            if (!expanded) {
-                window.addEventListener('click', function (e) {
-                    var checkboxes = document.getElementById("checkboxes");
-                    var div = document.getElementById('div-click');
-                    if (checkboxes.contains(e.target) || div.contains(e.target)) {
-                        div.on('click', function () {
-                            if (!expanded) {
-                                checkboxes.style.display = "block";
-                                expanded = true;
-                            } else {
-                                checkboxes.style.display = "none";
-                                expanded = false;
-                            }
-                        });
-                    } else {
-                        checkboxes.style.display = "none";
-                        expanded = false;
-                    }
-                })
-                checkboxes.style.display = "block";
-                expanded = true;
-            } else {
-                checkboxes.style.display = "none";
-                expanded = false;
-            }
-        }
-    </script>
+    <script src="{{asset('js/backend/promotion-create.js')}}">  </script>
 @endsection

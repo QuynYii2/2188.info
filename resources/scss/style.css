@@ -897,7 +897,7 @@ a {
   background: white;
   position: fixed;
   top: -15px;
-  height: 100%;
+  height: 105vh;
   right: -100%;
   transition: all 0.5s ease-in-out;
 }
