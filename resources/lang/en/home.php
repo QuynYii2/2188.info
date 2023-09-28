@@ -344,7 +344,7 @@ return [
     'POWER PRODUCTION ' => 'POWER PRODUCTION ',
     'Member' => 'Hội viên ',
     'Member booth' => 'Gian hàng hội viên ',
-    'Booth' => 'Gian hàng',
+    'Booth' => 'Booth',
     'Partner List' => 'Partner List',
     'Message received' => 'Tin nhắn đã nhận',
     'Message sent' => 'Tin nhắn đã gửi',
@@ -519,6 +519,7 @@ return [
     'Response time' => 'Thời gian đáp ứng',
     'Online revenue' => 'Doanh thu trực tuyến',
     'Floor space' => 'Không gian sàn',
+    'Gift Wrapping' => 'Gói quà',
     'Service' => 'Dịch vụ',
     'Small customization' => 'tùy chỉnh nhỏ',
     'Customization based on design' => 'Tùy chỉnh dựa trên thiết kế',
@@ -549,7 +550,7 @@ return [
     'Number clearance' => 'Number clearance',
     'Name company English' => 'Name company English',
     'Local language' =>	'Local language',
-    'English only' => 'English only',
+    'English only' => '영문',
     'Name company Korea' => 'Name company Korea',
     // nganh nghe
     'Career' => 'Career',
@@ -597,6 +598,7 @@ return [
     'Subscriber registration' => 'Subscriber registration ',
     'Representative registration' => 'Representative registration ',
     'Register as member' => 'Register as members ',
+    'Add' => 'Thêm vào',
     'Search Results' => 'Search Results',
     'Top Search' => 'Top Search',
     'See All' => 'See All',
@@ -923,4 +925,15 @@ return [
     'Create now'=>'Create now',
     'Product attribute'=>'Product attribute',
     'None'=>'None',
+
+    'No received messages' => 'No received messages',
+    'No sent messages' => 'No sent messages',
+    'đơn giá' => 'đơn giá',
+    'xác nhận đăng ký' => 'xác nhận đăng ký',
+    //
+    'Select file' => 'Select file',
+    'Address Business' => 'Address Business',
+    'Language English' => 'Language English',
+    'Language Local' => 'Language Local',
+
 ];

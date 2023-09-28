@@ -92,7 +92,7 @@
                             status.innerText = response['status'];
                         },
                         error: function (exception) {
-                            console.log(exception)
+
                         }
                     });
                 } catch (error) {

@@ -3,74 +3,7 @@
 @section('content')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
-    <style>
-        body {
-            background: #F5F5F5;
-        }
-
-        .size {
-            font-size: 17px;
-        }
-
-        :root {
-            --color-white: #ffffff;
-            --color-black: #000000;
-            --color-light: #f5f7f8;
-            --color-dark: #333333;
-            --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 3px rgba(0, 0, 0, 0.24);
-        }
-
-        button:focus {
-            box-shadow: none;
-        }
-
-        .main .item-card {
-            border-radius: 2px;
-        }
-
-        .main .card-image {
-            display: block;
-            padding-top: 70%;
-            position: relative;
-            width: 100%;
-        }
-
-        .modal-dialog {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .main .card-image img {
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .modal-header {
-            border: none;
-        }
-
-        .modal-content-css {
-            height: 85vh;
-            overflow-y: auto;
-        }
-
-        .btn:focus {
-            outline: 0;
-            box-shadow: none;
-        }
-
-        .modal-header {
-            padding-bottom: 0;
-        }
-    </style>
-    <div class="container">
+    <div class="container stand-member">
         @if($company)
             @php
                 if (Auth::check()){
@@ -113,24 +46,7 @@
             @endphp
             <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
             {{--            <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>--}}
-            <div class="d-flex justify-content-between align-items-center p-3">
-                <div>
-                    <a href=" {{ route('stand.register.member.index', $member->id) }}"
-                       class="btn btn-primary mr-2">{{ __('home.상품 전시장') }}</a>
-                    <a href="{{route('partner.register.member.index')}}"
-                       class="btn btn-warning">{{ __('home.Partner List') }}</a>
-                </div>
-                <div>
-                    <a href="{{route('chat.message.received')}}"
-                       class="btn btn-primary mr-2">{{ __('home.Message received') }}</a>
-                    <a href="{{route('chat.message.sent')}}" style=""
-                       class="btn btn-primary mr-2">{{ __('home.Message sent') }}</a>
-                    <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
-                       data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
-                    <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
-                       data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
-                </div>
-            </div>
+            @include('frontend.pages.member.header_member')
             <div class="row m-0">
                 <div class="col-md-6 border">
                     <div class="row">
@@ -351,7 +267,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body modal-member">
                     <div id="renderProductMember" class="row">
                         @if(!$products->isEmpty())
                             <div class="col-md-6">
@@ -495,60 +411,6 @@
                                  alt="">
                         </a>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="exampleModalBuyBulk" role="dialog"
-         aria-labelledby="exampleModalBuyBulk"
-         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content p-4" style="width: auto">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="d-flex justify-content-center align-items-center">
-                        <a href="{{route('parent.register.member.locale', 'kr')}}">
-                            <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
-                                 src="{{ asset('images/korea.png') }}"
-                                 alt="">
-                        </a>
-                        <a href="{{route('parent.register.member.locale', 'jp')}}">
-                            <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
-                                 src="{{ asset('images/japan.webp') }}"
-                                 alt="">
-                        </a>
-                        <a href="{{route('parent.register.member.locale', 'cn')}}">
-                            <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
-                                 src="{{ asset('images/china.webp') }}"
-                                 alt="">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modal-show-att" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content" id="modal-select-att">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="body-modal-att"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="selectAttProduct()">
-                        {{ __('home.Save') }}
-                    </button>
                 </div>
             </div>
         </div>
@@ -723,7 +585,7 @@
                     $('#tableMemberOrder').empty().append(response);
                 })
                 .fail(function (_, textStatus) {
-                    console.log(textStatus)
+
                 });
         }
 

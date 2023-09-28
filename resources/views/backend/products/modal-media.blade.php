@@ -203,15 +203,15 @@
 
         thumbnailImageItems.forEach((imgElement) => {
             const imgSrc = imgElement.src.match(/\/storage\/([^,]+),?/)[1];
-            // console.log(imgSrc)
+            //
             // if (fileUploaded.includes(imgSrc)) {
-            //     console.log('123')
+            //
             //     imgElement.parentElement.classList.add("selected-image");
             // }
-            // console.log(456)
+            //
 
             const isImageSelected = fileUploaded.some((fileName) => fileName === imgSrc);
-            console.log(isImageSelected);
+
             if (isImageSelected) {
                 imgElement.parentElement.classList.add("selected-image");
             }

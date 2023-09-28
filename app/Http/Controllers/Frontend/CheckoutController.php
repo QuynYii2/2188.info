@@ -340,33 +340,41 @@ class CheckoutController extends Controller
 
     public function returnCheckout(Request $request)
     {
-        // Xử lý dữ liệu từ VNPay và lấy thông tin giao dịch
-        $vnpResponse = $request->all();
+        $url = session('url_prev','/');
+        if($request->vnp_ResponseCode == "00") {
+            $vnpAmount = $request->input('vnp_Amount');
+            $vnpBankCode = $request->input('vnp_BankCode');
+            $vnpBankTranNo = $request->input('vnp_BankTranNo');
+            $time = $request->input('vnp_PayDate');
+            $responseCode = $request->input('vnp_ResponseCode');
+            $note = $request->input('vnp_OrderInfo');
+            $userId = Auth::user()->id;
+            $costId = $request->input('vnp_TxnRef');
 
-        // Kiểm tra tính hợp lệ của dữ liệu (kiểm tra vnp_ResponseCode)
-        if ($vnpResponse['vnp_ResponseCode'] == '00') {
-            // Lấy thông tin giao dịch từ dữ liệu VNPay
-            $transactionInfo = [
-                'transaction_id' => $vnpResponse['vnp_TxnRef'],
-                'amount' => $vnpResponse['vnp_Amount'] / 100,
-                'bank_code' => $vnpResponse['vnp_BankCode'],
-                'payment_status' => 'success', // Hoặc có thể sử dụng giá trị khác để biểu thị trạng thái khác
-                // Thêm các thông tin khác tùy theo yêu cầu của bạn
-            ];
+            DB::table('payments_vnpay')->insert([
+                'money' => $vnpAmount/100,
+                'code_bank' => $vnpBankCode,
+                'code_vnpay' => $vnpBankTranNo,
+                'time' => $time,
+                'vnp_response_code' => $responseCode,
+                'note' => $note,
+                'user_id' => $userId,
+                'cost_id' => $costId,
+            ]);
+            if (Auth::check()) {
+                DB::table('carts')->where([['user_id', Auth::user()->id], ['status', CartStatus::WAIT_ORDER]])->update([
+                    'status' => CartStatus::ORDERED
+                ]);
+                alert()->success('Success', 'Đã thanh toán phí dịch vụ');
+//                return redirect($url)->with('success' ,'Đã thanh toán phí dịch vụ');
+                return view('frontend.pages.PaymentMethods.vnpay_return');
+            }
 
-            // Lưu thông tin giao dịch vào cơ sở dữ liệu
-            Transaction::create($transactionInfo);
-
-            // Hiển thị thông báo thành công
-            alert()->success('Success', 'Payment success!');
-        } else {
-            // Xử lý khi thanh toán thất bại
-            alert()->error('Error', 'Payment failed!');
+            alert()->error('errors', 'errors');
+            return redirect($url)->with('errors' ,'Lỗi trong quá trình thanh toán phí dịch vụ');
         }
-
-        // Chuyển hướng người dùng đến trang chính hoặc trang cần thiết
-        return redirect(session('url_prev', route('checkout.create.vnpay')));
-
+        session()->forget('url_prev');
+        return redirect($url)->with('errors' ,'Lỗi trong quá trình thanh toán phí dịch vụ');
     }
     public function checkoutByVNPay(Request $request)
     {
@@ -375,7 +383,7 @@ class CheckoutController extends Controller
         session(['url_prev' => url()->previous()]);
         $vnp_TmnCode = "DX99JC99";
         $vnp_HashSecret = "NTMFIAYIYAEFEAMZVWNCESERJMBVROKS";
-        $vnp_Returnurl = route('home');
+        $vnp_Returnurl = route('return.checkout.payment');
         $vnp_TxnRef = date("YmdHis");
         $vnp_Amount = $money * 100;
         $vnp_Locale = 'vn';
@@ -424,7 +432,7 @@ class CheckoutController extends Controller
             $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
-        alert()->success('Success', 'Payment success!');
+        alert()->error('errors', 'Payment errors!');
         return redirect($vnp_Url);
 
     }

@@ -9,28 +9,10 @@
             $companyPerson = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->first();
             $oldUser = \App\Models\User::where('email', $companyPerson->email)->first();
         @endphp
-        <div class="container-fluid mb-2">
+        <div class="container mb-2">
             <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
             <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
-            <div class="d-flex justify-content-between align-items-center p-3">
-                <div>
-                    <a href="{{route('partner.register.member.index')}}"
-                       class="btn btn-primary mr-2">{{ __('home.Booth') }}</a>
-                    <a href="{{route('partner.register.member.index')}}"
-                       class="btn btn-warning">{{ __('home.Partner List') }}</a>
-                </div>
-                <div>
-                    <a href="{{route('chat.message.received')}}"
-                       class="btn btn-primary mr-2">{{ __('home.Message received') }}</a>
-                    <a href="{{route('chat.message.sent')}}"
-                       class="btn btn-primary mr-2">{{ __('home.Message sent') }}</a>
-                    <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
-                       data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
-                    <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
-                       data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
-                    <a href="{{route('chat.message.show')}}" class="btn btn-primary"> {{ __('home.Chat Now') }}</a>
-                </div>
-            </div>
+            @include('frontend.pages.member.header_member')
             <div class="row m-0">
                 <div class="col-md-6 border">
                     <div class="row">
@@ -109,10 +91,10 @@
                     </div>
                 </div>
             </div>
+            @if(!$listMessage->isEmpty())
             <div class="row">
                 <div class="col-md-3">
                     <div class="card-body">
-                        @if(!$listMessage->isEmpty())
                             @foreach($listMessage as $message)
                                 @php
                                     $user = \App\Models\User::find($message->from_user_id);
@@ -124,15 +106,13 @@
                                     <h5 class="card-title">{{$user->name}}</h5>
                                 </div>
                             @endforeach
-                        @endif
                     </div>
                     {{--        {{ $listMessage->links() }}--}}
                 </div>
-                @if(!$listMessage->isEmpty())
-                    @php
-                        $user = \App\Models\User::find($listMessage[0]->from_user_id);
-                    @endphp
-                    <div class="col-md-9">
+                @php
+                    $user = \App\Models\User::find($listMessage[0]->from_user_id);
+                @endphp
+                <div class="col-md-9">
                         <div class="card">
                             <h5 id="chat_user" class="text-center">{{$user->name}}</h5>
                             <h5 id="chat_message" class="ml-3">
@@ -142,9 +122,12 @@
                                     data-target="#exampleModal">{{ __('home.chat') }}</button>
                         </div>
                     </div>
-                @endif
-
             </div>
+            @else
+                <div class="text-center mt-4">
+                    {{ __('home.No received messages') }}
+                </div>
+            @endif
         </div>
     @endif
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -190,7 +173,7 @@
                 .then((response) => {
                     $('#chat_message').empty().append(response);
                 })
-                .catch(error => console.log(error));
+                .catch(error => );
         }
 
         function renderDefault() {

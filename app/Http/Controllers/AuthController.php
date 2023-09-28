@@ -248,7 +248,7 @@ class AuthController extends Controller
 
     public function getListNation()
     {
-        $listNation = DB::table('countries')->get(['name', 'iso2']);
+        $listNation = DB::table('countries')->orderBy('continents')->get(['name', 'iso2', 'continents']);
         return response()->json($listNation);
     }
 
@@ -256,7 +256,7 @@ class AuthController extends Controller
     {
         $listState = DB::table('states')
             ->where([['country_code', '=', $id]])
-            ->get(['name', 'state_code']);
+            ->get(['name', 'state_code', 'country_code']);
         return response()->json($listState);
     }
 
@@ -264,6 +264,7 @@ class AuthController extends Controller
     {
         $listCity = DB::table('cities')
             ->where([['state_code', '=', $id], ['country_code', '=', $code]])
+            ->orderBy('name')
             ->get(['name', 'city_code']);
         return response()->json($listCity);
     }
@@ -272,6 +273,7 @@ class AuthController extends Controller
     {
         $listWard = DB::table('wards')
             ->where([['city_code', '=', $id], ['country_code', '=', $code]])
+            ->orderBy('name')
             ->get(['name', 'id']);
         return response()->json($listWard);
     }
