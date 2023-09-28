@@ -108,16 +108,4 @@
             </div>
         </div>
     </div>
-    <script>
-        $(document).ready(function () {
-            $('#inputCheckboxApply').on('change', function () {
-                if ($('#inputCheckboxApply').is(':checked')) {
-                    let url = '{{route('admin.private.update.users', $user->id)}}';
-                    $('#btnContinue').attr("href", url);
-                } else {
-                    $('#btnContinue').attr("href", '');
-                }
-            })
-        })
-    </script>
 @endsection

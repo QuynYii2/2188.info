@@ -158,51 +158,5 @@
             </div>
         </div>
     </div>
-    <script>
-        function previewImage(event) {
-            var reader = new FileReader();
-            reader.onload = function () {
-                var output = document.getElementById('avatarPreview');
-                output.src = reader.result;
-                output.style.backgroundSize = "cover";
-            }
-            reader.readAsDataURL(event.target.files[0]);
-        }
-
-        var countrySelect = document.getElementById('country');
-        fetch('https://restcountries.com/v2/all')
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (data) {
-                const regionUser = "{{ Auth::user()->region }}";
-                for (var i = 0; i < data.length; i++) {
-                    var option = document.createElement('option');
-                    let codeRegion = data[i].alpha2Code.toLowerCase();
-                    option.value = codeRegion;
-                    option.text = data[i].name;
-                    if (codeRegion === regionUser) {
-                        option.selected = true;
-                    }
-                    countrySelect.add(option);
-                }
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    </script>
-
-    <script>
-        let desc = document.querySelectorAll('.description');
-        for (let i = 0; i < desc.length; i++) {
-            CKEDITOR.replace(desc[i], {
-                filebrowserBrowseUrl: '{{ asset('ckfinder/ckfinder.html') }}',
-                filebrowserImageBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Images') }}',
-                filebrowserFlashBrowseUrl: '{{ asset('ckfinder/ckfinder.html?type=Flash') }}',
-                filebrowserUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files') }}',
-                filebrowserImageUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images') }}',
-                filebrowserFlashUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash') }}'
-            });
-        }
-    </script>
+    <script src="{{ asset('js/backend/show_profile/update.js') }}"></script>
 @endsection

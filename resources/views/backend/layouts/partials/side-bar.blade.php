@@ -284,45 +284,4 @@
         @endif
     </ul>
 </div>
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    function checkUrl() {
-        var listUrl = document.getElementsByClassName('sidebarUrl');
-        var currentUrl = window.location.href;
-        for (let i = 0; i < listUrl.length; i++) {
-            let url = listUrl[i].href;
-            if (currentUrl == url) {
-                console.log(listUrl[i].parentElement.parentElement.previousElementSibling)
-                let sideBarItem = listUrl[i].parentElement.parentElement.previousElementSibling;
-                let parentItem = listUrl[i].parentElement.parentElement;
-                sideBarItem.classList.add('expanded');
-                parentItem.style.display = 'block';
-                listUrl[i].classList.add('text-danger')
-                // listUrl[i].previousElementSibling
-            }
-        }
-    }
-
-    checkUrl();
-</script>
-<script>
-    $(".items > li > a").click(function (e) {
-        e.preventDefault();
-        var $this = $(this);
-        if ($this.hasClass("expanded")) {
-            $this.removeClass("expanded");
-        } else {
-            $(".items a.expanded").removeClass("expanded");
-            $this.addClass("expanded");
-            $(".sub-items").filter(":visible").slideUp("normal");
-        }
-        $this.parent().children("ul").stop(true, true).slideToggle("normal");
-    });
-
-    $(".sub-items a").click(function () {
-        $(".sub-items a").removeClass("current");
-        $(this).addClass("current");
-    });
-</script>
+<script src="{{ asset('js/backend/side-bar.js') }}"></script>

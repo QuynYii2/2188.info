@@ -70,8 +70,8 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,400;1,700&family=Inter:wght@400;500;600;700&family=Nunito+Sans:wght@400;500&family=Poppins:wght@300&family=Roboto+Slab:wght@400;500&family=Roboto:wght@500&family=Rubik:wght@300;400;500&display=swap"
           rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <div class="d-none">
@@ -119,6 +119,6 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-<script src="{{ asset('js/style.js') }}"></script>
+<script src="{{ asset('js/frontend.js') }}"></script>
 </body>
 </html>
