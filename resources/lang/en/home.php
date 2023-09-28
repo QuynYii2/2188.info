@@ -919,6 +919,13 @@ return [
     'Registrator Information' => 'Registrator Information',
     'Representative Information' => 'Representative Information',
     'Staffs Information' => 'Staffs Information',
+    //
+    'Create new attribute'=>'Create new attribute',
+    'Save attribute'=>'Save attribute',
+    'Create now'=>'Create now',
+    'Product attribute'=>'Product attribute',
+    'None'=>'None',
+
     'No received messages' => 'No received messages',
     'No sent messages' => 'No sent messages',
     'đơn giá' => 'đơn giá',
@@ -928,4 +935,5 @@ return [
     'Address Business' => 'Address Business',
     'Language English' => 'Language English',
     'Language Local' => 'Language Local',
+
 ];
