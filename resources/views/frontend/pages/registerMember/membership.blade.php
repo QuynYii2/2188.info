@@ -128,30 +128,30 @@
 
                     </div>
                     <!-- Modal -->
-                    <div class="modal fade" id="modalRegisterMembership" tabindex="-1" role="dialog"
-                         aria-labelledby="modalRegisterMembershipLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title"
-                                        id="modalRegisterMembershipLabel">{{ __('home.Employee registration') }}</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form>
-                                    <div class="modal-body">
+{{--                    <div class="modal fade" id="modalRegisterMembership" tabindex="-1" role="dialog"--}}
+{{--                         aria-labelledby="modalRegisterMembershipLabel" aria-hidden="true">--}}
+{{--                        <div class="modal-dialog" role="document">--}}
+{{--                            <div class="modal-content">--}}
+{{--                                <div class="modal-header">--}}
+{{--                                    <h5 class="modal-title"--}}
+{{--                                        id="modalRegisterMembershipLabel">{{ __('home.Employee registration') }}</h5>--}}
+{{--                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+{{--                                        <span aria-hidden="true">&times;</span>--}}
+{{--                                    </button>--}}
+{{--                                </div>--}}
+{{--                                <form>--}}
+{{--                                    <div class="modal-body">--}}
 
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">{{ __('home.Close') }}</button>
-                                        <button type="button" class="btn btn-primary">{{ __('home.Save') }}</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+{{--                                    </div>--}}
+{{--                                    <div class="modal-footer">--}}
+{{--                                        <button type="button" class="btn btn-secondary"--}}
+{{--                                                data-dismiss="modal">{{ __('home.Close') }}</button>--}}
+{{--                                        <button type="button" class="btn btn-primary">{{ __('home.Save') }}</button>--}}
+{{--                                    </div>--}}
+{{--                                </form>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
 
                     <!-- Modal -->
                     <div class="modal fade" id="modalRegisterMore" tabindex="-1" role="dialog"
@@ -176,7 +176,8 @@
                                             @endif
                                         </div>
                                         <div class="container-fluid">
-                                            <form action="{{ route('staff.manage.store') }}" method="post" enctype="multipart/form-data"
+                                            <form action="{{ route('staff.manage.store') }}" method="post"
+                                                  enctype="multipart/form-data"
                                                   class="form-horizontal row" role="form">
                                                 @csrf
                                                 @if (session('success_update_product'))
@@ -202,11 +203,13 @@
                                                     <div class="form-group">
                                                         <div class="name">{{ __('home.phone number') }}</div>
                                                         <input type="text" class="form-control" name="phone" id="phone"
-                                                               placeholder="{{ __('home.Nhập số điện thoại') }}" required>
+                                                               placeholder="{{ __('home.Nhập số điện thoại') }}"
+                                                               required>
                                                     </div>
                                                     <div class="form-group">
                                                         <div class="name">{{ __('home.social network id') }}</div>
-                                                        <input type="text" class="form-control" name="social_media" id="social_media"
+                                                        <input type="text" class="form-control" name="social_media"
+                                                               id="social_media"
                                                                placeholder={{ __('home.Nhập id mxh') }} required>
                                                     </div>
 
@@ -223,7 +226,8 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <div class="name">{{ __('home.Nickname') }}</div>
-                                                        <input type="text" class="form-control" name="nickname" id="nickname"
+                                                        <input type="text" class="form-control" name="nickname"
+                                                               id="nickname"
                                                                placeholder={{ __('home.Nhập biệt danh') }} required>
                                                     </div>
                                                     <div class="form-group">
@@ -233,16 +237,19 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <div class="name">{{ __('home.Password') }}</div>
-                                                        <input type="password" class="form-control" name="password" id="password" placeholder={{ __('home.Nhập mật khẩu') }}
-                           required>
+                                                        <input type="password" class="form-control" name="password"
+                                                               id="password"
+                                                               placeholder={{ __('home.Nhập mật khẩu') }} required>
                                                     </div>
                                                 </div>
 
 
-                                                <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
+                                                <input id="input-form-create-attribute" name="attribute_property"
+                                                       type="text" hidden>
                                                 <div class="form-group col-12 col-md-7 col-sm-8 ">
                                                     <div class="row justify-content-center">
-                                                        <button type="submit" class="btn btn-success">{{ __('home.Gửi') }}</button>
+                                                        <button type="submit"
+                                                                class="btn btn-success">{{ __('home.Gửi') }}</button>
                                                     </div>
                                                 </div>
                                             </form>
