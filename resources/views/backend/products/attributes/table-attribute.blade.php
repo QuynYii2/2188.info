@@ -38,7 +38,7 @@
                             </td>
                             <td>
                                 <input type="file" id="thumbnail" class="img-cfg"
-                                       name="thumbnail"
+                                       name="thumbnail1"
                                        accept="image/*"
                                        required>
                             </td>
@@ -144,7 +144,7 @@
                         </td>
                         <td>
                             <input type="file" id="thumbnail" class="img-cfg"
-                                   name="thumbnail"
+                                   name="thumbnail1"
                                    accept="image/*"
                                    required>
                         </td>
