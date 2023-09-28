@@ -360,7 +360,7 @@ return [
     'Order conditions' => '주문 조건',
     'Ngày dự kiến xuất kho' => '출고예정일',
     'Unit price' => '단가',
-    'ngày kể từ ngày đặt hàng' => '주문일로부터 ...일',
+    'ngày kể từ ngày đặt hàng' => '출고예정일',
     'đơn giá phía trên là điều kiện FOB/TT' => '위 단가는 FOB/TT 조건입니다.',
     'Đặt hàng' => '주문하기',
     'Thuộc tính' => '속성',
@@ -378,7 +378,7 @@ return [
     'Nickname' => '닉네임',
     'Responsibility' => '직책',
     'Manager' => '관리자',
-    'Position' => '직무',
+    'Position' => '소속',
     'Add new products' => '새 제품 추가',
     'social network id' => '소셜 네트워크 ID',
     'Retail' => '구매대행',
@@ -410,7 +410,7 @@ return [
     'Select district/district' => '지역 선택',
     'Choose the city' => '도시 선택',
     'Select country' => '국가 선택',
-    'Rank' => '등급',
+    'Rank' => '직책',
     'Staff' => '직원',
     'SNS Account' => 'SNS 계정',
     'Other' => '기타',
@@ -581,8 +581,8 @@ return [
     'I agree to the above Terms' => '위 약관에 동의합니다',
     'Day register' => '등록일시',
     'Number clearance' => '통관번호',
-    'Name company English' => '성명 (영문)',
-    'Name company Korea' => '성명 (자국어)',
+    'Name company English' => '영문',
+    'Name company Korea' => '자국어',
     // nganh nghe
     'Career' => '업종선택',
     // nganh hang
@@ -609,7 +609,7 @@ return [
     // Nganh nghe kinh doanh
     'Business' => '사업품목',
     // Chuc vu
-    'Position company' => '직무',
+    'Position company' => '소속',
     'Responsibility company' => '직책',
     'Name English' => '영문',
     'Name Korea' => '자국어',
@@ -621,18 +621,19 @@ return [
     'Employee registration' => '직원 등록',
     'Registration order' => '등록순서',
     'List of registered managers' => '등록된 관리자 목록',
-    'Sign up for more' => '더 많이 구독하세요',
+    'Sign up for more' => '등록추가',
     'Classification of members' => '등록순서',
     'Agree to terms' => '회원종류선택 ',
     'Company registration' => '약관동의 ',
     'Subscriber registration' => '회사등록 ',
     'Representative registration' => '대표등록 ',
     'Register as member' => '직원등록 ',
+    'Add' => '추가하다',
     'Search Results' => '검색 결과',
     'Top Search' => '인기 상품',
     'See All' => '전체 보기',
     'permission_one' => '상품의 입출고 관리, 재고관리 및 영업관리',
-    'permission_two' => '전자상거래 및 전자상거래 상품관',
+    'permission_two' => '전자상점 개설 및 전자상거래 관리',
     'permission_there' => '화물(국제, 국내, 해상, 항공, 특송, 택배)의 발송, 수취',
     // end
     'số lượng' => '수량',
@@ -657,7 +658,7 @@ return [
     'mã voucher đã được sao chép' => '할인코드가 복사되었습니다',
     'Avatar' => '프로필 사진',
     'Name' => '상품명',
-    'Tên sản phẩm' => '상품명',
+    'Tên sản phẩm' => '성명',
     'Danh sách sản phẩm' => '상품 목록',
     'Tác giả' => '게시자',
     'chuyên mục' => '카테고리',
@@ -668,7 +669,7 @@ return [
     'danh sách đánh giá' => '후기 보기',
     'Tên user' => '회원 이름',
     'ID sản phẩm' => '상품 ID',
-    'vận chuyển' => '배송',
+    'vận chuyển' => '배송비',
     'quản lý vận chuyển' => '배송 관리',
     'giao hàng loạt' => '빠른 배송',
     'cài đặt vận chuyển' => '배송 설정',
@@ -800,9 +801,9 @@ return [
     'stock' => '잔고s',
     'featured' => '내용',
     'Date' => '날짜',
-    'chọn' => '선택하다',
+    'chọn' => '선택',
     'đã bị khoá' => '잠겼습니다',
-    'chỉnh sửa' => '편집하다',
+    'chỉnh sửa' => '편집',
     'Sửa nhanh' => '빠른 수정',
     'Thêm mới setup rank' => '랭크 추가',
     'Hạn mức COPPER' => 'COPPER',
@@ -819,7 +820,7 @@ return [
     'Thêm mới mã giảm giá' => '할인코드 생성',
     'Chọn rank áp dụng' => '적용 상품',
     'danh sách sale' => '프로모션',
-    'Áp dụng' => '적용',
+    'Áp dụng' => '등록확인',
     'Xoá rank' => '재설정',
     'Doanh thu' => '매출',
     'từ ngày' => '시작일',
@@ -1013,46 +1014,23 @@ return [
     //
     'Update information register member' => '등록인 정보',
     'Update information represent member' => '대표자 등록정보',
+
+    //
+    'Create new attribute'=>'속성 추가',
+    'Save attribute'=>'속성 저장',
+    'Create now'=>'바로 추가하기',
+    'Product attribute'=>'상품 속성',
+    'None'=>'없음',
+
     'No received messages' => '받은 메시지가 없습니다',
     'No sent messages' => '보낸 메시지가 없습니다',
+    //
+    'Select file' => '파일선택 (사업자등록사본을 첨부하세요)',
+    'Address Business' => '사업장주소',
+    'Language English' => '영문',
+    'Language Local' => '영문',
+    'đơn giá' => '단가',
+    'namess' => '성명',
+    'xác nhận đăng ký' => '등록확인'
+
 ];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

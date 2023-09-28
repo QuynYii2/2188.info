@@ -429,7 +429,7 @@
                                         <thead>
                                         <tr>
                                             <th class="text-left">{{ __('home.Month') }}</th>
-                                            <th class="text-left">{{ __('home.sales') }}</th>
+                                            <th class="text-left">{{ __('home.sale') }}</th>
                                         </tr>
                                         </thead>
                                         <tbody class="table-hover">
@@ -1061,7 +1061,7 @@
                 result.push(text);
             }
             result.sort();
-            console.log(result.join(','));
+            );
             myfunction(product_id.value, result);
 
             checkBtn();
@@ -1105,7 +1105,7 @@
                     productQuantity.innerText = response['quantity'];
                     variable.value = response['variation'];
                 })
-                .catch(error => console.log(error));
+                .catch(error => );
         }
 
         checkBtn();
@@ -1167,7 +1167,7 @@
                     _token: '{{ csrf_token() }}'
                 },
                 success: function (response) {
-                    console.log(response)
+
                     if (response == "Error") {
                         alert('Voucher đã có sẵn trong giỏ hàng rồi! Sử dụng thôi!')
                     } else {
@@ -1175,7 +1175,7 @@
                     }
                 },
                 error: function (exception) {
-                    console.log(exception)
+
                     if (exception['status'] == 403) {
                         alert('Error, please try again!')
                     } else if (exception['status'] == 401) {
@@ -1298,7 +1298,7 @@
                     currentIcon.classList.remove("checked");
                 }
             }
-            console.log(input.value)
+
             input.value = star.checked ? value : value - 1;
         }
 
@@ -1335,7 +1335,7 @@
 
         function responsiveTable(y) {
             let tabs = document.getElementsByClassName('product-other');
-            console.log(tabs.length)
+
             var i;
             for (i = 0; i < tabs.length; i++) {
                 if (y.matches) {
@@ -1438,7 +1438,7 @@
                     $('#productMainOrder').empty().append(response);
                 })
                 .fail(function (_, textStatus) {
-                    console.log(textStatus)
+
                 });
         }
 

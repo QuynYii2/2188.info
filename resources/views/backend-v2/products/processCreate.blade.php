@@ -223,7 +223,7 @@
                 },
                 // dataType: 'json',
                 success: function (response) {
-                    console.log(response)
+
                     // var item = response;
                     renderInputAttribute.append(response);
                 },
@@ -243,7 +243,7 @@
         {{--        },--}}
         {{--        dataType: 'json',--}}
         {{--        success: function (response) {--}}
-        {{--            console.log(response[1])--}}
+        {{--            --}}
         {{--            renderAttributeViewSession();--}}
         {{--        },--}}
         {{--        error: function (xhr, status, error) {--}}

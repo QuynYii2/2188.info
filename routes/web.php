@@ -168,47 +168,67 @@ Route::get('/location-nation', [AuthController::class, 'getListNation'])->name('
 Route::get('/location-state/{id}', [AuthController::class, 'getListStateByNation'])->name('location.state.get');
 Route::get('/location-city/{id}/{code}', [AuthController::class, 'getListCityByState'])->name('location.city.get');
 Route::get('/location-ward/{id}/{code}', [AuthController::class, 'getListWardByCity'])->name('location.ward.get');
+Route::get('/location-state-by-nation/{id}',
+    [AuthController::class, 'getListRegionByNation'])->name('location.state.get.by.nation');
 
 Route::get('/convert-currency/{amount}', [CurrencyController::class, 'getCurrency'])->name('convert.getCurrency.get');
-Route::get('/get-products-sale/{id}', [\App\Http\Controllers\ProductController::class, 'getProductSale'])->name('get.products.sale');
+Route::get('/get-products-sale/{id}',
+    [\App\Http\Controllers\ProductController::class, 'getProductSale'])->name('get.products.sale');
 
-Route::get('/product-detail/{id}', [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
-Route::get('/product-attribute/{id}', [\App\Http\Controllers\ProductController::class, 'orderProduct'])->name('order_product.attribute');
-Route::get('/product/att/{id}', [\App\Http\Controllers\ProductController::class, 'getDataToModalAtt'])->name('detail_product.data.modal');
+Route::get('/product-detail/{id}',
+    [\App\Http\Controllers\ProductController::class, 'detail_product'])->name('detail_product.show');
+Route::get('/product-attribute/{id}',
+    [\App\Http\Controllers\ProductController::class, 'orderProduct'])->name('order_product.attribute');
+Route::get('/product/att/{id}',
+    [\App\Http\Controllers\ProductController::class, 'getDataToModalAtt'])->name('detail_product.data.modal');
 Route::get('/shop/information/{id}', [ShopInformationController::class, 'index'])->name('shop.information.show');
 Route::get('/shop/product/{id}', [ShopInformationController::class, 'index'])->name('shop.product.show');
-Route::post('/shop/product/filter/{id}', [ShopInformationController::class, 'filterProductBySeller'])->name('shop.product.filter');
-Route::get('/product/detail/{slug}', [\App\Http\Controllers\ProductController::class, 'findBySlug'])->name('find.by.slug.product');
-Route::get('/detail-product/{id}', [\App\Http\Controllers\ProductController::class, 'detailProduct'])->name('detail_product.api');
+Route::post('/shop/product/filter/{id}',
+    [ShopInformationController::class, 'filterProductBySeller'])->name('shop.product.filter');
+Route::get('/product/detail/{slug}',
+    [\App\Http\Controllers\ProductController::class, 'findBySlug'])->name('find.by.slug.product');
+Route::get('/detail-product/{id}',
+    [\App\Http\Controllers\ProductController::class, 'detailProduct'])->name('detail_product.api');
 Route::get('/category/{id}', [CategoryController::class, 'category'])->name('category.show');
 Route::post('/category/filter/{id}', [CategoryController::class, 'filterInCategory'])->name('category.filter');
 // Products by location
-Route::get('/products/location/{locale}', [\App\Http\Controllers\ProductController::class, 'listProductsByLanguage'])->name('list.products.show.location');
+Route::get('/products/location/{locale}',
+    [\App\Http\Controllers\ProductController::class, 'listProductsByLanguage'])->name('list.products.show.location');
 // Config
 Route::get('/products-shop/{id}', [ProductController::class, 'getListByShops'])->name('list.products.shop.show');
-Route::get('/products-shop-category/{category}/{shop}', [ProductController::class, 'getListByCategoryAndShops'])->name('list.products.shop.category.show');
+Route::get('/products-shop-category/{category}/{shop}',
+    [ProductController::class, 'getListByCategoryAndShops'])->name('list.products.shop.category.show');
 
 Route::get('/chat-message/{from}/{to}', [SampleController::class, 'findAllMessage'])->name('chat.message.show.to.way');
 
 // Product
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
 Route::get('/product-variable/{id}/{value}', [\App\Http\Controllers\ProductController::class, 'getVariable']);
+Route::post('/get-category-one-parent',
+    [RegisterMemberController::class, 'getCategoryOneParent'])->name('get.category.one.parent');
+Route::post('/get-category-two-parent',
+    [RegisterMemberController::class, 'getCategoryTwoParent'])->name('get.category.two.parent');
 
 Route::middleware(['auth'])->group(function () {
     //Chat message
     Route::get('/chat-message', [SampleController::class, 'chat'])->name('chat.message.show');
     Route::get('/chat-message-sent', [SampleController::class, 'getListMessageSent'])->name('chat.message.sent');
-    Route::get('/chat-message-received', [SampleController::class, 'getListMessageReceived'])->name('chat.message.received');
+    Route::get('/chat-message-received',
+        [SampleController::class, 'getListMessageReceived'])->name('chat.message.received');
     //Setup marketing
     // Product member
-    Route::get('/member/product-buy-lot/attribute/{id}', [ProductController::class, 'detailProduct'])->name('detail_product.member.attribute');
-    Route::post('/member-add-to-cart/{product}', [ProductController::class, 'orderMemberProduct'])->name('member.add.cart');
+    Route::get('/member/product-buy-lot/attribute/{id}',
+        [ProductController::class, 'detailProduct'])->name('detail_product.member.attribute');
+    Route::post('/member-add-to-cart/{product}',
+        [ProductController::class, 'orderMemberProduct'])->name('member.add.cart');
     Route::get('/member-get-all-cart', [CartController::class, 'getAllCarts'])->name('member.all.cart');
 
     //Start update member
     Route::get('/member-info', [ProfileController::class, 'memberInfo'])->name('member.info');
-    Route::get('/member-detail-company/{id}', [MemberController::class, 'detailCompany'])->name('member.detail.company');
-    Route::put('/member-update-company/{id}', [MemberController::class, 'updateCompany'])->name('member.update.company');
+    Route::get('/member-detail-company/{id}',
+        [MemberController::class, 'detailCompany'])->name('member.detail.company');
+    Route::put('/member-update-company/{id}',
+        [MemberController::class, 'updateCompany'])->name('member.update.company');
     //End update member
 
     //View member
@@ -218,14 +238,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/info/', [ProfileController::class, 'info'])->name('profile.show');
 
     Route::get('/info-member-person', [ProfileController::class, 'memberPerson'])->name('profile.member.person');
-    Route::get('/info-member-represent', [ProfileController::class, 'memberRepresent'])->name('profile.member.represent');
+    Route::get('/info-member-represent',
+        [ProfileController::class, 'memberRepresent'])->name('profile.member.represent');
 //    Route::get('/my-notification/', [\App\Http\Controllers\ProfileController::class, 'my_notification']);
 //    Route::get('/order-management/', [\App\Http\Controllers\ProfileController::class, 'order_management']);
     Route::get('/return-management/', [ProfileController::class, 'return_management']);
 //    Route::get('/address-book/', [\App\Http\Controllers\ProfileController::class, 'address_book']);
     Route::get('/payment-information/', [ProfileController::class, 'payment_information']);
     Route::get('/product-evaluation/', [ProfileController::class, 'product_evaluation']);
-    Route::get('/product-evaluation/delete/{id}', [EvaluateProductController::class, 'destroy'])->name('product_evaluation.delete');
+    Route::get('/product-evaluation/delete/{id}',
+        [EvaluateProductController::class, 'destroy'])->name('product_evaluation.delete');
     Route::get('/favorite-product/', [ProfileController::class, 'favorite_product']);
     Route::get('/product-viewed/', [ProfileController::class, 'product_viewed']);
     Route::get('/my-review/', [ProfileController::class, 'my_review']);
@@ -243,7 +265,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/permission-user', [PermissionRankController::class, 'index'])->name('permission.user.show');
     Route::get('/permission-list', [PermissionRankController::class, 'list'])->name('permission.list.show');
     Route::post('/permission', [PermissionRankController::class, 'store'])->name('permission.create');
-    Route::post('/delete-payment/{id}', [PermissionRankController::class, 'deletePermission'])->name('permission.delete');
+    Route::post('/delete-payment/{id}',
+        [PermissionRankController::class, 'deletePermission'])->name('permission.delete');
     //
     Route::get('create-transaction', [PaypalPaymentController::class, 'createTransaction'])->name('createTransaction');
 //    Route::post('update-permission', [\App\Http\Controllers\PermissionRankController::class, 'updateRank'])->name('permission.update.rank');
@@ -251,8 +274,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('payment', [PaypalPaymentController::class, 'processTransaction'])->name('create.payment');
     Route::get('get-payment', [PaypalPaymentController::class, 'index'])->name('payment.show');
     //
-    Route::get('process-transaction', [PaypalPaymentController::class, 'processTransaction'])->name('processTransaction');
-    Route::get('success-transaction', [PaypalPaymentController::class, 'successTransaction'])->name('successTransaction');
+    Route::get('process-transaction',
+        [PaypalPaymentController::class, 'processTransaction'])->name('processTransaction');
+    Route::get('success-transaction',
+        [PaypalPaymentController::class, 'successTransaction'])->name('successTransaction');
     Route::get('cancel-transaction', [PaypalPaymentController::class, 'cancelTransaction'])->name('cancelTransaction');
     //
     Route::get('/my-notification/', [NotificationController::class, 'index'])->name('notification.show');
@@ -262,7 +287,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/buy-coin', [CoinController::class, 'index'])->name('buy.coin.show');
     Route::post('/buy-coin', [CoinController::class, 'store'])->name('buy.coin.create');
 //    Route::get('/buy-coin-success?price={price}&quantity={quantity}', [\App\Http\Controllers\CoinController::class, 'successPayment'])->name('buy.coin.success');
-    Route::get('/buy-coin-success/{price}/{quantity}', [CoinController::class, 'successPayment'])->name('buy.coin.success');
+    Route::get('/buy-coin-success/{price}/{quantity}',
+        [CoinController::class, 'successPayment'])->name('buy.coin.success');
     // thông tin cá nhân
     Route::post('change-password', [UserController::class, 'changePassword'])->name('user.changePassword');
     Route::post('change-email', [UserController::class, 'changeEmail'])->name('user.changeEmail');
@@ -271,15 +297,22 @@ Route::middleware(['auth'])->group(function () {
     //
     Route::get('/my-vouchers', [UserController::class, 'myVoucher'])->name('my.voucher.show');
     //
-    Route::get('/wish-list', [App\Http\Controllers\WishListController::class, 'wishListIndex'])->name('wish.list.index');
-    Route::post('/wish-list-store', [App\Http\Controllers\WishListController::class, 'wishListStore'])->name('user.wish.lists');
-    Route::post('/wish-list-delete/{id}', [App\Http\Controllers\WishListController::class, 'wishListSoftDelete'])->name('wish.list.delete');
+    Route::get('/wish-list',
+        [App\Http\Controllers\WishListController::class, 'wishListIndex'])->name('wish.list.index');
+    Route::post('/wish-list-store',
+        [App\Http\Controllers\WishListController::class, 'wishListStore'])->name('user.wish.lists');
+    Route::post('/wish-list-delete/{id}',
+        [App\Http\Controllers\WishListController::class, 'wishListSoftDelete'])->name('wish.list.delete');
     // Search products
-    Route::get('/search-products/category={id}', [SearchController::class, 'searchByCategory'])->name('search.products.category');
-    Route::get('/search-products/name', [SearchController::class, 'searchByNameProducts'])->name('search.products.name');
+    Route::get('/search-products/category={id}',
+        [SearchController::class, 'searchByCategory'])->name('search.products.category');
+    Route::get('/search-products/name',
+        [SearchController::class, 'searchByNameProducts'])->name('search.products.name');
     // Member trust
-    Route::get('/trusts-register-member', [TrustMemberController::class, 'memberStand'])->name('trust.register.member.index');
-    Route::get('/trusts-register-member/{locale}', [TrustMemberController::class, 'memberPartnerLocale'])->name('trust.register.member.locale');
+    Route::get('/trusts-register-member',
+        [TrustMemberController::class, 'memberStand'])->name('trust.register.member.index');
+    Route::get('/trusts-register-member/{locale}',
+        [TrustMemberController::class, 'memberPartnerLocale'])->name('trust.register.member.locale');
     // Cart
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/add-to-cart/{product}', [CartController::class, 'addToCart'])->name('cart.add');
@@ -288,7 +321,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/cart-clear', [CartController::class, 'clearCart'])->name('cart.clear');
     // Checkout Controller
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.show');
-    Route::get('/checkout-success/{name}/{email}/{phone}/{address}/{idVoucher}', [CheckoutController::class, 'checkoutSuccess'])->name('checkout.success.paypal');
+    Route::get('/checkout-success/{name}/{email}/{phone}/{address}/{idVoucher}',
+        [CheckoutController::class, 'checkoutSuccess'])->name('checkout.success.paypal');
     Route::post('/checkout-imm', [CheckoutController::class, 'checkoutByImme'])->name('checkout.create.imm');
     Route::post('/checkout-coin', [CheckoutController::class, 'checkoutByCoin'])->name('checkout.create.coin');
     Route::post('/checkout-paypal', [CheckoutController::class, 'checkoutByPaypal'])->name('checkout.create.paypal');
@@ -300,7 +334,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/order-delete/{id}', [OrderController::class, 'cancel'])->name('order.cancel');
     // Product Interest
     Route::get('/product-interest', [ProductInterestController::class, 'index'])->name('product.interest.index');
-    Route::post('/product-interest/{id}', [ProductInterestController::class, 'delete'])->name('product.interest.delete');
+    Route::post('/product-interest/{id}',
+        [ProductInterestController::class, 'delete'])->name('product.interest.delete');
     //
     Route::get('/product-views', [ProductController::class, 'getListByViews'])->name('product.views');
     // Member
@@ -310,25 +345,23 @@ Route::middleware(['auth'])->group(function () {
 
 // Backend v2
 Route::group(['prefix' => 'seller', 'middleware' => 'role.seller-or-admin'], function () {
-    require_once __DIR__ . '/backend.php';
+    require_once __DIR__.'/backend.php';
 });
 
 // Admin
 Route::group(['prefix' => 'admin', 'middleware' => 'role.admin'], function () {
-    require_once __DIR__ . '/admin.php';
+    require_once __DIR__.'/admin.php';
 });
 
 // Seller
 Route::group(['prefix' => 'seller', 'middleware' => 'role.seller-or-admin'], function () {
-    require_once __DIR__ . '/seller.php';
+    require_once __DIR__.'/seller.php';
 });
 
 // Buyer
 Route::group(['prefix' => 'buyer', 'middleware' => 'role.buyer'], function () {
-    require_once __DIR__ . '/buyer.php';
+    require_once __DIR__.'/buyer.php';
 });
 
 //Test
-Route::get('/test', function () {
-   return view('backend.products.demo');
-});
+Route::get('/test', [\App\Http\Controllers\TestController::class, 'testAttribute']);

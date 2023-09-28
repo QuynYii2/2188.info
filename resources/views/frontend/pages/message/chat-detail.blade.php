@@ -67,14 +67,14 @@
 <script>
     var url;
     if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
-        console.log('You are logging on localhost')
+
         url = 'ws://localhost:8080/?token';
     } else {
         if (location.protocol !== 'https:') {
-            console.log('You are logging on serve http')
+
             url = 'ws://137.59.106.221:8080/?token';
         } else {
-            console.log('You are logging on serve https')
+
             url = 'wss://137.59.106.221:8080/?token';
         }
 
@@ -87,17 +87,17 @@
         const connection = new WebSocket(url + '={{ auth()->user()->token }}');
 
         connection.addEventListener('open', () => {
-            console.log("Connected");
+
         });
 
         connection.addEventListener('close', () => {
             if (reconnectAttempts < maxReconnectAttempts) {
-                console.log("Connection closed, attempting to reconnect...");
+
                 setTimeout(() => createWebSocket(), 1000);
                 reconnectAttempts++;
             } else {
-                console.log(`Exceeded maximum reconnect attempts (${maxReconnectAttempts}). Stopping.`);
-                console.log('Stopped. Reload page to try again...')
+                . Stopping.`);
+
             }
         });
 
@@ -105,7 +105,7 @@
     }
 
     const conn = createWebSocket();
-    console.log(conn)
+
 
     var from_user_id = "{{ Auth::user()->id }}";
 

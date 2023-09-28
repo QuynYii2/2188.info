@@ -114,7 +114,8 @@ class AuthController extends Controller
             if ($isAdmin == false) {
                 if ($locale != 'en') {
                     if ($user->region != $locale) {
-                        toast('Tài khoản của bạn không dành cho khu vực này. Vui lòng chọn khu vực khách phù hợp', 'error', 'top-right');
+                        toast('Tài khoản của bạn không dành cho khu vực này. Vui lòng chọn khu vực khách phù hợp',
+                            'error', 'top-right');
                         return back();
                     }
                 }
@@ -140,11 +141,9 @@ class AuthController extends Controller
 //                dd($isMember, $member->member, RegisterMember::BUYER);
                 if ($isMember && $member->member == RegisterMember::LOGISTIC) {
                     return redirect()->route('stand.register.member.index', ['id' => $member->id]);
-                }
-                elseif ($isMember && $member->member == RegisterMember::TRUST) {
+                } elseif ($isMember && $member->member == RegisterMember::TRUST) {
                     return redirect()->route('trust.register.member.index');
-                }
-                else {
+                } else {
                     return redirect()->route('home');
                 }
             }
@@ -232,8 +231,10 @@ class AuthController extends Controller
                     $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
                 });
 
-                (new HomeController())->notifiCreate(Auth::user()->id, 'Đăng kí tài khoản thành công', 'Đăng kí tài khoản');
-                (new HomeController())->notifiCreate(Auth::user()->id, 'Vui lòng cập nhập mật khẩu cho tài khoản', 'Đăng kí tài khoản');
+                (new HomeController())->notifiCreate(Auth::user()->id, 'Đăng kí tài khoản thành công',
+                    'Đăng kí tài khoản');
+                (new HomeController())->notifiCreate(Auth::user()->id, 'Vui lòng cập nhập mật khẩu cho tài khoản',
+                    'Đăng kí tài khoản');
             }
 
             $request->session()->put('login', $googleUser);
@@ -248,15 +249,51 @@ class AuthController extends Controller
 
     public function getListNation()
     {
-        $listNation = DB::table('countries')->get(['name', 'iso2']);
+        $listNation = DB::table('countries')->orderBy('continents')->get(['name', 'iso2', 'continents']);
         return response()->json($listNation);
+    }
+
+    public function getListRegionByNation($id)
+    {
+//        $listState = DB::table('states')
+//            ->where([['country_code', '=', $id]])
+//            ->get(['name', 'state_code', 'country_code']);
+//        foreach ($listState as $state) {
+//            $city = DB::table('cities')
+//                ->where([['state_code', '=', $state->state_code], ['country_code', '=', $id]])
+//                ->orderBy('name')
+//                ->get(['name', 'city_code', 'state_code']);
+//            $state->total_child = count($city);
+//            $state->child = $city;
+//
+//        }
+
+        $sql = "SELECT
+    s.name,
+    s.state_code,
+    s.country_code,
+    COUNT(c.city_code) AS total_child,
+    CONCAT('[', GROUP_CONCAT(CONCAT('{\"name\":\"', c.name, '\",\"city_code\":\"', c.city_code, '\",\"state_code\":\"', c.state_code, '\"}')), ']') AS child
+FROM
+    states s
+LEFT JOIN
+    cities c ON s.state_code = c.state_code AND s.country_code = c.country_code
+WHERE
+    s.country_code =  :country_code GROUP BY
+    s.name, s.state_code, s.country_code
+ORDER BY
+    s.name;
+";
+        $listState = DB::select($sql, ['country_code' => $id]);
+
+        return response()->json($listState);
     }
 
     public function getListStateByNation($id)
     {
         $listState = DB::table('states')
             ->where([['country_code', '=', $id]])
-            ->get(['name', 'state_code']);
+            ->get(['name', 'state_code', 'country_code']);
         return response()->json($listState);
     }
 
@@ -264,6 +301,7 @@ class AuthController extends Controller
     {
         $listCity = DB::table('cities')
             ->where([['state_code', '=', $id], ['country_code', '=', $code]])
+            ->orderBy('name')
             ->get(['name', 'city_code']);
         return response()->json($listCity);
     }
@@ -272,6 +310,7 @@ class AuthController extends Controller
     {
         $listWard = DB::table('wards')
             ->where([['city_code', '=', $id], ['country_code', '=', $code]])
+            ->orderBy('name')
             ->get(['name', 'id']);
         return response()->json($listWard);
     }

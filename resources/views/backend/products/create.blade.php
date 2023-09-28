@@ -44,7 +44,7 @@
                         </div>
                     @endif
 
-                    <div class=".col-12 col-md-7 border-right mt-2 rm-pd-on-mobile">
+                    <div class="col-12 col-md-7 border-right mt-2 rm-pd-on-mobile">
                         <div class="form-group">
                             <div class="name">{{ __('home.Tên sản phẩm') }}</div>
                             <input type="text" class="form-control" name="name" id="name"
@@ -66,54 +66,8 @@
                             </textarea>
                         </div>
                         <div class="form-group mb-3">
-                            <label class="name">{{ __('home.Thông số sản phẩm') }}</label>
-                            <select class="form-control" name="attribute_id" id="selectAttribute">
-                                @foreach($attributes as $attribute)
-                                    <option value="{{ $attribute->id }}">{{ $attribute->name }}</option>
-                                @endforeach
-                            </select>
+                            @include('backend.products.demo')
                         </div>
-                        <div class="mb-3 full-width">
-                            @foreach($attributes as $attribute)
-                                @php
-                                    $properties = DB::table('properties')->where([['status', PropertiStatus::ACTIVE], ['attribute_id', $attribute->id]])->get();
-                                @endphp
-                                @if(!$properties->isEmpty())
-                                    <div id="attributeID_{{$attribute->id}}" class="d-none attribute-form">
-                                        <label class="name" for="date_start">{{$attribute->name}}</label>
-                                        <input type="text" class="form-control"
-                                               onclick="showDropdown('attribute_property{{$attribute->id}}', 'attribute_property-dropdownList{{$attribute->id}}')"
-                                               disabled id="attribute_property{{$attribute->id}}">
-                                        <div class="dropdown-content"
-                                             id="attribute_property-dropdownList{{$attribute->id}}">
-                                            <label>
-                                                @foreach($properties as $property)
-                                                    <input class="property-attribute checkbox{{$attribute->id}}"
-                                                           type="checkbox"
-                                                           value="{{$attribute->id}}-{{$property->id}}"
-                                                           name="property-{{$attribute->id}}"
-                                                           onchange="updateSelectedOptions(this, 'attribute_property{{$attribute->id}}', 'attribute_property-dropdownList{{$attribute->id}}')">
-                                                    {{$property->name}}
-                                                @endforeach
-                                            </label>
-                                        </div>
-                                        <div class="">
-                                            <a class="btn btn-success" onclick="selectAllAttribute({{$attribute->id}})">
-                                                SelectAll
-                                            </a>
-                                            <a class="btn btn-success" onclick="removeAllAttribute({{$attribute->id}})">
-                                                Remove All
-                                            </a>
-                                            <a class="btn btn-secondary" onclick="hiddenAttribute({{$attribute->id}})">
-                                                Hidden
-                                            </a>
-                                        </div>
-                                    </div>
-                                @endif
-                            @endforeach
-                        </div>
-                        <div id="renderInputAttribute" class="row"></div>
-                        <a id="btnSaveAttribute" class="btn btn-success mt-4 mb-5" style="color: white; display: none">SaveAttribute</a>
                     </div>
                     <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">
                         <div class="form-group">

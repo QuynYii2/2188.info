@@ -560,7 +560,7 @@
                 $('#tableMemberOrder').empty().append(response);
             })
             .fail(function (_, textStatus) {
-                console.log(textStatus)
+
             });
     }
 

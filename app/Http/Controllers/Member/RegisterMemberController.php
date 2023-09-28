@@ -557,6 +557,7 @@ class RegisterMemberController extends Controller
 
             $userOld = User::where('email', $email)->first();
             $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
+            $memberOld_v2 = MemberRegisterPersonSource::where('code', $codeItem)->first();
 
             $url = url()->previous();
             $route = app('router')->getRoutes($url)->match(app('request')->create($url))->getName();
@@ -640,6 +641,12 @@ class RegisterMemberController extends Controller
                     alert()->error('Error', 'Error, Email in member used!');
                     return back();
                 }
+
+                if ($memberOld_v2) {
+                    alert()->error('Error', 'Error, Code in member used!');
+                    return back();
+                }
+
                 $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member);
                 $success = MemberRegisterPersonSource::create($create);
             }
@@ -781,6 +788,7 @@ class RegisterMemberController extends Controller
 
             $userOld = User::where('email', $email)->first();
             $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
+            $memberOld_v2 = MemberRegisterPersonSource::where('code', $codeItem)->first();
 
             // Get previous url
             $url = url()->previous();
@@ -840,6 +848,10 @@ class RegisterMemberController extends Controller
                 }
                 if ($memberOld) {
                     alert()->error('Error', 'Error, Email in member used!');
+                    return back();
+                }
+                if ($memberOld_v2) {
+                    alert()->error('Error', 'Error, Code in member used!');
                     return back();
                 }
                 $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member);
@@ -1029,8 +1041,46 @@ class RegisterMemberController extends Controller
         }
     }
 
-    /*Private function*/
+    public function getCategoryOneParent(Request $request)
+    {
+        $listCategoryID = $request->input('listCategoryID');
 
+        $categories_one_parent_array = null;
+        foreach ($listCategoryID as $category) {
+            $categories_oneparent = Category::where([
+                ['status', CategoryStatus::ACTIVE],
+                ['parent_id', $category]
+            ])->get();
+            foreach ($categories_oneparent as $item) {
+                $categories_one_parent_array[] = $item;
+            }
+        }
+        $arrayCategory = $request->input('arrayCategory');
+        $categories_one_parent = collect($categories_one_parent_array);
+        return view('frontend.pages.registerMember.category.categories_one_parent', compact('categories_one_parent',
+            'arrayCategory'));
+    }
+
+    public function getCategoryTwoParent(Request $request)
+    {
+        $listCategoryID = $request->input('listCategoryID');
+        $categories_two_parent_array = null;
+        foreach ($listCategoryID as $category) {
+            $categories_twoparent = Category::where([
+                ['status', CategoryStatus::ACTIVE],
+                ['parent_id', $category]
+            ])->get();
+            foreach ($categories_twoparent as $item) {
+                $categories_two_parent_array[] = $item;
+            }
+        }
+
+        $categories_two_parent = collect($categories_two_parent_array);
+        $arrayCategory = $request->input('arrayCategory');
+        return view('frontend.pages.registerMember.category.categories_two_parent', compact('categories_two_parent', 'arrayCategory'));
+    }
+
+    /*Private function*/
     private function getArrayIds(Request $request, $input)
     {
         $listCategoryName[] = null;
