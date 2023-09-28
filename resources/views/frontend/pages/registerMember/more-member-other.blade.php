@@ -114,26 +114,22 @@
             </td>
             <td colspan="3">
                 <div class="row">
-                    <div class="form-group col-md-2" data-toggle="modal" data-target="#modal-address">
+                    <div class="form-group col-md-3" data-toggle="modal" data-target="#modal-address">
                         <label for="countries-select">{{ __('home.Select country') }}:</label>
-                        <select class="form-control" id="countries-select" name="countries-select"
-                                required>
-                        </select>
+                        <input type="text" disabled class="form-control" id="countries-select" name="countries-select"
+                               required>
                     </div>
-                    <div class="form-group col-md-2" data-toggle="modal" data-target="#modal-address">
+                    <div class="form-group col-md-3" data-toggle="modal" data-target="#modal-address">
                         <label for="cities-select">{{ __('home.Choose the city') }}:</label>
-                        <select class="form-control" id="cities-select" name="cities-select">
-                            <option value="">-- {{ __('home.Choose the city') }} --</option>
-                        </select>
+                        <input type="text" disabled class="form-control" id="cities-select" name="cities-select"
+                               required>
                     </div>
-                    <div class="form-group col-md-2" data-toggle="modal" data-target="#modal-address">
+                    <div class="form-group col-md-3" data-toggle="modal" data-target="#modal-address">
                         <label for="provinces-select">{{ __('home.Select district/district') }}:</label>
-                        <select class="form-control" id="provinces-select" name="provinces-select"
-                        >
-                            <option value="">-- {{ __('home.Select district/district') }} --</option>
-                        </select>
+                        <input type="text" disabled class="form-control" id="provinces-select" name="provinces-select"
+                               required>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="address_en">{{ __('home.Address detail') }}:</label>
                         <input type="text" name="address_en" id="address_en" class="form-control" required
                                value="{{ $exitsMember ? $exitsMember->address_en : old('address_en') }}">
@@ -397,6 +393,7 @@
 <script>
     $(document).ready(function () {
         $('#buttonRegister').on('click', function () {
+            handleAfterSelectRegion();
             // $('#formRegisterMember').trigger('submit');
             $('#btnSubmitFormRegister').trigger('click');
         })

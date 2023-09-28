@@ -36,7 +36,8 @@
     let numberOfCol = 3;
     let level = 0;
     let nameTh, idTh, codeTh;
-
+    let nationValue_Selected = provinceValue_Selected = districtValue_Selected =
+        nationName_Selected = provinceName_Selected = districtName_Selected = '';
     r_getListNation();
 
     async function r_getListNation() {
@@ -58,8 +59,42 @@
         }
     }
 
-    function r_handleSelectNation(id) {
+    function r_handleSelectNation(id, name) {
+        nationValue_Selected = id;
+        nationName_Selected = name;
         r_getListState(id);
+    }
+
+    function selectRegion(provinceName, provinceValue, districtName, districtValue) {
+        resetFieldAddress();
+        document.getElementById(ID_COUNTRY).value = nationName_Selected;
+        if (provinceName) {
+            provinceName_Selected = provinceName;
+            document.getElementById(ID_STATE).value = provinceName_Selected;
+        }
+        if (provinceValue) {
+            provinceValue_Selected = provinceValue;
+        }
+
+        if (districtName) {
+            districtName_Selected = districtName;
+            document.getElementById(ID_CITY).value = districtName_Selected;
+        }
+        if (districtValue) {
+            districtValue_Selected = districtValue;
+        }
+    }
+
+    function handleAfterSelectRegion() {
+        document.getElementById(ID_COUNTRY).value = nationValue_Selected;
+        document.getElementById(ID_STATE).value = provinceValue_Selected;
+        document.getElementById(ID_CITY).value = districtValue_Selected;
+    }
+
+    function resetFieldAddress() {
+        document.getElementById(ID_STATE).value = '';
+        document.getElementById(ID_CITY).value = '';
+        document.getElementById(ID_COUNTRY).value = '';
     }
 
     async function r_renderDataToHtmlLv0() {
@@ -88,7 +123,7 @@
                 check++;
             }
 
-            str += `<td class="name-region-lv-1" onclick="r_handleSelectNation('${region.iso2}')">
+            str += `<td class="name-region-lv-1" onclick="r_handleSelectNation('${region.iso2}', '${region.name}')">
                                         <span class="cursor-pointer">
                     ${region.name}</span>`
             index++;
@@ -141,7 +176,7 @@
                         index--;
                     }
 
-                    str += `<td class="name-region-lv-1" data-dismiss="modal" onclick="selectRegion('VN', 'thanh_pho_can_tho','quan_ninh_kieu')">
+                    str += `<td class="name-region-lv-1" data-dismiss="modal" onclick="selectRegion('${region.name}','${region.state_code}','${child.name}','${child.city_code}',)">
                                         <span class="cursor-pointer">
                     ${child.name}</span>`
                     if (index == numberOfCol) {
@@ -153,7 +188,7 @@
                 check = true;
 
             } else {
-                str += `<tr><th class="name-region" rowspan="${rowSpan}">${region.name}</th></tr>`
+                str += `<tr><th class="name-region cursor-pointer" style="width: 100px" rowspan="${rowSpan}" data-dismiss="modal" onclick="selectRegion('${region.name}','${region.state_code}')">${region.name}</th></tr>`
             }
         }
 

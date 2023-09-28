@@ -459,6 +459,7 @@
     $(document).ready(function () {
         $('#buttonRegister').on('click', function () {
             // $('#formRegisterMember').trigger('submit');
+            handleAfterSelectRegion();
             $('#btnSubmitFormRegister').trigger('click');
         })
     })
