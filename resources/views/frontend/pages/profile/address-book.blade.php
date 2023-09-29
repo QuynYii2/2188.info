@@ -2,21 +2,8 @@
 
 @section('title', 'Return Management')
 
-<style>
-    .link-tabs {
-        background-color: #f7f7f7 !important;
-    }
-
-    .link-tabs:hover {
-        color: #c69500 !important;
-    }
-</style>
-
 @section('sub-content')
-    @php
-
-    @endphp
-    <div class="container-fluid">
+    <div class="container-fluid" id="address-book">
         <div class="row mt-2 bg-white rounded">
             <div class="row  rounded pt-1 ml-5">
                 <h5>{{ __('home.address book') }}</h5>
@@ -266,99 +253,5 @@
             </div>
         </div>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
-            referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-    <script>
-
-        var renderData = (array, select) => {
-            let row = ' <option disable value="">Chọn</option>';
-            array.forEach(element => {
-                row += `<option data-id="${element.code}" value="${element.name}">${element.name}</option>`
-            });
-            document.querySelector("#" + select).innerHTML = row
-        }
-
-        const host = "https://provinces.open-api.vn/api/";
-        var callAPI = (api, id) => {
-            if (sessionStorage.hasOwnProperty('city')) {
-                renderData(JSON.parse(sessionStorage.getItem('city')), id);
-            } else {
-                return axios.get(api)
-                    .then((response) => {
-                        sessionStorage.setItem('city', JSON.stringify(response.data))
-                        renderData(response.data, id);
-                    });
-            }
-        }
-        callAPI('https://provinces.open-api.vn/api/?depth=1', 'city');
-        var callApiDistrict = (api, id) => {
-            return axios.get(api)
-                .then((response) => {
-                    renderData(response.data.districts, id);
-                });
-        }
-        var callApiWard = (api, id) => {
-            return axios.get(api)
-                .then((response) => {
-                    renderData(response.data.wards, id);
-                });
-        }
-
-
-        $("#city").change(() => {
-            callApiDistrict(host + "p/" + $("#city").find(':selected').data('id') + "?depth=2", 'district');
-        });
-        $("#district").change(() => {
-            callApiWard(host + "d/" + $("#district").find(':selected').data('id') + "?depth=2", "ward");
-        });
-        $("#city-edit").change(() => {
-            callApiDistrict(host + "p/" + $("#city-edit").find(':selected').data('id') + "?depth=2", 'province-edit');
-        });
-        $("#province-edit").change(() => {
-            callApiWard(host + "d/" + $("#province-edit").find(':selected').data('id') + "?depth=2", "location-edit");
-        });
-
-        async function editModal(obj) {
-            callAPI('https://provinces.open-api.vn/api/?depth=1', 'city-edit');
-
-            document.getElementById('id-edit').value = obj.id;
-            document.getElementById('username-edit').value = obj.username;
-            document.getElementById('company-edit').value = obj.company;
-            document.getElementById('phone-edit').value = obj.phone;
-
-            document.getElementById('city-edit').value = obj.city;
-            await callApiDistrict(host + "p/" + $("#city-edit").find(':selected').data('id') + "?depth=2", 'province-edit');
-            document.getElementById('province-edit').value = obj.province;
-            await callApiWard(host + "d/" + $("#province-edit").find(':selected').data('id') + "?depth=2", 'location-edit');
-            document.getElementById('location-edit').value = obj.location;
-
-            document.getElementById('address_detail-edit').textContent = obj.address_detail;
-
-            var homeRadio = document.getElementById("address_option-edit-1");
-            var companyRadio = document.getElementById("address_option-edit-2");
-            let typeAdd = obj.address_option;
-
-            if (typeAdd == "{{\App\Enums\AddressOrderOption::HOME_PRIVATE}}") {
-                homeRadio.checked = true;
-            } else if (obj.address_option == "{{\App\Enums\AddressOrderOption::COMPANY}}") {
-                companyRadio.checked = true;
-            }
-
-            var checkbox = document.getElementById('default-edit');
-            if (obj.default == 1) {
-                checkbox.checked = true;
-            } else {
-                checkbox.checked = false;
-            }
-
-            let formInput = document.getElementById('formInput');
-
-            formInput.action = "/address-update/" + obj.id;
-
-        }
-
-
-    </script>
+<script src="{{asset('js/frontend/pages/profile/address-book.js')}}"></script>
 @endsection

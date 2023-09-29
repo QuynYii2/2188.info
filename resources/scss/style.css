@@ -2229,7 +2229,8 @@ hr {
   height: 30px;
   border-radius: 20px 20px 20px 20px;
   border: 1px solid black;
-  line-height: 25px;
+  line-height: 30px;
+  text-align: center;
 }
 .section .item-body .card-bottom--left a {
   padding: 0 15px;

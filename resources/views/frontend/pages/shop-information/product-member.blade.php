@@ -14,7 +14,7 @@
         protect: true
     });
 </script>
-<div class="container product-member">
+<div class="product-member">
     @if($company)
         @php
             $memberAccounts = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->get();
@@ -386,7 +386,7 @@
         </div>
     </div>
 </div>
-
+</div>
 <script>
     var renderInputAttribute = $('#renderProductMember'), productMin, product, productName;
     $('.thumbnailProduct').on('click', function () {

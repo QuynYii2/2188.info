@@ -12,33 +12,7 @@
 @endphp
 <link rel="stylesheet" href="{{ mix('css/custom.css') }}">
 
-<style>
-
-    @media only screen and (max-width: 767px) {
-
-        .desktop-button {
-            display: none !important
-        }
-
-        .mobile-button {
-            display: block !important;
-        }
-    }
-
-    @media (min-width: 768px) {
-        .mobile-button {
-            display: none !important;
-        }
-
-        .desktop-button {
-            display: flex !important;
-        }
-
-    }
-
-
-</style>
-<div class="pt-2 pl-3 bg-white d-flex desktop-button">
+<div id="desktop-button" class="pt-2 pl-3 bg-white d-flex desktop-button">
     <div class="d-inline-block">
         <h6>{{ __('home.account of') }}</h6>
         <h4>{{$user->name}}</h4>

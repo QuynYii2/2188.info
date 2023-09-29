@@ -3,9 +3,6 @@
 @section('title', 'List Permission')
 
 @section('sub-content')
-    @php
-
-    @endphp
     <div class="row mt-2 bg-white rounded">
         <div class="row  rounded pt-1 ml-5">
             <h5>{{ __('home.upgrade permission') }}</h5>
@@ -104,17 +101,5 @@
             </div>
         </div>
     </div>
-    <script>
-        function myFun(x) {
-            var name = document.getElementById('permission-name');
-            var id = document.getElementById('permission-id');
-            var price = document.getElementById('price');
-            var duration = document.getElementById('duration');
-
-            name.value = document.getElementById('permission-name-' + x).value;
-            id.value = document.getElementById('permission-id-' + x).value;
-            price.value = document.getElementById('permission-price-' + x).value;
-            duration.value = document.getElementById('permission-duration-' + x).value;
-        }
-    </script>
+    <script src="{{asset('js/frontend/pages/profile/listRank.js')}}"></script>
 @endsection

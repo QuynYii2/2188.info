@@ -748,7 +748,6 @@
                     $shopInformation = \App\Models\ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first()
                 @endphp
 
-                <div class="content" id="content2">@include('frontend.pages.shop-information.tabs_shop_info')</div>
                 <button id="toggleBtn2" class="toggleBtn"
                         onclick="toggleContent('content2', 'toggleBtn2')">{{ __('home.Show More') }}</button>
             </div>

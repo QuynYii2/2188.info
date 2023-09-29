@@ -3,21 +3,6 @@
 @section('title', 'Product')
 
 @section('content')
-    @php
-
-    @endphp
-    <div class="breacrumb-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb-text">
-                        <a href="#"><i class="fa fa-home"></i> Home</a>
-                        <span>Shop</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <section class="product-shop spad">
         <div class="container">
             <div class="product-list">

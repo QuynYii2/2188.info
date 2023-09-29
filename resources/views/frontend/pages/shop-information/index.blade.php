@@ -1,9 +1,4 @@
 <style>
-    .XEshP\  + {
-        transition: margin-top .3s cubic-bezier(.4, 0, .2, 1);
-        -webkit-overflow-scrolling: touch;
-    }
-
     .shop-page__info {
         padding: 1.25rem 0;
         box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
@@ -115,14 +110,6 @@
         align-items: center;
     }
 
-    .section-seller-overview-horizontal__seller-portrait-link {
-        position: relative;
-        display: block;
-        height: 5rem;
-        width: 5rem;
-        flex-shrink: 0;
-    }
-
     .section-seller-overview-horizontal__portrait-info {
         margin-top: .625rem;
         margin-left: .625rem;
@@ -181,13 +168,6 @@
         box-sizing: border-box;
         border-width: .25rem;
         border-color: hsla(0, 0%, 100%, .4);
-    }
-
-    .section-seller-overview-horizontal__preferred-badge-wrapper {
-        position: absolute;
-        bottom: -4px;
-        left: 50%;
-        transform: translateX(-50%);
     }
 
     .section-seller-overview-horizontal__portrait-name {
@@ -321,51 +301,19 @@
         -moz-osx-font-smoothing: grayscale;
     }
 
-    .WgnEaf {
-        height: 16px;
-        width: 64px;
-    }
-
     .section-seller-overview-horizontal__icon .icon-plus-sign {
         font-size: .625rem;
-    }
-
-
-    /* These were inline style tags. Uses id+class to override almost everything */
-    #style-8dPYj.style-8dPYj {
-        background-image: url("https://down-ws-vn.img.susercontent.com/vn-11134210-7qukw-lhy85rv6ohola9_tn.webp");
-    }
-
-    .toggleBtn {
-        width: 130px;
-        background: #fd6506;
-        border-radius: 20px;
-        cursor: pointer;
-        font-size: 16px;
-        line-height: 45px;
-        font-weight: 600;
-        color: white;
-        border: none;
-    }
-
-    .content {
-        max-height: 6em;
-        overflow: hidden;
     }
 
     .productView-description {
         width: 100%;
     }
 </style>
-
 @extends('frontend.layouts.master')
 
 @section('title', 'Information Shop')
 
 @section('content')
-    @php
-
-            @endphp
     <div class="shop-page__info">
         <div class="section-seller-overview-horizontal container max-width">
             <div class="section-seller-overview-horizontal__leading row">
@@ -674,17 +622,8 @@
         </div>
     </div>
     <script>
-        function toggleContent(contentId, btnId) {
-            var content = document.getElementById(contentId);
-            var toggleBtn = document.getElementById(btnId);
-
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-                toggleBtn.innerHTML = "{{ __('home.Show More') }}";
-            } else {
-                content.style.maxHeight = content.scrollHeight + "px";
-                toggleBtn.innerHTML = "{{ __('home.Show Less') }}";
-            }
-        }
+        var more = "{{ __('home.Show More') }}";
+        var less = "{{ __('home.Show Less') }}";
     </script>
+    <script src="{{asset('js/frontend/pages/shop-infomation/index.js')}}"></script>
 @endsection

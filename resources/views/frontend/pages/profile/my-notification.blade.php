@@ -1,24 +1,8 @@
 @extends('frontend.layouts.profile')
 
 @section('title', 'My Notification')
-
-<style>
-    .link-tabs {
-        background-color: #f7f7f7 !important;
-    }
-
-    .link-tabs:hover {
-        color: #c69500;
-    !important;
-    }
-</style>
-
 @section('sub-content')
-    @php
-
-    @endphp
-    <div class="row mt-2 bg-white rounded">
-
+    <div id="address-book" class="row mt-2 bg-white rounded">
         <div class="col-md-12 ">
             <div class="row rounded pt-1 ml-5">
                 <h5>{{ __('home.my notification') }}</h5>
