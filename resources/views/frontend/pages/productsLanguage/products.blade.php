@@ -1,32 +1,8 @@
 @extends('frontend.layouts.master')
 
 @section('title', 'Products')
-
-<style>
-    .card-products {
-        max-width: 100%;
-    }
-
-    .country {
-        font-size: 32px;
-        font-weight: 600;
-        margin-left: 16px;
-    }
-
-    .product-content {
-        z-index: 100;
-    }
-
-    .product-price {
-        gap: 3rem;
-    }
-</style>
-
 @section('content')
-    @php
-
-    @endphp
-    <div class="container-fluid">
+    <div class="container-fluid" id="productsLanguage">
         <div class="card">
             <div class="card card-products">
                 <div class="card-header">

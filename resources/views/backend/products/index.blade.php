@@ -675,6 +675,7 @@
     <script>
         var url =  `{{ route('seller.products.hot', ['id' => ':productID']) }}`;
         var urla = `{{ route('seller.products.feature', ['id' => ':productID']) }}`;
+        var token = `{{ csrf_token() }}`;
     </script>
     <script src="{{ asset('js/backend/products-index.js') }}"> </script>
 @endsection
