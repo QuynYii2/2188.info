@@ -1,3 +1,44 @@
+#chat-detail {
+  #chat_area {
+    min-height: 500px;
+  }
+
+  #chat_history {
+    min-height: 500px;
+    max-height: 500px;
+    overflow-y: scroll;
+    margin-bottom: 16px;
+    background-color: #ece5dd;
+    padding: 16px;
+  }
+
+  #user_list {
+    min-height: 500px;
+    max-height: 500px;
+    overflow-y: scroll;
+  }
+}
+
+#productsLanguage{
+.card-products {
+  max-width: 100%;
+}
+
+  .country {
+    font-size: 32px;
+    font-weight: 600;
+    margin-left: 16px;
+  }
+
+  .product-content {
+    z-index: 100;
+  }
+
+  .product-price {
+    gap: 3rem;
+  }
+}
+
 body {
   font-family: 'DM Sans', sans-serif;
 }
