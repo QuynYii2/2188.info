@@ -128,6 +128,8 @@ Route::get(
     '/register-member-ship/{member}',
     [RegisterMemberController::class, 'registerMemberShip']
 )->name('show.register.member.ship');
+Route::post('/register-member-ship/create-staff/{id}',[RegisterMemberController::class, 'createNewStaff']
+)->name('create.staff.register');
 Route::get(
     '/congratulation-register-member/{member}',
     [RegisterMemberController::class, 'congratulationRegisterMember']
