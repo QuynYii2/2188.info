@@ -92,9 +92,9 @@
                 </div>
             </div>
             @if(!$listMessage->isEmpty())
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card-body">
                             @foreach($listMessage as $message)
                                 @php
                                     $user = \App\Models\User::find($message->from_user_id);
@@ -106,13 +106,13 @@
                                     <h5 class="card-title">{{$user->name}}</h5>
                                 </div>
                             @endforeach
+                        </div>
+                        {{--        {{ $listMessage->links() }}--}}
                     </div>
-                    {{--        {{ $listMessage->links() }}--}}
-                </div>
-                @php
-                    $user = \App\Models\User::find($listMessage[0]->from_user_id);
-                @endphp
-                <div class="col-md-9">
+                    @php
+                        $user = \App\Models\User::find($listMessage[0]->from_user_id);
+                    @endphp
+                    <div class="col-md-9">
                         <div class="card">
                             <h5 id="chat_user" class="text-center">{{$user->name}}</h5>
                             <h5 id="chat_message" class="ml-3">
@@ -122,7 +122,7 @@
                                     data-target="#exampleModal">{{ __('home.chat') }}</button>
                         </div>
                     </div>
-            </div>
+                </div>
             @else
                 <div class="text-center mt-4">
                     {{ __('home.No received messages') }}
@@ -173,7 +173,8 @@
                 .then((response) => {
                     $('#chat_message').empty().append(response);
                 })
-                .catch(error => );
+                .catch(error => {
+                });
         }
 
         function renderDefault() {

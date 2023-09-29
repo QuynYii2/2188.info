@@ -1061,7 +1061,6 @@
                 result.push(text);
             }
             result.sort();
-            );
             myfunction(product_id.value, result);
 
             checkBtn();
@@ -1105,7 +1104,8 @@
                     productQuantity.innerText = response['quantity'];
                     variable.value = response['variation'];
                 })
-                .catch(error => );
+                .catch(error => {
+                });
         }
 
         checkBtn();

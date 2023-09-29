@@ -339,7 +339,8 @@
                             calculationTotalCart();
                         }
 
-                    }).catch(error => );
+                    }).catch(error => {
+                    });
                 }
 
                 getItem();
