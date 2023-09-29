@@ -1,55 +1,5 @@
 @extends('backend.layouts.master')
 @section('title', 'List Top Seller')
-<style>
-    select{
-        max-width: 0;
-    }
-    .CTA h1 {
-        color: #ffffff;
-        margin-top: 10px;
-        margin-left: 9px;
-    }
-
-    nav a {
-        list-style: none;
-        padding: 35px;
-        color: #ffffff;
-        display: block;
-        transition: all 0.3s ease-in-out;
-    }
-    nav a :hover {
-        color: #3fb6a8;
-        transform: scale(1.2);
-        cursor: pointer;
-    }
-    nav a :first-child {
-        margin-top: 7px;
-    }
-
-    footer {
-        position: absolute;
-        width: 20%;
-        bottom: 0;
-        right: -20px;
-        text-align: right;
-        font-size: 0.8em;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-    }
-    footer p {
-        border: none;
-        padding: 0;
-    }
-    footer a {
-        color: #ffffff;
-        text-decoration: none;
-    }
-    footer a:hover {
-        color: #7d7d7d;
-    }
-
-
-</style>
 @section('content')
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
@@ -248,36 +198,4 @@
             </div>
         @endif
     </div>
-    <script>
-        {{--function location() {--}}
-        {{--    window.location.redirect('{{route('seller.config.processCreate')}}');--}}
-        {{--}--}}
-    </script>
-    <script>
-        /*active button class onclick*/
-        $("nav a").click(function (e) {
-            e.preventDefault();
-            $("nav a").removeClass("active");
-            $(this).addClass("active");
-            if (this.id === !"payment") {
-                $(".payment").addClass("noshow");
-            } else if (this.id === "payment") {
-                $(".payment").removeClass("noshow");
-                $(".rightbox").children().not(".payment").addClass("noshow");
-            } else if (this.id === "profile") {
-                $(".profile").removeClass("noshow");
-                $(".rightbox").children().not(".profile").addClass("noshow");
-            } else if (this.id === "subscription") {
-                $(".subscription").removeClass("noshow");
-                $(".rightbox").children().not(".subscription").addClass("noshow");
-            } else if (this.id === "privacy") {
-                $(".privacy").removeClass("noshow");
-                $(".rightbox").children().not(".privacy").addClass("noshow");
-            } else if (this.id === "settings") {
-                $(".settings").removeClass("noshow");
-                $(".rightbox").children().not(".settings").addClass("noshow");
-            }
-        });
-
-    </script>
 @endsection
