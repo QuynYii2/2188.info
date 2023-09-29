@@ -54,8 +54,9 @@
 </div>
 
 <script>
-    var url = `{{ route('file.img.save') }}`;
-    var urla = `{{ route('file.img.get') }}`;
+    var urlPostImg = `{{ route('file.img.save') }}`;
+    var urlGetImg = `{{ route('file.img.get') }}`;
     var imgUrl =  `{{ asset('storage/') }}`;
+    var token = `{{ csrf_token() }}`;
 </script>
 <script src="{{asset('js/backend/modal-media.js')}}"></script>
