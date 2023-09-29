@@ -2,18 +2,7 @@
 
 @section('title', 'My Voucher')
 
-<style>
-     body {
-         font-family: 'Montserrat', sans-serif;
-         background-color: #f5f5f5;
-     }
-
-</style>
-
 @section('sub-content')
-    @php
-
-    @endphp
     <div class="p-4 list-voucher">
         <p class="category">{{ __('home.Kho Voucher') }}</p>
         <div class="search">
@@ -108,25 +97,9 @@
         </div>
     </div>
 <script>
-    // Hàm sao chép mã voucher vào clipboard khi nhấp nút Copy Code
-    function copyCode(voucherId) {
-        // Lấy mã voucher theo ID
-        var voucherCode = document.getElementById('voucher-code-' + voucherId).innerText;
-
-        // Tạo một textarea ẩn để copy vào clipboard
-        var tempInput = document.createElement('textarea');
-        tempInput.value = voucherCode;
-        document.body.appendChild(tempInput);
-
-        // Chọn và sao chép nội dung vào clipboard
-        tempInput.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempInput);
-
-        // Hiển thị thông báo hoặc xử lý sau khi sao chép thành công (tuỳ ý)
-        alert({{ __('home.Mã voucher đã được sao chép: ') }} + voucherCode);
-    }
+    var text = '{{ __('home.Mã voucher đã được sao chép: ') }}';
 </script>
+    <script src="{{asset('js/frontend/pages/profile/my-voucher.js')}}"></script>
 </body>
 </html>
 @endsection

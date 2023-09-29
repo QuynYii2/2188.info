@@ -2,16 +2,6 @@
 
 @section('title', 'Shop My')
 
-<style>
-    .link-tabs {
-        background-color: #f7f7f7 !important;
-    }
-
-    .link-tabs:hover {
-        color: #c69500 !important;
-    }
-</style>
-
 @section('sub-content')
     <div class="container">
         <h5 class="text-center">My Shop</h5>

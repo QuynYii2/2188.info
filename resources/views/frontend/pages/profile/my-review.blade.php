@@ -3,9 +3,6 @@
 @section('title', 'My Review')
 
 @section('sub-content')
-    @php
-
-    @endphp
     <div class="row mt-2 bg-white rounded">
         <div class="row rounded pt-1 ml-5">
             <h5>Sản phẩm được xem nhiều nhất</h5>

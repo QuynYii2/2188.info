@@ -3,38 +3,10 @@
 @section('title', 'List Permission')
 
 @section('sub-content')
-    @php
-
-    @endphp
     <div class="row mt-5 bg-white rounded">
         <div class="rounded pt-1 ml-5">
             <h5>{{ __('home.list permission') }}</h5>
         </div>
-{{--        <div class="ml-5 float-right">--}}
-{{--            @php--}}
-{{--                use Illuminate\Support\Facades\Auth;--}}
-{{--                use Illuminate\Support\Facades\DB;--}}
-
-{{--                $roleUsers = DB::table('role_user')->where([['user_id', Auth::user()->id]])->get();--}}
-{{--                $isAdmin = false;--}}
-
-{{--                if (count($roleUsers) > 0){--}}
-{{--                    foreach ($roleUsers as $roleUser){--}}
-{{--                         $role = DB::table('roles')->where([['id', $roleUser->role_id]])->first() ;--}}
-{{--                        if ($role->name == 'super_admin'){--}}
-{{--                            $isAdmin = true;--}}
-{{--                        }--}}
-{{--                    }--}}
-{{--                }--}}
-{{--            @endphp--}}
-
-{{--            @if($isAdmin === true)--}}
-{{--                <form action="{{route('permission.down.rank')}}" method="post">--}}
-{{--                    @csrf--}}
-{{--                    <button class="btn btn-danger" type="submit">Reset Rank</button>--}}
-{{--                </form>--}}
-{{--            @endif--}}
-{{--        </div>--}}
         <div class="border-bottom"></div>
     </div>
 

@@ -1,19 +1,8 @@
 @extends('frontend.layouts.profile')
 
 @section('title', 'Order Management')
-
-<style>
-    .link-tabs {
-        background-color: #f7f7f7 !important;
-    }
-
-    .link-tabs:hover {
-        color: #c69500;
-    !important;
-    }
-</style>
 @section('sub-content')
-    <div class="row mt-2 bg-white rounded">
+    <div class="row mt-2 bg-white rounded" id="address-book">
         <div class="row rounded pt-1 ml-5">
             <h5>{{ __('home.order management') }}</h5>
         </div>

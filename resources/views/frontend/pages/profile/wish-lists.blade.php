@@ -39,30 +39,10 @@
             </div>
         @endforeach
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <script>
-        $(document).ready(function ($) {
-            $(".deleteButton--wish-list").click(function () {
-                var idWishList = $(this).data('value');
 
-                $.ajax({
-                    url: "{{route('wish.list.delete', ['id'=>':id'])}}",
-                    method: 'POST',
-                    dataType: 'json',
-                    data: {
-                        id: idWishList,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function (response) {
-                        alert(response.message);
-                        window.location.reload();
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Lỗi khi xóa dữ liệu: " + error);
-                    }
-                });
-            });
-        });
+    <script>
+        var url = "{{route('wish.list.delete', ['id'=>':id'])}}";
+        var token = '{{ csrf_token() }}';
     </script>
 
 @endsection

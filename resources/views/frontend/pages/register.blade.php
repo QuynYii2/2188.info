@@ -48,7 +48,7 @@
                                         @else
                                             {{ ($member->text_en) }}
                                         @endif
-                                        {{--                                        {{$member->name}}--}}
+{{--                                        {{$member->name}}--}}
                                     </h6>
                                     <ol class="text-success">
                                         @php
@@ -115,5 +115,3 @@
         </div>
     </div>
 @endsection
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-

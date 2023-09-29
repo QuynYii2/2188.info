@@ -1,6 +1,6 @@
 @php use App\Http\Controllers\Frontend\HomeController;use Illuminate\Support\Facades\Auth;
  $currentRouteName = Route::getCurrentRoute()->getName();
- $arrNameNeedHid = ['stand.register.member.index', 'partner.register.member.index', 'parent.register.member.locale', 'chat.message.received', 'chat.message.sent'];
+ $arrNameNeedHid = ['stand.register.member.index', 'partner.register.member.index', 'parent.register.member.locale', 'chat.message.received', 'chat.message.sent', 'shop.information.show', 'chat.message.show'];
 $isRoute = in_array($currentRouteName, $arrNameNeedHid);
 @endphp
         <!DOCTYPE html>
@@ -73,6 +73,24 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
     <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('js/vendor/jquery-3.3.1.min.js') }}"></script>
+
+
+    <script>
+        $(document).ready(function () {
+            if ($('#input-check').val() == '1') {
+                $('#body-content').click(function (e) {
+                    signIn();
+                    signInM();
+                });
+            }
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 </head>
 <div class="d-none">
     @if(Auth::check())
@@ -102,23 +120,6 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
         <i class="zmdi zmdi-chevron-up"></i>
     </span>
 </div>
-<script src="{{ asset('js/vendor/jquery-3.3.1.min.js') }}"></script>
-
-
-<script>
-    $(document).ready(function () {
-        if ($('#input-check').val() == '1') {
-            $('#body-content').click(function (e) {
-                signIn();
-                signInM();
-            });
-        }
-    });
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-<script src="{{ asset('js/frontend.js') }}"></script>
 </body>
+<script src="{{ asset('js/frontend.js') }}"></script>
 </html>

@@ -2,18 +2,8 @@
 
 @section('title', 'Return Management')
 
-<style>
-    .link-tabs{
-        background-color: #f7f7f7!important;
-    }
-
-    .link-tabs:hover{
-        color: #c69500;!important;
-    }
-</style>
-
 @section('sub-content')
-    <div class="row mt-2 bg-white rounded">
+    <div id="address-book" class="row mt-2 bg-white rounded">
         <div class="row rounded pt-1 ml-5">
             <h5>{{ __('home.return management') }}</h5>
         </div>
