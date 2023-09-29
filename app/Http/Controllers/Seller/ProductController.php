@@ -34,6 +34,7 @@ use Mockery\Exception;
 
 class ProductController extends Controller
 {
+
     public function index(Request $request)
     {
         (new HomeController())->getLocale($request);
@@ -186,7 +187,6 @@ class ProductController extends Controller
         $categoriesRegister =[];
         $arrayCategory = explode(',', $registerCategories[0]['category_id']);
         foreach($arrayCategory as $registerCategor){
-//            $exitsCategories = in_array($registerCategor, [1,2,36,37,38,39]);
             array_push($categoriesRegister, $registerCategor);
         }
 
@@ -207,7 +207,6 @@ class ProductController extends Controller
             'attributes' => $attributes,
             'storages' => $storages,
             'categoriesRegister' => $categoriesRegister,
-
         ]);
     }
 
@@ -929,4 +928,5 @@ class ProductController extends Controller
         }
         return $listIDs;
     }
+
 }
