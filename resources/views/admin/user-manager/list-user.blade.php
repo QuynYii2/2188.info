@@ -3,9 +3,6 @@
     User Manager
 @endsection
 @section('content')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.0/js/bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
     <div class="container">
         <section class="section ">
             <div class="">
@@ -120,80 +117,6 @@
             </div>
         </section>
     </div>
-    <script>
-        function SortUser() {
-            $('#tableUser').DataTable();
-            $('#tableUser_length').addClass('d-none');
-            $('#tableUser_filter').addClass('d-none');
-            $('#tableUser_paginate').addClass('d-none');
-            $('#tableUser_info').addClass('d-none');
-        }
 
-        SortUser();
-    </script>
-    <script>
-        $(document).ready(function () {
-            $("#name").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $('#tableUser tr').each(function () {
-                    var found = false;
-                    $(this).find("td.table-name").each(function () {
-                        if ($(this).text().toLowerCase().includes(value)) {
-                            found = true;
-                        }
-                    });
-                    $(this).toggle(found);
-                });
-            });
-
-            $("#email").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $('#tableUser tr').each(function () {
-                    var found = false;
-                    $(this).find("td.table-email").each(function () {
-                        if ($(this).text().toLowerCase().includes(value)) {
-                            found = true;
-                        }
-                    });
-                    $(this).toggle(found);
-                });
-            });
-
-            $("#member").on("change", function () {
-                var value = $(this).val().toLowerCase();
-                $('#tableUser tr').each(function () {
-                    var found = false;
-                    $(this).find("td.table-member").each(function () {
-                        if ($(this).text().toLowerCase().includes(value)) {
-                            found = true;
-                        }
-                    });
-                    $(this).toggle(found);
-                });
-            });
-
-            $("#role").on("change", function () {
-                var value = $(this).val().toLowerCase();
-                $('#tableUser tr').each(function () {
-                    var found = false;
-                    $(this).find("td.table-role").each(function () {
-                        if ($(this).text().toLowerCase().includes(value)) {
-                            found = true;
-                        }
-                    });
-                    $(this).toggle(found);
-                });
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $("#inputSearchUser").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#tableUser tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
+    <script src="{{ asset('js/admin/list-user.js') }}"></script>
 @endsection

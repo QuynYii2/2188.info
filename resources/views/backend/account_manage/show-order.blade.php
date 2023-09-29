@@ -1,5 +1,4 @@
 @extends('backend.layouts.master')
-
 @section('content')
     <div class="container-fluid">
         <div class="row mt-2 bg-white rounded">

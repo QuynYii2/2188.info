@@ -1,10 +1,10 @@
 <table class="table element-bordered align-middle" align="center">
     <form action="{{route('register.member.buyer')}}" method="post"
-      enctype="multipart/form-data">
-    @csrf
-    <input type="text" class="d-none" name="member_id" value="{{ $member->id }}">
-    <input type="text" class="d-none" name="member" value="{{ ($member->name) }}">
-    <tbody>
+          enctype="multipart/form-data">
+        @csrf
+        <input type="text" class="d-none" name="member_id" value="{{ $member->id }}">
+        <input type="text" class="d-none" name="member" value="{{ ($member->name) }}">
+        <tbody>
         <tr>
             <th scope="row">
                 <label for="datetime_register">{{ __('home.Day register') }}: </label>
@@ -27,8 +27,10 @@
                 <label for="name_en">{{ __('home.Full Name') }}:</label>
             </th>
             <td colspan="4">
-                <input type="text" class="form-control mb-2" id="name_en" name="name_en" placeholder="{{ __('home.English only') }}" required>
-                <input type="text" class="form-control" id="name" name="name" placeholder="{{ __('home.Local language') }}" required>
+                <input type="text" class="form-control mb-2" id="name_en" name="name_en"
+                       placeholder="{{ __('home.English only') }}" required>
+                <input type="text" class="form-control" id="name" name="name"
+                       placeholder="{{ __('home.Local language') }}" required>
             </td>
         </tr>
         <tr>
@@ -87,7 +89,8 @@
                 <label for="sns_account">{{ __('home.SNS Account') }}:</label>
             </th>
             <td colspan="4" class="item">
-                <input type="text" class="form-control" id="sns_account" name="sns_account" placeholder="{{ __('home.ID Kakao Talk') }}" required>
+                <input type="text" class="form-control" id="sns_account" name="sns_account"
+                       placeholder="{{ __('home.ID Kakao Talk') }}" required>
             </td>
         </tr>
         <tr>
@@ -379,23 +382,23 @@
             </th>
             <td colspan="4" class="item">
                 <div class="row mb-3">
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" data-toggle="modal" data-target="#modal-address">
                         <label for="countries-select">{{ __('home.Select country') }}:</label>
                         <select class="form-control" id="countries-select" name="countries-select"
-                                onchange="getListState(this.value)">
+                        >
                         </select>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" data-toggle="modal" data-target="#modal-address">
                         <label for="cities-select">{{ __('home.Choose the city') }}:</label>
                         <select class="form-control" id="cities-select" name="cities-select"
-                                onchange="getListCity(this.value)">
+                        >
                             <option value="">-- {{ __('home.Choose the city') }} --</option>
                         </select>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" data-toggle="modal" data-target="#modal-address">
                         <label for="provinces-select">{{ __('home.Select district/district') }}:</label>
                         <select class="form-control" id="provinces-select" name="provinces-select"
-                                onchange="getListWard(this.value)">
+                        >
                             <option value="">-- {{ __('home.Select district/district') }} --</option>
                         </select>
                     </div>
@@ -447,14 +450,16 @@
                         class="btn bg-member-green solid mr-3 btn-register">{{ __('home.next') }}</button>
             </td>
         </tr>
-    </tbody>
-    <button type="submit" id="btnSubmitFormRegister" class="d-none btn btn-primary">{{ __('home.sign up') }}</button>
-</form>
+        </tbody>
+        <button type="submit" id="btnSubmitFormRegister"
+                class="d-none btn btn-primary">{{ __('home.sign up') }}</button>
+    </form>
 </table>
 <script>
     $(document).ready(function () {
         $('#buttonRegister').on('click', function () {
             // $('#formRegisterMember').trigger('submit');
+            handleAfterSelectRegion();
             $('#btnSubmitFormRegister').trigger('click');
         })
     })

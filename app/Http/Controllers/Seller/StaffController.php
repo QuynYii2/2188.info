@@ -263,6 +263,6 @@ class StaffController extends Controller
         $userS->delete();
         $user = User::where([['id', '=', $id]])->first();
         $user->type_account = 'buyer';
-        return $this->index();
+        return redirect(route('staff.manage.show')) ;
     }
 }

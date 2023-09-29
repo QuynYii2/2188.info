@@ -1,7 +1,5 @@
 @extends('backend.layouts.master')
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
 @section('content')
 
     <div class="container-fluid" id="table-account-manage">
