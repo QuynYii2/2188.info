@@ -90,15 +90,9 @@
                                                checked
                                                value="{{OrderMethod::IMMEDIATE}}"/><span
                                                 class="ml-1">{{ __(OrderMethod::IMMEDIATE) }}</span><br>
-                                        <input type="radio" class="input-m0" name="order_method" id="order-by-card"
-                                               value="{{OrderMethod::CardCredit}}"/><span
-                                                class="ml-1">{{ __(OrderMethod::CardCredit) }}</span><br>
                                         <input type="radio" class="input-m0" name="order_method" id="order-by-e-wallet"
                                                 {{OrderMethod::ElectronicWallet}}/>
-                                        <span class="ml-1">{{ __(OrderMethod::ElectronicWallet) }}</span><br>
-                                        <input type="radio" class="input-m0" name="order_method" id="order-by-coin"
-                                                {{OrderMethod::SHOPPING_MALL_COIN}}/>
-                                        <span class="ml-1">{{ __(OrderMethod::SHOPPING_MALL_COIN) }}</span>
+                                        <span class="ml-1">{{ __(OrderMethod::ElectronicWallet) }}</span>
                                     </div>
                                     <div class="col-12" id="payment-info">
                                         <h3>{{ __('home.Payment') }}</h3>

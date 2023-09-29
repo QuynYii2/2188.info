@@ -33,9 +33,9 @@
                             </h6>
                             <div class="card">
                                 <div class="card-body">
-{{--                                    <h3 class="card-title text-danger text-center">--}}
-{{--                                        ${{$member->price}}--}}
-{{--                                    </h3>--}}
+                                    {{--                                    <h3 class="card-title text-danger text-center">--}}
+                                    {{--                                        ${{$member->price}}--}}
+                                    {{--                                    </h3>--}}
                                     <h6 class="card-subtitle mb-2 text-muted">
                                         @if(locationHelper() == 'kr')
                                             {{ ($member->text_kr) }}
@@ -53,6 +53,7 @@
                                     <ol class="text-success">
                                         @php
                                             $listPermissionID = $member->permission_id;
+                                            \Illuminate\Support\Facades\Cache::put('id-member-reg', $member->id);
                                             $arrayPermissionID = null;
                                             if ($listPermissionID){
                                                 $arrayPermissionID = explode(',', $listPermissionID);
@@ -81,23 +82,23 @@
                                                     @endif
                                                 </li>
                                             @endforeach
-                                                @php
-                                                    $permission = \App\Models\Permission::find($lastElement);
+                                            @php
+                                                $permission = \App\Models\Permission::find($lastElement);
 
-                                                @endphp
-                                                <p>
-                                                    @if(locationHelper() == 'kr')
-                                                        {{ ($permission->lang_kr) }}
-                                                    @elseif(locationHelper() == 'cn')
-                                                        {{ ($permission->lang_cn) }}
-                                                    @elseif(locationHelper() == 'jp')
-                                                        {{ ($permission->lang_jp) }}
-                                                    @elseif(locationHelper() == 'vi')
-                                                        {{ ($permission->name) }}
-                                                    @else
-                                                        {{ ($permission->lang_en) }}
-                                                    @endif
-                                                </p>
+                                            @endphp
+                                            <p>
+                                                @if(locationHelper() == 'kr')
+                                                    {{ ($permission->lang_kr) }}
+                                                @elseif(locationHelper() == 'cn')
+                                                    {{ ($permission->lang_cn) }}
+                                                @elseif(locationHelper() == 'jp')
+                                                    {{ ($permission->lang_jp) }}
+                                                @elseif(locationHelper() == 'vi')
+                                                    {{ ($permission->name) }}
+                                                @else
+                                                    {{ ($permission->lang_en) }}
+                                                @endif
+                                            </p>
                                         @endif
                                     </ol>
                                     <div class="col-12 justify-content-center d-flex">

@@ -95,20 +95,24 @@
                             $staffs = \App\Models\StaffUsers::where('parent_user_id', $user1->id)->orWhere('parent_user_id', $user2->id)->get();
                         }
                     @endphp
-                    @if($staffs)
-                        @if($staffs->isNotEmpty())
-                            @foreach($staffs as $staff)
+                    @if($staffUsers)
+                        @if($staffUsers->isNotEmpty())
+                            @foreach($staffUsers as $staff)
                                 <tr>
                                     <td>{{$staff->phu_trach}}</td>
-                                    <td>{{$staff->staff}}</td>
-                                    <td>{{$staff->name_en}}</td>
-                                    <td>{{$staff->name}}</td>
-                                    <td>{{$staff->code}}</td>
-                                    <td>{{$staff->phone}}</td>
-                                    <td>{{$staff->email}}</td>
-                                    <td>{{$staff->sns_account}}</td>
+                                    <td>{{$staff->chuc_vu}}</td>
+                                    @php
+                                    $infoStaff = \App\Models\User::where('id',$staff->user_id)->first();
+                                    @endphp
+                                    <td>{{$infoStaff->nickname}}</td>
+                                    <td>{{$infoStaff->name}}</td>
+                                    <td>{{$infoStaff->rental_code}}</td>
+                                    <td>{{$infoStaff->phone}}</td>
+                                    <td>{{$infoStaff->email}}</td>
+                                    <td>{{$infoStaff->social_media}}</td>
                                 </tr>
                             @endforeach
+
                         @endif
                     @endif
                     <tr class="">
@@ -128,32 +132,6 @@
 
                     </div>
                     <!-- Modal -->
-                    <div class="modal fade" id="modalRegisterMembership" tabindex="-1" role="dialog"
-                         aria-labelledby="modalRegisterMembershipLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title"
-                                        id="modalRegisterMembershipLabel">{{ __('home.Employee registration') }}</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form>
-                                    <div class="modal-body">
-
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">{{ __('home.Close') }}</button>
-                                        <button type="button" class="btn btn-primary">{{ __('home.Save') }}</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Modal -->
                     <div class="modal fade" id="modalRegisterMore" tabindex="-1" role="dialog"
                          aria-labelledby="modalRegisterMoreLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -165,16 +143,84 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form>
                                     <div class="modal-body">
+                                        <div class="container-fluid">
+                                            <form action="{{ route('create.staff.register', $userRepresent->id) }}" method="post"
+                                                  enctype="multipart/form-data"
+                                                  class="form-horizontal row" role="form">
+                                                @csrf
+                                                @if (session('success_update_product'))
+                                                    <div class="alert alert-success">
+                                                        {{ session('error_create_product') }}
+                                                    </div>
+                                                @endif
+                                                <div class="col-12 rm-pd-on-mobile">
+                                                    <div class="form-group">
+                                                        <div class="name">{{ __('home.Position') }}</div>
+                                                        <input type="text" class="form-control" name="chuc_vu" id="chuc_vu"
+                                                               placeholder={{ __('home.Position') }} required>
 
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="name">{{ __('home.full name') }}</div>
+                                                        <input type="text" class="form-control" name="name" id="name"
+                                                               placeholder={{ __('home.Nhập Họ tên') }} required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="name">{{ __('home.phone number') }}</div>
+                                                        <input type="text" class="form-control" name="phone" id="phone"
+                                                               placeholder="{{ __('home.Nhập số điện thoại') }}"
+                                                               required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="name">{{ __('home.social network id') }}</div>
+                                                        <input type="text" class="form-control" name="social_media"
+                                                               id="social_media"
+                                                               placeholder={{ __('home.Nhập id mxh') }} required>
+                                                    </div>
+
+                                                    <input type="text" hidden name="type_account" id="type_account"
+                                                           value="seller">
+                                                </div>
+                                                <div class="col-12 rm-pd-on-mobile">
+                                                    <div class="form-group">
+                                                        <div class="name">{{ __('home.Responsibility') }}</div>
+                                                        <input type="text" class="form-control" name="phu_trach" id="phu_trach"
+                                                               placeholder={{ __('home.Responsibility') }} required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="name">영 문 Tiếng Anh</div>
+                                                        <input type="text" class="form-control" name="nickname"
+                                                               id="nickname"
+                                                               placeholder={{ __('home.Nhập biệt danh') }} required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="name">{{ __('home.email') }}</div>
+                                                        <input type="text" class="form-control" name="email" id="email"
+                                                               placeholder={{ __('home.Nhập email') }} required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="name">{{ __('home.Password') }}</div>
+                                                        <input type="password" class="form-control" name="password"
+                                                               id="password"
+                                                               placeholder={{ __('home.Nhập mật khẩu') }} required>
+                                                    </div>
+                                                </div>
+
+
+                                                <input id="input-form-create-attribute" name="attribute_property"
+                                                       type="text" hidden>
+                                                <div class="form-group col-12 ">
+                                                    <div class="row justify-content-end">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal">{{ __('home.Close') }}</button>
+                                                        <button type="submit"
+                                                                class="btn btn-success">{{ __('home.Gửi') }}</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">{{ __('home.Close') }}</button>
-                                        <button type="button" class="btn btn-primary">{{ __('home.Save') }}</button>
-                                    </div>
-                                </form>
                             </div>
                         </div>
                     </div>
