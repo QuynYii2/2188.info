@@ -393,7 +393,7 @@
 <script>
     $(document).ready(function () {
         $('#buttonRegister').on('click', function () {
-            handleAfterSelectRegion();
+            // handleAfterSelectRegion();
             // $('#formRegisterMember').trigger('submit');
             $('#btnSubmitFormRegister').trigger('click');
         })

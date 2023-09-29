@@ -164,13 +164,13 @@ class AttributeController extends Controller
     {
         $attribute = Attribute::find($id);
         $properties = Properties::where([['attribute_id', $id], ['status', PropertiStatus::ACTIVE]])->get();
-        return view('backend.products.property', compact('properties', 'attribute'));
+        return view('backend.products.property.property', compact('properties', 'attribute'));
     }
 
     public function getAllAttribute()
     {
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', Auth::user()->id]])->get();
-        return view('backend.products.attribute', compact('attributes'));
+        return view('backend.products.attribute.attribute', compact('attributes'));
     }
 
     public function storeAttribute(Request $request)
@@ -232,12 +232,18 @@ class AttributeController extends Controller
             if ($property) {
                 $attribute = Attribute::find($attributeID);
                 $properties = Properties::where([['attribute_id', $attributeID], ['status', PropertiStatus::ACTIVE]])->get();
-                return view('backend.products.call-property', compact('properties', 'attribute'));
+                return view('backend.products.property.call-property', compact('properties', 'attribute'));
             } else {
                 return response('Bad request', 400);
             }
         } catch (\Exception $exception) {
             return response($exception, 500);
         }
+    }
+
+    public function callAttribute(Request $request)
+    {
+        $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', Auth::user()->id]])->get();
+        return view('backend.products.attribute.call-attribute', compact('attributes'));
     }
 }

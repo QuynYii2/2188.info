@@ -345,6 +345,18 @@ class RegisterMemberController extends Controller
             $code_business = $request->input('code_business');
             $type_business = $request->input('type_business');
 
+            if (!$code_1){
+                $code_1 = [];
+            }
+
+            if (!$code_2){
+                $code_2 = [];
+            }
+
+            if (!$code_3){
+                $code_3 = [];
+            }
+
             $categoryIds = implode(',', $code_1) . ',' . implode(',', $code_2) . ',' . implode(',', $code_3);
             $arrayCategoryID = explode(',', $categoryIds);
             sort($arrayCategoryID);
