@@ -23,6 +23,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -281,12 +282,9 @@ ORDER BY
     }
 
 
-    public function generateIso2($name, $table, $column)
+    public function generateIso2($table, $column)
     {
-        //        Xóa dấu tiếng việt
-        $name = $this->removeVietnameseAccents($name);
 
-        // Lấy 2 ký tự đầu tiên của $name
         $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
         // Tạo 2 ký tự ngẫu nhiên từ chuỗi
@@ -296,78 +294,55 @@ ORDER BY
         // Tạo chuỗi 2 ký tự
         $random_string = $random_char1.$random_char2;
 
-        // Kiểm tra xem $isoCode đã tồn tại trong bảng hay chưa
+        // Kiểm tra xem $random_string đã tồn tại trong bảng hay chưa
         $existingIsoCodes = DB::table($table)->pluck($column)->toArray();
 
-        $index = 1;
-
-        // Nếu $isoCode đã tồn tại, thay đổi $isoCode bằng ký tự 1 và 3 hoặc 1 và 4, ...
-        while (in_array($isoCode, $existingIsoCodes)) {
-            $isoCode = substr($name, 0, 1).substr($name, $index, 1);
-            $index++;
+        // Nếu $random_string đã tồn tại, lặp đến bao giờ không tồn tại thì thôi
+        while (in_array($random_string, $existingIsoCodes)) {
+            $this->generateIso2($table, $column);
         }
 
-        return $isoCode;
+        return $random_string;
     }
 
-    public function generateIso3($name, $table, $column)
+    public function generateIso3($table, $column)
     {
-        //        Xóa dấu tiếng việt
-        $name = $this->removeVietnameseAccents($name);
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-        // Lấy 3 ký tự đầu tiên của $name
-        $isoCode = substr($name, 0, 3);
+        // Tạo 3 ký tự ngẫu nhiên từ chuỗi
+        $random_char1 = $characters[rand(0, strlen($characters) - 1)];
+        $random_char2 = $characters[rand(0, strlen($characters) - 1)];
+        $random_char3 = $characters[rand(0, strlen($characters) - 1)];
 
-        // Kiểm tra xem $isoCode đã tồn tại trong bảng hay chưa
-        $existingIso3 = DB::table($table)->pluck($column)->toArray();
+        // Tạo chuỗi 2 ký tự
+        $random_string = $random_char1.$random_char2.$random_char3;
 
-        $index = 1;
+        // Kiểm tra xem $random_string đã tồn tại trong bảng hay chưa
+        $existingIsoCodes = DB::table($table)->pluck($column)->toArray();
 
-        // Nếu $isoCode đã tồn tại, thay đổi $isoCode bằng ký tự 1 và 3 hoặc 1 và 4, ...
-        while (in_array($isoCode, $existingIso3)) {
-            $isoCode = substr($isoCode, 0, 1).substr($isoCode, $index, 1);
-            $index++;
+        // Nếu $random_string đã tồn tại, lặp đến bao giờ không tồn tại thì thôi
+        while (in_array($random_string, $existingIsoCodes)) {
+            $this->generateIso3($table, $column);
         }
 
-        return $isoCode;
-    }
-
-    public function removeVietnameseAccents($str)
-    {
-        $str = preg_replace("/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", 'a', $str);
-        $str = preg_replace("/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/", 'e', $str);
-        $str = preg_replace("/(ì|í|ị|ỉ|ĩ)/", 'i', $str);
-        $str = preg_replace("/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/", 'o', $str);
-        $str = preg_replace("/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/", 'u', $str);
-        $str = preg_replace("/(ỳ|ý|ỵ|ỷ|ỹ)/", 'y', $str);
-        $str = preg_replace("/(đ)/", 'd', $str);
-
-        $str = preg_replace("/(À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ)/", 'A', $str);
-        $str = preg_replace("/(È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ)/", 'E', $str);
-        $str = preg_replace("/(Ì|Í|Ị|Ỉ|Ĩ)/", 'I', $str);
-        $str = preg_replace("/(Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ)/", 'O', $str);
-        $str = preg_replace("/(Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ)/", 'U', $str);
-        $str = preg_replace("/(Ỳ|Ý|Ỵ|Ỷ|Ỹ)/", 'Y', $str);
-        $str = preg_replace("/(Đ)/", 'D', $str);
-        return ($str);
+        return $random_string;
     }
 
     public function createLocation(Request $request)
     {
         $request = $request->input();
+        $id_reg = Cache::get('id-member-reg');
+        
         switch ($request['what_create']) {
             case "0":
                 $this->createNation($request);
-                return redirect(route('show.register.member.info', 16));
+                return redirect(route('show.register.member.info', $id_reg));
             case "1":
                 $this->createProvince($request);
-                break;
+                return redirect(route('show.register.member.info', $id_reg));
             case "2":
                 $this->createDistrict($request);
-                break;
-            case "3":
-                $this->createCommune($request);
-                break;
+                return redirect(route('show.register.member.info', $id_reg));
         }
     }
 
@@ -377,27 +352,55 @@ ORDER BY
         $tableCheck = 'countries';
         $columnCheckIso2 = 'iso2';
         $columnCheckIso3 = 'iso3';
-        $iso2 = $this->generateIso2($name, $tableCheck, $columnCheckIso2);
-        $iso3 = $this->generateIso3($name, $tableCheck, $columnCheckIso3);
+        $iso2 = $this->generateIso2($tableCheck, $columnCheckIso2);
+        $iso3 = $this->generateIso3($tableCheck, $columnCheckIso3);
         DB::table('countries')->insert([
             'name' => $name,
-            'iso2' => strtoupper(($iso2)),
-            'iso3' => strtoupper(($iso3)),
+            'iso2' => $iso2,
+            'iso3' => $iso3,
             'continents' => $request['continents'],
         ]);
     }
 
-
     public function createProvince($request)
     {
-        $country_id = $this->getIdFromCodeNation($request['nation-select']);
-        dd($request);
-
+        $province_name = $request['province-input'];
+        if ($province_name) {
+            $nation_id = $request['nation-select'];
+            $countryIn4 = $this->getIn4FromCodeNation($nation_id);
+            $tableCheck = 'states';
+            $columnCheckIso2 = 'state_code';
+            $iso2 = $this->generateIso2($tableCheck, $columnCheckIso2);
+            DB::table('states')->insert([
+                'name' => $province_name,
+                'country_id' => $countryIn4->id,
+                'country_name' => $countryIn4->name,
+                'country_code' => $nation_id,
+                'state_code' => $iso2
+            ]);
+        }
     }
 
     public function createDistrict($request)
     {
-
+        $district_name = $request['district-input'];
+        if ($district_name) {
+            $province_id = $request['province-select'];
+            $districtIn4 = $this->getIn4FromCodeProvince($province_id);
+            $tableCheck = 'cities';
+            $columnCheckIso2 = 'city_code';
+            $iso2 = $this->generateIso2($tableCheck, $columnCheckIso2);
+            DB::table($tableCheck)->insert([
+                'name' => $district_name,
+                'city_code' => $iso2,
+                'state_id' => $districtIn4->id,
+                'state_code' => $districtIn4->state_code,
+                'state_name' => $districtIn4->name,
+                'country_id' => $districtIn4->country_id,
+                'country_code' => $districtIn4->country_code,
+                'country_name' => $districtIn4->country_name,
+            ]);
+        }
     }
 
     public function createCommune($request)
@@ -405,9 +408,21 @@ ORDER BY
 
     }
 
-    public function getIdFromCodeNation($code)
+    public function getIn4FromCodeNation($code)
     {
-        return DB::table('countries')->where('iso2', $code)->first('id');
+        return DB::table('countries')->where('iso2', $code)->first(['id', 'name']);
+    }
+
+    public function getIn4FromCodeProvince($code)
+    {
+        return DB::table('states')->where('state_code', $code)->first([
+            'id',
+            'name',
+            'state_code',
+            'country_id',
+            'country_code',
+            'country_name'
+        ]);
     }
 
     public function getListStateByNation($id)
