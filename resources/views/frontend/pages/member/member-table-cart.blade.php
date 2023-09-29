@@ -86,71 +86,8 @@
     </tbody>
 </table>
 <script>
-    var priceCart = '#priceCart';
-    var totalCart = '#totalCart';
-    var currency = $('.currency').first().text();
-    $(document).ready(function () {
-        $('.input-number-cart').on('change', function () {
-            let cartID = $(this).data('id');
-            let url = '{{ route('cart.api.update', ['id' => ':id']) }}';
-            url = url.replace(':id', cartID);
-            let quantity = $(this).val();
-
-            const requestData = {
-                _token: '{{ csrf_token() }}',
-                quantity: quantity,
-            };
-            $.ajax({
-                url: url,
-                method: 'PUT',
-                data: requestData,
-                body: JSON.stringify(requestData),
-            })
-                .done(function (response) {
-                    let cartItem = response['cart'];
-                    let total = parseFloat(cartItem['price']) * parseFloat(cartItem['quantity'])
-                    convertPriceCart(cartItem['price'], cartID);
-                    convertTotalCart(total, cartID);
-                })
-                .fail(function (_, textStatus) {
-
-                });
-
-            // using function convertCurrency(total);
-            async function convertTotalCart(total, cartID) {
-                try {
-                    let result = await convertCurrency(total);
-                    let totalConvert = result + ' ' + currency;
-                    $(totalCart + cartID).text(totalConvert);
-                } catch (error) {
-                    console.error(error);
-                }
-            }
-
-            async function convertPriceCart(price, cartID) {
-                try {
-                    let result = await convertCurrency(price);
-                    $(priceCart + cartID).text(result);
-                } catch (error) {
-                    console.error(error);
-                }
-            }
-        })
-
-        // call api convert currency
-        async function convertCurrency(total) {
-            let url = '{{ route('convert.currency', ['total' => ':total']) }}';
-            url = url.replace(':total', total);
-
-            try {
-                let response = await $.ajax({
-                    url: url,
-                    method: 'GET',
-                });
-                return response;
-            } catch (error) {
-                throw error;
-            }
-        }
-    })
+    var urlConvertCurrency = `{{ route('convert.currency', ['total' => ':total']) }}`;
+    var token = `{{ csrf_token() }}`;
+    var urlCartUpdate = `{{ route('cart.api.update', ['id' => ':id']) }}`;
 </script>
+<script src="{{ asset('js/frontend/pages/member/member-table-cart.js') }}"></script>
