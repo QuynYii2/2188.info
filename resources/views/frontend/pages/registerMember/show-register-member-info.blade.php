@@ -142,7 +142,7 @@
                     <div class="title text-primary"
                          style="font-size: 35px; font-weight: 600">{{ __('home.Sign up company information') }}</div>
                 </div>
-                <div class="">
+                <div>
                     @if($member->name == \App\Enums\RegisterMember::BUYER)
                         @include('frontend.pages.registerMember.buyer')
                     @else
@@ -154,6 +154,114 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modal-address" tabindex="-1" aria-labelledby="modal-addressLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="height: 65vh; overflow-y: auto">
+                    @include('frontend.pages.registerMember.regionAddress')
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="r_getListNation()">
+                        Back
+                    </button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#modal-create-region">Create Region
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-create-region" tabindex="-1" aria-labelledby="modal-create-regionLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="#" method="post">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="continents">Châu lục</label>
+                                    <select class="form-control" id="continents" name="continents">
+                                        <option value="Asia">Châu Á</option>
+                                        <option value="Europe">Châu Âu</option>
+                                        <option value="Africa">Châu Phi</option>
+                                        <option value="North America">Bắc Mỹ</option>
+                                        <option value="South America">Nam Mỹ</option>
+                                        <option value="Oceania">Châu Đại Dương</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="what_create">Tạo mới cái j đấy?</label>
+                                    <select class="form-control" id="what_create" name="what_create"
+                                            onchange="selectWhatCreate()">
+                                        <option value="0">Quốc Gia</option>
+                                        <option value="1">Tỉnh</option>
+                                        <option value="2">Quận Huyện</option>
+                                        <option value="3">Phường Xã</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="nation">Quốc gia</label>
+                                    <input type="text" class="form-control" id="nation-input" name="nation">
+                                    <select class="form-control" id="nation-select" name="what_create">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="province">Tỉnh thành</label>
+                                    <input type="text" class="form-control" id="province-input" name="province">
+                                    <select class="form-control" id="province-select" name="what_create">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="district">Quận/huyện</label>
+                                    <input type="text" class="form-control" id="district-input" name="district">
+                                    <select class="form-control" id="district-select" name="what_create">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="commune">Xã phường</label>
+                                    <input type="text" class="form-control" id="commune-input" name="commune">
+                                    <select class="form-control" id="commune-select" name="what_create">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         $(document).ready(function () {
             $('.inputCheckboxCategory').on('click', function () {
@@ -434,6 +542,34 @@
             return option.id;
         }
 
+    </script>
+    <script>
+        function selectWhatCreate() {
+            let what = document.getElementById('what_create').value;
+            const arrInput = ['nation-input', 'province-input', 'district-input', 'commune-input'];
+            const arrSelect = ['nation-select', 'province-select', 'district-select', 'commune-select'];
+
+            for (let i = 0; i < arrSelect.length; i++) {
+                const itemInput = arrInput[i];
+                const itemSelect = arrSelect[i];
+
+                if (i > what) {
+                    document.getElementById(itemInput).disabled = true;
+                    document.getElementById(itemInput).style.display = 'block';
+                    document.getElementById(itemSelect).style.display = 'none';
+                } else if (i == what) {
+                    document.getElementById(itemInput).disabled = false;
+                    document.getElementById(itemInput).style.display = 'block';
+                    document.getElementById(itemSelect).style.display = 'none';
+                } else {
+                    document.getElementById(itemInput).disabled = false;
+                    document.getElementById(itemInput).style.display = 'none';
+                    document.getElementById(itemSelect).style.display = 'block';
+                }
+
+
+            }
+        }
     </script>
 @endsection
 

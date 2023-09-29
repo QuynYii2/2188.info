@@ -123,15 +123,5 @@
             </div>
         </div>
     </div>
-    <script>
-        $(document).ready(function () {
-            $('#inputCheckboxPassword').on('change', function () {
-                if ($('#inputCheckboxPassword').is(':checked')) {
-                    $('#password').prop('disabled', false);
-                } else {
-                    $('#password').prop('disabled', true);
-                }
-            })
-        })
-    </script>
+    <script src="{{ asset('js/admin/update-user.js') }}"></script>
 @endsection

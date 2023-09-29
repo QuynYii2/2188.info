@@ -11,7 +11,6 @@
                 <th scope="col">{{ __('home.thumbnail') }}</th>
                 <th scope="col">Sub thumbnails</th>
                 <th scope="col">{{ __('home.Status') }}</th>
-                <th scope="col">Details</th>
                 <th scope="col">{{ __('home.Action') }}</th>
             </tr>
             </thead>
@@ -26,7 +25,9 @@
                                 $thumbnails = explode(',', $thumbnails);
                             @endphp
                             @for($i = 0; $i<count($thumbnails); $i++)
-                                <img class="img img-100" src="{{ asset('storage/'.$thumbnails[$i]) }}" alt="Thumbnail">
+                                <div style="width: 200px; height: 200px; margin-top: 10px">
+                                    <img class="img" style="width: 100%; height: 100%; object-fit: cover" src="{{ asset('storage/'.$thumbnails[$i]) }}" alt="Thumbnail">
+                                </div>
                             @endfor
                         </td>
                         <td>
@@ -35,28 +36,13 @@
                                 $sub_thumbnails = explode(',', $sub_thumbnails);
                             @endphp
                             @for($i = 0; $i<count($sub_thumbnails); $i++)
-                                <img class="img img-100" src="{{ asset('storage/'.$sub_thumbnails[$i]) }}"
-                                     alt="Thumbnail">
+                                <div style="width: 200px; height: 200px; margin-top: 10px">
+                                    <img style="width: 100%; height: 100%; object-fit: cover" class="img" src="{{ asset('storage/'.$sub_thumbnails[$i]) }}"
+                                         alt="Thumbnail">
+                                </div>
                             @endfor
                         </td>
                         <td id="status{{$banner->id}}">{{$banner->status}}</td>
-                        <td>
-                            @if($banner->status == \App\Enums\BannerStatus::ACTIVE)
-                                <label class="switch">
-                                    <input value="{{$banner->id}}" class="inputCheckbox"
-                                           name="inputCheckbox-{{$banner->id}}" id="input-check-{{$banner->id}}"
-                                           type="checkbox" checked>
-                                    <span class="slider round"></span>
-                                </label>
-                            @else
-                                <label class="switch">
-                                    <input value="{{$banner->id}}" class="inputCheckbox"
-                                           name="inputCheckbox-{{$banner->id}}" id="input-check-{{$banner->id}}"
-                                           type="checkbox">
-                                    <span class="slider round"></span>
-                                </label>
-                            @endif
-                        </td>
                         <td>
                             <form method="post" action="{{route('admin.banners.delete', $banner->id)}}">
                                 @csrf
@@ -71,36 +57,3 @@
         </table>
     </div>
 @endsection
-<script>
-    $(document).ready(function () {
-        $(".inputCheckbox").click(function () {
-            var banner = jQuery(this).val();
-
-            async function toggleAttribute(banner) {
-                let url = '{{ route('admin.banners.update', ['id' => ':banner']) }}';
-                url = url.replace(':banner', banner);
-
-                try {
-                    await $.ajax({
-                        url: url,
-                        method: 'POST',
-                        data: {
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function (response) {
-                            let status = document.getElementById('status' + banner)
-                            status.innerText = response['status'];
-                        },
-                        error: function (exception) {
-
-                        }
-                    });
-                } catch (error) {
-                    throw error;
-                }
-            }
-
-            toggleAttribute(banner);
-        });
-    });
-</script>
