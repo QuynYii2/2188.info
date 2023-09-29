@@ -1,4 +1,3 @@
-
     <div class="price-table">
         @php
             $price_sales = \App\Models\ProductSale::where('product_id', '=', $product->id)->get();
