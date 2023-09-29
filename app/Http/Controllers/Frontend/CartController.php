@@ -6,6 +6,7 @@ use App\Enums\CartStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\ProductSale;
 use App\Models\Variation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -107,9 +108,30 @@ class CartController extends Controller
     public function change(Request $request, $id)
     {
         $cart = Cart::find($id);
+
+        $sales = null;
+
         $quantity = $request->input('quantity', 1);
         if ($cart != null || $cart->status == CartStatus::WAIT_ORDER) {
             $cart->quantity = $quantity;
+
+            $productSales = ProductSale::where('product_id', $cart->product_id)->get();
+            foreach ($productSales as $productSale) {
+                $listQuantity = $productSale->quantity;
+                $arrayQuantity = explode('-', $listQuantity);
+                $compare = $arrayQuantity[0];
+                if ($quantity >= $compare) {
+                    $sales = $productSale;
+                }
+            }
+
+            if ($sales) {
+                $cart->price = $sales->sales;
+            } else {
+                $product = Product::find($cart->product_id);
+                $cart->price = $product->price;
+            }
+
             $cart->save();
         }
 

@@ -22,6 +22,16 @@
     }
 
 @endphp
+<style>
+    /**/
+    select {
+        display: none;
+    }
+
+    #selectAttribute{
+        display: block !important;
+    }
+</style>
 @section('content')
 
     <div id="wpcontent" class="wpcontent">

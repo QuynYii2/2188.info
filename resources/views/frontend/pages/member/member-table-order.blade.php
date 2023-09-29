@@ -1,7 +1,7 @@
 <table class="table table-bordered" id="table-selected-att">
     <thead>
     <tr>
-        <th scope="col"  style="    width: 80px; text-align: center;">{{ __('home.thumbnail') }}</th>
+        <th scope="col" style="    width: 80px; text-align: center;">{{ __('home.thumbnail') }}</th>
         <th scope="col">{{ __('home.property') }}</th>
         <th scope="col">{{ __('home.quantity') }}</th>
         <th scope="col">{{ __('home.Unit price') }}</th>
@@ -81,12 +81,12 @@
                         </td>
                         <td>
                             @if($productVariable)
-                                <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                                <input type="number" min="0" value="0" name="quantity[]"
                                        class="input_quantity"
-                                       data-id="0" data-product="{{$productVariable}}"
+                                       data-id="0" data-product="{{$product}}"
                                        data-variable="{{$item[0]}}" style="width: 55px;">
                             @else
-                                <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                                <input type="number" min="0" value="0" name="quantity[]"
                                        class="input_quantity" data-id="0" data-product="{{$product}}"
                                        data-variable="{{$item[0]}}" style="width: 55px;">
                             @endif
@@ -187,13 +187,13 @@
                             </td>
                             <td>
                                 @if($productVariable)
-                                    <input type="number" min="{{$product->min}}" value="{{$product->min}}"
+                                    <input type="number" min="0" value="0"
                                            name="quantity[]"
                                            class="input_quantity"
-                                           data-id="{{$loop->index + 1}}" data-product="{{$productVariable}}"
+                                           data-id="{{$loop->index + 1}}" data-product="{{$product}}"
                                            data-variable="{{$attpro}}">
                                 @else
-                                    <input type="number" min="{{$product->min}}" value="{{$product->min}}"
+                                    <input type="number" min="0" value="0"
                                            name="quantity[]"
                                            class="input_quantity" data-id="{{$loop->index + 1}}"
                                            data-product="{{$product}}"
@@ -300,12 +300,12 @@
                     </td>
                     <td>
                         @if($productVariable)
-                            <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                            <input type="number" min="0" value="0" name="quantity[]"
                                    class="input_quantity"
-                                   data-id="0" data-product="{{$productVariable}}"
+                                   data-id="0" data-product="{{$product}}"
                                    data-variable="{{$item}}">
                         @else
-                            <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                            <input type="number" min="0" value="0" name="quantity[]"
                                    class="input_quantity" data-id="0" data-product="{{$product}}"
                                    data-variable="{{$item}}">
                         @endif
@@ -413,12 +413,12 @@
 
                     <td>
                         @if($productVariable)
-                            <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                            <input type="number" min="0" value="0" name="quantity[]"
                                    class="input_quantity"
-                                   data-id="{{$loop->index + 1}}" data-product="{{$productVariable}}"
+                                   data-id="{{$loop->index + 1}}" data-product="{{$product}}"
                                    data-variable="{{$productAttribute}}">
                         @else
-                            <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                            <input type="number" min="0" value="0" name="quantity[]"
                                    class="input_quantity"
                                    data-id="{{$loop->index + 1}}" data-product="{{$product}}"
                                    data-variable="{{$productAttribute}}">
@@ -475,6 +475,11 @@
 <script>
     var productItemInfo = [];
     $(document).ready(function () {
+        // Check data previous of input, set data-val of input
+        $('.input_quantity').on('focusin', function () {
+            $(this).data('val', parseInt($(this).val()));
+        });
+
         $('.input_quantity').on('change', function () {
             let number = $(this).data('id');
             let tdParent = $(this).parent().siblings(".priceTransport");
@@ -482,11 +487,34 @@
             let idPrice = 'productPrice' + number;
             let textPrice = 'textPrice' + number;
 
-            let itemValue = $(this).val();
+            // get data-val of input change
+            let prevValue = parseInt($(this).data('val'));
+            // get current value of input change
+            let itemValue = parseInt($(this).val());
 
             let product = $(this).data('product');
 
             let priceOld = product['price'];
+
+            let productMin = product['min'];
+
+            //Compare prev value with current value
+            if (itemValue > prevValue) {
+                // Set min of input
+                if (itemValue < productMin) {
+                    itemValue = productMin;
+                    $(this).val(productMin);
+                }
+            } else if (itemValue < prevValue) {
+                // Set value of input = 0
+                if (itemValue < productMin) {
+                    itemValue = 0;
+                    $(this).val(0);
+                }
+            }
+
+            // Re-set data-val of input
+            $(this).data('val', itemValue);
 
             let currencies = document.getElementsByClassName('currency');
             let currency = currencies[0].innerText;
