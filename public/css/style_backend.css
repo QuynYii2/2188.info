@@ -41,7 +41,6 @@ body {
   background-color: white;
   height: 30vh;
   overflow-y: auto !important;
-  display: none;
   border: 1px #dadada solid;
 }
 .wpcontent .dropdown-content {
