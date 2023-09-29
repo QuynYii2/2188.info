@@ -177,60 +177,38 @@ class ProductController extends Controller
                         break;
                     }
                 }
-                $variation = Variation::where('product_id', $productID)
-                    ->where('variation', $value)
-                    ->where('status', VariationStatus::ACTIVE)
-                    ->first();
-                if ($quantity > 0) {
-                    if ($valid == true) {
-                        if ($variation) {
-                            $price = $variation->price;
-                        } else {
-                            $price = $product->price;
-                        }
 
-                        $oldCart = Cart::where([
-                            ['user_id', '=', Auth::user()->id],
-                            ['product_id', '=', $productID],
-                            ['values', '=', $value],
-                            ['status', '=', CartStatus::WAIT_ORDER]
-                        ])->first();
+                if ($valid == true) {
+                    $variation = Variation::where('product_id', $productID)
+                        ->where('variation', $value)
+                        ->where('status', VariationStatus::ACTIVE)
+                        ->first();
 
-                        if ($oldCart) {
-                            $oldCart->price = $price;
-                            $total = (int)$oldCart->quantity + (int)$quantity;
-
-                            $sales = $this->getSales($productID, $total);
-                            if ($sales) {
-                                $oldCart->price = $sales->sales;
-                            }
-
-                            $oldCart->quantity = $total;
-                            $oldCart->save();
-                        } else {
-                            $sales = $this->getSales($productID, $quantity);
-                            if ($sales) {
-                                $price = $sales->sales;
-                            }
-
-                            $cart = [
-                                'user_id' => Auth::user()->id,
-                                'product_id' => $product->id,
-                                'price' => $price,
-                                'values' => $value,
-                                'member' => 1,
-                                'quantity' => $quantity,
-                                'status' => CartStatus::WAIT_ORDER,
-                            ];
-                            Cart::create($cart);
-                        }
+                    if ($variation) {
+                        $price = $variation->price;
                     } else {
-                        if ($variation) {
-                            $price = $variation->price;
-                        } else {
-                            $price = $product->price;
+                        $price = $product->price;
+                    }
+
+                    $oldCart = Cart::where([
+                        ['user_id', '=', Auth::user()->id],
+                        ['product_id', '=', $productID],
+                        ['values', '=', $value],
+                        ['status', '=', CartStatus::WAIT_ORDER]
+                    ])->first();
+
+                    if ($oldCart) {
+                        $oldCart->price = $price;
+                        $total = (int)$oldCart->quantity + (int)$quantity;
+
+                        $sales = $this->getSales($productID, $total);
+                        if ($sales) {
+                            $oldCart->price = $sales->sales;
                         }
 
+                        $oldCart->quantity = $total;
+                        $oldCart->save();
+                    } else {
                         $sales = $this->getSales($productID, $quantity);
                         if ($sales) {
                             $price = $sales->sales;
@@ -247,6 +225,43 @@ class ProductController extends Controller
                         ];
                         Cart::create($cart);
                     }
+
+//                    if (!$variation) {
+//                        $variation->quantity = $variation->quantity - $quantity;
+//                        $variation->save();
+//                    }
+                } else {
+                    $variation = Variation::where('product_id', $productID)
+                        ->where('variation', $value)
+                        ->where('status', VariationStatus::ACTIVE)
+                        ->first();
+
+                    if ($variation) {
+                        $price = $variation->price;
+                    } else {
+                        $price = $product->price;
+                    }
+
+                    $sales = $this->getSales($productID, $quantity);
+                    if ($sales) {
+                        $price = $sales->sales;
+                    }
+
+                    $cart = [
+                        'user_id' => Auth::user()->id,
+                        'product_id' => $product->id,
+                        'price' => $price,
+                        'values' => $value,
+                        'member' => 1,
+                        'quantity' => $quantity,
+                        'status' => CartStatus::WAIT_ORDER,
+                    ];
+                    Cart::create($cart);
+
+//                    if (!$variation) {
+//                        $variation->quantity = $variation->quantity - $quantity;
+//                        $variation->save();
+//                    }
                 }
             }
         }
