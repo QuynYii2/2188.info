@@ -159,6 +159,7 @@ Route::post('/add-cart/{product}/{percent}', [CartController::class, 'addToCartP
 // Property
 Route::get('/get-property-by-attribute/{id}', [AttributeController::class, 'getPropertyByAttribute'])->name('get.property.by.attribute');
 Route::get('/get-all-attribute', [AttributeController::class, 'getAllAttribute'])->name('get.all.attribute');
+Route::get('/call-attribute', [AttributeController::class, 'callAttribute'])->name('call.attribute');
 Route::post('/create-attribute', [AttributeController::class, 'storeAttribute'])->name('create.attribute');
 Route::post('/create-property', [AttributeController::class, 'storeProperty'])->name('create.property');
 Route::post('/create-product-attribute', [ProductController::class, 'saveAttribute'])->name('product.create.attribute');

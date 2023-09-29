@@ -28,6 +28,7 @@
         display: none;
     }
 
+    #attribute_id,
     #selectAttribute{
         display: block !important;
     }

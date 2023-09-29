@@ -619,9 +619,9 @@ class ProductController extends Controller
             session()->push('sourceArray', $newArray);
             session()->push('testArray', $testArray);
             if (!$testArray || !$newArray) {
-                return view('backend.products.attributes.table-none-attribute');
+                return view('backend.products.attribute-property.table-none-attribute');
             }
-            return view('backend.products.attributes.table-attribute');
+            return view('backend.products.attribute-property.table-attribute');
         } catch (Exception $exception) {
             return response($exception, 400);
         }
