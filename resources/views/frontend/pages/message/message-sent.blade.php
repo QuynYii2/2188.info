@@ -93,26 +93,26 @@
                 </div>
             </div>
             @if(!$listMessage->isEmpty())
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card-body">
-                                @foreach($listMessage as $message)
-                                    @php
-                                        $user = \App\Models\User::find($message->to_user_id);
-                                    @endphp
-                                    <div class="card-item-message card-item mb-3" data-message="{{$message}}"
-                                         data-user="{{$user}}" style="cursor: pointer">
-                                        <img src="{{ asset('storage/'.$user->image) }}" alt="" width="60px"
-                                             height="60xp">
-                                        <h5 class="card-title">
-                                            {{$user->name}}
-                                            <hr>
-                                        </h5>
-                                    </div>
-                                @endforeach
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card-body">
+                            @foreach($listMessage as $message)
+                                @php
+                                    $user = \App\Models\User::find($message->to_user_id);
+                                @endphp
+                                <div class="card-item-message card-item mb-3" data-message="{{$message}}"
+                                     data-user="{{$user}}" style="cursor: pointer">
+                                    <img src="{{ asset('storage/'.$user->image) }}" alt="" width="60px"
+                                         height="60xp">
+                                    <h5 class="card-title">
+                                        {{$user->name}}
+                                        <hr>
+                                    </h5>
+                                </div>
+                            @endforeach
                         </div>
-                    {{--        {{ $listMessage->links() }}--}}
-                </div>
+                        {{--        {{ $listMessage->links() }}--}}
+                    </div>
                     @php
                         $user = \App\Models\User::find($listMessage[0]->to_user_id);
                     @endphp
@@ -122,10 +122,11 @@
                             <h5 id="chat_message">
 
                             </h5>
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">{{ __('home.chat') }}</button>
+                            <button class="btn btn-primary" data-toggle="modal"
+                                    data-target="#exampleModal">{{ __('home.chat') }}</button>
                         </div>
                     </div>
-            </div>
+                </div>
             @else
                 <div class="text-center mt-4">
                     {{ __('home.No sent messages') }}
@@ -138,8 +139,8 @@
             $('.card-item-message').on('click', function () {
                 let message = $(this).data('message');
                 let user = $(this).data('user');
-                $('#chat_user').html( user['name'] );
-                $('#chat_message').html( message['chat_message'] );
+                $('#chat_user').html(user['name']);
+                $('#chat_message').html(message['chat_message']);
                 renderMessage({{auth()->user()->id}}, message['to_user_id']);
             })
         })
@@ -158,7 +159,8 @@
 
                     $('#chat_message').empty().append(response);
                 })
-                .catch(error => );
+                .catch(error => {
+                });
         }
 
         function renderDefault() {

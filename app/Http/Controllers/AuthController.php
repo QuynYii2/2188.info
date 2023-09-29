@@ -249,25 +249,16 @@ class AuthController extends Controller
 
     public function getListNation()
     {
-        $listNation = DB::table('countries')->orderBy('continents')->get(['name', 'iso2', 'continents']);
+        $listNation = DB::table('countries')->orderBy('continents')->orderBy('name')->get([
+            'name',
+            'iso2',
+            'continents'
+        ]);
         return response()->json($listNation);
     }
 
     public function getListRegionByNation($id)
     {
-//        $listState = DB::table('states')
-//            ->where([['country_code', '=', $id]])
-//            ->get(['name', 'state_code', 'country_code']);
-//        foreach ($listState as $state) {
-//            $city = DB::table('cities')
-//                ->where([['state_code', '=', $state->state_code], ['country_code', '=', $id]])
-//                ->orderBy('name')
-//                ->get(['name', 'city_code', 'state_code']);
-//            $state->total_child = count($city);
-//            $state->child = $city;
-//
-//        }
-
         $sql = "SELECT
     s.name,
     s.state_code,
@@ -287,6 +278,136 @@ ORDER BY
         $listState = DB::select($sql, ['country_code' => $id]);
 
         return response()->json($listState);
+    }
+
+
+    public function generateIso2($name, $table, $column)
+    {
+        //        Xóa dấu tiếng việt
+        $name = $this->removeVietnameseAccents($name);
+
+        // Lấy 2 ký tự đầu tiên của $name
+        $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        // Tạo 2 ký tự ngẫu nhiên từ chuỗi
+        $random_char1 = $characters[rand(0, strlen($characters) - 1)];
+        $random_char2 = $characters[rand(0, strlen($characters) - 1)];
+
+        // Tạo chuỗi 2 ký tự
+        $random_string = $random_char1.$random_char2;
+
+        // Kiểm tra xem $isoCode đã tồn tại trong bảng hay chưa
+        $existingIsoCodes = DB::table($table)->pluck($column)->toArray();
+
+        $index = 1;
+
+        // Nếu $isoCode đã tồn tại, thay đổi $isoCode bằng ký tự 1 và 3 hoặc 1 và 4, ...
+        while (in_array($isoCode, $existingIsoCodes)) {
+            $isoCode = substr($name, 0, 1).substr($name, $index, 1);
+            $index++;
+        }
+
+        return $isoCode;
+    }
+
+    public function generateIso3($name, $table, $column)
+    {
+        //        Xóa dấu tiếng việt
+        $name = $this->removeVietnameseAccents($name);
+
+        // Lấy 3 ký tự đầu tiên của $name
+        $isoCode = substr($name, 0, 3);
+
+        // Kiểm tra xem $isoCode đã tồn tại trong bảng hay chưa
+        $existingIso3 = DB::table($table)->pluck($column)->toArray();
+
+        $index = 1;
+
+        // Nếu $isoCode đã tồn tại, thay đổi $isoCode bằng ký tự 1 và 3 hoặc 1 và 4, ...
+        while (in_array($isoCode, $existingIso3)) {
+            $isoCode = substr($isoCode, 0, 1).substr($isoCode, $index, 1);
+            $index++;
+        }
+
+        return $isoCode;
+    }
+
+    public function removeVietnameseAccents($str)
+    {
+        $str = preg_replace("/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", 'a', $str);
+        $str = preg_replace("/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/", 'e', $str);
+        $str = preg_replace("/(ì|í|ị|ỉ|ĩ)/", 'i', $str);
+        $str = preg_replace("/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/", 'o', $str);
+        $str = preg_replace("/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/", 'u', $str);
+        $str = preg_replace("/(ỳ|ý|ỵ|ỷ|ỹ)/", 'y', $str);
+        $str = preg_replace("/(đ)/", 'd', $str);
+
+        $str = preg_replace("/(À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ)/", 'A', $str);
+        $str = preg_replace("/(È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ)/", 'E', $str);
+        $str = preg_replace("/(Ì|Í|Ị|Ỉ|Ĩ)/", 'I', $str);
+        $str = preg_replace("/(Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ)/", 'O', $str);
+        $str = preg_replace("/(Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ)/", 'U', $str);
+        $str = preg_replace("/(Ỳ|Ý|Ỵ|Ỷ|Ỹ)/", 'Y', $str);
+        $str = preg_replace("/(Đ)/", 'D', $str);
+        return ($str);
+    }
+
+    public function createLocation(Request $request)
+    {
+        $request = $request->input();
+        switch ($request['what_create']) {
+            case "0":
+                $this->createNation($request);
+                return redirect(route('show.register.member.info', 16));
+            case "1":
+                $this->createProvince($request);
+                break;
+            case "2":
+                $this->createDistrict($request);
+                break;
+            case "3":
+                $this->createCommune($request);
+                break;
+        }
+    }
+
+    public function createNation($request)
+    {
+        $name = $request['nation-input'];
+        $tableCheck = 'countries';
+        $columnCheckIso2 = 'iso2';
+        $columnCheckIso3 = 'iso3';
+        $iso2 = $this->generateIso2($name, $tableCheck, $columnCheckIso2);
+        $iso3 = $this->generateIso3($name, $tableCheck, $columnCheckIso3);
+        DB::table('countries')->insert([
+            'name' => $name,
+            'iso2' => strtoupper(($iso2)),
+            'iso3' => strtoupper(($iso3)),
+            'continents' => $request['continents'],
+        ]);
+    }
+
+
+    public function createProvince($request)
+    {
+        $country_id = $this->getIdFromCodeNation($request['nation-select']);
+        dd($request);
+
+    }
+
+    public function createDistrict($request)
+    {
+
+    }
+
+    public function createCommune($request)
+    {
+
+    }
+
+    public function getIdFromCodeNation($code)
+    {
+        return DB::table('countries')->where('iso2', $code)->first('id');
     }
 
     public function getListStateByNation($id)
