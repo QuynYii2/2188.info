@@ -83,7 +83,8 @@
                                     getAllTotal();
 
                                 })
-                                .catch(error => );
+                                .catch(error => {
+                                });
                         }
 
                         myfunction(arrayProducts[i]);
