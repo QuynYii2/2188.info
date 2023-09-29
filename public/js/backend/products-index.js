@@ -14,7 +14,7 @@
                     url: url,
                     method: 'POST',
                     data: {
-                        _token: '{{ csrf_token() }}'
+                        _token: token
                     },
                     success: function (response) {
                         console.log('success')
@@ -67,7 +67,7 @@
     url: urla,
     method: 'POST',
     data: {
-    _token: '{{ csrf_token() }}'
+    _token: token
 },
     success: function (response) {
     console.log('success')

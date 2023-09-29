@@ -419,6 +419,7 @@
     <script>
         var url = `{{ route('product.v2.create.attribute') }}`;
         var urla = `{{asset('/seller/delete-variable-v2')}}`;
+        var token = `{{ csrf_token() }}`;
     </script>
     <script src="{{ asset('js/backend/products-edit.js') }}"></script>
 @endsection
