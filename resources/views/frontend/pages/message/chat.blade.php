@@ -26,16 +26,4 @@
             @include('frontend.pages.message.chat-detail')
     </div>
 @endsection
-{{--<script>--}}
-{{--   $(document).ready(function () {--}}
-{{--      $('#message_area').on('change', function () {--}}
-{{--         if ($(this).text() == '' || $(this).text() == null){--}}
-{{--            --}}
-{{--            $('#send_button').attr('disabled', 'disabled');--}}
-{{--         } else {--}}
-{{--            --}}
-{{--            $('#send_button').removeAttr('disabled');--}}
-{{--         }--}}
-{{--      })--}}
-{{--   })--}}
-{{--</script>--}}
+

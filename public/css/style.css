@@ -1,5 +1,37 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Pontano+Sans");
+#chat-detail #chat_area {
+  min-height: 500px;
+}
+#chat-detail #chat_history {
+  min-height: 500px;
+  max-height: 500px;
+  overflow-y: scroll;
+  margin-bottom: 16px;
+  background-color: #ece5dd;
+  padding: 16px;
+}
+#chat-detail #user_list {
+  min-height: 500px;
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
+#productsLanguage .card-products {
+  max-width: 100%;
+}
+#productsLanguage .country {
+  font-size: 32px;
+  font-weight: 600;
+  margin-left: 16px;
+}
+#productsLanguage .product-content {
+  z-index: 100;
+}
+#productsLanguage .product-price {
+  gap: 3rem;
+}
+
 body {
   font-family: "DM Sans", sans-serif;
 }
