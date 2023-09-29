@@ -258,6 +258,7 @@
     </div><!-- wpcontent -->
     <script>
         var url = `{{ route('product.v2.create.attribute') }}`;
+        var token = `{{ csrf_token() }}`;
     </script>
     <script src="{{ asset('js/backend/products-create.js') }}"></script>
 @endsection

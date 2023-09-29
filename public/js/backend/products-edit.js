@@ -7,7 +7,7 @@
     url: url,
     type: 'POST',
     data: {
-    _token: '{{ csrf_token() }}',
+    _token: token,
     'attribute_property': attribute
 },
     // dataType: 'json',
