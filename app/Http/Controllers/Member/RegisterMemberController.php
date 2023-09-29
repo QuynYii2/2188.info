@@ -17,6 +17,7 @@ use App\Models\Coin;
 use App\Models\Member;
 use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
+use App\Models\StaffUsers;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -24,7 +25,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Route;
 
 class RegisterMemberController extends Controller
 {
@@ -959,7 +959,48 @@ class RegisterMemberController extends Controller
             return back();
         }
         $memberSource = MemberRegisterPersonSource::find($memberRepresent->person);
-        return view('frontend.pages.registerMember.membership', compact('memberRepresent', 'memberSource'));
+        $findMember = $memberRepresent->email;
+        $userRepresent = User::where('email', $findMember)->first();
+        $staffUsers = StaffUsers::where('parent_user_id', $userRepresent->id)->get();
+        return view('frontend.pages.registerMember.membership', compact('memberRepresent', 'memberSource', 'staffUsers', 'userRepresent'));
+    }
+
+    public function createNewStaff(Request $request, $id)
+    {
+        $existingUser = User::where('email', $request->email)->first();
+        if ($existingUser) {
+            toast('Địa chỉ email đã tồn tại.', 'error', 'top-right');
+            return back();
+        }
+        $parent_user =User::find($id);
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->address = $parent_user->address;
+        $user->rental_code = random_int(00,999);
+        $user->social_media = $request->social_media;
+        $user->industry = $parent_user->industry;
+        $user->password = Hash::make($request->password);
+        $user->type_account = $request->type_account;
+        $user->region = $parent_user->region;
+        $user->nickname = $request->nickname;
+
+        $success = $user->save();
+
+        $staff_user = new StaffUsers();
+        $staff_user->chuc_vu = $request->chuc_vu;
+        $staff_user->phu_trach = $request->phu_trach;
+        $staff_user->parent_user_id = $parent_user->id;
+        $staff_user->user_id = $user->id;
+
+        $staff_user->save();
+        if ($success) {
+            return back();
+        } else {
+            alert()->error('Error', 'Error, Please try again!!');
+            return back();
+        }
     }
 
     /*Show form register membership*/

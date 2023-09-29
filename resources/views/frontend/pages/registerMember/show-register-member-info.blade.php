@@ -224,7 +224,8 @@
                                     <div class="form-group">
                                         <label for="nation">Quốc gia</label>
                                         <input type="text" class="form-control" id="nation-input" name="nation-input">
-                                        <select class="form-control" id="nation-select" name="nation-select">
+                                        <select class="form-control" id="nation-select" name="nation-select"
+                                                onchange="getListState_selectModal(this.value)">
                                         </select>
                                     </div>
                                 </div>
@@ -233,7 +234,8 @@
                                         <label for="province">Tỉnh thành</label>
                                         <input type="text" class="form-control" id="province-input"
                                                name="province-input">
-                                        <select class="form-control" id="province-select" name="province-select">
+                                        <select class="form-control" id="province-select" name="province-select"
+                                                onchange="getListCity_selectModal(this.value)">
                                         </select>
                                     </div>
                                 </div>
@@ -500,7 +502,6 @@
             const selectElement = document.getElementById(id_where);
             selectElement.innerHTML = '';
 
-
             data.forEach(option => {
                 const optionElement = document.createElement('option');
 
@@ -561,15 +562,23 @@
                 if (i > what) {
                     document.getElementById(itemInput).disabled = true;
                     document.getElementById(itemInput).style.display = 'block';
+                    document.getElementById(itemInput).required = false;
+
                     document.getElementById(itemSelect).style.display = 'none';
+                    document.getElementById(itemSelect).required = false;
                 } else if (i == what) {
                     document.getElementById(itemInput).disabled = false;
                     document.getElementById(itemInput).style.display = 'block';
+                    document.getElementById(itemInput).required = true;
+
                     document.getElementById(itemSelect).style.display = 'none';
                 } else {
                     document.getElementById(itemInput).disabled = false;
                     document.getElementById(itemInput).style.display = 'none';
+                    document.getElementById(itemInput).required = false;
+
                     document.getElementById(itemSelect).style.display = 'block';
+                    document.getElementById(itemSelect).required = true;
                 }
             }
         }
@@ -582,8 +591,7 @@
                 .then(async function (res) {
                     clearDataOption1();
                     const data = await res.json();
-                    makeHTMLFromJson(data, ID_STATE_1)
-                    autoSelectedOption(ID_CITY_1)
+                    makeHTMLFromJson(data, ID_PROVINCE_MODAL_CREATE)
                 });
         }
 
@@ -594,8 +602,7 @@
             fetch(url)
                 .then(async function (res) {
                     const data = await res.json();
-                    makeHTMLFromJson(data, ID_CITY_1)
-                    // autoSelectedOption(ID_WARD_1)
+                    makeHTMLFromJson(data, ID_DISTRICT_MODAL_CREATE)
                 });
         }
 
