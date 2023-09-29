@@ -109,18 +109,28 @@
                 .done(function (response) {
                     let cartItem = response['cart'];
                     let total = parseFloat(cartItem['price']) * parseFloat(cartItem['quantity'])
-                    main(total, cartID);
+                    convertPriceCart(cartItem['price'], cartID);
+                    convertTotalCart(total, cartID);
                 })
                 .fail(function (_, textStatus) {
 
                 });
 
             // using function convertCurrency(total);
-            async function main(total, cartID) {
+            async function convertTotalCart(total, cartID) {
                 try {
                     let result = await convertCurrency(total);
                     let totalConvert = result + ' ' + currency;
                     $(totalCart + cartID).text(totalConvert);
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            async function convertPriceCart(price, cartID) {
+                try {
+                    let result = await convertCurrency(price);
+                    $(priceCart + cartID).text(result);
                 } catch (error) {
                     console.error(error);
                 }
