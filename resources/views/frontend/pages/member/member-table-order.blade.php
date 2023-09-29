@@ -1,7 +1,7 @@
 <table class="table table-bordered" id="table-selected-att">
     <thead>
     <tr>
-        <th scope="col"  style="    width: 80px; text-align: center;">{{ __('home.thumbnail') }}</th>
+        <th scope="col" style="    width: 80px; text-align: center;">{{ __('home.thumbnail') }}</th>
         <th scope="col">{{ __('home.property') }}</th>
         <th scope="col">{{ __('home.quantity') }}</th>
         <th scope="col">{{ __('home.Unit price') }}</th>
@@ -81,12 +81,12 @@
                         </td>
                         <td>
                             @if($productVariable)
-                                <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                                <input type="number" min="0" value="0" name="quantity[]"
                                        class="input_quantity"
-                                       data-id="0" data-product="{{$productVariable}}"
+                                       data-id="0" data-product="{{$product}}"
                                        data-variable="{{$item[0]}}" style="width: 55px;">
                             @else
-                                <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                                <input type="number" min="0" value="0" name="quantity[]"
                                        class="input_quantity" data-id="0" data-product="{{$product}}"
                                        data-variable="{{$item[0]}}" style="width: 55px;">
                             @endif
@@ -187,13 +187,13 @@
                             </td>
                             <td>
                                 @if($productVariable)
-                                    <input type="number" min="{{$product->min}}" value="{{$product->min}}"
+                                    <input type="number" min="0" value="0"
                                            name="quantity[]"
                                            class="input_quantity"
-                                           data-id="{{$loop->index + 1}}" data-product="{{$productVariable}}"
+                                           data-id="{{$loop->index + 1}}" data-product="{{$product}}"
                                            data-variable="{{$attpro}}">
                                 @else
-                                    <input type="number" min="{{$product->min}}" value="{{$product->min}}"
+                                    <input type="number" min="0" value="0"
                                            name="quantity[]"
                                            class="input_quantity" data-id="{{$loop->index + 1}}"
                                            data-product="{{$product}}"
@@ -300,12 +300,12 @@
                     </td>
                     <td>
                         @if($productVariable)
-                            <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                            <input type="number" min="0" value="0" name="quantity[]"
                                    class="input_quantity"
-                                   data-id="0" data-product="{{$productVariable}}"
+                                   data-id="0" data-product="{{$product}}"
                                    data-variable="{{$item}}">
                         @else
-                            <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                            <input type="number" min="0" value="0" name="quantity[]"
                                    class="input_quantity" data-id="0" data-product="{{$product}}"
                                    data-variable="{{$item}}">
                         @endif
@@ -413,12 +413,12 @@
 
                     <td>
                         @if($productVariable)
-                            <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                            <input type="number" min="0" value="0" name="quantity[]"
                                    class="input_quantity"
-                                   data-id="{{$loop->index + 1}}" data-product="{{$productVariable}}"
+                                   data-id="{{$loop->index + 1}}" data-product="{{$product}}"
                                    data-variable="{{$productAttribute}}">
                         @else
-                            <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                            <input type="number" min="0" value="0" name="quantity[]"
                                    class="input_quantity"
                                    data-id="{{$loop->index + 1}}" data-product="{{$product}}"
                                    data-variable="{{$productAttribute}}">
@@ -473,147 +473,9 @@
     </form>
 </div>
 <script>
-    var productItemInfo = [];
-    $(document).ready(function () {
-        $('.input_quantity').on('change', function () {
-            let number = $(this).data('id');
-            let tdParent = $(this).parent().siblings(".priceTransport");
-            // get price
-            let idPrice = 'productPrice' + number;
-            let textPrice = 'textPrice' + number;
-
-            let itemValue = $(this).val();
-
-            let product = $(this).data('product');
-
-            let priceOld = product['price'];
-
-            let currencies = document.getElementsByClassName('currency');
-            let currency = currencies[0].innerText;
-
-            // get product sale
-            async function getSales() {
-                try {
-                    let productSale = await getProductSale(itemValue);
-                    if (productSale) {
-                        let priceSale = productSale['sales'];
-                        let result = await convertCurrency(priceSale);
-                        $('#' + textPrice).text(result);
-                        $('#' + idPrice).val(priceSale);
-                        let priceShip = await convertCurrency(productSale['ship']);
-                        let priceShipText = priceShip + ' ' + currency;
-                        tdParent.text(priceShipText)
-                        changeDataTotal(productSale['ship']);
-                    } else {
-                        let result = await convertCurrency(priceOld);
-                        $('#' + textPrice).text(result);
-                        $('#' + idPrice).val(priceOld);
-                        tdParent.text(0);
-                        changeDataTotal(0);
-                    }
-                } catch (error) {
-                    console.error(error);
-                }
-            }
-
-            getSales();
-
-            function changeDataTotal(ship) {
-                let price = $('#' + idPrice).val();
-                //total
-                let total = parseFloat(price) * itemValue + ship;
-
-                // using function convertCurrency(total);
-                async function main() {
-                    try {
-                        let result = await convertCurrency(total);
-                        let totalConvert = result + ' ' + currency;
-                        $('#total-price' + number).text(totalConvert);
-                    } catch (error) {
-                        console.error(error);
-                    }
-                }
-
-                // render total
-                main();
-            }
-
-            changeDataTotal(0);
-
-            // order
-            let variable = $(this).data('variable');
-            let quantity = $(this).val();
-            let item = quantity + '&' + variable;
-
-            let index = productItemInfo.findIndex(element => {
-                return element.endsWith(variable);
-            });
-
-            if (quantity > 0) {
-                if (index !== -1) {
-                    productItemInfo[index] = item;
-                } else {
-                    productItemInfo.push(item);
-                }
-            } else {
-                if (index !== -1) {
-                    productItemInfo.splice(index, 1);
-                }
-            }
-
-            let value = null;
-            if (productItemInfo.length > 0) {
-                for (let i = 0; i < productItemInfo.length; i++) {
-                    if (!value) {
-                        value = productItemInfo[i];
-                    } else {
-                        value = value + '#' + productItemInfo[i];
-                    }
-                }
-            }
-
-            $('#productInfo').val(value);
-
-        })
-
-        // call api convert currency
-        async function convertCurrency(total) {
-            let url = '{{ route('convert.currency', ['total' => ':total']) }}';
-            url = url.replace(':total', total);
-
-            try {
-                let response = await $.ajax({
-                    url: url,
-                    method: 'GET',
-                });
-                return response;
-            } catch (error) {
-                throw error;
-            }
-        }
-
-        async function getProductSale(quantity) {
-            const requestData = {
-                _token: '{{ csrf_token() }}',
-                productID: `{{$product->id}}`,
-                quantity: quantity,
-            };
-
-            try {
-                let productSale = await $.ajax({
-                    url: `{{route('member.product.sales')}}`,
-                    method: 'GET',
-                    data: requestData,
-                    body: JSON.stringify(requestData),
-                })
-                return productSale;
-            } catch (error) {
-                throw error;
-            }
-        }
-
-        $('#supBtnOrder').on('click', function () {
-            $('#formOrderMember').trigger("submit");
-        })
-    })
+    var urlConvertCurrency = `{{ route('convert.currency', ['total' => ':total']) }}`;
+    var token = `{{ csrf_token() }}`;
+    var productID = `{{$product->id}}`;
+    var urlProductSale = `{{route('member.product.sales')}}`;
 </script>
+<script src="{{ asset('js/frontend/pages/member/member-table-order.js') }}"></script>

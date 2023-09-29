@@ -37,7 +37,7 @@ function choseImageToUse(check) {
 (function () {
     $(function () {
         return $('.file-upload__input').on('change', function () {
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            var csrfToken = token;
             var formData = new FormData();
 
             const listFile = this.files;
@@ -47,14 +47,14 @@ function choseImageToUse(check) {
             formData.append('_token', csrfToken);
 
             $.ajax({
-                url: url,
+                url: urlPostImg,
                 type: 'POST',
                 data: formData,
                 contentType: false,
                 processData: false,
                 success: async function (response) {
                     alert('Upload success')
-                    await getListImg();
+                    await getListImg(imgUrl);
                     await handleAfterUpload(response.split(','));
                 },
                 error: function (xhr, status, error) {
@@ -71,7 +71,7 @@ getListImg(imgUrl);
 
 function getListImg(imgUrl) {
     $.ajax({
-        url: urla,
+        url: urlGetImg,
         type: 'GET',
         dataType: 'json',
         success: function (response) {
@@ -148,7 +148,7 @@ function handleAfterUpload(fileUploaded) {
     thumbnailImageItems.forEach((imgElement) => {
         const imgSrc = imgElement.src.match(/\/storage\/([^,]+),?/)[1];
         const isImageSelected = fileUploaded.some((fileName) => fileName === imgSrc);
-        console.log(isImageSelected);
+        console.log(isImageSelected)
         if (isImageSelected) {
             imgElement.parentElement.classList.add("selected-image");
         }

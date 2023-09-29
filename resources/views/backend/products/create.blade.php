@@ -22,6 +22,16 @@
     }
 
 @endphp
+<style>
+    /**/
+    select {
+        display: none;
+    }
+
+    #selectAttribute{
+        display: block !important;
+    }
+</style>
 @section('content')
 
     <div id="wpcontent" class="wpcontent">
@@ -248,6 +258,7 @@
     </div><!-- wpcontent -->
     <script>
         var url = `{{ route('product.v2.create.attribute') }}`;
+        var token = `{{ csrf_token() }}`;
     </script>
     <script src="{{ asset('js/backend/products-create.js') }}"></script>
 @endsection

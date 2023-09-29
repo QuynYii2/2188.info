@@ -180,87 +180,92 @@
 
     <div class="modal fade" id="modal-create-region" tabindex="-1" aria-labelledby="modal-create-regionLabel"
          aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="#" method="post">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="continents">Châu lục</label>
-                                    <select class="form-control" id="continents" name="continents">
-                                        <option value="Asia">Châu Á</option>
-                                        <option value="Europe">Châu Âu</option>
-                                        <option value="Africa">Châu Phi</option>
-                                        <option value="North America">Bắc Mỹ</option>
-                                        <option value="South America">Nam Mỹ</option>
-                                        <option value="Oceania">Châu Đại Dương</option>
-                                    </select>
+        <form action="{{ route('location.create') }}" method="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#" method="post">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="continents">Châu lục</label>
+                                        <select class="form-control" id="continents" name="continents">
+                                            <option value="Asia">Châu Á</option>
+                                            <option value="Europe">Châu Âu</option>
+                                            <option value="Africa">Châu Phi</option>
+                                            <option value="North America">Bắc Mỹ</option>
+                                            <option value="South America">Nam Mỹ</option>
+                                            <option value="Oceania">Châu Đại Dương</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="what_create">Tạo mới cái j đấy?</label>
+                                        <select class="form-control" id="what_create" name="what_create"
+                                                onchange="selectWhatCreate()">
+                                            <option value="0">Quốc Gia</option>
+                                            <option value="1">Tỉnh</option>
+                                            <option value="2">Quận Huyện</option>
+                                            <option value="3">Phường Xã</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="what_create">Tạo mới cái j đấy?</label>
-                                    <select class="form-control" id="what_create" name="what_create"
-                                            onchange="selectWhatCreate()">
-                                        <option value="0">Quốc Gia</option>
-                                        <option value="1">Tỉnh</option>
-                                        <option value="2">Quận Huyện</option>
-                                        <option value="3">Phường Xã</option>
-                                    </select>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="nation">Quốc gia</label>
+                                        <input type="text" class="form-control" id="nation-input" name="nation-input">
+                                        <select class="form-control" id="nation-select" name="nation-select">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="province">Tỉnh thành</label>
+                                        <input type="text" class="form-control" id="province-input"
+                                               name="province-input">
+                                        <select class="form-control" id="province-select" name="province-select">
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="nation">Quốc gia</label>
-                                    <input type="text" class="form-control" id="nation-input" name="nation">
-                                    <select class="form-control" id="nation-select" name="what_create">
-                                    </select>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="district">Quận/huyện</label>
+                                        <input type="text" class="form-control" id="district-input"
+                                               name="district-input">
+                                        <select class="form-control" id="district-select" name="district-select">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="commune">Xã phường</label>
+                                        <input type="text" class="form-control" id="commune-input" name="commune-input">
+                                        <select class="form-control" id="commune-select" name="commune-select">
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="province">Tỉnh thành</label>
-                                    <input type="text" class="form-control" id="province-input" name="province">
-                                    <select class="form-control" id="province-select" name="what_create">
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="district">Quận/huyện</label>
-                                    <input type="text" class="form-control" id="district-input" name="district">
-                                    <select class="form-control" id="district-select" name="what_create">
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label for="commune">Xã phường</label>
-                                    <input type="text" class="form-control" id="commune-input" name="commune">
-                                    <select class="form-control" id="commune-select" name="what_create">
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thôi</button>
+                        <button type="submit" class="btn btn-primary">Tạo nha</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
     <script>
         $(document).ready(function () {
@@ -397,10 +402,14 @@
         const ID_CITY_1 = 'provinces-select-1'
         const ID_WARD_1 = 'wards-select-1'
 
+        const ID_NATION_MODAL_CREATE = 'nation-select'
+        const ID_PROVINCE_MODAL_CREATE = 'province-select'
+        const ID_DISTRICT_MODAL_CREATE = 'district-select'
+        const ID_COMMUNE_MODAL_CREATE = 'commune-select'
+
         let country_code = ''
         let city_code = ''
         getListNation();
-        getListNation1();
 
         function getListNation() {
             let url = '{{ route('location.nation.get') }}'
@@ -408,7 +417,10 @@
                 .then(async function (res) {
                     const data = await res.json();
                     makeHTMLFromJson(data, ID_COUNTRY)
+                    makeHTMLFromJson(data, ID_COUNTRY_1)
+                    makeHTMLFromJson(data, ID_NATION_MODAL_CREATE)
                     autoSelectedOption(ID_STATE)
+                    autoSelectedOption(ID_STATE_1)
                 });
         }
 
@@ -446,16 +458,6 @@
             {{--        const data = await res.json();--}}
             {{--        makeHTMLFromJson(data, ID_WARD)--}}
             {{--    });--}}
-        }
-
-        function getListNation1() {
-            let url = '{{ route('location.nation.get') }}'
-            fetch(url)
-                .then(async function (res) {
-                    const data = await res.json();
-                    makeHTMLFromJson(data, ID_COUNTRY_1)
-                    autoSelectedOption(ID_STATE_1)
-                });
         }
 
         function getListState1(id) {
@@ -544,6 +546,8 @@
 
     </script>
     <script>
+        selectWhatCreate();
+
         function selectWhatCreate() {
             let what = document.getElementById('what_create').value;
             const arrInput = ['nation-input', 'province-input', 'district-input', 'commune-input'];
@@ -553,6 +557,7 @@
                 const itemInput = arrInput[i];
                 const itemSelect = arrSelect[i];
 
+                // check hiển thị select hoặc input tùy theo đang tạo cái gì
                 if (i > what) {
                     document.getElementById(itemInput).disabled = true;
                     document.getElementById(itemInput).style.display = 'block';
@@ -566,10 +571,45 @@
                     document.getElementById(itemInput).style.display = 'none';
                     document.getElementById(itemSelect).style.display = 'block';
                 }
-
-
             }
         }
+
+        function getListState_selectModal(id) {
+            let url = '{{ route('location.state.get', ['id' => ':id']) }}';
+            url = url.replace(':id', id);
+            country_code = id;
+            fetch(url)
+                .then(async function (res) {
+                    clearDataOption1();
+                    const data = await res.json();
+                    makeHTMLFromJson(data, ID_STATE_1)
+                    autoSelectedOption(ID_CITY_1)
+                });
+        }
+
+        function getListCity_selectModal(id) {
+            let url = '{{ route('location.city.get', ['id' => ':id', 'code' => ':code']) }}';
+            url = url.replace(':id', id);
+            url = url.replace(':code', country_code);
+            fetch(url)
+                .then(async function (res) {
+                    const data = await res.json();
+                    makeHTMLFromJson(data, ID_CITY_1)
+                    // autoSelectedOption(ID_WARD_1)
+                });
+        }
+
+        function getListWard_selectModal(id) {
+            {{--let url = '{{ route('location.ward.get', ['id' => ':id', 'code' => ':code']) }}';--}}
+            {{--url = url.replace(':id', id);--}}
+            {{--url = url.replace(':code', country_code);--}}
+            {{--fetch(url)--}}
+            {{--    .then(async function (res) {--}}
+            {{--        const data = await res.json();--}}
+            {{--        makeHTMLFromJson(data, ID_WARD_1)--}}
+            {{--    });--}}
+        }
+
     </script>
 @endsection
 

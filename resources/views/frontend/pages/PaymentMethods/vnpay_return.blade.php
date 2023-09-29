@@ -85,9 +85,7 @@ $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
     </div>
     <form action="{{ route('home') }}" method="GET">
         @csrf
-        <button class="btn-primary btn button" type="submit">Home</button>
+        <button class="btn-primary btn button" type="submit">{{ __('home.Home') }}</button>
     </form>
-
-
 </div>
 @endsection

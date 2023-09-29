@@ -287,6 +287,7 @@
         var urlb = `{{route('admin.statistic.revenues')}}`;
         var urlc = `{{route('admin.statistic.users')}}`;
         var urld = `{{route('shop.statistic.index')}}`;
+        var token = '{{ csrf_token() }}';
     </script>
     <script src="{{ asset('js/backend/products-home.js') }}"></script>
 @endsection
