@@ -21,6 +21,16 @@
     }
 
 @endphp
+<style>
+    /**/
+    select {
+        display: none;
+    }
+
+    #selectAttribute{
+        display: block !important;
+    }
+</style>
 @section('content')
     <div id="wpcontent" class="wpcontent">
         <div id="wpbody" role="main">
@@ -110,8 +120,20 @@
                             <div class="form-group col-12 col-sm-12" id="list-img-thumbnail"></div>
                             <div class="form-group col-12 col-sm-12" id="list-img-gallery"></div>
                         </div>
-                        <div id="removeInputAttribute " class="form-group row">
-                            <table>
+                        <div id="removeInputAttribute" class="form-group row">
+                            <table class="table table-bordered">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Attribute</th>
+                                    <th scope="col">Thumbnail</th>
+                                    <th scope="col">Old Price</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
                                 @if(!$productDetails->isEmpty())
                                     @foreach($productDetails as $productDetail)
                                         @if($productDetail->variation && $productDetail->variation != 0)
@@ -181,20 +203,14 @@
                                         @endif
                                     @endforeach
                                 @endif
+                                </tbody>
                             </table>
                         </div>
                         <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
-                        <div class="form-group col-6 mt-2 row">
-                            <label class="name">Thông số sản phẩm</label>
 
+                        <div class="form-group mt-2">
+                            @include('backend.products.demo')
                         </div>
-                        <div class="row pl-2">
-
-                        </div>
-                        <div id="renderInputAttribute">
-                        </div>
-
-                        <input type="text" hidden="" name="isNew" id="isNew" value="0">
 
                     </div>
                     <div class="col-12 col-md-5 mt-2 rm-pd-on-mobile">

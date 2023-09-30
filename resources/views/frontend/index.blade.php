@@ -402,29 +402,10 @@
             </div>
         </section>
         @include('frontend.pages.modal-products')
+
         <script>
-            $(document).ready(function ($) {
-                $(".card-bottom--right").click(function () {
-                    var idProduct = $(this).attr('id-product');
-
-
-                    $.ajax({
-                        url: '{{route('user.wish.lists')}}',
-                        method: 'POST',
-                        dataType: 'json',
-                        data: {
-                            idProduct: idProduct,
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function (response) {
-                            alert(response.message);
-                        },
-                        error: function (exception) {
-                            //
-                        }
-                    });
-                });
-            });
+            var urla = '{{route('user.wish.lists')}}';
+            var token = '{{ csrf_token() }}';
         </script>
 @endsection
 

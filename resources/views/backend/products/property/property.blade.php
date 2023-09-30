@@ -5,8 +5,32 @@
             @foreach($properties as $property)
                 <div class="col-md-3">
                     <div class="form-check mb-2">
+                        @php
+                            $isChecked = false;
+                            $att_of_product = session()->get('att_of_product');
+                            if (!$att_of_product) {
+                                return back();
+                            }
+                            $att_of_product = $att_of_product[0];
+                        @endphp
+                        @if(isset($att_of_product))
+                            @foreach($att_of_product as $att)
+                                @if($att->attribute_id == $attribute->id )
+                                    @php
+                                        $value = explode(',', $att->value);
+                                        foreach($value as $item){
+                                            if($item == $property->id ){
+                                                $isChecked = true;
+                                            }
+                                        }
+                                    @endphp
+                                @endif
+                            @endforeach
+                        @endif
+
                         <input value="{{$attribute->id}}-{{$property->id}}" type="checkbox"
                                class="inputAttributeProperty property-attribute checkbox{{$attribute->id}}"
+                               {{ $isChecked ? 'checked' : '' }}
                                id="property_{{$property->id}}">
                         <label for="property_{{$property->id}}">
                             {{$property->name}}

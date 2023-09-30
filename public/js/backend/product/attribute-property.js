@@ -48,6 +48,10 @@ $(document).ready(function () {
     })
 
     $('#btnSaveAttribute').on('click', function () {
+        let removeInputAttribute = $('#removeInputAttribute');
+        if (removeInputAttribute) {
+            removeInputAttribute.empty();
+        }
         let attribute = document.getElementById('input-form-create-attribute').value;
         var renderInputAttribute = $('#renderInputAttribute');
         $.ajax({
