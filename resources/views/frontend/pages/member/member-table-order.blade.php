@@ -5,7 +5,7 @@
         <th scope="col">{{ __('home.property') }}</th>
         <th scope="col">{{ __('home.quantity') }}</th>
         <th scope="col">{{ __('home.Unit price') }}</th>
-        <th scope="col">{{ __('home.Ship') }}</th>
+        <th scope="col">{{ __('home.vận chuyển') }}</th>
         <th scope="col">{{ __('home.Grand Total') }}</th>
     </tr>
     </thead>
