@@ -1,25 +1,25 @@
-$('#btnSaveAttribute').on('click', function () {
-    let attribute = document.getElementById('input-form-create-attribute').value;
-    let isNew = document.getElementById('isNew');
-    isNew.value = 100;
-    var renderInputAttribute = $('#renderInputAttribute');
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: {
-            _token: token,
-            'attribute_property': attribute
-        },
-        // dataType: 'json',
-        success: function (response) {
-            // var item = response;
-            renderInputAttribute.append(response);
-        },
-        error: function (xhr, status, error) {
-            renderInputAttribute.append('<h3>Error</h3>');
-        }
-    })
-})
+// $('#btnSaveAttribute').on('click', function () {
+//     let attribute = document.getElementById('input-form-create-attribute').value;
+//     let isNew = document.getElementById('isNew');
+//     isNew.value = 100;
+//     var renderInputAttribute = $('#renderInputAttribute');
+//     $.ajax({
+//         url: url,
+//         type: 'POST',
+//         data: {
+//             _token: token,
+//             'attribute_property': attribute
+//         },
+//         // dataType: 'json',
+//         success: function (response) {
+//             // var item = response;
+//             renderInputAttribute.append(response);
+//         },
+//         error: function (xhr, status, error) {
+//             renderInputAttribute.append('<h3>Error</h3>');
+//         }
+//     })
+// })
 
 $('.btnRemove').on('click', function () {
     let attribute = $(this).data('value');
