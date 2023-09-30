@@ -353,6 +353,9 @@ class ProductController extends Controller
         $productDetails = Variation::where([['product_id', $id], ['status', VariationStatus::ACTIVE]])->get();
         $price_sales = ProductSale::where('product_id', $id)->get();
 
+        session()->forget('att_of_product');
+        session()->push('att_of_product', $att_of_product);
+
         return view('backend.products.edit', compact(
             'categories',
             'att_of_product',
