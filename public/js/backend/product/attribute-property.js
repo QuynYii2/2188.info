@@ -24,7 +24,7 @@ $(document).ready(function () {
             url: url,
             method: 'POST',
             data: {
-                _token: '{{ csrf_token() }}',
+                _token: token,
                 attribute_name: value
             },
         })
@@ -58,7 +58,6 @@ $(document).ready(function () {
                 'attribute_property': attribute
             },
             success: function (response) {
-                console.log(response);
                 renderInputAttribute.empty().append(response);
             },
             error: function (xhr, status, error) {

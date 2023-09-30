@@ -388,10 +388,6 @@ class ProductController extends Controller
 
             ProductSale::where('product_id', '=', $product->id)->delete();
 
-            $quantity = $request->input('quantity');
-            $sales = $request->input('sales');
-            $days = $request->input('days');
-
             $product->description = $descriptionValue;
             $product->short_description = $shortDescriptionValue;
 
@@ -448,19 +444,34 @@ class ProductController extends Controller
                 $product->feature = 0;
             }
 
-            if ($quantity) {
-                $counts = count($quantity);
-                for ($i = 0; $i < $counts; $i++) {
-                    $newProductSale = null;
-                    $newProductSale = [
-                        'user_id' => $product->user_id,
-                        'product_id' => $product->id,
-                        'quantity' => $quantity[$i],
-                        'sales' => $sales[$i],
-                        'days' => $days[$i],
-                    ];
-                    ProductSale::create($newProductSale);
+            $starts = $request->input('starts');
+            $ends = $request->input('ends');
+
+            $sales = $request->input('sales');
+            $days = $request->input('days');
+
+            $ships = $request->input('ships');
+
+            $counts = count($starts);
+            for ($i = 0; $i < $counts; $i++) {
+                $newProductSale = null;
+                if (!$starts[$i]){
+                    $starts[$i] = $product->min;
                 }
+                if (!$ends[$i]){
+                    $quantity = $starts[$i];
+                } else {
+                    $quantity = $starts[$i] . '-' . $ends[$i];
+                }
+                $newProductSale = [
+                    'user_id' => $product->user_id,
+                    'product_id' => $product->id,
+                    'quantity' => $quantity,
+                    'sales' => $sales[$i],
+                    'days' => $days[$i],
+                    'ship' => $ships[$i],
+                ];
+                ProductSale::create($newProductSale);
             }
 
             if ($isNew > 10) {
