@@ -483,3 +483,60 @@ $('.add-fields').each(function (index, el) {
         $(this).parents($(this).data('target') || '.form-group-price').remove();
     });
 });
+
+$(document).ready(function () {
+    $(".unregister").click(function () {
+        var categoryID = $(this).val();
+        var modalId = 'exampleModal-' + this.value;
+        var checkboxId = 'category-' + this.value;
+        var unCheck = document.getElementById(categoryID);
+        var originalChecked = this.checked;
+        var modal = document.getElementById(modalId);
+        console.log(categoryID);
+
+        async function setProductHots(categoryID) {
+            let url = urlCategory;
+            url = url.replace(':categoryID', categoryID);
+            try {
+                await $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: {
+                        _token: token
+                    },
+                    success: function (response) {
+                        console.log(!response.id)
+                        if (!response.id) {
+                            var modal = document.getElementById(modalId);
+                            $(modal).modal('show');
+
+                            var confirmButton = document.querySelector('#' + modalId + ' .btn-primary');
+                            confirmButton.addEventListener('click', function () {
+                                var checkbox = document.getElementById(checkboxId);
+                                checkbox.checked = true;
+                                $(modal).modal('hide');
+                            });
+
+                            // Xử lý sự kiện đóng Modal
+                            $(modal).on('hidden.bs.modal', function () {
+                                var checkbox = document.getElementById(checkboxId);
+                                if (checkbox.checked !== originalChecked) {
+                                    checkbox.checked = originalChecked;
+                                }
+                                $(unCheck).prop('checked', false);
+
+                            });
+                        }
+                    },
+                    error: function (exception) {
+
+                    }
+                });
+            } catch (error) {
+                throw error;
+            }
+        }
+
+        setProductHots(categoryID);
+    });
+})

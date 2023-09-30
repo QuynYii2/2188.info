@@ -2,9 +2,9 @@
     <thead>
     <tr>
         <th scope="col">{{ __('home.quantity') }}</th>
-        <th scope="col">{{ __('home.giảm giá') }}</th>
+        <th scope="col">{{ __('home.đơn giá') }}</th>
         <th scope="col">{{ __('home.ngày kể từ ngày đặt hàng') }}</th>
-        <th scope="col">{{ __('home.Ship') }}</th>
+        <th scope="col">{{ __('home.vận chuyển') }}</th>
     </tr>
     </thead>
     <tbody>

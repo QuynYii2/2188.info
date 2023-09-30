@@ -92,7 +92,7 @@ $(document).ready(function () {
 
         getSales();
 
-        function changeDataTotal(ship) {
+        async function changeDataTotal(ship) {
             let price = $('#' + idPrice).val();
             //total
             let total = parseFloat(price) * itemValue + ship;
@@ -109,7 +109,7 @@ $(document).ready(function () {
             }
 
             // render total
-            main();
+            await main();
         }
 
         changeDataTotal(0);
