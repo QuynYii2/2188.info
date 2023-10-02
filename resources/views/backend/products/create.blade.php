@@ -218,7 +218,7 @@
                             <div id="checkboxes" style=" display: block">
                                 @foreach($categories as $category)
                                     @if (!in_array($category->id, $categoriesRegister))
-                                        <div class="unregister" data-toggle="modal"
+                                        <div class="unregister" data-toggle="modal" data-id="{{$category->id}}"
                                              data-target="#exampleModal-{{$category->id}}">
                                             <label class="ml-2" for="category-{{$category->id}}">
                                                 <input type="checkbox" id="category-{{$category->id}}"
@@ -227,8 +227,7 @@
                                                        class="inputCheckboxCategory mr-2 p-3"
                                                         @php
                                                             echo in_array($category->id, $categoriesRegister) ? '' :'disabled';
-                                                        @endphp
-                                                />
+                                                        @endphp/>
                                                 <span class="labelCheckboxCategory">
                                                     @if(locationHelper() == 'kr')
                                                         <div class="text">{{ $category->name_ko }}</div>
@@ -258,20 +257,20 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        This type of category of yours has not been registered
+                                                        This type of category of yours has not been registered.<br>
+                                                        Would you like to add this category?
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
                                                                 data-dismiss="modal">Cancel
                                                         </button>
                                                         <button type="button" class="btn btn-primary"><a
-                                                                    href="{{route('permission.list.show')}}">Buy now</a>
+                                                                    href="{{route('categories.register', $category->id)}}">Add now</a>
                                                         </button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                     @else
                                         <label class="ml-2" for="category-{{$category->id}}">
                                             <input type="checkbox" id="category-{{$category->id}}"
@@ -290,7 +289,6 @@
                                                 @else
                                                     <div class="text">{{$category->name_en}}</div>
                                                 @endif
-
                                            </span>
                                         </label>
                                     @endif
@@ -300,7 +298,7 @@
                                         @endphp
                                         @foreach($categories as $child)
                                             @if(!in_array($child->id, $categoriesRegister))
-                                                <div class="unregister" data-toggle="modal"
+                                                <div class="unregister" data-toggle="modal" data-id="{{$child->id}}"
                                                      data-target="#exampleModal-{{$child->id}}">
                                                     <label class="ml-4" for="category-{{$child->id}}">
                                                         <input type="checkbox" id="category-{{$child->id}}"
@@ -340,15 +338,15 @@
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                This type of category of yours has not been registered
+                                                                This type of category of yours has not been registered.<br>
+                                                                Would you like to add this category?
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary"
                                                                         data-dismiss="modal">Cancel
                                                                 </button>
                                                                 <button type="button" class="btn btn-primary"><a
-                                                                            href="{{route('permission.list.show')}}">Buy
-                                                                        now</a>
+                                                                            href="{{route('categories.register', $child->id)}}">Add now</a>
                                                                 </button>
 
                                                             </div>
@@ -382,7 +380,7 @@
                                             @endphp
                                             @foreach($listChild2 as $child2)
                                                 @if(!in_array($child2->id, $categoriesRegister))
-                                                    <div class="unregister" data-toggle="modal"
+                                                    <div class="unregister" data-toggle="modal" data-id="{{$child2->id}}"
                                                          data-target="#exampleModal-{{$child->id}}">
                                                         <label class="ml-5" for="category-{{$child2->id}}">
                                                             <input type="checkbox" id="category-{{$child2->id}}"
@@ -391,8 +389,7 @@
                                                                    class="inputCheckboxCategory mr-2 p-3"
                                                                     @php
                                                                         echo in_array($child2->id, $categoriesRegister) ? '' :'disabled';
-                                                                    @endphp
-                                                            />
+                                                                    @endphp/>
                                                             <span class="labelCheckboxCategory">
                                                                 @if(locationHelper() == 'kr')
                                                                     <div class="text">{{ $child2->name_ko }}</div>
@@ -423,18 +420,16 @@
                                                                     </button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    This type of category of yours has not been
-                                                                    registered
+                                                                    This type of category of yours has not been registered.<br>
+                                                                    Would you like to add this category?
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                             data-dismiss="modal">Cancel
                                                                     </button>
                                                                     <button type="button" class="btn btn-primary"><a
-                                                                                href="{{route('permission.list.show')}}">Buy
-                                                                            now</a>
+                                                                                href="{{route('categories.register',$child2->id)}}">Add now</a>
                                                                     </button>
-
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -457,7 +452,6 @@
                                                             @else
                                                                 <div class="text">{{$child2->name_en}}</div>
                                                             @endif
-
                                                     </span>
                                                     </label>
                                                 @endif

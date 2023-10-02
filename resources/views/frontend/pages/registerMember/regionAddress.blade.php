@@ -38,6 +38,9 @@
     let nameTh, idTh, codeTh;
     let nationValue_Selected = provinceValue_Selected = districtValue_Selected =
         nationName_Selected = provinceName_Selected = districtName_Selected = '';
+    let nationValue_Selected1 = provinceValue_Selected1 = districtValue_Selected1 =
+        nationName_Selected1 = provinceName_Selected1 = districtName_Selected1 = '';
+    let nationValue_check = nationName_check = '';
     r_getListNation();
 
     async function r_getListNation() {
@@ -60,42 +63,110 @@
     }
 
     function r_handleSelectNation(id, name) {
-        nationValue_Selected = id;
-        nationName_Selected = name;
+        const checkWhereSelect = whereSelectRegion == 0;
+        if (nationName_check != name && name) {
+            nationName_check = name;
+            nationValue_check = id;
+            if (checkWhereSelect) {
+                nationValue_Selected = nationValue_check;
+                nationName_Selected = nationName_check;
+            } else {
+                nationValue_Selected1 = nationValue_check;
+                nationName_Selected1 = nationName_check;
+            }
+        } else if (nationName_check != name) {
+            if (checkWhereSelect) {
+                nationValue_Selected = nationValue_check;
+                nationName_Selected = nationName_check;
+            } else {
+                nationValue_Selected1 = nationValue_check;
+                nationName_Selected1 = nationName_check;
+            }
+        } else {
+            if (checkWhereSelect) {
+                nationValue_Selected = id;
+                nationName_Selected = name;
+            } else {
+                nationValue_Selected1 = id;
+                nationName_Selected1 = name;
+            }
+        }
+
         r_getListState(id);
     }
 
+
     function selectRegion(provinceName, provinceValue, districtName, districtValue) {
-        resetFieldAddress();
-        document.getElementById(ID_COUNTRY).value = nationName_Selected;
-        if (provinceName) {
-            provinceName_Selected = provinceName;
-            document.getElementById(ID_STATE).value = provinceName_Selected;
-        }
-        if (provinceValue) {
-            provinceValue_Selected = provinceValue;
+
+        // Kiểm tra xem dòng address bên trên hay bên dưới nhấn modal, để render
+        // biến whereSelectRegion lấy từ file show-register-member-info
+
+        r_handleSelectNation();
+
+        const checkWhereSelect = whereSelectRegion == 0;
+
+        resetFieldAddress(checkWhereSelect);
+
+        if (checkWhereSelect) {
+            document.getElementById(ID_COUNTRY).value = nationName_Selected;
+            if (provinceName) {
+                provinceName_Selected = provinceName;
+                document.getElementById(ID_STATE).value = provinceName_Selected;
+            }
+            if (provinceValue) {
+                provinceValue_Selected = provinceValue;
+            }
+
+            if (districtName) {
+                districtName_Selected = districtName;
+                document.getElementById(ID_CITY).value = districtName_Selected;
+            }
+            if (districtValue) {
+                districtValue_Selected = districtValue;
+            }
+        } else {
+            document.getElementById(ID_COUNTRY_1).value = nationName_Selected1;
+            if (provinceName) {
+                provinceName_Selected1 = provinceName;
+                document.getElementById(ID_STATE_1).value = provinceName_Selected1;
+            }
+            if (provinceValue) {
+                provinceValue_Selected1 = provinceValue;
+            }
+
+            if (districtName) {
+                districtName_Selected1 = districtName;
+                document.getElementById(ID_CITY_1).value = districtName_Selected1;
+            }
+            if (districtValue) {
+                districtValue_Selected1 = districtValue;
+            }
         }
 
-        if (districtName) {
-            districtName_Selected = districtName;
-            document.getElementById(ID_CITY).value = districtName_Selected;
-        }
-        if (districtValue) {
-            districtValue_Selected = districtValue;
-        }
     }
 
     function handleAfterSelectRegion() {
         document.getElementById(ID_COUNTRY).value = nationValue_Selected;
         document.getElementById(ID_STATE).value = provinceValue_Selected;
         document.getElementById(ID_CITY).value = districtValue_Selected;
+
+        document.getElementById(ID_COUNTRY_1).value = nationValue_Selected1;
+        document.getElementById(ID_STATE_1).value = provinceValue_Selected1;
+        document.getElementById(ID_CITY_1).value = districtValue_Selected1;
     }
 
-    function resetFieldAddress() {
-        document.getElementById(ID_STATE).value = '';
-        document.getElementById(ID_CITY).value = '';
-        document.getElementById(ID_COUNTRY).value = '';
+    function resetFieldAddress(checkWhereSelect) {
+        if (checkWhereSelect) {
+            document.getElementById(ID_STATE).value = '';
+            document.getElementById(ID_CITY).value = '';
+            document.getElementById(ID_COUNTRY).value = '';
+        } else {
+            document.getElementById(ID_STATE_1).value = '';
+            document.getElementById(ID_CITY_1).value = '';
+            document.getElementById(ID_COUNTRY_1).value = '';
+        }
     }
+
 
     async function r_renderDataToHtmlLv0() {
         let str = '';
@@ -134,17 +205,6 @@
 
         }
         document.getElementById('body_table_region').innerHTML = str;
-    }
-
-    function calcRowSpan(data, prefix) {
-        var count = 0;
-        // for (var i = 0; i < data.length; i++) {
-        //     if (data[i].country_code.startsWith(prefix)) {
-        //         count++;
-        //     }
-        // }
-        return 1
-        return Math.ceil(count / numberOfCol)
     }
 
     function r_renderDataToTable(data) {

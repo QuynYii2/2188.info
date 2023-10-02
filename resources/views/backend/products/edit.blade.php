@@ -30,6 +30,10 @@
     #selectAttribute {
         display: block !important;
     }
+
+    #attribute_id {
+        display: block !important;
+    }
 </style>
 @section('content')
     <div id="wpcontent" class="wpcontent">

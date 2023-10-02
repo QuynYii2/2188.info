@@ -292,6 +292,7 @@
                                 @endif
                             @endforeach
                         </div>
+
                     @else
                         <div id="code_1" class="mt-1  checkboxes">
                             @foreach($categories as $category)
@@ -382,31 +383,25 @@
             </th>
             <td colspan="4" class="item">
                 <div class="row mb-3">
-                    <div class="col-lg-4" data-toggle="modal" data-target="#modal-address">
+                    <div class="col-lg-3 form-group address-above" data-toggle="modal" data-target="#modal-address">
                         <label for="countries-select">{{ __('home.Select country') }}:</label>
-                        <select class="form-control" id="countries-select" name="countries-select"
-                        >
-                        </select>
+                        <input type="text" readonly class="form-control" id="countries-select" name="countries-select">
                     </div>
-                    <div class="col-lg-4" data-toggle="modal" data-target="#modal-address">
+                    <div class="col-lg-3 form-group address-above" data-toggle="modal" data-target="#modal-address">
                         <label for="cities-select">{{ __('home.Choose the city') }}:</label>
-                        <select class="form-control" id="cities-select" name="cities-select"
+                        <input type="text" readonly class="form-control" id="cities-select" name="cities-select"
                         >
-                            <option value="">-- {{ __('home.Choose the city') }} --</option>
-                        </select>
                     </div>
-                    <div class="col-lg-4" data-toggle="modal" data-target="#modal-address">
+                    <div class="col-lg-3 form-group address-above" data-toggle="modal" data-target="#modal-address">
                         <label for="provinces-select">{{ __('home.Select district/district') }}:</label>
-                        <select class="form-control" id="provinces-select" name="provinces-select"
+                        <input type="text" readonly class="form-control" id="provinces-select" name="provinces-select"
                         >
-                            <option value="">-- {{ __('home.Select district/district') }} --</option>
-                        </select>
                     </div>
-                </div>
-                <div>
-                    <label for="address_en">{{ __('home.Address detail') }}:</label>
-                    <input type="text" name="address_en" id="address_en" class="form-control" required
-                           value="{{ $exitsMember ? $exitsMember->address_en : old('address_en') }}">
+                    <div class="col-lg-3">
+                        <label for="address_en">{{ __('home.Address detail') }}:</label>
+                        <input type="text" name="address_en" id="address_en" class="form-control"
+                               value="{{ $exitsMember ? $exitsMember->address_en : old('address_en') }}">
+                    </div>
                 </div>
             </td>
         </tr>
@@ -416,31 +411,25 @@
             </th>
             <td colspan="4" class="item">
                 <div class="row mb-3">
-                    <div class="col-lg-4">
+                    <div class="col-lg-3 form-group address-below" data-toggle="modal" data-target="#modal-address">
                         <label for="countries-select-1">{{ __('home.Select country') }}:</label>
-                        <select class="form-control" id="countries-select-1" name="countries-select-1"
-                                onchange="getListState1(this.value)">
-                        </select>
+                        <input type="text" readonly class="form-control" id="countries-select-1"
+                               name="countries-select-1">
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3 form-group address-below" data-toggle="modal" data-target="#modal-address">
                         <label for="cities-select-1">{{ __('home.Choose the city') }}:</label>
-                        <select class="form-control" id="cities-select-1" name="cities-select-1"
-                                onchange="getListCity1(this.value)">
-                            <option value="">-- {{ __('home.Choose the city') }} --</option>
-                        </select>
+                        <input type="text" readonly class="form-control" id="cities-select-1" name="cities-select-1">
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-3 form-group address-below" data-toggle="modal" data-target="#modal-address">
                         <label for="provinces-select-1">{{ __('home.Select district/district') }}:</label>
-                        <select class="form-control" id="provinces-select-1" name="provinces-select-1"
-                                onchange="getListWard1(this.value)">
-                            <option value="">-- {{ __('home.Select district/district') }} --</option>
-                        </select>
+                        <input type="text" readonly class="form-control" id="provinces-select-1"
+                               name="provinces-select-1">
                     </div>
-                </div>
-                <div>
-                    <label for="address_kr"> {{ __('home.Address detail') }}:</label>
-                    <input type="text" name="address_kr" id="address_kr" class="form-control" required
-                           value="{{ $exitsMember ? $exitsMember->address_kr : old('address_kr') }}">
+                    <div class="col-lg-3">
+                        <label for="detail-address-1">{{ __('home.Select district/district') }}:</label>
+                        <input type="text" name="detail-address-1" id="detail-address-1" class="form-control"
+                               value="{{ $exitsMember ? $exitsMember->address_kr : old('address_kr') }}">
+                    </div>
                 </div>
             </td>
         </tr>

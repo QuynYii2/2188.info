@@ -1,27 +1,29 @@
 @php
     $isChecked = false;
     $att_of_product = session()->get('att_of_product');
-    if (!$att_of_product) {
-        return back();
+    if ($att_of_product){
+        $att_of_product = $att_of_product[0];
     }
-    $att_of_product = $att_of_product[0];
 @endphp
-@if(isset($att_of_product))
-    @foreach($att_of_product as $att)
-        @if($att->attribute_id == $attribute->id )
-            @php
-                $value = explode(',', $att->value);
-                foreach($value as $item){
-                    if($item == $property->id ){
-                        $isChecked = true;
-                    }
-                }
-            @endphp
-        @endif
-    @endforeach
-@endif
 
 @foreach($properties as $property)
+    @php
+        $isChecked = false;
+    @endphp
+    @if(isset($att_of_product))
+        @foreach($att_of_product as $att)
+            @if($att->attribute_id == $attribute->id )
+                @php
+                    $value = explode(',', $att->value);
+                    foreach($value as $item){
+                        if($item == $property->id ){
+                            $isChecked = true;
+                        }
+                    }
+                @endphp
+            @endif
+        @endforeach
+    @endif
     <div class="col-md-3">
         <div class="form-check mb-2">
             <input value="{{$attribute->id}}-{{$property->id}}"
@@ -29,7 +31,17 @@
                    {{ $isChecked ? 'checked' : '' }}
                    id="property_{{$property->id}}">
             <label for="property_{{$property->id}}">
-                {{$property->name}}
+                @if(locationHelper() == 'kr')
+                    {{ ($property->name_ko) }}
+                @elseif(locationHelper() == 'cn')
+                    {{ ($property->name_zh) }}
+                @elseif(locationHelper() == 'jp')
+                    {{ ($property->name_ja) }}
+                @elseif(locationHelper() == 'vi')
+                    {{ ($property->name_vi) }}
+                @else
+                    {{ ($property->name_en) }}
+                @endif
             </label>
         </div>
     </div>
@@ -72,7 +84,6 @@
                 propertyArray.push(property);
             }
         }
-        \
         $('#input-form-create-attribute').val(myArray);
     }
 

@@ -1,18 +1,32 @@
-<p>{{ __('home.Product attribute') }}: <span style="font-size: 16px; font-weight: 600">{{$attribute->name}}</span></p>
+<p>{{ __('home.Product attribute') }}: <span style="font-size: 16px; font-weight: 600">
+        @if(locationHelper() == 'kr')
+            {{ ($attribute->name_ko) }}
+        @elseif(locationHelper() == 'cn')
+            {{ ($attribute->name_zh) }}
+        @elseif(locationHelper() == 'jp')
+            {{ ($attribute->name_ja) }}
+        @elseif(locationHelper() == 'vi')
+            {{ ($attribute->name_vi) }}
+        @else
+            {{ ($attribute->name_en) }}
+        @endif
+    </span></p>
 <div class="">
+    @php
+        $isChecked = false;
+        $att_of_product = session()->get('att_of_product');
+        if ($att_of_product){
+            $att_of_product = $att_of_product[0];
+        }
+    @endphp
     @if($properties->isNotEmpty())
         <div class="row" id="property_{{$attribute->id}}">
             @foreach($properties as $property)
+                @php
+                    $isChecked = false;
+                @endphp
                 <div class="col-md-3">
                     <div class="form-check mb-2">
-                        @php
-                            $isChecked = false;
-                            $att_of_product = session()->get('att_of_product');
-                            if (!$att_of_product) {
-                                return back();
-                            }
-                            $att_of_product = $att_of_product[0];
-                        @endphp
                         @if(isset($att_of_product))
                             @foreach($att_of_product as $att)
                                 @if($att->attribute_id == $attribute->id )
@@ -33,7 +47,17 @@
                                {{ $isChecked ? 'checked' : '' }}
                                id="property_{{$property->id}}">
                         <label for="property_{{$property->id}}">
-                            {{$property->name}}
+                            @if(locationHelper() == 'kr')
+                                {{ ($property->name_ko) }}
+                            @elseif(locationHelper() == 'cn')
+                                {{ ($property->name_zh) }}
+                            @elseif(locationHelper() == 'jp')
+                                {{ ($property->name_ja) }}
+                            @elseif(locationHelper() == 'vi')
+                                {{ ($property->name_vi) }}
+                            @else
+                                {{ ($property->name_en) }}
+                            @endif
                         </label>
                     </div>
                 </div>
@@ -47,7 +71,7 @@
         </div>
     @endif
     <div class="col-md-3">
-        <a class="btm btn-warning btnCreateProperty"
+        <a class="btn btn-warning btnCreateProperty"
            data-id="{{$attribute->id}}">{{ __('home.Create now') }}
         </a>
     </div>
