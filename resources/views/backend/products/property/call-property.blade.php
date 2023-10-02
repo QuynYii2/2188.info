@@ -31,7 +31,17 @@
                    {{ $isChecked ? 'checked' : '' }}
                    id="property_{{$property->id}}">
             <label for="property_{{$property->id}}">
-                {{$property->name}}
+                @if(locationHelper() == 'kr')
+                    {{ ($property->name_ko) }}
+                @elseif(locationHelper() == 'cn')
+                    {{ ($property->name_zh) }}
+                @elseif(locationHelper() == 'jp')
+                    {{ ($property->name_ja) }}
+                @elseif(locationHelper() == 'vi')
+                    {{ ($property->name_vi) }}
+                @else
+                    {{ ($property->name_en) }}
+                @endif
             </label>
         </div>
     </div>
