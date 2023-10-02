@@ -287,63 +287,62 @@ ORDER BY
 
         $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-        // Tạo 2 ký tự ngẫu nhiên từ chuỗi
-        $random_char1 = $characters[rand(0, strlen($characters) - 1)];
-        $random_char2 = $characters[rand(0, strlen($characters) - 1)];
+        $maxAttempts = strlen($characters) * strlen($characters); // Số lần cố gắng tối đa
 
-        // Tạo chuỗi 2 ký tự
-        $random_string = $random_char1.$random_char2;
+        for ($i = 0; $i < $maxAttempts; $i++) {
+            $random_char1 = $characters[rand(0, strlen($characters) - 1)];
+            $random_char2 = $characters[rand(0, strlen($characters) - 1)];
+            $random_string = $random_char1.$random_char2;
 
-        // Kiểm tra xem $random_string đã tồn tại trong bảng hay chưa
-        $existingIsoCodes = DB::table($table)->pluck($column)->toArray();
+            // Kiểm tra xem $random_string đã tồn tại trong bảng hay chưa
+            $existingIsoCodes = DB::table($table)->pluck($column)->toArray();
 
-        // Nếu $random_string đã tồn tại, lặp đến bao giờ không tồn tại thì thôi
-        while (in_array($random_string, $existingIsoCodes)) {
-            $this->generateIso2($table, $column);
+            // Nếu không tồn tại, trả về chuỗi ngẫu nhiên
+            if (!in_array($random_string, $existingIsoCodes)) {
+                return $random_string;
+            }
         }
 
-        return $random_string;
+        return null;
     }
 
     public function generateIso3($table, $column)
     {
         $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $maxAttempts = strlen($characters) * strlen($characters) * strlen($characters);
+        for ($i = 0; $i < $maxAttempts; $i++) {
+            $random_char1 = $characters[rand(0, strlen($characters) - 1)];
+            $random_char2 = $characters[rand(0, strlen($characters) - 1)];
+            $random_char3 = $characters[rand(0, strlen($characters) - 1)];
+            $random_string = $random_char1.$random_char2.$random_char3;
 
-        // Tạo 3 ký tự ngẫu nhiên từ chuỗi
-        $random_char1 = $characters[rand(0, strlen($characters) - 1)];
-        $random_char2 = $characters[rand(0, strlen($characters) - 1)];
-        $random_char3 = $characters[rand(0, strlen($characters) - 1)];
+            $existingIsoCodes = DB::table($table)->pluck($column)->toArray();
 
-        // Tạo chuỗi 2 ký tự
-        $random_string = $random_char1.$random_char2.$random_char3;
-
-        // Kiểm tra xem $random_string đã tồn tại trong bảng hay chưa
-        $existingIsoCodes = DB::table($table)->pluck($column)->toArray();
-
-        // Nếu $random_string đã tồn tại, lặp đến bao giờ không tồn tại thì thôi
-        while (in_array($random_string, $existingIsoCodes)) {
-            $this->generateIso3($table, $column);
+            if (!in_array($random_string, $existingIsoCodes)) {
+                return $random_string;
+            }
         }
 
-        return $random_string;
+        return null;
     }
+
 
     public function createLocation(Request $request)
     {
         $request = $request->input();
         $id_reg = Cache::get('id-member-reg');
-        
+
         switch ($request['what_create']) {
             case "0":
                 $this->createNation($request);
-                return redirect(route('show.register.member.info', $id_reg));
+                break;
             case "1":
                 $this->createProvince($request);
-                return redirect(route('show.register.member.info', $id_reg));
+                break;
             case "2":
                 $this->createDistrict($request);
-                return redirect(route('show.register.member.info', $id_reg));
         }
+        return redirect(route('show.register.member.info', $id_reg));
     }
 
     public function createNation($request)
@@ -365,6 +364,7 @@ ORDER BY
     public function createProvince($request)
     {
         $province_name = $request['province-input'];
+
         if ($province_name) {
             $nation_id = $request['nation-select'];
             $countryIn4 = $this->getIn4FromCodeNation($nation_id);

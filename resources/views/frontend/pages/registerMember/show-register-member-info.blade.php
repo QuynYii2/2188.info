@@ -297,6 +297,14 @@
                     $('.inputCheckboxCategory2:checkbox:not(:checked)').prop('disabled', false);
                 }
             })
+
+            $('.form-group.address-above').on('click', function () {
+                whereSelectRegion = 0;
+            });
+
+            $('.form-group.address-below').on('click', function () {
+                whereSelectRegion = 1;
+            });
         })
 
         function getDate() {
@@ -411,6 +419,8 @@
 
         let country_code = ''
         let city_code = ''
+
+        var whereSelectRegion = '';
         getListNation();
 
         function getListNation() {
@@ -421,8 +431,6 @@
                     makeHTMLFromJson(data, ID_COUNTRY)
                     makeHTMLFromJson(data, ID_COUNTRY_1)
                     makeHTMLFromJson(data, ID_NATION_MODAL_CREATE)
-                    autoSelectedOption(ID_STATE)
-                    autoSelectedOption(ID_STATE_1)
                 });
         }
 
@@ -435,7 +443,6 @@
                     clearDataOption();
                     const data = await res.json();
                     makeHTMLFromJson(data, ID_STATE)
-                    autoSelectedOption(ID_CITY)
                 });
         }
 
@@ -447,7 +454,6 @@
                 .then(async function (res) {
                     const data = await res.json();
                     makeHTMLFromJson(data, ID_CITY)
-                    // autoSelectedOption(ID_WARD)
                 });
         }
 
@@ -471,7 +477,6 @@
                     clearDataOption1();
                     const data = await res.json();
                     makeHTMLFromJson(data, ID_STATE_1)
-                    autoSelectedOption(ID_CITY_1)
                 });
         }
 
@@ -483,7 +488,6 @@
                 .then(async function (res) {
                     const data = await res.json();
                     makeHTMLFromJson(data, ID_CITY_1)
-                    // autoSelectedOption(ID_WARD_1)
                 });
         }
 
@@ -516,20 +520,11 @@
         function clearDataOption() {
             document.getElementById(ID_STATE).innerHTML = '';
             document.getElementById(ID_CITY).innerHTML = '';
-            // document.getElementById(ID_WARD).innerHTML = '';
         }
 
         function clearDataOption1() {
             document.getElementById(ID_STATE_1).innerHTML = '';
             document.getElementById(ID_CITY_1).innerHTML = '';
-            // document.getElementById(ID_WARD_1).innerHTML = '';
-        }
-
-        function autoSelectedOption(id_where) {
-            const optionSelect = document.getElementById(id_where);
-            if (optionSelect.options.length > 0) {
-                optionSelect.options[0].selected = true;
-            }
         }
 
         function getValueForOption(option) {
@@ -616,6 +611,7 @@
             {{--        makeHTMLFromJson(data, ID_WARD_1)--}}
             {{--    });--}}
         }
+
 
     </script>
 @endsection
