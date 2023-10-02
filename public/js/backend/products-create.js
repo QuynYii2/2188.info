@@ -490,16 +490,13 @@ $('.add-fields').each(function (index, el) {
 
 $(document).ready(function () {
     $(".unregister").click(function () {
-        var categoryID = $(this).val();
-        var modalId = 'exampleModal-' + this.value;
-        var checkboxId = 'category-' + this.value;
-        var unCheck = document.getElementById(categoryID);
+        var categoryID = $(this).data("id");
+        var modalId_cate = 'exampleModal-' + categoryID;
+        var checkboxId = 'category-' + categoryID;
         var originalChecked = this.checked;
-        var modal = document.getElementById(modalId);
         console.log(categoryID);
-
-        async function setProductHots(categoryID) {
-            let url = urlCategory;
+        console.log(checkboxId);
+        async function setRegisterCategory(categoryID) {
             url = url.replace(':categoryID', categoryID);
             try {
                 await $.ajax({
@@ -511,23 +508,22 @@ $(document).ready(function () {
                     success: function (response) {
                         console.log(!response.id)
                         if (!response.id) {
-                            var modal = document.getElementById(modalId);
-                            $(modal).modal('show');
+                            var modal_cate = document.getElementById(modalId_cate);
+                            $(modal_cate).modal('show');
 
                             var confirmButton = document.querySelector('#' + modalId + ' .btn-primary');
                             confirmButton.addEventListener('click', function () {
                                 var checkbox = document.getElementById(checkboxId);
                                 checkbox.checked = true;
-                                $(modal).modal('hide');
+                                $(modal_cate).modal('hide');
                             });
 
                             // Xử lý sự kiện đóng Modal
-                            $(modal).on('hidden.bs.modal', function () {
+                            $(modal_cate).on('hidden.bs.modal', function () {
                                 var checkbox = document.getElementById(checkboxId);
                                 if (checkbox.checked !== originalChecked) {
                                     checkbox.checked = originalChecked;
                                 }
-                                $(unCheck).prop('checked', false);
 
                             });
                         }
@@ -540,7 +536,6 @@ $(document).ready(function () {
                 throw error;
             }
         }
-
-        setProductHots(categoryID);
+        setRegisterCategory(categoryID);
     });
 })
