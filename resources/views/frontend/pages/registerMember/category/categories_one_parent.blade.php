@@ -14,13 +14,13 @@
     @endif
     <label class="ml-2 d-flex align-items-center" for="code_2-{{$category->id}}">
         <input type="checkbox" id="code_2-{{$category->id}}"
-               name="code_2[]"
+               {{--               name="code_2[]"--}}
                value="{{ ($category->id) }}"
-               onchange="callCategory();"
+               onclick="callCategory();"
                {{ $isChecked ? 'checked' : '' }}
                class="inputCheckboxCategory1 mr-2 p-3"/>
         <span class="labelCheckboxCategory">
-                                                            @if(locationHelper() == 'kr')
+            @if(locationHelper() == 'kr')
                 <div class="item-text">{{ $category->name_ko }}</div>
             @elseif(locationHelper() == 'cn')
                 <div class="item-text">{{$category->name_zh}}</div>
@@ -63,6 +63,9 @@
             }
         }
         renderCategory3(arrayItem1);
+        arrayItem1.sort();
+        let value = arrayItem1.toString();
+        $('#input_code2').val(value);
     }
 
     async function renderCategory3(value) {
