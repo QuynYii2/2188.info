@@ -38,5 +38,7 @@
     var urlAllAttribute = `{{ route('get.all.attribute') }}`;
     var urlCreateAttribute = `{{ route('create.attribute') }}`;
     var urlProductCreateAttribute = `{{ route('product.create.attribute') }}`;
+    var urlCreateProperty = `{{ route('create.property') }}`;
+    var urlGetPropertyByAttribute = `{{ route('get.property.by.attribute', ['id' => ':id']) }}`
 </script>
 <script src="{{ asset('js/backend/product/attribute-property.js') }}"></script>

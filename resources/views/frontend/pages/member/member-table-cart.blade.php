@@ -1,15 +1,15 @@
-<table class="table table-bordered">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">{{ __('home.Product Name') }}</th>
-        <th scope="col">{{ __('home.quantity') }}</th>
-        <th scope="col">{{ __('home.Price') }}</th>
-        <th scope="col">{{ __('home.Grand Total') }}</th>
-    </tr>
-    </thead>
-    <tbody>
-    @if($carts->isNotEmpty())
+@if($carts->isNotEmpty())
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">{{ __('home.Product Name') }}</th>
+            <th scope="col">{{ __('home.quantity') }}</th>
+            <th scope="col">{{ __('home.Price') }}</th>
+            <th scope="col">{{ __('home.Grand Total') }}</th>
+        </tr>
+        </thead>
+        <tbody>
         @foreach($carts as $cart)
             <tr>
                 <th scope="row">{{$loop->index + 1}}</th>
@@ -28,42 +28,44 @@
                         @endif
                     </div>
                     <div class="small text-secondary">
-                        @php
-                            $arrayValues = explode(',', $cart->values);
-                        @endphp
-                        @foreach($arrayValues as $arrayValue)
+                        @if($cart->values && $cart->values != '')
                             @php
-                                $attribute_property = explode('-', $arrayValue);
-                                $attribute = \App\Models\Attribute::find($attribute_property[0]);
-                                $property = \App\Models\Properties::find($attribute_property[1]);
+                                $arrayValues = explode(',', $cart->values);
                             @endphp
-                            <span>
+                            @foreach($arrayValues as $arrayValue)
+                                @php
+                                    $attribute_property = explode('-', $arrayValue);
+                                    $attribute = \App\Models\Attribute::find($attribute_property[0]);
+                                    $property = \App\Models\Properties::find($attribute_property[1]);
+                                @endphp
+                                <span>
                                 @if(locationHelper() == 'kr')
-                                    {{$attribute->name_ko}}
-                                @elseif(locationHelper() == 'cn')
-                                    {{$attribute->name_zh}}
-                                @elseif(locationHelper() == 'jp')
-                                    {{$attribute->name_ja}}
-                                @elseif(locationHelper() == 'vi')
-                                    {{$attribute->name_vi}}
-                                @else
-                                    {{$attribute->name_en}}
-                                @endif
+                                        {{$attribute->name_ko}}
+                                    @elseif(locationHelper() == 'cn')
+                                        {{$attribute->name_zh}}
+                                    @elseif(locationHelper() == 'jp')
+                                        {{$attribute->name_ja}}
+                                    @elseif(locationHelper() == 'vi')
+                                        {{$attribute->name_vi}}
+                                    @else
+                                        {{$attribute->name_en}}
+                                    @endif
                                 :
                                 @if(locationHelper() == 'kr')
-                                    {{$property->name_ko}}
-                                @elseif(locationHelper() == 'cn')
-                                    {{$property->name_zh}}
-                                @elseif(locationHelper() == 'jp')
-                                    {{$property->name_ja}}
-                                @elseif(locationHelper() == 'vi')
-                                    {{$property->name_vi}}
-                                @else
-                                    {{$property->name_en}}
-                                @endif
+                                        {{$property->name_ko}}
+                                    @elseif(locationHelper() == 'cn')
+                                        {{$property->name_zh}}
+                                    @elseif(locationHelper() == 'jp')
+                                        {{$property->name_ja}}
+                                    @elseif(locationHelper() == 'vi')
+                                        {{$property->name_vi}}
+                                    @else
+                                        {{$property->name_en}}
+                                    @endif
                                     ,
                             </span>
-                        @endforeach
+                            @endforeach
+                        @endif
                     </div>
                 </td>
                 <td class="quantity col-md-1" style="vertical-align: middle;">
@@ -72,7 +74,7 @@
                                name="quantity" style="border-radius: 30px; border-color: #ccc; width: 55px; "
                                value="{{ $cart->quantity }}"
                                data-id="{{ $cart->id }}"
-                               min="{{$cart->product->min}}" />
+                               min="{{$cart->product->min}}"/>
                     </form>
                 </td>
                 <td>
@@ -82,9 +84,9 @@
                 <td id="totalCart{{ $cart->id }}">{{ number_format(convertCurrency('USD', $currency,$cart->price*$cart->quantity), 0, ',', '.') }} {{$currency}}</td>
             </tr>
         @endforeach
-    @endif
-    </tbody>
-</table>
+        </tbody>
+    </table>
+@endif
 <script>
     var urlConvertCurrency = `{{ route('convert.currency', ['total' => ':total']) }}`;
     var token = `{{ csrf_token() }}`;

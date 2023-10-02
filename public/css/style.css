@@ -33,7 +33,6 @@
   margin-top: -100px;
   margin-left: 50px;
   color: #000000;
-  font-family: Roboto;
   font-weight: 300;
 }
 #widget-error .message-box h1 {
@@ -620,6 +619,8 @@ input.qtyminus {
 input.input_quantity {
   max-width: 100px;
   width: 60px;
+  border-radius: 30px;
+  padding: 2px;
 }
 
 td.priceTransport {

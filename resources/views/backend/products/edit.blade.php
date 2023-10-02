@@ -27,7 +27,7 @@
         display: none;
     }
 
-    #selectAttribute{
+    #selectAttribute {
         display: block !important;
     }
 </style>
@@ -121,20 +121,20 @@
                             <div class="form-group col-12 col-sm-12" id="list-img-gallery"></div>
                         </div>
                         <div id="removeInputAttribute" class="form-group row">
-                            <table class="table table-bordered">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th scope="col">Attribute</th>
-                                    <th scope="col">Thumbnail</th>
-                                    <th scope="col">Old Price</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @if(!$productDetails->isEmpty())
+                            @if(!$productDetails->isEmpty())
+                                <table class="table table-bordered">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Attribute</th>
+                                        <th scope="col">Thumbnail</th>
+                                        <th scope="col">Old Price</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
                                     @foreach($productDetails as $productDetail)
                                         @if($productDetail->variation && $productDetail->variation != 0)
                                             <tr>
@@ -202,11 +202,11 @@
                                             </tr>
                                         @endif
                                     @endforeach
-                                @endif
-                                </tbody>
-                            </table>
+                                    <input type="text" hidden="" name="count" value="{{count($productDetails)}}">
+                                    </tbody>
+                                </table>
+                            @endif
                         </div>
-                        <input id="input-form-create-attribute" name="attribute_property" type="text" hidden>
 
                         <div class="form-group mt-2">
                             @include('backend.products.demo')

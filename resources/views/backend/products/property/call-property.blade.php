@@ -72,7 +72,9 @@
                 propertyArray.push(property);
             }
         }
-        console.log(myArray);
+        \
         $('#input-form-create-attribute').val(myArray);
     }
+
+    checkInput();
 </script>
