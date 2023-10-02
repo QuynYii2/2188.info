@@ -139,7 +139,18 @@
                                                 <img src="{{ asset('storage/' . $cartItem->product->thumbnail) }}">
                                             </div>
                                             <div class="col-5 name d-flex">
-                                                {{ $cartItem->quantity }} x {{ ($cartItem->product->name) }}
+                                                {{ $cartItem->quantity }} x
+                                                @if(locationHelper() == 'kr')
+                                                    {{ ($cartItem->product->name_ko) }}
+                                                @elseif(locationHelper() == 'cn')
+                                                    {{ ($cartItem->product->name_zh) }}
+                                                @elseif(locationHelper() == 'jp')
+                                                    {{ ($cartItem->product->name_ja) }}
+                                                @elseif(locationHelper() == 'vi')
+                                                    {{ ($cartItem->product->name_vi) }}
+                                                @else
+                                                    {{ ($cartItem->product->name_en) }}
+                                                @endif
                                             </div>
                                             @php
                                                 $currencyController = new \App\Http\Controllers\CurrencyController();
