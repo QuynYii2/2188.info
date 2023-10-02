@@ -201,6 +201,7 @@ class ProductController extends Controller
                 break;
             }
         }
+        session()->forget('att_of_product');
 
         return view('backend/products/create', [
             'categories' => $categories,

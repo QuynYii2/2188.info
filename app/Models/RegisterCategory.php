@@ -10,7 +10,9 @@ class RegisterCategory extends Model
     use HasFactory;
 
     protected $fillable =[
-      'user_id',
+        'user_id',
+        'storage_id',
+        'category_id',
     ];
     public function user()
     {

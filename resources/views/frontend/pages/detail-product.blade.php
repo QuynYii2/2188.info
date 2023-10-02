@@ -451,14 +451,6 @@
                         </div>
                     </div>
                     <div class=" buy justify-content-center d-none">
-                        {{--                        <div hidden="">--}}
-                        {{--                            <input min="{{$product->min}}" value="{{$product->min}}" type="number" class="input"--}}
-                        {{--                                   name="quantity">--}}
-                        {{--                            <div class="spinner">--}}
-                        {{--                                <button type="button" class="up button">&rsaquo;</button>--}}
-                        {{--                                <button type="button" class="down button">&lsaquo;</button>--}}
-                        {{--                            </div>--}}
-                        {{--                        </div>--}}
                         @if(!$attributes->isEmpty())
                             <button type="submit" id="btnAddCard"
                                     class="add-to-cart mr-3">{{ __('home.Add To Cart') }}</button>
@@ -470,9 +462,23 @@
                     </div>
                     <div class="column-xs-12 column-md-12 layout-fixed_rm table_element">
                         @include('frontend.pages.orderProductsDetail.tab-price-table')
-                        <div class="" id="productMainOrder"></div>
-                    </div>
+                        @if(!$attributes->isEmpty())
+                            <div class="" id="productMainOrder"></div>
+                        @else
+                            <div class=" buy justify-content-center d-flex">
+                                <div>
+                                    <input min="{{$product->min}}" value="{{$product->min}}" max="{{$product->qty}}" type="number" class="input"
+                                           name="quantity">
+                                    <div class="spinner">
+                                        <button type="button" class="up button">&rsaquo;</button>
+                                        <button type="button" class="down button">&lsaquo;</button>
+                                    </div>
+                                </div>
+                                <button type="submit" class="add-to-cart payment">{{ __('home.Add To Cart') }}</button>
 
+                                @endif
+                            </div>
+                    </div>
                 </form>
             </div>
             <div class="column-xs-12 column-md-3 layout-fixed">
@@ -508,14 +514,11 @@
                             </div>
                         </div>
                         <div class="express-footer">
-                            {{--                            <a href="#">--}}
-                            {{--                                <div class="button-start">{{ __('home.Start orde') }}</div>--}}
-                            {{--                            </a>--}}
-                            <a href="{{ route('shop.information.show', $name->id) }}">
+                            <a href="{{ route('chat.message.show', $name->name) }}">
                                 <div class="button-call"><i
                                             class="fa-solid fa-envelope"></i> {{ __('home.Contact supplier') }}</div>
                             </a>
-                            <a href="{{ route('chat.message.show', $name->name) }}">
+                            <a href="tel:{{ $name->phone }}" type="tel">
                                 <div class="button-call"><i class="fa-solid fa-phone"></i> {{ __('home.Call us') }}
                                 </div>
                             </a>
@@ -529,7 +532,7 @@
                 @if($shopInformation)
                     <div class="detail-module">
                         <form action="">
-                            <div class="widget-supplier-card company-card-integrated company-card-integrated-lite has-ta origin gps-background ilvietnam-0-0-1 snipcss-Kyhj9 style-v8cHz"
+                            <div class="widget-supplier-card company-card-integrated company-card-integrated-lite has-ta origin gps-background ilvietnam-0-0-1 style-v8cHz"
                                  data-role="widget-supplier-card" data-aui="supplier-card" id="style-v8cHz">
                                 <div class="card-central-logo ilvietnam-1-1-2">
                                     <a href="" target="_blank" data-aui="ta-ordered"
