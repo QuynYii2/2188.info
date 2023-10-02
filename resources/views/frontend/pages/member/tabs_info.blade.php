@@ -53,24 +53,26 @@
                         @php
                             $category = \App\Models\Category::find($itemArrayCategory);
                         @endphp
-                        <div class="col-md-6">
-                            <div class="mt-2 d-flex">
-                                <a href="{{route('category.show', $category->id)}}" class="mb-3 size">
-                                    @if(locationHelper() == 'kr')
-                                        {{ ($category->name_ko) }}
-                                    @elseif(locationHelper() == 'cn')
-                                        {{ ($category->name_zh) }}
-                                    @elseif(locationHelper() == 'jp')
-                                        {{ ($category->name_ja) }}
-                                    @elseif(locationHelper() == 'vi')
-                                        {{ ($category->name_vi) }}
-                                    @else
-                                        {{ ($category->name_en) }}
-                                    @endif
-                                    <i class="fa-solid fa-angle-right"></i>
-                                </a>
+                        @if($category)
+                            <div class="col-md-6">
+                                <div class="mt-2 d-flex">
+                                    <a href="{{route('category.show', $category->id)}}" class="mb-3 size">
+                                        @if(locationHelper() == 'kr')
+                                            {{ ($category->name_ko) }}
+                                        @elseif(locationHelper() == 'cn')
+                                            {{ ($category->name_zh) }}
+                                        @elseif(locationHelper() == 'jp')
+                                            {{ ($category->name_ja) }}
+                                        @elseif(locationHelper() == 'vi')
+                                            {{ ($category->name_vi) }}
+                                        @else
+                                            {{ ($category->name_en) }}
+                                        @endif
+                                        <i class="fa-solid fa-angle-right"></i>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     @endforeach
                 </div>
             </div>
