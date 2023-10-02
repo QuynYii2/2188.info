@@ -6,20 +6,19 @@
         $testArray = null;
     }
 @endphp
-<table class="table table-bordered">
-    <thead class="thead-light">
-    <tr>
-        <th scope="col">Attribute</th>
-        <th scope="col">Thumbnail</th>
-        <th scope="col">Old Price</th>
-        <th scope="col">Price</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-
-    @if($testArray)
+@if($testArray)
+    <table class="table table-bordered">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Attribute</th>
+            <th scope="col">Thumbnail</th>
+            <th scope="col">Old Price</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Description</th>
+        </tr>
+        </thead>
+        <tbody>
         @if(count($testArray) == 1)
             <div class="form-group col-12">
                 @php
@@ -34,7 +33,7 @@
                         @endphp
                         <tr>
                             <td>
-                               {{$attribute->name}}:{{$property->name}}
+                                {{$attribute->name}}:{{$property->name}}
                             </td>
                             <td>
                                 <input type="file" id="thumbnail" class="img-cfg"
@@ -238,7 +237,6 @@
             <br>
             <br>
         @endif
-    @endif
-
-    </tbody>
-</table>
+        </tbody>
+    </table>
+@endif

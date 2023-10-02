@@ -1,15 +1,15 @@
-<table class="table table-bordered">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">{{ __('home.Product Name') }}</th>
-        <th scope="col">{{ __('home.quantity') }}</th>
-        <th scope="col">{{ __('home.Price') }}</th>
-        <th scope="col">{{ __('home.Grand Total') }}</th>
-    </tr>
-    </thead>
-    <tbody>
-    @if($carts->isNotEmpty())
+@if($carts->isNotEmpty())
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">{{ __('home.Product Name') }}</th>
+            <th scope="col">{{ __('home.quantity') }}</th>
+            <th scope="col">{{ __('home.Price') }}</th>
+            <th scope="col">{{ __('home.Grand Total') }}</th>
+        </tr>
+        </thead>
+        <tbody>
         @foreach($carts as $cart)
             <tr>
                 <th scope="row">{{$loop->index + 1}}</th>
@@ -72,7 +72,7 @@
                                name="quantity" style="border-radius: 30px; border-color: #ccc; width: 55px; "
                                value="{{ $cart->quantity }}"
                                data-id="{{ $cart->id }}"
-                               min="{{$cart->product->min}}" />
+                               min="{{$cart->product->min}}"/>
                     </form>
                 </td>
                 <td>
@@ -82,9 +82,9 @@
                 <td id="totalCart{{ $cart->id }}">{{ number_format(convertCurrency('USD', $currency,$cart->price*$cart->quantity), 0, ',', '.') }} {{$currency}}</td>
             </tr>
         @endforeach
-    @endif
-    </tbody>
-</table>
+        </tbody>
+    </table>
+@endif
 <script>
     var urlConvertCurrency = `{{ route('convert.currency', ['total' => ':total']) }}`;
     var token = `{{ csrf_token() }}`;
