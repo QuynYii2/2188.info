@@ -184,9 +184,9 @@ class ProductController extends Controller
         $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $registerCate = MemberRegisterPersonSource::where('email', Auth::user()->email)->get();
         $registerCategories = MemberRegisterInfo::where('id', $registerCate[0]['member_id'])->get();
-        $categoriesRegister =[];
+        $categoriesRegister = [];
         $arrayCategory = explode(',', $registerCategories[0]['category_id']);
-        foreach($arrayCategory as $registerCategor){
+        foreach ($arrayCategory as $registerCategor) {
             array_push($categoriesRegister, $registerCategor);
         }
 
@@ -409,7 +409,7 @@ class ProductController extends Controller
 
 
             $product->origin = $request->input('origin');
-            $product-> min = $request->input('min');
+            $product->min = $request->input('min');
 
             $ld = new TranslateController();
 
@@ -458,10 +458,10 @@ class ProductController extends Controller
             $counts = count($starts);
             for ($i = 0; $i < $counts; $i++) {
                 $newProductSale = null;
-                if (!$starts[$i]){
+                if (!$starts[$i]) {
                     $starts[$i] = $product->min;
                 }
-                if (!$ends[$i]){
+                if (!$ends[$i]) {
                     $quantity = $starts[$i];
                 } else {
                     $quantity = $starts[$i] . '-' . $ends[$i];
@@ -533,6 +533,7 @@ class ProductController extends Controller
                 return back();
             }
         } catch (\Exception $exception) {
+            dd($exception);
             alert()->error('Error', 'Error, please try again');
             return back();
         }
@@ -666,7 +667,7 @@ class ProductController extends Controller
 
                     $newVariationData = Variation::find($id);
 
-
+                    $newVariationData->quantity = $request->input('quantity' . $id);
 
                     if ($request->hasFile('thumbnail' . $id)) {
                         $thumbnail = $request->file('thumbnail' . $id);
@@ -687,6 +688,7 @@ class ProductController extends Controller
                 }
             } else {
                 $newVariationData = Variation::where([['product_id', $product->id], ['status', VariationStatus::ACTIVE]])->first();
+
                 if (!$newVariationData) {
                     $newVariationData = new Variation();
                     $newVariationData->product_id = $product->id;
@@ -695,18 +697,22 @@ class ProductController extends Controller
                     $newVariationData->quantity = 100;
                 }
 
-                if ($request->hasFile('thumbnail1')) {
-                    $thumbnail = $request->file('thumbnail1');
+                $newVariationData->quantity = $request->input('quantity' . $newVariationData->id);
+
+                if ($request->hasFile('thumbnail' . $newVariationData->id)) {
+                    $thumbnail = $request->file('thumbnail' . $newVariationData->id);
                     $thumbnailPath = $thumbnail->store('thumbnails', 'public');
                     $newVariationData->thumbnail = $thumbnailPath;
                 }
 
-                $newVariationData->price = $request->input('price1');
-                $newVariationData->old_price = $request->input('old_price1');
+                $newVariationData->price = $request->input('price' . $newVariationData->id);
+                $newVariationData->old_price = $request->input('old_price' . $newVariationData->id);
 
-                if (!$request->input('price1') || $request->input('old_price1') < $request->input('price')) {
-                    $newVariationData->price = $request->input('old_price1');
+                if (!$request->input('price' . $newVariationData->id) || $request->input('old_price' . $newVariationData->id) < $request->input('price' . $newVariationData->id)) {
+                    $newVariationData->price = $request->input('old_price' . $newVariationData->id);
                 }
+
+                $newVariationData->description = $request->input('description' . $newVariationData->id);
 
                 $newVariationData->save();
             }
@@ -835,10 +841,10 @@ class ProductController extends Controller
         $counts = count($starts);
         for ($i = 0; $i < $counts; $i++) {
             $newProductSale = null;
-            if (!$starts[$i]){
+            if (!$starts[$i]) {
                 $starts[$i] = $product->min;
             }
-            if (!$ends[$i]){
+            if (!$ends[$i]) {
                 $quantity = $starts[$i];
             } else {
                 $quantity = $starts[$i] . '-' . $ends[$i];
