@@ -620,6 +620,8 @@ input.qtyminus {
 input.input_quantity {
   max-width: 100px;
   width: 60px;
+  border-radius: 30px;
+  padding: 2px;
 }
 
 td.priceTransport {
