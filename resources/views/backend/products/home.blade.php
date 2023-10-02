@@ -281,13 +281,14 @@
             </div>
         </div>
     </div>
+
     <script>
-        var url = `{{ route('admin.toggle.products', ['id' => ':productID']) }}`;
+        var urlToggleProduct = `{{ route('admin.toggle.products', ['id' => ':productID']) }}`;
         var urla = `{{route('admin.statistic.access')}}`;
         var urlb = `{{route('admin.statistic.revenues')}}`;
         var urlc = `{{route('admin.statistic.users')}}`;
         var urld = `{{route('shop.statistic.index')}}`;
-        var token = '{{ csrf_token() }}';
+        var token = `{{ csrf_token() }}`;
     </script>
     <script src="{{ asset('js/backend/products-home.js') }}"></script>
 @endsection

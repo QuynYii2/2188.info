@@ -2,6 +2,7 @@ $(".toggleProduct").click(function () {
     var productID = $(this).val();
 
     async function setProduct(productID) {
+        let url = urlToggleProduct;
         url = url.replace(':productID', productID);
 
         try {
