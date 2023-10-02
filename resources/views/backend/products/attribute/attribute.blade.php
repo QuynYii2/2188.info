@@ -4,7 +4,17 @@
         <option value="#"> --- {{ __('home.Chọn thuộc tính cha') }} ---</option>
         @foreach($attributes as $attribute)
             <option value="{{ $attribute->id }}" data-attribute="{{$attribute}}">
-                {{ $attribute->name }}
+                @if(locationHelper() == 'kr')
+                    {{ ($attribute->name_ko) }}
+                @elseif(locationHelper() == 'cn')
+                    {{ ($attribute->name_zh) }}
+                @elseif(locationHelper() == 'jp')
+                    {{ ($attribute->name_ja) }}
+                @elseif(locationHelper() == 'vi')
+                    {{ ($attribute->name_vi) }}
+                @else
+                    {{ ($attribute->name_en) }}
+                @endif
             </option>
         @endforeach
     </select>
