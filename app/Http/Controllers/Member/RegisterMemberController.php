@@ -166,8 +166,20 @@ class RegisterMemberController extends Controller
             $datetime_register = Carbon::now()->addHours(7);
             $number_clearance = $request->input('number_clearance');
             $name_kr = $request->input('name_kr');
-            $address_en = $request->input('address_en');
-            $address_kr = $request->input('address_kr');
+
+            $comma = ', ';
+            $address_en =
+                $request->input('countries-select').$comma.
+                $request->input('cities-select').$comma.
+                $request->input('provinces-select').$comma.
+                $request->input('detail-address');
+            $address_kr =
+                $request->input('countries-select-1').$comma.
+                $request->input('cities-select-1').$comma.
+                $request->input('provinces-select-1').$comma.
+                $request->input('detail-address-1');
+            $address = $address_en;
+
             $certify_business = '';
             $gpkdPath = '';
             /*Thông tin người đăng ký và đăng ký user*/
@@ -195,13 +207,22 @@ class RegisterMemberController extends Controller
             $code_3 = $request->input('code_3');
             $code_4 = $request->input('code_4');
 
-            $categoryIds = implode(',', $code_1).','.implode(',', $code_2);
+            $categoryIds = '';
+            $code_1_item = '';
+            $code_2_item = '';
+            if ($code_1) {
+                $categoryIds .= implode(',', $code_1);
+                $code_1_item = implode(',', $code_1);
+            }
+            if ($code_2) {
+                $categoryIds .= ','.implode(',', $code_2);
+                $code_2_item = implode(',', $code_2);
+            }
+
             $arrayCategoryID = explode(',', $categoryIds);
             sort($arrayCategoryID);
             $categoryIds = implode(',', $arrayCategoryID);
 
-            $code_1_item = implode(',', $code_1);
-            $code_2_item = implode(',', $code_2);
 
             $id = 0;
 

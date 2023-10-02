@@ -155,8 +155,7 @@
                     <div class="form-group col-md-3 address-below" data-toggle="modal" data-target="#modal-address">
                         <label for="provinces-select-1">{{ __('home.Select district/district') }}:</label>
                         <input type="text" readonly class="form-control" id="provinces-select-1"
-                               name="provinces-select-1"
-                        >
+                               name="provinces-select-1">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="address_kr"> {{ __('home.Address detail') }}:</label>
