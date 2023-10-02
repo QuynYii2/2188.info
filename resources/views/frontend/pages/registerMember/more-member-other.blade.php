@@ -110,28 +110,27 @@
                 <label>{{ __('home.Address Business') }}</label>
             </th>
             <td>
-                <label for="address_en"> {{ __('home.Language English') }} </label>
+                <label for="detail-address"> {{ __('home.Language English') }} </label>
             </td>
             <td colspan="3">
                 <div class="row">
-                    <div class="form-group col-md-3" data-toggle="modal" data-target="#modal-address">
+                    <div class="form-group col-md-3 address-above" data-toggle="modal" data-target="#modal-address">
                         <label for="countries-select">{{ __('home.Select country') }}:</label>
-                        <input type="text" disabled class="form-control" id="countries-select" name="countries-select"
-                               required>
+                        <input type="text" readonly class="form-control" id="countries-select" name="countries-select">
                     </div>
-                    <div class="form-group col-md-3" data-toggle="modal" data-target="#modal-address">
+                    <div class="form-group col-md-3 address-above" data-toggle="modal" data-target="#modal-address">
                         <label for="cities-select">{{ __('home.Choose the city') }}:</label>
-                        <input type="text" disabled class="form-control" id="cities-select" name="cities-select"
-                               required>
+                        <input type="text" readonly class="form-control" id="cities-select" name="cities-select"
+                        >
                     </div>
-                    <div class="form-group col-md-3" data-toggle="modal" data-target="#modal-address">
+                    <div class="form-group col-md-3 address-above" data-toggle="modal" data-target="#modal-address">
                         <label for="provinces-select">{{ __('home.Select district/district') }}:</label>
-                        <input type="text" disabled class="form-control" id="provinces-select" name="provinces-select"
-                               required>
+                        <input type="text" readonly class="form-control" id="provinces-select" name="provinces-select"
+                        >
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="address_en">{{ __('home.Address detail') }}:</label>
-                        <input type="text" name="address_en" id="address_en" class="form-control" required
+                        <label for="detail-address">{{ __('home.Address detail') }}:</label>
+                        <input type="text" name="detail-address" id="detail-address" class="form-control"
                                value="{{ $exitsMember ? $exitsMember->address_en : old('address_en') }}">
                     </div>
                 </div>
@@ -140,29 +139,29 @@
 
         <tr>
             <td>
-                <label for="address_en"> {{ __('home.Language English') }} </label>
+                <label for="detail-address-1"> {{ __('home.Language Local') }} </label>
             </td>
             <td colspan="3">
                 <div class="row">
-                    <div class="form-group col-md-3" data-toggle="modal" data-target="#modal-address">
-                        <label for="countries-select">{{ __('home.Select country') }}:</label>
-                        <input type="text" disabled class="form-control" id="countries-select" name="countries-select-1"
-                               required>
+                    <div class="form-group col-md-3 address-below" data-toggle="modal" data-target="#modal-address">
+                        <label for="countries-select-1">{{ __('home.Select country') }}:</label>
+                        <input type="text" readonly class="form-control" id="countries-select-1"
+                               name="countries-select-1">
                     </div>
-                    <div class="form-group col-md-3" data-toggle="modal" data-target="#modal-address">
-                        <label for="cities-select">{{ __('home.Choose the city') }}:</label>
-                        <input type="text" disabled class="form-control" id="cities-select" name="cities-select-1"
-                               required>
+                    <div class="form-group col-md-3 address-below" data-toggle="modal" data-target="#modal-address">
+                        <label for="cities-select-1">{{ __('home.Choose the city') }}:</label>
+                        <input type="text" readonly class="form-control" id="cities-select-1" name="cities-select-1">
                     </div>
-                    <div class="form-group col-md-3" data-toggle="modal" data-target="#modal-address">
-                        <label for="provinces-select">{{ __('home.Select district/district') }}:</label>
-                        <input type="text" disabled class="form-control" id="provinces-select" name="provinces-select-1"
-                               required>
+                    <div class="form-group col-md-3 address-below" data-toggle="modal" data-target="#modal-address">
+                        <label for="provinces-select-1">{{ __('home.Select district/district') }}:</label>
+                        <input type="text" readonly class="form-control" id="provinces-select-1"
+                               name="provinces-select-1"
+                        >
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="address_en">{{ __('home.Address detail') }}:</label>
-                        <input type="text" name="address_kr" id="address_en" class="form-control" required
-                               value="{{ $exitsMember ? $exitsMember->address_en : old('address_en') }}">
+                        <label for="address_kr"> {{ __('home.Address detail') }}:</label>
+                        <input type="text" name="detail-address-1" id="detail-address-1" class="form-control"
+                               value="{{ $exitsMember ? $exitsMember->address_kr : old('address_kr') }}">
                     </div>
                 </div>
             </td>
@@ -388,7 +387,7 @@
 <script>
     $(document).ready(function () {
         $('#buttonRegister').on('click', function () {
-            // handleAfterSelectRegion();
+            handleAfterSelectRegion();
             // $('#formRegisterMember').trigger('submit');
             $('#btnSubmitFormRegister').trigger('click');
         })
@@ -475,5 +474,7 @@
                 });
         }
     })
+
+
 </script>
 
