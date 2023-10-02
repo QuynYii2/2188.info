@@ -140,34 +140,29 @@
 
         <tr>
             <td>
-                <label for="address_kr"> {{ __('home.Language Local') }} </label>
+                <label for="address_en"> {{ __('home.Language English') }} </label>
             </td>
             <td colspan="3">
                 <div class="row">
-                    <div class="form-group col-md-3">
-                        <label for="countries-select-1">{{ __('home.Select country') }}:</label>
-                        <select class="form-control" id="countries-select-1" name="countries-select-1"
-                                onchange="getListState1(this.value)" required>
-                        </select>
+                    <div class="form-group col-md-3" data-toggle="modal" data-target="#modal-address">
+                        <label for="countries-select">{{ __('home.Select country') }}:</label>
+                        <input type="text" disabled class="form-control" id="countries-select" name="countries-select-1"
+                               required>
+                    </div>
+                    <div class="form-group col-md-3" data-toggle="modal" data-target="#modal-address">
+                        <label for="cities-select">{{ __('home.Choose the city') }}:</label>
+                        <input type="text" disabled class="form-control" id="cities-select" name="cities-select-1"
+                               required>
+                    </div>
+                    <div class="form-group col-md-3" data-toggle="modal" data-target="#modal-address">
+                        <label for="provinces-select">{{ __('home.Select district/district') }}:</label>
+                        <input type="text" disabled class="form-control" id="provinces-select" name="provinces-select-1"
+                               required>
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="cities-select-1">{{ __('home.Choose the city') }}:</label>
-                        <select class="form-control" id="cities-select-1" name="cities-select-1"
-                                onchange="getListCity1(this.value)">
-                            <option value="">-- {{ __('home.Choose the city') }} --</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="provinces-select-1">{{ __('home.Select district/district') }}:</label>
-                        <select class="form-control" id="provinces-select-1" name="provinces-select-1"
-                                onchange="getListWard1(this.value)">
-                            <option value="">-- {{ __('home.Select district/district') }} --</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="address_kr"> {{ __('home.Address detail') }}:</label>
-                        <input type="text" name="address_kr" id="address_kr" class="form-control" required
-                               value="{{ $exitsMember ? $exitsMember->address_kr : old('address_kr') }}">
+                        <label for="address_en">{{ __('home.Address detail') }}:</label>
+                        <input type="text" name="address_kr" id="address_en" class="form-control" required
+                               value="{{ $exitsMember ? $exitsMember->address_en : old('address_en') }}">
                     </div>
                 </div>
             </td>
