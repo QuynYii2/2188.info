@@ -55,6 +55,7 @@ class CartController extends Controller
 
             $price = $request->input('price');
 
+
             if ($valid == true) {
                 $quantity = $request->input('quantity');
                 $oldCart = Cart::where([
@@ -67,8 +68,8 @@ class CartController extends Controller
                 $cart->quantity = $cart->quantity + $quantity;
                 $success = $cart->save();
             } else {
-                $quantity = $request->input('quantity', 1);// Số lượng mặc định là 1, có thể điều chỉnh tùy ý
-                if ($quantity < 1) {
+                $quantity = $request->input('quantity', $product->min);// Số lượng mặc định là 1, có thể điều chỉnh tùy ý
+                if ($quantity < $product->min) {
                     return back();
                 }
                 $cart = [
@@ -83,7 +84,7 @@ class CartController extends Controller
             }
 
             if ($success) {
-                return redirect()->route('cart.index')->with('success', 'Product added to cart successfully!');
+                return redirect()->route('checkout.show')->with('success', 'Product added to cart successfully!');
             } else {
                 return back();
             }

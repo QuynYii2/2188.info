@@ -82,12 +82,12 @@
                             </td>
                             <td>
                                 @if($productVariable)
-                                    <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                                    <input type="number" min="{{$product->min}}" value="{{$product->min}}" max="{{ $product->qty }}" name="quantity[]"
                                            class="input_quantity"
                                            data-id="0" data-product="{{$productVariable}}"
                                            data-variable="{{$item[0]}}">
                                 @else
-                                    <input type="number" min="{{$product->min}}" value="{{$product->min}}" name="quantity[]"
+                                    <input type="number" min="{{$product->min}}" value="{{$product->min}}" max="{{ $product->qty }}" name="quantity[]"
                                            class="input_quantity" data-id="0" data-product="{{$product}}"
                                            data-variable="{{$item[0]}}">
                                 @endif
@@ -343,6 +343,7 @@
                 @endif
             @else
                 @foreach($testArray as $productAttribute)
+
                     @php
                         $productVariable =  \App\Models\Variation::where([
                                         ['product_id', $productID],
