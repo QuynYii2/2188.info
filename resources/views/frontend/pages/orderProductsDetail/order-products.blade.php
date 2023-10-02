@@ -1,5 +1,5 @@
 <div class="container-with-scroll">
-    <table class="table table-products" id="table-selected-att">
+    <table class="table table-bordered" id="table-selected-att">
         <thead>
         <tr>
             <th scope="col">{{ __('home.thumbnail') }}</th>
