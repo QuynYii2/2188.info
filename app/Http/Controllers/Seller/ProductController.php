@@ -387,7 +387,7 @@ class ProductController extends Controller
             }
 
             $number = $request->input('count');
-            $isNew = $request->input('isNew');
+            $isNew = $request->input('attribute_property');
 
             ProductSale::where('product_id', '=', $product->id)->delete();
 
@@ -666,6 +666,8 @@ class ProductController extends Controller
 
                     $newVariationData = Variation::find($id);
 
+
+
                     if ($request->hasFile('thumbnail' . $id)) {
                         $thumbnail = $request->file('thumbnail' . $id);
                         $thumbnailPath = $thumbnail->store('thumbnails', 'public');
@@ -678,6 +680,8 @@ class ProductController extends Controller
                     if (!$request->input('price' . $id) || $request->input('old_price' . $id) < $request->input('price' . $id)) {
                         $newVariationData->price = $request->input('old_price' . $id);
                     }
+
+                    $newVariationData->description = $request->input('description' . $id);
 
                     $newVariationData->save();
                 }

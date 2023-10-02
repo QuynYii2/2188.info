@@ -93,6 +93,8 @@
         $('#input-form-create-attribute').val(myArray);
     }
 
+    checkInput();
+
     async function generateFormProperty() {
         await $.ajax({
             url: '{{ route('call.attribute') }}',

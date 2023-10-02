@@ -1,26 +1,3 @@
-// $('#btnSaveAttribute').on('click', function () {
-//     let attribute = document.getElementById('input-form-create-attribute').value;
-//     let isNew = document.getElementById('isNew');
-//     isNew.value = 100;
-//     var renderInputAttribute = $('#renderInputAttribute');
-//     $.ajax({
-//         url: url,
-//         type: 'POST',
-//         data: {
-//             _token: token,
-//             'attribute_property': attribute
-//         },
-//         // dataType: 'json',
-//         success: function (response) {
-//             // var item = response;
-//             renderInputAttribute.append(response);
-//         },
-//         error: function (xhr, status, error) {
-//             renderInputAttribute.append('<h3>Error</h3>');
-//         }
-//     })
-// })
-
 $('.btnRemove').on('click', function () {
     let attribute = $(this).data('value');
     removeVariable(attribute);
@@ -69,7 +46,6 @@ function validInput(id) {
 function checkHotAndFeature() {
     var hot = document.getElementById('inputHotProduct');
     var feature = document.getElementById('inputFeatureProduct');
-    console.log(hot, feature);
     if (hot.value == 1) {
         document.getElementById("hot_product").checked = true;
     }
@@ -79,32 +55,6 @@ function checkHotAndFeature() {
 }
 
 checkHotAndFeature();
-var properties = document.getElementsByClassName('property-attribute')
-var number = properties.length
-
-function checkInput() {
-    var propertyArray = [];
-    var attributeArray = [];
-    var myArray = [];
-    for (i = 0; i < number; i++) {
-        if (properties[i].checked) {
-            const ArrPro = properties[i].value.split('-');
-            myArray.push(properties[i].value);
-            let attribute = ArrPro[0];
-            let property = ArrPro[1];
-            attributeArray.push(attribute);
-            propertyArray.push(property);
-        }
-    }
-    var attPro = document.getElementById('input-form-create-attribute')
-    attPro.value = myArray;
-}
-
-checkInput();
-
-$(document).on('change', '.property-attribute', function (event) {
-    checkInput();
-});
 
 function showDropdown(inputId, dropdownId) {
     var dropdownList = document.getElementById(dropdownId);
