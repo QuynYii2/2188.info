@@ -22,7 +22,7 @@ class CartController extends Controller
                 ['status', '=', CartStatus::WAIT_ORDER]
             ])->get();
             $currency = (new \App\Http\Controllers\Frontend\HomeController())->getLocation($request);
-            return view('frontend/pages/cart')->with('cartItems', $carts)->with('currency', $currency);
+            return back()->with('cartItems', $carts)->with('currency', $currency);
         } else {
             return view('frontend/pages/login');
         }
