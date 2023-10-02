@@ -367,7 +367,7 @@ class RegisterMemberController extends Controller
                 $code_3 = [];
             }
 
-            $categoryIds = implode(',', $code_1).','.implode(',', $code_2).','.implode(',', $code_3);
+            $categoryIds = $code_1.','.$code_2.','.$code_3;
             $arrayCategoryID = explode(',', $categoryIds);
             sort($arrayCategoryID);
             $categoryIds = implode(',', $arrayCategoryID);

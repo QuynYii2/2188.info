@@ -294,7 +294,7 @@
                             @foreach($categories_no_parent as $category)
                                 <label class="ml-2 d-flex align-items-center" for="type_business-{{$category->id}}">
                                     <input type="checkbox" id="type_business-{{$category->id}}"
-                                           name="code_1[]"
+{{--                                           name="code_1[]"--}}
                                            value="{{ ($category->id) }}"
                                            class="inputCheckboxCategory mr-2 p-3"/>
                                     <span class="labelCheckboxCategory">
@@ -381,6 +381,9 @@
             </td>
         </tr>
         </tbody>
+        <input type="text" name="code_1" class="d-none" id="input_code1">
+        <input type="text" name="code_2" class="d-none" id="input_code2">
+        <input type="text" name="code_3" class="d-none" id="input_code3">
         <button class="d-none" id="btnSubmitFormRegister" type="submit">Done</button>
     </form>
 </table>
@@ -434,7 +437,7 @@
 
 
         let arrayItem = [];
-        $('.inputCheckboxCategory').on('change', function () {
+        $('.inputCheckboxCategory').on('click', function () {
             let items = document.getElementsByClassName('inputCheckboxCategory');
             for (let i = 0; i < items.length; i++) {
                 if (items[i].checked) {
@@ -451,6 +454,9 @@
                 }
             }
             renderCategory2(arrayItem);
+            arrayItem.sort();
+            let value = arrayItem.toString();
+            $('#input_code1').val(value);
         })
 
 
