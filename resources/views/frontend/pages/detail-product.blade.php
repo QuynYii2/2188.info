@@ -465,11 +465,20 @@
                         @if(!$attributes->isEmpty())
                             <div class="" id="productMainOrder"></div>
                         @else
-                            <button type="submit" class="add-to-cart payment">{{ __('home.Add To Cart') }}</button>
-                        @endif
+                            <div class=" buy justify-content-center d-flex">
+                                <div>
+                                    <input min="{{$product->min}}" value="{{$product->min}}" max="{{$product->qty}}" type="number" class="input"
+                                           name="quantity">
+                                    <div class="spinner">
+                                        <button type="button" class="up button">&rsaquo;</button>
+                                        <button type="button" class="down button">&lsaquo;</button>
+                                    </div>
+                                </div>
+                                <button type="submit" class="add-to-cart payment">{{ __('home.Add To Cart') }}</button>
 
+                                @endif
+                            </div>
                     </div>
-
                 </form>
             </div>
             <div class="column-xs-12 column-md-3 layout-fixed">
