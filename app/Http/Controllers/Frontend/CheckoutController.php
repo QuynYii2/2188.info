@@ -83,6 +83,7 @@ class CheckoutController extends Controller
 
     private function checkout(Request $request, $status, $orderMethod, $name, $email, $phone, $address, $idVoucher, $array)
     {
+        (new HomeController())->getLocale($request);
         $carts = Cart::where([
             ['user_id', '=', Auth::user()->id],
             ['status', '=', CartStatus::WAIT_ORDER]
@@ -340,6 +341,7 @@ class CheckoutController extends Controller
 
     public function returnCheckout(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $url = session('url_prev','/');
         if($request->vnp_ResponseCode == "00") {
             $vnpAmount = $request->input('vnp_Amount');
