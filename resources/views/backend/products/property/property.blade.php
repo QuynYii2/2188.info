@@ -1,18 +1,20 @@
 <p>{{ __('home.Product attribute') }}: <span style="font-size: 16px; font-weight: 600">{{$attribute->name}}</span></p>
 <div class="">
+    @php
+        $isChecked = false;
+        $att_of_product = session()->get('att_of_product');
+        if ($att_of_product){
+            $att_of_product = $att_of_product[0];
+        }
+    @endphp
     @if($properties->isNotEmpty())
         <div class="row" id="property_{{$attribute->id}}">
             @foreach($properties as $property)
+                @php
+                    $isChecked = false;
+                @endphp
                 <div class="col-md-3">
                     <div class="form-check mb-2">
-                        @php
-                            $isChecked = false;
-                            $att_of_product = session()->get('att_of_product');
-                            if (!$att_of_product) {
-                                return back();
-                            }
-                            $att_of_product = $att_of_product[0];
-                        @endphp
                         @if(isset($att_of_product))
                             @foreach($att_of_product as $att)
                                 @if($att->attribute_id == $attribute->id )
@@ -47,7 +49,7 @@
         </div>
     @endif
     <div class="col-md-3">
-        <a class="btm btn-warning btnCreateProperty"
+        <a class="btn btn-warning btnCreateProperty"
            data-id="{{$attribute->id}}">{{ __('home.Create now') }}
         </a>
     </div>
