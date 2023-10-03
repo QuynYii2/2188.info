@@ -293,7 +293,7 @@
                             @foreach($categories_no_parent as $category)
                                 <label class="ml-2 d-flex align-items-center" for="type_business-{{$category->id}}">
                                     <input type="checkbox" id="type_business-{{$category->id}}"
-{{--                                           name="code_1[]"--}}
+                                           {{--                                           name="code_1[]"--}}
                                            value="{{ ($category->id) }}"
                                            class="inputCheckboxCategory mr-2 p-3"/>
                                     <span class="labelCheckboxCategory">
@@ -389,10 +389,24 @@
 <script>
     $(document).ready(function () {
         $('#buttonRegister').on('click', function () {
-            handleAfterSelectRegion();
             // $('#formRegisterMember').trigger('submit');
-            $('#btnSubmitFormRegister').trigger('click');
+            let isChecked = checkCategory('inputCheckboxCategory');
+            let isChecked1 = checkCategory('inputCheckboxCategory1');
+            let isChecked2 = checkCategory('inputCheckboxCategory2');
+
+            if (isChecked && isChecked1 && isChecked2) {
+                handleAfterSelectRegion();
+                $('#btnSubmitFormRegister').trigger('click');
+            } else {
+                alert('Bạn chưa chọn category');
+            }
         })
+
+        function checkCategory(className) {
+            let items = document.getElementsByClassName(className);
+            let isChecked = Array.from(items).some(item => item.checked);
+            return isChecked;
+        }
 
         let type_business = $('#type_business');
         let manufacture = $('.manufacture');
@@ -479,7 +493,5 @@
                 });
         }
     })
-
-
 </script>
 

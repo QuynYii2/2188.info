@@ -158,7 +158,7 @@
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('home.address') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -168,10 +168,10 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" onclick="r_getListNation()">
-                        Back
+                        {{ __('home.Back') }}
                     </button>
                     <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#modal-create-region">Create Region
+                            data-target="#modal-create-region">{{ __('home.tao moi vi tri') }}
                     </button>
                 </div>
             </div>
@@ -185,7 +185,7 @@
                 <div class="modal-content">
                     @csrf
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">{{ __('home.tao moi vi tri') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -195,26 +195,25 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="continents">Châu lục</label>
+                                        <label for="continents">{{ __('home.chau luc') }}</label>
                                         <select class="form-control" id="continents" name="continents">
-                                            <option value="Asia">Châu Á</option>
-                                            <option value="Europe">Châu Âu</option>
-                                            <option value="Africa">Châu Phi</option>
-                                            <option value="North America">Bắc Mỹ</option>
-                                            <option value="South America">Nam Mỹ</option>
-                                            <option value="Oceania">Châu Đại Dương</option>
+                                            <option value="Asia">{{ __('home.chau a') }}</option>
+                                            <option value="Europe">{{ __('home.chau au') }}</option>
+                                            <option value="Africa">{{ __('home.chau phi') }}</option>
+                                            <option value="Americas">{{ __('home.chau my') }}</option>
+                                            <option value="Oceania">{{ __('home.chau dai duong') }}</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="what_create">Tạo mới cái j đấy?</label>
+                                        <label for="what_create">{{ __('home.cap bac tao') }}</label>
                                         <select class="form-control" id="what_create" name="what_create"
                                                 onchange="selectWhatCreate()">
-                                            <option value="0">Quốc Gia</option>
-                                            <option value="1">Tỉnh</option>
-                                            <option value="2">Quận Huyện</option>
-                                            <option value="3">Phường Xã</option>
+                                            <option value="0">{{ __('home.Nation') }}</option>
+                                            <option value="1">{{ __('home.tinh thanh') }}</option>
+                                            <option value="2">{{ __('home.quan huyen') }}</option>
+                                            <option value="3">{{ __('home.xa phuong') }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -222,7 +221,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="nation">Quốc gia</label>
+                                        <label for="nation">{{ __('home.Nation') }}</label>
                                         <input type="text" class="form-control" id="nation-input" name="nation-input">
                                         <select class="form-control" id="nation-select" name="nation-select"
                                                 onchange="getListState_selectModal(this.value)">
@@ -231,7 +230,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="province">Tỉnh thành</label>
+                                        <label for="province">{{ __('home.tinh thanh') }}</label>
                                         <input type="text" class="form-control" id="province-input"
                                                name="province-input">
                                         <select class="form-control" id="province-select" name="province-select"
@@ -243,7 +242,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="district">Quận/huyện</label>
+                                        <label for="district">{{ __('home.quan huyen') }}</label>
                                         <input type="text" class="form-control" id="district-input"
                                                name="district-input">
                                         <select class="form-control" id="district-select" name="district-select">
@@ -252,7 +251,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="commune">Xã phường</label>
+                                        <label for="commune">{{ __('home.xa phuong') }}</label>
                                         <input type="text" class="form-control" id="commune-input" name="commune-input">
                                         <select class="form-control" id="commune-select" name="commune-select">
                                         </select>
@@ -262,8 +261,9 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Thôi</button>
-                        <button type="submit" class="btn btn-primary">Tạo nha</button>
+                        <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal">{{ __('home.Cancel') }}</button>
+                        <button type="submit" class="btn btn-primary">{{ __('home.save changes') }}</button>
                     </div>
                 </div>
             </div>

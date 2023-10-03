@@ -167,7 +167,7 @@ class RegisterMemberController extends Controller
             $number_clearance = $request->input('number_clearance');
             $name_kr = $request->input('name_kr');
 
-            $comma = ', ';
+            $comma = ',';
             $address_en =
                 $request->input('countries-select').$comma.
                 $request->input('cities-select').$comma.
@@ -339,7 +339,7 @@ class RegisterMemberController extends Controller
             $name_en = $request->input('name_en');
             $name_kr = $request->input('name_kr');
 
-            $comma = ', ';
+            $comma = ',';
             $address_en =
                 $request->input('countries-select').$comma.
                 $request->input('cities-select').$comma.
@@ -376,18 +376,6 @@ class RegisterMemberController extends Controller
             $code_business = $request->input('code_business');
             $type_business = $request->input('type_business');
 
-            if (!$code_1) {
-                $code_1 = [];
-            }
-
-            if (!$code_2) {
-                $code_2 = [];
-            }
-
-            if (!$code_3) {
-                $code_3 = [];
-            }
-
             $categoryIds = $code_1.','.$code_2.','.$code_3;
             $arrayCategoryID = explode(',', $categoryIds);
             sort($arrayCategoryID);
@@ -406,9 +394,9 @@ class RegisterMemberController extends Controller
                 $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
             }
 
-            $code_1_item = implode(',', $code_1);
-            $code_2_item = implode(',', $code_2);
-            $code_3_item = implode(',', $code_3);
+            $code_1_item = $code_1;
+            $code_2_item = $code_2;
+            $code_3_item = $code_3;
 
             if ($exitMemberPerson) {
                 $exitsMember = MemberRegisterInfo::where([
