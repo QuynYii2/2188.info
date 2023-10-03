@@ -224,9 +224,11 @@
 
             let arrChild = '';
             try {
+                console.log("region.child", region.child);
+                console.log('arrChild', arrChild);
                 arrChild = JSON.parse(region.child);
             } catch (error) {
-                console.error('Error parsing JSON:', error);
+                console.log('Error parsing JSON:', error);
             }
 
             if (arrChild) {
