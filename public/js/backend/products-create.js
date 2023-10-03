@@ -511,9 +511,10 @@ $(document).ready(function () {
                             var modal_cate = document.getElementById(modalId_cate);
                             $(modal_cate).modal('show');
 
-                            var confirmButton = document.querySelector('#' + modalId + ' .btn-primary');
+                            var confirmButton = document.querySelector('#' + modalId_cate + ' .btn-primary');
                             confirmButton.addEventListener('click', function () {
                                 var checkbox = document.getElementById(checkboxId);
+                                checkbox.removeAttribute('disabled');
                                 checkbox.checked = true;
                                 $(modal_cate).modal('hide');
                             });

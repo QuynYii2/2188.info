@@ -276,7 +276,11 @@
                                             <input type="checkbox" id="category-{{$category->id}}"
                                                    name="category-{{$category->id}}"
                                                    value="{{$category->id}}"
-                                                   class="inputCheckboxCategory mr-2 p-3"/>
+                                                   class="inputCheckboxCategory mr-2 p-3"
+                                                    @php
+                                                        echo !in_array($category->id, $categoriesRegister) ? '' :'checked';
+                                                    @endphp
+                                            />
                                             <span class="labelCheckboxCategory">
                                                 @if(locationHelper() == 'kr')
                                                     <div class="text">{{$category->name_ko }}</div>
@@ -358,7 +362,11 @@
                                                     <input type="checkbox" id="category-{{$child->id}}"
                                                            name="category-{{$child->id}}"
                                                            value="{{$child->id}}"
-                                                           class="inputCheckboxCategory mr-2 p-3"/>
+                                                           class="inputCheckboxCategory mr-2 p-3"
+                                                            @php
+                                                                echo !in_array($category->id, $categoriesRegister) ? '' :'checked';
+                                                            @endphp
+                                                    />
                                                     <span class="labelCheckboxCategory">
                                                             @if(locationHelper() == 'kr')
                                                             <div class="text">{{ $child->name_ko }}</div>
@@ -439,7 +447,11 @@
                                                         <input type="checkbox" id="category-{{$child2->id}}"
                                                                name="category-{{$child2->id}}"
                                                                value="{{$child2->id}}"
-                                                               class="inputCheckboxCategory mr-2 p-3"/>
+                                                               class="inputCheckboxCategory mr-2 p-3"
+                                                                @php
+                                                                    echo !in_array($category->id, $categoriesRegister) ? '' :'checked';
+                                                                @endphp
+                                                        />
                                                         <span class="labelCheckboxCategory">
                                                             @if(locationHelper() == 'kr')
                                                                 <div class="text">{{ $child2->name_ko }}</div>

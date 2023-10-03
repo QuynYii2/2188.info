@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 
 class RegisterCategoryController extends Controller
 {
+
     public function registerCategory($id, Request $request){
         (new HomeController())->getLocale($request);
         try {
