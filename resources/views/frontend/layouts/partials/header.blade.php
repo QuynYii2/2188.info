@@ -1065,7 +1065,7 @@
 </header>
 
 <div class="modal fade" id="modal-flag-header" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content p-4" style="width: auto">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Select country') }}</h5>
@@ -1077,24 +1077,16 @@
             <div class="modal-body">
                 <div class="d-flex justify-content-center">
                     <a href="https://shipgo.biz/kr">
-                        <div class="custom_flag">
-                            <img class="w-70 h-70 p-2" src="{{ asset('flag/kr.svg') }}" alt="">
-                        </div>
+                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px" src="{{ asset('flag/kr.svg') }}" alt="">
                     </a>
                     <a href="https://shipgo.biz/en">
-                        <div class="custom_flag">
-                            <img class="w-70 h-90 p-2" src="{{ asset('flag/us.svg') }}" alt="">
-                        </div>
+                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px" src="{{ asset('flag/us.svg') }}" alt="">
                     </a>
                     <a href="https://shipgo.biz/cn">
-                        <div class="custom_flag">
-                            <img class="w-70 h-70 p-2" src="{{ asset('flag/cn.svg') }}" alt="">
-                        </div>
+                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px" src="{{ asset('flag/cn.svg') }}" alt="">
                     </a>
                     <a href="https://shipgo.biz/vn">
-                        <div class="custom_flag">
-                            <img class="w-70 h-70 p-2" src="{{ asset('flag/vn.svg') }}" alt="">
-                        </div>
+                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px" src="{{ asset('flag/vn.svg') }}" alt="">
                     </a>
                 </div>
             </div>
@@ -1117,13 +1109,13 @@
                     <div class="modal-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="{{route('trust.register.member.locale', 'kr')}}">
-                                <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt="">
+                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px" src="{{ asset('images/korea.png') }}" alt="">
                             </a>
                             <a href="{{route('trust.register.member.locale', 'jp')}}">
-                                <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt="">
+                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px" src="{{ asset('images/japan.webp') }}" alt="">
                             </a>
                             <a href="{{route('trust.register.member.locale', 'cn')}}">
-                                <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt="">
+                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px" src="{{ asset('images/china.webp') }}" alt="">
                             </a>
                         </div>
                     </div>
@@ -1131,13 +1123,13 @@
                     <div class="modal-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="{{route('parent.register.member.locale', 'kr')}}">
-                                <img width="80px" height="80px" src="{{ asset('images/korea.png') }}" alt="">
+                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px" src="{{ asset('images/korea.png') }}" alt="">
                             </a>
                             <a href="{{route('parent.register.member.locale', 'jp')}}">
-                                <img width="80px" height="80px" src="{{ asset('images/japan.webp') }}" alt="">
+                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px" src="{{ asset('images/japan.webp') }}" alt="">
                             </a>
                             <a href="{{route('parent.register.member.locale', 'cn')}}">
-                                <img width="80px" height="80px" src="{{ asset('images/china.webp') }}" alt="">
+                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px" src="{{ asset('images/china.webp') }}" alt="">
                             </a>
                         </div>
                     </div>
@@ -1171,7 +1163,7 @@
 <div class="modal fade" id="modalBuyBulkTrust" role="dialog" aria-labelledby="exampleModalBuyBulkTrust"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+        <div class="modal-content p-4" style="width: auto;">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Chọn quốc gia mua hàng') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
