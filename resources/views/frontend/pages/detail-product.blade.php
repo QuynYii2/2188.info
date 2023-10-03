@@ -518,7 +518,7 @@
                     </form>
                 </div>
                 @php
-                    $shopInformation = \App\Models\ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first()
+                    $shopInformation = \App\Models\ShopInfo::where('user_id', '=', $name->id)->orderBy('created_at', 'DESC')->first()
                 @endphp
                 @if($shopInformation != null)
                     <div class="detail-module">
@@ -739,7 +739,7 @@
             @endphp
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 @php
-                    $shopInformation = \App\Models\ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first()
+                    $shopInformation = \App\Models\ShopInfo::where('user_id', '=', $name->id)->orderBy('created_at', 'DESC')->first()
                 @endphp
 
                 <button id="toggleBtn2" class="toggleBtn"
