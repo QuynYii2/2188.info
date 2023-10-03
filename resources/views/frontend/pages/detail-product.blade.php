@@ -243,7 +243,8 @@
         }
 
         .content {
-            max-height: 6em;
+            min-height: 5rem;
+            max-height: 6rem;
             overflow: hidden;
         }
     </style>
@@ -710,22 +711,24 @@
         </ul>
         <div class="tab-content container-fluid" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <div class="content" id="content1">
-                    @if(locationHelper() == 'kr')
-                        <div class="item-text">{!! $product->description_ko !!}</div>
-                    @elseif(locationHelper() == 'cn')
-                        <div class="item-text">{!! $product->description_zh !!}</div>
-                    @elseif(locationHelper() == 'jp')
-                        <div class="item-text">{!! $product->description_ja !!}</div>
-                    @elseif(locationHelper() == 'vi')
-                        <div class="item-text">{!! $product->description_vi !!}</div>
-                    @else
-                        <div class="item-text">{!! $product->description_en !!}</div>
-                    @endif
-                    {{--                    {!! $product->description!!}--}}
-                </div>
-                <button id="toggleBtn1" class="toggleBtn"
-                        onclick="toggleContent('content1', 'toggleBtn1')">{{ __('home.Show More') }}</button>
+                @if($product)
+                    <div class="content" id="content1">
+                        @if(locationHelper() == 'kr')
+                            <div class="item-text">{!! $product->description_ko !!}</div>
+                        @elseif(locationHelper() == 'cn')
+                            <div class="item-text">{!! $product->description_zh !!}</div>
+                        @elseif(locationHelper() == 'jp')
+                            <div class="item-text">{!! $product->description_ja !!}</div>
+                        @elseif(locationHelper() == 'vi')
+                            <div class="item-text">{!! $product->description_vi !!}</div>
+                        @else
+                            <div class="item-text">{!! $product->description_en !!}</div>
+                        @endif
+                        {{--                    {!! $product->description!!}--}}
+                    </div>
+                    <button id="toggleBtn1" class="toggleBtn"
+                            onclick="toggleContent('content1', 'toggleBtn1')">{{ __('home.Show More') }}</button>
+                @endif
             </div>
             @php
                 $infos = DB::table('shop_infos')->first();
@@ -735,9 +738,11 @@
                 @php
                     $shopInformation = \App\Models\ShopInfo::where('user_id', '=', $name->id)->orderBy('created_at', 'DESC')->first()
                 @endphp
-
-                <button id="toggleBtn2" class="toggleBtn"
-                        onclick="toggleContent('content2', 'toggleBtn2')">{{ __('home.Show More') }}</button>
+                @if($shopInformation)
+                    <div>{{$shopInformation->name}}</div>
+                    <button id="toggleBtn2" class="toggleBtn"
+                            onclick="toggleContent('content2', 'toggleBtn2')">{{ __('home.Show More') }}</button>
+                @endif
             </div>
             <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                 <div class="mb-4">

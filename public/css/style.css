@@ -852,10 +852,6 @@ td.priceTransport {
   transform: none !important;
 }
 
-.modal-dialog {
-  min-width: 1300px !important;
-}
-
 .cart .pagetitle .breadcrumb {
   background-color: white;
   margin-top: 10px;
