@@ -35,8 +35,11 @@
                             @foreach($arrayValues as $arrayValue)
                                 @php
                                     $attribute_property = explode('-', $arrayValue);
-                                    $attribute = \App\Models\Attribute::find($attribute_property[0]);
-                                    $property = \App\Models\Properties::find($attribute_property[1]);
+
+                                    $attribute = \App\Models\Attribute::where('status', \App\Enums\AttributeStatus::ACTIVE)
+                                        ->where('id', $attribute_property[0])->first();
+                                    $property = \App\Models\Properties::where('status', \App\Enums\PropertiStatus::ACTIVE)
+                                        ->where('id', $attribute_property[1])->first();
                                 @endphp
                                 <span>
                                 @if(locationHelper() == 'kr')

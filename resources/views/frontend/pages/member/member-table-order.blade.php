@@ -22,8 +22,12 @@
                 @if(count($item) == 1)
                     @php
                         $attproArray =  explode('-', $item[0]);
-                        $attribute = \App\Models\Attribute::find($attproArray[0]);
-                        $property = \App\Models\Properties::find($attproArray[1]);
+
+                        $attribute = \App\Models\Attribute::where('status', \App\Enums\AttributeStatus::ACTIVE)
+                                        ->where('id', $attproArray[0])->first();
+                        $property = \App\Models\Properties::where('status', \App\Enums\PropertiStatus::ACTIVE)
+                                        ->where('id', $attproArray[1])->first();
+
                         $productVariable =  \App\Models\Variation::where([
                             ['product_id', $productID],
                             ['variation', $item],
@@ -151,8 +155,11 @@
                                 </div>
                                 @php
                                     $attproArray =  explode('-', $attpro);
-                                    $attribute = \App\Models\Attribute::find($attproArray[0]);
-                                    $property = \App\Models\Properties::find($attproArray[1]);
+
+                                    $attribute = \App\Models\Attribute::where('status', \App\Enums\AttributeStatus::ACTIVE)
+                                        ->where('id', $attproArray[0])->first();
+                                    $property = \App\Models\Properties::where('status', \App\Enums\PropertiStatus::ACTIVE)
+                                        ->where('id', $attproArray[1])->first();
                                 @endphp
                                 <div class="small text-secondary">
                                     @if($attribute)
@@ -264,8 +271,10 @@
                             @foreach($myArray as $item)
                                 @php
                                     $attribute_property = explode('-', $item);
-                                    $attribute = \App\Models\Attribute::find($attribute_property[0]);
-                                    $property = \App\Models\Properties::find($attribute_property[1]);
+                                    $attribute = \App\Models\Attribute::where('status', \App\Enums\AttributeStatus::ACTIVE)
+                                        ->where('id', $attribute_property[0])->first();
+                                    $property = \App\Models\Properties::where('status', \App\Enums\PropertiStatus::ACTIVE)
+                                        ->where('id', $attribute_property[1])->first();
                                 @endphp
                                 @if($attribute)
                                     @if(locationHelper() == 'kr')
@@ -376,8 +385,11 @@
                                 @php
                                     $attribute_property = null;
                                     $attribute_property = explode('-', $item);
-                                    $attribute = \App\Models\Attribute::find($attribute_property[0]);
-                                    $property = \App\Models\Properties::find($attribute_property[1]);
+
+                                    $attribute = \App\Models\Attribute::where('status', \App\Enums\AttributeStatus::ACTIVE)
+                                        ->where('id', $attribute_property[0])->first();
+                                    $property = \App\Models\Properties::where('status', \App\Enums\PropertiStatus::ACTIVE)
+                                        ->where('id', $attribute_property[1])->first();
                                 @endphp
                                 @if($attribute)
                                     @if(locationHelper() == 'kr')
