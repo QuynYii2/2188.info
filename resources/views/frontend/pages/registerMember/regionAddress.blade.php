@@ -221,7 +221,13 @@
             if (index == 0) {
                 str += `<tr>`
             }
-            let arrChild = JSON.parse(region.child);
+
+            let arrChild = '';
+            try {
+                arrChild = JSON.parse(region.child);
+            } catch (error) {
+                console.error('Error parsing JSON:', error);
+            }
 
             if (arrChild) {
                 arrChild.forEach((child) => {
