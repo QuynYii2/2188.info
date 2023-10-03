@@ -520,7 +520,7 @@
                 @php
                     $shopInformation = \App\Models\ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first()
                 @endphp
-                @if($shopInformation)
+                @if($shopInformation != null)
                     <div class="detail-module">
                         <form action="">
                             <div class="widget-supplier-card company-card-integrated company-card-integrated-lite has-ta origin gps-background ilvietnam-0-0-1 style-v8cHz"
