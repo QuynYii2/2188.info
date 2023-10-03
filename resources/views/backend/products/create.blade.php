@@ -389,7 +389,7 @@
                                             @foreach($listChild2 as $child2)
                                                 @if(!in_array($child2->id, $categoriesRegister))
                                                     <div class="unregister" data-toggle="modal" data-id="{{$child2->id}}"
-                                                         data-target="#exampleModal-{{$child->id}}">
+                                                         data-target="#exampleModal-{{$child2->id}}">
                                                         <label class="ml-5" for="category-{{$child2->id}}">
                                                             <input type="checkbox" id="category-{{$child2->id}}"
                                                                    name="category-{{$child2->id}}"
