@@ -324,15 +324,23 @@
                                                                         @php
                                                                             $arrayAttPro = explode('-', $variable);
                                                                             if (count($arrayAttPro)>1){
-                                                                                $att = \App\Models\Attribute::find($arrayAttPro[0]);
-                                                                                $pro = \App\Models\Properties::find($arrayAttPro[1]);
+                                                                                $att = \App\Models\Attribute::where('id', $arrayAttPro[0])
+                                                                                    ->where('status', \App\Enums\AttributeStatus::ACTIVE)->first();
+                                                                                $pro = \App\Models\Properties::where('id', $arrayAttPro[1])
+                                                                                    ->where('status', \App\Enums\PropertiStatus::ACTIVE)->first();
                                                                             }
                                                                         @endphp
                                                                         @if(count($arrayAttPro)>1)
-                                                                            <p>
-                                                                                <span>{{($att->name)}}/ {{($pro->name)}}</span>
-                                                                                <span><i class="fa-regular fa-pen-to-square"></i></span>
-                                                                            </p>
+                                                                            @if($att)
+                                                                                <p>
+                                                                                    <span>{{($att->name)}}
+                                                                                        @if($pro)
+                                                                                            / {{($pro->name)}}
+                                                                                        @endif
+                                                                                    </span>
+                                                                                    <span><i class="fa-regular fa-pen-to-square"></i></span>
+                                                                                </p>
+                                                                            @endif
                                                                         @endif
                                                                     @endif
 

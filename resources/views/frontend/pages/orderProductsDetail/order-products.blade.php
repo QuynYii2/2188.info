@@ -22,8 +22,12 @@
                 @if(count($item) == 1)
                     @php
                         $attproArray =  explode('-', $item[0]);
-                        $attribute = \App\Models\Attribute::find($attproArray[0]);
-                        $property = \App\Models\Properties::find($attproArray[1]);
+
+                        $attribute = \App\Models\Attribute::where('status', \App\Enums\AttributeStatus::ACTIVE)
+                                    ->where('id', $attproArray[0])->first();
+                        $property = \App\Models\Properties::where('status', \App\Enums\PropertiStatus::ACTIVE)
+                                    ->where('id', $attproArray[1])->first();
+
                         $productVariable =  \App\Models\Variation::where([
                             ['product_id', $productID],
                             ['variation', $item],
@@ -151,8 +155,10 @@
                                 </div>
                                 @php
                                     $attproArray =  explode('-', $attpro);
-                                    $attribute = \App\Models\Attribute::find($attproArray[0]);
-                                    $property = \App\Models\Properties::find($attproArray[1]);
+                                    $attribute = \App\Models\Attribute::where('status', \App\Enums\AttributeStatus::ACTIVE)
+                                        ->where('id', $attproArray[0])->first();
+                                    $property = \App\Models\Properties::where('status', \App\Enums\PropertiStatus::ACTIVE)
+                                        ->where('id', $attproArray[1])->first();
                                 @endphp
                                 <div class="small text-secondary">
                                     @if($attribute)
@@ -264,8 +270,10 @@
                             @foreach($myArray as $item)
                                 @php
                                     $attribute_property = explode('-', $item);
-                                    $attribute = \App\Models\Attribute::find($attribute_property[0]);
-                                    $property = \App\Models\Properties::find($attribute_property[1]);
+                                    $attribute = \App\Models\Attribute::where('status', \App\Enums\AttributeStatus::ACTIVE)
+                                        ->where('id', $attribute_property[0])->first();
+                                    $property = \App\Models\Properties::where('status', \App\Enums\PropertiStatus::ACTIVE)
+                                        ->where('id', $attribute_property[1])->first();
                                 @endphp
                                 @if($attribute)
                                     @if(locationHelper() == 'kr')
@@ -349,82 +357,87 @@
                                     ['status', \App\Enums\VariationStatus::ACTIVE]
                             ])->first();
                 @endphp
-                <tr>
-                    <td scope="row">
-                        <img src="{{ asset('storage/' . $productVariable->thumbnail) }}" alt="">
-                    </td>
-                    <td>
-                        <div class="stand-text-secondary">
-                            @if(locationHelper() == 'kr')
-                                {{$product->name_ko}}
-                            @elseif(locationHelper() == 'cn')
-                                {{$product->name_zh}}
-                            @elseif(locationHelper() == 'jp')
-                                {{$product->name_ja}}
-                            @elseif(locationHelper() == 'vi')
-                                {{$product->name_vi}}
-                            @else
-                                {{$product->name_en}}
-                            @endif
-                        </div>
-                        @php
-                            $items = null;
-                            $items = explode(',', $productAttribute);
-                        @endphp
-                        <div class="small text-secondary">
-                            @foreach($items as $item)
-                                @php
-                                    $attribute_property = null;
-                                    $attribute_property = explode('-', $item);
-                                    $attribute = \App\Models\Attribute::find($attribute_property[0]);
-                                    $property = \App\Models\Properties::find($attribute_property[1]);
-                                @endphp
-                                @if($attribute)
-                                    @if(locationHelper() == 'kr')
-                                        {{$attribute->name_ko}}
-                                    @elseif(locationHelper() == 'cn')
-                                        {{$attribute->name_zh}}
-                                    @elseif(locationHelper() == 'jp')
-                                        {{$attribute->name_ja}}
-                                    @elseif(locationHelper() == 'vi')
-                                        {{$attribute->name_vi}}
-                                    @else
-                                        {{$attribute->name_en}}
-                                    @endif
-                                    :
-                                    @if($property)
-                                        @if(locationHelper() == 'kr')
-                                            {{$property->name_ko}}
-                                        @elseif(locationHelper() == 'cn')
-                                            {{$property->name_zh}}
-                                        @elseif(locationHelper() == 'jp')
-                                            {{$property->name_ja}}
-                                        @elseif(locationHelper() == 'vi')
-                                            {{$property->name_vi}}
-                                        @else
-                                            {{$property->name_en}}
-                                        @endif
-                                        ,
-                                    @endif
+                @if($productVariable)
+                    <tr>
+                        <td scope="row">
+                            <img src="{{ asset('storage/' . $productVariable->thumbnail) }}" alt="">
+                        </td>
+                        <td>
+                            <div class="stand-text-secondary">
+                                @if(locationHelper() == 'kr')
+                                    {{$product->name_ko}}
+                                @elseif(locationHelper() == 'cn')
+                                    {{$product->name_zh}}
+                                @elseif(locationHelper() == 'jp')
+                                    {{$product->name_ja}}
+                                @elseif(locationHelper() == 'vi')
+                                    {{$product->name_vi}}
+                                @else
+                                    {{$product->name_en}}
                                 @endif
-                            @endforeach
-                        </div>
-                    </td>
+                            </div>
+                            @php
+                                $items = null;
+                                $items = explode(',', $productAttribute);
+                            @endphp
+                            <div class="small text-secondary">
+                                @foreach($items as $item)
+                                    @php
+                                        $attribute_property = null;
+                                        $attribute_property = explode('-', $item);
+                                        $attribute = \App\Models\Attribute::where('status', \App\Enums\AttributeStatus::ACTIVE)
+                                        ->where('id', $attribute_property[0])->first();
+                                        $property = \App\Models\Properties::where('status', \App\Enums\PropertiStatus::ACTIVE)
+                                        ->where('id', $attribute_property[1])->first();
+                                    @endphp
+                                    @if($attribute)
+                                        @if(locationHelper() == 'kr')
+                                            {{$attribute->name_ko}}
+                                        @elseif(locationHelper() == 'cn')
+                                            {{$attribute->name_zh}}
+                                        @elseif(locationHelper() == 'jp')
+                                            {{$attribute->name_ja}}
+                                        @elseif(locationHelper() == 'vi')
+                                            {{$attribute->name_vi}}
+                                        @else
+                                            {{$attribute->name_en}}
+                                        @endif
+                                        :
+                                        @if($property)
+                                            @if(locationHelper() == 'kr')
+                                                {{$property->name_ko}}
+                                            @elseif(locationHelper() == 'cn')
+                                                {{$property->name_zh}}
+                                            @elseif(locationHelper() == 'jp')
+                                                {{$property->name_ja}}
+                                            @elseif(locationHelper() == 'vi')
+                                                {{$property->name_vi}}
+                                            @else
+                                                {{$property->name_en}}
+                                            @endif
+                                            ,
+                                        @endif
+                                    @endif
+                                @endforeach
+                            </div>
+                        </td>
 
-                    <td>
-                        @if($productVariable)
-                            <input type="number" min="0" value="0" max="{{ $productVariable->quantity }}" name="quantity[]"
-                                   class="input_quantity"
-                                   data-id="{{$loop->index + 1}}" data-product="{{$product}}"
-                                   data-variable="{{$productAttribute}}">
-                        @else
-                            <input type="number" min="0" value="0" max="{{ $productVariable->quantity }}" name="quantity[]"
-                                   class="input_quantity"
-                                   data-id="{{$loop->index + 1}}" data-product="{{$product}}"
-                                   data-variable="{{$productAttribute}}">
-                        @endif
-                    </td>
-                    <td>
+                        <td>
+                            @if($productVariable)
+                                <input type="number" min="0" value="0" max="{{ $productVariable->quantity }}"
+                                       name="quantity[]"
+                                       class="input_quantity"
+                                       data-id="{{$loop->index + 1}}" data-product="{{$product}}"
+                                       data-variable="{{$productAttribute}}">
+                            @else
+                                <input type="number" min="0" value="0" max="{{ $productVariable->quantity }}"
+                                       name="quantity[]"
+                                       class="input_quantity"
+                                       data-id="{{$loop->index + 1}}" data-product="{{$product}}"
+                                       data-variable="{{$productAttribute}}">
+                            @endif
+                        </td>
+                        <td>
 
                         <span>
                             <span>
@@ -446,16 +459,17 @@
                                 {{$currency}}
                             </span>
                         </span>
-                    </td>
-                    <td class="priceTransport">0</td>
-                    <td id="total-price{{$loop->index + 1}}">
-                        @if($productVariable)
-                            {{ number_format(convertCurrency('USD', $currency,$productVariable->price*$product->min), 0, ',', '.') }}  {{$currency}}
-                        @else
-                            {{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}
-                        @endif
-                    </td>
-                </tr>
+                        </td>
+                        <td class="priceTransport">0</td>
+                        <td id="total-price{{$loop->index + 1}}">
+                            @if($productVariable)
+                                {{ number_format(convertCurrency('USD', $currency,$productVariable->price*$product->min), 0, ',', '.') }}  {{$currency}}
+                            @else
+                                {{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}
+                            @endif
+                        </td>
+                    </tr>
+                @endif
             @endforeach
         @endif
         </tbody>

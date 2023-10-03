@@ -449,7 +449,21 @@
         $('#buttonRegister').on('click', function () {
             // $('#formRegisterMember').trigger('submit');
             handleAfterSelectRegion();
-            $('#btnSubmitFormRegister').trigger('click');
+
+            let isChecked = checkCategory('inputCheckboxCategory');
+            let isChecked1 = checkCategory('inputCheckboxCategory1');
+
+            if (isChecked && isChecked1) {
+                $('#btnSubmitFormRegister').trigger('click');
+            } else {
+                alert('Bạn chưa chọn category');
+            }
         })
+
+        function checkCategory(className) {
+            let items = document.getElementsByClassName(className);
+            let isChecked = Array.from(items).some(item => item.checked);
+            return isChecked;
+        }
     })
 </script>

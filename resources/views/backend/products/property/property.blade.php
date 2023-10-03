@@ -82,12 +82,13 @@
         if (attributeID !== undefined) {
             $('#formAddProperty').removeClass('d-none');
             generateFormProperty();
-            var select = document.getElementById('attribute_id');
-            var options = select.options;
-            for (var i = 0; i < options.length; i++) {
-                if (options[i].value == attributeID) {
-                    options[i].selected = true;
-                    break;
+            if (select){
+                var options = select.options;
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].value == attributeID) {
+                        options[i].selected = true;
+                        break;
+                    }
                 }
             }
         }

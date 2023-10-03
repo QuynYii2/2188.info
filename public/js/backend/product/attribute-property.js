@@ -20,23 +20,27 @@ $(document).ready(function () {
         let url = urlCreateAttribute;
         let value = $('#attribute_name').val();
 
-        await $.ajax({
-            url: url,
-            method: 'POST',
-            data: {
-                _token: token,
-                attribute_name: value
-            },
-        })
-            .done(function (response) {
-                alert('Success');
-                $('#formRenderAttribute').empty();
-                renderAttribute();
+        if (value && value != '') {
+            await $.ajax({
+                url: url,
+                method: 'POST',
+                data: {
+                    _token: token,
+                    attribute_name: value
+                },
             })
-            .fail(function (_, textStatus) {
-                alert('Error');
-                console.log(textStatus)
-            });
+                .done(function (response) {
+                    alert('Success');
+                    $('#formRenderAttribute').empty();
+                    renderAttribute();
+                })
+                .fail(function (_, textStatus) {
+                    alert('Error');
+                    console.log(textStatus)
+                });
+        } else {
+            alert('Please enter attribute name!')
+        }
     }
 
     $('#btnSubmitAttribute').on('click', function () {

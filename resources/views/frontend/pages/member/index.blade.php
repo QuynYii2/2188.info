@@ -52,7 +52,7 @@
                                     <div class="row">
                                         <div class="col-md-6 border">
                                             <div class="row">
-                                                <div class="col-md-12 border"  style="border-right: 1px solid white">
+                                                <div class="col-md-12 border" style="border-right: 1px solid white">
                                                     <div class="mt-2">
                                                         <h5 class="mb-3">{{ ($memberCompany->name) }}</h5>
                                                     </div>
@@ -64,7 +64,8 @@
                                                 </div>
                                                 <div class="col-md-6 border">
                                                     <div class="mt-2">
-                                                        <h5 class="mb-3">{{ __('home.Elite enterprise') }}: {{ ($memberCompany->member) }}</h5>
+                                                        <h5 class="mb-3">{{ __('home.Elite enterprise') }}
+                                                            : {{ ($memberCompany->member) }}</h5>
                                                         <div class="">
                                                             <i class="fa-solid fa-trophy"></i>
                                                             <i class="fa-solid fa-trophy"></i>
@@ -74,7 +75,8 @@
                                                 </div>
                                                 <div class="col-md-6 border">
                                                     <div class="mt-2">
-                                                        <h5 class="mb-3">Phân loại hội viên: {{ ($memberCompany->member) }}</h5>
+                                                        <h5 class="mb-3">Phân loại hội
+                                                            viên: {{ ($memberCompany->member) }}</h5>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 border">
@@ -86,7 +88,8 @@
                                         </div>
                                         <div class="col-md-6 border">
                                             <div class="row">
-                                                <div class="col-md-12 border" style="border-left: 1px solid white!important">
+                                                <div class="col-md-12 border"
+                                                     style="border-left: 1px solid white!important">
                                                     <div class="mt-2">
                                                         <h5 class="mb-3">Sản phẩm chỉ định</h5>
                                                     </div>
@@ -158,26 +161,34 @@
                                                         <h5>Product Attributes</h5>
                                                         @foreach($attributes as $attribute)
                                                             @php
-                                                                $att = \App\Models\Attribute::find($attribute->attribute_id);
+                                                                $att = \App\Models\Attribute::where('id', $attribute->attribute_id)
+                                                                    ->where('status', \App\Enums\AttributeStatus::ACTIVE)->first();
                                                                 $properties_id = $attribute->value;
                                                                 $arrayAtt = array();
                                                                 $arrayAtt = explode(',', $properties_id);
                                                             @endphp
                                                             <div class="col-sm-6 col-6">
-                                                                <label>{{ ($att->name) }}</label>
-                                                                <div class="radio-toolbar mt-3">
-                                                                    @foreach($arrayAtt as $data)
-                                                                        @php
-                                                                            $property = \App\Models\Properties::find($data);
-                                                                        @endphp
-                                                                        <input class="inputRadioButton"
-                                                                               id="input-{{$attribute->attribute_id}}-{{$loop->index+1}}"
-                                                                               name="inputProperty-{{$attribute->attribute_id}}"
-                                                                               type="radio"
-                                                                               value="{{$attribute->attribute_id}}-{{$property->id}}">
-                                                                        <label for="input-{{$attribute->attribute_id}}-{{$loop->index+1}}">{{ ($property->name) }}</label>
-                                                                    @endforeach
-                                                                </div>
+                                                                @if($att)
+                                                                    <label>{{ ($att->name) }}</label>
+                                                                    <div class="radio-toolbar mt-3">
+                                                                        @foreach($arrayAtt as $data)
+                                                                            @php
+                                                                                $property = \App\Models\Properties::where('id', $data)
+                                                                                    ->where('status', \App\Enums\PropertiStatus::ACTIVE)->first();
+                                                                            @endphp
+                                                                            @if($property)
+                                                                                <input class="inputRadioButton"
+                                                                                       id="input-{{$attribute->attribute_id}}-{{$loop->index+1}}"
+                                                                                       name="inputProperty-{{$attribute->attribute_id}}"
+                                                                                       type="radio"
+                                                                                       value="{{$attribute->attribute_id}}-{{$property->id}}">
+                                                                                <label for="input-{{$attribute->attribute_id}}-{{$loop->index+1}}">
+                                                                                    {{ ($property->name) }}
+                                                                                </label>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </div>
+                                                                @endif
                                                             </div>
                                                         @endforeach
                                                     </div>
@@ -266,7 +277,8 @@
                                                     </h5>
                                                 </div>
                                                 <button class="btn btn-primary partnerBtn partnerBtn{{$loop->index+1}}"
-                                                        data-value="{{$firstProduct->id}}" data-count="100">{{ __('home.Partner') }}
+                                                        data-value="{{$firstProduct->id}}"
+                                                        data-count="100">{{ __('home.Partner') }}
                                                 </button>
                                                 <table class="table table-bordered">
                                                     <thead>
