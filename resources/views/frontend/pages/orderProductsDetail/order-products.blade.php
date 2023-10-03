@@ -351,7 +351,7 @@
                 @endphp
                 <tr>
                     <td scope="row">
-                        <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
+                        <img src="{{ asset('storage/' . $productVariable->thumbnail) }}" alt="">
                     </td>
                     <td>
                         <div class="stand-text-secondary">
@@ -413,12 +413,12 @@
 
                     <td>
                         @if($productVariable)
-                            <input type="number" min="0" value="0" name="quantity[]"
+                            <input type="number" min="0" value="0" max="{{ $productVariable->quantity }}" name="quantity[]"
                                    class="input_quantity"
                                    data-id="{{$loop->index + 1}}" data-product="{{$product}}"
                                    data-variable="{{$productAttribute}}">
                         @else
-                            <input type="number" min="0" value="0" name="quantity[]"
+                            <input type="number" min="0" value="0" max="{{ $productVariable->quantity }}" name="quantity[]"
                                    class="input_quantity"
                                    data-id="{{$loop->index + 1}}" data-product="{{$product}}"
                                    data-variable="{{$productAttribute}}">
@@ -477,7 +477,7 @@
                 <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
             </td>
             <td>
-                <input type="number" min="0" value="0" name="quantity[]"
+                <input type="number" min="0" value="0" max="{{ $product->qty }}" name="quantity[]"
                        class="input_quantity" data-id="0" data-product="{{$product}}"
                        data-variable="" style="width: 55px;">
             </td>
