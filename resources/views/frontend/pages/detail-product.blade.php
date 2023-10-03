@@ -361,32 +361,38 @@
                         <div class="row d-none">
                             @foreach($attributes as $attribute)
                                 @php
-                                    $att = Attribute::find($attribute->attribute_id);
+                                    $att = Attribute::where('id', $attribute->attribute_id)
+                                        ->where('status', \App\Enums\AttributeStatus::ACTIVE)->first();
                                     $properties_id = $attribute->value;
                                     $arrayAtt = array();
                                     $arrayAtt = explode(',', $properties_id);
                                 @endphp
                                 <div class="col-sm-6 col-6 d-flex">
-                                    <label>{{($att->{'name' . $langDisplay->getLangDisplay()})}}</label>
-                                    <div class="radio-toolbar ml-3">
-                                        @foreach($arrayAtt as $index => $data)
-
-                                            @php
-                                                $property = Properties::find($data);
-                                            @endphp
-                                            <input class="inputRadioButton"
-                                                   id="input-{{$attribute->attribute_id}}-{{$loop->index+1}}"
-                                                   name="inputProperty-{{$attribute->attribute_id}}" type="radio"
-                                                   value="{{$attribute->attribute_id}}-{{$property->id}}"
-                                                   @if($index ==0 )checked @endif>
-                                            <label for="input-{{$attribute->attribute_id}}-{{$loop->index+1}}">
+                                    @if($att)
+                                        <label>{{($att->{'name' . $langDisplay->getLangDisplay()})}}</label>
+                                        <div class="radio-toolbar ml-3">
+                                            @foreach($arrayAtt as $index => $data)
                                                 @php
-                                                    $ld = new \App\Http\Controllers\TranslateController();
+                                                    $property = Properties::where('id', $data)
+                                                        ->where('status', \App\Enums\PropertiStatus::ACTIVE)->first();
                                                 @endphp
-                                                {{ $ld->translateText($property->name, locationPermissionHelper()) }}
-                                            </label>
-                                        @endforeach
-                                    </div>
+                                                @if($property)
+                                                    <input class="inputRadioButton"
+                                                           id="input-{{$attribute->attribute_id}}-{{$loop->index+1}}"
+                                                           name="inputProperty-{{$attribute->attribute_id}}"
+                                                           type="radio"
+                                                           value="{{$attribute->attribute_id}}-{{$property->id}}"
+                                                           @if($index ==0 )checked @endif>
+                                                    <label for="input-{{$attribute->attribute_id}}-{{$loop->index+1}}">
+                                                        @php
+                                                            $ld = new \App\Http\Controllers\TranslateController();
+                                                        @endphp
+                                                        {{ $ld->translateText($property->name, locationPermissionHelper()) }}
+                                                    </label>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    @endif
                                 </div>
                             @endforeach
                         </div>
@@ -463,7 +469,7 @@
                     </div>
                     <div class="column-xs-12 column-md-12 layout-fixed_rm table_element">
                         @include('frontend.pages.orderProductsDetail.tab-price-table')
-                            <div class="" id="productMainOrder"></div>
+                        <div class="" id="productMainOrder"></div>
                     </div>
                 </form>
             </div>

@@ -28,33 +28,40 @@
                     @if(count($item) == 1)
                         @php
                             $attproArray =  explode('-', $item[0]);
-                            $attribute = \App\Models\Attribute::find($attproArray[0]);
-                            $property = \App\Models\Properties::find($attproArray[1]);
+
+                            $attribute = \App\Models\Attribute::where('status', \App\Enums\AttributeStatus::ACTIVE)
+                                        ->where('id', $attproArray[0])->first();
+                            $property = \App\Models\Properties::where('status', \App\Enums\PropertiStatus::ACTIVE)
+                                        ->where('id', $attproArray[1])->first();
                         @endphp
                         <tr>
                             <td>
-                                @if(locationHelper() == 'kr')
-                                    {{ ($attribute->name_ko) }}
-                                @elseif(locationHelper() == 'cn')
-                                    {{ ($attribute->name_zh) }}
-                                @elseif(locationHelper() == 'jp')
-                                    {{ ($attribute->name_ja) }}
-                                @elseif(locationHelper() == 'vi')
-                                    {{ ($attribute->name_vi) }}
-                                @else
-                                    {{ ($attribute->name_en) }}
-                                @endif
-                                :
-                                @if(locationHelper() == 'kr')
-                                    {{ ($property->name_ko) }}
-                                @elseif(locationHelper() == 'cn')
-                                    {{ ($property->name_zh) }}
-                                @elseif(locationHelper() == 'jp')
-                                    {{ ($property->name_ja) }}
-                                @elseif(locationHelper() == 'vi')
-                                    {{ ($property->name_vi) }}
-                                @else
-                                    {{ ($property->name_en) }}
+                                @if($attribute)
+                                    @if(locationHelper() == 'kr')
+                                        {{ ($attribute->name_ko) }}
+                                    @elseif(locationHelper() == 'cn')
+                                        {{ ($attribute->name_zh) }}
+                                    @elseif(locationHelper() == 'jp')
+                                        {{ ($attribute->name_ja) }}
+                                    @elseif(locationHelper() == 'vi')
+                                        {{ ($attribute->name_vi) }}
+                                    @else
+                                        {{ ($attribute->name_en) }}
+                                    @endif
+                                    :
+                                    @if($property)
+                                        @if(locationHelper() == 'kr')
+                                            {{ ($property->name_ko) }}
+                                        @elseif(locationHelper() == 'cn')
+                                            {{ ($property->name_zh) }}
+                                        @elseif(locationHelper() == 'jp')
+                                            {{ ($property->name_ja) }}
+                                        @elseif(locationHelper() == 'vi')
+                                            {{ ($property->name_vi) }}
+                                        @else
+                                            {{ ($property->name_en) }}
+                                        @endif
+                                    @endif
                                 @endif
                             </td>
                             <td>
@@ -102,10 +109,18 @@
                                 <td>
                                     @php
                                         $attproArray =  explode('-', $attpro);
-                                        $attribute = \App\Models\Attribute::find($attproArray[0]);
-                                        $property = \App\Models\Properties::find($attproArray[1]);
+
+                                        $attribute = \App\Models\Attribute::where('status', \App\Enums\AttributeStatus::ACTIVE)
+                                                ->where('id', $attproArray[0])->first();
+                                        $property = \App\Models\Properties::where('status', \App\Enums\PropertiStatus::ACTIVE)
+                                                ->where('id', $attproArray[1])->first();
                                     @endphp
-                                    {{$attribute->name}}:{{$property->name}}
+                                    @if($attribute)
+                                        {{$attribute->name}}:
+                                        @if($property)
+                                            {{$property->name}}
+                                        @endif
+                                    @endif
                                 </td>
                                 <td>
                                     <input type="file" id="thumbnail" class="img-cfg"
@@ -157,10 +172,18 @@
                             @foreach($myArray as $value)
                                 @php
                                     $attpro =  explode('-', $value);
-                                    $attribue = \App\Models\Attribute::find($attpro[0]);
-                                    $property = \App\Models\Properties::find($attpro[1]);
+
+                                    $attribute = \App\Models\Attribute::where('status', \App\Enums\AttributeStatus::ACTIVE)
+                                            ->where('id', $attpro[0])->first();
+                                    $property = \App\Models\Properties::where('status', \App\Enums\PropertiStatus::ACTIVE)
+                                            ->where('id', $attpro[1])->first();
                                 @endphp
-                                {{$attribue->name}}:{{$property->name}},
+                                @if($attribute)
+                                    {{$attribute->name}}:
+                                    @if($property)
+                                        {{$property->name}},
+                                    @endif
+                                @endif
                             @endforeach
                         </td>
                         <td>
@@ -212,10 +235,18 @@
                         @foreach($attributeProperty as $attpro)
                             @php
                                 $attproArray =  explode('-', $attpro);
-                                $attribue = \App\Models\Attribute::find($attproArray[0]);
-                                $property = \App\Models\Properties::find($attproArray[1]);
+
+                                $attribute = \App\Models\Attribute::where('status', \App\Enums\AttributeStatus::ACTIVE)
+                                        ->where('id', $attproArray[0])->first();
+                                $property = \App\Models\Properties::where('status', \App\Enums\PropertiStatus::ACTIVE)
+                                        ->where('id', $attproArray[1])->first();
                             @endphp
-                            {{$attribue->name}}:{{$property->name}},
+                            @if($attribute)
+                                {{$attribute->name}}:
+                                @if($property)
+                                    {{$property->name}}
+                                @endif,
+                            @endif
                         @endforeach
                     </td>
                     <td>

@@ -33,25 +33,30 @@
         let property_name = $('#property_name').val();
         let attribute_id = $('#attribute_id').val();
 
-        await $.ajax({
-            url: url,
-            method: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-                property_name: property_name,
-                attribute_id: attribute_id
-            },
-        })
-            .done(function (response) {
-                alert('Success');
-                let item = $('#property_' + attribute_id);
-                item.empty().append(response);
-                $('#formAddProperty').addClass('d-none');
+        if (property_name && property_name != '') {
+            await $.ajax({
+                url: url,
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    property_name: property_name,
+                    attribute_id: attribute_id
+                },
             })
-            .fail(function (_, textStatus) {
-                alert('Error');
-                console.log(textStatus)
-            });
+                .done(function (response) {
+                    alert('Success');
+                    let item = $('#property_' + attribute_id);
+                    item.empty().append(response);
+                    $('#formAddProperty').addClass('d-none');
+                    $('#property_name').prop('required', false);
+                })
+                .fail(function (_, textStatus) {
+                    alert('Error');
+                    console.log(textStatus)
+                });
+        } else {
+            alert('Please enter name property!');
+        }
     }
 
     $('#btnSubmitProperty').on('click', function () {

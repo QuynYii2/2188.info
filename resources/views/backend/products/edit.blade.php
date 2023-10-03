@@ -150,10 +150,17 @@
                                                     @foreach($arrayVariation as $itemVariation)
                                                         @php
                                                             $arrayItemVariation = explode('-', $itemVariation);
-                                                            $attributeVariation = \App\Models\Attribute::find($arrayItemVariation[0]);
-                                                            $propertyVariation = \App\Models\Properties::find($arrayItemVariation[1]);
+                                                            $attributeVariation = \App\Models\Attribute::where('id', $arrayItemVariation[0])
+                                                                ->where('status', \App\Enums\AttributeStatus::ACTIVE)->first();
+                                                            $propertyVariation = \App\Models\Properties::where('id', $arrayItemVariation[1])
+                                                                ->where('status', PropertiStatus::ACTIVE)->first();
                                                         @endphp
-                                                        {{$attributeVariation->name}}:{{$propertyVariation->name}},
+                                                        @if($attributeVariation)
+                                                            {{$attributeVariation->name}}:
+                                                            @if($propertyVariation)
+                                                                {{$propertyVariation->name}}
+                                                            @endif,
+                                                        @endif
                                                     @endforeach
                                                 </td>
                                                 <td>

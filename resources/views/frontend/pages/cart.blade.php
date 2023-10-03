@@ -79,16 +79,22 @@
                                                         @php
                                                             $arrayAttPro = explode('-', $variable);
                                                             if (count($arrayAttPro)>1){
-                                                                $att = \App\Models\Attribute::find($arrayAttPro[0]);
-                                                                $pro = \App\Models\Properties::find($arrayAttPro[1]);
+                                                                $att = \App\Models\Attribute::where('id', $arrayAttPro[0])
+                                                                    ->where('status', \App\Enums\AttributeStatus::ACTIVE)->first();
+                                                                $pro = \App\Models\Properties::where('id', $arrayAttPro[1])
+                                                                    ->where('status', \App\Enums\PropertiStatus::ACTIVE)->first();
                                                             }
                                                         @endphp
                                                         @if(count($arrayAttPro)>1)
-                                                            <div class="font-italic">
-                                                            <span class="text-secondary">
-                                                            {{($att->name)}}
-                                                        </span>: <span>{{($pro->name)}}</span>
-                                                            </div>
+                                                            @if($att)
+                                                                <div class="font-italic">
+                                                                    <span class="text-secondary">
+                                                                    {{($att->name)}}
+                                                                    @if($pro)
+                                                                        </span>: <span>{{($pro->name)}}</span>
+                                                                    @endif
+                                                                </div>
+                                                            @endif
                                                         @endif
                                                     @endif
 

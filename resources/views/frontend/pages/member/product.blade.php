@@ -8,7 +8,7 @@
 @endphp
 @php
 
-@endphp
+        @endphp
 @if($firstProduct)
     @php
         $price_sales = \App\Models\ProductSale::where('product_id', '=', $firstProduct->id)->get();
@@ -34,26 +34,34 @@
                 <h5>Product Attributes</h5>
                 @foreach($attributes as $attribute)
                     @php
-                        $att = \App\Models\Attribute::find($attribute->attribute_id);
+                        $att = \App\Models\Attribute::where('id', $attribute->attribute_id)
+                            ->where('status', \App\Enums\AttributeStatus::ACTIVE)->first();
                         $properties_id = $attribute->value;
                         $arrayAtt = array();
                         $arrayAtt = explode(',', $properties_id);
                     @endphp
                     <div class="col-sm-6 col-6">
-                        <label>{{$att->name}}</label>
-                        <div class="radio-toolbar mt-3">
-                            @foreach($arrayAtt as $data)
-                                @php
-                                    $property = \App\Models\Properties::find($data);
-                                @endphp
-                                <input class="inputRadioButton"
-                                       id="input-{{$attribute->attribute_id}}-{{$loop->index+1}}"
-                                       name="inputProperty-{{$attribute->attribute_id}}"
-                                       type="radio"
-                                       value="{{$attribute->attribute_id}}-{{$property->id}}">
-                                <label for="input-{{$attribute->attribute_id}}-{{$loop->index+1}}">{{ $tran->translateText($property->name) }}</label>
-                            @endforeach
-                        </div>
+                        @if($att)
+                            <label>{{$att->name}}</label>
+                            <div class="radio-toolbar mt-3">
+                                @foreach($arrayAtt as $data)
+                                    @php
+                                        $property = \App\Models\Properties::where('id',$data)
+                                            ->where('status', \App\Enums\PropertiStatus::ACTIVE)->first();
+                                    @endphp
+                                    @if($property)
+                                        <input class="inputRadioButton"
+                                               id="input-{{$attribute->attribute_id}}-{{$loop->index+1}}"
+                                               name="inputProperty-{{$attribute->attribute_id}}"
+                                               type="radio"
+                                               value="{{$attribute->attribute_id}}-{{$property->id}}">
+                                        <label for="input-{{$attribute->attribute_id}}-{{$loop->index+1}}">
+                                            {{ $tran->translateText($property->name) }}
+                                        </label>
+                                    @endif
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 @endforeach
             </div>
