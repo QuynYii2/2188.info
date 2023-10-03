@@ -9,7 +9,7 @@
         <div class="card-body">
             <div class="form-row">
                 <div class="form-group col-md-4">
-                    <label for="fullName">Full Name11</label>
+                    <label for="fullName">Full Name</label>
                     <input type="text" class="form-control" disabled id="fullName" value="{{$order->fullname}}">
                 </div>
                 <div class="form-group col-md-4">
