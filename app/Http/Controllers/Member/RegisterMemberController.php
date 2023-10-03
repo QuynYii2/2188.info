@@ -157,7 +157,7 @@ class RegisterMemberController extends Controller
             /*Thông tin công ty đăng ký*/
             // MemberInfo
             $memberID = $request->input('member_id');
-            $address = $request->input('wards-select') . ', ' . $request->input('provinces-select') . ', ' . $request->input('cities-select') . ', ' . $request->input('countries-select');
+            $address = $request->input('wards-select').', '.$request->input('provinces-select').', '.$request->input('cities-select').', '.$request->input('countries-select');
             $companyName = $request->input('name_en');
             $numberBusiness = 'default';
             $phoneNumber = $request->input('phoneNumber');
@@ -167,16 +167,16 @@ class RegisterMemberController extends Controller
             $number_clearance = $request->input('number_clearance');
             $name_kr = $request->input('name_kr');
 
-            $comma = ', ';
+            $comma = ',';
             $address_en =
-                $request->input('countries-select') . $comma .
-                $request->input('cities-select') . $comma .
-                $request->input('provinces-select') . $comma .
+                $request->input('countries-select').$comma.
+                $request->input('cities-select').$comma.
+                $request->input('provinces-select').$comma.
                 $request->input('detail-address');
             $address_kr =
-                $request->input('countries-select-1') . $comma .
-                $request->input('cities-select-1') . $comma .
-                $request->input('provinces-select-1') . $comma .
+                $request->input('countries-select-1').$comma.
+                $request->input('cities-select-1').$comma.
+                $request->input('provinces-select-1').$comma.
                 $request->input('detail-address-1');
             $address = $address_en;
 
@@ -215,7 +215,7 @@ class RegisterMemberController extends Controller
                 $code_1_item = implode(',', $code_1);
             }
             if ($code_2) {
-                $categoryIds .= ',' . implode(',', $code_2);
+                $categoryIds .= ','.implode(',', $code_2);
                 $code_2_item = implode(',', $code_2);
             }
 
@@ -339,16 +339,16 @@ class RegisterMemberController extends Controller
             $name_en = $request->input('name_en');
             $name_kr = $request->input('name_kr');
 
-            $comma = ', ';
+            $comma = ',';
             $address_en =
-                $request->input('countries-select') . $comma .
-                $request->input('cities-select') . $comma .
-                $request->input('provinces-select') . $comma .
+                $request->input('countries-select').$comma.
+                $request->input('cities-select').$comma.
+                $request->input('provinces-select').$comma.
                 $request->input('detail-address');
             $address_kr =
-                $request->input('countries-select-1') . $comma .
-                $request->input('cities-select-1') . $comma .
-                $request->input('provinces-select-1') . $comma .
+                $request->input('countries-select-1').$comma.
+                $request->input('cities-select-1').$comma.
+                $request->input('provinces-select-1').$comma.
                 $request->input('detail-address-1');
             $address = $address_en;
             //file
@@ -376,7 +376,7 @@ class RegisterMemberController extends Controller
             $code_business = $request->input('code_business');
             $type_business = $request->input('type_business');
 
-            $categoryIds = $code_1 . ',' . $code_2 . ',' . $code_3;
+            $categoryIds = $code_1.','.$code_2.','.$code_3;
             $arrayCategoryID = explode(',', $categoryIds);
             sort($arrayCategoryID);
             $categoryIds = implode(',', $arrayCategoryID);
@@ -1161,7 +1161,7 @@ class RegisterMemberController extends Controller
         $arrayIds = null;
         $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         foreach ($categories as $category) {
-            $name = $input . $category->id;
+            $name = $input.$category->id;
             $listCategoryName[] = $name;
         }
         if ($listCategoryName != null) {

@@ -389,13 +389,13 @@
 <script>
     $(document).ready(function () {
         $('#buttonRegister').on('click', function () {
-            handleAfterSelectRegion();
             // $('#formRegisterMember').trigger('submit');
             let isChecked = checkCategory('inputCheckboxCategory');
             let isChecked1 = checkCategory('inputCheckboxCategory1');
             let isChecked2 = checkCategory('inputCheckboxCategory2');
 
             if (isChecked && isChecked1 && isChecked2) {
+                handleAfterSelectRegion();
                 $('#btnSubmitFormRegister').trigger('click');
             } else {
                 alert('Bạn chưa chọn category');
