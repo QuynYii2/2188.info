@@ -359,7 +359,7 @@
                             $listCategory = $exitsMember->category_id;
                             $arrayCategory = explode(',', $listCategory);
                         @endphp
-                        <input value="{{$arrayCategory}}" id="inputArrayCategory" class="d-none">
+                        <input value="{{$listCategory}}" id="inputArrayCategory" class="d-none">
                         <div id="code_2" class="mt-1 checkboxes">
 
                         </div>
@@ -451,6 +451,10 @@
 
         let arrayItem = [];
         $('.inputCheckboxCategory').on('click', function () {
+            getInput();
+        })
+
+        async function getInput() {
             let items = document.getElementsByClassName('inputCheckboxCategory');
             for (let i = 0; i < items.length; i++) {
                 if (items[i].checked) {
@@ -466,11 +470,15 @@
                     removeArray(arrayItem, items[i].value);
                 }
             }
-            renderCategory2(arrayItem);
+            await renderCategory2(arrayItem);
             arrayItem.sort();
             let value = arrayItem.toString();
             $('#input_code1').val(value);
-        })
+        }
+
+        @if($exitsMember)
+            getInput();
+        @endif
 
 
         async function renderCategory2(value) {
