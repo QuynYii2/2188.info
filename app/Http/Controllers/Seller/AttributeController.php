@@ -222,9 +222,21 @@ class AttributeController extends Controller
             $attributeID = $request->attribute_id;
             $slug = \Str::slug($name);
 
+            $ld = new TranslateController();
+            $name_vi = $ld->translateText($name, 'vi');
+            $name_ja = $ld->translateText($name, 'ja');
+            $name_ko = $ld->translateText($name, 'ko');
+            $name_en = $ld->translateText($name, 'en');
+            $name_zh = $ld->translateText($name, 'zh-CN');
+
             $property = Properties::create([
                 'name' => $name,
                 'slug' => $slug,
+                'name_vi' => $name_vi,
+                'name_ja' => $name_ja,
+                'name_ko' => $name_ko,
+                'name_en' => $name_en,
+                'name_zh' => $name_zh,
                 'description' => '',
                 'attribute_id' => $attributeID,
             ]);

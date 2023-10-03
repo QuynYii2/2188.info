@@ -54,6 +54,7 @@
                     <th scope="col">Full Name</th>
                     <th scope="col">Phone Number</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Method Payments</th>
                     <th scope="col">Total</th>
                     <th scope="col">Status</th>
                     <th scope="col">Action</th>
@@ -81,6 +82,9 @@
                             </td>
                             <td>
                                 {{$order->email}}
+                            </td>
+                            <td>
+                                {{$order->orders_method}}
                             </td>
                             <td>
                                 {{$order->total}}

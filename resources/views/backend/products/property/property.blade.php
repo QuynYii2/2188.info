@@ -1,4 +1,16 @@
-<p>{{ __('home.Product attribute') }}: <span style="font-size: 16px; font-weight: 600">{{$attribute->name}}</span></p>
+<p>{{ __('home.Product attribute') }}: <span style="font-size: 16px; font-weight: 600">
+        @if(locationHelper() == 'kr')
+            {{ ($attribute->name_ko) }}
+        @elseif(locationHelper() == 'cn')
+            {{ ($attribute->name_zh) }}
+        @elseif(locationHelper() == 'jp')
+            {{ ($attribute->name_ja) }}
+        @elseif(locationHelper() == 'vi')
+            {{ ($attribute->name_vi) }}
+        @else
+            {{ ($attribute->name_en) }}
+        @endif
+    </span></p>
 <div class="">
     @php
         $isChecked = false;
@@ -35,7 +47,17 @@
                                {{ $isChecked ? 'checked' : '' }}
                                id="property_{{$property->id}}">
                         <label for="property_{{$property->id}}">
-                            {{$property->name}}
+                            @if(locationHelper() == 'kr')
+                                {{ ($property->name_ko) }}
+                            @elseif(locationHelper() == 'cn')
+                                {{ ($property->name_zh) }}
+                            @elseif(locationHelper() == 'jp')
+                                {{ ($property->name_ja) }}
+                            @elseif(locationHelper() == 'vi')
+                                {{ ($property->name_vi) }}
+                            @else
+                                {{ ($property->name_en) }}
+                            @endif
                         </label>
                     </div>
                 </div>

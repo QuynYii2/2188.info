@@ -157,7 +157,7 @@ class RegisterMemberController extends Controller
             /*Thông tin công ty đăng ký*/
             // MemberInfo
             $memberID = $request->input('member_id');
-            $address = $request->input('wards-select') . ', ' . $request->input('provinces-select') . ', ' . $request->input('cities-select') . ', ' . $request->input('countries-select');
+            $address = $request->input('wards-select').', '.$request->input('provinces-select').', '.$request->input('cities-select').', '.$request->input('countries-select');
             $companyName = $request->input('name_en');
             $numberBusiness = 'default';
             $phoneNumber = $request->input('phoneNumber');
@@ -166,8 +166,20 @@ class RegisterMemberController extends Controller
             $datetime_register = Carbon::now()->addHours(7);
             $number_clearance = $request->input('number_clearance');
             $name_kr = $request->input('name_kr');
-            $address_en = $request->input('address_en');
-            $address_kr = $request->input('address_kr');
+
+            $comma = ',';
+            $address_en =
+                $request->input('countries-select').$comma.
+                $request->input('cities-select').$comma.
+                $request->input('provinces-select').$comma.
+                $request->input('detail-address');
+            $address_kr =
+                $request->input('countries-select-1').$comma.
+                $request->input('cities-select-1').$comma.
+                $request->input('provinces-select-1').$comma.
+                $request->input('detail-address-1');
+            $address = $address_en;
+
             $certify_business = '';
             $gpkdPath = '';
             /*Thông tin người đăng ký và đăng ký user*/
@@ -195,13 +207,22 @@ class RegisterMemberController extends Controller
             $code_3 = $request->input('code_3');
             $code_4 = $request->input('code_4');
 
-            $categoryIds = implode(',', $code_1) . ',' . implode(',', $code_2);
+            $categoryIds = '';
+            $code_1_item = '';
+            $code_2_item = '';
+            if ($code_1) {
+                $categoryIds .= implode(',', $code_1);
+                $code_1_item = implode(',', $code_1);
+            }
+            if ($code_2) {
+                $categoryIds .= ','.implode(',', $code_2);
+                $code_2_item = implode(',', $code_2);
+            }
+
             $arrayCategoryID = explode(',', $categoryIds);
             sort($arrayCategoryID);
             $categoryIds = implode(',', $arrayCategoryID);
 
-            $code_1_item = implode(',', $code_1);
-            $code_2_item = implode(',', $code_2);
 
             $id = 0;
 
@@ -302,7 +323,6 @@ class RegisterMemberController extends Controller
         try {
             $memberID = $request->input('member_id');
 
-            $address = $request->input('wards-select') . ', ' . $request->input('provinces-select') . ', ' . $request->input('cities-select') . ', ' . $request->input('countries-select');
             $companyName = $request->input('name_en');
             $email = $request->input('email');
             $homepage = $request->input('homepage');
@@ -318,8 +338,19 @@ class RegisterMemberController extends Controller
             $number_clearance = $request->input('number_clearance');
             $name_en = $request->input('name_en');
             $name_kr = $request->input('name_kr');
-            $address_en = $request->input('address_en');
-            $address_kr = $request->input('address_kr');
+
+            $comma = ',';
+            $address_en =
+                $request->input('countries-select').$comma.
+                $request->input('cities-select').$comma.
+                $request->input('provinces-select').$comma.
+                $request->input('detail-address');
+            $address_kr =
+                $request->input('countries-select-1').$comma.
+                $request->input('cities-select-1').$comma.
+                $request->input('provinces-select-1').$comma.
+                $request->input('detail-address-1');
+            $address = $address_en;
             //file
             if ($request->hasFile('certify_business')) {
                 $gpkd = $request->file('certify_business');
@@ -345,19 +376,7 @@ class RegisterMemberController extends Controller
             $code_business = $request->input('code_business');
             $type_business = $request->input('type_business');
 
-            if (!$code_1){
-                $code_1 = [];
-            }
-
-            if (!$code_2){
-                $code_2 = [];
-            }
-
-            if (!$code_3){
-                $code_3 = [];
-            }
-
-            $categoryIds = implode(',', $code_1) . ',' . implode(',', $code_2) . ',' . implode(',', $code_3);
+            $categoryIds = $code_1.','.$code_2.','.$code_3;
             $arrayCategoryID = explode(',', $categoryIds);
             sort($arrayCategoryID);
             $categoryIds = implode(',', $arrayCategoryID);
@@ -375,9 +394,9 @@ class RegisterMemberController extends Controller
                 $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
             }
 
-            $code_1_item = implode(',', $code_1);
-            $code_2_item = implode(',', $code_2);
-            $code_3_item = implode(',', $code_3);
+            $code_1_item = $code_1;
+            $code_2_item = $code_2;
+            $code_3_item = $code_3;
 
             if ($exitMemberPerson) {
                 $exitsMember = MemberRegisterInfo::where([
@@ -962,7 +981,8 @@ class RegisterMemberController extends Controller
         $findMember = $memberRepresent->email;
         $userRepresent = User::where('email', $findMember)->first();
         $staffUsers = StaffUsers::where('parent_user_id', $userRepresent->id)->get();
-        return view('frontend.pages.registerMember.membership', compact('memberRepresent', 'memberSource', 'staffUsers', 'userRepresent'));
+        return view('frontend.pages.registerMember.membership',
+            compact('memberRepresent', 'memberSource', 'staffUsers', 'userRepresent'));
     }
 
     public function createNewStaff(Request $request, $id)
@@ -972,13 +992,13 @@ class RegisterMemberController extends Controller
             toast('Địa chỉ email đã tồn tại.', 'error', 'top-right');
             return back();
         }
-        $parent_user =User::find($id);
+        $parent_user = User::find($id);
         $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->address = $parent_user->address;
-        $user->rental_code = random_int(00,999);
+        $user->rental_code = random_int(00, 999);
         $user->social_media = $request->social_media;
         $user->industry = $parent_user->industry;
         $user->password = Hash::make($request->password);
@@ -1130,7 +1150,8 @@ class RegisterMemberController extends Controller
 
         $categories_two_parent = collect($categories_two_parent_array);
         $arrayCategory = $request->input('arrayCategory');
-        return view('frontend.pages.registerMember.category.categories_two_parent', compact('categories_two_parent', 'arrayCategory'));
+        return view('frontend.pages.registerMember.category.categories_two_parent',
+            compact('categories_two_parent', 'arrayCategory'));
     }
 
     /*Private function*/
@@ -1140,7 +1161,7 @@ class RegisterMemberController extends Controller
         $arrayIds = null;
         $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         foreach ($categories as $category) {
-            $name = $input . $category->id;
+            $name = $input.$category->id;
             $listCategoryName[] = $name;
         }
         if ($listCategoryName != null) {

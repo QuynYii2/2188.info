@@ -462,22 +462,7 @@
                     </div>
                     <div class="column-xs-12 column-md-12 layout-fixed_rm table_element">
                         @include('frontend.pages.orderProductsDetail.tab-price-table')
-                        @if(!$attributes->isEmpty())
                             <div class="" id="productMainOrder"></div>
-                        @else
-                            <div class=" buy justify-content-center d-flex">
-                                <div>
-                                    <input min="{{$product->min}}" value="{{$product->min}}" max="{{$product->qty}}" type="number" class="input"
-                                           name="quantity">
-                                    <div class="spinner">
-                                        <button type="button" class="up button">&rsaquo;</button>
-                                        <button type="button" class="down button">&lsaquo;</button>
-                                    </div>
-                                </div>
-                                <button type="submit" class="add-to-cart payment">{{ __('home.Add To Cart') }}</button>
-
-                                @endif
-                            </div>
                     </div>
                 </form>
             </div>
@@ -527,9 +512,9 @@
                     </form>
                 </div>
                 @php
-                    $shopInformation = \App\Models\ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first()
+                    $shopInformation = \App\Models\ShopInfo::where('user_id', '=', $name->id)->orderBy('created_at', 'DESC')->first()
                 @endphp
-                @if($shopInformation)
+                @if($shopInformation != null)
                     <div class="detail-module">
                         <form action="">
                             <div class="widget-supplier-card company-card-integrated company-card-integrated-lite has-ta origin gps-background ilvietnam-0-0-1 style-v8cHz"
@@ -748,7 +733,7 @@
             @endphp
             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 @php
-                    $shopInformation = \App\Models\ShopInfo::where('user_id', '=', Auth::user()->id)->orderBy('created_at', 'DESC')->first()
+                    $shopInformation = \App\Models\ShopInfo::where('user_id', '=', $name->id)->orderBy('created_at', 'DESC')->first()
                 @endphp
 
                 <button id="toggleBtn2" class="toggleBtn"

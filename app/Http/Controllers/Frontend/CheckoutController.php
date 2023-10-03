@@ -83,6 +83,7 @@ class CheckoutController extends Controller
 
     private function checkout(Request $request, $status, $orderMethod, $name, $email, $phone, $address, $idVoucher, $array)
     {
+        (new HomeController())->getLocale($request);
         $carts = Cart::where([
             ['user_id', '=', Auth::user()->id],
             ['status', '=', CartStatus::WAIT_ORDER]
@@ -340,6 +341,7 @@ class CheckoutController extends Controller
 
     public function returnCheckout(Request $request)
     {
+        (new HomeController())->getLocale($request);
         $url = session('url_prev','/');
         if($request->vnp_ResponseCode == "00") {
             $vnpAmount = $request->input('vnp_Amount');
@@ -360,13 +362,21 @@ class CheckoutController extends Controller
                 'note' => $note,
                 'user_id' => $userId,
                 'cost_id' => $costId,
+                'orders_method' => OrderMethod::ElectronicWallet,
+                'status' => OrderStatus::PROCESSING
             ]);
-            if (Auth::check()) {
-                DB::table('carts')->where([['user_id', Auth::user()->id], ['status', CartStatus::WAIT_ORDER]])->update([
+            if (Auth::check())
+            {
+                DB::table('carts')->where([['user_id', Auth::user()->id],
+                    ['status', CartStatus::WAIT_ORDER]
+                ])->update([
                     'status' => CartStatus::ORDERED
                 ]);
+                DB::table('orders')->update([
+                    'status' => OrderStatus::PROCESSING
+                ]);
+
                 alert()->success('Success', 'Đã thanh toán phí dịch vụ');
-//                return redirect($url)->with('success' ,'Đã thanh toán phí dịch vụ');
                 return view('frontend.pages.PaymentMethods.vnpay_return');
             }
 
@@ -387,12 +397,12 @@ class CheckoutController extends Controller
         $vnp_TxnRef = date("YmdHis");
         $vnp_Amount = $money * 100;
         $vnp_Locale = 'vn';
-        $vnp_IpAddr = request()->ip();
-
+        $user = Auth::user();
+        $vnp_IpAddr = $request->input('address');
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_apiUrl = "http://sandbox.vnpayment.vn/merchant_webapi/merchant.html";
         $apiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
-
+        $vnpAmount = $request->input('total_price');
         $startTime = date("YmdHis");
         $expire = date('YmdHis',strtotime('+15 minutes',strtotime($startTime)));
 
@@ -410,6 +420,19 @@ class CheckoutController extends Controller
             "vnp_ReturnUrl" => $vnp_Returnurl,
             "vnp_TxnRef" => $vnp_TxnRef,
         );
+        Order::insert([
+            'user_id' => $user->id,
+            'fullname'=> $user->name,
+            'email'=>$user->email,
+            'phone'=>$user->phone,
+            'total'=>$money,
+            'address'=>$request->input('address'),
+            'total_price'=>$money,
+            'orders_method'=>OrderMethod::ElectronicWallet,
+            'shipping_price'=>$request->input('shipping_price'),
+            'discount_price'=>$request->input('discount_price'),
+            'status'=>OrderStatus::WAIT_PAYMENT
+        ]);
         if (isset($vnp_BankCode) && $vnp_BankCode != "") {
             $inputData['vnp_BankCode'] = $vnp_BankCode;
         }

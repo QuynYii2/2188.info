@@ -7,7 +7,19 @@
         <label for="attribute_id">{{ __('home.Chọn thuộc tính cha') }}:</label>
         <select class="form-control" id="attribute_id" name="attribute_id">
             @foreach($attributes as $attribute)
-                <option value="{{$attribute->id}}">{{$attribute->name}}</option>
+                <option value="{{$attribute->id}}">
+                    @if(locationHelper() == 'kr')
+                        {{ ($attribute->name_ko) }}
+                    @elseif(locationHelper() == 'cn')
+                        {{ ($attribute->name_zh) }}
+                    @elseif(locationHelper() == 'jp')
+                        {{ ($attribute->name_ja) }}
+                    @elseif(locationHelper() == 'vi')
+                        {{ ($attribute->name_vi) }}
+                    @else
+                        {{ ($attribute->name_en) }}
+                    @endif
+                </option>
             @endforeach
         </select>
     </div>
