@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Backend_v2;
 
 use App\Enums\AttributeProductStatus;
 use App\Enums\AttributeStatus;
+use App\Enums\CartStatus;
 use App\Enums\ProductStatus;
 use App\Enums\VariationStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\StaffUsers;
@@ -417,6 +419,11 @@ class ProductController_v2 extends Controller
     {
         try {
             $variable = Variation::where('id', $id)->first();
+            $carts = Cart::where('product_id', $variable->product_id)->where('values', $variable->variation)->get();
+            foreach ($carts as $cart) {
+                $cart->status = CartStatus::DELETED;
+                $cart->save();
+            }
             $variable->status = VariationStatus::DELETED;
             $success = $variable->save();
             if ($success) {
