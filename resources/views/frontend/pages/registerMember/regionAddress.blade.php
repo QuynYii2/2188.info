@@ -279,14 +279,6 @@
 <td valign="top" style="width: 600px">
     <div style="display: inline-block" id="Region_Name" onclick="getDataRegionLv0()">
     </div>
-    <div id="action-button" class="d-none">
-        <button type="button" onclick="showDialog('AddChild')" id="button-add-child">
-        </button>
-        <button type="button" onclick="showDialog('Modify')" id="button-edit">
-        </button>
-        <button onclick="DeleteRegion()" id="button-delete">
-        </button>
-    </div>
     <table class="table-region w-100">
         <tbody id="body_table_region"></tbody>
     </table>

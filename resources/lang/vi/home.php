@@ -969,5 +969,18 @@ return [
     'Address Business' => 'Địa chỉ công ty',
     'Language English' => 'Ngôn ngữ Tiếng Anh',
     'Language Local' => 'Ngôn ngữ hiện tại',
+
+    'tao moi vi tri' => 'Tạo mới vị trí',
+    'chau luc' => 'Châu lục',
+    'chau a' => 'Châu Á',
+    'chau au' => 'Châu Âu',
+    'chau phi' => 'Châu Phi',
+    'chau my' => 'Châu Mỹ',
+    'chau dai duong' => 'Châu Đại Dương',
+    'cap bac tao' => 'Cấp bậc cần tạo',
+    'tinh thanh' => 'Tỉnh thành',
+    'quan huyen' => 'Quận/Huyện',
+    'xa phuong' => 'Xã/Phường',
+
 ];
 

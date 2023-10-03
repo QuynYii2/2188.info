@@ -83,7 +83,7 @@ return [
     'all' => '모두',
     'Cancel' => '취소',
     'Back' => '돌아가기',
-    'OrderID' =>'주문 ID',
+    'OrderID' => '주문 ID',
     'in progress' => '진행 중',
     'done' => '완료',
     'add address' => '주소 추가',
@@ -343,7 +343,7 @@ return [
     'POWER VENDOR' => '파워벤더회원',
     'PRODUCTION' => '생산회원',
     'POWER PRODUCTION ' => '파워생산회원',
-    'Member' =>'회원',
+    'Member' => '회원',
     'Member booth' => '회원 상점 ',
     'Booth' => '상품 전시장',
     'Partner List' => '지정거래처',
@@ -1016,11 +1016,11 @@ return [
     'Update information represent member' => '대표자 등록정보',
 
     //
-    'Create new attribute'=>'속성 추가',
-    'Save attribute'=>'속성 저장',
-    'Create now'=>'바로 추가하기',
-    'Product attribute'=>'상품 속성',
-    'None'=>'없음',
+    'Create new attribute' => '속성 추가',
+    'Save attribute' => '속성 저장',
+    'Create now' => '바로 추가하기',
+    'Product attribute' => '상품 속성',
+    'None' => '없음',
 
     'No received messages' => '받은 메시지가 없습니다',
     'No sent messages' => '보낸 메시지가 없습니다',
@@ -1031,6 +1031,17 @@ return [
     'Language Local' => '영문',
     'đơn giá' => '단가',
     'namess' => '성명',
-    'xác nhận đăng ký' => '등록확인'
+    'xác nhận đăng ký' => '등록확인',
 
+    'tao moi vi tri' => '지역 추가',
+    'chau luc' => '대륙',
+    'chau a' => 'Asia',
+    'chau au' => 'Europe',
+    'chau phi' => 'Africa',
+    'chau my' => 'Americas',
+    'chau dai duong' => 'Oceania',
+    'cap bac tao' => '추가할 단위',
+    'tinh thanh' => '성/도',
+    'quan huyen' => '군/현',
+    'xa phuong' => '구/동',
 ];
