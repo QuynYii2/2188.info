@@ -71,7 +71,5 @@ Route::delete('/setup-marketing/create/{id}', [SetupMarketingController::class, 
 Route::get('/setup-marketing/edit/{id}', [SetupMarketingController::class, 'edit'])->name('setup-marketing.edit');
 Route::post('/setup-marketing/update/{id}', [SetupMarketingController::class, 'update'])->name('setup-marketing.update');
 
-Route::prefix('address')->group(function () {
-    Route::get('index', [AddressController::class, 'index'])->name('address.manage.index');
-});
+
 
