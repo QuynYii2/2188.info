@@ -128,47 +128,34 @@
                             </td>
                         </tr>
                     @else
-                        <table class="table table-bordered" id="table-selected-att">
-                            <thead>
-                            <tr>
-                                <th scope="col"
-                                    style="    width: 80px; text-align: center;">{{ __('home.thumbnail') }}</th>
-                                <th scope="col">{{ __('home.quantity') }}</th>
-                                <th scope="col">{{ __('home.Unit price') }}</th>
-                                <th scope="col">{{ __('home.vận chuyển') }}</th>
-                                <th scope="col">{{ __('home.Grand Total') }}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row">
-                                    <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                                </th>
-                                <td>
-                                    <input type="number" min="0" value="0" name="quantity[]"
-                                           class="input_quantity" data-id="0" data-product="{{$product}}"
-                                           data-variable="" style="width: 55px;">
-                                </td>
-                                <td>
-                <span>
-                    <span>
-                        <span id="textPrice0">
-                            {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
-                        </span>
-                        <input class="d-none" value="{{$product->price}}" id="productPrice0">
-                    </span>
-                     <span class="currency">
-                        {{$currency}}
-                     </span>
-                </span>
-                                </td>
-                                <td class="priceTransport">0</td>
-                                <td id="total-price0">
-                                    0
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <tr>
+                            <th scope="row">
+                                <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
+                            </th>
+                            <td></td>
+                            <td>
+                                <input type="number" min="0" value="0" name="quantity[]"
+                                       class="input_quantity" data-id="0" data-product="{{$product}}"
+                                       data-variable="" style="width: 55px;">
+                            </td>
+                            <td>
+                                    <span>
+                                        <span>
+                                            <span id="textPrice0">
+                                                {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
+                                            </span>
+                                            <input class="d-none" value="{{$product->price}}" id="productPrice0">
+                                        </span>
+                                         <span class="currency">
+                                            {{$currency}}
+                                         </span>
+                                    </span>
+                            </td>
+                            <td class="priceTransport">0</td>
+                            <td id="total-price0">
+                                0
+                            </td>
+                        </tr>
                     @endif
                 @else
                     @php
@@ -285,47 +272,34 @@
                             </tr>
                         @endforeach
                     @else
-                        <table class="table table-bordered" id="table-selected-att">
-                            <thead>
-                            <tr>
-                                <th scope="col"
-                                    style="    width: 80px; text-align: center;">{{ __('home.thumbnail') }}</th>
-                                <th scope="col">{{ __('home.quantity') }}</th>
-                                <th scope="col">{{ __('home.Unit price') }}</th>
-                                <th scope="col">{{ __('home.vận chuyển') }}</th>
-                                <th scope="col">{{ __('home.Grand Total') }}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row">
-                                    <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                                </th>
-                                <td>
-                                    <input type="number" min="0" value="0" name="quantity[]"
-                                           class="input_quantity" data-id="0" data-product="{{$product}}"
-                                           data-variable="" style="width: 55px;">
-                                </td>
-                                <td>
-                <span>
-                    <span>
-                        <span id="textPrice0">
-                            {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
-                        </span>
-                        <input class="d-none" value="{{$product->price}}" id="productPrice0">
-                    </span>
-                     <span class="currency">
-                        {{$currency}}
-                     </span>
-                </span>
-                                </td>
-                                <td class="priceTransport">0</td>
-                                <td id="total-price0">
-                                    0
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <tr>
+                            <th scope="row">
+                                <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
+                            </th>
+                            <td></td>
+                            <td>
+                                <input type="number" min="0" value="0" name="quantity[]"
+                                       class="input_quantity" data-id="0" data-product="{{$product}}"
+                                       data-variable="" style="width: 55px;">
+                            </td>
+                            <td>
+                                    <span>
+                                        <span>
+                                            <span id="textPrice0">
+                                                {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
+                                            </span>
+                                            <input class="d-none" value="{{$product->price}}" id="productPrice0">
+                                        </span>
+                                         <span class="currency">
+                                            {{$currency}}
+                                         </span>
+                                    </span>
+                            </td>
+                            <td class="priceTransport">0</td>
+                            <td id="total-price0">
+                                0
+                            </td>
+                        </tr>
                     @endif
                 @endif
             @else
@@ -438,46 +412,34 @@
                         </td>
                     </tr>
                 @else
-                    <table class="table table-bordered" id="table-selected-att">
-                        <thead>
-                        <tr>
-                            <th scope="col" style="    width: 80px; text-align: center;">{{ __('home.thumbnail') }}</th>
-                            <th scope="col">{{ __('home.quantity') }}</th>
-                            <th scope="col">{{ __('home.Unit price') }}</th>
-                            <th scope="col">{{ __('home.vận chuyển') }}</th>
-                            <th scope="col">{{ __('home.Grand Total') }}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">
-                                <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                            </th>
-                            <td>
-                                <input type="number" min="0" value="0" name="quantity[]"
-                                       class="input_quantity" data-id="0" data-product="{{$product}}"
-                                       data-variable="" style="width: 55px;">
-                            </td>
-                            <td>
-                <span>
-                    <span>
-                        <span id="textPrice0">
-                            {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
-                        </span>
-                        <input class="d-none" value="{{$product->price}}" id="productPrice0">
-                    </span>
-                     <span class="currency">
-                        {{$currency}}
-                     </span>
-                </span>
-                            </td>
-                            <td class="priceTransport">0</td>
-                            <td id="total-price0">
-                                0
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <tr>
+                        <th scope="row">
+                            <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
+                        </th>
+                        <td></td>
+                        <td>
+                            <input type="number" min="0" value="0" name="quantity[]"
+                                   class="input_quantity" data-id="0" data-product="{{$product}}"
+                                   data-variable="" style="width: 55px;">
+                        </td>
+                        <td>
+                            <span>
+                                <span>
+                                    <span id="textPrice0">
+                                        {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
+                                    </span>
+                                    <input class="d-none" value="{{$product->price}}" id="productPrice0">
+                                </span>
+                                 <span class="currency">
+                                    {{$currency}}
+                                 </span>
+                            </span>
+                        </td>
+                        <td class="priceTransport">0</td>
+                        <td id="total-price0">
+                            0
+                        </td>
+                    </tr>
                 @endif
             @endif
         @else
@@ -609,46 +571,34 @@
                 @endif
             @endforeach
             @if($isForm == false)
-                <table class="table table-bordered" id="table-selected-att">
-                    <thead>
-                    <tr>
-                        <th scope="col" style="    width: 80px; text-align: center;">{{ __('home.thumbnail') }}</th>
-                        <th scope="col">{{ __('home.quantity') }}</th>
-                        <th scope="col">{{ __('home.Unit price') }}</th>
-                        <th scope="col">{{ __('home.vận chuyển') }}</th>
-                        <th scope="col">{{ __('home.Grand Total') }}</th>
-                    </tr>
-                    </thead>
-                    <tbody>
                     <tr>
                         <th scope="row">
                             <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
                         </th>
+                        <td></td>
                         <td>
                             <input type="number" min="0" value="0" name="quantity[]"
                                    class="input_quantity" data-id="0" data-product="{{$product}}"
                                    data-variable="" style="width: 55px;">
                         </td>
                         <td>
-                <span>
-                    <span>
-                        <span id="textPrice0">
-                            {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
-                        </span>
-                        <input class="d-none" value="{{$product->price}}" id="productPrice0">
-                    </span>
-                     <span class="currency">
-                        {{$currency}}
-                     </span>
-                </span>
+                            <span>
+                                <span>
+                                    <span id="textPrice0">
+                                        {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
+                                    </span>
+                                    <input class="d-none" value="{{$product->price}}" id="productPrice0">
+                                </span>
+                                 <span class="currency">
+                                    {{$currency}}
+                                 </span>
+                            </span>
                         </td>
                         <td class="priceTransport">0</td>
                         <td id="total-price0">
                             0
                         </td>
                     </tr>
-                    </tbody>
-                </table>
             @endif
         @endif
         </tbody>
