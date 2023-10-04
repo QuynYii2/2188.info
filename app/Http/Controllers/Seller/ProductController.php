@@ -482,7 +482,6 @@ class ProductController extends Controller
 
             if ($isNew) {
                 $newArray = $this->getAttributeProperty($request);
-//                dd($newArray);
 
                 if ($request->hasFile('thumbnail')) {
                     $thumbnail = $request->file('thumbnail');
@@ -531,7 +530,6 @@ class ProductController extends Controller
                             $arrayProduct[] = $newVariationData;
                         }
                     }
-                    DB::table('product_attribute')->where('product_id', $product->id)->delete();
                     Variation::insert($arrayProduct);
                     $this->createAttributeProduct($product, $newArray);
                 }

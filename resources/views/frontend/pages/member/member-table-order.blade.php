@@ -10,597 +10,102 @@
     </tr>
     </thead>
     <tbody>
-    @if($testArray && count($testArray) != 0)
-        @php
-            $productID = $product->id;
-        @endphp
-        @if(count($testArray) == 1)
-            @php
-                $item = $testArray[0];
-            @endphp
-            @if(is_array($item))
-                @if(count($item) == 1)
+    @if($productVariables && $productVariables->isNotEmpty())
+        @foreach($productVariables as $productVariable)
+            <tr>
+                <td scope="row">
+                    <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
+                </td>
+                <td>
+                    <div class="stand-text-secondary">
+                        @if(locationHelper() == 'kr')
+                            {{$product->name_ko}}
+                        @elseif(locationHelper() == 'cn')
+                            {{$product->name_zh}}
+                        @elseif(locationHelper() == 'jp')
+                            {{$product->name_ja}}
+                        @elseif(locationHelper() == 'vi')
+                            {{$product->name_vi}}
+                        @else
+                            {{$product->name_en}}
+                        @endif
+                    </div>
                     @php
-                        $attproArray =  explode('-', $item[0]);
-
-                        $attribute = \App\Models\Attribute::where('status', \App\Enums\AttributeStatus::ACTIVE)
-                                        ->where('id', $attproArray[0])->first();
-                        $property = \App\Models\Properties::where('status', \App\Enums\PropertiStatus::ACTIVE)
-                                        ->where('id', $attproArray[1])->first();
-
-                        $productVariable =  \App\Models\Variation::where([
-                            ['product_id', $productID],
-                            ['variation', $item],
-                            ['status', \App\Enums\VariationStatus::ACTIVE]
-                        ])->first();
+                        $item = $productVariable->variation;
+                        $arrayItem = null;
+                        if ($item){
+                            $arrayItem = explode(',', $item);
+                        }
                     @endphp
-                    @if($productVariable)
-                        <tr>
-                            <td scope="row">
-                                <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                            </td>
-                            <td>
-                                <div class="stand-text-secondary">
+                    <div class="small text-secondary">
+                        @if($arrayItem)
+                            @foreach($arrayItem as $value)
+                                @php
+                                    $arrayValue = explode('-', $value);
+                                    $attribute = \App\Models\Attribute::where('status', \App\Enums\AttributeStatus::ACTIVE)
+                                        ->where('id', $arrayValue[0])->first();
+                                     $property = \App\Models\Attribute::where('status', \App\Enums\ProductStatus::ACTIVE)
+                                        ->where('id', $arrayValue[1])->first();
+                                @endphp
+                                @if($attribute)
                                     @if(locationHelper() == 'kr')
-                                        {{$product->name_ko}}
+                                        {{$attribute->name_ko}}
                                     @elseif(locationHelper() == 'cn')
-                                        {{$product->name_zh}}
+                                        {{$attribute->name_zh}}
                                     @elseif(locationHelper() == 'jp')
-                                        {{$product->name_ja}}
+                                        {{$attribute->name_ja}}
                                     @elseif(locationHelper() == 'vi')
-                                        {{$product->name_vi}}
+                                        {{$attribute->name_vi}}
                                     @else
-                                        {{$product->name_en}}
+                                        {{$attribute->name_en}}
                                     @endif
-                                </div>
-                                <div class="small text-secondary">
-                                    @if($attribute)
+                                    :
+                                    @if($property)
                                         @if(locationHelper() == 'kr')
-                                            {{$attribute->name_ko}}
+                                            {{$property->name_ko}}
                                         @elseif(locationHelper() == 'cn')
-                                            {{$attribute->name_zh}}
+                                            {{$property->name_zh}}
                                         @elseif(locationHelper() == 'jp')
-                                            {{$attribute->name_ja}}
+                                            {{$property->name_ja}}
                                         @elseif(locationHelper() == 'vi')
-                                            {{$attribute->name_vi}}
+                                            {{$property->name_vi}}
                                         @else
-                                            {{$attribute->name_en}}
+                                            {{$property->name_en}}
                                         @endif
-                                        :
-                                        @if($property)
-                                            @if(locationHelper() == 'kr')
-                                                {{$property->name_ko}}
-                                            @elseif(locationHelper() == 'cn')
-                                                {{$property->name_zh}}
-                                            @elseif(locationHelper() == 'jp')
-                                                {{$property->name_ja}}
-                                            @elseif(locationHelper() == 'vi')
-                                                {{$property->name_vi}}
-                                            @else
-                                                {{$property->name_en}}
-                                            @endif
-                                            ,
-                                        @endif
+                                        ,
                                     @endif
-                                </div>
-                            </td>
-                            <td>
-                                @if($productVariable)
-                                    <input type="number" min="0" value="0" name="quantity[]"
-                                           class="input_quantity"
-                                           data-id="0" data-product="{{$product}}"
-                                           data-variable="{{$item[0]}}" style="width: 55px;">
-                                @else
-                                    <input type="number" min="0" value="0" name="quantity[]"
-                                           class="input_quantity" data-id="0" data-product="{{$product}}"
-                                           data-variable="{{$item[0]}}" style="width: 55px;">
                                 @endif
-                            </td>
+                            @endforeach
+                        @endif
+                    </div>
+                </td>
+                <td>
+                    <input type="number" min="0" value="0" name="quantity[]"
+                           class="input_quantity"
+                           data-id="{{$loop->index + 1}}" data-product="{{$productVariable}}"
+                           data-variable="{{$productVariable->variation}}" style="width: 55px;">
+                </td>
 
-                            <td>
-                            <span>
-                                <span>
-                                      @if($productVariable)
-                                        <span id="textPrice0">
-                                            {{ number_format(convertCurrency('USD', $currency,$productVariable->price), 0, ',', '.') }}
-                                        </span>
-                                        <input class="d-none" value="{{$productVariable->price}}"
-                                               id="productPrice0">
-                                    @else
-                                        <span id="textPrice0">
-                                            {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
-                                        </span>
-                                        <input class="d-none" value="{{$product->price}}" id="productPrice0">
-                                    @endif
-                                </span>
-                                 <span class="currency">
-                                    {{$currency}}
-                                 </span>
-                            </span>
-                            </td>
-                            <td class="priceTransport">0</td>
-                            <td id="total-price0">
-                                @if($productVariable)
-                                    {{ number_format(convertCurrency('USD', $currency,$productVariable->price*$product->min), 0, ',', '.') }}  {{$currency}}
-                                @else
-                                    {{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}
-                                @endif
-                            </td>
-                        </tr>
-                    @else
-                        <tr>
-                            <td scope="row">
-                                <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                            </td>
-                            <td>{{ __('home.None') }}</td>
-                            <td>
-                                <input type="number" min="0" value="0" name="quantity[]"
-                                       class="input_quantity" data-id="0" data-product="{{$product}}"
-                                       data-variable="" style="width: 55px;">
-                            </td>
-                            <td>
-                                    <span>
-                                        <span>
-                                            <span id="textPrice0">
-                                                {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
-                                            </span>
-                                            <input class="d-none" value="{{$product->price}}" id="productPrice0">
-                                        </span>
-                                         <span class="currency">
-                                            {{$currency}}
-                                         </span>
-                                    </span>
-                            </td>
-                            <td class="priceTransport">0</td>
-                            <td id="total-price0">
-                                0
-                            </td>
-                        </tr>
-                    @endif
-                @else
-                    @php
-                        $productVariable =  \App\Models\Variation::where([
-                                    ['product_id', $productID],
-                                    ['variation', $item],
-                                    ['status', \App\Enums\VariationStatus::ACTIVE]
-                                ])->first();
-                    @endphp
-                    @if($productVariable)
-                        @foreach($item as $key => $attpro)
-                            <tr>
-                                <td scope="row">
-                                    <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                                </td>
-                                <td>
-                                    <div class="stand-text-secondary">
-                                        @if(locationHelper() == 'kr')
-                                            {{$product->name_ko}}
-                                        @elseif(locationHelper() == 'cn')
-                                            {{$product->name_zh}}
-                                        @elseif(locationHelper() == 'jp')
-                                            {{$product->name_ja}}
-                                        @elseif(locationHelper() == 'vi')
-                                            {{$product->name_vi}}
-                                        @else
-                                            {{$product->name_en}}
-                                        @endif
-                                    </div>
-                                    @php
-                                        $attproArray =  explode('-', $attpro);
-
-                                        $attribute = \App\Models\Attribute::where('status', \App\Enums\AttributeStatus::ACTIVE)
-                                            ->where('id', $attproArray[0])->first();
-                                        $property = \App\Models\Properties::where('status', \App\Enums\PropertiStatus::ACTIVE)
-                                            ->where('id', $attproArray[1])->first();
-                                    @endphp
-                                    <div class="small text-secondary">
-                                        @if($attribute)
-                                            @if(locationHelper() == 'kr')
-                                                {{$attribute->name_ko}}
-                                            @elseif(locationHelper() == 'cn')
-                                                {{$attribute->name_zh}}
-                                            @elseif(locationHelper() == 'jp')
-                                                {{$attribute->name_ja}}
-                                            @elseif(locationHelper() == 'vi')
-                                                {{$attribute->name_vi}}
-                                            @else
-                                                {{$attribute->name_en}}
-                                            @endif
-                                            :
-                                            @if($property)
-                                                @if(locationHelper() == 'kr')
-                                                    {{$property->name_ko}}
-                                                @elseif(locationHelper() == 'cn')
-                                                    {{$property->name_zh}}
-                                                @elseif(locationHelper() == 'jp')
-                                                    {{$property->name_ja}}
-                                                @elseif(locationHelper() == 'vi')
-                                                    {{$property->name_vi}}
-                                                @else
-                                                    {{$property->name_en}}
-                                                @endif
-                                                ,
-                                            @endif
-                                        @endif
-                                    </div>
-                                </td>
-                                <td>
-                                    @if($productVariable)
-                                        <input type="number" min="0" value="0"
-                                               name="quantity[]"
-                                               class="input_quantity"
-                                               data-id="{{$loop->index + 1}}" data-product="{{$product}}"
-                                               data-variable="{{$attpro}}">
-                                    @else
-                                        <input type="number" min="0" value="0"
-                                               name="quantity[]"
-                                               class="input_quantity" data-id="{{$loop->index + 1}}"
-                                               data-product="{{$product}}"
-                                               data-variable="{{$attpro}}">
-                                    @endif
-                                </td>
-                                <td>
-                                <span>
-                                    <span>
-                                          @if($productVariable)
-                                            <span id="textPrice{{$loop->index + 1}}">
-                                                {{ number_format(convertCurrency('USD', $currency,$productVariable->price), 0, ',', '.') }}
-                                            </span>
-                                            <input class="d-none" value="{{$productVariable->price}}"
-                                                   id="productPrice{{$loop->index + 1}}">
-                                        @else
-                                            <span id="textPrice{{$loop->index + 1}}">
-                                                {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
-                                            </span>
-                                            <input class="d-none" value="{{$product->price}}"
-                                                   id="productPrice{{$loop->index + 1}}">
-                                        @endif
-                                    </span>
-                                     <span class="currency">
-                                        {{$currency}}
-                                     </span>
-                                </span>
-                                </td>
-                                <td class="priceTransport">0</td>
-                                <td id="total-price{{$loop->index + 1}}">
-                                    @if($productVariable)
-                                        {{ number_format(convertCurrency('USD', $currency,$productVariable->price*$product->min), 0, ',', '.') }}  {{$currency}}
-                                    @else
-                                        {{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td scope="row">
-                                <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                            </td>
-                            <td>{{ __('home.None') }}</td>
-                            <td>
-                                <input type="number" min="0" value="0" name="quantity[]"
-                                       class="input_quantity" data-id="0" data-product="{{$product}}"
-                                       data-variable="" style="width: 55px;">
-                            </td>
-                            <td>
-                                    <span>
-                                        <span>
-                                            <span id="textPrice0">
-                                                {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
-                                            </span>
-                                            <input class="d-none" value="{{$product->price}}" id="productPrice0">
-                                        </span>
-                                         <span class="currency">
-                                            {{$currency}}
-                                         </span>
-                                    </span>
-                            </td>
-                            <td class="priceTransport">0</td>
-                            <td id="total-price0">
-                                0
-                            </td>
-                        </tr>
-                    @endif
-                @endif
-            @else
-                @php
-                    $myArray =  explode(',', $item);
-                    $productVariable =  \App\Models\Variation::where([
-                                    ['product_id', $productID],
-                                    ['variation', $item],
-                                    ['status', \App\Enums\VariationStatus::ACTIVE]
-                            ])->first();
-                @endphp
-                @if($productVariable)
-                    <tr>
-                        <td scope="row">
-                            <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                        </td>
-                        <td>
-                            <div class="stand-text-secondary">
-                                @if(locationHelper() == 'kr')
-                                    {{$product->name_ko}}
-                                @elseif(locationHelper() == 'cn')
-                                    {{$product->name_zh}}
-                                @elseif(locationHelper() == 'jp')
-                                    {{$product->name_ja}}
-                                @elseif(locationHelper() == 'vi')
-                                    {{$product->name_vi}}
-                                @else
-                                    {{$product->name_en}}
-                                @endif
-                            </div>
-                            <div class="small text-secondary">
-                                @foreach($myArray as $item)
-                                    @php
-                                        $attribute_property = explode('-', $item);
-                                        $attribute = \App\Models\Attribute::where('status', \App\Enums\AttributeStatus::ACTIVE)
-                                            ->where('id', $attribute_property[0])->first();
-                                        $property = \App\Models\Properties::where('status', \App\Enums\PropertiStatus::ACTIVE)
-                                            ->where('id', $attribute_property[1])->first();
-                                    @endphp
-                                    @if($attribute)
-                                        @if(locationHelper() == 'kr')
-                                            {{$attribute->name_ko}}
-                                        @elseif(locationHelper() == 'cn')
-                                            {{$attribute->name_zh}}
-                                        @elseif(locationHelper() == 'jp')
-                                            {{$attribute->name_ja}}
-                                        @elseif(locationHelper() == 'vi')
-                                            {{$attribute->name_vi}}
-                                        @else
-                                            {{$attribute->name_en}}
-                                        @endif
-                                        :
-                                        @if($property)
-                                            @if(locationHelper() == 'kr')
-                                                {{$property->name_ko}}
-                                            @elseif(locationHelper() == 'cn')
-                                                {{$property->name_zh}}
-                                            @elseif(locationHelper() == 'jp')
-                                                {{$property->name_ja}}
-                                            @elseif(locationHelper() == 'vi')
-                                                {{$property->name_vi}}
-                                            @else
-                                                {{$property->name_en}}
-                                            @endif
-                                            ,
-                                        @endif
-                                    @endif
-                                @endforeach
-                            </div>
-                        </td>
-                        <td>
-                            @if($productVariable)
-                                <input type="number" min="0" value="0" name="quantity[]"
-                                       class="input_quantity"
-                                       data-id="0" data-product="{{$product}}"
-                                       data-variable="{{$item}}">
-                            @else
-                                <input type="number" min="0" value="0" name="quantity[]"
-                                       class="input_quantity" data-id="0" data-product="{{$product}}"
-                                       data-variable="{{$item}}">
-                            @endif
-                        </td>
-                        <td>
+                <td>
+                    <span>
                         <span>
-                            <span>
-                                  @if($productVariable)
-                                    <span id="textPrice0">
-                                        {{ number_format(convertCurrency('USD', $currency,$productVariable->price), 0, ',', '.') }}
-                                    </span>
-                                    <input class="d-none" value="{{$productVariable->price}}" id="productPrice0">
-                                @else
-                                    <span id="textPrice0">
-                                        {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
-                                    </span>
-                                    <input class="d-none" value="{{$product->price}}" id="productPrice0">
-                                @endif
+                            <span id="textPrice{{$loop->index + 1}}">
+                                {{ number_format(convertCurrency('USD', $currency,$productVariable->price), 0, ',', '.') }}
                             </span>
-                             <span class="currency">
-                                {{$currency}}
-                            </span>
+                            <input class="d-none" value="{{$productVariable->price}}"
+                                   id="productPrice{{$loop->index + 1}}">
                         </span>
-                        </td>
-                        <td class="priceTransport">0</td>
-                        <td id="total-price0">
-                            @if($productVariable)
-                                {{ number_format(convertCurrency('USD', $currency,$productVariable->price*$product->min), 0, ',', '.') }}  {{$currency}}
-                            @else
-                                {{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}
-                            @endif
-                        </td>
-                    </tr>
-                @else
-                    <tr>
-                        <td scope="row">
-                            <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                        </td>
-                        <td>{{ __('home.None') }}</td>
-                        <td>
-                            <input type="number" min="0" value="0" name="quantity[]"
-                                   class="input_quantity" data-id="0" data-product="{{$product}}"
-                                   data-variable="" style="width: 55px;">
-                        </td>
-                        <td>
-                            <span>
-                                <span>
-                                    <span id="textPrice0">
-                                        {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
-                                    </span>
-                                    <input class="d-none" value="{{$product->price}}" id="productPrice0">
-                                </span>
-                                 <span class="currency">
-                                    {{$currency}}
-                                 </span>
-                            </span>
-                        </td>
-                        <td class="priceTransport">0</td>
-                        <td id="total-price0">
-                            0
-                        </td>
-                    </tr>
-                @endif
-            @endif
-        @else
-            @php
-                $isForm = false;
-            @endphp
-            @foreach($testArray as $productAttribute)
-                @php
-                    $productVariable =  \App\Models\Variation::where([
-                                    ['product_id', $productID],
-                                    ['variation', $productAttribute],
-                                    ['status', \App\Enums\VariationStatus::ACTIVE]
-                            ])->first();
-                @endphp
-                @if($productVariable)
-                    @php
-                        $isForm = true;
-                    @endphp
-                    <tr>
-                        <td scope="row">
-                            <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                        </td>
-                        <td>
-                            <div class="stand-text-secondary">
-                                @if(locationHelper() == 'kr')
-                                    {{$product->name_ko}}
-                                @elseif(locationHelper() == 'cn')
-                                    {{$product->name_zh}}
-                                @elseif(locationHelper() == 'jp')
-                                    {{$product->name_ja}}
-                                @elseif(locationHelper() == 'vi')
-                                    {{$product->name_vi}}
-                                @else
-                                    {{$product->name_en}}
-                                @endif
-                            </div>
-                            @php
-                                $items = null;
-                                $items = explode(',', $productAttribute);
-                            @endphp
-                            <div class="small text-secondary">
-                                @foreach($items as $item)
-                                    @php
-                                        $attribute_property = null;
-                                        $attribute_property = explode('-', $item);
-
-                                        $attribute = \App\Models\Attribute::where('status', \App\Enums\AttributeStatus::ACTIVE)
-                                            ->where('id', $attribute_property[0])->first();
-                                        $property = \App\Models\Properties::where('status', \App\Enums\PropertiStatus::ACTIVE)
-                                            ->where('id', $attribute_property[1])->first();
-                                    @endphp
-                                    @if($attribute)
-                                        @if(locationHelper() == 'kr')
-                                            {{$attribute->name_ko}}
-                                        @elseif(locationHelper() == 'cn')
-                                            {{$attribute->name_zh}}
-                                        @elseif(locationHelper() == 'jp')
-                                            {{$attribute->name_ja}}
-                                        @elseif(locationHelper() == 'vi')
-                                            {{$attribute->name_vi}}
-                                        @else
-                                            {{$attribute->name_en}}
-                                        @endif
-                                        :
-                                        @if($property)
-                                            @if(locationHelper() == 'kr')
-                                                {{$property->name_ko}}
-                                            @elseif(locationHelper() == 'cn')
-                                                {{$property->name_zh}}
-                                            @elseif(locationHelper() == 'jp')
-                                                {{$property->name_ja}}
-                                            @elseif(locationHelper() == 'vi')
-                                                {{$property->name_vi}}
-                                            @else
-                                                {{$property->name_en}}
-                                            @endif
-                                            ,
-                                        @endif
-                                    @endif
-                                @endforeach
-                            </div>
-                        </td>
-
-                        <td>
-                            @if($productVariable)
-                                <input type="number" min="0" value="0" name="quantity[]"
-                                       class="input_quantity"
-                                       data-id="{{$loop->index + 1}}" data-product="{{$product}}"
-                                       data-variable="{{$productAttribute}}">
-                            @else
-                                <input type="number" min="0" value="0" name="quantity[]"
-                                       class="input_quantity"
-                                       data-id="{{$loop->index + 1}}" data-product="{{$product}}"
-                                       data-variable="{{$productAttribute}}">
-                            @endif
-                        </td>
-                        <td>
-
-                        <span>
-                            <span>
-                                  @if($productVariable)
-                                    <span id="textPrice{{$loop->index + 1}}">
-                                        {{ number_format(convertCurrency('USD', $currency,$productVariable->price), 0, ',', '.') }}
-                                    </span>
-                                    <input class="d-none" value="{{$productVariable->price}}"
-                                           id="productPrice{{$loop->index + 1}}">
-                                @else
-                                    <span id="textPrice{{$loop->index + 1}}">
-                                            {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
-                                        </span>
-                                    <input class="d-none" value="{{$product->price}}"
-                                           id="productPrice{{$loop->index + 1}}">
-                                @endif
-                            </span>
-                            <span class="currency">
-                                {{$currency}}
-                            </span>
-                        </span>
-                        </td>
-                        <td class="priceTransport">0</td>
-                        <td id="total-price{{$loop->index + 1}}">
-                            @if($productVariable)
-                                {{ number_format(convertCurrency('USD', $currency,$productVariable->price*$product->min), 0, ',', '.') }}  {{$currency}}
-                            @else
-                                {{ number_format(convertCurrency('USD', $currency,$product->price*$product->min), 0, ',', '.') }}  {{$currency}}
-                            @endif
-                        </td>
-                    </tr>
-                @endif
-            @endforeach
-            @if($isForm == false)
-                <tr>
-                    <td scope="row">
-                        <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                    </td>
-                    <td> {{ __('home.None') }}</td>
-                    <td>
-                        <input type="number" min="0" value="0" name="quantity[]"
-                               class="input_quantity" data-id="0" data-product="{{$product}}"
-                               data-variable="" style="width: 55px;">
-                    </td>
-                    <td>
-                            <span>
-                                <span>
-                                    <span id="textPrice0">
-                                        {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }}
-                                    </span>
-                                    <input class="d-none" value="{{$product->price}}" id="productPrice0">
-                                </span>
-                                 <span class="currency">
-                                    {{$currency}}
-                                 </span>
-                            </span>
-                    </td>
-                    <td class="priceTransport">0</td>
-                    <td id="total-price0">
-                        0
-                    </td>
-                </tr>
-            @endif
-        @endif
+                         <span class="currency">
+                            {{$currency}}
+                         </span>
+                    </span>
+                </td>
+                <td class="priceTransport">0</td>
+                <td id="total-price{{$loop->index + 1}}">
+                    0
+                </td>
+            </tr>
+        @endforeach
     @else
         <tr>
             <td scope="row">
