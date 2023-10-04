@@ -106,24 +106,26 @@
                                 @php
                                     $category = \App\Models\Category::find($itemArrayCategory);
                                 @endphp
-                                <div class="col-md-6">
-                                    <div class="mt-2 d-flex">
-                                        <div class="mb-3 size">
-                                            @if(locationHelper() == 'kr')
-                                                {{ ($category->name_ko) }}
-                                            @elseif(locationHelper() == 'cn')
-                                                {{ ($category->name_zh) }}
-                                            @elseif(locationHelper() == 'jp')
-                                                {{ ($category->name_ja) }}
-                                            @elseif(locationHelper() == 'vi')
-                                                {{ ($category->name_vi) }}
-                                            @else
-                                                {{ ($category->name_en) }}
-                                            @endif
-                                            <i class="fa-solid fa-angle-right"></i>
+                                @if($category)
+                                    <div class="col-md-6">
+                                        <div class="mt-2 d-flex">
+                                            <div class="mb-3 size">
+                                                @if(locationHelper() == 'kr')
+                                                    {{ ($category->name_ko) }}
+                                                @elseif(locationHelper() == 'cn')
+                                                    {{ ($category->name_zh) }}
+                                                @elseif(locationHelper() == 'jp')
+                                                    {{ ($category->name_ja) }}
+                                                @elseif(locationHelper() == 'vi')
+                                                    {{ ($category->name_vi) }}
+                                                @else
+                                                    {{ ($category->name_en) }}
+                                                @endif
+                                                <i class="fa-solid fa-angle-right"></i>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
                             @endforeach
                         </div>
                     </div>
