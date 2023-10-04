@@ -1,16 +1,16 @@
-@if($testArray && count($testArray) != 0)
-    <table class="table table-bordered" id="table-selected-att">
-        <thead>
-        <tr>
-            <th scope="col" style="width: 80px; text-align: center;">{{ __('home.thumbnail') }}</th>
-            <th scope="col">{{ __('home.property') }}</th>
-            <th scope="col">{{ __('home.quantity') }}</th>
-            <th scope="col">{{ __('home.Unit price') }}</th>
-            <th scope="col">{{ __('home.vận chuyển') }}</th>
-            <th scope="col">{{ __('home.Grand Total') }}</th>
-        </tr>
-        </thead>
-        <tbody>
+<table class="table table-bordered" id="table-selected-att">
+    <thead>
+    <tr>
+        <th scope="col" style="width: 80px; text-align: center;">{{ __('home.thumbnail') }}</th>
+        <th scope="col">{{ __('home.property') }}</th>
+        <th scope="col">{{ __('home.quantity') }}</th>
+        <th scope="col">{{ __('home.Unit price') }}</th>
+        <th scope="col">{{ __('home.vận chuyển') }}</th>
+        <th scope="col">{{ __('home.Grand Total') }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if($testArray && count($testArray) != 0)
         @php
             $productID = $product->id;
         @endphp
@@ -132,7 +132,7 @@
                             <th scope="row">
                                 <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
                             </th>
-                            <td></td>
+                            <td>{{ __('home.None') }}</td>
                             <td>
                                 <input type="number" min="0" value="0" name="quantity[]"
                                        class="input_quantity" data-id="0" data-product="{{$product}}"
@@ -276,7 +276,7 @@
                             <th scope="row">
                                 <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
                             </th>
-                            <td></td>
+                            <td>{{ __('home.None') }}</td>
                             <td>
                                 <input type="number" min="0" value="0" name="quantity[]"
                                        class="input_quantity" data-id="0" data-product="{{$product}}"
@@ -416,7 +416,7 @@
                         <th scope="row">
                             <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
                         </th>
-                        <td></td>
+                        <td>{{ __('home.None') }}</td>
                         <td>
                             <input type="number" min="0" value="0" name="quantity[]"
                                    class="input_quantity" data-id="0" data-product="{{$product}}"
@@ -571,17 +571,17 @@
                 @endif
             @endforeach
             @if($isForm == false)
-                    <tr>
-                        <th scope="row">
-                            <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                        </th>
-                        <td></td>
-                        <td>
-                            <input type="number" min="0" value="0" name="quantity[]"
-                                   class="input_quantity" data-id="0" data-product="{{$product}}"
-                                   data-variable="" style="width: 55px;">
-                        </td>
-                        <td>
+                <tr>
+                    <th scope="row">
+                        <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
+                    </th>
+                    <td> {{ __('home.None') }}</td>
+                    <td>
+                        <input type="number" min="0" value="0" name="quantity[]"
+                               class="input_quantity" data-id="0" data-product="{{$product}}"
+                               data-variable="" style="width: 55px;">
+                    </td>
+                    <td>
                             <span>
                                 <span>
                                     <span id="textPrice0">
@@ -593,32 +593,20 @@
                                     {{$currency}}
                                  </span>
                             </span>
-                        </td>
-                        <td class="priceTransport">0</td>
-                        <td id="total-price0">
-                            0
-                        </td>
-                    </tr>
+                    </td>
+                    <td class="priceTransport">0</td>
+                    <td id="total-price0">
+                        0
+                    </td>
+                </tr>
             @endif
         @endif
-        </tbody>
-    </table>
-@else
-    <table class="table table-bordered" id="table-selected-att">
-        <thead>
-        <tr>
-            <th scope="col" style="width: 80px; text-align: center;">{{ __('home.thumbnail') }}</th>
-            <th scope="col">{{ __('home.quantity') }}</th>
-            <th scope="col">{{ __('home.Unit price') }}</th>
-            <th scope="col">{{ __('home.vận chuyển') }}</th>
-            <th scope="col">{{ __('home.Grand Total') }}</th>
-        </tr>
-        </thead>
-        <tbody>
+    @else
         <tr>
             <th scope="row">
                 <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
             </th>
+            <td>{{ __('home.None') }}</td>
             <td>
                 <input type="number" min="0" value="0" name="quantity[]"
                        class="input_quantity" data-id="0" data-product="{{$product}}"
@@ -642,9 +630,9 @@
                 0
             </td>
         </tr>
-        </tbody>
-    </table>
-@endif
+    @endif
+    </tbody>
+</table>
 <button id="supBtnOrder" type="button"
         class="btn btn-success float-right">{{ __('home.Tiếp nhận đặt hàng') }}</button>
 
