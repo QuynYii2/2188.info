@@ -1028,7 +1028,7 @@ return [
     'Select file' => '파일선택 (사업자등록사본을 첨부하세요)',
     'Address Business' => '사업장주소',
     'Language English' => '영문',
-    'Language Local' => '영문',
+    'Language Local' => '자국어',
     'đơn giá' => '단가',
     'namess' => '성명',
     'xác nhận đăng ký' => '등록확인',
