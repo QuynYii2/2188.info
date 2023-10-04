@@ -38,7 +38,7 @@ $('.thumbnailProduct').on('click', function () {
     let string = '';
     let viewImg = '';
     for (let i = 0; i < arrayUrlImg.length; i++) {
-        string = string + `<div class="col-md-3 thumbnailSupGallery-img">
+        string = string + `<div class="col-md-2 thumbnailSupGallery-img">
                 <img src="${arrayUrlImg[i]}" alt="" class="thumbnailProductGallery " data-id="${productID}"></div>`;
         viewImg = viewImg + `<div class="item-card d-none"> <div class="card-image"> <a href="${arrayUrlImg[i]}"
                 data-fancybox="gallery" data-caption="${productName}"> <img src="${arrayUrlImg[i]}" class="thumbnailProductMain" alt="">
