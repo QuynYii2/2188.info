@@ -252,7 +252,7 @@ class AuthController extends Controller
 
     public function getListNation()
     {
-        $listNation = DB::table('countries')->orderBy('continents')->orderBy('name')->get([
+        $listNation = DB::table('countries')->where('isShow', '1')->orderBy('continents')->orderBy('name')->get([
             'name',
             'iso2',
             'continents'

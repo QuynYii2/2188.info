@@ -33,7 +33,7 @@
 </style>
 <script>
     let dataNation, dataState, dataCity, dataWard;
-    let numberOfCol = 3;
+    let numberOfCol = 4;
     let level = 0;
     let nameTh, idTh, codeTh;
     let nationValue_Selected = provinceValue_Selected = districtValue_Selected =
