@@ -356,6 +356,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'role.admin'], function () {
     require_once __DIR__.'/admin.php';
 });
 
+Route::prefix('address')->group(function () {
+    Route::get('index', [\App\Http\Controllers\Seller\AddressController::class, 'index'])->name('address.manage.index');
+});
+
 // Seller
 Route::group(['prefix' => 'seller', 'middleware' => 'role.seller-or-admin'], function () {
     require_once __DIR__.'/seller.php';
