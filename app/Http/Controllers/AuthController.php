@@ -14,11 +14,13 @@ use App\Enums\UserStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Libraries\GeoIP;
 use App\Models\Category;
+use App\Models\City;
 use App\Models\Coin;
 use App\Models\Member;
 use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
 use App\Models\Permission;
+use App\Models\State;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -260,6 +262,25 @@ class AuthController extends Controller
 
     public function getListRegionByNation($id)
     {
+        $states = State::where('country_code', $id)
+            ->orderBy('name')
+            ->cursor()
+            ->map(function ($state) {
+                $cities = City::where('state_code', $state->state_code)
+                    ->where('country_code', $state->country_code)
+                    ->get(['name', 'city_code', 'state_code']);
+
+                return [
+                    'name' => $state->name,
+                    'state_code' => $state->state_code,
+                    'country_code' => $state->country_code,
+                    'total_child' => $cities->count(),
+                    'child' => $cities->toArray(),
+                ];
+            });
+
+        return $states;
+
         $sql = "SELECT
     s.name,
     s.state_code,

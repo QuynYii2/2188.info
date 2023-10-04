@@ -222,14 +222,7 @@
                 str += `<tr>`
             }
 
-            let arrChild = '';
-            try {
-                arrChild = JSON.parse(region.child);
-            } catch (error) {
-                console.log("region.child", region.child);
-                console.log('Error parsing JSON:', error);
-                console.log('------------------------------------------');
-            }
+            let arrChild = region.child;
 
             if (arrChild) {
                 arrChild.forEach((child) => {
