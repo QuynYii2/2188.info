@@ -2,6 +2,15 @@
     use App\Models\Attribute;use App\Models\Properties;use Illuminate\Support\Facades\Auth;
     (new \App\Http\Controllers\Frontend\HomeController())->createStatisticShopDetail('views', $product->user_id);
      $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
+
+    $route = Route::currentRouteName();
+    $isDetail = null;
+    if ($route == 'detail_product.show'){
+        $isDetail = true;
+    }
+
+    session()->forget('isDetail');
+    session()->push('isDetail', $isDetail);
 @endphp
 
 @extends('frontend.layouts.master')
@@ -1424,7 +1433,7 @@
     </script>
     <script>
         async function renderProduct(product) {
-            let url = '{{ route('order_product.attribute', ['id' => ':id']) }}';
+            let url = '{{ route('detail_product.member.attribute', ['id' => ':id']) }}';
             url = url.replace(':id', product);
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);

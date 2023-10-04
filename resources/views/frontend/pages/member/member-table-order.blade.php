@@ -36,9 +36,9 @@
                     @endphp
                     @if($productVariable)
                         <tr>
-                            <th scope="row">
+                            <td scope="row">
                                 <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                            </th>
+                            </td>
                             <td>
                                 <div class="stand-text-secondary">
                                     @if(locationHelper() == 'kr')
@@ -129,9 +129,9 @@
                         </tr>
                     @else
                         <tr>
-                            <th scope="row">
+                            <td scope="row">
                                 <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                            </th>
+                            </td>
                             <td>{{ __('home.None') }}</td>
                             <td>
                                 <input type="number" min="0" value="0" name="quantity[]"
@@ -168,9 +168,9 @@
                     @if($productVariable)
                         @foreach($item as $key => $attpro)
                             <tr>
-                                <th scope="row">
+                                <td scope="row">
                                     <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                                </th>
+                                </td>
                                 <td>
                                     <div class="stand-text-secondary">
                                         @if(locationHelper() == 'kr')
@@ -273,9 +273,9 @@
                         @endforeach
                     @else
                         <tr>
-                            <th scope="row">
+                            <td scope="row">
                                 <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                            </th>
+                            </td>
                             <td>{{ __('home.None') }}</td>
                             <td>
                                 <input type="number" min="0" value="0" name="quantity[]"
@@ -313,9 +313,9 @@
                 @endphp
                 @if($productVariable)
                     <tr>
-                        <th scope="row">
+                        <td scope="row">
                             <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                        </th>
+                        </td>
                         <td>
                             <div class="stand-text-secondary">
                                 @if(locationHelper() == 'kr')
@@ -413,9 +413,9 @@
                     </tr>
                 @else
                     <tr>
-                        <th scope="row">
+                        <td scope="row">
                             <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                        </th>
+                        </td>
                         <td>{{ __('home.None') }}</td>
                         <td>
                             <input type="number" min="0" value="0" name="quantity[]"
@@ -459,9 +459,9 @@
                         $isForm = true;
                     @endphp
                     <tr>
-                        <th scope="row">
+                        <td scope="row">
                             <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                        </th>
+                        </td>
                         <td>
                             <div class="stand-text-secondary">
                                 @if(locationHelper() == 'kr')
@@ -572,9 +572,9 @@
             @endforeach
             @if($isForm == false)
                 <tr>
-                    <th scope="row">
+                    <td scope="row">
                         <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-                    </th>
+                    </td>
                     <td> {{ __('home.None') }}</td>
                     <td>
                         <input type="number" min="0" value="0" name="quantity[]"
@@ -603,9 +603,9 @@
         @endif
     @else
         <tr>
-            <th scope="row">
+            <td scope="row">
                 <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
-            </th>
+            </td>
             <td>{{ __('home.None') }}</td>
             <td>
                 <input type="number" min="0" value="0" name="quantity[]"
@@ -633,8 +633,13 @@
     @endif
     </tbody>
 </table>
+@php
+    $sessionValue = session()->get('isDetail');
+    $isDetail = $sessionValue[0];
+@endphp
+
 <button id="supBtnOrder" type="button"
-        class="btn btn-success float-right">{{ __('home.Tiếp nhận đặt hàng') }}</button>
+        class="float-right {{ $isDetail ? 'payment' : 'btn btn-success' }}">{{ __('home.Tiếp nhận đặt hàng') }}</button>
 
 <div class="d-none">
     <form action="{{route('member.add.cart', $product)}}" method="post" id="formOrderMember">
