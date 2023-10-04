@@ -177,7 +177,6 @@
                                                             </button>
                                                           </div>
                                                                 @php
-                                                                    $att_of_product = DB::table('product_attribute')->where('product_id', $product->id)->get();
                                                                     $productDetails = \App\Models\Variation::where('product_id', $product->id)->get();
                                                                 @endphp
                                                           <div class="modal-body">

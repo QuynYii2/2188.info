@@ -3,10 +3,12 @@
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\ConfigProjectController;
+use App\Http\Controllers\Seller\AddressController;
 use App\Http\Controllers\Seller\CategoryController;
 use App\Http\Controllers\Seller\ProductController;
 use App\Http\Controllers\Seller\TopSellerConfigController;
 use App\Http\Controllers\SetupMarketingController;
+use Illuminate\Support\Facades\Route;
 
 // Admin
 // Route User
@@ -68,3 +70,6 @@ Route::post('/setup-marketing/create', [SetupMarketingController::class, 'store'
 Route::delete('/setup-marketing/create/{id}', [SetupMarketingController::class, 'delete'])->name('setup-marketing.delete');
 Route::get('/setup-marketing/edit/{id}', [SetupMarketingController::class, 'edit'])->name('setup-marketing.edit');
 Route::post('/setup-marketing/update/{id}', [SetupMarketingController::class, 'update'])->name('setup-marketing.update');
+
+
+
