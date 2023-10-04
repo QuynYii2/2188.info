@@ -1,3 +1,12 @@
+@php
+    $route = Route::currentRouteName();
+    $isDetail = null;
+    if ($route == 'detail_product.member.attribute'){
+        $isDetail = true;
+    }
+    session()->forget('isDetail');
+    session()->push('isDetail', $isDetail);
+@endphp
 @extends('frontend.layouts.master')
 @section('title', 'Product Register Members')
 @section('content')

@@ -1,3 +1,13 @@
+@php
+    $route = Route::currentRouteName();
+    $isDetail = null;
+    if ($route == 'detail_product.show'){
+        $isDetail = true;
+    }
+
+    session()->forget('isDetail');
+    session()->push('isDetail', $isDetail);
+@endphp
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 <script>
