@@ -280,26 +280,6 @@ class AuthController extends Controller
             });
 
         return $states;
-
-        $sql = "SELECT
-    s.name,
-    s.state_code,
-    s.country_code,
-    COUNT(c.city_code) AS total_child,
-    CONCAT('[', GROUP_CONCAT(CONCAT('{\"name\":\"', c.name, '\",\"city_code\":\"', c.city_code, '\",\"state_code\":\"', c.state_code, '\"}')), ']') AS child
-FROM
-    states s
-LEFT JOIN
-    cities c ON s.state_code = c.state_code AND s.country_code = c.country_code
-WHERE
-    s.country_code =  :country_code GROUP BY
-    s.name, s.state_code, s.country_code
-ORDER BY
-    s.name;
-";
-        $listState = DB::select($sql, ['country_code' => $id]);
-
-        return response()->json($listState);
     }
 
 
