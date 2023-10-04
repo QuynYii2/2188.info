@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
+use App\Models\Country;
+use App\Models\State;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AddressController extends Controller
 {
@@ -14,6 +18,79 @@ class AddressController extends Controller
      */
     public function index()
     {
+        $listNation = [];
+        $perPage = 20;
+
+        Country::where('isShow', '1')
+            ->orderBy('continents')
+            ->orderBy('name')
+            ->chunk($perPage, function ($countries) use (&$listNation) {
+                foreach ($countries as $country) {
+                    $states = State::where('country_code', $country->iso2)
+                        ->where('country_name', $country->name)
+                        ->get();
+
+                    $stateData = $states->map(function ($state) {
+                        $cities = City::where('state_code', $state->state_code)
+                            ->where('country_code', $state->country_code)
+                            ->get(['name', 'city_code', 'state_code']);
+
+                        return [
+                            'name' => $state->name,
+                            'state_code' => $state->state_code,
+                            'country_code' => $state->country_code,
+                            'total_child' => $cities->count(),
+                            'child' => $cities->toArray(),
+                        ];
+                    });
+
+                    $listNation[] = [
+                        'name' => $country->name,
+                        'country_code' => $country->iso2,
+                        'isShow' => $country->isShow,
+                        'total_child' => $states->count(),
+                        'child' => $stateData,
+                    ];
+                }
+            });
+
+        return response()->json($listNation);
+
+
+
+        $listNation = Country::where('isShow', '1')
+            ->orderBy('continents')
+            ->orderBy('name')
+            ->cursor()
+            ->map(function ($country) {
+                $states = State::where('country_code', $country->iso2)
+                    ->where('country_name', $country->name)
+                    ->cursor()
+                    ->map(function ($state) {
+                        $cities = City::where('state_code', $state->state_code)
+                            ->where('country_code', $state->country_code)
+                            ->get(['name', 'city_code', 'state_code']);
+
+                        return [
+                            'name' => $state->name,
+                            'state_code' => $state->state_code,
+                            'country_code' => $state->country_code,
+                            'total_child' => $cities->count(),
+                            'child' => $cities->toArray(),
+                        ];
+                    });
+
+                return [
+                    'name' => $country->name,
+                    'country_code' => $country->iso2,
+                    'isShow' => $country->isShow,
+                    'total_child' => $states->count(),
+                    'child' => $states->toArray(),
+                ];
+            });
+
+        return response()->json($listNation);
+
         return view('backend.address.index');
     }
 
