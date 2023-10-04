@@ -4,6 +4,10 @@
 
 <style>
 
+    .modal-dialog {
+        min-width: 1300px !important;
+    }
+
     .image-upload {
         display: inline-block;
         position: relative;

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Seller;
 
 use App\Enums\AttributeProductStatus;
 use App\Enums\AttributeStatus;
+use App\Enums\CartStatus;
 use App\Enums\CategoryStatus;
 use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\OrderStatus;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\TranslateController;
 use App\Models\Attribute;
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
@@ -478,8 +480,9 @@ class ProductController extends Controller
                 ProductSale::create($newProductSale);
             }
 
-            if ($isNew > 10) {
+            if ($isNew) {
                 $newArray = $this->getAttributeProperty($request);
+//                dd($newArray);
 
                 if ($request->hasFile('thumbnail')) {
                     $thumbnail = $request->file('thumbnail');
@@ -513,12 +516,23 @@ class ProductController extends Controller
                             $newVariationData['price'] = $request->input('old_price' . $i);
                         }
 
-                        $arrayProduct[] = $newVariationData;
+                        $oldVariable = Variation::where('product_id', $product->id)
+                            ->where('variation', $attPro)
+                            ->where('status', VariationStatus::ACTIVE)
+                            ->first();
+                        if ($oldVariable) {
+                            $oldVariable->thumbnail = $newVariationData['thumbnail'];
+                            $oldVariable->price = $newVariationData['price'];
+                            $oldVariable->old_price = $newVariationData['old_price'];
+                            $oldVariable->description = $newVariationData['description'];
+                            $oldVariable->quantity = $newVariationData['quantity'];
+                            $oldVariable->save();
+                        } else {
+                            $arrayProduct[] = $newVariationData;
+                        }
                     }
-
-                    Variation::where('product_id', $product->id)->delete();
-                    Variation::insert($arrayProduct);
                     DB::table('product_attribute')->where('product_id', $product->id)->delete();
+                    Variation::insert($arrayProduct);
                     $this->createAttributeProduct($product, $newArray);
                 }
                 $updateProduct = $product->save();
@@ -534,7 +548,6 @@ class ProductController extends Controller
                 return back();
             }
         } catch (\Exception $exception) {
-            dd($exception);
             alert()->error('Error', 'Error, please try again');
             return back();
         }
@@ -722,6 +735,73 @@ class ProductController extends Controller
         $success = $product->save();
 
         return $success;
+    }
+
+    public function removeVariation($id)
+    {
+        try {
+            $variable = Variation::where('id', $id)->first();
+            if ($variable) {
+                $carts = Cart::where('product_id', $variable->product_id)->where('values', $variable->variation)->get();
+                foreach ($carts as $cart) {
+                    $cart->status = CartStatus::DELETED;
+                    $cart->save();
+                }
+                $variable->status = VariationStatus::DELETED;
+
+                $moreVariable = Variation::where('product_id', $variable->product_id)
+                    ->where('id', '!=', $id)
+                    ->where('status', VariationStatus::ACTIVE)
+                    ->first();
+
+                if ($moreVariable) {
+                    $item = $variable->variation;
+                    $arrayItems = explode(',', $item);
+                    foreach ($arrayItems as $value) {
+                        $arrayValue = explode('-', $value);
+                        $product_attribute = DB::table('product_attribute')
+                            ->where('product_id', $variable->product_id)
+                            ->where('attribute_id', $arrayValue[0])
+                            ->first();
+
+                        if ($product_attribute) {
+                            if (count($arrayItems) == 1) {
+                                DB::table('product_attribute')
+                                    ->where('product_id', $variable->product_id)
+                                    ->where('attribute_id', $arrayValue[0])
+                                    ->delete();
+                            } else {
+                                $property = $product_attribute->value;
+                                $arrayProperty = explode(',', $property);
+                                if (count($arrayProperty) > 1) {
+                                    $key = array_search($arrayValue[1], $arrayProperty);
+                                    if ($key !== false) {
+                                        unset($arrayProperty[$key]);
+                                    }
+                                }
+                                DB::table('product_attribute')
+                                    ->where('product_id', $variable->product_id)
+                                    ->where('attribute_id', $arrayValue[0])
+                                    ->update(['value' => implode(',', $arrayProperty)]);
+                            }
+                        }
+                    }
+                } else {
+                    DB::table('product_attribute')->where('product_id', $variable->product_id)->delete();
+                }
+                $success = $variable->save();
+                if ($success) {
+                    alert()->success('Success', 'Variable đã được xóa thành công!');
+                    return back();
+                }
+            }
+
+            alert()->error('Error', 'Không thể xoá variable!');
+            return back();
+        } catch (\Exception $exception) {
+            alert()->error('Error', 'Error please try again!');
+            return back();
+        }
     }
 
     private function getAttributeProperty(Request $request)
@@ -953,5 +1033,4 @@ class ProductController extends Controller
         }
         return $listIDs;
     }
-
 }

@@ -33,7 +33,7 @@
 </style>
 <script>
     let dataNation, dataState, dataCity, dataWard;
-    let numberOfCol = 3;
+    let numberOfCol = 4;
     let level = 0;
     let nameTh, idTh, codeTh;
     let nationValue_Selected = provinceValue_Selected = districtValue_Selected =
@@ -222,14 +222,7 @@
                 str += `<tr>`
             }
 
-            let arrChild = '';
-            try {
-                arrChild = JSON.parse(region.child);
-            } catch (error) {
-                console.log("region.child", region.child);
-                console.log('Error parsing JSON:', error);
-                console.log('------------------------------------------');
-            }
+            let arrChild = region.child;
 
             if (arrChild) {
                 arrChild.forEach((child) => {

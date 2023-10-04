@@ -14,11 +14,13 @@ use App\Enums\UserStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Libraries\GeoIP;
 use App\Models\Category;
+use App\Models\City;
 use App\Models\Coin;
 use App\Models\Member;
 use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
 use App\Models\Permission;
+use App\Models\State;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -250,7 +252,7 @@ class AuthController extends Controller
 
     public function getListNation()
     {
-        $listNation = DB::table('countries')->orderBy('continents')->orderBy('name')->get([
+        $listNation = DB::table('countries')->where('isShow', '1')->orderBy('continents')->orderBy('name')->get([
             'name',
             'iso2',
             'continents'
@@ -260,25 +262,24 @@ class AuthController extends Controller
 
     public function getListRegionByNation($id)
     {
-        $sql = "SELECT
-    s.name,
-    s.state_code,
-    s.country_code,
-    COUNT(c.city_code) AS total_child,
-    CONCAT('[', GROUP_CONCAT(CONCAT('{\"name\":\"', c.name, '\",\"city_code\":\"', c.city_code, '\",\"state_code\":\"', c.state_code, '\"}')), ']') AS child
-FROM
-    states s
-LEFT JOIN
-    cities c ON s.state_code = c.state_code AND s.country_code = c.country_code
-WHERE
-    s.country_code =  :country_code GROUP BY
-    s.name, s.state_code, s.country_code
-ORDER BY
-    s.name;
-";
-        $listState = DB::select($sql, ['country_code' => $id]);
+        $states = State::where('country_code', $id)
+            ->orderBy('name')
+            ->cursor()
+            ->map(function ($state) {
+                $cities = City::where('state_code', $state->state_code)
+                    ->where('country_code', $state->country_code)
+                    ->get(['name', 'city_code', 'state_code']);
 
-        return response()->json($listState);
+                return [
+                    'name' => $state->name,
+                    'state_code' => $state->state_code,
+                    'country_code' => $state->country_code,
+                    'total_child' => $cities->count(),
+                    'child' => $cities->toArray(),
+                ];
+            });
+
+        return $states;
     }
 
 

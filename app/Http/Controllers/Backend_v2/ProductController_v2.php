@@ -419,17 +419,61 @@ class ProductController_v2 extends Controller
     {
         try {
             $variable = Variation::where('id', $id)->first();
-            $carts = Cart::where('product_id', $variable->product_id)->where('values', $variable->variation)->get();
-            foreach ($carts as $cart) {
-                $cart->status = CartStatus::DELETED;
-                $cart->save();
+            if ($variable) {
+                $carts = Cart::where('product_id', $variable->product_id)->where('values', $variable->variation)->get();
+                foreach ($carts as $cart) {
+                    $cart->status = CartStatus::DELETED;
+                    $cart->save();
+                }
+                $variable->status = VariationStatus::DELETED;
+
+                $moreVariable = Variation::where('product_id', $variable->product_id)
+                    ->where('id', '!=', $id)
+                    ->where('status', VariationStatus::ACTIVE)
+                    ->first();
+
+                if ($moreVariable) {
+                    $item = $variable->variation;
+                    $arrayItems = explode(',', $item);
+                    foreach ($arrayItems as $value) {
+                        $arrayValue = explode('-', $value);
+                        $product_attribute = DB::table('product_attribute')
+                            ->where('product_id', $variable->product_id)
+                            ->where('attribute_id', $arrayValue[0])
+                            ->first();
+
+                        if ($product_attribute) {
+                            if (count($arrayItems) == 1) {
+                                DB::table('product_attribute')
+                                    ->where('product_id', $variable->product_id)
+                                    ->where('attribute_id', $arrayValue[0])
+                                    ->delete();
+                            } else {
+                                $property = $product_attribute->value;
+                                $arrayProperty = explode(',', $property);
+                                if (count($arrayProperty) > 1) {
+                                    $key = array_search($arrayValue[1], $arrayProperty);
+                                    if ($key !== false) {
+                                        unset($arrayProperty[$key]);
+                                    }
+                                }
+                                DB::table('product_attribute')
+                                    ->where('product_id', $variable->product_id)
+                                    ->where('attribute_id', $arrayValue[0])
+                                    ->update(['value' => implode(',', $arrayProperty)]);
+                            }
+                        }
+                    }
+                } else {
+                    DB::table('product_attribute')->where('product_id', $variable->product_id)->delete();
+                }
+                $success = $variable->save();
+                if ($success) {
+                    alert()->success('Success', 'Variable đã được xóa thành công!');
+                    return back();
+                }
             }
-            $variable->status = VariationStatus::DELETED;
-            $success = $variable->save();
-            if ($success) {
-                alert()->success('Success', 'Variable đã được xóa thành công!');
-                return back();
-            }
+
             alert()->error('Error', 'Không thể xoá variable!');
             return back();
         } catch (\Exception $exception) {

@@ -1,3 +1,13 @@
+@php
+    $route = Route::currentRouteName();
+    $isDetail = null;
+    if ($route == 'detail_product.show'){
+        $isDetail = true;
+    }
+
+    session()->forget('isDetail');
+    session()->push('isDetail', $isDetail);
+@endphp
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 <script>
@@ -106,24 +116,26 @@
                                 @php
                                     $category = \App\Models\Category::find($itemArrayCategory);
                                 @endphp
-                                <div class="col-md-6">
-                                    <div class="mt-2 d-flex">
-                                        <div class="mb-3 size">
-                                            @if(locationHelper() == 'kr')
-                                                {{ ($category->name_ko) }}
-                                            @elseif(locationHelper() == 'cn')
-                                                {{ ($category->name_zh) }}
-                                            @elseif(locationHelper() == 'jp')
-                                                {{ ($category->name_ja) }}
-                                            @elseif(locationHelper() == 'vi')
-                                                {{ ($category->name_vi) }}
-                                            @else
-                                                {{ ($category->name_en) }}
-                                            @endif
-                                            <i class="fa-solid fa-angle-right"></i>
+                                @if($category)
+                                    <div class="col-md-6">
+                                        <div class="mt-2 d-flex">
+                                            <div class="mb-3 size">
+                                                @if(locationHelper() == 'kr')
+                                                    {{ ($category->name_ko) }}
+                                                @elseif(locationHelper() == 'cn')
+                                                    {{ ($category->name_zh) }}
+                                                @elseif(locationHelper() == 'jp')
+                                                    {{ ($category->name_ja) }}
+                                                @elseif(locationHelper() == 'vi')
+                                                    {{ ($category->name_vi) }}
+                                                @else
+                                                    {{ ($category->name_en) }}
+                                                @endif
+                                                <i class="fa-solid fa-angle-right"></i>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
                             @endforeach
                         </div>
                     </div>
@@ -254,7 +266,7 @@
         </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-member" role="document">
                 <div class="modal-content modal-content-css">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
