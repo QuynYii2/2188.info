@@ -339,6 +339,10 @@ class CheckoutController extends Controller
         return redirect()->route('checkout.show')->with('error', 'Checkout fail');
     }
 
+    public function mailCheckout()
+    {
+        dd(123);
+    }
     public function returnCheckout(Request $request)
     {
         (new HomeController())->getLocale($request);

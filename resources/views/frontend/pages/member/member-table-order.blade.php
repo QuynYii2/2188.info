@@ -1,3 +1,7 @@
+@php
+    $sessionValue = session()->get('isDetail');
+    $isDetail = $sessionValue[0];
+@endphp
 <table class="table table-bordered" id="table-selected-att">
     <thead>
     <tr>
@@ -5,7 +9,7 @@
         <th scope="col">{{ __('home.property') }}</th>
         <th scope="col">{{ __('home.quantity') }}</th>
         <th scope="col">{{ __('home.Unit price') }}</th>
-        <th scope="col">{{ __('home.vận chuyển') }}</th>
+        <th class="{{ $isDetail ? 'shipping' : '' }}" scope="col">{{ __('home.vận chuyển') }}</th>
         <th scope="col">{{ __('home.Grand Total') }}</th>
     </tr>
     </thead>
