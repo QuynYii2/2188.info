@@ -2,7 +2,7 @@
 
 @section('content')
 	<script src="{{ asset('js/backend/address/jquery-simple-tree-table.js') }}"></script>
-	<table id="basic" border="1">
+	<table id="basic" border="1" class="w-100">
 		<tbody>
 		@foreach($listNation as $index => $nation)
 			<tr data-node-id="{{ $index }}">
