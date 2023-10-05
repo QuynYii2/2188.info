@@ -14,45 +14,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
     <div class="container stand-member">
         @if($company)
-            @php
-                if (Auth::check()){
-                                                $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
-                                                  $isMember = null;
-                                                if ($memberPerson){
-                                                    $member = \App\Models\MemberRegisterInfo::where([
-                                                        ['id', $memberPerson->member_id],
-                                                        ['status', \App\Enums\MemberRegisterInfoStatus::ACTIVE]
-                                                    ])->first();
-                                                    if ($member){
-                                                        $isMember = true;
-                                                    }
-                                                }
-                                            }
-                    $memberAccounts = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->get();
-                    $companyPerson = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->first();
-                    $oldUser = \App\Models\User::where('email', $companyPerson->email)->first();
-                    if (!$memberAccounts->isEmpty()){
-                      $products = \App\Models\Product::where(function ($query) use ($company, $memberAccounts){
-                            if (count($memberAccounts) == 2){
-                                $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
-                                $user2 = \App\Models\User::where('email', $memberAccounts[1]->email)->first();
-                            } else{
-                                $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
-                                $user2 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
-                            }
-
-                            $query->where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])
-                                  ->orWhere([['user_id', $user1->id], ['status', \App\Enums\ProductStatus::ACTIVE]])
-                                  ->orWhere([['user_id', $user2->id], ['status', \App\Enums\ProductStatus::ACTIVE]]);
-                            })->get();
-                    } else{
-                        $products = \App\Models\Product::where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])->get();
-                    }
-                    $firstProduct = null;
-                    if (!$products->isEmpty()){
-                     $firstProduct = $products[0];
-                    }
-            @endphp
             <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
             {{--            <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>--}}
             @include('frontend.pages.member.header_member')
@@ -166,108 +127,20 @@
             </div>
     </div>
     <div class="mt-3 container">
-        <div class="row">
-            @foreach($products as $product)
-                <button type="button" class="btn thumbnailProduct col-xl-4 col-md-3" data-toggle="modal"
-                        data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}" data-name="
-                         @if(locationHelper() == 'kr')
-                                        {{ ($product->name_ko) }}
-                                    @elseif(locationHelper() == 'cn')
-                                        {{ ($product->name_zh) }}
-                                    @elseif(locationHelper() == 'jp')
-                                        {{ ($product->name_ja) }}
-                                    @elseif(locationHelper() == 'vi')
-                                        {{ ($product->name_vi) }}
-                                    @else
-                                        {{ ($product->name_en) }}
-                                    @endif
-                         ">
-                    <div class="standsMember-item section" style="background-color: white">
-                        <img data-id="{{$product->id}}"
-                             src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
-                             class="thumbnailProduct" data-value="{{$product}}"
-
-                             width="150px" height="150px">
-                        <div class="item-body">
-                            <div class="card-rating text-left">
-                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                <i class="fa-solid fa-star" style="color: #fac325;"></i>
-                                <span>(1)</span>
-                            </div>
-                            @php
-                                $nameSeller = DB::table('users')->where('id', $product->user_id)->first();
-                            @endphp
-                            <div class="card-brand text-left">
-                                <a href="{{route('shop.information.show', $nameSeller->id)}}">
-                                    {{($nameSeller->name)}}
-                                </a>
-                            </div>
-                            <div class="card-title text-left">
-                                @if(Auth::check())
-                                    <a>
-                                        @if(locationHelper() == 'kr')
-                                            {{ ($product->name_ko) }}
-                                        @elseif(locationHelper() == 'cn')
-                                            {{ ($product->name_zh) }}
-                                        @elseif(locationHelper() == 'jp')
-                                            {{ ($product->name_ja) }}
-                                        @elseif(locationHelper() == 'vi')
-                                            {{ ($product->name_vi) }}
-                                        @else
-                                            {{ ($product->name_en) }}
-                                        @endif
-                                    </a>
-                                @else
-                                    <a>
-                                        @if(locationHelper() == 'kr')
-                                            {{ ($product->name_ko) }}
-                                        @elseif(locationHelper() == 'cn')
-                                            {{ ($product->name_zh) }}
-                                        @elseif(locationHelper() == 'jp')
-                                            {{ ($product->name_ja) }}
-                                        @elseif(locationHelper() == 'vi')
-                                            {{ ($product->name_vi) }}
-                                        @else
-                                            {{ ($product->name_en) }}
-                                        @endif
-                                    </a>
-                                @endif
-                            </div>
-                            @if($product->price)
-                                <div class="card-price text-left">
-                                    @php
-                                        $prises = $product->old_price;
-                                    @endphp
-                                    @if($product->price != null)
-                                        <div class="price-sale">
-                                            <strong> {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strong>
-                                        </div>
-                                        <div class="price-cost">
-                                            <strike>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strike>
-                                        </div>
-                                    @else
-                                        <div class="price-sale">
-                                            <strong>{{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}</strong>
-                                        </div>
-                                    @endif
-                                </div>
-                            @endif
-                            <div class="card-bottom--left" hidden="">
-                                @if(Auth::check())
-                                    <a href="{{route('detail_product.show', $product->id)}}">{{ __('home.Choose Options') }}</a>
-                                @else
-                                    <a class="check_url">{{ __('home.Choose Options') }}</a>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </button>
-            @endforeach
+        <div id="data-wrapper">
+            @include('products-member')
         </div>
-
+    </div>
+    <!-- Data Loader -->
+    <div class="auto-load text-center">
+        <svg version="1.1" id="L9" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+             x="0px" y="0px" height="60" viewBox="0 0 100 100" enable-background="new 0 0 0 0" xml:space="preserve">
+            <path fill="#000"
+                  d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50">
+                <animateTransform attributeName="transform" attributeType="XML" type="rotate" dur="1s"
+                                  from="0 50 50" to="360 50 50" repeatCount="indefinite"/>
+            </path>
+        </svg>
     </div>
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
@@ -422,6 +295,54 @@
             </div>
         </div>
     </div>
+
+    <script>
+        var ENDPOINT = "{{ route('stand.register.member.index', ['id' => ':id']) }}";
+        ENDPOINT = ENDPOINT.replace(':id', `{{$company->id}}`);
+        var page = 1;
+        let isLoading = false;
+
+        /*------------------------------------------
+        --------------------------------------------
+        Call on Scroll
+        --------------------------------------------
+        --------------------------------------------*/
+        $(window).scroll(function () {
+            if ($(window).scrollTop() + $(window).height() >= ($(document).height() - 20)) {
+                setTimeout(() => {
+                    page++;
+                    infinteLoadMore(page);
+                }, 1500);
+            }
+        });
+
+        /*------------------------------------------
+        --------------------------------------------
+        call infinteLoadMore()
+        --------------------------------------------
+        --------------------------------------------*/
+        async function infinteLoadMore(page) {
+            await $.ajax({
+                url: ENDPOINT + "?page=" + page,
+                datatype: "html",
+                type: "get",
+                beforeSend: function () {
+                    $('.auto-load').removeClass('d-none');
+                }
+            })
+                .done(function (response) {
+                    if (response.html == '') {
+                        $('.auto-load').html("We don't have more data to display :(");
+                        return;
+                    }
+                    $('.auto-load').hide();
+                    $("#data-wrapper").append(response.html);
+                })
+                .fail(function (jqXHR, ajaxOptions, thrownError) {
+                    console.log('Server error occured');
+                });
+        }
+    </script>
     <script>
         var token = `{{ csrf_token() }}`;
         var urlGetProductSale = `{{asset('get-products-sale')}}`;

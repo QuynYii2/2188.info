@@ -339,7 +339,7 @@
                                         @endphp
                                         <div class="row thumbnailSupGallery" id="productThumbnail">
                                             @foreach($arrayProductImg as $productImg)
-                                                <div class="col-md-3 thumbnailSupGallery-img">
+                                                <div class="col-md-2 thumbnailSupGallery-img">
                                                     <img src="{{ asset('storage/' . $productImg) }}" alt=""
                                                          class="thumbnailProductGallery thumbnailGallery{{$loop->index+1}}"
                                                          data-id="{{$firstProduct->id}}">

@@ -41,8 +41,51 @@ class RegisterMemberSuccessController extends Controller
         if ($company && $company->member == RegisterMember::TRUST) {
             return back();
         }
+        if (Auth::check()) {
+            $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+            $isMember = null;
+            if ($memberPerson) {
+                $member = \App\Models\MemberRegisterInfo::where([
+                    ['id', $memberPerson->member_id],
+                    ['status', \App\Enums\MemberRegisterInfoStatus::ACTIVE]
+                ])->first();
+                if ($member) {
+                    $isMember = true;
+                }
+            }
+        }
+        $memberAccounts = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->get();
+        $companyPerson = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->first();
+        $oldUser = \App\Models\User::where('email', $companyPerson->email)->first();
+        if (!$memberAccounts->isEmpty()) {
+            $products = \App\Models\Product::where(function ($query) use ($company, $memberAccounts) {
+                if (count($memberAccounts) == 2) {
+                    $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
+                    $user2 = \App\Models\User::where('email', $memberAccounts[1]->email)->first();
+                } else {
+                    $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
+                    $user2 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
+                }
+
+                $query->where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])
+                    ->orWhere([['user_id', $user1->id], ['status', \App\Enums\ProductStatus::ACTIVE]])
+                    ->orWhere([['user_id', $user2->id], ['status', \App\Enums\ProductStatus::ACTIVE]]);
+            })->paginate(6);
+        } else {
+            $products = \App\Models\Product::where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]])->paginate(6);
+        }
         $currency = (new \App\Http\Controllers\Frontend\HomeController())->getLocation($request);
-        return view('frontend.pages.member.stand-member', compact('company', 'currency'));
+        if ($request->ajax()) {
+            $view = view('products-member', compact('products', 'currency'))->render();
+            return response()->json(['html' => $view]);
+        }
+        $firstProduct = null;
+        if (!$products->isEmpty()) {
+            $firstProduct = $products[0];
+        }
+
+
+        return view('frontend.pages.member.stand-member', compact('company', 'currency','products', 'firstProduct'));
     }
 
     public function memberParent(Request $request, $id)

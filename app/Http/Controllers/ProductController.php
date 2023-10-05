@@ -81,6 +81,56 @@ class ProductController extends Controller
         $currency = (new HomeController())->getLocation($request);
         return view('frontend/pages/detail-product', $value)->with('currency', $currency);
     }
+
+    public function orderProduct($id, Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $currency = (new HomeController())->getLocation($request);
+        $product = Product::find($id);
+        $productAttributes = DB::table('product_attribute')
+            ->where('product_id', $id)
+            ->where('status', AttributeProductStatus::ACTIVE)
+            ->get();
+        $myArray = null;
+        $listAtt = null;
+        if (!$productAttributes->isEmpty()) {
+            foreach ($productAttributes as $item) {
+
+                $id = $item->attribute_id;
+                $att = Attribute::where('id', $id)->first(['id', 'name', 'name_vi', 'name_zh', 'name_en', 'name_ja', 'name_ko',]);
+                $listAtt[$id] = $att;
+
+                $attribute = $item->attribute_id;
+                $properties = $item->value;
+                $arrayProperty = explode(',', $properties);
+                $array = null;
+                $list = null;
+                foreach ($arrayProperty as $property) {
+                    $list = $list . '-' . $property;
+                }
+                $list = $attribute . $list;
+                $myArray[] = $list;
+            }
+        }
+
+        $testArray = null;
+        if ($myArray) {
+            foreach ($myArray as $myItem) {
+                $key = explode("-", $myItem);
+                $demoArray = null;
+                for ($j = 1; $j < count($key); $j++) {
+                    $demoArray[] = $key[0] . '-' . $key[$j];
+                }
+                $testArray[] = $demoArray;
+            }
+        }
+
+        //detail_product.member.attribute
+        $testArray = $this->getArray($testArray);
+
+        return view('frontend.pages.orderProductsDetail.order-products', compact('product', 'currency', 'testArray', 'listAtt'));
+    }
+
     public function productViewed(Request $request)
     {
         try {
@@ -181,7 +231,8 @@ class ProductController extends Controller
         return view('frontend.pages.profile.my-shop', compact('products', 'currency'));
     }
 
-    public function getProductSale(Request $request, $id){
+    public function getProductSale(Request $request, $id)
+    {
         (new HomeController())->getLocale($request);
         $price_sales = ProductSale::where('product_id', $id)->get();
         $currency = (new HomeController())->getLocation($request);
@@ -265,6 +316,13 @@ class ProductController extends Controller
             'listAtt' => $listAtt,
             'listProperties' => $listProperties,
         ];
+    }
+
+    public function getAllProduct(Request $request)
+    {
+        $products = Product::all();
+        $currency = (new HomeController())->getLocation($request);
+        return view('frontend.pages.member.product-load', compact('products', 'currency'));
     }
 
     private function mergeArray($array1, $array2)
