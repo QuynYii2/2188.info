@@ -51,6 +51,8 @@ Route::post('/register', [UserController::class, 'store'])->name('register.store
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/get-all-products', [\App\Http\Controllers\ProductController::class, 'getAllProduct'])->name('get-all-product');
+
 Route::prefix('/login')->group(function () {
     Route::get('', [AuthController::class, 'showLogin'])->name('login');
     Route::get('/{locale}', [AuthController::class, 'showLoginForm'])->name('login.local');

@@ -56,7 +56,7 @@ class ProductController extends Controller
         $productByLocal = Product::paginate(6);
 
         if ($request->ajax()) {
-            $view = view('test', compact('productByLocal'))->render();
+            $view = view('products-member', compact('productByLocal'))->render();
             return response()->json(['html' => $view]);
         }
 

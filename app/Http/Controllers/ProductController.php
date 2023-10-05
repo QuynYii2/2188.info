@@ -81,6 +81,7 @@ class ProductController extends Controller
         $currency = (new HomeController())->getLocation($request);
         return view('frontend/pages/detail-product', $value)->with('currency', $currency);
     }
+
     public function orderProduct($id, Request $request)
     {
         (new HomeController())->getLocale($request);
@@ -129,6 +130,7 @@ class ProductController extends Controller
 
         return view('frontend.pages.orderProductsDetail.order-products', compact('product', 'currency', 'testArray', 'listAtt'));
     }
+
     public function productViewed(Request $request)
     {
         try {
@@ -229,7 +231,8 @@ class ProductController extends Controller
         return view('frontend.pages.profile.my-shop', compact('products', 'currency'));
     }
 
-    public function getProductSale(Request $request, $id){
+    public function getProductSale(Request $request, $id)
+    {
         (new HomeController())->getLocale($request);
         $price_sales = ProductSale::where('product_id', $id)->get();
         $currency = (new HomeController())->getLocation($request);
@@ -313,6 +316,13 @@ class ProductController extends Controller
             'listAtt' => $listAtt,
             'listProperties' => $listProperties,
         ];
+    }
+
+    public function getAllProduct(Request $request)
+    {
+        $products = Product::all();
+        $currency = (new HomeController())->getLocation($request);
+        return view('frontend.pages.member.product-load', compact('products', 'currency'));
     }
 
     private function mergeArray($array1, $array2)
