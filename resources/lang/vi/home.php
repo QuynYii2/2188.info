@@ -981,6 +981,6 @@ return [
     'tinh thanh' => 'Tỉnh thành',
     'quan huyen' => 'Quận/Huyện',
     'xa phuong' => 'Xã/Phường',
-
+    'manager_products' => 'Quản lý sản phẩm'
 ];
 
