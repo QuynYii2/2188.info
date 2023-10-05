@@ -244,10 +244,10 @@ class CategoryController extends Controller
                 }
             }
             $category->status = CategoryStatus::DELETED;
-            $categories = Category::where('parent_id', $id)->get();
             $category->save();
+            $categories = Category::where('parent_id', $id)->get();
             foreach ($categories as $item) {
-                $item = Category::where('parent_id', $id)->get();
+                $item->status = CategoryStatus::DELETED;
                 $item->save();
             }
             alert()->success('Success', 'Category đã được xóa thành công!');
