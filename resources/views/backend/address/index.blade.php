@@ -1,49 +1,56 @@
 @extends('backend.layouts.master')
 
 @section('content')
-	<script src="{{ asset('js/backend/address/jquery-simple-tree-table.js') }}"></script>
+	<link rel="stylesheet" href="{{ asset('css/bootstrap-treefy.css') }}">
 
-	<table id="basic" border="1">
-		<tr data-node-id="1">
-			<td><a href="#">1</a></td>
-			<td>text of 1</td>
+	<table class="table" id="table">
+		<thead>
+		<tr>
+			<th></th>
+			<th>Column A</th>
+			<th>Column B</th>
+			<th>Column C</th>
+			<th>Column D</th>
 		</tr>
-		<tr data-node-id="1.1" data-node-pid="1">
-			<td><a href="#">1.1</a></td>
-			<td>text of 1.1</td>
+		</thead>
+		<tbody>
+		<tr data-node="treetable-1">
+			<td><input type="checkbox" name="row.id"/></td>
+			<td>Node</td>
+			<td>1</td>
+			<td>c</td>
+			<td>info</td>
 		</tr>
-		<tr data-node-id="1.1.1" data-node-pid="1.1">
-			<td><a href="#">1.1.1</a></td>
-			<td>text of 1.1.1</td>
+		<tr data-node="treetable-2" data-pnode="treetable-parent-1">
+			<td><input type="checkbox" name="row.id"/></td>
+			<td>Node</td>
+			<td>1-1</td>
+			<td>c</td>
+			<td>info</td>
 		</tr>
-		<tr data-node-id="1.1.2" data-node-pid="1.1">
-			<td><a href="#">1.1.2</a></td>
-			<td>text of 1.1.2</td>
+		<tr data-node="treetable-3" data-pnode="treetable-parent-1">
+			<td><input type="checkbox" name="row.id"/></td>
+			<td>Node</td>
+			<td>1-2</td>
+			<td>c</td>
+			<td>info</td>
 		</tr>
-		<tr data-node-id="1.2" data-node-pid="1">
-			<td><a href="#">1.2</a></td>
-			<td>text of 1.2</td>
+		<tr data-node="treetable-4">
+			<td><input type="checkbox" name="row.id"/></td>
+			<td>Node</td>
+			<td>2</td>
+			<td>c</td>
+			<td>info</td>
 		</tr>
-
-		<tr data-node-id="2">
-			<td><a href="#">2</a></td>
-			<td>text of 2</td>
-		</tr>
-		<tr data-node-id="2.1" data-node-pid="2">
-			<td><a href="#">2.1</a></td>
-			<td>text of 2.1</td>
-		</tr>
-		<tr data-node-id="2.2" data-node-pid="2">
-			<td><a href="#">2.2</a></td>
-			<td>text of 2.2</td>
-		</tr>
+		</tbody>
 	</table>
+
+	<script src="{{ asset('js/bootstrap-treefy.js') }}"></script>
 	<script>
-		$('#basic').simpleTreeTable({
-			expander: $('#expander'),
-			collapser: $('#collapser'),
-			store: 'session',
-			storeKey: 'simple-tree-table-basic'
+		$(function () {
+			$("#table").treeFy({
+				treeColumn: 1
+			});
 		});
 	</script>
 
