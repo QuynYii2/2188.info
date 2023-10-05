@@ -27,5 +27,6 @@ class ShopInfo extends Model
         'test_method',
         'annual_output',
         'partner',
+        'information',
     ];
 }

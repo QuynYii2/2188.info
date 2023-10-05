@@ -1,3 +1,16 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
 var renderInputAttribute = $('#renderProductMember');
 
 $('.thumbnailProduct').on('click', function () {
