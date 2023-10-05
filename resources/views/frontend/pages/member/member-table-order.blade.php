@@ -18,7 +18,7 @@
         @foreach($productVariables as $productVariable)
             <tr>
                 <td scope="row">
-                    <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
+                    <img src="{{ asset('storage/' . $productVariable->thumbnail) }}" alt="">
                 </td>
                 <td>
                     <div class="stand-text-secondary">
@@ -48,7 +48,7 @@
                                     $arrayValue = explode('-', $value);
                                     $attribute = \App\Models\Attribute::where('status', \App\Enums\AttributeStatus::ACTIVE)
                                         ->where('id', $arrayValue[0])->first();
-                                     $property = \App\Models\Attribute::where('status', \App\Enums\ProductStatus::ACTIVE)
+                                     $property = \App\Models\Properties::where('status', \App\Enums\PropertiStatus::ACTIVE)
                                         ->where('id', $arrayValue[1])->first();
                                 @endphp
                                 @if($attribute)
