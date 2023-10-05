@@ -15,6 +15,12 @@
                     @method('PUT')
                     <table class="form-table" role="presentation">
                         <tbody>
+                        <div class="form-field form-required term-name-wrap">
+                            <label for="category_stt">
+                                {{ __('home.nhập số thứ tự') }}
+                            </label>
+                            <input name="category_stt" id="category_stt" type="number" value="{{$category->stt}}" min="1" required>
+                        </div>
                         <tr class="form-field form-required term-name-wrap">
                             <th scope="row"><label for="category_name">{{ __('home.Name') }}</label></th>
                             <td><input name="category_name" id="category_name" type="text" value="{{$category->name}}"

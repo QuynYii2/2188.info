@@ -50,7 +50,11 @@
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item categorySearch" data-id="0">{{ __('home.all') }}</a>
                                     @php
-                                        $listCate = DB::table('categories')->where('parent_id', null)->where('status', \App\Enums\CategoryStatus::ACTIVE)->get();
+                                        $listCate = DB::table('categories')
+                                        ->where('parent_id', null)
+                                        ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                        ->orderBy('stt', 'asc')
+                                        ->get();
                                     @endphp
                                     @foreach($listCate as $cate)
                                         <a class="item-hd dropdown-item categorySearch"
@@ -58,7 +62,11 @@
                                         @if(!$listCate->isEmpty())
                                             <ul class="hd_dropdown--right row">
                                                 @php
-                                                    $listChild = DB::table('categories')->where('status', \App\Enums\CategoryStatus::ACTIVE)->where('parent_id', $cate->id)->get();
+                                                    $listChild = DB::table('categories')
+                                                    ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                                    ->where('parent_id', $cate->id)
+                                                    ->orderBy('stt', 'asc')
+                                                    ->get();
                                                 @endphp
                                                 @foreach($listChild as $child)
                                                     <a class="dropdown-item categorySearch"
@@ -564,7 +572,11 @@
                                 <i class="fa-solid fa-angle-down"></i>
                             </div>
                             @php
-                                $listCate = DB::table('categories')->where('status', \App\Enums\CategoryStatus::ACTIVE)->where('parent_id', null)->get();
+                                $listCate = DB::table('categories')
+                                ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                ->where('parent_id', null)
+                                ->orderBy('stt', 'asc')
+                                ->get();
                             @endphp
                             <div class="drop-menu">
                                 <div class="drop-relative">
@@ -591,7 +603,11 @@
                                                     <ul class="hd_dropdown--right">
                                                         <div class="list-category">
                                                             @php
-                                                                $listChild = DB::table('categories')->where('status', \App\Enums\CategoryStatus::ACTIVE)->where('parent_id', $cate->id)->get();
+                                                                $listChild = DB::table('categories')
+                                                                ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                                                ->where('parent_id', $cate->id)
+                                                                ->orderBy('stt', 'asc')
+                                                                ->get();
                                                             @endphp
                                                             @foreach($listChild as $child)
                                                                 <div class="colum d-block">
@@ -623,7 +639,11 @@
                                                                     @endif
 
                                                                     @php
-                                                                        $listChild2 = DB::table('categories')->where('status', \App\Enums\CategoryStatus::ACTIVE)->where('parent_id', $child->id)->get();
+                                                                        $listChild2 = DB::table('categories')
+                                                                        ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                                                        ->where('parent_id', $child->id)
+                                                                        ->orderBy('stt', 'asc')
+                                                                        ->get();
                                                                     @endphp
                                                                     @foreach($listChild2 as $child2)
                                                                         @if(locationHelper() == 'kr')
@@ -837,7 +857,11 @@
                             @if(!$listCate->isEmpty())
                                 <div class="OptionBody">
                                     @php
-                                        $listChild = DB::table('categories')->where('status', \App\Enums\CategoryStatus::ACTIVE)->where('parent_id', $cate->id)->get();
+                                        $listChild = DB::table('categories')
+                                        ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                        ->where('parent_id', $cate->id)
+                                        ->orderBy('stt', 'asc')
+                                        ->get();
                                     @endphp
                                     @foreach($listChild as $child)
                                         <div class="OptionContainer">
@@ -854,7 +878,11 @@
                                             </div>
                                             <div class="OptionBody">
                                                 @php
-                                                    $listChild2 = DB::table('categories')->where('status', \App\Enums\CategoryStatus::ACTIVE)->where('parent_id', $child->id)->get();
+                                                    $listChild2 = DB::table('categories')
+                                                    ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                                    ->where('parent_id', $child->id)
+                                                    ->orderBy('stt', 'asc')
+                                                    ->get();
                                                 @endphp
                                                 @foreach($listChild2 as $child2)
                                                     <div class="OptionContainer">
@@ -881,7 +909,11 @@
                 <div class="dropdown-menu">
                     <a class="dropdown-item categorySearch" data-id="0">All</a>
                     @php
-                        $listCate = DB::table('categories')->where('status', \App\Enums\CategoryStatus::ACTIVE)->where('parent_id', null)->get();
+                        $listCate = DB::table('categories')
+                        ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                        ->where('parent_id', null)
+                        ->orderBy('stt', 'asc')
+                        ->get();
                     @endphp
                     @foreach($listCate as $cate)
                         <a class="item-hd dropdown-item categorySearch"
@@ -889,7 +921,11 @@
                         @if(!$listCate->isEmpty())
                             <ul class="hd_dropdown--right row">
                                 @php
-                                    $listChild = DB::table('categories')->where('status', \App\Enums\CategoryStatus::ACTIVE)->where('parent_id', $cate->id)->get();
+                                    $listChild = DB::table('categories')
+                                    ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                    ->where('parent_id', $cate->id)
+                                    ->orderBy('stt', 'asc')
+                                    ->get();
                                 @endphp
                                 @foreach($listChild as $child)
                                     <a class="dropdown-item categorySearch"
