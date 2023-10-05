@@ -20,6 +20,12 @@
                             @csrf
                             @method('POST')
                             <div class="form-field form-required term-name-wrap">
+                                <label for="category_stt">
+                                    {{ __('home.nhập số thứ tự') }}
+                                </label>
+                                <input name="category_stt" id="category_stt" type="number" value="" min="1" required>
+                            </div>
+                            <div class="form-field form-required term-name-wrap">
                                 <label for="category_name">
                                     {{ __('home.Name') }}
                                 </label>
@@ -94,6 +100,9 @@
                         <thead>
                         <tr>
                             <th scope="col">
+                                STT
+                            </th>
+                            <th scope="col">
                                 {{ __('home.Image') }}
                             </th>
                             <th scope="col">
@@ -114,6 +123,9 @@
                         @if(!$categories->isEmpty())
                             @foreach($categories as $category)
                                 <tr class="alternate">
+                                    <td>
+                                        {{$category->stt}}
+                                    </td>
                                     <td>
                                         <img width="60px" height="60px"
                                              src="{{ asset('storage/'.$category->thumbnail) }}" alt="Thumbnail">
@@ -217,6 +229,16 @@
                                                                                            required>
                                                                                 </td>
                                                                             </tr>
+
+                                                                            <tr class="form-field term-slug-wrap">
+                                                                                <th scope="row"><label for="category_stt">
+                                                                                        {{ __('home.nhập số thứ tự') }}
+                                                                                    </label>
+                                                                                </th>
+                                                                                <td><input name="category_stt" id="category_stt" type="number" value="{{$category->stt}}" min="1" required>
+                                                                                </td>
+                                                                            </tr>
+
                                                                             <tr class="form-field term-slug-wrap">
                                                                                 <th scope="row"><label
                                                                                             for="category_slug">{{ __('home.Đường dẫn') }}</label></th>
@@ -334,7 +356,7 @@
                                                 </span>
                                         </div>
                                     </td>
-                                    <td class="description column-description" data-colname="Mô tả">
+                                    <td class=" column-description" data-colname="Mô tả">
                                         @if(!$category->description)
                                             <span aria-hidden="true">—</span>
                                             <span class="screen-reader-text">{{ __('home.Không có mô tả') }}</span>
