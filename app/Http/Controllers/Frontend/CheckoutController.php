@@ -14,6 +14,7 @@ use App\Enums\PriceUpLevel;
 use App\Enums\UserInterestEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PaypalPaymentController;
+use App\Mail\PaymentSuccessfulMail;
 use App\Models\Cart;
 use App\Models\Coin;
 use App\Models\MemberPartner;
@@ -30,9 +31,11 @@ use App\Models\StorageProduct;
 use App\Models\User;
 use App\Models\VoucherItem;
 use Carbon\Carbon;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
 class CheckoutController extends Controller
@@ -339,10 +342,17 @@ class CheckoutController extends Controller
         return redirect()->route('checkout.show')->with('error', 'Checkout fail');
     }
 
-    public function mailCheckout()
+    public function sendMail()
     {
-        dd(123);
+        $email = session('emailTo');
+        $data = ['message'=>'$request->input()'];
+        Mail::send('frontend/widgets/mailCode', $data, function ($message) use ($email) {
+            $message->to($email, 'Verify mail!')->subject
+            ('Verify mail');
+            $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
+        });
     }
+
     public function returnCheckout(Request $request)
     {
         (new HomeController())->getLocale($request);
@@ -355,6 +365,7 @@ class CheckoutController extends Controller
             $responseCode = $request->input('vnp_ResponseCode');
             $note = $request->input('vnp_OrderInfo');
             $userId = Auth::user()->id;
+            $email = Auth::user()->email;
             $costId = $request->input('vnp_TxnRef');
 
             DB::table('payments_vnpay')->insert([
@@ -381,7 +392,10 @@ class CheckoutController extends Controller
                 ]);
 
                 alert()->success('Success', 'Đã thanh toán phí dịch vụ');
-                return view('frontend.pages.PaymentMethods.vnpay_return');
+                $this->sendMail();
+                return view('frontend.pages.PaymentMethods.vnpay_return',compact([
+                    'email',
+                ]));
             }
 
             alert()->error('errors', 'errors');
@@ -392,6 +406,8 @@ class CheckoutController extends Controller
     }
     public function checkoutByVNPay(Request $request)
     {
+        $emailTo = $request->input('email');
+        session(['emailTo' => $emailTo]);
         $money = $request->input('priceID') * 24372;
         session(['cost_id' => $request->id]);
         session(['url_prev' => url()->previous()]);
