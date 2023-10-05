@@ -281,6 +281,20 @@
                     </li>
                 </ul>
             </li>
+            <li>
+                <a class="sidebar item sidebarUrl" href="#"><i
+                            class="fa-regular fa-clipboard"></i> Quản lý địa chỉ nha
+                </a>
+                <ul class='sub-items pl-3'>
+                    <li><a class="sidebarUrl" href="{{route('address.manage.index')}}">Danh sách địa chỉ</a>
+                    </li>
+                    <li><a class="sidebarUrl" href="{{route('admin.processCreate.users')}}">Thêm</a>
+                    </li>
+                    <li><a class="sidebarUrl" href="{{route('admin.processCreate.users')}}">Sửa</a>
+                    </li>
+                </ul>
+            </li>
+
         @endif
     </ul>
 </div>

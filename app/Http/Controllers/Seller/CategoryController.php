@@ -16,7 +16,7 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->orderBy('stt', 'asc')->get();
         return view('backend/categories/index', [
             'categories' => $categories
         ]);
@@ -39,6 +39,7 @@ class CategoryController extends Controller
         try {
             $validatedData = $request->validate([
                 'category_name' => 'required',
+                'category_stt' => 'required',
                 'category_parentID' => 'nullable',
             ]);
 
@@ -54,6 +55,7 @@ class CategoryController extends Controller
 
             $slug = $request->input('category_slug');
             $name = $validatedData['category_name'];
+            $stt = $validatedData['category_stt'];
             if (!$slug) {
                 $slug = \Str::slug($name);
             }
@@ -97,6 +99,7 @@ class CategoryController extends Controller
 
             $category->user_id = Auth::user()->id;
             $category->slug = $slug;
+            $category->stt = $stt;
             $category->description = $request->input('category_description');
 
             if ($request->hasFile('thumbnail')) {
@@ -161,8 +164,13 @@ class CategoryController extends Controller
 
             $validatedData = $request->validate([
                 'category_name' => 'required',
+                'category_stt' => 'required',
                 'category_parentID' => 'nullable',
             ]);
+
+            $stt = $validatedData['category_stt'];
+
+            $category->stt = $stt;
 
             $slug = $request->input('category_slug');
             $name = $validatedData['category_name'];
@@ -236,10 +244,10 @@ class CategoryController extends Controller
                 }
             }
             $category->status = CategoryStatus::DELETED;
-            $categories = Category::where('parent_id', $id)->get();
             $category->save();
+            $categories = Category::where('parent_id', $id)->get();
             foreach ($categories as $item) {
-                $item = Category::where('parent_id', $id)->get();
+                $item->status = CategoryStatus::DELETED;
                 $item->save();
             }
             alert()->success('Success', 'Category đã được xóa thành công!');

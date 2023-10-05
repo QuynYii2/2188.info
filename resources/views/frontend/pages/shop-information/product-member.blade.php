@@ -277,10 +277,6 @@
                         <div id="renderProductMember" class="row">
                             @if(!$products->isEmpty())
                                 <div class="col-md-6">
-                                    @php
-                                        $attributes = DB::table('product_attribute')->where([['product_id', $firstProduct->id], ['status', \App\Enums\AttributeProductStatus::ACTIVE]])->get();
-                                        $price_sales = \App\Models\ProductSale::where('product_id', '=', $firstProduct->id)->get();
-                                    @endphp
                                     <div class="d-flex justify-content-between">
                                         <div class="">
                                             <h5>Product Code</h5>

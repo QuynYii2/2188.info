@@ -53,15 +53,12 @@ class ProductController extends Controller
 
         $categories = Category::get()->toTree();
 
-        $locations = ['vi', 'kr', 'jp', 'cn'];
+        $productByLocal = Product::paginate(6);
 
-        $locations = array_diff($locations, [$locale]);
-
-        $productByLocal = Product::whereIn('location', array_slice($locations, 0, 3))
-            ->limit(10)
-            ->get();
-
-        $productByLocal = Product::all();
+        if ($request->ajax()) {
+            $view = view('test', compact('productByLocal'))->render();
+            return response()->json(['html' => $view]);
+        }
 
         return view('frontend/pages/product', [
             'productByLocal' => $productByLocal,
@@ -100,48 +97,10 @@ class ProductController extends Controller
         (new HomeController())->getLocale($request);
         $currency = (new HomeController())->getLocation($request);
         $product = Product::find($id);
-        $productAttributes = DB::table('product_attribute')
-            ->where('product_id', $id)
-            ->where('status', AttributeProductStatus::ACTIVE)
-            ->get();
-        $myArray = null;
-        $listAtt = null;
-        if (!$productAttributes->isEmpty()) {
-            foreach ($productAttributes as $item) {
 
-                $id = $item->attribute_id;
-                $att = Attribute::where('id', $id)->first(['id', 'name', 'name_vi', 'name_zh', 'name_en', 'name_ja', 'name_ko',]);
-                $listAtt[$id] = $att;
+        $productVariables = Variation::where('product_id', $id)->where('status', ProductStatus::ACTIVE)->get();
 
-                $attribute = $item->attribute_id;
-                $properties = $item->value;
-                $arrayProperty = explode(',', $properties);
-                $array = null;
-                $list = null;
-                foreach ($arrayProperty as $property) {
-                    $list = $list . '-' . $property;
-                }
-                $list = $attribute . $list;
-                $myArray[] = $list;
-            }
-        }
-
-        $testArray = null;
-        if ($myArray) {
-            foreach ($myArray as $myItem) {
-                $key = explode("-", $myItem);
-                $demoArray = null;
-                for ($j = 1; $j < count($key); $j++) {
-                    $demoArray[] = $key[0] . '-' . $key[$j];
-                }
-                $testArray[] = $demoArray;
-            }
-        }
-
-        //detail_product.member.attribute
-        $testArray = $this->getArray($testArray);
-
-        return view('frontend.pages.member.member-table-order', compact('product', 'currency', 'testArray', 'listAtt'));
+        return view('frontend.pages.member.member-table-order', compact('product', 'currency', 'productVariables'));
     }
 
     public function orderMemberProduct(Request $request, $product)

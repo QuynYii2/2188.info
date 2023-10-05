@@ -1044,4 +1044,5 @@ return [
     'tinh thanh' => '성/도',
     'quan huyen' => '군/현',
     'xa phuong' => '구/동',
+    'manager_products' => '제품관리'
 ];
