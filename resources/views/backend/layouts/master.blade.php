@@ -52,13 +52,13 @@
 <header class="container-fluid header_back d-flex">
     <div class="name"><a href="{{ route('seller.products.home') }}">{{ __('home.Kênh người bán') }}</a></div>
     <div class="name"><a href="{{ route('home') }}" target="_blank">{{ __('home.Xem trang chủ') }}</a></div>
-{{--    @if(getTypeMember()->member == 'LOGISTIC')--}}
-{{--        <div class="name">--}}
-{{--            <a href="{{ route('stand.register.member.index', ['id' => getTypeMember()->id]) }}" target="_blank">--}}
-{{--                {{ __('home.Shop') }}--}}
-{{--            </a>--}}
-{{--        </div>--}}
-{{--    @endif--}}
+    @if(getTypeMember()->member == 'LOGISTIC')
+        <div class="name">
+            <a href="{{ route('stand.register.member.index', ['id' => getTypeMember()->id]) }}" target="_blank">
+                {{ __('home.Shop') }}
+            </a>
+        </div>
+    @endif
 </header>
 
 <!-- Main Content -->
