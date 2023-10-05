@@ -327,7 +327,7 @@
                 datatype: "html",
                 type: "get",
                 beforeSend: function () {
-                    $('.auto-load').show();
+                    $('.auto-load').removeClass('d-none');
                 }
             })
                 .done(function (response) {
