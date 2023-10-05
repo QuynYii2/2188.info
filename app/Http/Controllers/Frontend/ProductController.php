@@ -53,15 +53,7 @@ class ProductController extends Controller
 
         $categories = Category::get()->toTree();
 
-        $locations = ['vi', 'kr', 'jp', 'cn'];
-
-        $locations = array_diff($locations, [$locale]);
-
-        $productByLocal = Product::whereIn('location', array_slice($locations, 0, 3))
-            ->limit(10)
-            ->get();
-
-        $productByLocal = Product::all();
+        $productByLocal = Product::paginate(6);
 
         return view('frontend/pages/product', [
             'productByLocal' => $productByLocal,

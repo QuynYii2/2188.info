@@ -15,6 +15,7 @@ class Category extends Model
         'id',
         'name',
         'thumbnail',
+        'stt',
         'description',
         'slug',
     ];
