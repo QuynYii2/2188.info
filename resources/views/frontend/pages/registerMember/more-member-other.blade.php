@@ -247,7 +247,7 @@
                 <div class="multiselect" style="position: relative">
                     <div class="selectBox" id="code_1_item" onclick="showCheckboxes()">
                         <select>
-                            <option>{{ __('home.Select the applicable category') }}</option>
+                            <option id="inputCheckboxCategory">{{ __('home.Select the applicable category') }}</option>
                         </select>
                         <div class="overSelect"></div>
                     </div>
@@ -322,7 +322,7 @@
                 <div class="multiselect" style="position: relative">
                     <div class="selectBox" id="code_3_item" onclick="showCheckboxes1()">
                         <select>
-                            <option>{{ __('home.Select the applicable category') }}</option>
+                            <option id="inputCheckboxCategory2">{{ __('home.Select the applicable category') }}</option>
                         </select>
                         <div class="overSelect"></div>
                     </div>
@@ -350,7 +350,7 @@
                 <div class="multiselect" style="position: relative">
                     <div class="selectBox" id="code_2_item" onclick="showCheckboxes2()">
                         <select>
-                            <option>{{ __('home.Select the applicable category') }}</option>
+                            <option id="inputCheckboxCategory1">{{ __('home.Select the applicable category') }}</option>
                         </select>
                         <div class="overSelect"></div>
                     </div>
@@ -448,36 +448,72 @@
             return arr;
         }
 
+        function getListName(array, items) {
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].checked) {
+                    if (array.length == 0) {
+                        array.push(items[i].nextElementSibling.innerText);
+                    } else {
+                        let name = array.includes(items[i].nextElementSibling.innerText);
+                        if (!name) {
+                            array.push(items[i].nextElementSibling.innerText);
+                        }
+                    }
+                } else {
+                    removeArray(array, items[i].nextElementSibling.innerText)
+                }
+            }
+            return array;
+        }
+
+        function checkArray(array, listItems) {
+            for (let i = 0; i < listItems.length; i++) {
+                if (listItems[i].checked) {
+                    if (array.length == 0) {
+                        array.push(listItems[i].value);
+                    } else {
+                        let check = array.includes(listItems[i].value);
+                        if (!check) {
+                            array.push(listItems[i].value);
+                        }
+                    }
+                } else {
+                    removeArray(array, listItems[i].value);
+                }
+            }
+            return array;
+        }
+
 
         let arrayItem = [];
+        let arrayNameCategory = [];
         $('.inputCheckboxCategory').on('click', function () {
             getInput();
         })
 
         async function getInput() {
             let items = document.getElementsByClassName('inputCheckboxCategory');
-            for (let i = 0; i < items.length; i++) {
-                if (items[i].checked) {
-                    if (arrayItem.length == 0) {
-                        arrayItem.push(items[i].value);
-                    } else {
-                        let check = arrayItem.includes(items[i].value);
-                        if (!check) {
-                            arrayItem.push(items[i].value);
-                        }
-                    }
-                } else {
-                    removeArray(arrayItem, items[i].value);
-                }
+
+            arrayItem = checkArray(arrayItem, items);
+            arrayNameCategory = getListName(arrayNameCategory, items)
+
+            let listName = arrayNameCategory.toString();
+
+            if (listName) {
+                $('#inputCheckboxCategory').text(listName);
+                await renderCategory2(arrayItem);
+            } else {
+                $('#inputCheckboxCategory').text(`{{ __('home.Select the applicable category') }}`);
             }
-            await renderCategory2(arrayItem);
+
             arrayItem.sort();
             let value = arrayItem.toString();
             $('#input_code1').val(value);
         }
 
         @if($exitsMember)
-            getInput();
+        getInput();
+
         @endif
 
 
