@@ -124,7 +124,7 @@
                             <div class="form-group col-12 col-sm-12" id="list-img-thumbnail"></div>
                             <div class="form-group col-12 col-sm-12" id="list-img-gallery"></div>
                         </div>
-                        <div id="removeInputAttribute" class="form-group row">
+                        <div id="removeInputAttributeEdit" class="form-group row">
                             @if(!$productDetails->isEmpty())
                                 <table class="table table-bordered">
                                     <thead class="thead-light">

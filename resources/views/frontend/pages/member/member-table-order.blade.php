@@ -147,6 +147,12 @@
     $isDetail = $sessionValue[0];
 @endphp
 
+@php
+    $cart = \App\Models\Cart::where('user_id', Auth::user()->id)->where('status', \App\Enums\CartStatus::WAIT_ORDER)->first();
+@endphp
+@if($cart)
+    <input class="d-none" type="text" name="cartItem" id="cartItem" value="cartItem">
+@endif
 <button id="supBtnOrder" type="button"
         class="float-right {{ $isDetail ? 'payment' : 'btn btn-success' }}">{{ __('home.Tiếp nhận đặt hàng') }}</button>
 
