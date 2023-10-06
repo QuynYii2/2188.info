@@ -23,6 +23,32 @@
 @section('content')
     <div id="wpbody-content" class="snipcss-PfbzX">
         <div class="">
+            <form action="{{ route('seller.products.search') }}" id="searchInput" class="row my-2 pl-3">
+                @csrf
+                <div class="col-sm-2">
+                    <input placeholder={{ __('home.full name') }} type="text" class="form-control" id="fullName" name="fullName" value="{{ isset($phoneNumber) ? $phoneNumber : '' }}"
+                           data-date-split-input="true">
+                </div>
+                <div class="col-sm-2">
+                    <input placeholder="Phone Number" type="text" class="form-control" id="phoneNumber" name="phoneNumber" value="{{ isset($phoneNumber) ? $phoneNumber : '' }}"
+                           data-date-split-input="true">
+                </div>
+                <div class="col-sm-2">
+                    <input placeholder="Email" type="text" class="form-control" id="email" name="email" value="{{ isset($email) ? $email : '' }}"
+                           data-date-split-input="true">
+                </div>
+                <div class="col-sm-2">
+                    <input placeholder={{ __('home.từ ngày') }}"" type="date" class="form-control" id="from_date" name="from_date" value="{{ isset($from_date) ? $from_date : '' }}"
+                           data-date-split-input="true">
+                </div>
+                <div class="col-sm-2">
+                    <input placeholder={{ __('home.đến ngày') }} type="date" class="form-control" id="to_date" name="to_date" value="{{ isset($to_date) ? $to_date : '' }}"
+                           data-date-split-input="true">
+                </div>
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-success position-absolute" style="bottom: 0">{{ __('home.search') }}</button>
+                </div>
+            </form>
             {{--START TABLE--}}
             <table class="wp-list-table widefat fixed striped table-view-list posts">
                 {{--START THEAD TABLE--}}
@@ -134,6 +160,7 @@
                                         @php
                                             $ld = new \App\Http\Controllers\TranslateController();
                                         @endphp
+                                        {{$product->name}}
                                         {{ $ld->translateText($product->name, locationPermissionHelper()) }}
 
                                     </a>
@@ -193,21 +220,21 @@
                                                                     <select class="form-control" id="category"
                                                                             name="category_id">
                                                                         <option value="">-- Select Category --</option>
-                                                                        @foreach ($categories as $category)
-                                                                            <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>
-                                                                                @if(locationHelper() == 'kr')
-                                                                                    <div class="text">{{ $category->name_ko }}</div>
-                                                                                @elseif(locationHelper() == 'cn')
-                                                                                    <div class="text">{{$category->name_zh}}</div>
-                                                                                @elseif(locationHelper() == 'jp')
-                                                                                    <div class="text">{{$category->name_ja}}</div>
-                                                                                @elseif(locationHelper() == 'vi')
-                                                                                    <div class="text">{{$category->name_vi}}</div>
-                                                                                @else
-                                                                                    <div class="text">{{$category->name_en}}</div>
-                                                                                @endif
-                                                                            </option>
-                                                                        @endforeach
+{{--                                                                        @foreach ($categories as $category)--}}
+{{--                                                                            <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>--}}
+{{--                                                                                @if(locationHelper() == 'kr')--}}
+{{--                                                                                    <div class="text">{{ $category->name_ko }}</div>--}}
+{{--                                                                                @elseif(locationHelper() == 'cn')--}}
+{{--                                                                                    <div class="text">{{$category->name_zh}}</div>--}}
+{{--                                                                                @elseif(locationHelper() == 'jp')--}}
+{{--                                                                                    <div class="text">{{$category->name_ja}}</div>--}}
+{{--                                                                                @elseif(locationHelper() == 'vi')--}}
+{{--                                                                                    <div class="text">{{$category->name_vi}}</div>--}}
+{{--                                                                                @else--}}
+{{--                                                                                    <div class="text">{{$category->name_en}}</div>--}}
+{{--                                                                                @endif--}}
+{{--                                                                            </option>--}}
+{{--                                                                        @endforeach--}}
                                                                     </select>
                                                                 </div>
                         <div class="form-group">
@@ -597,21 +624,21 @@
                                 @endforeach
                             </td>
                             <td class="hot column-hot" data-colname="Hot">
-                                    @if($product->hot == 1)
-                                        <label class="switch">
-                                            <input value="{{$product->id}}" class="inputHotCheckbox"
-                                                   name="inputHot-{{$product->id}}" id="inputHot-{{$product->id}}"
-                                                   type="checkbox" checked>
-                                            <span class="slider round"></span>
-                                        </label>
-                                    @else
-                                        <label class="switch">
-                                            <input value="{{$product->id}}" class="inputHotCheckbox"
-                                                   name="inputHot-{{$product->id}}" id="inputHot-{{$product->id}}"
-                                                   type="checkbox">
-                                            <span class="slider round"></span>
-                                        </label>
-                                    @endif
+                                @if($product->hot == 1)
+                                    <label class="switch">
+                                        <input value="{{$product->id}}" class="inputHotCheckbox"
+                                               name="inputHot-{{$product->id}}" id="inputHot-{{$product->id}}"
+                                               type="checkbox" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                @else
+                                    <label class="switch">
+                                        <input value="{{$product->id}}" class="inputHotCheckbox"
+                                               name="inputHot-{{$product->id}}" id="inputHot-{{$product->id}}"
+                                               type="checkbox">
+                                        <span class="slider round"></span>
+                                    </label>
+                                @endif
                                 <!-- Modal -->
                                 <div class="modal fade" id="exampleModal-{{$product->id}}" tabindex="-1" role="dialog"
                                      aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
@@ -640,23 +667,23 @@
                                 </div>
                             </td>
                             <td class="featured column-featured" data-colname="Featured">
-                                    @if($product->feature == 1)
-                                        <label class="switch">
-                                            <input value="{{$product->id}}" class="inputFeatureCheckbox"
-                                                   name="inputFeature-{{$product->id}}"
-                                                   id="inputFeature-{{$product->id}}"
-                                                   type="checkbox" checked>
-                                            <span class="slider round"></span>
-                                        </label>
-                                    @else
-                                        <label class="switch">
-                                            <input value="{{$product->id}}" class="inputFeatureCheckbox"
-                                                   name="inputFeature-{{$product->id}}"
-                                                   id="inputFeature-{{$product->id}}"
-                                                   type="checkbox">
-                                            <span class="slider round"></span>
-                                        </label>
-                                    @endif
+                                @if($product->feature == 1)
+                                    <label class="switch">
+                                        <input value="{{$product->id}}" class="inputFeatureCheckbox"
+                                               name="inputFeature-{{$product->id}}"
+                                               id="inputFeature-{{$product->id}}"
+                                               type="checkbox" checked>
+                                        <span class="slider round"></span>
+                                    </label>
+                                @else
+                                    <label class="switch">
+                                        <input value="{{$product->id}}" class="inputFeatureCheckbox"
+                                               name="inputFeature-{{$product->id}}"
+                                               id="inputFeature-{{$product->id}}"
+                                               type="checkbox">
+                                        <span class="slider round"></span>
+                                    </label>
+                                @endif
                             </td>
                             <td>
                                 {{ __('home.Đã xuất bản') }} <br>
@@ -672,9 +699,9 @@
         </div>
     </div>
     <script>
-        var url =  `{{ route('seller.products.hot', ['id' => ':productID']) }}`;
+        var url = `{{ route('seller.products.hot', ['id' => ':productID']) }}`;
         var urla = `{{ route('seller.products.feature', ['id' => ':productID']) }}`;
         var token = `{{ csrf_token() }}`;
     </script>
-    <script src="{{ asset('js/backend/products-index.js') }}"> </script>
+    <script src="{{ asset('js/backend/products-index.js') }}"></script>
 @endsection
