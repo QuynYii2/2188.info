@@ -496,47 +496,81 @@ $(document).ready(function () {
         var originalChecked = this.checked;
         console.log(categoryID);
         console.log(checkboxId);
-        async function setRegisterCategory(categoryID) {
-            url = url.replace(':categoryID', categoryID);
-            try {
-                await $.ajax({
-                    url: url,
-                    method: 'POST',
-                    data: {
-                        _token: token
-                    },
-                    success: function (response) {
-                        console.log(!response.id)
-                        if (!response.id) {
-                            var modal_cate = document.getElementById(modalId_cate);
-                            $(modal_cate).modal('show');
-
-                            var confirmButton = document.querySelector('#' + modalId_cate + ' .btn-primary');
-                            confirmButton.addEventListener('click', function () {
-                                var checkbox = document.getElementById(checkboxId);
-                                checkbox.removeAttribute('disabled');
-                                checkbox.checked = true;
-                                $(modal_cate).modal('hide');
-                            });
-
-                            // Xử lý sự kiện đóng Modal
-                            $(modal_cate).on('hidden.bs.modal', function () {
-                                var checkbox = document.getElementById(checkboxId);
-                                if (checkbox.checked !== originalChecked) {
-                                    checkbox.checked = originalChecked;
-                                }
-
-                            });
-                        }
-                    },
-                    error: function (exception) {
-
-                    }
-                });
-            } catch (error) {
-                throw error;
-            }
-        }
-        setRegisterCategory(categoryID);
+        // async function setRegisterCategory(categoryID) {
+        //     url = url.replace(':categoryID', categoryID);
+        //     try {
+        //         await $.ajax({
+        //             url: url,
+        //             method: 'POST',
+        //             data: {
+        //                 _token: token
+        //             },
+        //             success: function (response) {
+        //                 console.log(!response.id)
+        //                 if (!response.id) {
+        //                     var modal_cate = document.getElementById(modalId_cate);
+        //                     $(modal_cate).modal('show');
+        //                     var confirmButton = document.querySelector('#' + modalId_cate + ' .btn-primary');
+        //                     confirmButton.addEventListener('click', function () {
+        //                         var checkbox = document.getElementById(checkboxId);
+        //                         checkbox.removeAttribute('disabled');
+        //                         checkbox.checked = true;
+        //                         $(modal_cate).modal('hide');
+        //                     });// Xử lý sự kiện đóng Modal
+        //                     $(modal_cate).on('hidden.bs.modal', function () {
+        //                         var checkbox = document.getElementById(checkboxId);
+        //                         if (checkbox.checked !== originalChecked) {
+        //                             checkbox.checked = originalChecked;
+        //                         }
+        //
+        //                     });
+        //                 }
+        //             },
+        //             error: function (exception) {
+        //
+        //             }
+        //         });
+        //     } catch (error) {
+        //         throw error;
+        //     }
+        // }
+        // setRegisterCategory(categoryID);
     });
+
+    $(".addCategory").click(function () {
+        var post_id = $(this).attr('data-cate');
+        var categoryID = $(this).data("id");
+        var modalId_cate = 'exampleModal-' + categoryID;
+        var checkboxId = 'category-' + categoryID;
+        var originalChecked = this.checked;
+        var urlCategory = `{{ route('categories.register', ['id' => ':categoryID']) }}`;
+        $.ajax({
+            type: 'GET',
+            url: urlCategory,
+            data: {
+                _token: token,
+                // id: post_id,
+            },
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+                if (!data.id) {
+                    var modal_cate = document.getElementById(modalId_cate);
+                    $(modal_cate).modal('show');
+                    var confirmButton = document.querySelector('#' + modalId_cate + ' .btn-primary');
+                    confirmButton.addEventListener('click', function () {
+                        $(modal_cate).modal('hide');
+                    });
+                    $(modal_cate).on('hidden.bs.modal', function () {
+                        var checkbox = document.getElementById(checkboxId);
+                        if (checkbox.checked !== originalChecked) {
+                            checkbox.checked = originalChecked;
+                        }
+
+                    });
+                }
+            }
+        });
+    })
+
 })
