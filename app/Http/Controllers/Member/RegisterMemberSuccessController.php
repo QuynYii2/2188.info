@@ -41,22 +41,7 @@ class RegisterMemberSuccessController extends Controller
         if ($company && $company->member == RegisterMember::TRUST) {
             return back();
         }
-        if (Auth::check()) {
-            $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
-            $isMember = null;
-            if ($memberPerson) {
-                $member = \App\Models\MemberRegisterInfo::where([
-                    ['id', $memberPerson->member_id],
-                    ['status', \App\Enums\MemberRegisterInfoStatus::ACTIVE]
-                ])->first();
-                if ($member) {
-                    $isMember = true;
-                }
-            }
-        }
         $memberAccounts = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->get();
-        $companyPerson = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->first();
-        $oldUser = \App\Models\User::where('email', $companyPerson->email)->first();
         if (!$memberAccounts->isEmpty()) {
             $products = \App\Models\Product::where(function ($query) use ($company, $memberAccounts) {
                 if (count($memberAccounts) == 2) {

@@ -118,6 +118,7 @@
                                                                             @php
                                                                                 $currencyValue = $currencyController->getCurrency(request(), $order_item->price);
                                                                             @endphp
+
                                                                             <td>
                                                                                 {{ ($currencyValue) }}
                                                                             </td>

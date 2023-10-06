@@ -391,7 +391,6 @@ class CheckoutController extends Controller
                     'status' => OrderStatus::PROCESSING
                 ]);
 
-                alert()->success('Success', 'Đã thanh toán phí dịch vụ');
                 $this->sendMail();
                 return view('frontend.pages.PaymentMethods.vnpay_return',compact([
                     'email',
