@@ -48,6 +48,24 @@ $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
             <label >Mã đơn hàng:</label>
                 <label><?php echo $_GET['vnp_TxnRef'] ?></label>
         </div>
+        @foreach($orderItems as $orderItem)
+            @php
+                $product = \App\Models\Product::find($orderItem->product_id);
+            @endphp
+            @if($product)
+                <p><strong>Sản phẩm: </strong> {{$product->name}}  </p>
+                <p><strong>Số lượng: </strong>{{$orderItem->quantity}}</p>
+                <p><strong>Giá: </strong><?php
+                                            $orderItemPrice = $orderItem->price;
+                                            $calculatedValue = $orderItemPrice * 24372;
+                                            $calculatedValue = rtrim($calculatedValue, '0');
+                                            $calculatedValue = rtrim($calculatedValue, '.');
+                                            $formattedValue = number_format($calculatedValue, 0, ',', '.') . " VND";
+
+                                            echo  $formattedValue ;
+                                            ?>
+            @endif
+        @endforeach
         <div class="form-group col-6">
             <label >Số tiền:</label>
             <label><?php
