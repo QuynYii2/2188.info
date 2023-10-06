@@ -34,8 +34,8 @@ class OrderController extends Controller
         $fullName = $request->input('fullName');
         $phoneNumber = $request->input('phoneNumber');
         $email = $request->input('email');
-        $from_date = $request->input('from-date');
-        $to_date = $request->input('to-date');
+        $from_date = $request->input('from_date');
+        $to_date = $request->input('to_date');
         if ($fullName) {
             $str = ['fullname', 'like', '%' . $fullName . '%'];
             array_push($query, $str);
@@ -58,7 +58,7 @@ class OrderController extends Controller
         }
 
         $orders = Order::where($query)->get();
-        return view('backend.order.list', compact('orders'));
+        return view('backend.order.list', compact('orders', 'fullName', 'phoneNumber', 'email', 'from_date', 'to_date' ));
     }
 
     public function detail(Request $request, $id)

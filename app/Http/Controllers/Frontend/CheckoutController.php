@@ -399,7 +399,6 @@ class CheckoutController extends Controller
                 $email = session('emailTo');
                 $adminID = DB::table('role_user')->where('role_id','=',1)->first('user_id');
                 $admin = DB::table('users')->where('id','=', $adminID->user_id)->first('email');
-                alert()->success('Success', 'Đã thanh toán phí dịch vụ');
                 $this->sendMail($email);
                 $this->sendMail($admin->email);
                 return view('frontend.pages.PaymentMethods.vnpay_return',compact([
