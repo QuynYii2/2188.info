@@ -26,6 +26,29 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modal-address" tabindex="-1" aria-labelledby="modal-addressLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('home.address') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="height: 65vh; overflow-y: auto">
+                    @include('frontend.pages.registerMember.regionAddress')
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="r_getListNation()">
+                        {{ __('home.Back') }}
+                    </button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                            data-target="#modal-create-region">{{ __('home.tao moi vi tri') }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     var urlGetLocation = `{{ route('location.nation.get') }}`;

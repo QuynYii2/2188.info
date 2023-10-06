@@ -376,6 +376,8 @@ class RegisterMemberController extends Controller
             $code_business = $request->input('code_business');
             $type_business = $request->input('type_business');
 
+            $updateInfo = $request->input('updateInfo');
+
             if (is_array($code_1)) {
                 $code_1 = implode(',', $code_1);
             }
@@ -450,7 +452,13 @@ class RegisterMemberController extends Controller
                 $success = $exitsMember->save();
                 if ($success) {
                     alert()->success('Success', 'Success, Update success!');
-                    return back();
+                    if ($updateInfo) {
+                        return back();
+                    }
+                    return redirect(route('show.register.member.person.source', [
+                        'member_id' => $exitsMember->id,
+                        'registerMember' => $registerMember
+                    ]));
                 }
                 alert()->error('Error', 'Error, Create error!');
                 return back();

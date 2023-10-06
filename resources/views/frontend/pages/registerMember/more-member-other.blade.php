@@ -380,6 +380,16 @@
             </td>
         </tr>
         </tbody>
+        @php
+            $isUpdate = false;
+            $route = Route::currentRouteName();
+            if ($route == 'member.info'){
+                $isUpdate = true;
+            }
+        @endphp
+        @if($isUpdate)
+            <input type="text" name="updateInfo" value="abcdef" class="d-none">
+        @endif
         <input type="text" name="code_1" class="d-none" id="input_code1">
         <input type="text" name="code_2" class="d-none" id="input_code2">
         <input type="text" name="code_3" class="d-none" id="input_code3">
