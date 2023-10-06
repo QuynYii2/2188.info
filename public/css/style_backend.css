@@ -237,6 +237,7 @@ body {
 }
 .header-card--right {
   background-color: #f6f6f6;
+  min-height: 100vh;
 }
 .header-card--right .todo_list {
   margin-top: 40px;

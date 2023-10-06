@@ -394,6 +394,7 @@ class CheckoutController extends Controller
                     'status' => OrderStatus::PROCESSING
                 ]);
 
+                $this->sendMail();
                 $email = session('emailTo');
                 $adminID = DB::table('role_user')->where('role_id','=',1)->first('user_id');
                 $admin = DB::table('users')->where('id','=', $adminID->user_id)->first('email');

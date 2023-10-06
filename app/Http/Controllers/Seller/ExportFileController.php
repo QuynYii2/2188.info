@@ -55,7 +55,6 @@ class ExportFileController extends Controller
         $jsonData = $request->input('excel-value');
         $arrayData = json_decode($jsonData, true);
         $writer = SimpleExcelWriter::create(storage_path('app/public/order.xlsx'));
-        dd($arrayData);
         $writer->addRows($arrayData);
 
         return response()->download(storage_path('app/public/order.xlsx'), 'storage-' . Auth::user()->name . '-' . rand() . '.xlsx')->deleteFileAfterSend();

@@ -16,26 +16,6 @@
 @extends('frontend.layouts.master')
 @section('title', 'Detail')
 @section('content')
-    <style>
-        .toggleBtn {
-            width: 130px;
-            background: #fd6506;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 16px;
-            line-height: 45px;
-            font-weight: 600;
-            color: white;
-            border: none;
-        }
-
-        .content {
-            min-height: 5rem;
-            max-height: 6rem;
-            overflow: hidden;
-        }
-    </style>
-
     <div id="detail-product">
         <div class="container-fluid detail">
             <div class="grid second-nav">
@@ -804,7 +784,6 @@
     <script>
         $(window).on( 'load', function() {
             var largestHeight = 50;
-            console.log($('#content1').height());
             if ($('#content1').height() < largestHeight){
                 $('#toggleBtn1').addClass('d-none');
             } else {
@@ -813,9 +792,8 @@
         });
 
         $(window).on( 'load1', function() {
-            var largestHeight = 50;
-            console.log($('#content2').height());
-            if ($('#content2').height() < largestHeight){
+            var largestHeight1 = 50;
+            if ($('#content2').height() < largestHeight1){
                 $('#toggleBtn2').addClass('d-none');
             } else {
                 $('#toggleBtn2').removeClass('d-none');
