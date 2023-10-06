@@ -168,4 +168,4 @@ Route::post('/create-product-attribute', [ProductController::class, 'saveAttribu
 //Register More Category
 //Route::get('/categories/register_process', [\App\Http\Controllers\RegisterCategoryController::class, 'registerProcess'])->name('categories.register.process');
 Route::get('/categories/register_process', [\App\Http\Controllers\RegisterCategoryController::class, 'index'])->name('categories.register.process');
-Route::get('/categories/register/{id}', [\App\Http\Controllers\RegisterCategoryController::class, 'registerCategory'])->name('categories.register');
+Route::get('products/categories/register/{id}', [\App\Http\Controllers\RegisterCategoryController::class, 'registerCategory'])->name('categories.register');
