@@ -55,6 +55,47 @@ class ProductController extends Controller
         return view('backend/products/index', ['products' => $products, 'categories' => $categories]);
     }
 
+    public function search(Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $query = [];
+        $fullName = $request->input('fullName');
+        $phoneNumber = $request->input('phoneNumber');
+        $listIdUser = User::where('name', 'like', '%' . $fullName . '%')->get('id');
+        if (count($listIdUser)!=0) {
+            foreach ($listIdUser as $idUser) {
+                $str = ['user_id', '=', $idUser->id];
+                array_push($query, $str);
+            }
+        }
+        $products = Product::where([])->get();
+        dd($products);
+        $email = $request->input('email');
+        $from_date = $request->input('from_date');
+        $to_date = $request->input('to_date');
+        if ($fullName) {
+            $str = ['name', 'like', '%' . $fullName . '%'];
+            array_push($query, $str);
+        }
+        if ($phoneNumber) {
+            $str = ['phone','like', '%' . $fullName . '%'];
+            array_push($query, $str);
+        }
+        if ($email) {
+            $str = ['phone','like', '%' . $fullName . '%'];
+            array_push($query, $str);
+        }
+        if ($from_date) {
+            $str = ['created_at', '>=', $from_date . ' 00:00:00'];
+            array_push($query, $str);
+        }
+        if ($to_date) {
+            $str = ['created_at', '<=', $to_date . ' 23:59:59'];
+            array_push($query, $str);
+        }
+        $products = Product::where($query)->get();
+        return view('backend.products.index', compact('products', 'fullName', 'phoneNumber', 'email', 'from_date', 'to_date' ));
+    }
     public function home(Request $request)
     {
         (new HomeController())->getLocale($request);
