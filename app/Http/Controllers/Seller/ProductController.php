@@ -480,6 +480,7 @@ class ProductController extends Controller
                 ProductSale::create($newProductSale);
             }
 
+
             if ($isNew) {
                 $newArray = $this->getAttributeProperty($request);
 
@@ -534,9 +535,8 @@ class ProductController extends Controller
                     $this->createAttributeProduct($product, $newArray);
                 }
                 $updateProduct = $product->save();
-            } else {
-                $updateProduct = $this->updateProduct($product, $request, $number);
             }
+            $updateProduct = $this->updateProduct($product, $request, $number);
 
             if ($updateProduct) {
                 alert()->success('Success', 'Cập nhật thành công.');

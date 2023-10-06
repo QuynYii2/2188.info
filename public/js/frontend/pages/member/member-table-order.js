@@ -10,11 +10,15 @@ $(document).ready(function () {
             }
         }
 
-        if (check == true) {
-            document.getElementById("supBtnOrder").disabled = false;
-        } else {
-            document.getElementById("supBtnOrder").disabled = true;
+        let value = $('#cartItem').val()
+        if (!value) {
+            if (check == true) {
+                document.getElementById("supBtnOrder").disabled = false;
+            } else {
+                document.getElementById("supBtnOrder").disabled = true;
+            }
         }
+
     }
 
     checkInput();
