@@ -629,6 +629,14 @@ body {
   .topSearch .swipertopSearch .topSearch-item .topSearch-body {
     font-size: 18px;
   }
+  #form-paymentSuccess .product-item {
+    margin: 10px 0;
+  }
+  #form-paymentSuccess .product-item .img {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+  }
 }
 
 /*# sourceMappingURL=responsive.css.map */

@@ -44,29 +44,11 @@ $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
         </div>
     </div>
     <div class="row" id="form-paymentSuccess">
-        <div class="form-group col-6">
+        <div class="form-group col-12 col-md-6">
             <label >Mã đơn hàng:</label>
                 <label><?php echo $_GET['vnp_TxnRef'] ?></label>
         </div>
-        @foreach($orderItems as $orderItem)
-            @php
-                $product = \App\Models\Product::find($orderItem->product_id);
-            @endphp
-            @if($product)
-                <p><strong>Sản phẩm: </strong> {{$product->name}}  </p>
-                <p><strong>Số lượng: </strong>{{$orderItem->quantity}}</p>
-                <p><strong>Giá: </strong><?php
-                                            $orderItemPrice = $orderItem->price;
-                                            $calculatedValue = $orderItemPrice * 24372;
-                                            $calculatedValue = rtrim($calculatedValue, '0');
-                                            $calculatedValue = rtrim($calculatedValue, '.');
-                                            $formattedValue = number_format($calculatedValue, 0, ',', '.') . " VND";
-
-                                            echo  $formattedValue ;
-                                            ?>
-            @endif
-        @endforeach
-        <div class="form-group col-6">
+        <div class="form-group col-12 col-md-6">
             <label >Số tiền:</label>
             <label><?php
                    $vnp_Amount = $_GET['vnp_Amount'];
@@ -81,11 +63,11 @@ $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
                    }
                    ?></label>
         </div>
-        <div class="form-group col-6">
+        <div class="form-group col-12 col-md-6">
             <label >Ngân hàng thanh toán:</label>
             <label><?php echo $_GET['vnp_BankCode'] ?></label>
         </div>
-        <div class="form-group col-6">
+        <div class="form-group col-12 col-md-6">
             <label >Thời gian thanh toán:</label>
             <label><?php
                    $vnp_PayDate = $_GET['vnp_PayDate'];
@@ -97,19 +79,19 @@ $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
                    }
                    ?></label>
         </div>
-        <div class="form-group col-6">
+        <div class="form-group col-12 col-md-6">
             <label >Mã GD Tại VNPAY:</label>
             <label><?php echo $_GET['vnp_TransactionNo'] ?></label>
         </div>
-        <div class="form-group col-6">
+        <div class="form-group col-12 col-md-6">
             <label >Nội dung thanh toán:</label>
             <label><?php echo $_GET['vnp_OrderInfo'] ?></label>
         </div>
-        <div class="form-group col-6">
+        <div class="form-group col-12 col-md-6">
             <label >Mã phản hồi (vnp_ResponseCode):</label>
             <label><?php echo $_GET['vnp_ResponseCode'] ?></label>
         </div>
-        <div class="form-group col-6">
+        <div class="form-group col-12 col-md-6">
             <label >Kết quả:</label>
             <label>
                 <?php
@@ -126,6 +108,32 @@ $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
 
         </label>
     </div>
+        @foreach($orderItems as $orderItem)
+            @php
+                $product = \App\Models\Product::find($orderItem->product_id);
+            @endphp
+            @if($product)
+                <div class="product-item col-12 d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <div class="img">
+                            <img src="{{asset('storage/'. $product->thumbnail)}}" alt="">
+                        </div>
+                        <div class="name">{{$product->name}}</div>
+                    </div>
+                    <div class="quantity">X{{$orderItem->quantity}}</div>
+                    <div class="price">
+                            <?php
+                       $orderItemPrice = $orderItem->price;
+                       $calculatedValue = $orderItemPrice * 24372;
+                       $calculatedValue = rtrim($calculatedValue, '0');
+                       $calculatedValue = rtrim($calculatedValue, '.');
+                       $formattedValue = number_format($calculatedValue, 0, ',', '.') . " VND";
+                       echo  $formattedValue ;
+                       ?>
+                    </div>
+                </div>
+            @endif
+        @endforeach
     </div>
     <form class="text-center mt-4 mb-4" action="{{ route('home') }}" method="GET">
         @csrf
