@@ -99,3 +99,12 @@
         </button>
     @endforeach
 </div>
+<script>
+    var token = `{{ csrf_token() }}`;
+    var urlGetProductSale = `{{asset('get-products-sale')}}`;
+    var imageUrlMain = `{{ asset('storage') }}`;
+    var detailProductModal = `{{ route('detail_product.data.modal', ['id' => ':id']) }}`;
+    var detailProductAttribute = `{{ route('detail_product.member.attribute', ['id' => ':id']) }}`;
+    var memberViewCart = `{{route('member.view.carts')}}`;
+</script>
+<script src="{{ asset('js/frontend/pages/member/stand-member.js') }}"></script>

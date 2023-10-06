@@ -33,25 +33,75 @@
     </label>
 @endforeach
 <script>
-    $('.inputCheckboxCategory2').on('click', function () {
-        let arrayItem2 = [];
-        let items = document.getElementsByClassName('inputCheckboxCategory2');
-        for (let i = 0; i < items.length; i++) {
-            if (items[i].checked) {
-                if (arrayItem2.length == 0) {
-                    arrayItem2.push(items[i].value);
-                } else {
-                    let check = arrayItem2.includes(items[i].value);
-                    if (!check) {
-                        arrayItem2.push(items[i].value);
-                    }
+    function getCategory2() {
+        function removeArray(arr) {
+            var what, a = arguments, L = a.length, ax;
+            while (L > 1 && arr.length) {
+                what = a[--L];
+                while ((ax = arr.indexOf(what)) !== -1) {
+                    arr.splice(ax, 1);
                 }
-            } else {
-                removeArray(arrayItem2, items[i].value);
             }
+            return arr;
         }
-        arrayItem2.sort();
-        let value = arrayItem2.toString();
-        $('#input_code3').val(value);
-    })
+
+        function getListName(array, items) {
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].checked) {
+                    if (array.length == 0) {
+                        array.push(items[i].nextElementSibling.innerText);
+                    } else {
+                        let name = array.includes(items[i].nextElementSibling.innerText);
+                        if (!name) {
+                            array.push(items[i].nextElementSibling.innerText);
+                        }
+                    }
+                } else {
+                    removeArray(array, items[i].nextElementSibling.innerText)
+                }
+            }
+            return array;
+        }
+
+        function checkArray(array, listItems) {
+            for (let i = 0; i < listItems.length; i++) {
+                if (listItems[i].checked) {
+                    if (array.length == 0) {
+                        array.push(listItems[i].value);
+                    } else {
+                        let check = array.includes(listItems[i].value);
+                        if (!check) {
+                            array.push(listItems[i].value);
+                        }
+                    }
+                } else {
+                    removeArray(array, listItems[i].value);
+                }
+            }
+            return array;
+        }
+
+        let arrayNameCategory2 = [];
+        let arrayItem2 = [];
+        $('.inputCheckboxCategory2').on('click', function () {
+            let items = document.getElementsByClassName('inputCheckboxCategory2');
+
+            arrayItem2 = checkArray(arrayItem2, items);
+            arrayNameCategory2 = getListName(arrayNameCategory2, items);
+
+            let listName = arrayNameCategory2.toString();
+
+            if (listName) {
+                $('#inputCheckboxCategory2').text(listName);
+            } else {
+                $('#inputCheckboxCategory2').text(`{{ __('home.Select the applicable category') }}`);
+            }
+
+            arrayItem2.sort();
+            let value = arrayItem2.toString();
+            $('#input_code3').val(value);
+        })
+    }
+
+    getCategory2();
 </script>
