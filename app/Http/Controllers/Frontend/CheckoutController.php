@@ -370,6 +370,9 @@ class CheckoutController extends Controller
             $userId = Auth::user()->id;
             $email = Auth::user()->email;
             $costId = $request->input('vnp_TxnRef');
+            $order = session('order');
+            $orderItems = null;
+            $orderItems = \App\Models\OrderItem::where('order_id', $order->id)->get();
 
             DB::table('payments_vnpay')->insert([
                 'money' => $vnpAmount/100,
@@ -393,8 +396,6 @@ class CheckoutController extends Controller
                 DB::table('orders')->update([
                     'status' => OrderStatus::PROCESSING
                 ]);
-
-                $this->sendMail();
                 $email = session('emailTo');
                 $adminID = DB::table('role_user')->where('role_id','=',1)->first('user_id');
                 $admin = DB::table('users')->where('id','=', $adminID->user_id)->first('email');
@@ -402,7 +403,7 @@ class CheckoutController extends Controller
                 $this->sendMail($email);
                 $this->sendMail($admin->email);
                 return view('frontend.pages.PaymentMethods.vnpay_return',compact([
-                    'email',
+                    'email','orderItems'
                 ]));
             }
 
