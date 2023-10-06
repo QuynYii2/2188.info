@@ -36,7 +36,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use mysql_xdevapi\Exception;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
+use function Symfony\Component\String\u;
 
 class CheckoutController extends Controller
 {
@@ -92,7 +94,6 @@ class CheckoutController extends Controller
             ['status', '=', CartStatus::WAIT_ORDER]
         ])->get();
         $realTotalPrice = 0;
-
         foreach ($carts as $cart) {
             if ($cart->member == 1) {
                 $productCart = Product::find($cart->product_id);
@@ -154,7 +155,8 @@ class CheckoutController extends Controller
             'status' => $status
         ];
 
-        Order::create($order);
+       $od = Order::create($order);
+        session(['order' => $od]);
 
         $totalCheck = 0;
         $listOrder = Order::where('user_id', Auth::user()->id)->get();
@@ -342,12 +344,12 @@ class CheckoutController extends Controller
         return redirect()->route('checkout.show')->with('error', 'Checkout fail');
     }
 
-    public function sendMail()
+    public function sendMail($email)
     {
-        $email = session('emailTo');
+        $order = session('order');
         $data = ['message'=>'$request->input()'];
         Mail::send('frontend/widgets/mailCode', $data, function ($message) use ($email) {
-            $message->to($email, 'Verify mail!')->subject
+            $message->to([$email], 'Verify mail!')->subject
             ('Verify mail');
             $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
         });
@@ -357,6 +359,7 @@ class CheckoutController extends Controller
     {
         (new HomeController())->getLocale($request);
         $url = session('url_prev','/');
+
         if($request->vnp_ResponseCode == "00") {
             $vnpAmount = $request->input('vnp_Amount');
             $vnpBankCode = $request->input('vnp_BankCode');
@@ -391,8 +394,12 @@ class CheckoutController extends Controller
                     'status' => OrderStatus::PROCESSING
                 ]);
 
+                $email = session('emailTo');
+                $adminID = DB::table('role_user')->where('role_id','=',1)->first('user_id');
+                $admin = DB::table('users')->where('id','=', $adminID->user_id)->first('email');
                 alert()->success('Success', 'Đã thanh toán phí dịch vụ');
-                $this->sendMail();
+                $this->sendMail($email);
+                $this->sendMail($admin->email);
                 return view('frontend.pages.PaymentMethods.vnpay_return',compact([
                     'email',
                 ]));
@@ -425,6 +432,13 @@ class CheckoutController extends Controller
         $vnpAmount = $request->input('total_price');
         $startTime = date("YmdHis");
         $expire = date('YmdHis',strtotime('+15 minutes',strtotime($startTime)));
+        $shippingPrice = $request->input('shipping_price');
+        $salePrice = $request->input('discount_price');
+        $array[] = $vnpAmount;
+        $array[] = $shippingPrice;
+        $array[] = $salePrice;
+        $array[] = $money;
+        $array = implode(',', $array);
 
         $inputData = array(
             "vnp_Version" => "2.1.0",
@@ -440,19 +454,15 @@ class CheckoutController extends Controller
             "vnp_ReturnUrl" => $vnp_Returnurl,
             "vnp_TxnRef" => $vnp_TxnRef,
         );
-        Order::insert([
-            'user_id' => $user->id,
-            'fullname'=> $user->name,
-            'email'=>$user->email,
-            'phone'=>$user->phone,
-            'total'=>$money,
-            'address'=>$request->input('address'),
-            'total_price'=>$money,
-            'orders_method'=>OrderMethod::ElectronicWallet,
-            'shipping_price'=>$request->input('shipping_price'),
-            'discount_price'=>$request->input('discount_price'),
-            'status'=>OrderStatus::WAIT_PAYMENT
-        ]);
+        $order = $this->checkout($request, $status=OrderStatus::WAIT_PAYMENT,
+            OrderMethod::ElectronicWallet,
+            $name=$request->input('fullname'),
+            $email=$emailTo,
+            $phone=$request->input('phone'),
+            $address=$request->input('address'),
+            $idVoucher = $request->input('voucherID'),
+            $array);
+
         if (isset($vnp_BankCode) && $vnp_BankCode != "") {
             $inputData['vnp_BankCode'] = $vnp_BankCode;
         }

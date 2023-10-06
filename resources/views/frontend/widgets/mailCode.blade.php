@@ -34,7 +34,29 @@
     <p>Cảm ơn bạn đã đặt hàng tại cửa hàng chúng tôi. Dưới đây là chi tiết về đơn hàng của bạn:</p>
     <div class="order-details">
         <p><strong>Mã đơn hàng:</strong> <?php echo $_GET['vnp_TxnRef'] ?></p>
-        <p><strong>Sản phẩm:</strong> Áo thun xanh - Size M</p>
+        @php
+            $order = session('order');
+            $orderItems = null;
+            $orderItems = \App\Models\OrderItem::where('order_id', $order->id)->get();
+        @endphp
+        @foreach($orderItems as $orderItem)
+                    @php
+                        $product = \App\Models\Product::find($orderItem->product_id);
+                    @endphp
+                    @if($product)
+                        <p><strong>Sản phẩm:</strong> {{$product->name}}  </p>
+                        <p><strong>Số lượng:</strong>{{$orderItem->quantity}}</p>
+                        <p><strong>Giá:</strong><?php
+                                                    $orderItemPrice = $orderItem->price;
+                                                    $calculatedValue = $orderItemPrice * 24372;
+                                                    $calculatedValue = rtrim($calculatedValue, '0');
+                                                    $calculatedValue = rtrim($calculatedValue, '.');
+                                                    $formattedValue = number_format($calculatedValue, 0, ',', '.') . " VND";
+
+                                                    echo  $formattedValue ;
+                                                    ?>
+                    @endif
+        @endforeach
         <p><strong>Tổng tiền:</strong> <?php
                                        $vnp_Amount = $_GET['vnp_Amount'];
 
