@@ -264,23 +264,17 @@
                                                         <button type="button" class="btn btn-secondary"
                                                                 data-dismiss="modal">Cancel
                                                         </button>
-                                                        <button type="button" class="btn btn-primary"><a
-                                                                    href="{{route('categories.register', $category->id)}}">Add now</a>
-                                                        </button>
+                                                        <button type="button" class="btn btn-primary addCategory" data-cate="{{$category->id}}" href="{{route('categories.register', $category->id)}}">Add now</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     @else
-                                        <label class="ml-2" for="category-{{$category->id}}">
+                                        <label class="ml-2" for="category-{{$category->id}}" id="label-{{$category->id}}">
                                             <input type="checkbox" id="category-{{$category->id}}"
                                                    name="category-{{$category->id}}"
                                                    value="{{$category->id}}"
-                                                   class="inputCheckboxCategory mr-2 p-3"
-                                                    @php
-                                                        echo !in_array($category->id, $categoriesRegister) ? '' :'checked';
-                                                    @endphp
-                                            />
+                                                   class="inputCheckboxCategory mr-2 p-3"/>
                                             <span class="labelCheckboxCategory">
                                                 @if(locationHelper() == 'kr')
                                                     <div class="text">{{$category->name_ko }}</div>
@@ -349,24 +343,17 @@
                                                                 <button type="button" class="btn btn-secondary"
                                                                         data-dismiss="modal">Cancel
                                                                 </button>
-                                                                <button type="button" class="btn btn-primary"><a
-                                                                            href="{{route('categories.register', $child->id)}}">Add now</a>
-                                                                </button>
-
+                                                                <button type="button" class="btn btn-primary addCategory" data-cate="{{$child->id}}" href="{{route('categories.register', $child->id)}}">Add now</button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             @else
-                                                <label class="ml-2" for="category-{{$child->id}}">
+                                                <label class="ml-4" for="category-{{$child->id}}" id="label-{{$child->id}}">
                                                     <input type="checkbox" id="category-{{$child->id}}"
                                                            name="category-{{$child->id}}"
                                                            value="{{$child->id}}"
-                                                           class="inputCheckboxCategory mr-2 p-3"
-                                                            @php
-                                                                echo !in_array($category->id, $categoriesRegister) ? '' :'checked';
-                                                            @endphp
-                                                    />
+                                                           class="inputCheckboxCategory mr-2 p-3"/>
                                                     <span class="labelCheckboxCategory">
                                                             @if(locationHelper() == 'kr')
                                                             <div class="text">{{ $child->name_ko }}</div>
@@ -435,22 +422,17 @@
                                                                     <button type="button" class="btn btn-secondary"
                                                                             data-dismiss="modal">Cancel
                                                                     </button>
-                                                                    <button type="button" class="btn btn-primary"><a
-                                                                                href="{{route('categories.register',$child2->id)}}">Add now</a>
-                                                                    </button>
+                                                                    <button type="button" class="btn btn-primary addCategory" data-cate="{{$child2->id}}" href="{{route('categories.register', $child2->id)}}">Add now</button>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 @else
-                                                    <label class="ml-2" for="category-{{$child2->id}}">
+                                                    <label class="ml-5" for="category-{{$child2->id}}" id="label-{{$child2->id}}">
                                                         <input type="checkbox" id="category-{{$child2->id}}"
                                                                name="category-{{$child2->id}}"
                                                                value="{{$child2->id}}"
                                                                class="inputCheckboxCategory mr-2 p-3"
-                                                                @php
-                                                                    echo !in_array($category->id, $categoriesRegister) ? '' :'checked';
-                                                                @endphp
                                                         />
                                                         <span class="labelCheckboxCategory">
                                                             @if(locationHelper() == 'kr')
@@ -498,6 +480,7 @@
     <script>
         var url = `{{ route('product.v2.create.attribute') }}`;
         var token = `{{ csrf_token() }}`;
+        var urlCategory = `{{ route('categories.register', ['id' => ':categoryID']) }}`;
         var urlCategory = `{{ route('categories.register', ['id' => ':categoryID']) }}`;
     </script>
     <script src="{{ asset('js/backend/products-create.js') }}"></script>
