@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\MemberRegisterPersonSourceStatus;
 use App\Enums\NotificationStatus;
 use App\Enums\PermissionUserStatus;
 use App\Enums\TimeLevelStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Libraries\GeoIP;
 use App\Models\Category;
+use App\Models\MemberRegisterPersonSource;
 use App\Models\Notification;
 use App\Models\Permission;
 use App\Models\ProductInterested;
@@ -39,7 +41,7 @@ class UserController extends Controller
         $existingUser = User::where('email', $request->email)->first();
         if ($existingUser) {
             toast('Địa chỉ email đã tồn tại.', 'error', 'top-right');
-            return redirect(route('register.show')) ->withErrors($validator)
+            return redirect(route('register.show'))->withErrors($validator)
                 ->withInput();
         }
 
@@ -288,7 +290,23 @@ class UserController extends Controller
                 alert()->error('Error', 'Email already used!');
                 return back();
             } else {
+                $person = MemberRegisterPersonSource::where('email', $email)
+                    ->where('status', MemberRegisterPersonSourceStatus::ACTIVE)
+                    ->first();
+
+                if ($person) {
+                    alert()->error('Error', 'Email already used!');
+                    return back();
+                }
+
+                $myPerson = MemberRegisterPersonSource::where('email', $user->email)
+                    ->where('status', MemberRegisterPersonSourceStatus::ACTIVE)
+                    ->first();
+
                 $user->email = $email;
+                $myPerson->email = $email;
+
+                $myPerson->save();
                 $success = $user->save();
                 if ($success) {
                     alert()->success('Success', 'Change Email Success!');
