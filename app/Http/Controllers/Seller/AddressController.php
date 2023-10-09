@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\State;
@@ -18,10 +19,10 @@ class AddressController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = $request->query('perPage', 10);
+        (new HomeController())->getLocale($request);
+        $perPage = $request->query('perPage', 5);
         $countries = Country::orderBy('name')
-            ->simplePaginate($perPage);
-
+            ->paginate($perPage);
         $listNation = [];
 
         foreach ($countries as $country) {
@@ -53,14 +54,16 @@ class AddressController extends Controller
         }
 
 // Access the paginated data and links
-        $paginationInfo = [
-            'current_page' => $countries->currentPage(),
-            'per_page' => $countries->perPage(),
-            'next_page_url' => $countries->nextPageUrl(),
-            'prev_page_url' => $countries->previousPageUrl(),
-        ];
+        $paginationInfo = $countries;
 
         return view('backend.address.index', compact('listNation', 'paginationInfo'));
+    }
+
+    public function updateStar(Request $request, $nationID)
+    {
+        $isShow = $request->input('isShow');
+        Country::where('isShow', $nationId)->update(['isShow' => $isShow]);
+        return response()->json(['success' => true]);
     }
 
     /**
@@ -68,6 +71,8 @@ class AddressController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
     public function create()
     {
         //
