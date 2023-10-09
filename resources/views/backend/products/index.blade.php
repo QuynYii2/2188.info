@@ -26,7 +26,7 @@
             <form action="{{ route('seller.products.search') }}" id="searchInput" class="row my-2 pl-3">
                 @csrf
                 <div class="col-sm-2">
-                    <input placeholder={{ __('home.full name') }} type="text" class="form-control" id="fullName" name="fullName" value="{{ isset($phoneNumber) ? $phoneNumber : '' }}"
+                    <input placeholder={{ __('home.full name') }} type="text" class="form-control" id="fullName" name="fullName" value="{{ isset($fullName) ? $fullName : '' }}"
                            data-date-split-input="true">
                 </div>
                 <div class="col-sm-2">
@@ -703,5 +703,10 @@
         var urla = `{{ route('seller.products.feature', ['id' => ':productID']) }}`;
         var token = `{{ csrf_token() }}`;
     </script>
+    <script>
+        localStorage.setItem('searchInput', document.getElementById('fullName').value);
+        document.getElementById('fullName').value = localStorage.getItem('searchInput');
+    </script>
+    <script src="{{ asset('js/backend/list.js') }}"></script>
     <script src="{{ asset('js/backend/products-index.js') }}"></script>
 @endsection

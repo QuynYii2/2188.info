@@ -58,41 +58,46 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $query = [];
+
+        $query = Product::query();
+
         $fullName = $request->input('fullName');
         $phoneNumber = $request->input('phoneNumber');
         $email = $request->input('email');
         $from_date = $request->input('from_date');
         $to_date = $request->input('to_date');
 
+        if ($fullName) {
+            $query->whereHas('user', function ($userQuery) use ($fullName) {
+                $userQuery->where('name', 'like', '%' . $fullName . '%');
+            });
+        }
+
         if ($phoneNumber) {
-            $str = ['phone', 'like', '%'.$phoneNumber.'%'];
-            array_push($query, $str);
+            $query->whereHas('user', function ($userQuery) use ($phoneNumber) {
+                $userQuery->where('phone', 'like', '%' . $phoneNumber . '%');
+            });
         }
 
         if ($email) {
-            $str = ['email', 'like', '%'.$email.'%'];
-            array_push($query, $str);
+            $query->whereHas('user', function ($userQuery) use ($email) {
+                $userQuery->where('email', 'like', '%' . $email . '%');
+            });
         }
 
         if ($from_date) {
-            $str = ['created_at', '>=', $from_date . ' 00:00:00'];
-            array_push($query, $str);
+            $query->where('created_at', '>=', $from_date . ' 00:00:00');
         }
 
         if ($to_date) {
-            $str = ['created_at', '<=', $to_date . ' 23:59:59'];
-            array_push($query, $str);
+            $query->where('created_at', '<=', $to_date . ' 23:59:59');
         }
 
-        $listIdUser = User::where('name', 'like', '%'.$fullName.'%')->pluck('id')->toArray();
+        $products = $query->get();
 
-        if (!empty($listIdUser)) {
-            $products = Product::whereIn('user_id', $listIdUser)->where($query)->get();
-        }
-
-        return view('backend.products.index', compact('products', 'fullName', 'phoneNumber', 'email', 'from_date', 'to_date' ));
+        return view('backend.products.index', compact('products', 'fullName', 'phoneNumber', 'email', 'from_date', 'to_date'));
     }
+
 
     public function home(Request $request)
     {
