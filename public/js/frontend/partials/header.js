@@ -1,4 +1,21 @@
 $(document).ready(function () {
+    async function showCart() {
+        let url = urlrenderCart;
+
+        await $.ajax({
+            url: url,
+            method: 'GET',
+        })
+            .done(function (response) {
+                $('#cartBlog').append(response);
+            })
+            .fail(function (_, textStatus) {
+                console.log(textStatus)
+            });
+    }
+
+    showCart();
+
     $('.categorySearch').on('click', function () {
         let id = $(this).data('id');
         console.log(id);

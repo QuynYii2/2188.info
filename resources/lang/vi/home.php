@@ -659,6 +659,7 @@ return [
     'Tên danh mục' => 'Tên danh mục',
     '-- Chọn danh mục cha --' => '-- Chọn danh mục cha --',
     'thumbnail' => 'thumbnail',
+    'icon' => 'icon',
     'thêm mới' => 'thêm mới',
     'Edit category' => 'Edit category',
     'Đường dẫn' => 'Đường dẫn',

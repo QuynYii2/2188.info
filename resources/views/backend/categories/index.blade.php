@@ -82,7 +82,13 @@
                                 <div>
                                     <input type="file" name="thumbnail" class="upload_image_button" required>
                                 </div>
-                                <div class="clear">
+                            </div>
+                            <div class="form-field term-thumbnail-wrap">
+                                <label>
+                                    {{ __('home.icon') }}
+                                </label>
+                                <div>
+                                    <input type="file" name="icon" class="upload_icon_button" required>
                                 </div>
                             </div>
                             <p class="submit">

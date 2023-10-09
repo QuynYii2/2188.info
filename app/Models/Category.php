@@ -18,6 +18,7 @@ class Category extends Model
         'stt',
         'description',
         'slug',
+        'icon',
     ];
 
 

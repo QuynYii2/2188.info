@@ -108,6 +108,12 @@ class CategoryController extends Controller
                 $category->thumbnail = $thumbnailPath;
             }
 
+            if ($request->hasFile('icon')) {
+                $icon = $request->file('icon');
+                $iconPath = $icon->store('categories', 'public');
+                $category->icon = $iconPath;
+            }
+
             if ($validatedData['category_parentID']) {
                 $parentCategory = Category::find($validatedData['category_parentID']);
                 if ($parentCategory) {
@@ -211,6 +217,12 @@ class CategoryController extends Controller
                 $thumbnail = $request->file('thumbnail');
                 $thumbnailPath = $thumbnail->store('categories', 'public');
                 $category->thumbnail = $thumbnailPath;
+            }
+
+            if ($request->hasFile('icon')) {
+                $icon = $request->file('icon');
+                $iconPath = $icon->store('categories', 'public');
+                $category->icon = $iconPath;
             }
 
             $updateCategory = $category->save();
