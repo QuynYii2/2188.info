@@ -58,44 +58,47 @@ class ProductController extends Controller
     public function search(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $query = [];
+
+        $query = Product::query();
+
         $fullName = $request->input('fullName');
         $phoneNumber = $request->input('phoneNumber');
-        $listIdUser = User::where('name', 'like', '%' . $fullName . '%')->get('id');
-        if (count($listIdUser)!=0) {
-            foreach ($listIdUser as $idUser) {
-                $str = ['user_id', '=', $idUser->id];
-                array_push($query, $str);
-            }
-        }
-        $products = Product::where([])->get();
-        dd($products);
         $email = $request->input('email');
         $from_date = $request->input('from_date');
         $to_date = $request->input('to_date');
+
         if ($fullName) {
-            $str = ['name', 'like', '%' . $fullName . '%'];
-            array_push($query, $str);
+            $query->whereHas('user', function ($userQuery) use ($fullName) {
+                $userQuery->where('name', 'like', '%' . $fullName . '%');
+            });
         }
+
         if ($phoneNumber) {
-            $str = ['phone','like', '%' . $fullName . '%'];
-            array_push($query, $str);
+            $query->whereHas('user', function ($userQuery) use ($phoneNumber) {
+                $userQuery->where('phone', 'like', '%' . $phoneNumber . '%');
+            });
         }
+
         if ($email) {
-            $str = ['phone','like', '%' . $fullName . '%'];
-            array_push($query, $str);
+            $query->whereHas('user', function ($userQuery) use ($email) {
+                $userQuery->where('email', 'like', '%' . $email . '%');
+            });
         }
+
         if ($from_date) {
-            $str = ['created_at', '>=', $from_date . ' 00:00:00'];
-            array_push($query, $str);
+            $query->where('created_at', '>=', $from_date . ' 00:00:00');
         }
+
         if ($to_date) {
-            $str = ['created_at', '<=', $to_date . ' 23:59:59'];
-            array_push($query, $str);
+            $query->where('created_at', '<=', $to_date . ' 23:59:59');
         }
-        $products = Product::where($query)->get();
-        return view('backend.products.index', compact('products', 'fullName', 'phoneNumber', 'email', 'from_date', 'to_date' ));
+
+        $products = $query->get();
+
+        return view('backend.products.index', compact('products', 'fullName', 'phoneNumber', 'email', 'from_date', 'to_date'));
     }
+
+
     public function home(Request $request)
     {
         (new HomeController())->getLocale($request);
