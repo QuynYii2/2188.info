@@ -373,5 +373,7 @@ Route::group(['prefix' => 'buyer', 'middleware' => 'role.buyer'], function () {
     require_once __DIR__.'/buyer.php';
 });
 
-//Test
-Route::get('/test', [\App\Http\Controllers\TestController::class, 'testAttribute']);
+//showCart
+Route::get('/showCart', [CartController::class, 'showCart'])->name('showCart');
+Route::get('/renderCart', [CartController::class, 'renderCart'])->name('renderCart');
+Route::post('deleteCart/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');

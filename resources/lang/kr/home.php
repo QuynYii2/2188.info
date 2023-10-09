@@ -685,6 +685,7 @@ return [
     'Tên danh mục' => '카테고리',
     '-- Chọn danh mục cha --' => '업종 선택',
     'thumbnail' => '사진',
+    'icon' => 'icon',
     'thêm mới' => '추가',
     'Edit category' => '업종 관리',
     'Đường dẫn' => '링크',

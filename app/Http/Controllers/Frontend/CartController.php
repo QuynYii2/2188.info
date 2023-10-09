@@ -306,4 +306,38 @@ class CartController extends Controller
         ])->get();
         return $carts;
     }
+
+    public function showCart()
+    {
+        $cartViews = Cart::where([
+            ['user_id', '=', Auth::user()->id],
+            ['status', '=', \App\Enums\CartStatus::WAIT_ORDER]
+        ])->get();
+        $totalHeader = 0;
+        foreach ($cartViews as $cart1) {
+            $totalHeader = $totalHeader + ($cart1->price * $cart1->quantity);
+        }
+        return view('frontend.pages.cart-item', compact('cartViews', 'totalHeader'));
+    }
+
+    public function renderCart()
+    {
+        $cartViews = Cart::where([
+            ['user_id', '=', Auth::user()->id],
+            ['status', '=', \App\Enums\CartStatus::WAIT_ORDER]
+        ])->get();
+        $totalHeader = 0;
+        foreach ($cartViews as $cart1) {
+            $totalHeader = $totalHeader + ($cart1->price * $cart1->quantity);
+        }
+        return view('frontend.pages.cart-header', compact('cartViews', 'totalHeader'));
+    }
+
+    public function deleteCart($id)
+    {
+        $cartViews = Cart::find($id);
+        $cartViews->status = CartStatus::DELETED;
+        $cartViews->save();
+        return response('Success', 200);
+    }
 }
