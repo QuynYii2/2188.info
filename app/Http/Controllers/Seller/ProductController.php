@@ -391,11 +391,14 @@ class ProductController extends Controller
     {
         (new HomeController())->getLocale($request);
         $product = Product::findOrFail($id);
-        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', \Illuminate\Support\Facades\Auth::user()->id]])->get();
         $att_of_product = DB::table('product_attribute')->where('product_id', $product->id)->get();
         $productDetails = Variation::where([['product_id', $id], ['status', VariationStatus::ACTIVE]])->get();
         $price_sales = ProductSale::where('product_id', $id)->get();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
+        $registerCate = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        $registerCategories = MemberRegisterInfo::where('id', $registerCate->member_id)->first();
+        $categoriesRegister = explode(',', $registerCategories->category_id);
 
         session()->forget('att_of_product');
         session()->push('att_of_product', $att_of_product);
@@ -406,7 +409,8 @@ class ProductController extends Controller
             'attributes',
             'price_sales',
             'product',
-            'productDetails'));
+            'productDetails',
+            'categoriesRegister'));
 
     }
 
@@ -419,6 +423,7 @@ class ProductController extends Controller
             $nameValue = $request->input('name');
             $descriptionValue = $request->input('description');
             $shortDescriptionValue = $request->input('short_description');
+            $product->category_id = $request->input('category_id');
 
             $arrThumbnail = $request->input('imgThumbnail');
             $arrGallery = $request->input('imgGallery');
