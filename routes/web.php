@@ -373,6 +373,6 @@ Route::group(['prefix' => 'buyer', 'middleware' => 'role.buyer'], function () {
 });
 
 //showCart
-Route::get('/showCart', [\App\Http\Controllers\frontend\CartController::class, 'showCart'])->name('showCart');
-Route::get('/renderCart', [\App\Http\Controllers\frontend\CartController::class, 'renderCart'])->name('renderCart');
-Route::post('deleteCart/{id}', [\App\Http\Controllers\frontend\CartController::class, 'deleteCart'])->name('deleteCart');
+Route::get('/showCart', [CartController::class, 'showCart'])->name('showCart');
+Route::get('/renderCart', [CartController::class, 'renderCart'])->name('renderCart');
+Route::post('deleteCart/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
