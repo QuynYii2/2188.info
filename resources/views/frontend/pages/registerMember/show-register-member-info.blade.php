@@ -174,9 +174,6 @@
                     <button type="button" class="btn btn-secondary" onclick="r_getListNation()">
                         {{ __('home.Back') }}
                     </button>
-                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                            data-target="#modal-create-region">{{ __('home.tao moi vi tri') }}
-                    </button>
                 </div>
             </div>
         </div>
