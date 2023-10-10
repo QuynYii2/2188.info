@@ -102,7 +102,7 @@ class AddressController extends Controller
 
     public function create()
     {
-        //
+        return view('backend.address.create');
     }
 
     /**

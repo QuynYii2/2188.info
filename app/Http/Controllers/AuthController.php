@@ -343,7 +343,7 @@ class AuthController extends Controller
             case "2":
                 $this->createDistrict($request);
         }
-        return redirect(route('show.register.member.info', $id_reg));
+        return back();
     }
 
     public function createNation($request)
