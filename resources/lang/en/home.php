@@ -431,6 +431,8 @@ return [
     'Messaging and product promotion' => 'Nhắn tin và quảng cáo sản phẩm',
     'Payment success' => 'Thanh toán thành công',
     ' Back to home' => 'Về trang chủ',
+    'Đến (sản phẩm)' =>'최대 수량',
+
     'FileReader' => 'Trình đọc tệp',
     'The Foreign Wholesale Order feature is only available to corporate members (Trusted members) and above' => 'Tính năng Đặt sỉ nước ngoài chỉ áp dụng cho hội viên doanh nghiệp (hội viên Tin cậy) trở lên',
     'Upgrade Instructions' => 'Hướng dẫn nâng cấp',
