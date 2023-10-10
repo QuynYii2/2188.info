@@ -8,4 +8,7 @@ final class AddressOrderOption extends Enum
 {
     const HOME_PRIVATE =   "Home";
     const COMPANY =   'Company';
+    const NATION =   'nation';
+    const STATE =   'state';
+    const CITY =   'city';
 }

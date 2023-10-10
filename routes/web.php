@@ -360,7 +360,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'role.admin'], function () {
 
 Route::prefix('address')->group(function () {
     Route::get('index', [\App\Http\Controllers\Seller\AddressController::class, 'index'])->name('address.manage.index');
-    Route::post('update-star/{nationID}', [\App\Http\Controllers\Seller\AddressController::class, 'updateStar'])->name('address.manage.update.star');
+    Route::post('update-star-nation/{id}', [\App\Http\Controllers\Seller\AddressController::class, 'updateStarNation'])->name('address.manage.update.star.nation');
+    Route::post('update-star-state/{id}', [\App\Http\Controllers\Seller\AddressController::class, 'updateStarState'])->name('address.manage.update.star.state');
+    Route::post('update-star-city/{id}', [\App\Http\Controllers\Seller\AddressController::class, 'updateStarCity'])->name('address.manage.update.star.city');
 });
 
 // Seller
