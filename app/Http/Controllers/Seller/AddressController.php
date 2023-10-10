@@ -21,18 +21,20 @@ class AddressController extends Controller
     {
         (new HomeController())->getLocale($request);
         $perPage = $request->query('perPage', 5);
-        $countries = Country::orderBy('name')
+        $countries = Country::orderBy('isShow', 'desc')->orderBy('name')
             ->paginate($perPage);
         $listNation = [];
 
         foreach ($countries as $country) {
             $states = State::where('country_code', $country->iso2)
                 ->where('country_name', $country->name)
+                ->orderBy('isShow','desc')
                 ->get();
 
             $stateData = $states->map(function ($state) {
                 $cities = City::where('state_code', $state->state_code)
                     ->where('country_code', $state->country_code)
+                    ->orderBy('isShow','desc')
                     ->get(['id','name', 'city_code', 'state_code', 'isShow']);
 
                 return [
