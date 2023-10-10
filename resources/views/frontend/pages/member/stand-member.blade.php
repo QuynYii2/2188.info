@@ -301,6 +301,22 @@
         var page = 1;
         let isLoading = false;
 
+        function checkItem() {
+            let products = document.getElementsByClassName('thumbnailProduct');
+            if(products.length < 6){
+                $('.auto-load').hide();
+            }
+        }
+
+        checkItem();
+
+        function loadMore() {
+            if (!isLoading) {
+                isLoading = true;
+                page++;
+                infinteLoadMore(page);
+            }
+        }
         /*------------------------------------------
         --------------------------------------------
         Call on Scroll
@@ -308,9 +324,13 @@
         --------------------------------------------*/
         $(window).scroll(function () {
             if ($(window).scrollTop() + $(window).height() >= ($(document).height() - 20)) {
+                let products = document.getElementsByClassName('thumbnailProduct');
+                console.log(products.length)
                 setTimeout(() => {
                     page++;
-                    infinteLoadMore(page);
+                    if(products.length > 6){
+                        infinteLoadMore(page);
+                    }
                 }, 1500);
             }
         });
