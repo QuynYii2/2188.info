@@ -44,10 +44,10 @@
             </th>
             <td rowspan="2">
                 <input type="text" class="form-control" id="code" name="code"
-                       placeholder="{{ __('home.ID') }}"  value="{{$memberPerson ? $memberPerson->code : ''}}" required>
+                       placeholder="{{ __('home.ID') }}" value="{{$memberPerson ? $memberPerson->code : ''}}" required>
             </td>
             <th rowspan="2">
-                <label for="password">{{ __('home.Duplicate') }}</label>
+                <button id="buttonCheckID" type="button" class="btn btn-secondary">{{ __('home.Duplicate') }}</button>
             </th>
             @if(!Auth::check())
                 <th>
@@ -135,6 +135,7 @@
         </tbody>
         <button class="d-none" id="btnSubmitFormRegister" type="submit">Done</button>
     </form>
+    <input type="text" class="d-none" id="valueID">
 </table>
 <script>
     function getDate() {
@@ -144,10 +145,62 @@
 
     getDate();
 
+    let message;
+    const memberInput = $('#code');
+    const valueInput = $('#valueID');
     $(document).ready(function () {
+        memberInput.on('keyup', checkID);
+
+        $('#buttonCheckID').on('click', function () {
+            checkID();
+            let message = localStorage.getItem('message');
+            alert(message);
+            let value = localStorage.getItem('valueInput');
+            valueInput.val(value);
+        })
+
         $('#buttonRegister').on('click', function () {
             // $('#formRegisterMember').trigger('submit');
-            $('#btnSubmitFormRegister').trigger('click');
+            let item = valueInput.val();
+            if (!item || item == 'null' || item == '') {
+                alert('Please click button check ID!');
+            } else {
+                localStorage.clear();
+                $('#btnSubmitFormRegister').trigger('click');
+            }
         })
+
     })
+
+    async function checkID() {
+        let urlCheckID = `{{route('member.checkId')}}`;
+        let code = memberInput.val();
+
+        if (code) {
+            await $.ajax({
+                url: urlCheckID,
+                method: 'POST',
+                data: {
+                    _token: `{{ csrf_token() }}`,
+                    memberID: code,
+                },
+            })
+                .done(function (response) {
+                    message = response;
+                    localStorage.setItem('message', message);
+                    localStorage.setItem('valueInput', code);
+                    // alert(message)
+                })
+                .fail(function (response) {
+                    message = response.responseText;
+                    localStorage.setItem('message', message);
+                    localStorage.setItem('valueInput', null);
+                    // alert(message);
+                });
+        } else {
+            localStorage.setItem('message', 'Please enter member ID!');
+            localStorage.setItem('valueInput', null);
+            // alert('Please enter member ID!');
+        }
+    }
 </script>

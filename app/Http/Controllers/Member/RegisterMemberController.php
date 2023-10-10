@@ -1174,6 +1174,17 @@ class RegisterMemberController extends Controller
             compact('categories_two_parent', 'arrayCategory'));
     }
 
+    public function checkID(Request $request)
+    {
+        $id = $request->input('memberID');
+        $exitMember = MemberRegisterPersonSource::where('code', $id)->first();
+        if ($exitMember){
+            return response('ID is already in use!', 400);
+        } else {
+            return response('This ID is available.', 200);
+        }
+    }
+
     /*Private function*/
     private function getArrayIds(Request $request, $input)
     {

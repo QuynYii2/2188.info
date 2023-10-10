@@ -379,3 +379,5 @@ Route::group(['prefix' => 'buyer', 'middleware' => 'role.buyer'], function () {
 Route::get('/showCart', [CartController::class, 'showCart'])->name('showCart');
 Route::get('/renderCart', [CartController::class, 'renderCart'])->name('renderCart');
 Route::post('deleteCart/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
+// CheckID
+Route::post('/checkID', [RegisterMemberController::class, 'checkID'])->name('member.checkId');
