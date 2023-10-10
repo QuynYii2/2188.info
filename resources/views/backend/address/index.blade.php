@@ -12,7 +12,7 @@
     </style>
     @php
         $nodeIndex = 0;
-        $parenIndex=0;
+        $parenIndex = 0;
     @endphp
     <table class="table" id="table">
         <thead>
@@ -30,8 +30,11 @@
             @endphp
             <tr data-node="treetable-{{ $nodeIndex }}">
                 <td><input type="checkbox" name="row.id"/></td>
-                <td><i class="fa-solid fa-star star-icon gray"></i>
-                    {{ $nation['name'] }}</td>
+                <td>
+                    <input type="radio" name="star" id="star" value="" hidden="">
+                    <label for="star" onclick="starCheck({{$nation['id']}}, '{{ \App\Enums\AddressOrderOption::NATION }}')"><i id="icon-star" class="fa fa-star star-check {{ $nation['isShow'] ? 'orange' : '' }}"></i></label>
+                    {{ $nation['name'] }}
+                </td>
                 <td>{{ $nation['country_code'] }}</td>
             </tr>
             @if (!empty($nation['child']))
@@ -42,7 +45,7 @@
                     @endphp
                     <tr data-node="treetable-{{$nodeIndex}}" data-pnode="treetable-parent-{{$parenIndex}}">
                         <td><input type="checkbox" name="row.id"/></td>
-                        <td><i class="fa-solid fa-star star-icon gray"></i> {{ $state['name']}}</td>
+                        <td><label for="star" onclick="starCheck({{$state['id']}}, '{{ \App\Enums\AddressOrderOption::STATE }}')"><i class="fa fa-star star-check {{ $state['isShow'] ? 'orange' : '' }}"></i> {{ $state['name']}}</td>
                         <td>{{$state['state_code']}}</td>
                     </tr>
                     @if(!empty($state['child']))
@@ -52,8 +55,8 @@
                             @endphp
                             <tr data-node="treetable-{{$nodeIndex}}" data-pnode="treetable-parent-{{$parenIndex_1}}">
                                 <td><input type="checkbox" name="row.id"/></td>
-                                <td><i class="fa-solid fa-star star-icon gray"></i> {{ $city['name']}}</td>
-                                <td>{{$city['state_code']}}</td>
+                                <td><label for="star" onclick="starCheck({{$city['id']}}, '{{ \App\Enums\AddressOrderOption::CITY }}')"><i class="fa fa-star star-check {{ $city['isShow'] ? 'orange' : '' }}"></i> {{ $city['name']}}</td>
+                                <td>{{$city['city_code']}}</td>
                             </tr>
                         @endforeach
                     @endif
@@ -98,37 +101,38 @@
         </ul>
     </div>
     <script src="{{ asset('js/bootstrap-treefy.js') }}"></script>
-	<script>
-		$(document).ready(function () {
-			$('.star-icon').click(function () {
-				var $this = $(this);
-				var nationId = $this.data('nation-id'); // Lấy ID của quốc gia từ data attribute
-				var isShow = $this.data('is-show'); // Lấy trạng thái isShow từ data attribute
-				var newIsShow = isShow === 0 ? 1 : 0; // Đảo ngược trạng thái isShow
+    <script>
+        function starCheck(element, where) {
+            let url = '';
+            console.log(element, where)
+            switch (where) {
+                case '{{ \App\Enums\AddressOrderOption::NATION }}':
+                    url = '{{ route('address.manage.update.star.nation', ['id' => ':id']) }}';
+                    break;
+                case '{{ \App\Enums\AddressOrderOption::STATE }}':
+                    url = '{{ route('address.manage.update.star.state', ['id' => ':id']) }}';
+                    break;
+                case '{{ \App\Enums\AddressOrderOption::CITY }}':
+                    url = '{{ route('address.manage.update.star.city', ['id' => ':id']) }}';
+                    break;
+            }
+            url = url.replace(':id', element);
 
-				$.ajax({
-					type: 'POST',
-					url: '/update-star/' + nationId,
-					data: {
-						_token: '{{ csrf_token() }}',
-						isShow: newIsShow
-					},
-					success: function (data) {
-						// Thực hiện các thay đổi trên giao diện dựa trên kết quả từ server
-						if (newIsShow === 1) {
-							$this.removeClass('gray').addClass('orange');
-						} else {
-							$this.removeClass('orange').addClass('gray');
-						}
-						$this.data('is-show', newIsShow);
-					},
-					error: function (xhr, textStatus, errorThrown) {
-						console.error('Lỗi khi gửi AJAX request: ' + textStatus);
-					}
-				});
-			});
-		});
-	</script>
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {
+                    _token: '{{ csrf_token() }}',
+                },
+                success: function (data) {
+                    window.location.reload();
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.error('Lỗi khi gửi AJAX request: ' + textStatus);
+                }
+            });
+        }
+    </script>
     <script>
         $(function () {
             $("#table").treeFy({

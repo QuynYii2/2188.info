@@ -33,18 +33,21 @@ class AddressController extends Controller
             $stateData = $states->map(function ($state) {
                 $cities = City::where('state_code', $state->state_code)
                     ->where('country_code', $state->country_code)
-                    ->get(['name', 'city_code', 'state_code']);
+                    ->get(['id','name', 'city_code', 'state_code', 'isShow']);
 
                 return [
+                    'id'=> $state->id,
                     'name' => $state->name,
                     'state_code' => $state->state_code,
                     'country_code' => $state->country_code,
+                    'isShow' => $state->isShow,
                     'total_child' => $cities->count(),
                     'child' => $cities->toArray(),
                 ];
             });
 
             $listNation[] = [
+                'id'=> $country->id,
                 'name' => $country->name,
                 'country_code' => $country->iso2,
                 'isShow' => $country->isShow,
@@ -59,12 +62,34 @@ class AddressController extends Controller
         return view('backend.address.index', compact('listNation', 'paginationInfo'));
     }
 
-    public function updateStar(Request $request, $nationID)
+    public function updateStarNation($id)
     {
-        $isShow = $request->input('isShow');
-        Country::where('isShow', $nationId)->update(['isShow' => $isShow]);
-        return response()->json(['success' => true]);
+        $nation = Country::find($id);
+        if (!$nation) {
+            return response()->json(['message' => 'Không tìm thấy quốc gia'], 404);
+        }
+        $nation->isShow = !$nation->isShow;
+        $nation->save();
     }
+    public function updateStarState($id)
+    {
+        $nation = State::find($id);
+        if (!$nation) {
+            return response()->json(['message' => 'Không tìm thấy quốc gia'], 404);
+        }
+        $nation->isShow = !$nation->isShow;
+        $nation->save();
+    }
+    public function updateStarCity($id)
+    {
+        $nation = City::find($id);
+        if (!$nation) {
+            return response()->json(['message' => 'Không tìm thấy quốc gia'], 404);
+        }
+        $nation->isShow = !$nation->isShow;
+        $nation->save();
+    }
+
 
     /**
      * Show the form for creating a new resource.
