@@ -10,7 +10,7 @@
                     $check = false;
                 }
             @endphp
-            @if($check == true){
+            @if($check == true)
             <a href="{{ route('seller.setup.processCreate') }}" class="btn btn-primary">{{ __('home.thêm mới') }}</a>
             @endif
         </div>
