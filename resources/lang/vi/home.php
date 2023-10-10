@@ -252,6 +252,8 @@ return [
     'Cash on Delivery' => 'Thanh Toán Khi Nhận Hàng',
     'Debit or Credit Card' => 'Thẻ Ghi Nợ Hoặc Tín Dụng',
     'E-wallet' => 'Ví Điện Tử',
+    'Đến (sản phẩm)' =>'최대 수량',
+
 
     'log out' => 'Đăng xuất',
     'profile' => 'Trang cá nhân',

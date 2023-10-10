@@ -137,7 +137,6 @@ function renderImg(whereRender) {
             break;
         }
     }
-    document.getElementById('button-open-modal').textContent = 'Sửa ảnh'
 }
 
 function handleAfterUpload(fileUploaded) {
