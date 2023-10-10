@@ -288,7 +288,7 @@
                 <ul class='sub-items pl-3'>
                     <li><a class="sidebarUrl" href="{{route('address.manage.index')}}">Danh sách địa chỉ</a>
                     </li>
-                    <li><a class="sidebarUrl" href="{{route('admin.processCreate.users')}}">Thêm</a>
+                    <li><a class="sidebarUrl" href="{{route('address.manage.add')}}">Thêm</a>
                     </li>
                     <li><a class="sidebarUrl" href="{{route('admin.processCreate.users')}}">Sửa</a>
                     </li>
