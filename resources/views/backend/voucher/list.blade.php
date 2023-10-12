@@ -22,8 +22,8 @@
                         <th>{{ __('home.Phần trăm giảm giá') }}</th>
                         <th>{{ __('home.Áp dụng') }}</th>
                         <th>{{ __('home.ngày bắt đầu') }}</th>
-                        <th>{{ __('home.ngày hết hạn') }}</th>
-                        <th>{{ __('home.trạng thái') }}</th>
+                        <th>{{ __('home.ngày kết thúc') }}</th>
+                        <th>{{ __('home.Trạng thái') }}</th>
                         <th>{{ __('home.Thêm') }}</th>
                     </tr>
                     </thead>

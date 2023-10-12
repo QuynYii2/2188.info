@@ -555,7 +555,7 @@
                     </div>
                     <div class="section-seller-overview__item-text">
                         <div class="section-seller-overview__item-text-name">
-                            Người theo dõi:&nbsp;
+                            {{ __('home.Người theo dõi') }}:&nbsp;
                         </div>
                         <div class="section-seller-overview__item-text-value">
                             @php

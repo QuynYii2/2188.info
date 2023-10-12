@@ -950,4 +950,5 @@ return [
     'tinh thanh' => 'Province',
     'quan huyen' => 'District',
     'xa phuong' => 'Wards',
+    'Người theo dõi' => 'Người theo dõi'
 ];
