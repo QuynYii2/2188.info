@@ -13,8 +13,6 @@ if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
 
 }
 
-console.log(url)
-
 const maxReconnectAttempts = 5;
 let reconnectAttempts = 0;
 
@@ -572,4 +570,3 @@ function upload_image() {
 
     file_reader.readAsArrayBuffer(file_element);
 }
-
