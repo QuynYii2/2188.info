@@ -16,7 +16,9 @@ class AdminAddressController extends Controller
     {
         $listAddress = DB::table('addresses')
             ->where('code', '=', $code)
-            ->orWhere('code', 'like', $code . '!__')->get();
+            ->orWhere('code', 'like', $code . '!__')
+            ->orderBy('sort_index', 'asc')
+            ->get();
         return response()->json($listAddress);
     }
 
@@ -26,6 +28,7 @@ class AdminAddressController extends Controller
             ->cursor()
             ->map(function ($state) {
                 $cities = Address::where('code', 'like', $state->code . '!__')
+                    ->orderBy('sort_index', 'asc')
                     ->get();
 
                 return [
