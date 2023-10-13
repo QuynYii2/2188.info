@@ -242,7 +242,6 @@ class HomeController extends Controller
         }
     }
 
-
     public function notifiCreate($id, $content, $desc)
     {
         $noti = [
@@ -390,142 +389,47 @@ class HomeController extends Controller
                 }
 
                 $companyArray = explode('&&', $company);
+
                 $email = $companyArray[0];
                 $email = str_replace('!', '', $email);
 
-                for ($k = 1; $k < 7; $k++) {
+                for ($k = 1; $k < 10; $k++) {
                     if (!$companyArray[$k] || $companyArray[$k] == 'item_is_null') {
                         $companyArray[$k] = 'default';
                     }
                 }
 
-                list($companyName, $companyCode, $companyTEL, $companyFAX, $companyAddress, $categoryCompany) = array_slice($companyArray, 1, 6);
+                list($companyName, $companyCode, $companyTEL, $companyFAX, $companyAddress,
+                    $categoryCompany, $userEmail, $userName, $userTel, $companyNo) = array_slice($companyArray, 1, 10);
 
                 $language = $this->getLanguageCode((new TranslateController())->detectLanguage($companyAddress));
 
                 $arrayNameCategory = $this->getCategoryIds($categoryCompany, $categoryDefault);
 
                 if (empty($arrayNameCategory)) {
-                    $arrayNameCategory[] = 'default';
+                    $arrayNameCategory[] = $categoryDefault[0]->id;
                 }
 
                 $category_id = implode(',', $arrayNameCategory);
 
-                $oldUser = User::where('email', $email)->first();
+                $newUser = $this->createUser($companyName, $email, $companyTEL, $companyAddress, $language, $passwordHash);
 
-                if (!$oldUser) {
-                    $newUser = User::create([
-                        'name' => 'default name',
-                        'email' => $email,
-                        'phone' => $companyTEL,
-                        'address' => 'default address',
-                        'region' => $language,
-                        'password' => $passwordHash,
-                        'type_account' => 'seller',
-                        'email_verified_at' => now(),
-                        'image' => 'default image',
-                        'member' => RegisterMember::LOGISTIC
-                    ]);
+                $member = Member::where('name', RegisterMember::LOGISTIC)->first();
 
-                    Mail::send('frontend/widgets/mailWelcome', ['mail' => $email, 'name' => $email, 'password' => Contains::PASSWORD_DEFAULT], function ($message) use ($email) {
-                        $message->to($email, 'Welcome mail!')->subject('Welcome mail');
-                        $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
-                    });
+                $exitMember = $this->createOrUpdateMember($newUser, $companyName, $companyTEL, $companyFAX,
+                    $companyCode, $category_id, $member, $companyAddress, $email, $companyNo);
 
-                    DB::table('role_user')->insert([
-                        'role_id' => 2,
-                        'user_id' => $newUser->id
-                    ]);
+                $exitMemberPer = $this->updateOrCreatePerson($email, $companyName, $passwordHash, $companyTEL, $exitMember);
 
-                    $member = Member::where('name', RegisterMember::LOGISTIC)->first();
+                $this->updateOrCreatePersonRepresent($userEmail, $userName, $userTel,
+                    $companyAddress, $language, $passwordHash,
+                    $exitMemberPer, $exitMember);
 
-                    $memberInfo = [
-                        'user_id' => $newUser->id,
-                        'name' => $companyName,
-                        'name_en' => $companyName,
-                        'name_kr' => $companyName,
-                        'phone' => $companyTEL,
-                        'fax' => $companyFAX,
-                        'code_fax' => $companyCode,
-                        'category_id' => $category_id,
-                        'code_business' => $category_id,
-                        'type_business' => $category_id,
-                        'number_business' => 'default number business',
-                        'member' => RegisterMember::LOGISTIC,
-                        'member_id' => $member->id,
-                        'address' => $companyAddress,
-                        'address_en' => $companyAddress,
-                        'address_kr' => $companyAddress,
-                        'status' => MemberRegisterInfoStatus::ACTIVE
-                    ];
-
-                    MemberRegisterInfo::create($memberInfo);
-
-                    $exitMember = MemberRegisterInfo::where('user_id', $newUser->id)->orderBy('created_at', 'desc')->first();
-
-                    $exitMemberPersonSource = MemberRegisterPersonSource::where([
-                        ['email', $email],
-                        ['type', MemberRegisterType::SOURCE]
-                    ])->first();
-
-                    if (!$exitMemberPersonSource) {
-                        $memberPersonSource = [
-                            'user_id' => $newUser->id,
-                            'name' => $companyName,
-                            'password' => $passwordHash,
-                            'phone' => $companyTEL,
-                            'email' => $email,
-                            'staff' => 'default',
-                            'member_id' => $exitMember->id,
-                            'price' => 0,
-                            'rank' => '0',
-                            'sns_account' => 'default',
-                            'type' => MemberRegisterType::SOURCE,
-                            'verifyCode' => '',
-                            'isVerify' => 0,
-                            'status' => MemberRegisterPersonSourceStatus::ACTIVE
-                        ];
-
-                        MemberRegisterPersonSource::create($memberPersonSource);
-                    }
-
-                    $exitMemberPer = MemberRegisterPersonSource::where([
-                        ['user_id', $newUser->id],
-                        ['email', $email],
-                        ['type', MemberRegisterType::SOURCE]
-                    ])->first();
-
-                    if ($exitMemberPer) {
-                        $exitMemberPersonRepresent = MemberRegisterPersonSource::where([
-                            ['email', $email],
-                            ['type', MemberRegisterType::REPRESENT]
-                        ])->first();
-
-                        if (!$exitMemberPersonRepresent) {
-                            $memberPersonRepresent = [
-                                'user_id' => $newUser->id,
-                                'name' => $companyName,
-                                'password' => $passwordHash,
-                                'phone' => $companyTEL,
-                                'email' => $email,
-                                'staff' => 'default',
-                                'person' => $exitMemberPer->id,
-                                'member_id' => $exitMember->id,
-                                'price' => 0,
-                                'rank' => '0',
-                                'sns_account' => 'default',
-                                'type' => MemberRegisterType::REPRESENT,
-                                'verifyCode' => '',
-                                'isVerify' => 0,
-                                'status' => MemberRegisterPersonSourceStatus::ACTIVE
-                            ];
-
-                            MemberRegisterPersonSource::create($memberPersonRepresent);
-                        }
-                    }
-                }
             }
+
+            echo('done');
         } catch (Exception $exception) {
+            echo($exception);
             return $exception;
         }
     }
@@ -635,4 +539,168 @@ class HomeController extends Controller
         }
     }
 
+    private function createUser($name, $email, $tel, $address, $language, $passwordHash)
+    {
+        $oldUser = User::where('email', $email)->first();
+        if ($oldUser) {
+            $oldUser->name = $name;
+            $oldUser->email = $email;
+            $oldUser->phone = $tel;
+            $oldUser->address = $address;
+            $oldUser->region = $language;
+            $oldUser->password = $passwordHash;
+            $oldUser->save();
+        } else {
+            $oldUser = User::create([
+                'name' => $name,
+                'email' => $email,
+                'phone' => $tel,
+                'address' => $address,
+                'region' => $language,
+                'password' => $passwordHash,
+                'type_account' => 'seller',
+                'email_verified_at' => now(),
+                'image' => 'default image',
+                'member' => RegisterMember::LOGISTIC
+            ]);
+
+//            if ($this->checkEmail($email)) {
+//                Mail::send('frontend/widgets/mailWelcome', ['mail' => $email, 'name' => $email, 'password' => Contains::PASSWORD_DEFAULT],
+//                    function ($message) use ($email) {
+//                        $message->to($email, 'Welcome mail!')->subject('Welcome mail');
+//                        $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
+//                    });
+//            }
+
+            DB::table('role_user')->insert([
+                'role_id' => 2,
+                'user_id' => $oldUser->id
+            ]);
+        }
+        return $oldUser;
+    }
+
+
+    private
+    function createOrUpdateMember($newUser, $companyName, $companyTEL, $companyFAX, $companyCode,
+                                  $category_id, $member, $companyAddress, $email, $companyNo)
+    {
+        $memberInfo = [
+            'user_id' => $newUser->id,
+            'name' => $companyName,
+            'name_en' => $companyName,
+            'name_kr' => $companyName,
+            'phone' => $companyTEL,
+            'fax' => $companyFAX,
+            'code_fax' => $companyCode,
+            'category_id' => $category_id,
+            'code_business' => $category_id,
+            'type_business' => $category_id,
+            'number_business' => $companyNo,
+            'member' => RegisterMember::LOGISTIC,
+            'member_id' => $member->id,
+            'address' => $companyAddress,
+            'address_en' => $companyAddress,
+            'address_kr' => $companyAddress,
+            'email' => $email,
+            'homepage' => '',
+            'status' => MemberRegisterInfoStatus::ACTIVE
+        ];
+
+        $exitMember = MemberRegisterInfo::create($memberInfo);
+        return $exitMember;
+    }
+
+    private
+    function updateOrCreatePerson($email, $companyName, $passwordHash, $companyTEL, $exitMember)
+    {
+        $exitMemberPersonSource = MemberRegisterPersonSource::where([
+            ['email', $email],
+            ['type', MemberRegisterType::SOURCE]
+        ])->first();
+
+        if (!$exitMemberPersonSource) {
+            $memberPersonSource = [
+                'user_id' => 0,
+                'name' => $companyName,
+                'password' => $passwordHash,
+                'phone' => $companyTEL,
+                'email' => $email,
+                'staff' => 'default',
+                'member_id' => $exitMember->id,
+                'price' => 0,
+                'rank' => '0',
+                'sns_account' => 'default',
+                'type' => MemberRegisterType::SOURCE,
+                'verifyCode' => '',
+                'isVerify' => 0,
+                'status' => MemberRegisterPersonSourceStatus::ACTIVE
+            ];
+
+            $exitMemberPersonSource = MemberRegisterPersonSource::create($memberPersonSource);
+        } else {
+            $exitMemberPersonSource->name = $companyName;
+            $exitMemberPersonSource->password = $passwordHash;
+            $exitMemberPersonSource->phone = $companyTEL;
+            $exitMemberPersonSource->email = $email;
+            $exitMemberPersonSource->member_id = $exitMember->id;
+            $exitMemberPersonSource->type = MemberRegisterType::SOURCE;
+            $exitMemberPersonSource->verifyCode = '';
+            $exitMemberPersonSource->isVerify = 0;
+            $exitMemberPersonSource->status = MemberRegisterPersonSourceStatus::ACTIVE;
+            $exitMemberPersonSource->save();
+        }
+
+        return $exitMemberPersonSource;
+    }
+
+    private function updateOrCreatePersonRepresent($userEmail, $userName, $userTel,
+                                                   $companyAddress, $language, $passwordHash,
+                                                   $exitMemberPer, $exitMember)
+    {
+        $exitMemberPersonRepresent = MemberRegisterPersonSource::where('email', $userEmail)->first();
+
+        $user = $this->createUser($userName, $userEmail, $userTel, $companyAddress, $language, $passwordHash);
+
+        if (!$exitMemberPersonRepresent) {
+            $memberPersonRepresent = [
+                'user_id' => 0,
+                'name' => $userName,
+                'password' => $passwordHash,
+                'phone' => $userTel,
+                'email' => $userEmail,
+                'staff' => 'default',
+                'person' => $exitMemberPer->id,
+                'member_id' => $exitMember->id,
+                'price' => 0,
+                'rank' => '0',
+                'sns_account' => 'default',
+                'type' => MemberRegisterType::REPRESENT,
+                'verifyCode' => '',
+                'isVerify' => 0,
+                'status' => MemberRegisterPersonSourceStatus::ACTIVE
+            ];
+
+            MemberRegisterPersonSource::create($memberPersonRepresent);
+        } else {
+            $exitMemberPersonRepresent->name = $userName;
+            $exitMemberPersonRepresent->password = $passwordHash;
+            $exitMemberPersonRepresent->phone = $userTel;
+            $exitMemberPersonRepresent->person = $exitMemberPer->id;
+            $exitMemberPersonRepresent->member_id = $exitMember->id;
+            $exitMemberPersonRepresent->type = MemberRegisterType::REPRESENT;
+            $exitMemberPersonRepresent->verifyCode = '';
+            $exitMemberPersonRepresent->isVerify = 0;
+            $exitMemberPersonRepresent->status = MemberRegisterPersonSourceStatus::ACTIVE;
+            $exitMemberPersonRepresent->save();
+        }
+
+    }
+
+    function checkEmail($email)
+    {
+        $find1 = strpos($email, '@');
+        $find2 = strpos($email, '.');
+        return ($find1 !== false && $find2 !== false && $find2 > $find1);
+    }
 }
