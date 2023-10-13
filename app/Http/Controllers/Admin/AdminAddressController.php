@@ -15,7 +15,10 @@ class AdminAddressController extends Controller
     public function show($code)
     {
         $listAddress = DB::table('addresses')
-            ->where('code', 'like', $code . '%')->get();
+            ->where('code', '=', $code)
+            ->orWhere('code', 'like', $code . '!__')
+            ->orderBy('sort_index', 'asc')
+            ->get();
         return response()->json($listAddress);
     }
 
@@ -25,6 +28,7 @@ class AdminAddressController extends Controller
             ->cursor()
             ->map(function ($state) {
                 $cities = Address::where('code', 'like', $state->code . '!__')
+                    ->orderBy('sort_index', 'asc')
                     ->get();
 
                 return [
@@ -42,7 +46,6 @@ class AdminAddressController extends Controller
 
     public function create(Request $request)
     {
-
         $code = (new HomeController())->generateRandomString(2);
 
         $name = $request->input('name');
