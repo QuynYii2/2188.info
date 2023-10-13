@@ -79,4 +79,4 @@ Route::post('/address/create', [AdminAddressController::class, 'create'])->name(
 Route::put('/address/update/{id}', [AdminAddressController::class, 'update'])->name('admin.address.update');
 Route::delete('/address/delete/{id}', [AdminAddressController::class, 'delete'])->name('admin.address.delete');
 Route::post('/address/change-status/{id}', [AdminAddressController::class, 'changeStatus'])->name('admin.address.change.status');
-Route::post('/address/change-show/{id}', [AdminAddressController::class, 'changeShow'])->name('admin.address.change.show');
+Route::get('/address/change-show/{id}', [AdminAddressController::class, 'changeShow'])->name('admin.address.change.show');
