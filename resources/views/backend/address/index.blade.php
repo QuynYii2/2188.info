@@ -8,12 +8,16 @@
             padding: 7px;
         }
 
+        .cursor-pointer {
+            cursor: pointer;
+        }
+
         .bg-color-th1 {
-            background-color: #e1dddd;
+            background-color: #e1dddd !important;
         }
 
         .bg-color-th2 {
-            background-color: #c8e2f3;
+            background-color: #c8e2f3 !important;
         }
 
         .layer_tbl th {
@@ -35,6 +39,13 @@
             color: grey;
         }
     </style>
+
+    <div class="jumbotron jumbotron-fluid" id="title-div" style="display: none">
+        <div class="container">
+            <h1 class="title-main cursor-pointer" id="title-main" onclick="getListAddress()">Region</h1>
+        </div>
+    </div>
+
     <table cellspacing="0" cellpadding="0" class="regionWrap layer_tbl mt10" style="display: table;">
         <colgroup>
             <col width="230">
@@ -51,6 +62,7 @@
             </th>
             <td></td>
         </tr>
+        <tbody id="c-table"></tbody>
     </table>
     <div class="modal fade" id="createRegion" tabindex="-1" aria-labelledby="exampleCreateRegion" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -61,7 +73,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('admin.address.create') }}" method="post">
+                <form action="{{ route('admin.address.modify') }}" method="post">
                     @csrf
                     <div class="modal-body">
                         <div class="layer_contents">
@@ -76,7 +88,6 @@
                                 <tr>
                                     <th scope="row">상위 지역명</th>
                                     <td colspan="3"><input type="text" disabled id="up_name" name="up_name" value="" ></td>
-                                    <td class="d-none"><input type="text" id="up_code" name="up_code" value="" ></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">지역명(영어)</th>
@@ -100,6 +111,9 @@
                                                 class="int_space" for="use_yn2">미사용</label>
                                     </td>
                                 </tr>
+
+                                <input type="text" class="d-none" id="up_code" name="up_code" value="" >
+                                <input type="text" class="d-none" id="mode" name="mode" value="" >
                                 </tbody>
                             </table>
                         </div>
@@ -112,16 +126,24 @@
             </div>
         </div>
     </div>
-
+    <tr>
     <script>
         getListAddress();
+        let checkLevel = 1;
+
+        const MODE_CREATE = 'create'
+        const MODE_EDIT = 'edit'
 
         async function getListAddress() {
             let url = '{{ route('admin.address.index') }}';
             let result = await fetch(url);
             if (result.ok) {
                 const data = await result.json();
+                 document.getElementById('p-table').innerHTML = '';
+                document.getElementById('c-table').innerHTML = '';
+                document.getElementById('title-div').style.display = 'none';
                 makeHTMLFromJson(data);
+                checkLevel = 1;
             }
         }
 
@@ -134,41 +156,69 @@
             }
         }
 
-        function createNewRegion(code, name) {
-            document.getElementById('up_name').value = name
-            document.getElementById('up_code').value = code
+        function createOrEditRegion(code, name, mode) {
+            document.getElementById('up_name').value = name;
+            document.getElementById('up_code').value = code;
+            document.getElementById('mode').value = mode;
         }
-
 
         function setSortIndex(id) {
             console.log(id)
         }
 
+        async function getListAddressChild(code, name) {
+            let url = '{{ route('admin.address.show', ['code' => ':code']) }}';
+            url = url.replace(':code', code);
+            let result = await fetch(url);
+            if (result.ok) {
+                const data = await result.json();
+                if (checkLevel == 1) {
+                    console.log(123)
+                    document.getElementById('title-div').style.display = 'block';
+                    document.getElementById('title-main').innerHTML = name;
+                }
+                makeHTMLFromJson(data);
+                checkLevel = 2;
+            }
+        }
+
         function makeHTMLFromJson(data) {
-            const t_p_Body = document.getElementById('p-table');
+            const isTable = checkLevel == 1;
             let str = '';
-            data.forEach((pItem) => {
-                str += `<tr><th class="cont bg-color-th1 "><span onclick="fnRegionDetailPop('10001',2)">${pItem.name_en ?? pItem.name ?? ''}</span>
+
+            data.forEach((pItem, index) => {
+                const classTh = index % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
+
+                str += `<tr><th class="cont ${classTh} "><span onclick="fnRegionDetailPop('10001',2)">${pItem.name_en ?? pItem.name ?? ''}</span>
                                     <div class="mt5"><span class="minBtn btn-down" onclick="setSortIndex('${pItem.code}')"><span
                                                     class="">▼</span></span><span class="minBtn  ml20"><span class=""
-                                                                                                             onclick="createNewRegion('${pItem.code}','${pItem.name_en ?? pItem.name}' )"
+                                                                                                             onclick="createOrEditRegion('${pItem.code}','${pItem.name_en ?? pItem.name}', '${MODE_CREATE}')"
                                                                                                              data-toggle="modal" data-target="#createRegion" >국가등록</span></span>
                                     </div>
                                 </th>`
                 if (pItem.total_child) {
                     str += `<td>`;
                     pItem.child.forEach((cItem) => {
-                        str += ` <span class="nation"><span class="tit ${cItem.isShow == 1 ? 'orange' : 'grey'} " onclick="setIsShow('${cItem.id}')">★ </span>
+                        str += ` <span class="nation"><span class="tit cursor-pointer ${cItem.isShow == 1 ? 'orange' : 'grey'} " onclick="setIsShow('${cItem.id}')">★ </span>
                     <span
-                            class="tit"
-                            onclick="fnRegionCityLoad('10059','South Korea','한국')">${cItem.name_en ?? ''} ${cItem.name ?? ''}</span></span>`
+                            class="tit cursor-pointer"
+                            onclick="getListAddressChild('${cItem.code}', '${cItem.name_en ?? cItem.name ?? ''}')">${cItem.name_en ?? ''} ${cItem.name ?? ''}</span>
+                    <span class="skyblue ml10"> <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion" onclick="createOrEditRegion('${cItem.id}','${cItem.name_en ?? cItem.name}', '${MODE_EDIT}')">▤</span>
+                    </span></span>`
                     })
                     str += `</td>`;
                 }
                 str += `</tr>`
             })
 
-            t_p_Body.innerHTML = str;
+            if (isTable) {
+                const t_p_Body = document.getElementById('p-table');
+                t_p_Body.innerHTML = str;
+            } else {
+                const t_p_Body = document.getElementById('c-table');
+                t_p_Body.innerHTML += str;
+            }
+
         }
     </script>
 @endsection
