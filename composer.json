@@ -27,7 +27,6 @@
         "srmklive/paypal": "*",
         "stichoza/google-translate-php": "^4.1",
         "torann/geoip": "^3.0",
-        "unisharp/laravel-filemanager": "^2.6",
         "wyndow/fuzzywuzzy": "^0.6.0"
     },
     "require-dev": {
