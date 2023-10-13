@@ -72,6 +72,7 @@ Route::delete('/setup-marketing/create/{id}', [SetupMarketingController::class, 
 Route::get('/setup-marketing/edit/{id}', [SetupMarketingController::class, 'edit'])->name('setup-marketing.edit');
 Route::post('/setup-marketing/update/{id}', [SetupMarketingController::class, 'update'])->name('setup-marketing.update');
 //
-Route::get('/address/{code}', [AdminAddressController::class, 'index'])->name('address.show');
-Route::post('/address/create', [AdminAddressController::class, 'create'])->name('address.create');
+Route::get('/address/list', [AdminAddressController::class, 'index'])->name('admin.address.index');
+Route::get('/address/detail/{code}', [AdminAddressController::class, 'show'])->name('admin.address.show');
+Route::post('/address/create', [AdminAddressController::class, 'create'])->name('admin.address.create');
 
