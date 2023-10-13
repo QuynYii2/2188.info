@@ -12,11 +12,34 @@ use Illuminate\Support\Facades\DB;
 
 class AdminAddressController extends Controller
 {
-    public function index($code)
+    public function show($code)
     {
-        $listAddress = DB::table('addresses')->where('phone', 'like', $code . '!__')->get();
+        $listAddress = DB::table('addresses')
+            ->where('code', '=', $code)
+            ->orWhere('code', 'like', $code . '!__')->get();
         return response()->json($listAddress);
     }
+
+    public function index()
+    {
+        $states = Address::where('code',  'not like', '%!%')
+            ->cursor()
+            ->map(function ($state) {
+                $cities = Address::where('code','like', $state->code . '!__')
+                    ->get();
+
+                return [
+                    'name' => $state->name,
+                    'code' => $state->code,
+                    'name_en' => $state->name_en,
+                    'total_child' => $cities->count(),
+                    'child' => $cities->toArray(),
+                ];
+            });
+
+        return response()->json($states);
+    }
+
 
     public function create(Request $request)
     {
