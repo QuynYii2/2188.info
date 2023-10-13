@@ -9,14 +9,14 @@ use App\Models\Address;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use function Sodium\add;
 
 class AdminAddressController extends Controller
 {
     public function show($code)
     {
         $listAddress = DB::table('addresses')
-            ->where('code', 'like', $code . '%')->get();
+            ->where('code', '=', $code)
+            ->orWhere('code', 'like', $code . '!__')->get();
         return response()->json($listAddress);
     }
 
@@ -131,7 +131,7 @@ class AdminAddressController extends Controller
         $delete = Address::where('id', $id)->delete();
         Address::where('code', '=', $address->code)
             ->orWhere('code', 'like', $address->code . '%')->delete();
-        if ($delete){
+        if ($delete) {
             return response('success', 200);
         }
         return response('error', 500);
