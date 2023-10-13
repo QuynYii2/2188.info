@@ -64,7 +64,7 @@
                 <tr>
                     <th>
                         <button id="btnMod2" name="btnMod2" class="sky"
-                                onclick="createNewRegion('','')"
+                                onclick="createOrEditRegion('','')"
                                 data-toggle="modal" data-target="#createRegion"
                                 style="margin-top:0; width:230px;">+ 대륙추가
                         </button>
@@ -85,7 +85,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('admin.address.modify') }}" method="post">
+                <form action="{{ route('admin.address.modify') }}" method="post" id="form-modify-address">
                     @csrf
                     <div class="modal-body">
                         <div class="layer_contents">
@@ -114,7 +114,7 @@
                                 <tr>
                                     <th scope="row"><label for="a8">정렬순서</label></th>
                                     <td>
-                                        <input type="text" id="sort_index" name="sort_index"
+                                        <input type="number" id="sort_index" name="sort_index"
                                                style="width:98%;">
                                     </td>
                                     <th scope="row">사용여부</th>
@@ -174,6 +174,10 @@
                 document.getElementById('up_name').value = name;
                 document.getElementById('up_code').value = code;
                 document.getElementById('mode').value = mode;
+                resetFormModal()
+                if (mode == MODE_EDIT) {
+                    getById(code)
+                }
             }
 
             async function getListAddressChild(code, name) {
@@ -190,6 +194,28 @@
                     makeHTMLFromJson(data);
                     checkLevel = 2;
                 }
+            }
+
+            async function getById(id) {
+                let url = '{{ route('admin.address.get.by.id', ['id' => ':id']) }}';
+                url = url.replace(':id', id);
+                let result = await fetch(url);
+                if (result.ok) {
+                    const data = await result.json();
+                    loadDataToModal(data);
+                }}
+
+
+            function loadDataToModal(data) {
+                document.getElementById('up_name').value = data.name;
+                document.getElementById('name_en').value = data.name_en;
+                document.getElementById('name').value = data.name;
+                document.getElementById('sort_index').value = data.sort_index;
+                document.getElementsByName('status').value = data.status;
+            }
+
+            function resetFormModal() {
+                document.getElementById('form-modify-address').reset();
             }
 
             function makeHTMLFromJson(data) {

@@ -75,6 +75,7 @@ Route::post('/setup-marketing/update/{id}', [SetupMarketingController::class, 'u
 Route::get('/address/list', [AdminAddressController::class, 'index'])->name('admin.address.index');
 Route::get('/address/detail/{code}', [AdminAddressController::class, 'show'])->name('admin.address.show');
 Route::post('/address/modify', [AdminAddressController::class, 'modifyAddress'])->name('admin.address.modify');
+Route::get('/address/get-by-id/{id}', [AdminAddressController::class, 'getById'])->name('admin.address.get.by.id');
 
 Route::delete('/address/delete/{id}', [AdminAddressController::class, 'delete'])->name('admin.address.delete');
 Route::post('/address/change-status/{id}', [AdminAddressController::class, 'changeStatus'])->name('admin.address.change.status');
