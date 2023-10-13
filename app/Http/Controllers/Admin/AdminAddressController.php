@@ -84,7 +84,7 @@ class AdminAddressController extends Controller
         $address->name_en = $nameEN;
 
         $address->save();
-        return response()->json($address);
+        return back();
     }
 
     public function update($id, Request $request)
@@ -101,7 +101,7 @@ class AdminAddressController extends Controller
 
         $address->name_en = $nameEN;
         $address->save();
-        return response()->json($address);
+        return back();
     }
 
     public function changeStatus($id)
@@ -113,7 +113,7 @@ class AdminAddressController extends Controller
             $address->status = 1;
         }
         $address->save();
-        return response()->json($address);
+        return back();
     }
 
     public function changeShow($id)
@@ -125,7 +125,7 @@ class AdminAddressController extends Controller
             $address->isShow = 1;
         }
         $address->save();
-        return response()->json($address);
+        return back();
     }
 
     public function delete($id)
@@ -134,9 +134,6 @@ class AdminAddressController extends Controller
         $delete = Address::where('id', $id)->delete();
         Address::where('code', '=', $address->code)
             ->orWhere('code', 'like', $address->code . '%')->delete();
-        if ($delete) {
-            return response('success', 200);
-        }
-        return response('error', 500);
+        return back();
     }
 }
