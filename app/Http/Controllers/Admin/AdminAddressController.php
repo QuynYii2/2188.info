@@ -54,8 +54,20 @@ class AdminAddressController extends Controller
         return response()->json($states);
     }
 
+    public function modifyAddress(Request $request)
+    {
+        switch ($request->input('mode')) {
+            case 'create':
+                $this->create($request);
+                break;
+            case 'edit':
+                $this->update($request);
+                break;
+        }
+        return back();
+    }
 
-    public function create(Request $request)
+    public function create($request)
     {
         $code = (new HomeController())->generateRandomString(2);
 
@@ -95,11 +107,11 @@ class AdminAddressController extends Controller
         $address->name_en = $nameEN;
 
         $address->save();
-        return back();
     }
 
-    public function update($id, Request $request)
+    public function update($request)
     {
+        $id = $request->input('up_code');
         $address = Address::find($id);
         $address->name = $request->input('name');
         $address->sort_index = $request->input('sort_index');
@@ -112,7 +124,6 @@ class AdminAddressController extends Controller
 
         $address->name_en = $nameEN;
         $address->save();
-        return back();
     }
 
     public function changeStatus($id)
