@@ -9,7 +9,6 @@ use App\Models\Address;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use function Sodium\add;
 
 class AdminAddressController extends Controller
 {
@@ -43,6 +42,7 @@ class AdminAddressController extends Controller
 
     public function create(Request $request)
     {
+
         $code = (new HomeController())->generateRandomString(2);
 
         $name = $request->input('name');
@@ -81,7 +81,7 @@ class AdminAddressController extends Controller
         $address->name_en = $nameEN;
 
         $address->save();
-        return response()->json($address);
+        return back();
     }
 
     public function update($id, Request $request)
@@ -98,7 +98,7 @@ class AdminAddressController extends Controller
 
         $address->name_en = $nameEN;
         $address->save();
-        return response()->json($address);
+        return back();
     }
 
     public function changeStatus($id)
@@ -110,7 +110,7 @@ class AdminAddressController extends Controller
             $address->status = 1;
         }
         $address->save();
-        return response()->json($address);
+        return back();
     }
 
     public function changeShow($id)
@@ -122,7 +122,7 @@ class AdminAddressController extends Controller
             $address->isShow = 1;
         }
         $address->save();
-        return response()->json($address);
+        return back();
     }
 
     public function delete($id)
@@ -131,9 +131,6 @@ class AdminAddressController extends Controller
         $delete = Address::where('id', $id)->delete();
         Address::where('code', '=', $address->code)
             ->orWhere('code', 'like', $address->code . '%')->delete();
-        if ($delete){
-            return response('success', 200);
-        }
-        return response('error', 500);
+        return back();
     }
 }
