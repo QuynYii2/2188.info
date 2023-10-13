@@ -19,6 +19,13 @@
         .bg-color-th2 {
             background-color: #c8e2f3 !important;
         }
+        .bg-color-td1 {
+            background-color: #fbf8f8 !important;
+        }
+
+        .bg-color-td2 {
+            background-color: #f4f9fd !important;
+        }
 
         .layer_tbl th {
             text-align: left;
@@ -46,25 +53,29 @@
             <h1 class="title-main cursor-pointer" id="title-main" onclick="getListAddress()">Region</h1>
         </div>
     </div>
+    <div class="card">
+        <div class="card-body">
+            <table cellspacing="0" cellpadding="0" class="regionWrap layer_tbl mt10 border" style="display: table;">
+                <colgroup>
+                    <col width="230">
+                    <col width="/">
+                </colgroup>
+                <tbody id="p-table"></tbody>
+                <tr>
+                    <th>
+                        <button id="btnMod2" name="btnMod2" class="sky"
+                                onclick="createNewRegion('','')"
+                                data-toggle="modal" data-target="#createRegion"
+                                style="margin-top:0; width:230px;">+ 대륙추가
+                        </button>
+                    </th>
+                    <td></td>
+                </tr>
+                <tbody id="c-table"></tbody>
+            </table>
+        </div>
+    </div>
 
-    <table cellspacing="0" cellpadding="0" class="regionWrap layer_tbl mt10" style="display: table;">
-        <colgroup>
-            <col width="230">
-            <col width="/">
-        </colgroup>
-        <tbody id="p-table"></tbody>
-        <tr>
-            <th>
-                <button id="btnMod2" name="btnMod2" class="sky"
-                        onclick="createNewRegion('','')"
-                        data-toggle="modal" data-target="#createRegion"
-                        style="margin-top:0; width:230px;">+ 대륙추가
-                </button>
-            </th>
-            <td></td>
-        </tr>
-        <tbody id="c-table"></tbody>
-    </table>
     <div class="modal fade" id="createRegion" tabindex="-1" aria-labelledby="exampleCreateRegion" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -103,7 +114,7 @@
                                 <tr>
                                     <th scope="row"><label for="a8">정렬순서</label></th>
                                     <td>
-                                        <input type="text" id="sort_index" name="sort_index" value="3"
+                                        <input type="text" id="sort_index" name="sort_index"
                                                style="width:98%;">
                                     </td>
                                     <th scope="row">사용여부</th>
@@ -165,10 +176,6 @@
                 document.getElementById('mode').value = mode;
             }
 
-            function setSortIndex(id) {
-                console.log(id)
-            }
-
             async function getListAddressChild(code, name) {
                 let url = '{{ route('admin.address.show', ['code' => ':code']) }}';
                 url = url.replace(':code', code);
@@ -191,16 +198,16 @@
 
                 data.forEach((pItem, index) => {
                     const classTh = index % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
+                    const classTd = index % 2 == 0 ? 'bg-color-td2' : 'bg-color-td1';
 
                     str += `<tr><th class="cont ${classTh} "><div class="text-center"><span onclick="fnRegionDetailPop('10001',2)">${pItem.name_en ?? pItem.name ?? ''}</span></div>
-                                    <div class="mt5 text-center"><span class="minBtn btn-down cursor-pointer" onclick="setSortIndex('${pItem.code}')"><span
-                                                    class="">▼</span></span> <span class="minBtn  ml20"> <span class="cursor-pointer"
+                                    <div class="mt5 text-center"><span class="minBtn  ml20"> <span class="cursor-pointer"
                                                                                                              onclick="createOrEditRegion('${pItem.code}','${pItem.name_en ?? pItem.name}', '${MODE_CREATE}')"
                                                                                                              data-toggle="modal" data-target="#createRegion" >국가등록</span></span>
                                     </div>
                                 </th>`
                     if (pItem.total_child) {
-                        str += `<td>`;
+                        str += `<td class="${classTd}">`;
                         pItem.child.forEach((cItem) => {
                             str += ` <span class="nation"><span class="tit cursor-pointer ${cItem.isShow == 1 ? 'orange' : 'grey'} " onclick="setIsShow('${cItem.id}')">★ </span>
                     <span
