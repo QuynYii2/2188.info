@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminAddressController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\ConfigProjectController;
@@ -70,6 +71,7 @@ Route::post('/setup-marketing/create', [SetupMarketingController::class, 'store'
 Route::delete('/setup-marketing/create/{id}', [SetupMarketingController::class, 'delete'])->name('setup-marketing.delete');
 Route::get('/setup-marketing/edit/{id}', [SetupMarketingController::class, 'edit'])->name('setup-marketing.edit');
 Route::post('/setup-marketing/update/{id}', [SetupMarketingController::class, 'update'])->name('setup-marketing.update');
-
-
+//
+Route::get('/address/{code}', [AdminAddressController::class, 'index'])->name('address.show');
+Route::post('/address/create', [AdminAddressController::class, 'create'])->name('address.create');
 
