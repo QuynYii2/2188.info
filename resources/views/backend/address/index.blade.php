@@ -144,6 +144,7 @@
         <script>
             getListAddress();
             let checkLevel = 1;
+            let index_main = 1;
 
             const MODE_CREATE = 'create'
             const MODE_EDIT = 'edit'
@@ -153,6 +154,7 @@
                 let result = await fetch(url);
                 if (result.ok) {
                     checkLevel = 1;
+                    index_main = 1;
                     const data = await result.json();
                     document.getElementById('p-table').innerHTML = '';
                     document.getElementById('c-table').innerHTML = '';
@@ -171,29 +173,45 @@
             }
 
             function createOrEditRegion(code, name, mode) {
+                resetFormModal()
                 document.getElementById('up_name').value = name;
                 document.getElementById('up_code').value = code;
                 document.getElementById('mode').value = mode;
-                resetFormModal()
                 if (mode == MODE_EDIT) {
-                    getById(code)
+                    getById(code);
                 }
             }
 
-            async function getListAddressChild(code, name) {
+            async function getListAddressChild(code, name, element) {
                 let url = '{{ route('admin.address.show', ['code' => ':code']) }}';
                 url = url.replace(':code', code);
                 let result = await fetch(url);
+                let data_num = element.getAttribute('data-num');
+                duyetTheTr(data_num);
+
                 if (result.ok) {
                     const data = await result.json();
                     if (checkLevel == 1) {
-                        console.log(123)
                         document.getElementById('title-div').style.display = 'block';
                         document.getElementById('title-main').innerHTML = name;
                     }
                     makeHTMLFromJson(data);
                     checkLevel = 2;
+                    index_main++;
                 }
+            }
+
+            function duyetTheTr(index) {
+                let i = index++;
+                do {
+                    const element = document.querySelector(`tr[data-num="${i}"]`);
+                    if (element) {
+                        element.remove()
+                        i++;
+                    } else {
+                        break;
+                    }
+                } while (true)
             }
 
             async function getById(id) {
@@ -226,7 +244,7 @@
                     const classTh = index % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
                     const classTd = index % 2 == 0 ? 'bg-color-td2' : 'bg-color-td1';
 
-                    str += `<tr><th class="cont ${classTh} "><div class="text-center"><span onclick="fnRegionDetailPop('10001',2)">${pItem.name_en ?? pItem.name ?? ''}</span></div>
+                    str += `<tr data-num="${index_main}"><th class="cont ${classTh} "><div class="text-center"><span onclick="fnRegionDetailPop('10001',2)">${pItem.name_en ?? pItem.name ?? ''}</span></div>
                                     <div class="mt5 text-center"><span class="minBtn  ml20"> <span class="cursor-pointer"
                                                                                                              onclick="createOrEditRegion('${pItem.code}','${pItem.name_en ?? pItem.name}', '${MODE_CREATE}')"
                                                                                                              data-toggle="modal" data-target="#createRegion" >국가등록</span></span>
@@ -237,8 +255,8 @@
                         pItem.child.forEach((cItem) => {
                             str += ` <span class="nation"><span class="tit cursor-pointer ${cItem.isShow == 1 ? 'orange' : 'grey'} " onclick="setIsShow('${cItem.id}')">★ </span>
                     <span
-                            class="tit cursor-pointer"
-                            onclick="getListAddressChild('${cItem.code}', '${cItem.name_en ?? cItem.name ?? ''}')">${cItem.name_en ?? ''} ${cItem.name ?? ''}</span>
+                            class="tit cursor-pointer" data-num="${index_main}"
+                            onclick="getListAddressChild('${cItem.code}', '${cItem.name_en ?? cItem.name ?? ''}', this)">${cItem.name_en ?? ''} ${cItem.name ?? ''}</span>
                     <span class="skyblue ml10"> <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion" onclick="createOrEditRegion('${cItem.id}','${cItem.name_en ?? cItem.name}', '${MODE_EDIT}')">▤</span>
                     </span></span>`
                         })
