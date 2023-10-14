@@ -19,6 +19,7 @@
         .bg-color-th2 {
             background-color: #c8e2f3 !important;
         }
+
         .bg-color-td1 {
             background-color: #fbf8f8 !important;
         }
@@ -167,8 +168,16 @@
                 let url = '{{ route('admin.address.change.show', ['id' => ':id']) }}';
                 url = url.replace(':id', id);
                 let result = await fetch(url);
+                let star = document.getElementById('myStar-' + id)
                 if (result.ok) {
-                    getListAddress();
+                    if (star.classList.contains('orange')) {
+                        star.classList.remove("orange");
+                        star.classList.add("grey");
+                    } else {
+                        star.classList.add("orange");
+                        star.classList.remove("grey");
+                    }
+
                 }
             }
 
@@ -227,7 +236,8 @@
                 if (result.ok) {
                     const data = await result.json();
                     loadDataToModal(data);
-                }}
+                }
+            }
 
 
             function loadDataToModal(data) {
@@ -259,7 +269,7 @@
                     if (pItem.total_child) {
                         str += `<td class="${classTd}">`;
                         pItem.child.forEach((cItem) => {
-                            str += ` <span class="nation"><span class="tit cursor-pointer ${cItem.isShow == 1 ? 'orange' : 'grey'} " onclick="setIsShow('${cItem.id}')">★ </span>
+                            str += ` <span class="nation"><span class="tit cursor-pointer ${cItem.isShow == 1 ? 'orange' : 'grey'} " onclick="setIsShow('${cItem.id}')" id="myStar-${cItem.id}">★ </span>
                     <span
                             class="tit cursor-pointer" data-num="${index_main}"
                             onclick="getListAddressChild('${cItem.code}', '${cItem.name_en ?? cItem.name ?? ''}', this)">${cItem.name_en ?? ''} ${cItem.name ?? ''}</span>
