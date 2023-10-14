@@ -19,6 +19,7 @@
         .bg-color-th2 {
             background-color: #c8e2f3 !important;
         }
+
         .bg-color-td1 {
             background-color: #fbf8f8 !important;
         }
@@ -55,7 +56,7 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <table cellspacing="0" cellpadding="0" class="regionWrap layer_tbl mt10 border" style="display: table;">
+            <table cellspacing="0" cellpadding="0" class="regionWrap layer_tbl mt10 border" style="display: table;" id="masterTable">
                 <colgroup>
                     <col width="230">
                     <col width="/">
@@ -144,6 +145,7 @@
         <script>
             getListAddress();
             let checkLevel = 1;
+            let number = checkLevel;
 
             const MODE_CREATE = 'create'
             const MODE_EDIT = 'edit'
@@ -184,6 +186,8 @@
                 let url = '{{ route('admin.address.show', ['code' => ':code']) }}';
                 url = url.replace(':code', code);
                 let result = await fetch(url);
+                let array = code.split('!');
+                console.log(array)
                 if (result.ok) {
                     const data = await result.json();
                     if (checkLevel == 1) {
@@ -191,8 +195,9 @@
                         document.getElementById('title-div').style.display = 'block';
                         document.getElementById('title-main').innerHTML = name;
                     }
+                    number = array.length;
                     makeHTMLFromJson(data);
-                    checkLevel = 2;
+                    checkLevel = array.length;
                 }
             }
 
@@ -203,7 +208,8 @@
                 if (result.ok) {
                     const data = await result.json();
                     loadDataToModal(data);
-                }}
+                }
+            }
 
 
             function loadDataToModal(data) {
@@ -220,6 +226,7 @@
 
             function makeHTMLFromJson(data) {
                 const isTable = checkLevel == 1;
+
                 let str = '';
 
                 data.forEach((pItem, index) => {
@@ -244,15 +251,24 @@
                         })
                         str += `</td>`;
                     }
-                    str += `</tr>`
+                    str += `</tr>`;
                 })
 
                 if (isTable) {
                     const t_p_Body = document.getElementById('p-table');
                     t_p_Body.innerHTML = str;
                 } else {
-                    const t_p_Body = document.getElementById('c-table');
-                    t_p_Body.innerHTML += str;
+                    console.log(number)
+                    if (number < 4) {
+                        $('#c-table').empty().append(str)
+                        $('.addressMoreLevel').empty();
+                    } else {
+                        let string = `<tbody class="addressMoreLevel" id="c-table-${number}"></tbody>`;
+                        $('#masterTable').append(string);
+                        $('#c-table-' + number).empty().append(str)
+                    }
+                    // const t_p_Body = document.getElementById('c-table');
+                    // t_p_Body.innerHTML += str;
                 }
 
             }
