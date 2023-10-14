@@ -51,7 +51,7 @@
 
     <div class="jumbotron jumbotron-fluid" id="title-div" style="display: none">
         <div class="container">
-            <h1 class="title-main cursor-pointer" id="title-main" onclick="getListAddress()">Region</h1>
+            <h1 class="title-main cursor-pointer" id="title-main" onclick="getListAddress()">{{ __('home.Address management ') }}</h1>
         </div>
     </div>
     <div class="card">
@@ -67,7 +67,7 @@
                         <button id="btnMod2" name="btnMod2" class="sky"
                                 onclick="createOrEditRegion('','', `${MODE_CREATE}`)"
                                 data-toggle="modal" data-target="#createRegion"
-                                style="margin-top:0; width:230px;">+ 대륙추가
+                                style="margin-top:0; width:230px;">+ {{ __('home.Add region ') }}
                         </button>
                     </th>
                     <td></td>
@@ -81,7 +81,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Add region ') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -99,31 +99,31 @@
                                 </colgroup>
                                 <tbody>
                                 <tr>
-                                    <th scope="row">상위 지역명</th>
+                                    <th scope="row">{{ __('home.Add continent ') }}</th>
                                     <td colspan="3"><input type="text" disabled id="up_name" name="up_name" value="">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">지역명(영어)</th>
+                                    <th scope="row">{{ __('home.Name English ') }}</th>
                                     <td colspan="3"><input type="text" id="name_en" name="name_en" style="width:98%">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">지역명(자국어)</th>
+                                    <th scope="row">{{ __('home.Name (Own language) ') }}</th>
                                     <td colspan="3"><input type="text" id="name" name="name" style="width:98%"></td>
                                 </tr>
                                 <tr>
-                                    <th scope="row"><label for="a8">정렬순서</label></th>
+                                    <th scope="row"><label for="a8">{{ __('home.stt') }}</label></th>
                                     <td>
                                         <input type="number" id="sort_index" name="sort_index"
                                                style="width:98%;">
                                     </td>
-                                    <th scope="row">사용여부</th>
+                                    <th scope="row">{{ __('home.Use this or not?') }}</th>
                                     <td>
                                         <input type="radio" id="use_yn1" name="status" value="1"
-                                               checked="checked"><label class="int_space" for="use_yn1">사용</label>
+                                               checked="checked"><label class="int_space" for="use_yn1">{{ __('home.yes') }}</label>
                                         <input type="radio" id="use_yn2" name="status" value="0"><label
-                                                class="int_space" for="use_yn2">미사용</label>
+                                                class="int_space" for="use_yn2">{{ __('home.no') }}</label>
                                     </td>
                                 </tr>
 
@@ -134,8 +134,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}</button>
+                        <button type="submit" class="btn btn-primary">{{ __('home.Save') }}</button>
                     </div>
                 </form>
             </div>

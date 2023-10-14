@@ -252,7 +252,7 @@ return [
     'Cash on Delivery' => 'Thanh Toán Khi Nhận Hàng',
     'Debit or Credit Card' => 'Thẻ Ghi Nợ Hoặc Tín Dụng',
     'E-wallet' => 'Ví Điện Tử',
-    'Đến (sản phẩm)' =>'최대 수량',
+    'Đến (sản phẩm)' => '최대 수량',
 
 
     'log out' => 'Đăng xuất',
@@ -984,6 +984,16 @@ return [
     'tinh thanh' => 'Tỉnh thành',
     'quan huyen' => 'Quận/Huyện',
     'xa phuong' => 'Xã/Phường',
-    'manager_products' => 'Quản lý sản phẩm'
+    'manager_products' => 'Quản lý sản phẩm',
+
+    'Address management' => 'Quản lý địa chỉ ',
+    'Add continent' => 'Đăng ký châu lục',
+    'Use this or not?' => 'Dùng cái này hay không?',
+    'yes' => 'Có',
+    'no' => 'Không',
+    'stt' => 'Số thứ tự',
+    'Name (Own language)' => 'Tên (Ngôn ngữ riêng)',
+    'Add region ' => 'Thêm khu vực',
+    'Add nation' => 'Thêm quốc gia',
 ];
 

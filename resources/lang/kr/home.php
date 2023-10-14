@@ -437,7 +437,7 @@ return [
     'The Foreign Wholesale Order feature is only available to corporate members (Trusted members) and above' => '해외도매는 기업전용 (성실회원 이상) 가능합니다.',
     'Upgrade Instructions' => '등업안내',
     'Please upgrade your membership to use' => '회원등업후 이용 가능합니다.',
-    'Close' => '닫기',
+        'Close' => '닫기',
     'Create your account and enjoy a new shopping experience.' => '계정을 만들고 새로운 쇼핑 경험을 즐겨보십시오.',
     'Follow' => '팔로우',
     // ban dich moi
@@ -1046,5 +1046,15 @@ return [
     'tinh thanh' => '성/도',
     'quan huyen' => '군/현',
     'xa phuong' => '구/동',
-    'manager_products' => '제품관리'
+    'manager_products' => '제품관리',
+
+    'Address management' => '주소관리 ',
+    'Add continent' => '대륙등록',
+    'Use this or not?' => '사용여부',
+    'yes' => '사용',
+    'no' => '미사용',
+    'stt' => '정렬순서',
+    'Name (Own language)' => '지역명(자국어)',
+    'Add region ' => '상위지역명',
+    'Add nation' => '국가등록',
 ];
