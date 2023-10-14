@@ -65,7 +65,7 @@
                 <tr>
                     <th>
                         <button id="btnMod2" name="btnMod2" class="sky"
-                                onclick="createOrEditRegion('','')"
+                                onclick="createOrEditRegion('','', `${MODE_CREATE}`)"
                                 data-toggle="modal" data-target="#createRegion"
                                 style="margin-top:0; width:230px;">+ 대륙추가
                         </button>
