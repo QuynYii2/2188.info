@@ -146,6 +146,7 @@
             getListAddress();
             let checkLevel = 1;
             let index_main = 1;
+            let nation_code, nation_name;
 
             const MODE_CREATE = 'create'
             const MODE_EDIT = 'edit'
@@ -189,6 +190,10 @@
                 if (mode == MODE_EDIT) {
                     getById(code);
                 }
+                if (mode == MODE_CREATE && !code && !name) {
+                    document.getElementById('up_name').value = nation_name;
+                    document.getElementById('up_code').value = nation_code;
+                }
             }
 
             async function getListAddressChild(code, name, element) {
@@ -201,11 +206,13 @@
                 if (result.ok) {
                     const data = await result.json();
                     if (checkLevel == 1) {
+                        nation_code = code;
+                        nation_name = name;
                         document.getElementById('title-div').style.display = 'block';
                         document.getElementById('title-main').innerHTML = name;
                     }
                     makeHTMLFromJson(data);
-                    checkLevel = 2;
+                    checkLevel++;
                     index_main++;
                 }
             }
