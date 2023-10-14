@@ -202,16 +202,22 @@
             }
 
             function duyetTheTr(index) {
-                let i = index++;
+                let i = ++index;
+                let checkindex = 0;
                 do {
                     const element = document.querySelector(`tr[data-num="${i}"]`);
                     if (element) {
                         element.remove()
                         i++;
+                        if (checkindex == 0) {
+                            index_main = index;
+                        }
+                        checkindex++;
                     } else {
                         break;
                     }
                 } while (true)
+
             }
 
             async function getById(id) {
