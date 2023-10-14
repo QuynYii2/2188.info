@@ -431,7 +431,7 @@ return [
     'Messaging and product promotion' => 'Nhắn tin và quảng cáo sản phẩm',
     'Payment success' => 'Thanh toán thành công',
     ' Back to home' => 'Về trang chủ',
-    'Đến (sản phẩm)' =>'최대 수량',
+    'Đến (sản phẩm)' => '최대 수량',
 
     'FileReader' => 'Trình đọc tệp',
     'The Foreign Wholesale Order feature is only available to corporate members (Trusted members) and above' => 'Tính năng Đặt sỉ nước ngoài chỉ áp dụng cho hội viên doanh nghiệp (hội viên Tin cậy) trở lên',
@@ -950,4 +950,14 @@ return [
     'tinh thanh' => 'Province',
     'quan huyen' => 'District',
     'xa phuong' => 'Wards',
+
+    'Address management' => 'Address management ',
+    'Add continent' => 'Add continent',
+    'Use this or not?' => 'Use this or not?',
+    'yes' => 'yes',
+    'no' => 'no',
+    'stt' => 'Order of sorting',
+    'Name (Own language)' => 'Name (Own language)',
+    'Add region ' => 'Add region',
+    'Add nation' => 'Add nation',
 ];
