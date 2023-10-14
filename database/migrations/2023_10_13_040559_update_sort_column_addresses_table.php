@@ -14,7 +14,7 @@ class UpdateSortColumnAddressesTable extends Migration
     public function up()
     {
         Schema::table('addresses', function (Blueprint $table) {
-            $table->integer('sort_index')->nullable();
+            $table->unsignedInteger('sort_index')->nullable();
         });
     }
 

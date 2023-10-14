@@ -158,4 +158,10 @@ class AdminAddressController extends Controller
             ->orWhere('code', 'like', $address->code . '%')->delete();
         return back();
     }
+
+    public function getById($id)
+    {
+        $address = Address::find($id);
+        return response()->json($address);
+    }
 }
