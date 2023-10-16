@@ -92,14 +92,14 @@ class AdminAddressController extends Controller
     {
         $code = (new HomeController())->generateRandomString(2);
 
-        $name = $request->input('name');
-        $nameEN = $request->input('name_en');
-        $sort_index = $request->input('sort_index');
-        $status = $request->input('status');
-        $isShow = $request->input('isShow') ?? 1;
-        $created_by = Auth::user()->id;
+        $name = $request['name'];
+        $nameEN = $request['name_en'];
+        $sort_index = $request['sort_index'];
+        $status = $request['status'];
+        $isShow = $request['isShow'] ?? 1;
+        $codeParent = $request['up_code'];
 
-        $codeParent = $request->input('up_code');
+        $created_by = Auth::user()->id;
 
         do {
             $item = DB::table('addresses')->where('code', $code)->first();
@@ -130,13 +130,20 @@ class AdminAddressController extends Controller
 
     public function update($request)
     {
-        $id = $request->input('up_code');
+        $id = $request['up_code'];
         $address = Address::find($id);
-        $address->name = $request->input('name');
-        $address->name_en = $request->input('name_en');
-        $address->sort_index = $request->input('sort_index');
-        $address->status = $request->input('status');
-        $address->isShow = $request->input('isShow');
+
+        $name = $request['name'];
+        $nameEN = $request['name_en'];
+        $sort_index = $request['sort_index'];
+        $status = $request['status'];
+        $isShow = $request['isShow'] ?? 1;
+
+        $address->name = $name;
+        $address->name_en = $nameEN;
+        $address->sort_index = $sort_index;
+        $address->status = $status;
+        $address->isShow = $isShow;
         $address->updated_by = Auth::user()->id;
 
         $address->save();

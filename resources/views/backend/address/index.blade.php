@@ -51,7 +51,8 @@
 
     <div class="jumbotron jumbotron-fluid" id="title-div" style="display: none">
         <div class="container">
-            <h1 class="title-main cursor-pointer" id="title-main" onclick="getListAddress()">{{ __('home.Address management ') }}</h1>
+            <h1 class="title-main cursor-pointer" id="title-main"
+                onclick="getListAddress()">{{ __('home.Address management ') }}</h1>
         </div>
     </div>
     <div class="card">
@@ -86,8 +87,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('admin.address.modify') }}" method="post" id="form-modify-address">
-                    @csrf
+                <form id="form-modify-address">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="modal-body">
                         <div class="layer_contents">
                             <table cellspacing="0" cellpadding="0" class="layer_tbl">
@@ -121,7 +122,8 @@
                                     <th scope="row">{{ __('home.Use this or not?') }}</th>
                                     <td>
                                         <input type="radio" id="use_yn1" name="status" value="1"
-                                               checked="checked"><label class="int_space" for="use_yn1">{{ __('home.yes') }}</label>
+                                               checked="checked"><label class="int_space"
+                                                                        for="use_yn1">{{ __('home.yes') }}</label>
                                         <input type="radio" id="use_yn2" name="status" value="0"><label
                                                 class="int_space" for="use_yn2">{{ __('home.no') }}</label>
                                     </td>
@@ -134,177 +136,196 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}</button>
-                        <button type="submit" class="btn btn-primary">{{ __('home.Save') }}</button>
+                        <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal">{{ __('home.Close') }}</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                onclick="handleSubmitFormAddress()">{{ __('home.Save') }}</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <tr>
-        <script>
-            getListAddress();
-            let checkLevel = 1;
-            let index_main = 1;
-            let nation_code = nation_name = '';
+    <script>
+        getListAddress();
+        let checkLevel = 1;
+        let index_main = 1;
+        let nation_code = nation_name = '';
 
-            const MODE_CREATE = 'create'
-            const MODE_EDIT = 'edit'
+        const MODE_CREATE = 'create'
+        const MODE_EDIT = 'edit'
 
-            async function getListAddress() {
-                let url = '{{ route('admin.address.index') }}';
-                let result = await fetch(url);
-                if (result.ok) {
-                    checkLevel = 1;
-                    index_main = 1;
-                    const data = await result.json();
-                    document.getElementById('p-table').innerHTML = '';
-                    document.getElementById('c-table').innerHTML = '';
-                    document.getElementById('title-div').style.display = 'none';
-                    makeHTMLFromJson(data);
-                }
+        async function getListAddress() {
+            let url = '{{ route('admin.address.index') }}';
+            let result = await fetch(url);
+            if (result.ok) {
+                checkLevel = 1;
+                index_main = 1;
+                const data = await result.json();
+                document.getElementById('p-table').innerHTML = '';
+                document.getElementById('c-table').innerHTML = '';
+                document.getElementById('title-div').style.display = 'none';
+                makeHTMLFromJson(data);
             }
+        }
 
-            async function setIsShow(id) {
-                let url = '{{ route('admin.address.change.show', ['id' => ':id']) }}';
-                url = url.replace(':id', id);
-                let result = await fetch(url);
-                let star = document.getElementById('myStar-' + id)
-                if (result.ok) {
-                    if (star.classList.contains('orange')) {
-                        star.classList.remove("orange");
-                        star.classList.add("grey");
-                    } else {
-                        star.classList.add("orange");
-                        star.classList.remove("grey");
-                    }
-
-                }
-            }
-
-            function createOrEditRegion(code, name, mode) {
-                resetFormModal()
-                document.getElementById('up_name').value = name;
-                document.getElementById('up_code').value = code;
-                document.getElementById('mode').value = mode;
-                if (mode == MODE_EDIT) {
-                    getById(code);
-                }
-                if (mode == MODE_CREATE && !code && !name) {
-                    document.getElementById('up_name').value = nation_name;
-                    document.getElementById('up_code').value = nation_code;
-                }
-            }
-
-            async function getListAddressChild(code, name, element) {
-                let url = '';
-                if (checkLevel == 1) {
-                    url = '{{ route('admin.address.show.region', ['code' => ':code']) }}';
-                    url = url.replace(':code', code);
+        async function setIsShow(id) {
+            let url = '{{ route('admin.address.change.show', ['id' => ':id']) }}';
+            url = url.replace(':id', id);
+            let result = await fetch(url);
+            let star = document.getElementById('myStar-' + id)
+            if (result.ok) {
+                if (star.classList.contains('orange')) {
+                    star.classList.remove("orange");
+                    star.classList.add("grey");
                 } else {
-                    url = '{{ route('admin.address.show', ['code' => ':code']) }}';
-                    url = url.replace(':code', code);
+                    star.classList.add("orange");
+                    star.classList.remove("grey");
                 }
-                let result = await fetch(url);
-                let data_num = element.getAttribute('data-num');
-                duyetTheTr(data_num);
 
-                if (result.ok) {
-                    const data = await result.json();
-                    if (checkLevel == 1) {
-                        nation_code = code;
-                        nation_name = name;
-                        document.getElementById('title-div').style.display = 'block';
-                        document.getElementById('title-main').innerHTML = name;
+            }
+        }
+
+        function createOrEditRegion(code, name, mode) {
+            resetFormModal()
+            document.getElementById('up_name').value = name;
+            document.getElementById('up_code').value = code;
+            document.getElementById('mode').value = mode;
+            if (mode == MODE_EDIT) {
+                getById(code);
+            }
+            if (mode == MODE_CREATE && !code && !name) {
+                document.getElementById('up_name').value = nation_name;
+                document.getElementById('up_code').value = nation_code;
+            }
+        }
+
+        async function getListAddressChild(code, name, element) {
+            let url = '';
+            if (checkLevel == 1) {
+                url = '{{ route('admin.address.show.region', ['code' => ':code']) }}';
+                url = url.replace(':code', code);
+            } else {
+                url = '{{ route('admin.address.show', ['code' => ':code']) }}';
+                url = url.replace(':code', code);
+            }
+            let result = await fetch(url);
+            let data_num = element.getAttribute('data-num');
+            duyetTheTr(data_num);
+
+            if (result.ok) {
+                const data = await result.json();
+                if (checkLevel == 1) {
+                    nation_code = code;
+                    nation_name = name;
+                    document.getElementById('title-div').style.display = 'block';
+                    document.getElementById('title-main').innerHTML = name;
+                }
+                makeHTMLFromJson(data);
+                checkLevel++;
+                index_main++;
+            }
+        }
+
+        function duyetTheTr(index) {
+            let i = ++index;
+            let checkindex = 0;
+            do {
+                const element = document.querySelector(`tr[data-num="${i}"]`);
+                if (element) {
+                    element.remove()
+                    i++;
+                    if (checkindex == 0) {
+                        index_main = index;
                     }
-                    makeHTMLFromJson(data);
-                    checkLevel++;
-                    index_main++;
+                    checkindex++;
+                } else {
+                    break;
                 }
+            } while (true)
+
+        }
+
+        async function getById(id) {
+            let url = '{{ route('admin.address.get.by.id', ['id' => ':id']) }}';
+            url = url.replace(':id', id);
+            let result = await fetch(url);
+            if (result.ok) {
+                const data = await result.json();
+                loadDataToModal(data);
             }
+        }
 
-            function duyetTheTr(index) {
-                let i = ++index;
-                let checkindex = 0;
-                do {
-                    const element = document.querySelector(`tr[data-num="${i}"]`);
-                    if (element) {
-                        element.remove()
-                        i++;
-                        if (checkindex == 0) {
-                            index_main = index;
-                        }
-                        checkindex++;
-                    } else {
-                        break;
-                    }
-                } while (true)
+        function loadDataToModal(data) {
+            document.getElementById('up_name').value = data.name;
+            document.getElementById('name_en').value = data.name_en;
+            document.getElementById('name').value = data.name;
+            document.getElementById('sort_index').value = data.sort_index;
+            document.getElementsByName('status').value = data.status;
+        }
 
-            }
+        function resetFormModal() {
+            document.getElementById('form-modify-address').reset();
+        }
 
-            async function getById(id) {
-                let url = '{{ route('admin.address.get.by.id', ['id' => ':id']) }}';
-                url = url.replace(':id', id);
-                let result = await fetch(url);
-                if (result.ok) {
-                    const data = await result.json();
-                    loadDataToModal(data);
-                }
-            }
+        function makeHTMLFromJson(data) {
+            const isTable = checkLevel == 1;
+            let str = '';
 
+            data.forEach((pItem, index) => {
+                const classTh = index % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
+                const classTd = index % 2 == 0 ? 'bg-color-td2' : 'bg-color-td1';
 
-            function loadDataToModal(data) {
-                document.getElementById('up_name').value = data.name;
-                document.getElementById('name_en').value = data.name_en;
-                document.getElementById('name').value = data.name;
-                document.getElementById('sort_index').value = data.sort_index;
-                document.getElementsByName('status').value = data.status;
-            }
-
-            function resetFormModal() {
-                document.getElementById('form-modify-address').reset();
-            }
-
-            function makeHTMLFromJson(data) {
-                const isTable = checkLevel == 1;
-                let str = '';
-
-                data.forEach((pItem, index) => {
-                    const classTh = index % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
-                    const classTd = index % 2 == 0 ? 'bg-color-td2' : 'bg-color-td1';
-
-                    str += `<tr data-num="${index_main}"><th class="cont ${classTh} "><div class="text-center"><span class="cursor-pointer">${pItem.name_en ?? pItem.name ?? ''}</span></div>
-                                    <div class="mt5 text-center"><span class="minBtn  ml20"> <span class="cursor-pointer"
+                str += `<tr data-num="${index_main}"><th class="cont ${classTh} "><div class="text-center"><span class="cursor-pointer">${pItem.name_en ?? pItem.name ?? ''}</span></div>
+                                    <div class="mt5 text-center"><span class="minBtn ml20"> <span class="cursor-pointer"
                                                                                                              onclick="createOrEditRegion('${pItem.code}','${pItem.name_en ?? pItem.name}', '${MODE_CREATE}')"
                                                                                                              data-toggle="modal" data-target="#createRegion" >국가등록</span></span>
                                     </div>
                                 </th>`
-                    if (pItem.total_child) {
-                        str += `<td class="${classTd}">`;
-                        pItem.child.forEach((cItem) => {
-                            str += ` <span class="nation">`;
-                            if (isTable) {
-                                str += `<span class="tit cursor-pointer ${cItem.isShow == 1 ? 'orange' : 'grey'} " onclick="setIsShow('${cItem.id}')" id="myStar-${cItem.id}">★ </span>`;
-                            }
-                            str += `<span
+                if (pItem.total_child) {
+                    str += `<td class="${classTd}">`;
+                    pItem.child.forEach((cItem) => {
+                        str += ` <span class="nation">`;
+                        if (isTable) {
+                            str += `<span class="tit cursor-pointer ${cItem.isShow == 1 ? 'orange' : 'grey'} " onclick="setIsShow('${cItem.id}')" id="myStar-${cItem.id}">★ </span>`;
+                        }
+                        str += `<span
                             class="tit cursor-pointer" data-num="${index_main}"
                             onclick="getListAddressChild('${cItem.code}', '${cItem.name_en ?? cItem.name ?? ''}', this)">${cItem.name_en ?? ''} ${cItem.name ?? ''}</span>
-                    <span class="skyblue ml10"> <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion" onclick="createOrEditRegion('${cItem.id}','${cItem.name_en ?? cItem.name}', '${MODE_EDIT}')">{{ __('home.edit') }}</span>
+                    <span class="skyblue ml10"> <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion" onclick="createOrEditRegion('${cItem.id}','${cItem.name_en ?? cItem.name}', '${MODE_EDIT}')">▤</span>
                     </span></span>`
-                        })
-                        str += `</td>`;
-                    }
-                    str += `</tr>`
-                })
-
-                if (isTable) {
-                    const t_p_Body = document.getElementById('p-table');
-                    t_p_Body.innerHTML = str;
-                } else {
-                    const t_p_Body = document.getElementById('c-table');
-                    t_p_Body.innerHTML += str;
+                    })
+                    str += `</td>`;
                 }
+                str += `</tr>`
+            })
 
+            if (isTable) {
+                const t_p_Body = document.getElementById('p-table');
+                t_p_Body.innerHTML = str;
+            } else {
+                const t_p_Body = document.getElementById('c-table');
+                t_p_Body.innerHTML += str;
             }
-        </script>
+
+        }
+
+        function handleSubmitFormAddress() {
+            const formData = new FormData();
+
+            formData.append('up_name', document.getElementById('up_name').value);
+            formData.append('name_en', document.getElementById('name_en').value);
+            formData.append('name', document.getElementById('name').value);
+            formData.append('sort_index', document.getElementById('sort_index').value);
+            formData.append('status', document.querySelector('input[name="status"]:checked').value);
+            formData.append('up_code', document.getElementById('up_code').value);
+            formData.append('mode', document.getElementById('mode').value);
+            formData.append('_token', document.querySelector('input[name="_token"]').value);
+
+            fetch('{{ route("admin.address.modify") }}', {
+                method: 'POST',
+                body: formData
+            });
+
+        }
+    </script>
 @endsection
