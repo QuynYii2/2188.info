@@ -141,11 +141,11 @@
             let add_3_en = '';
             arrAddress.forEach((value, index) => {
                 if (index == 0) {
-                    $('#countries-select').val(value.name)
-                    $('#countries-select-1').val(value.name_en)
+                    $('#countries-select').val(value.name_en)
+                    $('#countries-select-1').val(value.name)
                 } else if (index == 1) {
-                    $('#cities-select').val(value.name)
-                    $('#cities-select-1').val(value.name_en)
+                    $('#cities-select').val(value.name_en)
+                    $('#cities-select-1').val(value.name)
                 } else {
                     add_3 += value.name + ', '
                     add_3_en += value.name_en + ', '
@@ -154,8 +154,8 @@
             if (add_3) {
                 add_3 = add_3.slice(0, -2);
                 add_3_en = add_3_en.slice(0, -2);
-                $('#provinces-select').val(add_3);
-                $('#provinces-select-1').val(add_3_en);
+                $('#provinces-select').val(add_3_en);
+                $('#provinces-select-1').val(add_3);
             }
             $('#address_code').val(nation_code);
         }

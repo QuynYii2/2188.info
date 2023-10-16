@@ -449,7 +449,6 @@
     $(document).ready(function () {
         $('#buttonRegister').on('click', function () {
             // $('#formRegisterMember').trigger('submit');
-            handleAfterSelectRegion();
 
             let isChecked = checkCategory('inputCheckboxCategory');
             let isChecked1 = checkCategory('inputCheckboxCategory1');
