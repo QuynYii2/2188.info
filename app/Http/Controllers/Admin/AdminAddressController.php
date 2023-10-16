@@ -32,6 +32,27 @@ class AdminAddressController extends Controller
             });
         return response()->json($listAddress);
     }
+    public function showRegion($code)
+    {
+        $listAddress = Address::where('code', 'like', $code . '!__')
+            ->orderBy('sort_index', 'asc')
+            ->cursor()
+            ->map(function ($pAddress) {
+                $cAddresses = Address::where('code', 'like', $pAddress->code . '!__')
+                    ->orderBy('sort_index', 'asc')
+                    ->get();
+
+                return [
+                    'id' => $pAddress->id,
+                    'code' => $pAddress->code,
+                    'name' => $pAddress->name,
+                    'name_en' => $pAddress->name_en,
+                    'total_child' => $cAddresses->count(),
+                    'child' => $cAddresses->toArray(),
+                ];
+            });
+        return response()->json($listAddress);
+    }
 
     public function index()
     {
