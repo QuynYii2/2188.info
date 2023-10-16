@@ -99,17 +99,17 @@
                                 </colgroup>
                                 <tbody>
                                 <tr>
-                                    <th scope="row">{{ __('home.Add continent ') }}</th>
+                                    <th scope="row">{{ __('home.Add continent') }}</th>
                                     <td colspan="3"><input type="text" disabled id="up_name" name="up_name" value="">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">{{ __('home.Name English ') }}</th>
+                                    <th scope="row">{{ __('home.Name English') }}</th>
                                     <td colspan="3"><input type="text" id="name_en" name="name_en" style="width:98%">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">{{ __('home.Name (Own language) ') }}</th>
+                                    <th scope="row">{{ __('home.Name (Own language)') }}</th>
                                     <td colspan="3"><input type="text" id="name" name="name" style="width:98%"></td>
                                 </tr>
                                 <tr>
