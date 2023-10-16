@@ -292,16 +292,16 @@
                 if (pItem.total_child) {
                     str += `<td class="${classTd}" id="td-region-${index}">`;
                     pItem.child.forEach((cItem) => {
-                        str += ` <span class="nation">`;
+                        str += ` <span class="nation" id="span-id-${cItem.code}">`;
                         if (isTable) {
                             str += `<span class="tit cursor-pointer ${cItem.isShow == 1 ? 'orange' : 'grey'} " onclick="setIsShow('${cItem.id}')" id="myStar-${cItem.id}">★ </span>`;
                         }
                         str += `<span
                             class="tit cursor-pointer" data-num="${index_main}"
                             onclick="getListAddressChild('${cItem.code}', '${cItem.name_en ?? cItem.name ?? ''}', this)">${cItem.name_en ?? ''} ${cItem.name ?? ''}</span>
-                    <span class="skyblue ml10"> <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion"
+                     <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion"
                     onclick="createOrEditRegion('${cItem.id}','${cItem.name_en ?? cItem.name}', '${MODE_EDIT}', '${elementTd}', '${index}')">▤</span>
-                    </span></span>`
+                    </span>`
                     })
                     str += `</td>`;
                 }
@@ -368,6 +368,14 @@
                     }
                     break;
                 case MODE_EDIT:
+                    const newSpan = document.createElement('span');
+                    newSpan.innerHTML = `<span class="nation" id="span-id-${data.code}"><span class="tit cursor-pointer orange " onclick="setIsShow('${data.id}')" id="myStar-${data.id}">★ </span>
+                                    <span class="tit cursor-pointer" data-num="1" onclick="getListAddressChild('${data.code}', '${data.name}', this)">${data.name_en} ${data.name}</span>
+                     <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion" onclick="createOrEditRegion('${data.id}','${data.name_en}', '${MODE_EDIT}', '${elementTd}', '0')">▤</span>
+                    </span>`
+                    document.getElementById('span-id-' + data.code).innerHTML = '';
+                    document.getElementById('span-id-' + data.code).append(newSpan);
+
                     break;
             }
         }
