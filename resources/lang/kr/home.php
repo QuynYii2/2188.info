@@ -1057,4 +1057,6 @@ return [
     'Name (Own language)' => '지역명(자국어)',
     'Add region ' => '상위지역명',
     'Add nation' => '국가등록',
+    'follower' => '뒤쫓는 사람',
+
 ];
