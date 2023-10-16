@@ -132,7 +132,25 @@
                                     <div class="name_and_package_member">
                                         <div class="item-text">{{Auth::user()->name}}</div>
                                         @if($company)
-                                            <span class="package_member">( {{__('home.Member')}} : {{$company->member}} )</span>
+                                            @php
+                                                $location = locationHelper();
+                                                $langWithLocation = 'lang_'.$locale;
+                                            @endphp
+                                            <span class="package_member d-flex">( {{__('home.Member')}} :
+
+                                                @if(locationHelper() == 'kr')
+                                                    @php $nameMember = \App\Models\Member::where('name',$company->member)->value($langWithLocation); @endphp
+                                                    <div class="item-text">{{ $nameMember }}</div>
+                                                @elseif(locationHelper() == 'cn')
+                                                    <div class="item-text">{{$nameMember}}</div>
+                                                @elseif(locationHelper() == 'jp')
+                                                    <div class="item-text">{{$nameMember}}</div>
+                                                @elseif(locationHelper() == 'vi')
+                                                    <div class="item-text">{{$nameMember }}</div>
+                                                @else
+                                                    <div class="item-text">{{$nameMember }}</div>
+                                                @endif
+                                            )</span>
                                         @endif
                                     </div>
 
