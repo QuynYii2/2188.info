@@ -9341,6 +9341,7 @@ header.card-header a {
 
 .avatar-upload .avatar-edit input + label:after,
 .image-upload .image-edit input + label:after {
+  font-family: "FontAwesome";
   color: #757575;
   position: absolute;
   top: 10px;

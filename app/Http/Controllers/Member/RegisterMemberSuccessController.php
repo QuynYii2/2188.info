@@ -12,6 +12,7 @@ use App\Models\MemberPartner;
 use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
 use App\Models\Product;
+use App\Models\StaffUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -73,19 +74,7 @@ class RegisterMemberSuccessController extends Controller
 
     public function staffInfo($memberId)
     {
-
-        $memberRepresent = \App\Models\MemberRegisterPersonSource::find($memberId);
-        if (!$memberRepresent) {
-            return back();
-        }
-        $memberSource = \App\Models\MemberRegisterPersonSource::find($memberRepresent->person);
-        if ($memberSource){
-            $user1 = \App\Models\User::where('email', $memberSource->email)->first();
-        }
-        $memberSource = \App\Models\MemberRegisterPersonSource::find($memberRepresent->person);
-        $findMember = $memberRepresent->email;
-        $userRepresent = \App\Models\User::where('email', $findMember)->first();
-        $staffUsers = \App\Models\StaffUsers::where('parent_user_id', $userRepresent->id)->get();
+        $staffUsers = StaffUsers::where('parent_user_id', Auth::user()->id);
         return view('frontend.pages.member.tab-staff-member',compact('staffUsers'));
     }
     public function memberParent(Request $request, $id)
