@@ -197,8 +197,14 @@
             }
 
             async function getListAddressChild(code, name, element) {
-                let url = '{{ route('admin.address.show', ['code' => ':code']) }}';
-                url = url.replace(':code', code);
+                let url = '';
+                if (checkLevel == 1) {
+                    url = '{{ route('admin.address.show.region', ['code' => ':code']) }}';
+                    url = url.replace(':code', code);
+                } else {
+                    url = '{{ route('admin.address.show', ['code' => ':code']) }}';
+                    url = url.replace(':code', code);
+                }
                 let result = await fetch(url);
                 let data_num = element.getAttribute('data-num');
                 duyetTheTr(data_num);
@@ -280,7 +286,7 @@
                     <span
                             class="tit cursor-pointer" data-num="${index_main}"
                             onclick="getListAddressChild('${cItem.code}', '${cItem.name_en ?? cItem.name ?? ''}', this)">${cItem.name_en ?? ''} ${cItem.name ?? ''}</span>
-                    <span class="skyblue ml10"> <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion" onclick="createOrEditRegion('${cItem.id}','${cItem.name_en ?? cItem.name}', '${MODE_EDIT}')">▤</span>
+                    <span class="skyblue ml10"> <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion" onclick="createOrEditRegion('${cItem.id}','${cItem.name_en ?? cItem.name}', '${MODE_EDIT}')">{{ __('home.edit') }}</span>
                     </span></span>`
                         })
                         str += `</td>`;

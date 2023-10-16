@@ -32,6 +32,27 @@ class AdminAddressController extends Controller
             });
         return response()->json($listAddress);
     }
+    public function showRegion($code)
+    {
+        $listAddress = Address::where('code', 'like', $code . '!__')
+            ->orderBy('sort_index', 'asc')
+            ->cursor()
+            ->map(function ($pAddress) {
+                $cAddresses = Address::where('code', 'like', $pAddress->code . '!__')
+                    ->orderBy('sort_index', 'asc')
+                    ->get();
+
+                return [
+                    'id' => $pAddress->id,
+                    'code' => $pAddress->code,
+                    'name' => $pAddress->name,
+                    'name_en' => $pAddress->name_en,
+                    'total_child' => $cAddresses->count(),
+                    'child' => $cAddresses->toArray(),
+                ];
+            });
+        return response()->json($listAddress);
+    }
 
     public function index()
     {
@@ -72,13 +93,11 @@ class AdminAddressController extends Controller
         $code = (new HomeController())->generateRandomString(2);
 
         $name = $request->input('name');
+        $nameEN = $request->input('name_en');
         $sort_index = $request->input('sort_index');
         $status = $request->input('status');
         $isShow = $request->input('isShow') ?? 1;
         $created_by = Auth::user()->id;
-
-        $ld = new TranslateController();
-        $nameEN = $ld->translateText($name, 'en');
 
         $codeParent = $request->input('up_code');
 
