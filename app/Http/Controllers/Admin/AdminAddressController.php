@@ -74,7 +74,7 @@ class AdminAddressController extends Controller
         $name = $request->input('name');
         $sort_index = $request->input('sort_index');
         $status = $request->input('status');
-        $isShow = $request->input('isShow');
+        $isShow = $request->input('isShow') ?? 1;
         $created_by = Auth::user()->id;
 
         $ld = new TranslateController();

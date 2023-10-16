@@ -399,9 +399,10 @@
                     </div>
                     <div class="col-lg-3">
                         <label for="address_en">{{ __('home.Address detail') }}:</label>
-                        <input type="text" name="address_en" id="address_en" class="form-control"
+                        <input type="text" name="detail-address" id="detail-address" class="form-control"
                                value="{{ $exitsMember ? $exitsMember->address_en : old('address_en') }}">
                     </div>
+                    <input type="hidden" id="address_code" name="address_code">
                 </div>
             </td>
         </tr>

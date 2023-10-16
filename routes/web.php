@@ -385,3 +385,6 @@ Route::get('/renderCart', [CartController::class, 'renderCart'])->name('renderCa
 Route::post('deleteCart/{id}', [CartController::class, 'deleteCart'])->name('deleteCart');
 // CheckID
 Route::post('/checkID', [RegisterMemberController::class, 'checkID'])->name('member.checkId');
+
+Route::get('/address/list', [\App\Http\Controllers\AddressController::class, 'index'])->name('address.index');
+Route::get('/address/detail/{code}', [\App\Http\Controllers\AddressController::class, 'show'])->name('address.detail');

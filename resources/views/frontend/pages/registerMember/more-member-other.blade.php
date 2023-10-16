@@ -133,10 +133,10 @@
                         <input type="text" name="detail-address" id="detail-address" class="form-control"
                                value="{{ $exitsMember ? $exitsMember->address_en : old('address_en') }}">
                     </div>
+                    <input type="hidden" id="address_code" name="address_code">
                 </div>
             </td>
         </tr>
-
         <tr>
             <td>
                 <label for="detail-address-1"> {{ __('home.Language Local') }} </label>
