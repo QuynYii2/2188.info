@@ -172,7 +172,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="handleSelectRegion()">Save changes</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="handleSelectRegion()">
+                        Save changes
+                    </button>
                 </div>
             </div>
         </div>
@@ -182,6 +184,7 @@
         $(document).ready(function () {
             $('.inputCheckboxCategory').on('click', function () {
                 let count = document.querySelectorAll('.inputCheckboxCategory:checked').length
+                console.log(count)
                 if (count > 3) {
                     $('.inputCheckboxCategory:checkbox:not(:checked)').prop('disabled', true);
                 } else {
@@ -191,6 +194,8 @@
 
             $('.inputCheckboxCategory1').on('click', function () {
                 let count = document.querySelectorAll('.inputCheckboxCategory1:checked').length
+                console.log(count)
+
                 if (count > 3) {
                     $('.inputCheckboxCategory1:checkbox:not(:checked)').prop('disabled', true);
                 } else {
@@ -200,6 +205,8 @@
 
             $('.inputCheckboxCategory2').on('click', function () {
                 let count = document.querySelectorAll('.inputCheckboxCategory2:checked').length
+                console.log(count)
+
                 if (count > 3) {
                     $('.inputCheckboxCategory2:checkbox:not(:checked)').prop('disabled', true);
                 } else {
@@ -220,12 +227,10 @@
             let nowTime = new Date().toLocaleDateString('en-GB');
             $('#datetime_register').val(nowTime);
         }
-
         getDate();
     </script>
     <script>
         var expanded = false, expanded1 = false, expanded2 = false;
-
         function showCheckboxes() {
             var code_1 = document.getElementById("code_1");
             if (!expanded) {
@@ -253,7 +258,6 @@
                 expanded = false;
             }
         }
-
         function showCheckboxes1() {
             var code_3 = document.getElementById("code_3");
             if (!expanded1) {

@@ -2,10 +2,10 @@
     @php
         $getMemberId = \App\Models\MemberRegisterPersonSource::where('email' , Auth::user()->email)->value('member_id');
     @endphp
-    <div> <a href="{{ route('stand.register.member.index', $company->id) }}"
-            class="btn btn-warning mr-2 d-inline-block">{{ __('home.Booth') }}</a> </div>
     @if($getMemberId == $company->id)
         <div>
+            <a href="{{ route('stand.register.member.index', $company->id) }}"
+               class="btn btn-warning mr-2 d-inline-block">{{ __('home.Booth') }}</a>
             <a href="{{route('partner.register.member.index')}}"
                class="btn btn-primary d-inline-block">{{ __('home.Partner List') }}</a>
             @if(getTypeMember()->member == 'LOGISTIC')
