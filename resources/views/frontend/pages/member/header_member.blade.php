@@ -1,26 +1,32 @@
 <div class="d-flex justify-content-between align-items-center p-3">
-    <div>
-        <a href="{{ route('stand.register.member.index', $company->id) }}"
-           class="btn btn-warning mr-2 d-inline-block">{{ __('home.Booth') }}</a>
-        <a href="{{route('partner.register.member.index')}}"
-           class="btn btn-primary d-inline-block">{{ __('home.Partner List') }}</a>
-        @if(getTypeMember()->member == 'LOGISTIC')
-            <a href="{{ route('seller.products.index') }}"
-               class="btn btn-primary d-inline-block">{{ __('home.manager_products') }}</a>
-        @endif
-    </div>
-    <div>
-        <a href="{{route('chat.message.received')}}"
-           class="btn btn-primary mr-2 d-inline-block">{{ __('home.Message received') }}</a>
-        <a href="{{route('chat.message.sent')}}"
-           class="btn btn-primary mr-2 d-inline-block">{{ __('home.Message sent') }}</a>
-    </div>
-    <div>
-        <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
-           data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
-        <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
-           data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
-    </div>
+    @php
+        $getMemberId = \App\Models\MemberRegisterPersonSource::where('email' , Auth::user()->email)->value('member_id');
+    @endphp
+    <div> <a href="{{ route('stand.register.member.index', $company->id) }}"
+            class="btn btn-warning mr-2 d-inline-block">{{ __('home.Booth') }}</a> </div>
+    @if($getMemberId == $company->id)
+        <div>
+            <a href="{{route('partner.register.member.index')}}"
+               class="btn btn-primary d-inline-block">{{ __('home.Partner List') }}</a>
+            @if(getTypeMember()->member == 'LOGISTIC')
+                <a href="{{ route('seller.products.index') }}"
+                   class="btn btn-primary d-inline-block">{{ __('home.manager_products') }}</a>
+            @endif
+        </div>
+        <div>
+            <a href="{{route('chat.message.received')}}"
+               class="btn btn-primary mr-2 d-inline-block">{{ __('home.Message received') }}</a>
+            <a href="{{route('chat.message.sent')}}"
+               class="btn btn-primary mr-2 d-inline-block">{{ __('home.Message sent') }}</a>
+        </div>
+        <div>
+            <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
+               data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
+            <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
+               data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
+        </div>
+    @endif
+
 </div>
 
 <div class="modal fade" id="exampleModalDemo" role="dialog" aria-labelledby="exampleModal" aria-hidden="true">

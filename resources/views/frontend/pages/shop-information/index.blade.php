@@ -608,7 +608,6 @@
         </div>
         <div class="container-fluid">
             <div class="row">
-
                 <div class="productView-description">
                     <div class="tab-content container-fluid" id="myTabContent">
                         <div class="tab-pane fade show active" id="product" role="tabpanel"

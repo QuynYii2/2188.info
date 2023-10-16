@@ -225,7 +225,7 @@ class ProductController extends Controller
             }
         }
 
-        return redirect(route('checkout.show'));
+        return back();
     }
 
     public function cartMemberProduct(Request $request)
