@@ -388,3 +388,4 @@ Route::post('/checkID', [RegisterMemberController::class, 'checkID'])->name('mem
 
 Route::get('/address/list', [\App\Http\Controllers\AddressController::class, 'index'])->name('address.index');
 Route::get('/address/detail/{code}', [\App\Http\Controllers\AddressController::class, 'show'])->name('address.detail');
+Route::get('/address/detail-region/{code}', [\App\Http\Controllers\AddressController::class, 'showRegion'])->name('address.show.region');
