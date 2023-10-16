@@ -66,6 +66,13 @@
 
 <tr>
     <script>
+        $(document).ready(function () {
+            $('#modal-address').on('shown.bs.modal', function () {
+                getListAddress();
+            });
+        });
+    </script>
+    <script>
         getListAddress();
         let nation_code = nation_name = '';
         let arrAddress = [];
@@ -96,7 +103,7 @@
                 url = '{{ route('address.show.region', ['code' => ':code']) }}';
                 url = url.replace(':code', code);
             } else {
-                url = '{{ route('address.show', ['code' => ':code']) }}';
+                url = '{{ route('address.show.region', ['code' => ':code']) }}';
                 url = url.replace(':code', code);
             }
             let result = await fetch(url);
@@ -154,6 +161,7 @@
         function handleSelectRegion() {
             let add_3 = '';
             let add_3_en = '';
+            resetAddress();
             arrAddress.forEach((value, index) => {
                 if (index == 0) {
                     $('#countries-select').val(value.name_en)
@@ -173,5 +181,15 @@
                 $('#provinces-select-1').val(add_3);
             }
             $('#address_code').val(nation_code);
+        }
+
+        function resetAddress() {
+            $('#countries-select').val('')
+            $('#countries-select-1').val('')
+            $('#cities-select').val('')
+            $('#cities-select-1').val('')
+            $('#provinces-select').val('');
+            $('#provinces-select-1').val('');
+            $('#address_code').val('');
         }
     </script>
