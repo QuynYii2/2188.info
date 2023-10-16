@@ -197,8 +197,14 @@
             }
 
             async function getListAddressChild(code, name, element) {
-                let url = '{{ route('admin.address.show', ['code' => ':code']) }}';
-                url = url.replace(':code', code);
+                let url = '';
+                if (checkLevel == 1) {
+                    url = '{{ route('admin.address.show.region', ['code' => ':code']) }}';
+                    url = url.replace(':code', code);
+                } else {
+                    url = '{{ route('admin.address.show', ['code' => ':code']) }}';
+                    url = url.replace(':code', code);
+                }
                 let result = await fetch(url);
                 let data_num = element.getAttribute('data-num');
                 duyetTheTr(data_num);
