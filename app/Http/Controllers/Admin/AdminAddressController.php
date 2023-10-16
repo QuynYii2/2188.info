@@ -114,15 +114,12 @@ class AdminAddressController extends Controller
         $id = $request->input('up_code');
         $address = Address::find($id);
         $address->name = $request->input('name');
+        $address->name_en = $request->input('name_en');
         $address->sort_index = $request->input('sort_index');
         $address->status = $request->input('status');
         $address->isShow = $request->input('isShow');
         $address->updated_by = Auth::user()->id;
 
-        $ld = new TranslateController();
-        $nameEN = $ld->translateText($request->input('name'), 'en');
-
-        $address->name_en = $nameEN;
         $address->save();
     }
 
