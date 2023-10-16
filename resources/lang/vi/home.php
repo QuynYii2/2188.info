@@ -993,7 +993,7 @@ return [
     'no' => 'Không',
     'stt' => 'Số thứ tự',
     'Name (Own language)' => 'Tên (Ngôn ngữ riêng)',
-    'Add region ' => 'Thêm khu vực',
+    'Add region' => 'Thêm khu vực',
     'Add nation' => 'Thêm quốc gia',
     'follower' => 'Người theo dõi',
 

@@ -57,6 +57,7 @@ class AdminAddressController extends Controller
     public function index()
     {
         $states = Address::where('code', 'not like', '%!%')
+            ->orderBy('sort_index', 'asc')
             ->cursor()
             ->map(function ($state) {
                 $cities = Address::where('code', 'like', $state->code . '!__')

@@ -39,8 +39,8 @@
                     @include('frontend.pages.registerMember.regionAddress')
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="handleSelectRegion()">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="handleSelectRegion()">{{ __('home.save changes') }}</button>
                 </div>
             </div>
         </div>
