@@ -68,11 +68,26 @@ class RegisterMemberSuccessController extends Controller
         if (!$products->isEmpty()) {
             $firstProduct = $products[0];
         }
-
-
-        return view('frontend.pages.member.stand-member', compact('company', 'currency','products', 'firstProduct'));
+        return view('frontend.pages.member.stand-member', compact('company', 'currency','products', 'firstProduct' , 'id'));
     }
 
+    public function staffInfo($memberId)
+    {
+
+        $memberRepresent = \App\Models\MemberRegisterPersonSource::find($memberId);
+        if (!$memberRepresent) {
+            return back();
+        }
+        $memberSource = \App\Models\MemberRegisterPersonSource::find($memberRepresent->person);
+        if ($memberSource){
+            $user1 = \App\Models\User::where('email', $memberSource->email)->first();
+        }
+        $memberSource = \App\Models\MemberRegisterPersonSource::find($memberRepresent->person);
+        $findMember = $memberRepresent->email;
+        $userRepresent = \App\Models\User::where('email', $findMember)->first();
+        $staffUsers = \App\Models\StaffUsers::where('parent_user_id', $userRepresent->id)->get();
+        return view('frontend.pages.member.tab-staff-member',compact('staffUsers'));
+    }
     public function memberParent(Request $request, $id)
     {
         (new HomeController())->getLocale($request);
@@ -94,11 +109,6 @@ class RegisterMemberSuccessController extends Controller
         $memberList = null;
         if ($memberPerson) {
             $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
-
-//            $memberList = MemberPartner::where('status', MemberPartnerStatus::ACTIVE)
-//                ->orWhere('company_id_source', $company->id)
-//                ->orWhere('company_id_follow', $company->id)->get();
-
             $memberList = MemberPartner::where([
                 ['company_id_source', $company->id],
                 ['status', MemberPartnerStatus::ACTIVE]

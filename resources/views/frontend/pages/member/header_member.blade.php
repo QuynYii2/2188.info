@@ -1,30 +1,42 @@
-<div class="d-flex justify-content-between align-items-center p-3">
+<div class="">
     @php
         $getMemberId = \App\Models\MemberRegisterPersonSource::where('email' , Auth::user()->email)->value('member_id');
+        $memberId = \App\Models\MemberRegisterPersonSource::where('member_id',$getMemberId)->value('id');
     @endphp
     @if($getMemberId == $company->id)
-        <div>
-            <a href="{{ route('stand.register.member.index', $company->id) }}"
-               class="btn btn-warning mr-2 d-inline-block">{{ __('home.Booth') }}</a>
-            <a href="{{route('partner.register.member.index')}}"
-               class="btn btn-primary d-inline-block">{{ __('home.Partner List') }}</a>
-            @if(getTypeMember()->member == 'LOGISTIC')
-                <a href="{{ route('seller.products.index') }}"
-                   class="btn btn-primary d-inline-block">{{ __('home.manager_products') }}</a>
-            @endif
+        <div  class="d-flex justify-content-between align-items-center p-3">
+            <div>
+                <a href="{{ route('stand.register.member.index', $company->id) }}"
+                   class="btn btn-warning mr-2 d-inline-block">{{ __('home.Booth') }}</a>
+                <a href="{{route('partner.register.member.index')}}"
+                   class="btn btn-primary d-inline-block">{{ __('home.Partner List') }}</a>
+                @if(getTypeMember()->member == 'LOGISTIC')
+                    <a href="{{ route('seller.products.index') }}"
+                       class="btn btn-primary d-inline-block">{{ __('home.manager_products') }}</a>
+                @endif
+            </div>
+            <div>
+                <a href="{{route('chat.message.received')}}"
+                   class="btn btn-primary mr-2 d-inline-block">{{ __('home.Message received') }}</a>
+                <a href="{{route('chat.message.sent')}}"
+                   class="btn btn-primary mr-2 d-inline-block">{{ __('home.Message sent') }}</a>
+            </div>
+            <div>
+                <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
+                   data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
+                <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
+                   data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
+            </div>
         </div>
-        <div>
-            <a href="{{route('chat.message.received')}}"
-               class="btn btn-primary mr-2 d-inline-block">{{ __('home.Message received') }}</a>
-            <a href="{{route('chat.message.sent')}}"
-               class="btn btn-primary mr-2 d-inline-block">{{ __('home.Message sent') }}</a>
+        <div class="d-flex justify-content-between align-items-center p-3">
+            <a href="{{ route('shop.information.show', Auth::user()->id) }}" class="btn btn-success mr-3">{{ __('home.info_company') }}</a>
+            <a href="{{route('login')}}" class="btn btn-success mr-3">{{ __('home.Registrator Information') }}</a>
+            <a href="{{route('login')}}" class="btn btn-success mr-3">{{ __('home.Representative Information') }}</a>
+            <a href="{{route('staff.member.info', $memberId)}}" class="btn btn-success mr-3">{{ __('home.Staffs Information') }}</a>
+            <a href="{{route('home')}}" class="btn btn-success">{{ __('home.Home') }}</a>
         </div>
-        <div>
-            <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
-               data-target="#exampleModalDemo">{{ __('home.Purchase') }}</a>
-            <a href="#" class="btn btn-primary mr-2" data-toggle="modal"
-               data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
-        </div>
+
+
     @endif
 
 </div>

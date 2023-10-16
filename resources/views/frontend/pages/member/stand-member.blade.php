@@ -126,6 +126,7 @@
                 </div>
             </div>
     </div>
+
     <div class="mt-3 container">
         <div id="data-wrapper">
             @include('products-member')
