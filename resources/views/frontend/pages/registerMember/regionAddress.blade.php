@@ -69,6 +69,7 @@
         getListAddress();
         let nation_code = nation_name = '';
         let arrAddress = [];
+        let checkLevel = 1;
 
         const MODE_CREATE = 'create'
         const MODE_EDIT = 'edit'
@@ -77,29 +78,43 @@
             let url = '{{ route('address.index') }}';
             let result = await fetch(url);
             if (result.ok) {
+                checkLevel = 1;
                 arrAddress = [];
-                const data = await result.json();
+                let data = await result.json();
                 document.getElementById('p-r-table').innerHTML = '';
                 document.getElementById('title-div').style.display = 'none';
+                if (typeof data === 'object') {
+                    data = Object.values(data);
+                }
                 makeHTMLFromJson(data);
             }
         }
 
         async function getListAddressChild(code, name, name_en) {
-            let url = '{{ route('address.detail', ['code' => ':code']) }}';
-            url = url.replace(':code', code);
+            let url = '';
+            if (checkLevel == 1) {
+                url = '{{ route('address.show.region', ['code' => ':code']) }}';
+                url = url.replace(':code', code);
+            } else {
+                url = '{{ route('address.show', ['code' => ':code']) }}';
+                url = url.replace(':code', code);
+            }
             let result = await fetch(url);
             arrAddress.push({
                 name: name,
                 name_en: name_en
             });
             if (result.ok) {
-                const data = await result.json();
+                let data = await result.json();
                 nation_code = code;
                 nation_name = name ?? name_en;
                 document.getElementById('title-div').style.display = 'block';
                 document.getElementById('title-main').innerHTML = name ?? name_en;
+                if (typeof data === 'object') {
+                    data = Object.values(data);
+                }
                 makeHTMLFromJson(data);
+                checkLevel++;
             }
         }
 

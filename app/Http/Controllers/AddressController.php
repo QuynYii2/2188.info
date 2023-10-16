@@ -107,6 +107,31 @@ class AddressController extends Controller
         return response()->json($listAddress);
     }
 
+    public function showRegion($code)
+    {
+        $listAddress = Address::where('code', 'like', $code . '!__')
+            ->orderBy('sort_index', 'asc')
+            ->cursor()
+            ->map(function ($pAddress) {
+                $cAddresses = Address::where('code', 'like', $pAddress->code . '!__')
+                    ->orderBy('sort_index', 'asc')
+                    ->where('isShow', 1)
+                    ->get();
+
+                return [
+                    'id' => $pAddress->id,
+                    'code' => $pAddress->code,
+                    'name' => $pAddress->name,
+                    'name_en' => $pAddress->name_en,
+                    'total_child' => $cAddresses->count(),
+                    'child' => $cAddresses->toArray(),
+                ];
+            })->filter(function ($cAddress) {
+                return $cAddress['total_child'] != 0;
+            });
+        return response()->json($listAddress);
+    }
+
 
     /**
      * Show the form for editing the specified resource.
