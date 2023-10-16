@@ -79,10 +79,10 @@ class AdminAddressController extends Controller
     {
         switch ($request->input('mode')) {
             case 'create':
-                $this->create($request);
+                return $this->create($request);
                 break;
             case 'edit':
-                $this->update($request);
+                return $this->update($request);
                 break;
         }
         return back();
@@ -126,6 +126,8 @@ class AdminAddressController extends Controller
         $address->name_en = $nameEN;
 
         $address->save();
+
+        return $address;
     }
 
     public function update($request)
@@ -147,6 +149,8 @@ class AdminAddressController extends Controller
         $address->updated_by = Auth::user()->id;
 
         $address->save();
+
+        return $address;
     }
 
     public function changeStatus($id)

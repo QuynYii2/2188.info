@@ -66,7 +66,7 @@
                 <tr>
                     <th>
                         <button id="btnMod2" name="btnMod2" class="sky"
-                                onclick="createOrEditRegion('','', `${MODE_CREATE}`)"
+                                onclick="createOrEditRegion('','', `${MODE_CREATE}`, `${elementTh}`, -1)"
                                 data-toggle="modal" data-target="#createRegion"
                                 style="margin-top:0; width:230px;">+ {{ __('home.Add region ') }}
                         </button>
@@ -150,6 +150,9 @@
         let checkLevel = 1;
         let index_main = 1;
         let nation_code = nation_name = '';
+        let elementTh = 'th';
+        let elementTd = 'td';
+        let modeForAppend = elementForAppend = indexForAppend = ''
 
         const MODE_CREATE = 'create'
         const MODE_EDIT = 'edit'
@@ -185,8 +188,13 @@
             }
         }
 
-        function createOrEditRegion(code, name, mode) {
-            resetFormModal()
+        function createOrEditRegion(code, name, mode, element, index) {
+
+            modeForAppend = mode;
+            elementForAppend = element;
+            indexForAppend = index;
+
+            resetFormModal();
             document.getElementById('up_name').value = name;
             document.getElementById('up_code').value = code;
             document.getElementById('mode').value = mode;
@@ -277,12 +285,12 @@
 
                 str += `<tr data-num="${index_main}"><th class="cont ${classTh} "><div class="text-center"><span class="cursor-pointer">${pItem.name_en ?? pItem.name ?? ''}</span></div>
                                     <div class="mt5 text-center"><span class="minBtn ml20"> <span class="cursor-pointer"
-                                                                                                             onclick="createOrEditRegion('${pItem.code}','${pItem.name_en ?? pItem.name}', '${MODE_CREATE}')"
+                                                                                                             onclick="createOrEditRegion('${pItem.code}','${pItem.name_en ?? pItem.name}', '${MODE_CREATE}', '${elementTd}', '${index}' )"
                                                                                                              data-toggle="modal" data-target="#createRegion" >국가등록</span></span>
                                     </div>
                                 </th>`
                 if (pItem.total_child) {
-                    str += `<td class="${classTd}">`;
+                    str += `<td class="${classTd}" id="td-region-${index}">`;
                     pItem.child.forEach((cItem) => {
                         str += ` <span class="nation">`;
                         if (isTable) {
@@ -291,7 +299,8 @@
                         str += `<span
                             class="tit cursor-pointer" data-num="${index_main}"
                             onclick="getListAddressChild('${cItem.code}', '${cItem.name_en ?? cItem.name ?? ''}', this)">${cItem.name_en ?? ''} ${cItem.name ?? ''}</span>
-                    <span class="skyblue ml10"> <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion" onclick="createOrEditRegion('${cItem.id}','${cItem.name_en ?? cItem.name}', '${MODE_EDIT}')">▤</span>
+                    <span class="skyblue ml10"> <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion"
+                    onclick="createOrEditRegion('${cItem.id}','${cItem.name_en ?? cItem.name}', '${MODE_EDIT}', '${elementTd}', '${index}')">▤</span>
                     </span></span>`
                     })
                     str += `</td>`;
@@ -309,7 +318,7 @@
 
         }
 
-        function handleSubmitFormAddress() {
+        async function handleSubmitFormAddress() {
             const formData = new FormData();
 
             formData.append('up_name', document.getElementById('up_name').value);
@@ -321,11 +330,46 @@
             formData.append('mode', document.getElementById('mode').value);
             formData.append('_token', document.querySelector('input[name="_token"]').value);
 
-            fetch('{{ route("admin.address.modify") }}', {
+            const result = await fetch('{{ route("admin.address.modify") }}', {
                 method: 'POST',
                 body: formData
             });
+            if (result.ok) {
+                const data = await result.json();
+                appendElementTable(data);
+            }
+        }
 
+        function appendElementTable(data) {
+            switch (modeForAppend) {
+                case MODE_CREATE:
+                    if (elementForAppend == elementTd) {
+                        const newTD = document.createElement('td');
+                        newTD.innerHTML = `<span class="nation"><span class="tit cursor-pointer orange "
+                        onclick="setIsShow('${data.id}')" id="myStar-${data.id}">★ </span>
+                        <span class="tit cursor-pointer" data-num="1" onclick="getListAddressChild('${data.code}', '${data.name}', this)">${data.name} ${data.name_en}</span>
+                    <span class="skyblue ml10"> <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion" onclick="createOrEditRegion('${data.id}','${data.name}', '${MODE_EDIT}', '${elementTd}', '3')">▤</span>
+                    </span></span>`;
+
+                        const targetElement = document.getElementById('td-region-' + indexForAppend)
+                        targetElement.appendChild(newTD);
+                    } else if (elementForAppend == elementTh) {
+                        const newTR = document.createElement('tr');
+                        const newTH = document.createElement('th');
+
+                        newTH.innerHTML = `<th class="cont bg-color-th1 "><div class="text-center"><span class="cursor-pointer">${data.name_en}</span></div>
+                                    <div class="mt5 text-center"><span class="minBtn ml20"> <span class="cursor-pointer" onclick="createOrEditRegion('${data.code}','${data.name}', '${MODE_CREATE}', '${elementTd}', '11' )" data-toggle="modal" data-target="#createRegion">국가등록</span></span>
+                                    </div>
+                                </th>`
+
+                        const targetElement = document.getElementById('p-table')
+                        newTR.appendChild(newTH)
+                        targetElement.appendChild(newTR);
+                    }
+                    break;
+                case MODE_EDIT:
+                    break;
+            }
         }
     </script>
 @endsection
