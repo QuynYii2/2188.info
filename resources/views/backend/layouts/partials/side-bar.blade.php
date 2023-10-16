@@ -283,14 +283,10 @@
             </li>
             <li>
                 <a class="sidebar item sidebarUrl" href="#"><i
-                            class="fa-regular fa-clipboard"></i> Quản lý địa chỉ nha
+                            class="fa-regular fa-clipboard"></i>{{ __('home.Address management') }}
                 </a>
                 <ul class='sub-items pl-3'>
-                    <li><a class="sidebarUrl" href="{{route('address.manage.index')}}">Danh sách địa chỉ</a>
-                    </li>
-                    <li><a class="sidebarUrl" href="{{route('address.manage.add')}}">Thêm</a>
-                    </li>
-                    <li><a class="sidebarUrl" href="{{route('admin.processCreate.users')}}">Sửa</a>
+                    <li><a class="sidebarUrl" href="{{route('address.manage.index')}}">{{ __('home.Address management') }}</a>
                     </li>
                 </ul>
             </li>

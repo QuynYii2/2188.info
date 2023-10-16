@@ -958,7 +958,7 @@ return [
     'no' => 'no',
     'stt' => 'Order of sorting',
     'Name (Own language)' => 'Name (Own language)',
-    'Add region ' => 'Add region',
+    'Add region' => 'Add region',
     'Add nation' => 'Add nation',
     'follower' => 'follower',
 

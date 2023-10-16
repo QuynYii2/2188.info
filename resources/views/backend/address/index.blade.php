@@ -68,7 +68,7 @@
                         <button id="btnMod2" name="btnMod2" class="sky"
                                 onclick="createOrEditRegion('','', `${MODE_CREATE}`, `${elementTh}`, -1)"
                                 data-toggle="modal" data-target="#createRegion"
-                                style="margin-top:0; width:230px;">+ {{ __('home.Add region ') }}
+                                style="margin-top:0; width:230px;">+ {{ __('home.Add continent') }}
                         </button>
                     </th>
                     <td></td>
@@ -153,6 +153,8 @@
         let elementTh = 'th';
         let elementTd = 'td';
         let modeForAppend = elementForAppend = indexForAppend = ''
+        const ID_MASTER = 1;
+        const ID_CHILD = 2;
 
         const MODE_CREATE = 'create'
         const MODE_EDIT = 'edit'
@@ -167,6 +169,7 @@
                 document.getElementById('p-table').innerHTML = '';
                 document.getElementById('c-table').innerHTML = '';
                 document.getElementById('title-div').style.display = 'none';
+                setTextButton(ID_MASTER);
                 makeHTMLFromJson(data);
             }
         }
@@ -228,6 +231,7 @@
                     document.getElementById('title-div').style.display = 'block';
                     document.getElementById('title-main').innerHTML = name;
                 }
+                setTextButton(ID_CHILD);
                 makeHTMLFromJson(data);
                 checkLevel++;
                 index_main++;
@@ -284,9 +288,9 @@
                 const classTd = index % 2 == 0 ? 'bg-color-td2' : 'bg-color-td1';
 
                 str += `<tr data-num="${index_main}"><th class="cont ${classTh} "><div class="text-center"><span class="cursor-pointer">${pItem.name_en ?? pItem.name ?? ''}</span></div>
-                                    <div class="mt5 text-center"><span class="minBtn ml20"> <span class="cursor-pointer"
+                                    <div class="mt5 text-center"><span class="minBtn ml20"> <span class="cursor-pointer button-create-region"
                                                                                                              onclick="createOrEditRegion('${pItem.code}','${pItem.name_en ?? pItem.name}', '${MODE_CREATE}', '${elementTd}', '${index}' )"
-                                                                                                             data-toggle="modal" data-target="#createRegion" >국가등록</span></span>
+                                                                                                             data-toggle="modal" data-target="#createRegion">{{ __('home.Add nation') }}</span></span>
                                     </div>
                                 </th>`
                 if (pItem.total_child) {
@@ -376,6 +380,19 @@
                     document.getElementById('span-id-' + data.code).innerHTML = '';
                     document.getElementById('span-id-' + data.code).append(newSpan);
 
+                    break;
+            }
+        }
+
+        function setTextButton(id) {
+            switch (id) {
+                case ID_MASTER:
+                    $('#btnMod2').textContent = '{{ __('home.Add continent') }}';
+                    $('.button-create-region').textContent = '{{ __('home.Add nation') }}'
+                    break;
+                case ID_CHILD:
+                    $('#btnMod2').textContent = '{{ __('home.Add region') }}';
+                    $('.button-create-region').textContent = '{{ __('home.Add region') }}'
                     break;
             }
         }
