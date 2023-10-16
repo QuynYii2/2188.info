@@ -267,7 +267,7 @@
                     const classTh = index % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
                     const classTd = index % 2 == 0 ? 'bg-color-td2' : 'bg-color-td1';
 
-                    str += `<tr data-num="${index_main}"><th class="cont ${classTh} "><div class="text-center"><span onclick="fnRegionDetailPop('10001',2)">${pItem.name_en ?? pItem.name ?? ''}</span></div>
+                    str += `<tr data-num="${index_main}"><th class="cont ${classTh} "><div class="text-center"><span class="cursor-pointer">${pItem.name_en ?? pItem.name ?? ''}</span></div>
                                     <div class="mt5 text-center"><span class="minBtn  ml20"> <span class="cursor-pointer"
                                                                                                              onclick="createOrEditRegion('${pItem.code}','${pItem.name_en ?? pItem.name}', '${MODE_CREATE}')"
                                                                                                              data-toggle="modal" data-target="#createRegion" >국가등록</span></span>
