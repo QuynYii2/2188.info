@@ -93,13 +93,11 @@ class AdminAddressController extends Controller
         $code = (new HomeController())->generateRandomString(2);
 
         $name = $request->input('name');
+        $nameEN = $request->input('name_en');
         $sort_index = $request->input('sort_index');
         $status = $request->input('status');
         $isShow = $request->input('isShow') ?? 1;
         $created_by = Auth::user()->id;
-
-        $ld = new TranslateController();
-        $nameEN = $ld->translateText($name, 'en');
 
         $codeParent = $request->input('up_code');
 
