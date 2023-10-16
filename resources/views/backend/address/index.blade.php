@@ -146,7 +146,7 @@
             getListAddress();
             let checkLevel = 1;
             let index_main = 1;
-            let nation_code, nation_name;
+            let nation_code = nation_name = '';
 
             const MODE_CREATE = 'create'
             const MODE_EDIT = 'edit'
