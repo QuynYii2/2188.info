@@ -405,7 +405,6 @@
             let isChecked2 = checkCategory('inputCheckboxCategory2');
 
             if (isChecked && isChecked1 && isChecked2) {
-                handleAfterSelectRegion();
                 $('#btnSubmitFormRegister').trigger('click');
             } else {
                 alert('Bạn chưa chọn category');
