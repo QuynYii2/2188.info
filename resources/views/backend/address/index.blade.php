@@ -153,6 +153,7 @@
         let elementTh = 'th';
         let elementTd = 'td';
         let modeForAppend = elementForAppend = indexForAppend = ''
+        let arrAddress = [];
         const ID_MASTER = 1;
         const ID_CHILD = 2;
 
@@ -171,6 +172,10 @@
                 document.getElementById('title-div').style.display = 'none';
                 setTextButton(ID_MASTER);
                 makeHTMLFromJson(data);
+                arrAddress = [{
+                    level: checkLevel,
+                    code: ''
+                }];
             }
         }
 
@@ -187,7 +192,6 @@
                     star.classList.add("orange");
                     star.classList.remove("grey");
                 }
-
             }
         }
 
@@ -235,6 +239,13 @@
                 makeHTMLFromJson(data);
                 checkLevel++;
                 index_main++;
+
+                arrAddress.push({
+                    level: checkLevel,
+                    code: code,
+                    name: name,
+                    element: element,
+                })
             }
         }
 
@@ -294,7 +305,7 @@
                                     </div>
                                 </th>`
                 if (pItem.total_child) {
-                    str += `<td class="${classTd}" id="td-region-${index}">`;
+                    str += `<td class="${classTd} w-100" id="td-region-${index}">`;
                     pItem.child.forEach((cItem) => {
                         str += ` <span class="nation" id="span-id-${cItem.code}">`;
                         if (isTable) {
@@ -351,7 +362,7 @@
                         const newTD = document.createElement('td');
                         newTD.innerHTML = `<span class="nation"><span class="tit cursor-pointer orange "
                         onclick="setIsShow('${data.id}')" id="myStar-${data.id}">★ </span>
-                        <span class="tit cursor-pointer" data-num="1" onclick="getListAddressChild('${data.code}', '${data.name}', this)">${data.name} ${data.name_en}</span>
+                        <span class="tit cursor-pointer" data-num="1" onclick="getListAddressChild('${data.code}', '${data.name}', this)">${data.name_en} ${data.name}</span>
                     <span class="skyblue ml10"> <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion" onclick="createOrEditRegion('${data.id}','${data.name}', '${MODE_EDIT}', '${elementTd}', '3')">▤</span>
                     </span></span>`;
 
@@ -395,6 +406,14 @@
                     $('.button-create-region').textContent = '{{ __('home.Add region') }}'
                     break;
             }
+        }
+
+        function handleAfterCreateOrEdit() {
+            arrAddress.forEach((data) => {
+                if (data.code) {
+                    getListAddressChild(data.code, data.name, data.element);
+                }
+            });
         }
     </script>
 @endsection
