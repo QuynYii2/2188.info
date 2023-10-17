@@ -1061,5 +1061,7 @@ return [
     'Quản lý địa chỉ nha' => '주소관리',
     'Danh sách địa chỉ' =>'주소 리스트',
     'Sửa' =>'편집',
+    'Independent Customs Clearance' => '자체통관여부',
+    'General Customs Clearance' => '일반통관',
 
 ];

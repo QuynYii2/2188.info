@@ -618,6 +618,7 @@ class HomeController extends Controller
             'address_kr' => $companyAddress,
             'email' => $email,
             'homepage' => '',
+            'datetime_register' => Carbon::now()->addHours(7),
             'status' => MemberRegisterInfoStatus::ACTIVE
         ];
 
