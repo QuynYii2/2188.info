@@ -72,10 +72,25 @@ class RegisterMemberSuccessController extends Controller
         return view('frontend.pages.member.stand-member', compact('company', 'currency','products', 'firstProduct' , 'id'));
     }
 
-    public function staffInfo($memberId)
+    public function staffInfo(Request $request, $memberId)
     {
-        $staffUsers = StaffUsers::where('parent_user_id', Auth::user()->id);
-        return view('frontend.pages.member.tab-staff-member',compact('staffUsers'));
+        (new HomeController())->getLocale($request);
+        $staffUsers = StaffUsers::where('parent_user_id', Auth::user()->id)->get();
+        $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        $company = null;
+        $memberList = null;
+        if ($memberPerson) {
+            $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
+            $memberList = MemberPartner::where([
+                ['company_id_source', $company->id],
+                ['status', MemberPartnerStatus::ACTIVE]
+            ])->get();
+        }
+        session()->forget('region');
+        if ($company && $company->member == RegisterMember::TRUST) {
+            return back();
+        }
+        return view('frontend.pages.member.tab-staff-member',compact('staffUsers','company','memberList'));
     }
     public function memberParent(Request $request, $id)
     {
