@@ -29,11 +29,17 @@
             </div>
         </div>
         <div class="d-flex justify-content-between align-items-center p-3">
-            <a href="{{ route('member.info') }}" class="btn btn-success mr-3">{{ __('home.info_company') }}</a>
-            <a href="{{route('profile.member.person')}}" class="btn btn-success mr-3">{{ __('home.Registrator Information') }}</a>
-            <a href="{{route('profile.member.represent')}}" class="btn btn-success mr-3">{{ __('home.Representative Information') }}</a>
-            <a href="{{route('staff.member.info', $memberId)}}" class="btn btn-success mr-3">{{ __('home.Staffs Information') }}</a>
-            <a href="{{route('home')}}" class="btn btn-success">{{ __('home.Home') }}</a>
+            <div>
+                <a href="{{ route('member.info') }}" class="btn btn-success mr-3">{{ __('home.info_company') }}</a>
+                <a href="{{route('profile.member.person')}}" class="btn btn-success mr-3">{{ __('home.Registrator Information') }}</a>
+                <a href="{{route('profile.member.represent')}}" class="btn btn-success mr-3">{{ __('home.Representative Information') }}</a>
+                <a href="{{route('staff.member.info', $memberId)}}" class="btn btn-success mr-3">{{ __('home.Staffs Information') }}</a>
+            </div>
+            <div>
+                <a href="{{route('checkout.show')}}" class="btn btn-success">{{ __('home.Check out now') }}</a>
+                <a href="{{route('home')}}" class="btn btn-success">{{ __('home.Home') }}</a>
+            </div>
+
         </div>
     @endif
 
