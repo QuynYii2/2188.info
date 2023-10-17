@@ -147,16 +147,13 @@ class RegisterMemberSuccessController extends Controller
         $memberList = DB::table('member_register_infos')
             ->join('member_register_person_sources', 'member_register_person_sources.member_id', '=', 'member_register_infos.id')
             ->join('users', 'users.email', '=', 'member_register_person_sources.email')
-            ->where([
-                ['users.region', $locale],
-                ['member_register_infos.id', '!=', $company->id],
-                ['member_register_infos.member', $company->member],
-                ['member_register_infos.type_business', $company->type_business],
-                ['member_register_infos.status', MemberRegisterInfoStatus::ACTIVE]
-            ])
+            ->where('users.region', $locale)
+            ->where('member_register_infos.id', '!=', $company->id)
+            ->where('member_register_infos.member', $company->member)
+            ->where('member_register_infos.status', MemberRegisterInfoStatus::ACTIVE)
             ->select('member_register_infos.*', 'users.region')
-            ->get();
-        $memberList = $memberList->unique();
+            ->distinct()
+            ->paginate(10);
 
         return view('frontend.pages.member.member-partner-locale', compact('company', 'memberList', 'locale'));
     }

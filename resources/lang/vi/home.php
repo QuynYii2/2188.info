@@ -999,6 +999,7 @@ return [
     'Quản lý địa chỉ nha' => 'Quản lý địa chỉ nha',
     'Danh sách địa chỉ' =>'Danh sách địa chỉ',
     'Sửa' =>'Sửa',
-
+    'Independent Customs Clearance' => 'Thủ tục hải quan độc lập',
+    'General Customs Clearance' => 'General Customs Clearance',
 ];
 
