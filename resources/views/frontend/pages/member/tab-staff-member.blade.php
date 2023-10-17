@@ -6,7 +6,7 @@
         $mentor = \App\Models\User::where('email', $memberPer->email)->first();
     @endphp
     <div class="container">
-        <h3 class="text-center">{{ __('home.Partner List') }}</h3>
+        <h3 class="text-center">{{ __('home.Staffs Information') }}</h3>
         @include('frontend.pages.member.header_member')
         @include('frontend.pages.member.tabs_info')
         <table class="table table-bordered">

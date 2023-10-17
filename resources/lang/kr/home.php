@@ -1063,5 +1063,6 @@ return [
     'Sửa' =>'편집',
     'Independent Customs Clearance' => '자체통관여부',
     'General Customs Clearance' => '일반통관',
-
+    'thêm tỉnh thành' => '지역등록',
+    'thêm vùng' => '권역추가',
 ];
