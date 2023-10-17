@@ -170,7 +170,6 @@
                 document.getElementById('p-table').innerHTML = '';
                 document.getElementById('c-table').innerHTML = '';
                 document.getElementById('title-div').style.display = 'none';
-                setTextButton(ID_MASTER);
                 makeHTMLFromJson(data);
                 const addIn4 = {
                     level: checkLevel,
@@ -178,6 +177,7 @@
                     name: name,
                     data_num: '',
                 };
+                setTextButton(ID_MASTER);
                 arrAddress = new Set();
                 arrAddress.add(JSON.stringify(addIn4));
             }
@@ -238,10 +238,10 @@
                     document.getElementById('title-div').style.display = 'block';
                     document.getElementById('title-main').innerHTML = name;
                 }
-                setTextButton(ID_CHILD);
                 makeHTMLFromJson(data);
                 checkLevel++;
                 index_main++;
+                setTextButton(ID_CHILD);
 
                 const addIn4 = {
                     level: checkLevel,
@@ -359,16 +359,22 @@
         }
 
         function setTextButton(id) {
+            let textBtnMod2 = '';
+            let textButton_create_region = '';
             switch (id) {
                 case ID_MASTER:
-                    $('#btnMod2').textContent = '{{ __('home.Add continent') }}';
-                    $('.button-create-region').textContent = '{{ __('home.Add nation') }}'
+                    textBtnMod2 = '{{ __('home.Add continent') }}'
+                    textButton_create_region = '{{ __('home.Add nation') }}';
                     break;
                 case ID_CHILD:
-                    $('#btnMod2').textContent = '{{ __('home.Add region') }}';
-                    $('.button-create-region').textContent = '{{ __('home.Add region') }}'
+                    textBtnMod2 = '{{ __('home.thêm vùng') }}'
+                    textButton_create_region = '{{ __('home.thêm tỉnh thành') }}';
                     break;
             }
+            document.getElementById('btnMod2').textContent = textBtnMod2
+            document.querySelectorAll('.button-create-region').forEach((element) => {
+                element.textContent = textButton_create_region;
+            });
         }
 
         function handleAfterCreateOrEdit() {
