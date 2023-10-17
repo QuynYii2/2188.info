@@ -1,13 +1,9 @@
 <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
 <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
 
+
 <div class="container-fluid">
-    <div class="d-flex">
-        <a href="{{route('profile.show')}}" class="btn btn-success mr-3">{{ __('home.info_company') }}</a>
-        <a href="{{route('profile.member.person')}}" class="btn btn-success mr-3">{{ __('home.Registrator Information') }}</a>
-        <a href="{{route('profile.member.represent')}}" class="btn btn-success mr-3">{{ __('home.Representative Information') }}</a>
-        <a href="#" class="btn btn-success">{{ __('home.Staffs Information') }}</a>
-    </div>
+    @include('frontend.pages.member.header-button')
 
     <h3 class="text-center mt-5">{{ __('home.Congratulations, you have registered as a member') }} {{$company->member}}</h3>
     <div class="start-page mb-3">
