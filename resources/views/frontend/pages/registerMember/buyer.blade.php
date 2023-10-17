@@ -18,7 +18,7 @@
             </th>
             <td>
                 <input type="number" class="form-control" id="number_clearance"
-                       value="{{ $exitsMember ? $exitsMember->number_clearance : old('number_clearance') }}"
+                       value="{{ $create ? $create['number_clearance'] : old('number_clearance', $exitsMember ? $exitsMember->number_clearance : '') }}"
                        name="number_clearance">
             </td>
         </tr>
@@ -28,8 +28,10 @@
             </th>
             <td colspan="4">
                 <input type="text" class="form-control mb-2" id="name_en" name="name_en"
+                       value="{{ $create ? $create['name_en'] : old('name_en', $exitsMember ? $exitsMember->name_en : '') }}"
                        placeholder="{{ __('home.English only') }}" required>
                 <input type="text" class="form-control" id="name" name="name"
+                       value="{{ $create ? $create['name'] : old('name', $exitsMember ? $exitsMember->name : '') }}"
                        placeholder="{{ __('home.Local language') }}" required>
             </td>
         </tr>
@@ -38,7 +40,9 @@
                 <label for="code">{{ __('home.ID') }} :</label>
             </th>
             <td colspan="4" class="item">
-                <input type="text" class="form-control" id="code" name="code" required>
+                <input type="text" class="form-control" id="code" name="code"
+                       value="{{ $create ? $create['code'] : old('code', $exitsMember ? $exitsMember->code : '') }}"
+                       required>
             </td>
         </tr>
         <tr>
@@ -65,6 +69,7 @@
             </th>
             <td colspan="2" class="item">
                 <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                       value="{{ $create ? $create['phone'] : old('phone', $exitsMember ? $exitsMember->phone : '') }}"
                        required>
             </td>
             <td colspan="3" class="item">
@@ -77,7 +82,9 @@
                 <label for="email">{{ __('home.email') }}:</label>
             </th>
             <td colspan="2" class="item">
-                <input type="email" class="form-control" id="email" name="email" required>
+                <input type="email" class="form-control" id="email" name="email"
+                       value="{{ $create ? $create['email'] : old('email', $exitsMember ? $exitsMember->email : '') }}"
+                       required>
             </td>
             <td colspan="3" class="item">
                 <input type="checkbox" value="1" required>
@@ -90,6 +97,7 @@
             </th>
             <td colspan="4" class="item">
                 <input type="text" class="form-control" id="sns_account" name="sns_account"
+                       value="{{ $create ? $create['sns_account'] : old('sns_account', $exitsMember ? $exitsMember->sns_account : '') }}"
                        placeholder="{{ __('home.ID Kakao Talk') }}" required>
             </td>
         </tr>
@@ -400,7 +408,7 @@
                     <div class="col-lg-3">
                         <label for="address_en">{{ __('home.Address detail') }}:</label>
                         <input type="text" name="detail-address" id="detail-address" class="form-control"
-                               value="{{ $exitsMember ? $exitsMember->address_en : old('address_en') }}">
+                               value="{{ $create ? $create['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">
                     </div>
                     <input type="hidden" id="address_code" name="address_code">
                 </div>
@@ -429,7 +437,7 @@
                     <div class="col-lg-3">
                         <label for="detail-address-1">{{ __('home.Select district/district') }}:</label>
                         <input type="text" name="detail-address-1" id="detail-address-1" class="form-control"
-                               value="{{ $exitsMember ? $exitsMember->address_kr : old('address_kr') }}">
+                               value="{{  $create ? $create['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">
                     </div>
                 </div>
             </td>

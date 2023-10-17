@@ -166,6 +166,7 @@ class RegisterMemberController extends Controller
             $datetime_register = Carbon::now()->addHours(7);
             $number_clearance = $request->input('number_clearance');
             $name_kr = $request->input('name_kr');
+            $codeItem = $request->input('code');
 
             $comma = ',';
             $address_en =
@@ -193,36 +194,15 @@ class RegisterMemberController extends Controller
             //
             $name_en = $request->input('name_en');
 
-            if ($password !== $passwordConfirm) {
-                alert()->error('Error', 'Error, Password or Password confirm incorrect!');
-                return back();
-            }
-
             $password = Hash::make($password);
 
             $price = 0;
 
-            $code_1 = $request->input('code_1');
-            $code_2 = $request->input('code_2');
-            $code_3 = $request->input('code_3');
-            $code_4 = $request->input('code_4');
-
             $categoryIds = '';
-            $code_1_item = '';
-            $code_2_item = '';
-            if ($code_1) {
-                $categoryIds .= implode(',', $code_1);
-                $code_1_item = implode(',', $code_1);
-            }
-            if ($code_2) {
-                $categoryIds .= ',' . implode(',', $code_2);
-                $code_2_item = implode(',', $code_2);
-            }
 
             $arrayCategoryID = explode(',', $categoryIds);
             sort($arrayCategoryID);
             $categoryIds = implode(',', $arrayCategoryID);
-
 
             $id = 0;
 
@@ -234,10 +214,11 @@ class RegisterMemberController extends Controller
                 'phone' => $phoneNumber,
                 'fax' => $fax,
                 'code_fax' => 'default',
+                'sns_account' => $sns_account,
                 'category_id' => $categoryIds,
-                'code_business' => $code_1_item,
+                'code_business' => $categoryIds,
                 'number_business' => $numberBusiness,
-                'type_business' => $code_2_item,
+                'type_business' => $categoryIds,
                 'member' => $registerMember,
                 'address' => $address,
                 'member_id' => $memberID,
@@ -247,29 +228,35 @@ class RegisterMemberController extends Controller
                 'datetime_register' => $datetime_register,
                 'number_clearance' => $number_clearance,
                 'name_en' => $name_en,
+                'code' => $codeItem,
                 'name_kr' => $name_kr,
                 'address_en' => $address_en,
                 'address_kr' => $address_kr,
                 'certify_business' => $certify_business,
             ];
 
+            if (!Hash::check($passwordConfirm, $password)) {
+                alert()->error('Error', 'Error, Password or Password confirm incorrect!');
+                return back()->with('create', $create);
+            }
+
             $userOld = User::where('email', $email)->first();
             if ($userOld) {
                 alert()->error('Error', 'Error, Email is user used!');
-                return back();
+                return back()->with('create', $create);
             }
 
             $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
             if ($memberOld) {
                 alert()->error('Error', 'Error, Email in member used!');
-                return back();
+                return back()->with('create', $create);
             }
 
             $success = MemberRegisterInfo::create($create);
 
             if (!$success) {
                 alert()->error('Error', 'Register error, Please try again!');
-                return back();
+                return back()->with('create', $create);
             }
 
             $newMember = MemberRegisterInfo::where([
@@ -310,10 +297,10 @@ class RegisterMemberController extends Controller
                 return redirect(route('show.register.member.congratulation', $member->id));
             }
             alert()->error('Error', 'Error, Create error!');
-            return back();
+            return back()->with('create', $create);
         } catch (\Exception $exception) {
             alert()->error('Error', 'Error, Please try again!');
-            return back();
+            return back()->with('create', $create);
         }
     }
 
@@ -412,6 +399,38 @@ class RegisterMemberController extends Controller
             $code_2_item = $code_2;
             $code_3_item = $code_3;
 
+            $create = [
+                'user_id' => $id,
+                'name' => $companyName,
+                'phone' => $phoneNumber,
+                'fax' => $fax,
+                'email' => $email,
+                'homepage' => $homepage,
+                'code_fax' => 'default',
+                'category_id' => $categoryIds,
+                'code_business' => $code_business,
+                'number_business' => $numberBusiness,
+                'type_business' => $type_business,
+                'member' => $registerMember,
+                'address' => $address,
+                'member_id' => $memberID,
+                'status' => $status,
+                'giay_phep_kinh_doanh' => $gpkdPath,
+
+                'datetime_register' => $datetime_register,
+                'number_clearance' => $number_clearance,
+                'name_en' => $name_en,
+                'name_kr' => $name_kr,
+                'address_en' => $address_en,
+                'address_kr' => $address_kr,
+                'certify_business' => $certify_business,
+                'status_business' => $status_business,
+                'code_1' => $code_1_item,
+                'code_2' => $code_2_item,
+                'code_3' => $code_3_item,
+                'code_4' => $code_4,
+            ];
+
             if ($exitMemberPerson) {
                 $exitsMember = MemberRegisterInfo::where([
                     ['id', $exitMemberPerson->member_id],
@@ -453,7 +472,7 @@ class RegisterMemberController extends Controller
                 if ($success) {
                     alert()->success('Success', 'Success, Update success!');
                     if ($updateInfo) {
-                        return back();
+                        return back()->with('create', $create);
                     }
                     return redirect(route('show.register.member.person.source', [
                         'member_id' => $exitsMember->id,
@@ -461,46 +480,14 @@ class RegisterMemberController extends Controller
                     ]));
                 }
                 alert()->error('Error', 'Error, Create error!');
-                return back();
+                return back()->with('create', $create);
 
             } else {
                 $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
                 if ($memberOld) {
                     alert()->error('Error', 'Error, Email in member used!');
-                    return back();
+                    return back()->with('create', $create);
                 }
-
-                $create = [
-                    'user_id' => $id,
-                    'name' => $companyName,
-                    'phone' => $phoneNumber,
-                    'fax' => $fax,
-                    'email' => $email,
-                    'homepage' => $homepage,
-                    'code_fax' => 'default',
-                    'category_id' => $categoryIds,
-                    'code_business' => $code_business,
-                    'number_business' => $numberBusiness,
-                    'type_business' => $type_business,
-                    'member' => $registerMember,
-                    'address' => $address,
-                    'member_id' => $memberID,
-                    'status' => $status,
-                    'giay_phep_kinh_doanh' => $gpkdPath,
-
-                    'datetime_register' => $datetime_register,
-                    'number_clearance' => $number_clearance,
-                    'name_en' => $name_en,
-                    'name_kr' => $name_kr,
-                    'address_en' => $address_en,
-                    'address_kr' => $address_kr,
-                    'certify_business' => $certify_business,
-                    'status_business' => $status_business,
-                    'code_1' => $code_1_item,
-                    'code_2' => $code_2_item,
-                    'code_3' => $code_3_item,
-                    'code_4' => $code_4,
-                ];
 
                 $success = MemberRegisterInfo::create($create);
                 $newUser = MemberRegisterInfo::where([
@@ -516,10 +503,10 @@ class RegisterMemberController extends Controller
                 ]));
             }
             alert()->error('Error', 'Error, Create error!');
-            return back();
+            return back()->with('create', $create);
         } catch (\Exception $exception) {
             alert()->error('Error', 'Error, Please try again!');
-            return back();
+            return back()->with('create', $create);
         }
     }
 
@@ -541,11 +528,6 @@ class RegisterMemberController extends Controller
             $responsibility = $request->input('responsibility');
             $position = $request->input('position');
             $codeItem = $request->input('code');
-
-            if ($password !== $passwordConfirm) {
-                alert()->error('Error', 'Error, Password or Password confirm incorrect!');
-                return back();
-            }
 
             $password = Hash::make($password);
 
@@ -606,6 +588,11 @@ class RegisterMemberController extends Controller
                 'status' => MemberRegisterPersonSourceStatus::ACTIVE
             ];
 
+            if (!Hash::check($passwordConfirm, $password)) {
+                alert()->error('Error', 'Error, Password or Password confirm incorrect!');
+                return back()->with('create', $create);
+            }
+
             $userOld = User::where('email', $email)->first();
             $memberOld = MemberRegisterPersonSource::where('email', $email)->first();
             $memberOld_v2 = MemberRegisterPersonSource::where('code', $codeItem)->first();
@@ -645,7 +632,7 @@ class RegisterMemberController extends Controller
 
                     if ($route == 'profile.member.person') {
                         alert()->success('Success', 'Success, Update success!');
-                        return back();
+                        return back()->with('create', $create);
                     }
 
                     alert()->success('Success', 'Success, Create success! Please continue next steps');
@@ -656,12 +643,12 @@ class RegisterMemberController extends Controller
                 } else {
                     if ($userOld) {
                         alert()->error('Error', 'Error, Email is user used!');
-                        return back();
+                        return back()->with('create', $create);
                     }
 
                     if ($memberOld) {
                         alert()->error('Error', 'Error, Email in member used!');
-                        return back();
+                        return back()->with('create', $create);
                     }
                     if ($exitsMember->member != RegisterMember::TRUST) {
                         DB::table('role_user')->insert([
@@ -679,23 +666,23 @@ class RegisterMemberController extends Controller
 
                     if ($route == 'profile.member.person') {
                         alert()->success('Success', 'Success, Update success!');
-                        return back();
+                        return back()->with('create', $create);
                     }
                 }
             } else {
                 if ($userOld) {
                     alert()->error('Error', 'Error, Email is user used!');
-                    return back();
+                    return back()->with('create', $create);
                 }
 
                 if ($memberOld) {
                     alert()->error('Error', 'Error, Email in member used!');
-                    return back();
+                    return back()->with('create', $create);
                 }
 
                 if ($memberOld_v2) {
                     alert()->error('Error', 'Error, Code in member used!');
-                    return back();
+                    return back()->with('create', $create);
                 }
 
                 $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member);
@@ -724,10 +711,10 @@ class RegisterMemberController extends Controller
                 return redirect(route('subscription.options.member.person', $member->id));
             }
             alert()->error('Error', 'Error, Create error!');
-            return back();
+            return back()->with('create', $create);
         } catch (\Exception $exception) {
             alert()->error('Error', 'Error, Please try again!');
-            return back();
+            return back()->with('create', $create);
         }
     }
 
@@ -782,11 +769,6 @@ class RegisterMemberController extends Controller
             $position = $request->input('position');
             $codeItem = $request->input('code');
 
-            if ($password !== $passwordConfirm) {
-                alert()->error('Error', 'Error, Password or Password confirm incorrect!');
-                return back();
-            }
-
             $password = Hash::make($password);
 
             $id = 0;
@@ -818,6 +800,11 @@ class RegisterMemberController extends Controller
 
                 'status' => MemberRegisterPersonSourceStatus::ACTIVE
             ];
+
+            if (!Hash::check($passwordConfirm, $password)) {
+                alert()->error('Error', 'Error, Password or Password confirm incorrect!');
+                return back()->with('create', $create);
+            }
 
             $exitMemberPerson = null;
             if (Auth::check()) {
@@ -868,7 +855,7 @@ class RegisterMemberController extends Controller
 
                     if ($route == 'profile.member.represent') {
                         alert()->success('Success', 'Success, Update success!');
-                        return back();
+                        return back()->with('create', $create);
                     }
 
                     alert()->success('Success', 'Success');
@@ -876,11 +863,11 @@ class RegisterMemberController extends Controller
                 } else {
                     if ($userOld) {
                         alert()->error('Error', 'Error, Email is user used!');
-                        return back();
+                        return back()->with('create', $create);
                     }
                     if ($memberOld) {
                         alert()->error('Error', 'Error, Email in member used!');
-                        return back();
+                        return back()->with('create', $create);
                     }
                     $this->updateUser($user, $fullName, $email, $phoneNumber, $exitsMember->member);
                     $memberPerson->email = $email;
@@ -889,21 +876,21 @@ class RegisterMemberController extends Controller
                     $success = $memberPerson->save();
                     if ($route == 'profile.member.represent') {
                         alert()->success('Success', 'Success, Update success!');
-                        return back();
+                        return back()->with('create', $create);
                     }
                 }
             } else {
                 if ($userOld) {
                     alert()->error('Error', 'Error, Email is user used!');
-                    return back();
+                    return back()->with('create', $create);
                 }
                 if ($memberOld) {
                     alert()->error('Error', 'Error, Email in member used!');
-                    return back();
+                    return back()->with('create', $create);
                 }
                 if ($memberOld_v2) {
                     alert()->error('Error', 'Error, Code in member used!');
-                    return back();
+                    return back()->with('create', $create);
                 }
                 $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member);
                 $success = MemberRegisterPersonSource::create($create);
@@ -922,10 +909,10 @@ class RegisterMemberController extends Controller
                 return redirect(route('show.register.member.ship', $member->id));
             }
             alert()->error('Error', 'Error, Create error!');
-            return back();
+            return back()->with('create', $create);
         } catch (\Exception $exception) {
             alert()->error('Error', 'Error, Please try again!');
-            return back();
+            return back()->with('create', $create);
         }
     }
 
@@ -1178,7 +1165,7 @@ class RegisterMemberController extends Controller
     {
         $id = $request->input('memberID');
         $exitMember = MemberRegisterPersonSource::where('code', $id)->first();
-        if ($exitMember){
+        if ($exitMember) {
             return response('ID is already in use!', 400);
         } else {
             return response('This ID is available.', 200);

@@ -11,6 +11,12 @@
                 <div class="title">{{ __('home.Register source information for members') }}</div>
             </div>
             <div class="">
+                @php
+                    $create = null;
+                    if(session('create')){
+                          $create =  session('create');
+                    }
+                @endphp
                 @include('frontend.pages.registerMember.member-person')
             </div>
         </div>
