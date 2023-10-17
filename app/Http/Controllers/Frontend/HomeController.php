@@ -580,13 +580,13 @@ class HomeController extends Controller
                 'member' => RegisterMember::LOGISTIC
             ]);
 
-            if ($this->checkEmail($email)) {
-                Mail::send('frontend/widgets/mailWelcome', ['mail' => $email, 'name' => $email, 'password' => Contains::PASSWORD_DEFAULT],
-                    function ($message) use ($email) {
-                        $message->to($email, 'Welcome mail!')->subject('Welcome mail');
-                        $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
-                    });
-            }
+//            if ($this->checkEmail($email)) {
+//                Mail::send('frontend/widgets/mailWelcome', ['mail' => $email, 'name' => $email, 'password' => Contains::PASSWORD_DEFAULT],
+//                    function ($message) use ($email) {
+//                        $message->to($email, 'Welcome mail!')->subject('Welcome mail');
+//                        $message->from('supprot.ilvietnam@gmail.com', 'Support IL');
+//                    });
+//            }
 
             DB::table('role_user')->insert([
                 'role_id' => 2,
