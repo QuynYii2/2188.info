@@ -3,6 +3,7 @@
         @csrf
         <input type="text" class="d-none" name="member_id" value="{{ $member->id }}">
         <input type="text" class="d-none" name="member" value="{{ ($member->name) }}">
+        <div class="d-none" id="text-category">{{ __('home.Select the applicable category') }}</div>
         <tbody>
         <tr>
             <th scope="row">

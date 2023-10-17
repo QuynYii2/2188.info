@@ -96,8 +96,19 @@
             if (listName) {
                 $('#inputCheckboxCategory1').text(listName);
                 await renderCategory3(arrayItem1);
+
+                $('.inputCheckboxCategory1').on('click', function () {
+                    let count = document.querySelectorAll('.inputCheckboxCategory1:checked').length
+                    if (count > 3) {
+                        $('.inputCheckboxCategory1:checkbox:not(:checked)').prop('disabled', true);
+                    } else {
+                        $('.inputCheckboxCategory1:checkbox:not(:checked)').prop('disabled', false);
+                    }
+                })
+
             } else {
-                $('#inputCheckboxCategory1').text(`{{ __('home.Select the applicable category') }}`);
+                let text = $('#text-category').text();
+                $('#inputCheckboxCategory1').text(text);
             }
 
             arrayItem1.sort();

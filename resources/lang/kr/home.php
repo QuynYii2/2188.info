@@ -392,7 +392,7 @@ return [
     'Grand Total' => '총계',
     'Xem chi tiết' => '자세히 보기',
     'Sign up now' => '지금 회원가입 하십시오',
-    'Product Management' => '제품 관리',
+    'Product Management' => '계정 관리',
     'Agree to the terms and conditions of the member' => '회원약관에 동의합니다',
     'Check the rules you must agree to below' => '아래에서 동의해야 하는 규칙을 확인하세요',
     'Trust' => '동의합니다',
@@ -439,7 +439,7 @@ return [
     'Please upgrade your membership to use' => '회원등업후 이용 가능합니다.',
         'Close' => '닫기',
     'Create your account and enjoy a new shopping experience.' => '계정을 만들고 새로운 쇼핑 경험을 즐겨보십시오.',
-    'Follow' => '팔로우',
+    'Follow' => '지정거래처로 추가',
     // ban dich moi
     'Membership Level' => '회원 등급',
     'Customer code' => '고객번호',
@@ -676,7 +676,7 @@ return [
     'quản lý đơn hàng' => '주문관리',
     'tất cả' => '전체 보기',
     'trả hàng /hoàn tiền' => '반품/환불 요청',
-    'quản lý sản phẩm' => '제품 관리',
+    'quản lý sản phẩm' => '계정 관리',
     'Tất Cả Sản Phẩm' => '모든 상품 보기',
     'Thêm mới sản phẩm' => '상품 추가',
     'Sắp xếp theo lượt xem' => '조회순',
@@ -1058,5 +1058,8 @@ return [
     'Add region' => '상위지역명',
     'Add nation' => '국가등록',
     'follower' => '뒤쫓는 사람',
+    'Quản lý địa chỉ nha' => '주소관리',
+    'Danh sách địa chỉ' =>'주소 리스트',
+    'Sửa' =>'편집',
 
 ];
