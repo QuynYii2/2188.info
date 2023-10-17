@@ -1046,7 +1046,7 @@ return [
     'tinh thanh' => '성/도',
     'quan huyen' => '군/현',
     'xa phuong' => '구/동',
-    'manager_products' => '제품관리',
+    'manager_products' => '계정 관리',
 
     'Address management' => '주소관리 ',
     'Add continent' => '대륙등록',
