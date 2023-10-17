@@ -355,6 +355,12 @@ class HomeController extends Controller
         return $currency;
     }
 
+    public function replaceString($search, $replace, $string)
+    {
+        $res = str_replace(array($search), $replace, $string);
+        return $res;
+    }
+
     //Api convert currency
     public function convertCurrency(Request $request, $total)
     {
@@ -411,6 +417,15 @@ class HomeController extends Controller
                 }
 
                 $category_id = implode(',', $arrayNameCategory);
+
+                $companyName = $this->replaceStringCheck($companyName);
+                $email = $this->replaceStringCheck($email);
+                $companyTEL = $this->replaceStringCheck($companyTEL);
+                $companyAddress = $this->replaceStringCheck($companyAddress);
+
+                $userEmail = $this->replaceStringCheck($userEmail);
+                $userName = $this->replaceStringCheck($userName);
+                $userTel = $this->replaceStringCheck($userTel);
 
                 $newUser = $this->createUser($companyName, $email, $companyTEL, $companyAddress, $language, $passwordHash);
 
@@ -472,6 +487,7 @@ class HomeController extends Controller
 
         return $arrayNameCategory;
     }
+
     //End import user form nn21
 
     // Private function
@@ -580,10 +596,8 @@ class HomeController extends Controller
         return $oldUser;
     }
 
-
-    private
-    function createOrUpdateMember($newUser, $companyName, $companyTEL, $companyFAX, $companyCode,
-                                  $category_id, $member, $companyAddress, $email, $companyNo)
+    private function createOrUpdateMember($newUser, $companyName, $companyTEL, $companyFAX, $companyCode,
+                                          $category_id, $member, $companyAddress, $email, $companyNo)
     {
         $memberInfo = [
             'user_id' => $newUser->id,
@@ -611,8 +625,7 @@ class HomeController extends Controller
         return $exitMember;
     }
 
-    private
-    function updateOrCreatePerson($email, $companyName, $passwordHash, $companyTEL, $exitMember)
+    private function updateOrCreatePerson($email, $companyName, $passwordHash, $companyTEL, $exitMember)
     {
         $exitMemberPersonSource = MemberRegisterPersonSource::where([
             ['email', $email],
@@ -697,10 +710,16 @@ class HomeController extends Controller
 
     }
 
-    function checkEmail($email)
+    private function checkEmail($email)
     {
         $find1 = strpos($email, '@');
         $find2 = strpos($email, '.');
         return ($find1 !== false && $find2 !== false && $find2 > $find1);
+    }
+
+    private function replaceStringCheck($str)
+    {
+        $res = $this->replaceString('!', '', $str);
+        return $res;
     }
 }
