@@ -1,6 +1,6 @@
 @php use App\Http\Controllers\Frontend\HomeController;use Illuminate\Support\Facades\Auth;
  $currentRouteName = Route::getCurrentRoute()->getName();
- $arrNameNeedHid = ['stand.register.member.index', 'partner.register.member.index', 'parent.register.member.locale', 'chat.message.received', 'chat.message.sent', 'chat.message.show'];
+ $arrNameNeedHid = ['stand.register.member.index', 'partner.register.member.index', 'parent.register.member.locale', 'chat.message.received', 'chat.message.sent', 'chat.message.show','staff.member.info'];
 $isRoute = in_array($currentRouteName, $arrNameNeedHid);
 @endphp
         <!DOCTYPE html>
