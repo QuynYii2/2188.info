@@ -606,7 +606,7 @@
             </div>
 
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid mt-5">
             <div class="row">
                 <div class="productView-description">
                     <div class="tab-content container-fluid" id="myTabContent">
