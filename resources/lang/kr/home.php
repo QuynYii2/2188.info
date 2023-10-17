@@ -1061,5 +1061,8 @@ return [
     'Quản lý địa chỉ nha' => '주소관리',
     'Danh sách địa chỉ' =>'주소 리스트',
     'Sửa' =>'편집',
+    'thêm tỉnh thành' => '지역등록',
+    'thêm vùng' => '권역추가'
+
 
 ];
