@@ -35,7 +35,8 @@
             <td>
                 <input type="text" class="form-control" id="position" name="position"
                        placeholder="{{ __('home.Position') }}"
-                       value="{{ $memberPersonSource ? $memberPersonSource->position : ''}}" required>
+                       value="{{ $create ? $create['position'] : old('position', $memberPersonSource ? $memberPersonSource->position : '')}}"
+                       required>
             </td>
             <th>
                 <label for="rank">{{ __('home.Rank') }}</label>
@@ -43,7 +44,7 @@
             <td>
                 <input type="text" class="form-control" id="rank" name="rank"
                        placeholder="{{ __('home.Rank') }}"
-                       value="{{$memberPersonSource ? $memberPersonSource->rank : ''}}"
+                       value="{{$create ? $create['rank'] : old('rank', $memberPersonSource ? $memberPersonSource->rank : '')}}"
                        required>
             </td>
         </tr>
@@ -57,7 +58,7 @@
             <td colspan="3">
                 <input type="text" class="form-control" id="name_en" name="name_en"
                        placeholder="{{ __('home.Name English') }}"
-                       value="{{$memberPersonSource ? $memberPersonSource->name_en : ''}}" required>
+                       value="{{$create ? $create['name_en'] : old('name_en', $memberPersonSource ? $memberPersonSource->name_en : '')}}" required>
             </td>
         </tr>
         <tr>
@@ -67,7 +68,7 @@
             <td colspan="3">
                 <input type="text" class="form-control" id="name" name="name"
                        placeholder="{{ __('home.Name Default') }}"
-                       value="{{$memberPersonSource ? $memberPersonSource->name : ''}}" required>
+                       value="{{$create ? $create['name'] : old('name', $memberPersonSource ? $memberPersonSource->name : '')}}" required>
             </td>
         </tr>
         <tr>
@@ -77,7 +78,7 @@
             <td rowspan="2">
                 <input type="text" class="form-control" id="code" name="code"
                        placeholder="{{ __('home.ID') }}"
-                       value="{{$memberPersonSource ? $memberPersonSource->code : ''}}" required>
+                       value="{{$create ? $create['code'] : old('code', $memberPersonSource ? $memberPersonSource->code : '')}}" required>
             </td>
             <th rowspan="2">
                 <button id="buttonCheckID" type="button" class="btn btn-secondary">{{ __('home.Duplicate') }}</button>
@@ -111,7 +112,7 @@
             <td colspan="2">
                 <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
                        placeholder="{{ __('home.Phone Number') }}"
-                       value="{{$memberPersonSource ? $memberPersonSource->phone : ''}}"
+                       value="{{$create ? $create['phone'] : old('phone', $memberPersonSource ? $memberPersonSource->phone : '')}}"
                        required>
             </td>
             <td>
@@ -133,7 +134,7 @@
             <td colspan="2">
                 <input type="email" class="form-control" id="email" name="email"
                        placeholder="{{ __('home.email') }}"
-                       value="{{$memberPersonSource ? $memberPersonSource->email : ''}}"
+                       value="{{$create ? $create['email'] : old('email', $memberPersonSource ? $memberPersonSource->email : '')}}"
                        required>
             </td>
             <td>
@@ -155,7 +156,7 @@
             <td colspan="4">
                 <input type="text" class="form-control" id="sns_account" name="sns_account"
                        placeholder="{{ __('home.SNS Account') }}"
-                       value="{{$memberPersonSource ? $memberPersonSource->sns_account : ''}}" required>
+                       value="{{$create ? $create['sns_account'] : old('sns_account', $memberPersonSource ? $memberPersonSource->sns_account : '')}}" required>
             </td>
         </tr>
         <tr class="">
@@ -197,7 +198,7 @@
             localStorage.removeItem('message');
             localStorage.removeItem('valueInput');
             let item = valueInput.val();
-            if (!item || item == 'null' || item=='') {
+            if (!item || item == 'null' || item == '') {
                 alert('Please click button check ID!');
             } else {
                 $('#btnSubmitFormRegister').trigger('click');

@@ -146,6 +146,13 @@
                     <div class="title text-primary"
                          style="font-size: 35px; font-weight: 600">{{ __('home.Sign up company information') }}</div>
                 </div>
+                @php
+                    $create = null;
+                    if(session('create')){
+                          $create =  session('create');
+                    }
+
+                @endphp
                 <div>
                     @if($member->name == \App\Enums\RegisterMember::BUYER)
                         @include('frontend.pages.registerMember.buyer')

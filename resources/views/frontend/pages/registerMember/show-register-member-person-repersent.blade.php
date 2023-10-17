@@ -10,6 +10,12 @@
                 <div class="title">{{ __('home.Register represent information for members') }}</div>
             </div>
             <div class="">
+                @php
+                    $create = null;
+                    if(session('create')){
+                          $create =  session('create');
+                    }
+                @endphp
                 @include('frontend.pages.registerMember.member-person-repersent')
             </div>
         </div>

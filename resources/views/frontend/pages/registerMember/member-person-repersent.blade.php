@@ -25,7 +25,8 @@
             <td colspan="3">
                 <input type="text" class="form-control" id="name_en" name="name_en"
                        placeholder="{{ __('home.Name English') }}"
-                       value="{{$memberPerson ? $memberPerson->name_en : ''}}" required>
+                       value="{{$create ? $create['name_en'] : old('name_en', $memberPerson ? $memberPerson->name_en : '')}}"
+                       required>
             </td>
         </tr>
         <tr>
@@ -35,7 +36,7 @@
             <td colspan="3">
                 <input type="text" class="form-control" id="name" name="name"
                        placeholder="{{ __('home.Name Default') }}"
-                       value="{{$memberPerson ? $memberPerson->name : ''}}" required>
+                       value="{{$create ? $create['name'] : old('', $memberPerson ? $memberPerson->name : '')}}" required>
             </td>
         </tr>
         <tr>
@@ -44,7 +45,7 @@
             </th>
             <td rowspan="2">
                 <input type="text" class="form-control" id="code" name="code"
-                       placeholder="{{ __('home.ID') }}" value="{{$memberPerson ? $memberPerson->code : ''}}" required>
+                       placeholder="{{ __('home.ID') }}" value="{{$create ? $create['code'] : old('', $memberPerson ? $memberPerson->code : '')}}" required>
             </td>
             <th rowspan="2">
                 <button id="buttonCheckID" type="button" class="btn btn-secondary">{{ __('home.Duplicate') }}</button>
@@ -78,7 +79,7 @@
             <td colspan="2">
                 <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
                        placeholder="{{ __('home.Phone Number') }}"
-                       value="{{$memberPerson ? $memberPerson->phone : ''}}"
+                       value="{{$create ? $create['phone'] : old('phone', $memberPerson ? $memberPerson->phone : '')}}"
                        required>
             </td>
             <td>
@@ -100,7 +101,7 @@
             <td colspan="2">
                 <input type="email" class="form-control" id="email" name="email"
                        placeholder="{{ __('home.email') }}"
-                       value="{{$memberPerson ? $memberPerson->email : ''}}"
+                       value="{{$create ? $create['email'] : old('email', $memberPerson ? $memberPerson->email : '')}}"
                        required>
             </td>
             <td>
@@ -122,7 +123,7 @@
             <td colspan="4">
                 <input type="text" class="form-control" id="sns_account" name="sns_account"
                        placeholder="{{ __('home.SNS Account') }}"
-                       value="{{$memberPerson ? $memberPerson->sns_account : ''}}" required>
+                       value="{{$create ? $create['sns_account'] : old('sns_account', $memberPerson ? $memberPerson->sns_account : '')}}" required>
             </td>
         </tr>
         <tr class="">
