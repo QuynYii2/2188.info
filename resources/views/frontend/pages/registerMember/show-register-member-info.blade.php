@@ -189,24 +189,6 @@
                 }
             })
 
-            $('.inputCheckboxCategory1').on('click', function () {
-                let count = document.querySelectorAll('.inputCheckboxCategory1:checked').length
-                if (count > 3) {
-                    $('.inputCheckboxCategory1:checkbox:not(:checked)').prop('disabled', true);
-                } else {
-                    $('.inputCheckboxCategory1:checkbox:not(:checked)').prop('disabled', false);
-                }
-            })
-
-            $('.inputCheckboxCategory2').on('click', function () {
-                let count = document.querySelectorAll('.inputCheckboxCategory2:checked').length
-                if (count > 3) {
-                    $('.inputCheckboxCategory2:checkbox:not(:checked)').prop('disabled', true);
-                } else {
-                    $('.inputCheckboxCategory2:checkbox:not(:checked)').prop('disabled', false);
-                }
-            })
-
             $('.form-group.address-above').on('click', function () {
                 whereSelectRegion = 0;
             });

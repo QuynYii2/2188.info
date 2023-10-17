@@ -91,10 +91,18 @@
 
             let listName = arrayNameCategory2.toString();
 
+            let count = document.querySelectorAll('.inputCheckboxCategory2:checked').length
+            if (count > 3) {
+                $('.inputCheckboxCategory2:checkbox:not(:checked)').prop('disabled', true);
+            } else {
+                $('.inputCheckboxCategory2:checkbox:not(:checked)').prop('disabled', false);
+            }
+
             if (listName) {
                 $('#inputCheckboxCategory2').text(listName);
             } else {
-                $('#inputCheckboxCategory2').text(`{{ __('home.Select the applicable category') }}`);
+                let text = $('#text-category').text();
+                $('#inputCheckboxCategory2').text(text);
             }
 
             arrayItem2.sort();
