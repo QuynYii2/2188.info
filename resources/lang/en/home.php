@@ -961,5 +961,8 @@ return [
     'Add region' => 'Add region',
     'Add nation' => 'Add nation',
     'follower' => 'follower',
+    'Quản lý địa chỉ nha' => 'Quản lý địa chỉ nha',
+    'Danh sách địa chỉ' =>'Danh sách địa chỉ',
+    'Sửa' =>'Sửa',
 
 ];

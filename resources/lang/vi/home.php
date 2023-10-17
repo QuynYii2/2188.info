@@ -996,6 +996,9 @@ return [
     'Add region' => 'Thêm khu vực',
     'Add nation' => 'Thêm quốc gia',
     'follower' => 'Người theo dõi',
+    'Quản lý địa chỉ nha' => 'Quản lý địa chỉ nha',
+    'Danh sách địa chỉ' =>'Danh sách địa chỉ',
+    'Sửa' =>'Sửa',
 
 ];
 
