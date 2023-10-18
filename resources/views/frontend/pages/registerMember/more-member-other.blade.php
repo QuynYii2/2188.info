@@ -1,11 +1,16 @@
-<table class="table element-bordered align-middle" align="center">
+<style>
+    #tableMemberOther th, #tableMemberOther td {
+        vertical-align: middle !important;
+    }
+</style>
+<table class="table element-bordered" align="center" id="tableMemberOther">
     <form action="{{route('register.member.info')}}" method="post" id="formRegisterMember">
         @csrf
         <input type="text" class="d-none" name="member_id" value="{{ $member->id }}">
         <input type="text" class="d-none" name="member" value="{{ ($member->name) }}">
         <div class="d-none" id="text-category">{{ __('home.Select the applicable category') }}</div>
-        <tbody>
-        <tr>
+        <tbody class="text-nowrap">
+        <tr class="text-center">
             <th scope="row">
                 <label for="datetime_register">{{ __('home.Day register') }}</label>
             </th>
@@ -23,8 +28,8 @@
                        placeholder="{{ __('home.Customs clearance number (enter numbers only)')}}">
             </td>
         </tr>
-        <tr>
-            <th rowspan="4">
+        <tr class="text-center">
+            <th rowspan="4" class="companyName">
                 <label>{{ __('home.Company Name') }}</label>
             </th>
             <td>
@@ -44,7 +49,7 @@
                        name="phone" placeholder="{{ __('home.Phone Number') }}" required>
             </td>
         </tr>
-        <tr>
+        <tr class="text-center">
             <td>
                 <label for="name_kr">{{ __('home.Name Korea')}}</label>
             </td>
@@ -62,7 +67,7 @@
                        name="fax" placeholder="{{ __('home.Fax') }}">
             </td>
         </tr>
-        <tr>
+        <tr class="text-center">
             <td>
                 <label for="homepage">{{ __('home.Home') }}</label>
             </td>
@@ -81,19 +86,19 @@
             </td>
         </tr>
         <tr>
-            <td>
+            <td class="text-center">
                 <label for="number_business">{{ __('home.Business registration number') }}</label>
             </td>
-            <td>
+            <td class="text-center">
                 <input type="number" class="form-control" id="number_business"
                        value="{{ $create ? $create['number_business'] : old('number_business', $exitsMember ? $exitsMember->number_business :'') }}"
                        name="number_business" placeholder="{{ __('home.Business registration number') }}" required>
             </td>
-            <td>
+            <td class="text-center">
                 <label for="giay_phep_kinh_doanh"> {{ __('home.giay_phep_kinh_doanh') }} </label>
             </td>
             <td>
-                <div>
+                <div class="" style="margin-top: 16px; margin-bottom: -38px">
                     <label id="giay_phep_kinh_doanhLabel" for="giay_phep_kinh_doanh"
                            class="btn btn-outline-secondary">{{ __('home.Select file') }}</label>
                     <input type="file" class="form-control" id="giay_phep_kinh_doanh" accept="image/*"
@@ -106,7 +111,7 @@
                 @endif
             </td>
         </tr>
-        <tr>
+        <tr class="text-center">
             <th rowspan="2">
                 <label>{{ __('home.Address Business') }}</label>
             </th>
@@ -136,7 +141,7 @@
                 </div>
             </td>
         </tr>
-        <tr>
+        <tr class="text-center">
             <td>
                 <label for="detail-address-1"> {{ __('home.Language Local') }} </label>
             </td>
@@ -164,7 +169,7 @@
                 </div>
             </td>
         </tr>
-        <tr>
+        <tr class="text-center">
             <th>
                 <label>{{ __('home.Business industry') }}</label>
             </th>
@@ -234,7 +239,7 @@
                 </select>
             </td>
         </tr>
-        <tr>
+        <tr class="text-center">
             <th rowspan="2">
                 <label>{{ __('home.PLU') }}</label>
             </th>
@@ -340,7 +345,7 @@
                 </div>
             </td>
         </tr>
-        <tr>
+        <tr class="text-center">
             <td>
                 <label for="code_2">{{ __('home.2nd classification') }}</label>
             </td>

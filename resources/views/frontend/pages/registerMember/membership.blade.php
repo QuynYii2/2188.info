@@ -1,28 +1,21 @@
 @extends('frontend.layouts.master')
 
 @section('title', 'Register Member')
+<style>
+    #tableMemberShip th, #tableMemberShip td {
+        vertical-align: middle !important;
+    }
+</style>
 @section('content')
     <div class="start-page mb-3" style="margin-top: 150px">
-        <div class="form-title text-center">
-            <h3 style="font-size: 36px">{{ __('home.Employee registration') }}</h3>
-        </div>
         <div class="background container-fluid pt-3 justify-content-center pb-3">
             <div class="form-title text-center pt-2 solid-3x bg-member-green" style="font-size: 35px; font-weight: 600">
                 <div class="title">{{ __('home.Employee registed manager') }}</div>
             </div>
             <div class="">
-                {{--            <nav>--}}
-                {{--                <ol class="breadcrumb">--}}
-                {{--                    <li class="breadcrumb-item">{{ __('home.Classification of members') }}</li>--}}
-                {{--                    <li class="breadcrumb-item">{{ __('home.Agree to terms') }}</li>--}}
-                {{--                    <li class="breadcrumb-item">{{ __('home.Company registration') }}</li>--}}
-                {{--                    <li class="breadcrumb-item">{{ __('home.Subscriber registration') }}</li>--}}
-                {{--                    <li class="breadcrumb-item">{{ __('home.Representative registration') }}</li>--}}
-                {{--                    <li class="breadcrumb-item active">{{ __('home.Register as member') }}</li>--}}
-                {{--                </ol>--}}
-                {{--            </nav>--}}
-                <table class="table element-bordered align-middle">
-                    <thead>
+
+                <table class="table element-bordered text-center" id="tableMemberShip">
+                    <thead class="text-center">
                     <tr>
                         <th rowspan="2" scope="col">{{ __('home.Responsibility') }}</th>
                         <th rowspan="2" scope="col">{{ __('home.Position') }}</th>

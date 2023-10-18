@@ -122,6 +122,7 @@
                                             </table>
                                         </div>
                                         <div class="modal-footer">
+                                            <a href="{{ route('stand.register.member.index', $memberItem->id) }}" class="btn btn-primary">{{ __('home.Shop') }}</a>
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}
                                             </button>
                                         </div>
