@@ -63,7 +63,7 @@ return [
     'change password' => '비밀번호 변경',
     'set pin code' => 'PIN 코드 설정',
     'link social network' => 'SNS 계정 연결',
-    'save changes' => '변경사항 저장',
+    'save changes' => '저장',
     'address' => '주소',
     //update, add email, liên kết, nam, nữ, khác
     'update' => '업데이트',
