@@ -156,6 +156,7 @@
         let arrAddress = new Set();
         const ID_MASTER = 1;
         const ID_CHILD = 2;
+        let isFirst = true;
 
         const MODE_CREATE = 'create'
         const MODE_EDIT = 'edit'
@@ -164,6 +165,7 @@
             let url = '{{ route('admin.address.index') }}';
             let result = await fetch(url);
             if (result.ok) {
+                isFirst = true;
                 checkLevel = 1;
                 index_main = 1;
                 const data = await result.json();
@@ -213,6 +215,10 @@
                 getById(code);
             }
             if (mode == MODE_CREATE && !code && !name) {
+                if (isFirst) {
+                    nation_name = '';
+                    nation_code = '';
+                }
                 document.getElementById('up_name').value = nation_name;
                 document.getElementById('up_code').value = nation_code;
             }
@@ -231,6 +237,8 @@
             duyetTheTr(data_num);
 
             if (result.ok) {
+                isFirst = false;
+
                 const data = await result.json();
                 if (checkLevel == 1) {
                     nation_code = code;
