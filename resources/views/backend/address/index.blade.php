@@ -180,9 +180,7 @@
                     data_num: '',
                 };
                 setTextButton(ID_MASTER);
-                arrAddress2 = new Map();
-
-                arrAddress2.set(addIn4.code + '-' + addIn4.data_num, addIn4)
+                checkKeyArrMap(addIn4);
             }
         }
 
