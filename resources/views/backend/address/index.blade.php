@@ -406,12 +406,12 @@
 
             arrAddress2.forEach((value, key) => {
                 let lengthKey = key.length;
-                if (lengthKeyInput == lengthKey || lengthKey > lengthKeyInput) {
+                if (lengthKey >= lengthKeyInput) {
                     arrAddress2.delete(key);
                 }
             });
             arrAddress2.set(keyInput, input);
-
+            console.log(arrAddress2);
         }
     </script>
 @endsection
