@@ -153,7 +153,7 @@
         let elementTh = 'th';
         let elementTd = 'td';
         let modeForAppend = elementForAppend = indexForAppend = ''
-        let arrAddress2 = new Map();
+        let arrAddress2 = new Array();
         const ID_MASTER = 1;
         const ID_CHILD = 2;
         let isFirst = true;
@@ -399,17 +399,18 @@
         }
 
         function checkKeyArrMap(input) {
-            let keyInput = input.code + '-' + input.data_num;
+            let keyInput = input.code;
             let lengthKeyInput = keyInput.length;
 
+            console.log('arrAddress2', arrAddress2);
+
             arrAddress2.forEach((value, key) => {
-                let lengthKey = key.length;
-                if (lengthKey >= lengthKeyInput) {
-                    arrAddress2.delete(key);
+                if (key >= lengthKeyInput) {
+                    arrAddress2.splice(key, 1);
                 }
             });
-            arrAddress2.set(keyInput, input);
-            console.log(arrAddress2);
+            arrAddress2[keyInput.length] = input;
+            console.log('array sau khi check', arrAddress2);
         }
     </script>
 @endsection
