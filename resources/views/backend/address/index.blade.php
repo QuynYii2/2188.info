@@ -153,7 +153,7 @@
         let elementTh = 'th';
         let elementTd = 'td';
         let modeForAppend = elementForAppend = indexForAppend = ''
-        let arrAddress = new Set();
+        let arrAddress2 = new Map();
         const ID_MASTER = 1;
         const ID_CHILD = 2;
         let isFirst = true;
@@ -180,8 +180,9 @@
                     data_num: '',
                 };
                 setTextButton(ID_MASTER);
-                arrAddress = new Set();
-                arrAddress.add(JSON.stringify(addIn4));
+                arrAddress2 = new Map();
+
+                arrAddress2.set(addIn4.code + '-' + addIn4.data_num, addIn4)
             }
         }
 
@@ -257,7 +258,8 @@
                     name: name,
                     data_num: data_num,
                 };
-                arrAddress.add(JSON.stringify(addIn4))
+                checkKeyArrMap(addIn4);
+
             }
         }
 
@@ -361,7 +363,7 @@
                 body: formData
             });
             if (result.ok) {
-                const data = await result.json();
+                await result.json();
                 handleAfterCreateOrEdit();
             }
         }
@@ -388,15 +390,28 @@
         function handleAfterCreateOrEdit() {
             document.getElementById('p-table').innerHTML = '';
             document.getElementById('c-table').innerHTML = '';
-            const addressesArray = Array.from(arrAddress).map(JSON.parse);
-            addressesArray.forEach((data) => {
-                checkLevel = data.level - 1;
-                if (data.code) {
-                    getListAddressChild(data.code, data.name, data.data_num);
+            arrAddress2.forEach((value) => {
+                checkLevel = value.level - 1;
+                if (value.code) {
+                    getListAddressChild(value.code, value.name, value.data_num);
                 } else if (checkLevel == 0) {
                     getListAddress();
                 }
             });
+        }
+
+        function checkKeyArrMap(input) {
+            let keyInput = input.code + '-' + input.data_num;
+            let lengthKeyInput = keyInput.length;
+
+            arrAddress2.forEach((value, key) => {
+                let lengthKey = key.length;
+                if (lengthKeyInput == lengthKey || lengthKey > lengthKeyInput) {
+                    arrAddress2.delete(key);
+                }
+            });
+            arrAddress2.set(keyInput, input);
+
         }
     </script>
 @endsection
