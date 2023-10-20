@@ -361,8 +361,7 @@
                 body: formData
             });
             if (result.ok) {
-                await result.json();
-                handleAfterCreateOrEdit();
+                location.reload();
             }
         }
 
