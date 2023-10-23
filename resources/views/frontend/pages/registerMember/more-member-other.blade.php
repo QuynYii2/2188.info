@@ -1,11 +1,16 @@
-<table class="table element-bordered align-middle" align="center">
+<style>
+    #tableMemberOther th, #tableMemberOther td {
+        vertical-align: middle !important;
+    }
+</style>
+<table class="table element-bordered" align="center" id="tableMemberOther">
     <form action="{{route('register.member.info')}}" method="post" id="formRegisterMember">
         @csrf
         <input type="text" class="d-none" name="member_id" value="{{ $member->id }}">
         <input type="text" class="d-none" name="member" value="{{ ($member->name) }}">
         <div class="d-none" id="text-category">{{ __('home.Select the applicable category') }}</div>
-        <tbody>
-        <tr>
+        <tbody class="text-nowrap">
+        <tr class="text-center">
             <th scope="row">
                 <label for="datetime_register">{{ __('home.Day register') }}</label>
             </th>
@@ -18,13 +23,13 @@
             </th>
             <td>
                 <input type="number" class="form-control" id="number_clearance"
-                       value="{{ $exitsMember ? $exitsMember->number_clearance : old('number_clearance') }}"
+                       value="{{ $create ? $create['number_clearance'] : old('number_clearance', $exitsMember ? $exitsMember->number_clearance: '') }}"
                        name="number_clearance"
                        placeholder="{{ __('home.Customs clearance number (enter numbers only)')}}">
             </td>
         </tr>
-        <tr>
-            <th rowspan="4">
+        <tr class="text-center">
+            <th rowspan="4" class="companyName">
                 <label>{{ __('home.Company Name') }}</label>
             </th>
             <td>
@@ -32,7 +37,7 @@
             </td>
             <td>
                 <input type="text" class="form-control" id="name_en"
-                       value="{{ $exitsMember ? $exitsMember->name_kr : old('name_kr') }}"
+                       value="{{ $create ? $create['name_en'] : old('name_en', $exitsMember ? $exitsMember->name_en : '') }}"
                        name="name_en" required>
             </td>
             <td>
@@ -40,17 +45,17 @@
             </td>
             <td>
                 <input type="number" class="form-control" id="phone"
-                       value="{{ $exitsMember ? $exitsMember->phone : old('phone') }}"
+                       value="{{ $create ? $create['phone'] : old('phone', $exitsMember ? $exitsMember->phone : '') }}"
                        name="phone" placeholder="{{ __('home.Phone Number') }}" required>
             </td>
         </tr>
-        <tr>
+        <tr class="text-center">
             <td>
                 <label for="name_kr">{{ __('home.Name Korea')}}</label>
             </td>
             <td>
                 <input type="text" class="form-control" id="name_kr"
-                       value="{{ $exitsMember ? $exitsMember->name_kr : old('name_kr') }}"
+                       value="{{ $create ? $create['name_kr'] : old('name_kr', $exitsMember ? $exitsMember->name_kr :'') }}"
                        name="name_kr" required>
             </td>
             <td>
@@ -58,17 +63,17 @@
             </td>
             <td>
                 <input type="number" class="form-control" id="fax"
-                       value="{{ $exitsMember ? $exitsMember->fax : old('fax') }}"
+                       value="{{ $create ? $create['fax'] : old('fax', $exitsMember ? $exitsMember->fax :'') }}"
                        name="fax" placeholder="{{ __('home.Fax') }}">
             </td>
         </tr>
-        <tr>
+        <tr class="text-center">
             <td>
                 <label for="homepage">{{ __('home.Home') }}</label>
             </td>
             <td>
                 <input type="text" class="form-control" id="homepage"
-                       value="{{ $exitsMember ? $exitsMember->homepage : old('homepage') }}"
+                       value="{{ $create ? $create['homepage'] : old('homepage', $exitsMember ? $exitsMember->homepage : '') }}"
                        name="homepage" placeholder="{{ __('home.Home') }}" required>
             </td>
             <td>
@@ -76,24 +81,24 @@
             </td>
             <td>
                 <input type="email" class="form-control" id="email"
-                       value="{{ $exitsMember ? $exitsMember->email : old('email') }}"
+                       value="{{ $create ? $create['email'] : old('email', $exitsMember ? $exitsMember->email: '') }}"
                        name="email" placeholder="{{ __('home.email') }}">
             </td>
         </tr>
         <tr>
-            <td>
+            <td class="text-center">
                 <label for="number_business">{{ __('home.Business registration number') }}</label>
             </td>
-            <td>
+            <td class="text-center">
                 <input type="number" class="form-control" id="number_business"
-                       value="{{ $exitsMember ? $exitsMember->number_business : old('number_business') }}"
+                       value="{{ $create ? $create['number_business'] : old('number_business', $exitsMember ? $exitsMember->number_business :'') }}"
                        name="number_business" placeholder="{{ __('home.Business registration number') }}" required>
             </td>
-            <td>
+            <td class="text-center">
                 <label for="giay_phep_kinh_doanh"> {{ __('home.giay_phep_kinh_doanh') }} </label>
             </td>
             <td>
-                <div>
+                <div class="" style="margin-top: 16px; margin-bottom: -38px">
                     <label id="giay_phep_kinh_doanhLabel" for="giay_phep_kinh_doanh"
                            class="btn btn-outline-secondary">{{ __('home.Select file') }}</label>
                     <input type="file" class="form-control" id="giay_phep_kinh_doanh" accept="image/*"
@@ -106,7 +111,7 @@
                 @endif
             </td>
         </tr>
-        <tr>
+        <tr class="text-center">
             <th rowspan="2">
                 <label>{{ __('home.Address Business') }}</label>
             </th>
@@ -121,24 +126,22 @@
                     </div>
                     <div class="form-group col-md-3 address-above" data-toggle="modal" data-target="#modal-address">
                         <label for="cities-select">{{ __('home.Choose the city') }}:</label>
-                        <input type="text" readonly class="form-control" id="cities-select" name="cities-select"
-                        >
+                        <input type="text" readonly class="form-control" id="cities-select" name="cities-select">
                     </div>
                     <div class="form-group col-md-3 address-above" data-toggle="modal" data-target="#modal-address">
                         <label for="provinces-select">{{ __('home.Select district/district') }}:</label>
-                        <input type="text" readonly class="form-control" id="provinces-select" name="provinces-select"
-                        >
+                        <input type="text" readonly class="form-control" id="provinces-select" name="provinces-select">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="detail-address">{{ __('home.Address detail') }}:</label>
                         <input type="text" name="detail-address" id="detail-address" class="form-control"
-                               value="{{ $exitsMember ? $exitsMember->address_en : old('address_en') }}">
+                               value="{{ $create ? $create['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">
                     </div>
                     <input type="hidden" id="address_code" name="address_code">
                 </div>
             </td>
         </tr>
-        <tr>
+        <tr class="text-center">
             <td>
                 <label for="detail-address-1"> {{ __('home.Language Local') }} </label>
             </td>
@@ -161,13 +164,12 @@
                     <div class="form-group col-md-3">
                         <label for="address_kr"> {{ __('home.Address detail') }}:</label>
                         <input type="text" name="detail-address-1" id="detail-address-1" class="form-control"
-                               value="{{ $exitsMember ? $exitsMember->address_kr : old('address_kr') }}">
+                               value="{{ $create ? $create['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">
                     </div>
                 </div>
             </td>
         </tr>
-
-        <tr>
+        <tr class="text-center">
             <th>
                 <label>{{ __('home.Business industry') }}</label>
             </th>
@@ -237,7 +239,7 @@
                 </select>
             </td>
         </tr>
-        <tr>
+        <tr class="text-center">
             <th rowspan="2">
                 <label>{{ __('home.PLU') }}</label>
             </th>
@@ -343,7 +345,7 @@
                 </div>
             </td>
         </tr>
-        <tr>
+        <tr class="text-center">
             <td>
                 <label for="code_2">{{ __('home.2nd classification') }}</label>
             </td>

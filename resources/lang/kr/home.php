@@ -63,7 +63,7 @@ return [
     'change password' => '비밀번호 변경',
     'set pin code' => 'PIN 코드 설정',
     'link social network' => 'SNS 계정 연결',
-    'save changes' => '변경사항 저장',
+    'save changes' => '저장',
     'address' => '주소',
     //update, add email, liên kết, nam, nữ, khác
     'update' => '업데이트',
@@ -318,7 +318,7 @@ return [
     'Price: Descending' => '가격: 내림차순',
     'Jump to' => '이동',
     'Electronics' => '전자제품',
-    'Home' => '홈피',
+    'Home' => '홈으로 가기',
     'Min' => '최소',
     'Max' => '최대',
     'Related Products' => '관련 상품',
@@ -387,7 +387,7 @@ return [
     'Mua sỉ nước ngoài' => '해외도매',
     'Shipping And Payment' => '배송 및 결제',
     'Partner' => '지정 거래처',
-    'Check out now' => '지금 확인하기',
+    'Check out now' => '장바구니 보기',
     'View Cart' => '장바구니 보기',
     'Grand Total' => '총계',
     'Xem chi tiết' => '자세히 보기',
@@ -1061,5 +1061,8 @@ return [
     'Quản lý địa chỉ nha' => '주소관리',
     'Danh sách địa chỉ' =>'주소 리스트',
     'Sửa' =>'편집',
-
+    'Independent Customs Clearance' => '자체통관여부',
+    'General Customs Clearance' => '일반통관',
+    'thêm tỉnh thành' => '지역등록',
+    'thêm vùng' => '권역추가',
 ];

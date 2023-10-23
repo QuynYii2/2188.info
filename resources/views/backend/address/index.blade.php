@@ -82,7 +82,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Add region ') }}</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Add region') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -153,8 +153,10 @@
         let elementTh = 'th';
         let elementTd = 'td';
         let modeForAppend = elementForAppend = indexForAppend = ''
+        let arrAddress2 = new Array();
         const ID_MASTER = 1;
         const ID_CHILD = 2;
+        let isFirst = true;
 
         const MODE_CREATE = 'create'
         const MODE_EDIT = 'edit'
@@ -163,14 +165,22 @@
             let url = '{{ route('admin.address.index') }}';
             let result = await fetch(url);
             if (result.ok) {
+                isFirst = true;
                 checkLevel = 1;
                 index_main = 1;
                 const data = await result.json();
                 document.getElementById('p-table').innerHTML = '';
                 document.getElementById('c-table').innerHTML = '';
                 document.getElementById('title-div').style.display = 'none';
-                setTextButton(ID_MASTER);
                 makeHTMLFromJson(data);
+                const addIn4 = {
+                    level: checkLevel,
+                    code: '',
+                    name: name,
+                    data_num: '',
+                };
+                setTextButton(ID_MASTER);
+                checkKeyArrMap(addIn4);
             }
         }
 
@@ -187,7 +197,6 @@
                     star.classList.add("orange");
                     star.classList.remove("grey");
                 }
-
             }
         }
 
@@ -205,12 +214,16 @@
                 getById(code);
             }
             if (mode == MODE_CREATE && !code && !name) {
+                if (isFirst) {
+                    nation_name = '';
+                    nation_code = '';
+                }
                 document.getElementById('up_name').value = nation_name;
                 document.getElementById('up_code').value = nation_code;
             }
         }
 
-        async function getListAddressChild(code, name, element) {
+        async function getListAddressChild(code, name, data_num) {
             let url = '';
             if (checkLevel == 1) {
                 url = '{{ route('admin.address.show.region', ['code' => ':code']) }}';
@@ -220,10 +233,11 @@
                 url = url.replace(':code', code);
             }
             let result = await fetch(url);
-            let data_num = element.getAttribute('data-num');
             duyetTheTr(data_num);
 
             if (result.ok) {
+                isFirst = false;
+
                 const data = await result.json();
                 if (checkLevel == 1) {
                     nation_code = code;
@@ -231,10 +245,19 @@
                     document.getElementById('title-div').style.display = 'block';
                     document.getElementById('title-main').innerHTML = name;
                 }
-                setTextButton(ID_CHILD);
                 makeHTMLFromJson(data);
                 checkLevel++;
                 index_main++;
+                setTextButton(ID_CHILD);
+
+                const addIn4 = {
+                    level: checkLevel,
+                    code: code,
+                    name: name,
+                    data_num: data_num,
+                };
+                checkKeyArrMap(addIn4);
+
             }
         }
 
@@ -294,7 +317,7 @@
                                     </div>
                                 </th>`
                 if (pItem.total_child) {
-                    str += `<td class="${classTd}" id="td-region-${index}">`;
+                    str += `<td class="${classTd} w-100" id="td-region-${index}">`;
                     pItem.child.forEach((cItem) => {
                         str += ` <span class="nation" id="span-id-${cItem.code}">`;
                         if (isTable) {
@@ -302,7 +325,7 @@
                         }
                         str += `<span
                             class="tit cursor-pointer" data-num="${index_main}"
-                            onclick="getListAddressChild('${cItem.code}', '${cItem.name_en ?? cItem.name ?? ''}', this)">${cItem.name_en ?? ''} ${cItem.name ?? ''}</span>
+                            onclick="getListAddressChild('${cItem.code}', '${cItem.name_en ?? cItem.name ?? ''}', ${index_main})">${cItem.name_en ?? ''} ${cItem.name ?? ''}</span>
                      <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion"
                     onclick="createOrEditRegion('${cItem.id}','${cItem.name_en ?? cItem.name}', '${MODE_EDIT}', '${elementTd}', '${index}')">▤</span>
                     </span>`
@@ -324,7 +347,6 @@
 
         async function handleSubmitFormAddress() {
             const formData = new FormData();
-
             formData.append('up_name', document.getElementById('up_name').value);
             formData.append('name_en', document.getElementById('name_en').value);
             formData.append('name', document.getElementById('name').value);
@@ -339,62 +361,55 @@
                 body: formData
             });
             if (result.ok) {
-                const data = await result.json();
-                appendElementTable(data);
-            }
-        }
-
-        function appendElementTable(data) {
-            switch (modeForAppend) {
-                case MODE_CREATE:
-                    if (elementForAppend == elementTd) {
-                        const newTD = document.createElement('td');
-                        newTD.innerHTML = `<span class="nation"><span class="tit cursor-pointer orange "
-                        onclick="setIsShow('${data.id}')" id="myStar-${data.id}">★ </span>
-                        <span class="tit cursor-pointer" data-num="1" onclick="getListAddressChild('${data.code}', '${data.name}', this)">${data.name} ${data.name_en}</span>
-                    <span class="skyblue ml10"> <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion" onclick="createOrEditRegion('${data.id}','${data.name}', '${MODE_EDIT}', '${elementTd}', '3')">▤</span>
-                    </span></span>`;
-
-                        const targetElement = document.getElementById('td-region-' + indexForAppend)
-                        targetElement.appendChild(newTD);
-                    } else if (elementForAppend == elementTh) {
-                        const newTR = document.createElement('tr');
-                        const newTH = document.createElement('th');
-
-                        newTH.innerHTML = `<th class="cont bg-color-th1 "><div class="text-center"><span class="cursor-pointer">${data.name_en}</span></div>
-                                    <div class="mt5 text-center"><span class="minBtn ml20"> <span class="cursor-pointer" onclick="createOrEditRegion('${data.code}','${data.name}', '${MODE_CREATE}', '${elementTd}', '11' )" data-toggle="modal" data-target="#createRegion">국가등록</span></span>
-                                    </div>
-                                </th>`
-
-                        const targetElement = document.getElementById('p-table')
-                        newTR.appendChild(newTH)
-                        targetElement.appendChild(newTR);
-                    }
-                    break;
-                case MODE_EDIT:
-                    const newSpan = document.createElement('span');
-                    newSpan.innerHTML = `<span class="nation" id="span-id-${data.code}"><span class="tit cursor-pointer orange " onclick="setIsShow('${data.id}')" id="myStar-${data.id}">★ </span>
-                                    <span class="tit cursor-pointer" data-num="1" onclick="getListAddressChild('${data.code}', '${data.name}', this)">${data.name_en} ${data.name}</span>
-                     <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion" onclick="createOrEditRegion('${data.id}','${data.name_en}', '${MODE_EDIT}', '${elementTd}', '0')">▤</span>
-                    </span>`
-                    document.getElementById('span-id-' + data.code).innerHTML = '';
-                    document.getElementById('span-id-' + data.code).append(newSpan);
-
-                    break;
+                location.reload();
             }
         }
 
         function setTextButton(id) {
+            let textBtnMod2 = '';
+            let textButton_create_region = '';
             switch (id) {
                 case ID_MASTER:
-                    $('#btnMod2').textContent = '{{ __('home.Add continent') }}';
-                    $('.button-create-region').textContent = '{{ __('home.Add nation') }}'
+                    textBtnMod2 = '{{ __('home.Add continent') }}'
+                    textButton_create_region = '{{ __('home.Add nation') }}';
                     break;
                 case ID_CHILD:
-                    $('#btnMod2').textContent = '{{ __('home.Add region') }}';
-                    $('.button-create-region').textContent = '{{ __('home.Add region') }}'
+                    textBtnMod2 = '{{ __('home.thêm vùng') }}'
+                    textButton_create_region = '{{ __('home.thêm tỉnh thành') }}';
                     break;
             }
+            document.getElementById('btnMod2').textContent = textBtnMod2
+            document.querySelectorAll('.button-create-region').forEach((element) => {
+                element.textContent = textButton_create_region;
+            });
+        }
+
+        function handleAfterCreateOrEdit() {
+            document.getElementById('p-table').innerHTML = '';
+            document.getElementById('c-table').innerHTML = '';
+            arrAddress2.forEach((value) => {
+                checkLevel = value.level - 1;
+                if (value.code) {
+                    getListAddressChild(value.code, value.name, value.data_num);
+                } else if (checkLevel == 0) {
+                    getListAddress();
+                }
+            });
+        }
+
+        function checkKeyArrMap(input) {
+            let keyInput = input.code;
+            let lengthKeyInput = keyInput.length;
+
+            console.log('arrAddress2', arrAddress2);
+
+            arrAddress2.forEach((value, key) => {
+                if (key >= lengthKeyInput) {
+                    arrAddress2.splice(key, 1);
+                }
+            });
+            arrAddress2[keyInput.length] = input;
+            console.log('array sau khi check', arrAddress2);
         }
     </script>
 @endsection
