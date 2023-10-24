@@ -157,6 +157,7 @@
         const ID_MASTER = 1;
         const ID_CHILD = 2;
         let isFirst = true;
+        let isCallback = false;
 
         const MODE_CREATE = 'create'
         const MODE_EDIT = 'edit'
@@ -250,13 +251,15 @@
                 index_main++;
                 setTextButton(ID_CHILD);
 
-                const addIn4 = {
-                    level: checkLevel,
-                    code: code,
-                    name: name,
-                    data_num: data_num,
-                };
-                checkKeyArrMap(addIn4);
+                if (!isCallback) {
+                    const addIn4 = {
+                        level: checkLevel,
+                        code: code,
+                        name: name,
+                        data_num: data_num,
+                    };
+                    checkKeyArrMap(addIn4);
+                }
 
             }
         }
@@ -361,7 +364,9 @@
                 body: formData
             });
             if (result.ok) {
+                isCallback = true;
                 handleAfterCreateOrEdit();
+                isCallback = false;
             }
         }
 
@@ -401,15 +406,12 @@
             let keyInput = input.code;
             let lengthKeyInput = keyInput.length;
 
-            console.log('arrAddress2', arrAddress2);
-
             arrAddress2.forEach((value, key) => {
                 if (key >= lengthKeyInput) {
                     arrAddress2.splice(key, 1);
                 }
             });
             arrAddress2[keyInput.length] = input;
-            console.log('array sau khi check', arrAddress2);
         }
     </script>
 @endsection
