@@ -157,7 +157,7 @@
         const ID_MASTER = 1;
         const ID_CHILD = 2;
         let isFirst = true;
-        let isCallback = false;
+        let isCallback = true;
 
         const MODE_CREATE = 'create'
         const MODE_EDIT = 'edit'
@@ -174,14 +174,19 @@
                 document.getElementById('c-table').innerHTML = '';
                 document.getElementById('title-div').style.display = 'none';
                 makeHTMLFromJson(data);
-                const addIn4 = {
-                    level: checkLevel,
-                    code: '',
-                    name: name,
-                    data_num: '',
-                };
+
                 setTextButton(ID_MASTER);
-                checkKeyArrMap(addIn4);
+
+                if (isCallback) {
+                    const addIn4 = {
+                        level: checkLevel,
+                        code: '',
+                        name: name,
+                        data_num: '',
+                    };
+                    checkKeyArrMap(addIn4);
+                }
+
             }
         }
 
@@ -251,7 +256,7 @@
                 index_main++;
                 setTextButton(ID_CHILD);
 
-                if (!isCallback) {
+                if (isCallback) {
                     const addIn4 = {
                         level: checkLevel,
                         code: code,
@@ -364,9 +369,9 @@
                 body: formData
             });
             if (result.ok) {
-                isCallback = true;
-                handleAfterCreateOrEdit();
                 isCallback = false;
+                handleAfterCreateOrEdit();
+                isCallback = true;
             }
         }
 
