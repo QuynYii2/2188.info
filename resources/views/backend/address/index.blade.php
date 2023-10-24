@@ -361,7 +361,7 @@
                 body: formData
             });
             if (result.ok) {
-                location.reload();
+                handleAfterCreateOrEdit();
             }
         }
 
