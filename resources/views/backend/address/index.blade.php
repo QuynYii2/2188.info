@@ -1,9 +1,6 @@
 @extends('backend.layouts.master')
 
 @section('content')
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-
     <style>
         .nation {
             display: inline-block;
@@ -50,9 +47,6 @@
         .grey {
             color: grey;
         }
-
-
-
     </style>
 
     <div class="jumbotron jumbotron-fluid" id="title-div" style="display: none">
@@ -61,63 +55,28 @@
                 onclick="getListAddress()">{{ __('home.Address management ') }}</h1>
         </div>
     </div>
-
     <div class="card">
         <div class="card-body">
-            <table id="dataTable-1" class="regionWrap layer_tbl mt10 border">
-                <thead>
-                <tr>
-                    <td>Name</td>
-                    <td>child</td>
-                </tr>
-                </thead>
-            </table>
-            <table>
+            <table cellspacing="0" cellpadding="0" class="regionWrap layer_tbl mt10 border" style="display: table;">
+                <colgroup>
+                    <col width="230">
+                    <col width="/">
+                </colgroup>
+                <tbody id="p-table"></tbody>
                 <tr>
                     <th>
                         <button id="btnMod2" name="btnMod2" class="sky"
-                                onclick="createOrEditRegion('','', MODE_CREATE, elementTh, -1, TABLE_1)"
+                                onclick="createOrEditRegion('','', `${MODE_CREATE}`, `${elementTh}`, -1)"
                                 data-toggle="modal" data-target="#createRegion"
                                 style="margin-top:0; width:230px;">+ {{ __('home.Add continent') }}
                         </button>
                     </th>
                     <td></td>
                 </tr>
-            </table>
-            <table id="dataTable-2" class="regionWrap layer_tbl mt10 border">
-                <thead>
-                <tr>
-                    <td>Name</td>
-                    <td>child</td>
-                </tr>
-                </thead>
+                <tbody id="c-table"></tbody>
             </table>
         </div>
     </div>
-
-
-{{--    <div class="card">--}}
-{{--        <div class="card-body">--}}
-{{--            <table cellspacing="0" cellpadding="0" class="regionWrap layer_tbl mt10 border" style="display: table;">--}}
-{{--                <colgroup>--}}
-{{--                    <col width="230">--}}
-{{--                    <col width="/">--}}
-{{--                </colgroup>--}}
-{{--                <tbody id="p-table"></tbody>--}}
-{{--                <tr>--}}
-{{--                    <th>--}}
-{{--                        <button id="btnMod2" name="btnMod2" class="sky"--}}
-{{--                                onclick="createOrEditRegion('','', `${MODE_CREATE}`, `${elementTh}`, -1, )"--}}
-{{--                                data-toggle="modal" data-target="#createRegion"--}}
-{{--                                style="margin-top:0; width:230px;">+ {{ __('home.Add continent') }}--}}
-{{--                        </button>--}}
-{{--                    </th>--}}
-{{--                    <td></td>--}}
-{{--                </tr>--}}
-{{--                <tbody id="c-table"></tbody>--}}
-{{--            </table>--}}
-{{--        </div>--}}
-{{--    </div>--}}
 
     <div class="modal fade" id="createRegion" tabindex="-1" aria-labelledby="exampleCreateRegion" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -187,60 +146,33 @@
         </div>
     </div>
     <script>
-        let checkLevel = 1;
-        let index_main = 1;
-        let nation_code = nation_name = '';
-        let elementTh = 'th';
-        let elementTd = 'td';
-        let modeForAppend = elementForAppend = indexForAppend = '';
-        let arrAddress2 = new Map();
+        getListAddress();
+        var checkLevel = 1;
+        var index_main = 1;
+        var nation_code = nation_name = '';
+        var elementTh = 'th';
+        var elementTd = 'td';
+        var modeForAppend = elementForAppend = indexForAppend = ''
+        var arrAddress2 = new Map();
         const ID_MASTER = 1;
         const ID_CHILD = 2;
-        let isFirst = true;
-        const TABLE_1 = 'TABLE_1'
-        const TABLE_2 = 'TABLE_2';
-        let table_num = TABLE_1;
+        var isFirst = true;
 
         const MODE_CREATE = 'create'
         const MODE_EDIT = 'edit'
 
-        let dataTable_1 = $('#dataTable-1').DataTable({
-            columns: [
-                {data: "name"},
-                {data: "child"},
-            ],
-            searching: false,
-            ordering:  false,
-            paging: false,
-            info: false,
-        });
-        let dataTable_2 = $('#dataTable-2').DataTable({
-            columns: [
-                {data: "name"},
-                {data: "child"},
-            ],
-            searching: false,
-            ordering:  false,
-            paging: false,
-            info: false,
-        });
-
-        getListAddress();
-
         async function getListAddress() {
-            let url = '{{ route('admin.address.index') }}';
-            let result = await fetch(url);
+            var url = '{{ route('admin.address.index') }}';
+            var result = await fetch(url);
             if (result.ok) {
                 isFirst = true;
                 checkLevel = 1;
                 index_main = 1;
                 const data = await result.json();
-
+                document.getElementById('p-table').innerHTML = '';
+                document.getElementById('c-table').innerHTML = '';
                 document.getElementById('title-div').style.display = 'none';
-                dataTable_1.clear().draw();
-                dataTable_2.clear().draw();
-                makeHTMLForDataTable(data);
-
+                makeHTMLFromJson(data);
                 const addIn4 = {
                     level: checkLevel,
                     code: '',
@@ -253,10 +185,10 @@
         }
 
         async function setIsShow(id) {
-            let url = '{{ route('admin.address.change.show', ['id' => ':id']) }}';
+            var url = '{{ route('admin.address.change.show', ['id' => ':id']) }}';
             url = url.replace(':id', id);
-            let result = await fetch(url);
-            let star = document.getElementById('myStar-' + id)
+            var result = await fetch(url);
+            var star = document.getElementById('myStar-' + id)
             if (result.ok) {
                 if (star.classList.contains('orange')) {
                     star.classList.remove("orange");
@@ -268,12 +200,11 @@
             }
         }
 
-        function createOrEditRegion(code, name, mode, element, index, dataTable) {
+        function createOrEditRegion(code, name, mode, element, index) {
 
             modeForAppend = mode;
             elementForAppend = element;
             indexForAppend = index;
-            table_num = dataTable;
 
             resetFormModal();
             document.getElementById('up_name').value = name;
@@ -293,7 +224,7 @@
         }
 
         async function getListAddressChild(code, name, data_num) {
-            let url = '';
+            var url = '';
             if (checkLevel == 1) {
                 url = '{{ route('admin.address.show.region', ['code' => ':code']) }}';
                 url = url.replace(':code', code);
@@ -301,24 +232,20 @@
                 url = '{{ route('admin.address.show', ['code' => ':code']) }}';
                 url = url.replace(':code', code);
             }
-            let result = await fetch(url);
+            var result = await fetch(url);
             duyetTheTr(data_num);
 
             if (result.ok) {
                 isFirst = false;
 
                 const data = await result.json();
-
                 if (checkLevel == 1) {
                     nation_code = code;
                     nation_name = name;
                     document.getElementById('title-div').style.display = 'block';
                     document.getElementById('title-main').innerHTML = name;
                 }
-
-                makeHTMLForDataTable(data);
-                // makeHTMLFromJson(data);
-
+                makeHTMLFromJson(data);
                 checkLevel++;
                 index_main++;
                 setTextButton(ID_CHILD);
@@ -335,8 +262,8 @@
         }
 
         function duyetTheTr(index) {
-            let i = ++index;
-            let checkindex = 0;
+            var i = ++index;
+            var checkindex = 0;
             do {
                 const element = document.querySelector(`tr[data-num="${i}"]`);
                 if (element) {
@@ -354,9 +281,9 @@
         }
 
         async function getById(id) {
-            let url = '{{ route('admin.address.get.by.id', ['id' => ':id']) }}';
+            var url = '{{ route('admin.address.get.by.id', ['id' => ':id']) }}';
             url = url.replace(':id', id);
-            let result = await fetch(url);
+            var result = await fetch(url);
             if (result.ok) {
                 const data = await result.json();
                 loadDataToModal(data);
@@ -377,7 +304,7 @@
 
         function makeHTMLFromJson(data) {
             const isTable = checkLevel == 1;
-            let str = '';
+            var str = '';
 
             data.forEach((pItem, index) => {
                 const classTh = index % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
@@ -418,72 +345,6 @@
 
         }
 
-        function makeHTMLForDataTable(data) {
-            console.log(modeForAppend)
-            const isTable = checkLevel == 1;
-            if (isTable) {
-                dataTable_1.clear().draw();
-            }
-            data.forEach((pItem, index) => {
-                let str = '';
-                const classTh = index % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
-                const classTd = index % 2 == 0 ? 'bg-color-td2' : 'bg-color-td1';
-
-                str += `<tr data-num="${index_main}" data-index="${index}"><th class="cont ${classTh} "><div class="text-center"><span class="cursor-pointer">${pItem.name_en ?? pItem.name ?? ''}</span></div>
-                <div class="mt5 text-center"><span class="minBtn ml20"> <span class="cursor-pointer button-create-region"
-                                                                         onclick="createOrEditRegion('${pItem.code}','${pItem.name_en ?? pItem.name}', '${MODE_CREATE}', '${elementTd}', '${index}', '${checkLevel > 1 ? TABLE_2 : TABLE_1}' )"
-                                                                         data-toggle="modal" data-target="#createRegion">{{ __('home.Add nation') }}</span></span>
-                </div>
-            </th>`;
-
-                if (pItem.total_child) {
-                    str += `<td class="${classTd} w-100" id="td-region-${index}">`;
-                    pItem.child.forEach((cItem) => {
-                        str += `<span class="nation" id="span-id-${cItem.code}">`;
-
-                        if (isTable) {
-                            str += `<span class="tit cursor-pointer ${cItem.isShow == 1 ? 'orange' : 'grey'} " onclick="setIsShow('${cItem.id}')">★ </span>`;
-                        }
-
-                        str += `<span
-                class="tit cursor-pointer" data-num="${index_main}"
-                onclick="getListAddressChild('${cItem.code}', '${cItem.name_en ?? cItem.name ?? ''}', ${index_main})">${cItem.name_en ?? ''} ${cItem.name ?? ''}</span>
-                <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion"
-                onclick="createOrEditRegion('${cItem.id}','${cItem.name_en ?? cItem.name}', '${MODE_EDIT}', '${elementTd}', '${index}', '${checkLevel > 1 ? TABLE_2 : TABLE_1}')">▤</span>
-            </span>`;
-                    });
-
-                    str += `</td>`;
-                } else {
-                    str += `<td></td>`;
-                }
-
-                str += `</tr>`;
-
-                const $row = $(str);
-
-                console.log(modeForAppend);
-                if (modeForAppend) {
-                    switch (table_num) {
-                        case TABLE_1:
-                            dataTable_1.row.add($row).draw(false);
-                            break;
-                        case TABLE_2:
-                            dataTable_2.row.add($row).draw(false);
-                            break;
-                    }
-                } else {
-                    if (checkLevel > 1) {
-                        dataTable_2.row.add($row).draw(false);
-                    } else {
-                        dataTable_1.row.add($row).draw(false);
-                    }
-                }
-
-            });
-
-        }
-
         async function handleSubmitFormAddress() {
             const formData = new FormData();
             formData.append('up_name', document.getElementById('up_name').value);
@@ -500,46 +361,14 @@
                 body: formData
             });
             if (result.ok) {
-                const data = await result.json();
-                addMoreInTD(data);
-            }
-        }
-
-        function addMoreInTD(data) {
-            const isTable = checkLevel == 1;
-
-            if (modeForAppend == MODE_CREATE) {
-                if (elementForAppend == elementTd) {
-                    const dataCurrent = dataTable_1.cell(indexForAppend, 1).data();
-                    let str = '';
-                    {
-                        str += `<span class="nation" id="span-id-${data.code}">`;
-
-                        if (isTable) {
-                            str += `<span class="tit cursor-pointer ${data.isShow == 1 ? 'orange' : 'grey'} " onclick="setIsShow('${data.id}')">★ </span>`;
-                        }
-
-                        str += `<span
-                class="tit cursor-pointer" data-num="${index_main}"
-                onclick="getListAddressChild('${data.code}', '${data.name_en ?? data.name ?? ''}', ${index_main})">${data.name_en ?? ''} ${data.name ?? ''}</span>
-                <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion"
-                onclick="createOrEditRegion('${data.id}','${data.name_en ?? data.name}', '${MODE_EDIT}', '${elementTd}', '${indexForAppend}', '${checkLevel > 1 ? TABLE_2 : TABLE_1}')">▤</span>
-            </span>`;
-                    }
-                     // str = `<span class="nation" id="span-id-${data.code}">
-                     //    <span class="tit cursor-pointer ${data.isShow == 1 ? 'orange' : 'grey'} " onclick="setIsShow('${data.id}')">★ </span>
-                     //    <span class="tit cursor-pointer" data-num="${index_main}"
-                     //    onclick="getListAddressChild('${data.code}', '${data.name_en ?? data.name ?? ''}', ${index_main})">${data.name_en ?? ''} ${data.name ?? ''}</span>
-                     //    <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion"
-                     //    onclick="createOrEditRegion('${data.id}','${data.name_en ?? data.name}', '${MODE_EDIT}', '${elementTd}', '${indexForAppend}')">▤</span>`;
-                    dataTable_1.cell(indexForAppend, 1).data(dataCurrent + str).draw();
-                }
+                await result.json();
+                handleAfterCreateOrEdit();
             }
         }
 
         function setTextButton(id) {
-            let textBtnMod2 = '';
-            let textButton_create_region = '';
+            var textBtnMod2 = '';
+            var textButton_create_region = '';
             switch (id) {
                 case ID_MASTER:
                     textBtnMod2 = '{{ __('home.Add continent') }}'
@@ -570,17 +399,16 @@
         }
 
         function checkKeyArrMap(input) {
-            let keyInput = input.code + '-' + input.data_num;
-            let lengthKeyInput = keyInput.length;
+            var keyInput = input.code + '-' + input.data_num;
+            var lengthKeyInput = keyInput.length;
 
             arrAddress2.forEach((value, key) => {
-                let lengthKey = key.length;
+                var lengthKey = key.length;
                 if (lengthKey >= lengthKeyInput) {
                     arrAddress2.delete(key);
                 }
             });
             arrAddress2.set(keyInput, input);
-            console.log(arrAddress2);
         }
     </script>
 @endsection
