@@ -228,13 +228,13 @@ class ProductController extends Controller
     {
         (new HomeController())->getLocale($request);
         $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
-        $registerCate = MemberRegisterPersonSource::where('email', Auth::user()->email)->get();
-        $registerCategories = MemberRegisterInfo::where('id', $registerCate[0]['member_id'])->get();
+        $registerCate = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+        $registerCategories = MemberRegisterInfo::where('id', $registerCate->member_id)->first();
         $categoriesRegister = [];
-        $arrayCategory = explode(',', $registerCategories[0]['category_id']);
-        foreach ($arrayCategory as $registerCategor) {
-            array_push($categoriesRegister, $registerCategor);
-        }
+        $arrayCategory = explode(',', $registerCategories->category_id);
+//        foreach ($arrayCategory as $registerCategor) {
+//            array_push($categoriesRegister, $registerCategor);
+//        }
 
         $attributes = Attribute::where([['status', AttributeStatus::ACTIVE], ['user_id', Auth::user()->id]])->get();
 
@@ -253,7 +253,7 @@ class ProductController extends Controller
             'categories' => $categories,
             'attributes' => $attributes,
             'storages' => $storages,
-            'categoriesRegister' => $categoriesRegister,
+            'categoriesRegister' => $arrayCategory,
         ]);
     }
 
