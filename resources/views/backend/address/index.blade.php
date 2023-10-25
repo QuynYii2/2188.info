@@ -105,7 +105,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">{{ __('home.Name English') }}</th>
+                                    <th scope="row">{{ __('home.Name English1') }}</th>
                                     <td colspan="3"><input type="text" id="name_en" name="name_en" style="width:98%">
                                     </td>
                                 </tr>
