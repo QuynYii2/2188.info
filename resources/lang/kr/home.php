@@ -611,7 +611,7 @@ return [
     // Chuc vu
     'Position company' => '소속',
     'Responsibility company' => '직책',
-    'Name English' => '영문',
+    'Name English' => ' 지역명(영문)',
     'Name Korea' => '자국어',
     'ID' => '아이디',
     'Congratulations, you have registered as a member' => '회원으로 가입 되신 것을 축하합니다',
@@ -1049,7 +1049,7 @@ return [
     'manager_products' => '계정 관리',
 
     'Address management' => '주소관리 ',
-    'Add continent' => '대륙등록',
+    'Add continent' => '상위 지역명',
     'Use this or not?' => '사용여부',
     'yes' => '사용',
     'no' => '미사용',
