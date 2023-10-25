@@ -318,7 +318,7 @@ return [
     'Price: Descending' => '가격: 내림차순',
     'Jump to' => '이동',
     'Electronics' => '전자제품',
-    'Home' => '홈으로 가기',
+    'Home' => '홈피',
     'Min' => '최소',
     'Max' => '최대',
     'Related Products' => '관련 상품',
