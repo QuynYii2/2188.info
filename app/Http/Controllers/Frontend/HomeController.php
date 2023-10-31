@@ -43,6 +43,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use PragmaRX\Countries\Package\Countries;
 
 
@@ -210,18 +211,18 @@ class HomeController extends Controller
 
     public function getLocale(Request $request)
     {
-        if ($request->session()->has('locale')) {
-            $locale = $request->session()->get('locale');
-            app()->setLocale('kr');
-        } else {
-            $ipAddress = $request->ip();
-            $geoIp = new GeoIP();
-            $locale = $geoIp->get_country_from_ip($ipAddress);
-            if ($locale !== null && is_array($locale)) {
-                $locale = $locale['countryCode'];
-            }
-        }
-        app()->setLocale('kr');
+//        if ($request->session()->has('locale')) {
+//            $locale = $request->session()->get('locale');
+//            app()->setLocale('kr');
+//        } else {
+//            $ipAddress = $request->ip();
+//            $geoIp = new GeoIP();
+//            $locale = $geoIp->get_country_from_ip($ipAddress);
+//            if ($locale !== null && is_array($locale)) {
+//                $locale = $locale['countryCode'];
+//            }
+//        }
+//        app()->setLocale('kr');
     }
 
     public function getLangDisplay()
@@ -338,6 +339,16 @@ class HomeController extends Controller
     public function setLocale()
     {
         $this->createMultilNewUser();
+    }
+
+    public function changeLanguage(Request $request)
+    {
+        $locale = $request->input('locale');
+        if (!$locale) {
+            $locale = 'kr';
+        }
+        Session::put('locale', $locale);
+        return redirect()->back();
     }
 
     public function getLocation(Request $request)

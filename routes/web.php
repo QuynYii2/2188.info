@@ -49,6 +49,7 @@ Route::get('/lang/kr', function ($locale) {
 })->name('language');
 
 Route::get('/set-locale/kr', [HomeController::class, 'setLocale'])->name('app.set.locale');
+Route::post('/change-locale', [HomeController::class, 'changeLanguage'])->name('app.change.locale');
 
 Route::post('/register', [UserController::class, 'store'])->name('register.store');
 
@@ -134,7 +135,7 @@ Route::get(
     '/register-member-ship/{member}',
     [RegisterMemberController::class, 'registerMemberShip']
 )->name('show.register.member.ship');
-Route::post('/register-member-ship/create-staff/{id}',[RegisterMemberController::class, 'createNewStaff']
+Route::post('/register-member-ship/create-staff/{id}', [RegisterMemberController::class, 'createNewStaff']
 )->name('create.staff.register');
 Route::get(
     '/congratulation-register-member/{member}',
@@ -354,12 +355,12 @@ Route::middleware(['auth'])->group(function () {
 
 // Backend v2
 Route::group(['prefix' => 'seller', 'middleware' => 'role.seller-or-admin'], function () {
-    require_once __DIR__.'/backend.php';
+    require_once __DIR__ . '/backend.php';
 });
 
 // Admin
 Route::group(['prefix' => 'admin', 'middleware' => 'role.admin'], function () {
-    require_once __DIR__.'/admin.php';
+    require_once __DIR__ . '/admin.php';
 });
 
 Route::prefix('address')->group(function () {
@@ -372,12 +373,12 @@ Route::prefix('address')->group(function () {
 
 // Seller
 Route::group(['prefix' => 'seller', 'middleware' => 'role.seller-or-admin'], function () {
-    require_once __DIR__.'/seller.php';
+    require_once __DIR__ . '/seller.php';
 });
 
 // Buyer
 Route::group(['prefix' => 'buyer', 'middleware' => 'role.buyer'], function () {
-    require_once __DIR__.'/buyer.php';
+    require_once __DIR__ . '/buyer.php';
 });
 
 //showCart
