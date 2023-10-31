@@ -37,7 +37,7 @@
             </div>
             <div>
                 <a href="{{route('checkout.show')}}" class="btn btn-success">{{ __('home.Check out now') }}</a>
-                <a href="{{route('home')}}" class="btn btn-success">{{ __('home.Home') }}</a>
+                <a href="{{route('homepage')}}" class="btn btn-success">{{ __('home.Home') }}</a>
             </div>
 
         </div>

@@ -22,7 +22,7 @@
         <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
         <div class="category-header align-items-center mt-4 mb-3 container-fluid d-flex justify-content-between">
             <div class="category-header--left">
-                {{--                <a href="{{route('home')}}">{{ __('home.Home') }}</a> / <a href="#">{{ __('home.Electronics') }}</a>--}}
+                {{--                <a href="{{route('homepage')}}">{{ __('home.Home') }}</a> / <a href="#">{{ __('home.Electronics') }}</a>--}}
             </div>
             <div class="category-header--right">
                 <div class="show-item mr-4 align-items-center">

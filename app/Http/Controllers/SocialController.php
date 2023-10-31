@@ -102,7 +102,7 @@ class SocialController extends Controller
             $request->session()->put('login', $facebookUser);
             $login = $request->session()->get('login');
 
-            return redirect()->route('home');
+            return redirect()->route('homepage');
 
         } catch (\Exception $exception) {
             return $exception;
@@ -193,7 +193,7 @@ class SocialController extends Controller
             $request->session()->put('login', $kakaoUser);
             $login = $request->session()->get('login');
 
-            return redirect()->route('home');
+            return redirect()->route('homepage');
 
         } catch (\Exception $exception) {
             return $exception;

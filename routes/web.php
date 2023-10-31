@@ -52,7 +52,8 @@ Route::get('/set-locale/kr', [HomeController::class, 'setLocale'])->name('app.se
 
 Route::post('/register', [UserController::class, 'store'])->name('register.store');
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [AuthController::class, 'showLogin'])->name('home.login');
+Route::get('/home', [HomeController::class, 'index'])->name('homepage');
 
 Route::get('/get-all-products', [\App\Http\Controllers\ProductController::class, 'getAllProduct'])->name('get-all-product');
 
