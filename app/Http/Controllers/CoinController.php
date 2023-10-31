@@ -48,12 +48,12 @@ class CoinController extends Controller
             }
 
             return redirect()
-                ->route('home')
+                ->route('homepage')
                 ->with('error', 'Something went wrong.');
 
         } else {
             return redirect()
-                ->route('home')
+                ->route('homepage')
                 ->with('error', $response['message'] ?? 'Something went wrong back');
         }
     }
@@ -99,7 +99,7 @@ class CoinController extends Controller
                 ->with('success', 'Transaction complete.');
         } else {
             return redirect()
-                ->route('home')
+                ->route('homepage')
                 ->with('error', $response['message'] ?? 'Something went wrong.');
         }
     }

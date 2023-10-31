@@ -3,7 +3,7 @@ use DaveJamesMiller\Breadcrumbs\BreadcrumbsGenerator as Breadcrumbs;
 
 Breadcrumbs::for('product', function ($trail, $product) {
     // Thêm breadcrumb cho trang chủ
-    $trail->push('Home', route('home'));
+    $trail->push('Home', route('homepage'));
 
     // Thêm breadcrumb cho danh mục sản phẩm (nếu có)
     if ($product->category) {

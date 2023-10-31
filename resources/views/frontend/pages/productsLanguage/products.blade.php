@@ -27,7 +27,7 @@
                             @endif
                         </div>
                         <div class="directional">
-                            <a href="{{route('home')}}" class="btn btn-primary p-3">
+                            <a href="{{route('homepage')}}" class="btn btn-primary p-3">
                                 Back To Home
                             </a>
                             <select class="language_drop btn btn-warning p-3 ml-3" name="countries"

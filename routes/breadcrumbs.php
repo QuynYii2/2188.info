@@ -19,7 +19,7 @@ Breadcrumbs::for('category', function ($trail, $category) {
         break;
     }
 
-    $trail->push(__('home.Home'), route('home'));
+    $trail->push(__('home.Home'), route('homepage'));
 
     while ($category) {
         $trail->push($categoryName, route('category.show', $category));
@@ -46,7 +46,7 @@ Breadcrumbs::for('product', function ($trail, $product) {
             break;
     }
 
-    $trail->push(__('home.Home'), route('home'));
+    $trail->push(__('home.Home'), route('homepage'));
     $trail->push($categoryName, route('category.show', $product->category));
     $trail->push($productName, route('product.show', $product));
 });

@@ -25,7 +25,7 @@
                     <div class="header-top-left col-xl-2 col-md-2">
                         @if(!$config->isEmpty())
                             <div class="header-logo">
-                                <a href="{{route('home')}}">
+                                <a href="{{route('homepage')}}">
                                     <img src="{{ asset('storage/'.$config[0]->logo) }}" alt="">
                                 </a>
                             </div>
@@ -734,7 +734,7 @@
             <div onclick="closeSearch()" class="search"></div>
             @if(!$config->isEmpty())
                 <div class="hd-mobile--center col-5 text-center">
-                    <a href="{{route('home')}}">
+                    <a href="{{route('homepage')}}">
                         <img class="header-logo--image" src="{{ asset('storage/'.$config[0]->logo) }}" alt="">
                     </a>
                 </div>

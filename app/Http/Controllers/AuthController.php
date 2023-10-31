@@ -60,7 +60,7 @@ class AuthController extends Controller
 //                StatisticAccess::create($statisticRevenue);
 //            }
             // nếu đăng nhập thàng công thì
-            return redirect()->route('home');
+            return redirect()->route('homepage');
         } else {
             return view('frontend/pages/login');
         }
@@ -70,7 +70,7 @@ class AuthController extends Controller
     {
         app()->setLocale($locale);
         if (Auth::check()) {
-            return redirect()->route('home');
+            return redirect()->route('homepage');
         } else {
             return view('frontend/pages/login');
         }
@@ -147,7 +147,7 @@ class AuthController extends Controller
                 } elseif ($isMember && $member->member == RegisterMember::TRUST) {
                     return redirect()->route('trust.register.member.index');
                 } else {
-                    return redirect()->route('home');
+                    return redirect()->route('homepage');
                 }
             }
         } else {
@@ -243,7 +243,7 @@ class AuthController extends Controller
             $request->session()->put('login', $googleUser);
             $login = $request->session()->get('login');
 
-            return redirect()->route('home');
+            return redirect()->route('homepage');
 
         } catch (\Exception $exception) {
             return $exception;
