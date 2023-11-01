@@ -137,8 +137,7 @@
                                                 $langWithLocation = 'lang_'.$locale;
                                             @endphp
                                             <span class="package_member d-flex"> {{__('home.Member')}} :
-                                               @php $nameMember = \App\Models\Member::where('name',$company->member)->value($langWithLocation) ?? ''; @endphp
-
+                                               @php $nameMember = \App\Models\Member::where('id',$company->member_id)->value($langWithLocation) ?? ''; @endphp
                                                 @if(locationHelper() == 'kr')
                                                     <div class="item-text">{{ $nameMember }}</div>
                                                 @elseif(locationHelper() == 'cn')
