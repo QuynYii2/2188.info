@@ -133,6 +133,9 @@ class AuthController extends Controller
             User::where('id', Auth::id())->update(['token' => $token]);
 
             $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+
+            $memberLogistic = Member::where('name', RegisterMember::LOGISTIC)->first();
+
             $isMember = null;
             if ($memberPerson) {
                 $member = MemberRegisterInfo::where([
@@ -142,10 +145,10 @@ class AuthController extends Controller
                 if ($member) {
                     $isMember = true;
                 }
-//                dd($isMember, $member->member, RegisterMember::BUYER);
-                if ($isMember && $member->member == RegisterMember::LOGISTIC) {
+
+                if ($isMember && $member->member_id == $memberLogistic->id) {
                     return redirect()->route('stand.register.member.index', ['id' => $member->id]);
-                } elseif ($isMember && $member->member == RegisterMember::TRUST) {
+                } elseif ($isMember) {
                     return redirect()->route('trust.register.member.index');
                 } else {
                     return redirect()->route('homepage');
