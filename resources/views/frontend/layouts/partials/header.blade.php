@@ -136,7 +136,7 @@
                                                 $location = locationHelper();
                                                 $langWithLocation = 'lang_'.$locale;
                                             @endphp
-                                            <span class="package_member d-flex">( {{__('home.Member')}} :
+                                            <span class="package_member d-flex"> {{__('home.Member')}} :
                                                @php $nameMember = \App\Models\Member::where('name',$company->member)->value($langWithLocation) ?? ''; @endphp
 
                                                 @if(locationHelper() == 'kr')
@@ -236,14 +236,14 @@
                                                     }
                                                 }
                                             }
-
+                                            $memberLogistic = \App\Models\Member::where('name', \App\Enums\RegisterMember::LOGISTIC)->first();
                                             $isValid = (new \App\Http\Controllers\Frontend\HomeController())->checkSellerOrAdmin();
                                         @endphp
-                                        @if($isMember && $member->member == \App\Enums\RegisterMember::LOGISTIC)
+                                        @if($isMember && $member->member_id == $memberLogistic->id)
                                             <div class="drop-item">
                                                 <a href="{{ route('stand.register.member.index', $member->id) }}">{{ __('home.Shop') }}</a>
                                             </div>
-                                        @elseif($isMember && $member->member == \App\Enums\RegisterMember::TRUST)
+                                        @elseif($isMember)
                                             <div class="drop-item">
                                                 <a href="{{ route('trust.register.member.index') }}">{{ __('home.Partner List') }}</a>
                                             </div>
