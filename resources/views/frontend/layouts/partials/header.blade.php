@@ -25,7 +25,7 @@
                     <div class="header-top-left col-xl-2 col-md-2">
                         @if(!$config->isEmpty())
                             <div class="header-logo">
-                                <a href="{{route('home')}}">
+                                <a href="{{route('homepage')}}">
                                     <img src="{{ asset('storage/'.$config[0]->logo) }}" alt="">
                                 </a>
                             </div>
@@ -137,9 +137,9 @@
                                                 $langWithLocation = 'lang_'.$locale;
                                             @endphp
                                             <span class="package_member d-flex">( {{__('home.Member')}} :
+                                               @php $nameMember = \App\Models\Member::where('name',$company->member)->value($langWithLocation) ?? ''; @endphp
 
                                                 @if(locationHelper() == 'kr')
-                                                    @php $nameMember = \App\Models\Member::where('name',$company->member)->value($langWithLocation); @endphp
                                                     <div class="item-text">{{ $nameMember }}</div>
                                                 @elseif(locationHelper() == 'cn')
                                                     <div class="item-text">{{$nameMember}}</div>
@@ -150,7 +150,7 @@
                                                 @else
                                                     <div class="item-text">{{$nameMember }}</div>
                                                 @endif
-                                            )</span>
+                                            </span>
                                         @endif
                                     </div>
 
@@ -734,7 +734,7 @@
             <div onclick="closeSearch()" class="search"></div>
             @if(!$config->isEmpty())
                 <div class="hd-mobile--center col-5 text-center">
-                    <a href="{{route('home')}}">
+                    <a href="{{route('homepage')}}">
                         <img class="header-logo--image" src="{{ asset('storage/'.$config[0]->logo) }}" alt="">
                     </a>
                 </div>

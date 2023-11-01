@@ -141,7 +141,7 @@
                                 @endif
                                 <p class="text-success small">{{ __('home.Payment success') }}</p>
                                 <div class="float-right mt-5">
-                                    <a href="{{route('home')}}" class="btn btn-success">
+                                    <a href="{{route('homepage')}}" class="btn btn-success">
                                         {{ __('home. Back to home') }}
                                     </a>
                                 </div>

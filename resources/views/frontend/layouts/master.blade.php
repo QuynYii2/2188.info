@@ -123,4 +123,62 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
 </div>
 </body>
 <script src="{{ asset('js/frontend.js') }}"></script>
+<script>
+    async function getLanguage() {
+        const userLocale = navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language;
+        // const userLocale = navigator.language || navigator.userLanguage;
+        return userLocale;
+    }
+
+    async function changeLanguageProject() {
+        let lang = localStorage.getItem('language');
+        let locale = await getLanguage();
+        if (!lang || lang != locale) {
+            lang = locale;
+            localStorage.setItem('language', locale);
+        }
+        //app.change.locale
+        console.log(lang);
+
+        switch (lang) {
+            case 'vi':
+                lang = 'vi';
+                break;
+            case 'ko':
+                lang = 'kr';
+                break;
+            case 'zh-CN':
+                lang = 'cn';
+                break;
+            case 'ja':
+                lang = 'jp';
+                break;
+            default:
+                lang = 'en';
+                break;
+        }
+
+        console.log(lang)
+
+        let url = `{{route('app.change.locale')}}`;
+
+        await $.ajax({
+            url: url,
+            method: 'POST',
+            data: {
+                _token: `{{csrf_token()}}`,
+                locale: lang
+            },
+        })
+            .done(function (response) {
+                let item = `{{app()->getLocale()}}`;
+                console.log(item)
+            })
+            .fail(function (_, textStatus) {
+                console.log(textStatus)
+            });
+    }
+
+    changeLanguageProject();
+</script>
 </html>

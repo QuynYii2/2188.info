@@ -105,7 +105,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">{{ __('home.Name English') }}</th>
+                                    <th scope="row">{{ __('home.Name English1') }}</th>
                                     <td colspan="3"><input type="text" id="name_en" name="name_en" style="width:98%">
                                     </td>
                                 </tr>
@@ -157,6 +157,7 @@
         const ID_MASTER = 1;
         const ID_CHILD = 2;
         let isFirst = true;
+        let isCallback = true;
 
         const MODE_CREATE = 'create'
         const MODE_EDIT = 'edit'
@@ -173,14 +174,19 @@
                 document.getElementById('c-table').innerHTML = '';
                 document.getElementById('title-div').style.display = 'none';
                 makeHTMLFromJson(data);
-                const addIn4 = {
-                    level: checkLevel,
-                    code: '',
-                    name: name,
-                    data_num: '',
-                };
+
                 setTextButton(ID_MASTER);
-                checkKeyArrMap(addIn4);
+
+                if (isCallback) {
+                    const addIn4 = {
+                        level: checkLevel,
+                        code: '',
+                        name: name,
+                        data_num: '',
+                    };
+                    checkKeyArrMap(addIn4);
+                }
+
             }
         }
 
@@ -250,13 +256,15 @@
                 index_main++;
                 setTextButton(ID_CHILD);
 
-                const addIn4 = {
-                    level: checkLevel,
-                    code: code,
-                    name: name,
-                    data_num: data_num,
-                };
-                checkKeyArrMap(addIn4);
+                if (isCallback) {
+                    const addIn4 = {
+                        level: checkLevel,
+                        code: code,
+                        name: name,
+                        data_num: data_num,
+                    };
+                    checkKeyArrMap(addIn4);
+                }
 
             }
         }
@@ -361,7 +369,9 @@
                 body: formData
             });
             if (result.ok) {
-                location.reload();
+                isCallback = false;
+                handleAfterCreateOrEdit();
+                isCallback = true;
             }
         }
 
@@ -401,15 +411,12 @@
             let keyInput = input.code;
             let lengthKeyInput = keyInput.length;
 
-            console.log('arrAddress2', arrAddress2);
-
             arrAddress2.forEach((value, key) => {
                 if (key >= lengthKeyInput) {
                     arrAddress2.splice(key, 1);
                 }
             });
             arrAddress2[keyInput.length] = input;
-            console.log('array sau khi check', arrAddress2);
         }
     </script>
 @endsection

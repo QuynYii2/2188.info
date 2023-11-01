@@ -8,7 +8,7 @@
             <a href="{{route('login')}}" class="btn btn-success mr-3">{{ __('home.Registrator Information') }}</a>
             <a href="{{route('login')}}" class="btn btn-success mr-3">{{ __('home.Representative Information') }}</a>
             <a href="{{route('login')}}" class="btn btn-success mr-3">{{ __('home.Staffs Information') }}</a>
-            <a href="{{route('home')}}" class="btn btn-success">{{ __('home.Home') }}</a>
+            <a href="{{route('homepage')}}" class="btn btn-success">{{ __('home.Home') }}</a>
         </div>
 
         <h3 class="text-center mt-5">{{ __('home.Congratulations, you have registered as a member') }} {{$company->member}}</h3>
