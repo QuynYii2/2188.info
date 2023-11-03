@@ -10,8 +10,11 @@
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <div class="card-body">
+                        @php
+                            $thumbnail = checkThumbnail($product->thumbnail);
+                        @endphp
                         <div class="item-img">
-                            <img src="{{ asset('/storage/' . $product->thumbnail) }}"
+                            <img src="{{ $thumbnail }}"
                                  alt="">
                         </div>
                         Tên sản phẩm: {{ ($product->name) }}<br>

@@ -113,7 +113,10 @@
     @else
         <tr>
             <td scope="row">
-                <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="">
+                @php
+                    $thumbnail = checkThumbnail($product->thumbnail);
+                @endphp
+                <img src="{{ $thumbnail }}" alt="">
             </td>
             <td>{{ __('home.None') }}</td>
             <td>

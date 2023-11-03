@@ -138,9 +138,12 @@
                             </th>
                             <td class="thumb column-thumb" data-colname="Image">
                                 <a href="#">
+                                    @php
+                                        $thumbnail = checkThumbnail($product->thumbnail);
+                                    @endphp
                                     @if($product->thumbnail)
                                         <img width="150" height="150"
-                                             src="{{ asset('storage/'.$product->thumbnail) }}"
+                                             src="{{ $thumbnail }}"
                                              class="woocommerce-placeholder wp-post-image" alt="Placeholder"
                                              decoding="async"
                                              loading="lazy">
@@ -493,12 +496,15 @@
                                                                     @endphp
                                                                     @if ($product->gallery )
                                                                         @foreach ($modifiedArray as $image)
-                                                                            <a href="{{ asset('storage/' . $image) }}"
+                                                                            @php
+                                                                                $thumbnail = checkThumbnail($image);
+                                                                            @endphp
+                                                                            <a href="{{ $thumbnail }}"
                                                                                data-fancybox="group"
                                                                                data-caption="This image has a caption 1">
                                                                                 <img class="mt-2"
                                                                                      style="height: 100px; width: 100px "
-                                                                                     src="{{ asset('storage/' . $image) }}"
+                                                                                     src="{{ $thumbnail }}"
                                                                                      alt="Gallery Image" width="100">
                                                                             </a>
                                                                         @endforeach

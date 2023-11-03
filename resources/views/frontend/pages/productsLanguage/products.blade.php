@@ -212,12 +212,15 @@
                                             <div class="product-imgs col-md-12 py-1" id="product">
                                                 <div class="img-display ">
                                                     <div class="img-showcase d-flex flex-row bd-highlight">
+                                                        @php
+                                                            $thumbnail = checkThumbnail($product->thumbnail);
+                                                        @endphp
                                                         <img id="img-default" class="img w-100"
-                                                             src="{{ asset('storage/' . $product->thumbnail) }}"
+                                                             src="{{ $thumbnail }}"
                                                              alt="image" width="360px" height="250px"
                                                              data-toggle="modal"
                                                              data-target="#seeImageProduct">
-                                                        <input id="img-rollback" value="{{$product->thumbnail}}"
+                                                        <input id="img-rollback" value="{{$thumbnail}}"
                                                                hidden=""
                                                                disabled>
                                                     </div>

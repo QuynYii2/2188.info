@@ -4,7 +4,13 @@ $('.thumbnailProduct').on('click', function () {
     productName = product['name'];
     productMin = product['min'];
     let imgMain = product['thumbnail'];
-    let imageUrl = imageUrlMain + '/' + imgMain;
+    let imageUrl;
+    if (imgMain.includes("http")){
+        imageUrl = imgMain;
+    } else {
+        imageUrl = imageUrlMain + '/' + imgMain;
+    }
+
     let idImg = '#imgProductMain';
     let linkImg = '#linkProductImg';
 
@@ -31,7 +37,11 @@ $('.thumbnailProduct').on('click', function () {
     let arrayGallery = gallery.split(',');
     let arrayUrlImg = []
     for (let i = 0; i < arrayGallery.length; i++) {
-        arrayUrlImg.push(imageUrlMain + '/' + arrayGallery[i])
+        if (!arrayGallery[i].includes("http")){
+            arrayUrlImg.push(imageUrlMain + '/' + arrayGallery[i])
+        } else {
+            arrayUrlImg.push(arrayGallery[i])
+        }
     }
 
     let string = '';

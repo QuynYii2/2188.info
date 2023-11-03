@@ -134,9 +134,12 @@
                     <label for="thumbnail">{{ __('home.thumbnail') }}</label>
                     <input type="file" class="form-control-file" id="thumbnail" name="thumbnail" accept="image/*">
                     @if ($product->thumbnail)
-                        <a href="{{ asset('storage/' . $product->thumbnail) }}" data-fancybox="group"
+                        @php
+                            $thumbnail = checkThumbnail($product->thumbnail);
+                        @endphp
+                        <a href="{{ $thumbnail }}" data-fancybox="group"
                            data-caption="This image has a caption 1">
-                            <img class="mt-2" style="height: 100px" src="{{ asset('storage/' . $product->thumbnail) }}"
+                            <img class="mt-2" style="height: 100px" src="{{ $thumbnail }}"
                                  alt="Thumbnail">
                         </a>
                     @endif
@@ -153,10 +156,13 @@
                     @endphp
                     @if ($product->gallery )
                         @foreach ($modifiedArray as $image)
-                            <a href="{{ asset('storage/' . $image) }}" data-fancybox="group"
+                            @php
+                                $thumbnail = checkThumbnail($image);
+                            @endphp
+                            <a href="{{ $thumbnail }}" data-fancybox="group"
                                data-caption="This image has a caption 1">
                                 <img class="mt-2" style="height: 100px; width: 100px "
-                                     src="{{ asset('storage/' . $image) }}" alt="Gallery Image" width="100">
+                                     src="{{ $thumbnail }}" alt="Gallery Image" width="100">
                             </a>
                         @endforeach
                     @endif
