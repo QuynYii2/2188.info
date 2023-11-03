@@ -56,8 +56,7 @@
             "app/Hepper/VnPay_helper.php",
             "app/Hepper/BreadcrumbsHelper.php",
             "app/Hepper/checkAdmin_helper.php",
-            "app/Hepper/membershiptypeHelper.php",
-            "app/Hepper/checkThumbnail.php"
+            "app/Hepper/membershiptypeHelper.php"
         ]
     },
     "autoload-dev": {
