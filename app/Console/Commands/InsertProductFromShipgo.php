@@ -16,7 +16,7 @@ class InsertProductFromShipgo extends Command
      * php artisan insert-product {option}
      * option: shipgo || shoppe || lazada
      */
-    protected $signature = 'insert-product {serve}';
+    protected $signature = 'insert-product';
 
     /**
      * The console command description.
@@ -42,7 +42,6 @@ class InsertProductFromShipgo extends Command
      */
     public function handle()
     {
-        $serve = $this->argument('serve');
-        (new MainController())->insertProduct($serve);
+        (new MainController())->insertProduct();
     }
 }

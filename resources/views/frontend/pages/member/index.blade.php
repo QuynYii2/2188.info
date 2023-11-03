@@ -120,9 +120,12 @@
                                     <div class="col-md-4 border">
                                         <div class="row mt-3" data-id="{{$loop->index+1}}">
                                             @foreach($products as $product)
+                                                @php
+                                                    $thumbnail = checkThumbnail($product->thumbnail);
+                                                @endphp
                                                 <div class="col-md-3 mb-2 text-center">
                                                     <img data-id="{{$product->id}}"
-                                                         src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
+                                                         src="{{ $thumbnail }}" alt=""
                                                          class="thumbnailProduct" data-value="{{$product}}"
                                                          width="60px" height="60px">
                                                     <p class="mt-2">

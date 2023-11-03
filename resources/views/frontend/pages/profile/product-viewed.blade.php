@@ -20,11 +20,14 @@
                     <div class="row">
                         @foreach($arrayProducts as $product)
                            @if($product!= null)
+                                @php
+                                    $thumbnail = checkThumbnail($product->thumbnail);
+                                @endphp
                                 <div class="col-md-3 border mb-3">
                                     <h5 class="text-center">
                                         <a class="link-hover" href="{{route('detail_product.show', $product->id)}}"> {{ ($product->name) }}</a>
                                     </h5>
-                                    <img class="img" src="{{$product->thumbnail}}" alt="Product image">
+                                    <img class="img" src="{{$thumbnail}}" alt="Product image">
                                     <div class="text-center text-danger">${{ ($product->price) }}</div>
                                 </div>
                            @endif

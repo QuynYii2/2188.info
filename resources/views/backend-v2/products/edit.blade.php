@@ -100,10 +100,13 @@
                             @endphp
                             @if ($product->gallery )
                                 @foreach ($modifiedArray as $image)
-                                    <a href="{{ asset('storage/' . $image) }}" data-fancybox="group"
+                                    @php
+                                        $thumbnail = checkThumbnail($image);
+                                    @endphp
+                                    <a href="{{ $thumbnail }}" data-fancybox="group"
                                        data-caption="This image has a caption 1">
                                         <img class="mt-2" style="height: 100px; width: 100px "
-                                             src="{{ asset('storage/' . $image) }}" alt="Gallery Image" width="100">
+                                             src="{{ $thumbnail }}" alt="Gallery Image" width="100">
                                     </a>
                                 @endforeach
                             @endif

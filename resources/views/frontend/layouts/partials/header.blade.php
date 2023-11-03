@@ -486,7 +486,10 @@
                                                                             <div class="swiper-slide">
                                                                                 <div class="item">
                                                                                     <div class="item-img">
-                                                                                        <img src="{{ asset('storage/' . $product->thumbnail) }}"
+                                                                                        @php
+                                                                                            $thumbnail = checkThumbnail($product->thumbnail);
+                                                                                        @endphp
+                                                                                        <img src="{{ $thumbnail }}"
                                                                                              alt="">
                                                                                     </div>
                                                                                     <div class="item-body">

@@ -17,7 +17,11 @@
                                 <a class="link-hover"
                                    href="{{route('detail_product.show', $product->id)}}"> {{ ($product->name) }}</a>
                             </h5>
-                            <img class="img" src="{{ asset('storage/' . $product->thumbnail) }}" alt="Product image">
+                            @php
+                                $thumbnail = checkThumbnail($product->thumbnail);
+                            @endphp
+
+                            <img class="img" src="{{ $thumbnail }}" alt="Product image">
                             <div class="text-center text-danger">${{ ($product->price) }}</div>
                         </div>
                     @endforeach

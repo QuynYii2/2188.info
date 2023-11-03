@@ -51,10 +51,13 @@
                 @endphp
                 @foreach($products as $product)
                     <div class=" ">
+                        @php
+                            $thumbnail = checkThumbnail($product->thumbnail);
+                        @endphp
                         <label class="image-checkbox d-flex align-items-center">
                             <input class="inputCheckbox" type="checkbox" name="arrayProduct[]" value="{{$product->id}}"/>
                             <div class="check_url">
-                                <img src="{{ asset('storage/'.$product->thumbnail) }}" class="img img-100">
+                                <img src="{{ $thumbnail }}" class="img img-100">
                             </div>
                             <a href="{{route('detail_product.show', $product->id)}}">{{ ($product->name) }}</a>
                         </label>

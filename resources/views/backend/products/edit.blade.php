@@ -112,10 +112,13 @@
                             @endphp
                             @if ($product->gallery )
                                 @foreach ($modifiedArray as $image)
-                                    <a href="{{ asset('storage/' . $image) }}" data-fancybox="group"
+                                    @php
+                                        $thumbnail = checkThumbnail($image);
+                                    @endphp
+                                    <a href="{{ $thumbnail }}" data-fancybox="group"
                                        data-caption="This image has a caption 1">
                                         <img class="mt-2" style="height: 100px; width: 100px "
-                                             src="{{ asset('storage/' . $image) }}" alt="Gallery Image" width="100">
+                                             src="{{ $thumbnail }}" alt="Gallery Image" width="100">
                                     </a>
                                 @endforeach
                             @endif
@@ -564,7 +567,10 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="" width="60px" height="60px">
+                            @php
+                                $thumbnail = checkThumbnail($product->thumbnail);
+                            @endphp
+                            <img src="{{ $thumbnail }}" alt="" width="60px" height="60px">
                         </div>
                     </div>
                     <input type="text" hidden id="imgGallery" value="" name="imgGallery[]">

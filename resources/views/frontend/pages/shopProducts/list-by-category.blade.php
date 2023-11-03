@@ -27,7 +27,10 @@
                                 <div class="col-lg-4 col-sm-6">
                                     <div class="product-item">
                                         <div class="pi-pic">
-                                            <img class="img" src="{{ asset('storage/'.$product->thumbnail) }}" alt="">
+                                            @php
+                                                $thumbnail = checkThumbnail($product->thumbnail);
+                                            @endphp
+                                            <img class="img" src="{{ $thumbnail }}" alt="">
                                             <div class="sale pp-sale">Sale</div>
                                             <div class="icon">
                                                 <i class="fa fa-heart-o"></i>
