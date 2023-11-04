@@ -480,7 +480,7 @@
                                                                 <div class="swiper Category_listProduct">
                                                                     <div class="swiper-wrapper">
                                                                         @php
-                                                                            $products = DB::table('products')->get();
+                                                                            $products = \App\Models\Product::where('status', \App\Enums\ProductStatus::ACTIVE)->limit(5)->get();
                                                                         @endphp
                                                                         @foreach($products as $product)
                                                                             <div class="swiper-slide">

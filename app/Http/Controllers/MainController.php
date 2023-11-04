@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AttributeProductStatus;
 use App\Enums\AttributeStatus;
 use App\Enums\CategoryStatus;
 use App\Enums\Contains;
 use App\Enums\ProductStatus;
+use App\Enums\PropertiStatus;
+use App\Enums\VariationStatus;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Properties;
 use App\Models\Role;
+use App\Models\Variation;
 use FuzzyWuzzy\Fuzz;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\DB;
@@ -27,31 +32,9 @@ class MainController extends Controller
 
             $attributes = $this->getAllAttributeFromShipGo();
             $dataAttribute = json_decode($attributes, true);
+
             foreach ($dataAttribute as $att) {
-                $name = $att['Name'];
-
-                $attribute = Attribute::where('serve', 'shipgo')->where('serve_id', $att['Id'])->first();
-                if (!$attribute) {
-                    $attribute = new Attribute();
-                    $attribute->name = $name;
-
-                    $attribute->serve = 'shipgo';
-                    $attribute->serve_id = $att['Id'];
-
-                    $ld = new TranslateController();
-
-                    $attribute->name_vi = $ld->translateText($att['Name'], 'vi');
-                    $attribute->name_zh = $ld->translateText($att['Name'], 'zh-CN');
-                    $attribute->name_en = $ld->translateText($att['Name'], 'en');
-                    $attribute->name_ja = $ld->translateText($att['Name'], 'ja');
-                    $attribute->name_ko = $ld->translateText($att['Name'], 'ko');
-
-                    $attribute->slug = \Str::slug($name);
-                    $attribute->user_id = $adminRole->user_id;
-
-                    $attribute->status = AttributeStatus::ACTIVE;
-                    $attribute->save();
-                }
+                $attribute = $this->createAttribute($att, 'Name', $adminRole);
             }
 
             $categories = $this->getAllCategoryFromShipGo();
@@ -120,15 +103,66 @@ class MainController extends Controller
                                 $product->thumbnail = $thumbnail;
                                 $product->gallery = $gallery;
 
-                                $newProduct = $this->createProduct($product, $value);
-//                                dd($newProduct->id);
+                                $product = $this->createProduct($product, $value);
 
-//                                $attributeProduct = $this->getAllProductAttributeFromShipGo($productID);
-//                                $dataAttributeProduct = json_decode($attributeProduct, true);
-//
-//                                foreach ($dataAttributeProduct as $itemAttributeProduct) {
-//
-//                                }
+//                                dd($productID);
+                                $attributeProduct = $this->getAllProductAttributeFromShipGo($productID);
+                                $dataAttributeProduct = json_decode($attributeProduct, true);
+
+                                if (count($dataAttributeProduct) > 0) {
+                                    foreach ($dataAttributeProduct as $itemAttributeProduct) {
+                                        $attribute = Attribute::where('serve', 'shipgo')->where('serve_id', $itemAttributeProduct['ProductAttributeId'])->first();
+
+                                        $attributeProductValue = $this->getAllProductAttributeValueFromShipGo($itemAttributeProduct['Id']);
+                                        $dataAttributeProductValue = json_decode($attributeProductValue, true);
+
+                                        $arrayProperty = null;
+                                        foreach ($dataAttributeProductValue as $itemAttributeProductValue) {
+                                            $property = new Properties();
+                                            $property->attribute_id = $attribute->id;
+                                            $property = $this->createProperty($property, 'Name', $itemAttributeProductValue);
+
+                                            $attribute_property = $attribute->id . '-' . $property->id;
+
+                                            $variation = new Variation();
+
+                                            $variation->user_id = $adminRole->user_id;
+
+                                            $variation->quantity = $itemAttributeProductValue['Quantity'];
+
+                                            $variation->price = $product->price * (1 + $itemAttributeProductValue['PriceAdjustment']);
+                                            $variation->old_price = $product->old_price * (1 + $itemAttributeProductValue['PriceAdjustment']);
+
+                                            $thumbnail = $this->getProductPictureDetail($itemAttributeProductValue['PictureId']);
+                                            if (!$thumbnail) {
+                                                $thumbnail = '';
+                                            } else {
+                                                $thumbnail = str_replace("wwwroot/", "", $thumbnail);
+
+                                                $thumbnail = $this->checkServeImage($thumbnail);
+                                            }
+
+                                            $variation->thumbnail = $thumbnail;
+
+                                            $variation->variation = $attribute_property;
+
+                                            $variation->description = '';
+                                            $variation->status = VariationStatus::ACTIVE;
+
+                                            $arrayProperty[] = $property->id;
+                                        }
+
+                                        $listProperty = implode(',', $arrayProperty);
+
+                                        $attribute_property = [
+                                            'product_id' => $product->id,
+                                            'attribute_id' => $attribute->id,
+                                            'value' => $listProperty,
+                                            'status' => AttributeProductStatus::ACTIVE
+                                        ];
+                                        DB::table('product_attribute')->insert($attribute_property);
+                                    }
+                                }
                             }
                         }
                     }
@@ -137,6 +171,106 @@ class MainController extends Controller
         } catch (\Exception $exception) {
             echo $exception;
         }
+    }
+
+    private function getAttributeProperty($request)
+    {
+        $proAtt = $request;
+
+        if ($proAtt === null) {
+            return null;
+        }
+
+        $newArray = [];
+
+        $elements = explode(',', $proAtt);
+
+        foreach ($elements as $element) {
+            $parts = explode('-', $element);
+            $prefix = $parts[0];
+            $value = $parts[1];
+
+            if (!isset($newArray[$prefix])) {
+                $newArray[$prefix] = $prefix . '-' . $value;
+            } else {
+
+                $newArray[$prefix] .= '-' . $value;
+            }
+        }
+
+        $newArray = array_values($newArray);
+
+        return $newArray;
+    }
+
+    private function getArray($array)
+    {
+        if ($array) {
+            if (count($array) == 1) {
+                return $array;
+            }
+            $newArray = $array[0];
+            for ($i = 1; $i < count($array); $i++) {
+                $newArray = $this->mergeArray($newArray, $array[$i]);
+            }
+            return $newArray;
+        } else {
+            return null;
+        }
+    }
+
+    private function createAttribute($att, $Name, $adminRole)
+    {
+        $name = $att[$Name];
+
+        $attribute = Attribute::where('serve', 'shipgo')->where('serve_id', $att['Id'])->first();
+        if (!$attribute) {
+            $attribute = new Attribute();
+            $attribute->name = $name;
+
+            $attribute->serve = 'shipgo';
+            $attribute->serve_id = $att['Id'];
+
+            $ld = new TranslateController();
+
+            $attribute->name_vi = $ld->translateText($att[$Name], 'vi');
+            $attribute->name_zh = $ld->translateText($att[$Name], 'zh-CN');
+            $attribute->name_en = $ld->translateText($att[$Name], 'en');
+            $attribute->name_ja = $ld->translateText($att[$Name], 'ja');
+            $attribute->name_ko = $ld->translateText($att[$Name], 'ko');
+
+            $attribute->slug = \Str::slug($name);
+            $attribute->user_id = $adminRole->user_id;
+
+            $attribute->status = AttributeStatus::ACTIVE;
+            $attribute->save();
+        }
+        return $attribute;
+    }
+
+    public function createProperty($property, $name, $itemAttributeProductValue)
+    {
+        $property->name = $itemAttributeProductValue[$name];
+
+        $property->serve = 'shipgo';
+        $property->serve_id = $itemAttributeProductValue['Id'];
+
+        $ld = new TranslateController();
+
+        $property->name_vi = $ld->translateText($itemAttributeProductValue[$name], 'vi');
+        $property->name_zh = $ld->translateText($itemAttributeProductValue[$name], 'zh-CN');
+        $property->name_en = $ld->translateText($itemAttributeProductValue[$name], 'en');
+        $property->name_ja = $ld->translateText($itemAttributeProductValue[$name], 'ja');
+        $property->name_ko = $ld->translateText($itemAttributeProductValue[$name], 'ko');
+
+        $property->slug = \Str::slug($itemAttributeProductValue[$name]);
+
+
+        $property->status = PropertiStatus::ACTIVE;
+
+        $property->save();
+
+        return $property;
     }
 
     private function createProduct($product, $item)
