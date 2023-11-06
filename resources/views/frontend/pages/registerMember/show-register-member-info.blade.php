@@ -139,9 +139,9 @@
 @section('content')
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
-    <div class="container">
+    <div class=" container-fluid">
         <div class="start-page mb-3">
-            <div class="background container pt-3 justify-content-center pb-3">
+            <div class="background container-fluid pt-3 justify-content-center pb-3">
                 <div class="form-title text-center solid-3x pt-2 pb-3 bg-member-green">
                     <div class="title text-primary"
                          style="font-size: 35px; font-weight: 600">{{ __('home.Sign up company information') }}</div>

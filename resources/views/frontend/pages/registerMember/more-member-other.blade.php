@@ -2,6 +2,14 @@
     #tableMemberOther th, #tableMemberOther td {
         vertical-align: middle !important;
     }
+
+    #tableMemberOther th {
+        width: 250px;
+    }
+
+    #tableMemberOther td {
+        width: 500px;
+    }
 </style>
 @php
     $create = null;
@@ -11,6 +19,7 @@
 
 @endphp
 <table class="table element-bordered" align="center" id="tableMemberOther">
+<table class="table element-bordered" id="tableMemberOther">
     <form action="{{route('register.member.info')}}" method="post" id="formRegisterMember">
         @csrf
         <input type="text" class="d-none" name="member_id" value="{{ $member->id }}">
@@ -21,14 +30,14 @@
             <th scope="row">
                 <label for="datetime_register">{{ __('home.Day register') }}</label>
             </th>
-            <td colspan="2">
+            <th colspan="3">
                 <input type="text" class="form-control" id="datetime_register"
                        name="datetime_register" disabled>
-            </td>
+            </th>
             <th scope="row">
                 <label for="number_clearance">{{ __('home.Number clearance')}}</label>
             </th>
-            <td>
+            <td colspan="2">
                 <input type="number" class="form-control" id="number_clearance"
                        value="{{ $create ? $create['number_clearance'] : old('number_clearance', $exitsMember ? $exitsMember->number_clearance: '') }}"
                        name="number_clearance"
@@ -39,72 +48,72 @@
             <th rowspan="4" class="companyName">
                 <label>{{ __('home.Company Name') }}</label>
             </th>
-            <td>
+            <th>
                 <label for="name_en">{{ __('home.English only') }}</label>
-            </td>
-            <td>
+            </th>
+            <td colspan="2">
                 <input type="text" class="form-control" id="name_en"
                        value="{{ $create ? $create['name_en'] : old('name_en', $exitsMember ? $exitsMember->name_en : '') }}"
                        name="name_en" required>
             </td>
-            <td>
+            <th>
                 <label for="phone">{{ __('home.Phone Number') }}</label>
-            </td>
-            <td>
+            </th>
+            <td colspan="2">
                 <input type="number" class="form-control" id="phone"
                        value="{{ $create ? $create['phone'] : old('phone', $exitsMember ? $exitsMember->phone : '') }}"
                        name="phone" placeholder="{{ __('home.Phone Number') }}" required>
             </td>
         </tr>
         <tr class="text-center">
-            <td>
+            <th>
                 <label for="name_kr">{{ __('home.Name Korea')}}</label>
-            </td>
-            <td>
+            </th>
+            <td colspan="2">
                 <input type="text" class="form-control" id="name_kr"
                        value="{{ $create ? $create['name_kr'] : old('name_kr', $exitsMember ? $exitsMember->name_kr :'') }}"
                        name="name_kr" required>
             </td>
-            <td>
+            <th>
                 <label for="fax">{{ __('home.Fax') }}</label>
-            </td>
-            <td>
+            </th>
+            <td colspan="2">
                 <input type="number" class="form-control" id="fax"
                        value="{{ $create ? $create['fax'] : old('fax', $exitsMember ? $exitsMember->fax :'') }}"
                        name="fax" placeholder="{{ __('home.Fax') }}">
             </td>
         </tr>
         <tr class="text-center">
-            <td>
+            <th>
                 <label for="homepage">{{ __('home.Home') }}</label>
-            </td>
-            <td>
+            </th>
+            <td colspan="2">
                 <input type="text" class="form-control" id="homepage"
                        value="{{ $create ? $create['homepage'] : old('homepage', $exitsMember ? $exitsMember->homepage : '') }}"
                        name="homepage" placeholder="{{ __('home.Home') }}" required>
             </td>
-            <td>
+            <th>
                 <label for="email">{{ __('home.email') }}</label>
-            </td>
-            <td>
+            </th>
+            <td colspan="2">
                 <input type="email" class="form-control" id="email"
                        value="{{ $create ? $create['email'] : old('email', $exitsMember ? $exitsMember->email: '') }}"
                        name="email" placeholder="{{ __('home.email') }}">
             </td>
         </tr>
         <tr>
-            <td class="text-center">
+            <th class="text-center">
                 <label for="number_business">{{ __('home.Business registration number') }}</label>
-            </td>
-            <td class="text-center">
+            </th>
+            <td class="text-center" colspan="2">
                 <input type="number" class="form-control" id="number_business"
                        value="{{ $create ? $create['number_business'] : old('number_business', $exitsMember ? $exitsMember->number_business :'') }}"
                        name="number_business" placeholder="{{ __('home.Business registration number') }}" required>
             </td>
-            <td class="text-center">
+            <th class="text-center">
                 <label for="giay_phep_kinh_doanh"> {{ __('home.giay_phep_kinh_doanh') }} </label>
-            </td>
-            <td>
+            </th>
+            <td colspan="2">
                 <div class="" style="margin-top: 16px; margin-bottom: -38px">
                     <label id="giay_phep_kinh_doanhLabel" for="giay_phep_kinh_doanh"
                            class="btn btn-outline-secondary">{{ __('home.Select file') }}</label>
@@ -122,10 +131,10 @@
             <th rowspan="2">
                 <label>{{ __('home.Address Business') }}</label>
             </th>
-            <td>
+            <th>
                 <label for="detail-address"> {{ __('home.Language English') }} </label>
-            </td>
-            <td colspan="3">
+            </th>
+            <td colspan="5">
                 <div class="row">
                     <div class="form-group col-md-3 address-above" data-toggle="modal" data-target="#modal-address">
                         <label for="countries-select">{{ __('home.Select country') }}:</label>
@@ -149,10 +158,10 @@
             </td>
         </tr>
         <tr class="text-center">
-            <td>
+            <th>
                 <label for="detail-address-1"> {{ __('home.Language Local') }} </label>
-            </td>
-            <td colspan="3">
+            </th>
+            <td colspan="5">
                 <div class="row">
                     <div class="form-group col-md-3 address-below" data-toggle="modal" data-target="#modal-address">
                         <label for="countries-select-1">{{ __('home.Select country') }}:</label>
@@ -180,10 +189,10 @@
             <th>
                 <label>{{ __('home.Business industry') }}</label>
             </th>
-            <td>
+            <th>
                 <label for="type_business">{{ __('home.Business') }}</label>
-            </td>
-            <td>
+            </th>
+            <td colspan="2">
                 <select id="type_business" name="type_business" class="form-control">
                     <option @if($exitsMember)
                                 @if($exitsMember->type_business == 'distributive')
@@ -197,10 +206,10 @@
                             @endif value="manufacture">{{ __('home.manufacture') }}</option>
                 </select>
             </td>
-            <td>
+            <th>
                 <label for="code_business">{{ __('home.Business industry') }}</label>
-            </td>
-            <td>
+            </th>
+            <td colspan="2">
                 <select id="code_business" name="code_business" class="form-control">
                     <option @if($exitsMember)
                                 @if($exitsMember->code_business == 'wholesale')
@@ -250,10 +259,10 @@
             <th rowspan="2">
                 <label>{{ __('home.PLU') }}</label>
             </th>
-            <td>
+            <th>
                 <label for="code_1">{{ __('home.1st classification') }}</label>
-            </td>
-            <td>
+            </th>
+            <td colspan="2">
                 <div class="multiselect" style="position: relative">
                     <div class="selectBox" id="code_1_item" onclick="showCheckboxes()">
                         <select>
@@ -325,10 +334,10 @@
                     @endif
                 </div>
             </td>
-            <td>
+            <th>
                 <label for="code_3">{{ __('home.3rd classification') }}</label>
-            </td>
-            <td>
+            </th>
+            <td colspan="2">
                 <div class="multiselect" style="position: relative">
                     <div class="selectBox" id="code_3_item" onclick="showCheckboxes1()">
                         <select>
@@ -353,10 +362,10 @@
             </td>
         </tr>
         <tr class="text-center">
-            <td>
+            <th>
                 <label for="code_2">{{ __('home.2nd classification') }}</label>
-            </td>
-            <td>
+            </th>
+            <td colspan="2">
                 <div class="multiselect" style="position: relative">
                     <div class="selectBox" id="code_2_item" onclick="showCheckboxes2()">
                         <select>

@@ -2,6 +2,14 @@
     #tableMemberPerson th, #tableMemberPerson td {
         vertical-align: middle !important;
     }
+
+    #tableMemberPerson th {
+        width: 250px!important;
+    }
+
+    #tableMemberPerson td {
+        width: 500px!important;
+    }
 </style>
 @php
     $create = null;
@@ -11,6 +19,7 @@
 
 @endphp
 <table class="table element-bordered" align="center" id="tableMemberPerson">
+<table class="table element-bordered" id="tableMemberPerson">
     <form class="p-3" action="{{route('register.member.source')}}" method="post">
         @csrf
         <tbody class="text-nowrap">
@@ -89,12 +98,12 @@
             <th rowspan="2" class="text-center">
                 <label for="code">{{ __('home.ID') }}</label>
             </th>
-            <td rowspan="2" colspan="3">
+            <th rowspan="2" colspan="2">
                 <input type="text" class="form-control" id="code" name="code"
                        placeholder="{{ __('home.ID') }}"
                        value="{{$create ? $create['code'] : old('code', $memberPersonSource ? $memberPersonSource->code : '')}}"
                        required>
-            </td>
+            </th>
             <th rowspan="2" class="text-center">
                 <button id="buttonCheckID" type="button"
                         class="btn btn-secondary">{{ __('home.Duplicate') }}</button>
@@ -103,7 +112,7 @@
                 <th class="text-center">
                     <label for="password">{{ __('home.Password') }}</label>
                 </th>
-                <td>
+                <td colspan="2">
                     <input type="password" class="form-control" id="password" name="password"
                            placeholder="{{ __('home.Password') }}" required>
                 </td>
@@ -114,7 +123,7 @@
                 <th class="text-center">
                     <label for="passwordConfirm">{{ __('home.Re-Password') }}</label>
                 </th>
-                <td>
+                <td colspan="2">
                     <input type="password" class="form-control" id="passwordConfirm"
                            name="passwordConfirm" placeholder="{{ __('home.Re-Password') }}"
                            required>
@@ -131,9 +140,9 @@
                        value="{{$create ? $create['phone'] : old('phone', $memberPersonSource ? $memberPersonSource->phone : '')}}"
                        required>
             </td>
-            <td class="text-center">
+            <th class="text-center">
                 <input type="checkbox" id="checkBoxPhone">
-            </td>
+            </th>
             <td class="text-center">
                 <label for="checkBoxPhone">{{ __('home.Apply notification SMS') }}</label>
             </td>
@@ -153,9 +162,9 @@
                        value="{{$create ? $create['email'] : old('email', $memberPersonSource ? $memberPersonSource->email : '')}}"
                        required>
             </td>
-            <td class="text-center">
+            <th class="text-center">
                 <input type="checkbox" id="checkBoxEmail">
-            </td>
+            </th>
             <td class="text-center">
                 <label for="checkBoxEmail">{{ __('home.Apply notification Email') }}</label>
             </td>

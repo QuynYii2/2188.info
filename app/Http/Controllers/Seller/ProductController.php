@@ -40,16 +40,16 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->paginate(10);
         $isAdmin = (new HomeController())->checkAdmin();
         if ($isAdmin) {
-            $products = Product::where('status', '!=', ProductStatus::DELETED)->orderByDesc('id')->get();
+            $products = Product::where('status', '!=', ProductStatus::DELETED)->orderByDesc('id')->paginate(10);
         } else {
             $check_ctv_shop = StaffUsers::where('user_id', Auth::user()->id)->first();
             if ($check_ctv_shop) {
-                $products = Product::where([['user_id', $check_ctv_shop->parent_user_id], ['status', '!=', ProductStatus::DELETED]])->orderByDesc('id')->get();
+                $products = Product::where([['user_id', $check_ctv_shop->parent_user_id], ['status', '!=', ProductStatus::DELETED]])->orderByDesc('id')->paginate(10);
             } else {
-                $products = Product::where([['user_id', Auth::user()->id], ['status', '!=', ProductStatus::DELETED]])->orderByDesc('id')->get();
+                $products = Product::where([['user_id', Auth::user()->id], ['status', '!=', ProductStatus::DELETED]])->orderByDesc('id')->paginate(10);
             }
         }
         return view('backend/products/index', ['products' => $products, 'categories' => $categories]);
