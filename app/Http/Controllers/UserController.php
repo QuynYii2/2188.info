@@ -447,13 +447,12 @@ class UserController extends Controller
 
         $apiUrl = "https://api.s247.vn:8443/api/sms?site=".$site."&LoginName=".$loginName."&Password=".$password."&SendServiceCode=".$sendServiceCode."&BrandName=".$brandName."&mobile=".$phoneTo."&Message=".$content."&SmsId=".$smsId."&Unicode=".$unicode;
 
-//        $client = new Client();
-//
-//        $response = $client->get($apiUrl);
-//
-//        $data = $response->getBody()->getContents();
+        $client = new Client();
 
-        return "1";
+        $response = $client->get($apiUrl);
+
+        $data = $response->getBody()->getContents();
+
         return json_decode($data)->code;
     }
 }
