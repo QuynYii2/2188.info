@@ -211,6 +211,7 @@ Route::get('/products-shop-category/{category}/{shop}',
     [ProductController::class, 'getListByCategoryAndShops'])->name('list.products.shop.category.show');
 
 Route::get('/chat-message/{from}/{to}', [SampleController::class, 'findAllMessage'])->name('chat.message.show.to.way');
+Route::post('get-number-phone-by-email', [UserController::class, 'getNumberPhoneByEmail'])->name('user.get.number.phone');
 
 // Product
 Route::get('/product', [ProductController::class, 'index'])->name('product.index');
