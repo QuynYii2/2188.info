@@ -45,6 +45,8 @@ class CheckoutController extends Controller
     public function index(Request $request)
     {
         (new HomeController())->getLocale($request);
+//        $currency = (new HomeController())->getLocation($request);
+        $currency = 'KWR';
         if (Auth::check()) {
             $number = Cart::where([
                 ['user_id', '=', Auth::user()->id],
@@ -58,7 +60,7 @@ class CheckoutController extends Controller
             $voucherItems = VoucherItem::where('customer_id', Auth::user()->id)->get();
 
             $totalSaleByRank = $this->findDiscount($carts);
-            return view('frontend/pages/checkout', compact('number', 'carts', 'user', 'voucherItems', 'totalSaleByRank'));
+            return view('frontend/pages/checkout', compact('number', 'carts', 'user', 'voucherItems', 'totalSaleByRank', 'currency'));
         } else {
             return view('frontend/pages/login');
         }
