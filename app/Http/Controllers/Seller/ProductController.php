@@ -93,7 +93,7 @@ class ProductController extends Controller
             $query->where('created_at', '<=', $to_date . ' 23:59:59');
         }
 
-        $products = $query->get();
+        $products = $query->paginate(10);
 
         return view('backend.products.index', compact('products', 'fullName', 'phoneNumber', 'email', 'from_date', 'to_date'));
     }
