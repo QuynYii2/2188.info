@@ -1067,5 +1067,7 @@ return [
     'thêm tỉnh thành' => '지역등록',
     'thêm vùng' => '권역추가',
     'Quản lý thông tin' => '정보관리',
+    'commit member trust' => 'Commit member trust',
+    'commit member buyer' => 'Commit member buyer'
 
 ];
