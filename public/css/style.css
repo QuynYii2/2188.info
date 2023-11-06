@@ -618,6 +618,17 @@ header .none_decoration {
   border-width: 3px;
 }
 
+.solid-4x {
+  border-style: solid solid solid none !important;
+  border-width: 3px;
+}
+
+.solid-4x-pink {
+  border-style: solid solid solid none !important;
+  border-color: rgb(241, 172, 139);
+  border-width: 1px;
+}
+
 .mix-1 {
   border-style: solid none none none;
   border-width: 3px;
