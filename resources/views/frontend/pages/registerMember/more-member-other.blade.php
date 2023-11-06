@@ -3,6 +3,13 @@
         vertical-align: middle !important;
     }
 </style>
+@php
+    $create = null;
+    if(session('create')){
+          $create =  session('create');
+    }
+
+@endphp
 <table class="table element-bordered" align="center" id="tableMemberOther">
     <form action="{{route('register.member.info')}}" method="post" id="formRegisterMember">
         @csrf

@@ -966,4 +966,6 @@ return [
     'Sửa' => 'Sửa',
     'Independent Customs Clearance' => 'Independent Customs Clearance',
     'General Customs Clearance' => 'General Customs Clearance',
+    'Quản lý thông tin' => 'Information management',
+
 ];
