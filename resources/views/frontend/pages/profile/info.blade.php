@@ -97,7 +97,7 @@
                         <label for="day" class="col-md-2 col-12 col-form-label">{{ __('home.nationality') }}</label>
 
                         <div class="col-md-10 col-12">
-                            <select class="form-control" id="country" name="region">
+                            <select class="form-control" id="country" name="region" disabled>
                             </select>
                         </div>
                     </div>
