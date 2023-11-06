@@ -126,7 +126,10 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
 <script src="{{ asset('js/frontend.js') }}"></script>
 <script>
     function hidden() {
-        $('.header-bottom').addClass('d-none');
+        const arrayHidden = ['header-bottom'];
+        for (let i = 0; i < arrayHidden.length; i++) {
+            $('.' + arrayHidden[i]).addClass('d-none');
+        }
     }
 
     hidden();
@@ -169,6 +172,44 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
 
         let url = `{{route('app.change.locale')}}`;
 
+        // await changeUrl(url, lang);
+        await redirectUrl(lang);
+    }
+
+    async function redirectUrl(locale) {
+        if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+
+        } else {
+            checkLocale(locale);
+        }
+    }
+
+    function checkLocale(locale) {
+        switch (locale) {
+            case 'vi':
+                locale = 'vi';
+                window.location.href = 'https://vn.2188.info/';
+                break;
+            case 'ko':
+                locale = 'kr';
+                window.location.href = 'https://kr.2188.info/';
+                break;
+            case 'zh-CN':
+                locale = 'cn';
+                window.location.href = 'https://cn.2188.info/';
+                break;
+            case 'ja':
+                locale = 'jp';
+                window.location.href = 'https://jp.2188.info/';
+                break;
+            default:
+                locale = 'en';
+                window.location.href = 'https://2188.info/';
+                break;
+        }
+    }
+
+    async function changeUrl(url, lang) {
         await $.ajax({
             url: url,
             method: 'POST',

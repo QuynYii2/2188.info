@@ -2,6 +2,14 @@
     #tableMemberRepresent th, #tableMemberRepresent td {
         vertical-align: middle !important;
     }
+
+    #tableMemberRepresent th {
+        width: 250px!important;
+    }
+
+    #tableMemberRepresent td {
+        width: 500px!important;
+    }
 </style>
 <table class="table element-bordered" id="tableMemberRepresent">
     <form class="p-3" action="{{route('register.member.represent')}}" method="post">
@@ -46,7 +54,7 @@
             <th rowspan="2">
                 <label for="code">{{ __('home.ID') }}</label>
             </th>
-            <td rowspan="2" colspan="3">
+            <td rowspan="2" colspan="2">
                 <input type="text" class="form-control" id="code" name="code"
                        placeholder="{{ __('home.ID') }}"
                        value="{{$create ? $create['code'] : old('', $memberPerson ? $memberPerson->code : '')}}"
@@ -59,7 +67,7 @@
                 <th>
                     <label for="password">{{ __('home.Password') }}</label>
                 </th>
-                <td>
+                <td colspan="2">
                     <input type="password" class="form-control" id="password" name="password"
                            placeholder="{{ __('home.Password') }}" required>
                 </td>
@@ -70,7 +78,7 @@
                 <th>
                     <label for="passwordConfirm">{{ __('home.Re-Password') }}</label>
                 </th>
-                <td>
+                <td colspan="2">
                     <input type="password" class="form-control" id="passwordConfirm"
                            name="passwordConfirm" placeholder="{{ __('home.Re-Password') }}"
                            required>
@@ -87,17 +95,17 @@
                        value="{{$create ? $create['phone'] : old('phone', $memberPerson ? $memberPerson->phone : '')}}"
                        required>
             </td>
-            <td>
+            <th>
                 <input type="checkbox" id="checkBoxPhone">
-            </td>
+            </th>
             <td>
                 <label for="checkBoxPhone">{{ __('home.Apply notification SMS') }}</label>
             </td>
         </tr>
         <tr>
-            <td colspan="6">
+            <th colspan="6">
                 <label for="checkBoxPhone">{{ __('home.Confirm apply notification SMS') }}</label>
-            </td>
+            </th>
         </tr>
         <tr class="text-center">
             <th rowspan="2">
@@ -109,9 +117,9 @@
                        value="{{$create ? $create['email'] : old('email', $memberPerson ? $memberPerson->email : '')}}"
                        required>
             </td>
-            <td>
+            <th>
                 <input type="checkbox" id="checkBoxEmail">
-            </td>
+            </th>
             <td>
                 <label for="checkBoxEmail">{{ __('home.Apply notification Email') }}</label>
             </td>
