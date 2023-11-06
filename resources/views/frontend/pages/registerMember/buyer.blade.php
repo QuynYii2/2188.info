@@ -449,6 +449,7 @@
             </td>
         </tr>
         </tbody>
+        <input id="localeInput" name="locale" class="d-none">
         <button type="submit" id="btnSubmitFormRegister"
                 class="d-none btn btn-primary">{{ __('home.sign up') }}</button>
     </form>

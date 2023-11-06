@@ -192,6 +192,7 @@
                 </td>
             </tr>
             <input type="text" class="form-control" name="member" value="{{$member}}" hidden="">
+            <input id="localeInput" name="locale" class="d-none">
             </tbody>
             <button class="d-none" id="btnSubmitFormRegister" type="submit">Done</button>
         </form>
