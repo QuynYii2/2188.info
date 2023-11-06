@@ -1,5 +1,5 @@
 @php
-    use Illuminate\Support\Facades\DB;
+    use App\Enums\PermissionUserStatus;use Illuminate\Support\Facades\Auth;use Illuminate\Support\Facades\DB;
 
     if (auth()->check() != null){
         $roleUsers = DB::table('role_user')
@@ -8,9 +8,6 @@
     } else {
         $roleUsers[] = null;
     }
-
-    use Illuminate\Support\Facades\Auth;
-    use App\Enums\PermissionUserStatus;
 
     if (auth()->check() != null){
         $permissionUsers = DB::table('permissions')
@@ -26,6 +23,8 @@
      $routeName = \Illuminate\Support\Facades\Route::currentRouteName();
 
      $isAdmin = (new \App\Http\Controllers\Frontend\HomeController())->checkAdmin();
+     $getMemberId = \App\Models\MemberRegisterPersonSource::where('email' , Auth::user()->email)->value('member_id');
+     $memberId = \App\Models\MemberRegisterPersonSource::where('member_id',$getMemberId)->value('id');
 @endphp
 <div class='wrapper text-nowrap'>
     <ul class='items'>
@@ -59,14 +58,16 @@
                 <li><a class="sidebarUrl" href="{{route('seller.products.index')}}">{{ __('home.Tất Cả Sản Phẩm') }}</a>
                 </li>
                 @if(!$check_ctv_shop)
-                    <li><a class="sidebarUrl" href="{{route('seller.products.create')}}">{{ __('home.Thêm mới sản phẩm') }}</a>
+                    <li><a class="sidebarUrl"
+                           href="{{route('seller.products.create')}}">{{ __('home.Thêm mới sản phẩm') }}</a>
                     </li>
                 @endif
                 <li><a class="sidebarUrl"
                        href="{{route('seller.products.views')}}">{{ __('home.Sắp xếp theo lượt xem') }}</a>
                 </li>
                 @if($isAdmin == true)
-                    <li><a class="sidebarUrl" href="{{route('seller.categories.index')}}">{{ __('home.chuyên mục') }}</a>
+                    <li><a class="sidebarUrl"
+                           href="{{route('seller.categories.index')}}">{{ __('home.chuyên mục') }}</a>
                     </li>
                 @endif
             </ul>
@@ -88,10 +89,12 @@
             <ul class='sub-items pl-3'>
                 @if($isAdmin == true)
                     <li>
-                        <a class="sidebarUrl" href="{{route('seller.config.show')}}">{{ __('home.Quản Lí Marketing') }}</a>
+                        <a class="sidebarUrl"
+                           href="{{route('seller.config.show')}}">{{ __('home.Quản Lí Marketing') }}</a>
                     </li>
                     <li>
-                        <a class="sidebarUrl" href="{{route('setup-marketing.show')}}">{{ __('home.Setup Marketing') }}</a>
+                        <a class="sidebarUrl"
+                           href="{{route('setup-marketing.show')}}">{{ __('home.Setup Marketing') }}</a>
                     </li>
                 @endif
 
@@ -277,7 +280,8 @@
 
                     <li><a class="sidebarUrl" href="{{route('admin.list.users')}}">{{ __('home.list_user') }}</a>
                     </li>
-                    <li><a class="sidebarUrl" href="{{route('admin.processCreate.users')}}">{{ __('home.create_member') }}</a>
+                    <li><a class="sidebarUrl"
+                           href="{{route('admin.processCreate.users')}}">{{ __('home.create_member') }}</a>
                     </li>
                 </ul>
             </li>
@@ -286,12 +290,28 @@
                             class="fa-regular fa-clipboard"></i>{{ __('home.Address management') }}
                 </a>
                 <ul class='sub-items pl-3'>
-                    <li><a class="sidebarUrl" href="{{route('address.manage.index')}}">{{ __('home.Address management') }}</a>
+                    <li><a class="sidebarUrl"
+                           href="{{route('address.manage.index')}}">{{ __('home.Address management') }}</a>
                     </li>
                 </ul>
             </li>
-
         @endif
+        <li>
+            <a class="sidebar item" href='#'><i class="fa-solid fa-truck"></i> {{ __('home.Quản lý thông tin') }}</a>
+            <ul class='sub-items pl-3'>
+                <li><a class="sidebarUrl" href="{{route('member.info')}}">{{ __('home.Quản lý thông tin') }}</a>
+                </li>
+                <li><a class="sidebarUrl"
+                       href="{{route('profile.member.person')}}">{{ __('home.Registrator Information') }}</a>
+                </li>
+                <li><a class="sidebarUrl"
+                       href="{{route('profile.member.represent')}}">{{ __('home.Representative Information') }}</a>
+                </li>
+                <li><a class="sidebarUrl"
+                       href="{{route('staff.member.info', $memberId)}}">{{ __('home.Staffs Information') }}</a>
+                </li>
+            </ul>
+        </li>
     </ul>
 </div>
 <script src="{{ asset('js/backend/side-bar.js') }}"></script>

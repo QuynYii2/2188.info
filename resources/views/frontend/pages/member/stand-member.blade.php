@@ -15,7 +15,6 @@
     <div class="container stand-member">
         @if($company)
             <h3 class="text-center">{{ __('home.Member booth') }}</h3>
-            {{--            <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>--}}
             @include('frontend.pages.member.header_member')
             <div class="row m-0">
                 <div class="col-md-6 border">

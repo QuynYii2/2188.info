@@ -11,6 +11,14 @@
         width: 500px;
     }
 </style>
+@php
+    $create = null;
+    if(session('create')){
+          $create =  session('create');
+    }
+
+@endphp
+<table class="table element-bordered" align="center" id="tableMemberOther">
 <table class="table element-bordered" id="tableMemberOther">
     <form action="{{route('register.member.info')}}" method="post" id="formRegisterMember">
         @csrf
