@@ -105,16 +105,17 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
 <body>
 
 <!-- Header -->
-@include('frontend.layouts.partials.header', ['infoUser' => $infoUser ?? '', 'isRoute' => $isRoute ])
+{{--@include('frontend.layouts.partials.header', ['infoUser' => $infoUser ?? '', 'isRoute' => $isRoute ])--}}
 @include('sweetalert::alert')
 
-<div class="{{ $isRoute ? ' mt-5' : 'marginTop-body' }}" id="mt-body {{ $isRoute ? ' booth' : '' }} ">
+{{--<div class="{{ $isRoute ? ' mt-5' : 'marginTop-body' }}" id="mt-body {{ $isRoute ? ' booth' : '' }} ">--}}
+<div>
     @yield('content')
 </div>
 
 <!-- Footer -->
-@include('frontend.layouts.partials.footer', ['isRoute' => $isRoute])
-
+{{--@include('frontend.layouts.partials.footer', ['isRoute' => $isRoute])--}}
+{{----}}
 <!-- Back to top -->
 <div class="btn-back-to-top" id="myBtn">
     <span class="symbol-btn-back-to-top">
@@ -124,6 +125,12 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
 </body>
 <script src="{{ asset('js/frontend.js') }}"></script>
 <script>
+    function hidden() {
+        $('.header-bottom').addClass('d-none');
+    }
+
+    hidden();
+
     async function getLanguage() {
         const userLocale = navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language;
         // const userLocale = navigator.language || navigator.userLanguage;
