@@ -116,7 +116,10 @@ $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
                 <div class="product-item col-12 d-flex justify-content-between">
                     <div class="d-flex align-items-center">
                         <div class="img">
-                            <img src="{{asset('storage/'. $product->thumbnail)}}" alt="">
+                            @php
+                                $thumbnail = checkThumbnail($product->thumbnail);
+                            @endphp
+                            <img src="{{$thumbnail}}" alt="">
                         </div>
                         <div class="name">{{$product->name}}</div>
                     </div>

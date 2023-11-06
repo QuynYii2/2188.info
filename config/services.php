@@ -46,4 +46,7 @@ return [
         'client_secret' => env('KAKAO_CLIENT_SECRET'),
         'redirect' => env('KAKAO_REDIRECT_URI')
     ],
+    'local' => [
+        'verify' => storage_path('certificates/credentials.crt'),
+    ],
 ];

@@ -40,7 +40,10 @@
                             <td>{{ $product->category->name}}</td>
                             <td>{{ $product->price }}</td>
                             <td style="width: 100px; height: 100px">
-                                <img src="{{ asset('storage/'.$product->thumbnail) }}" style="width: 100%; height: auto" alt="{{ __('home.thumbnail') }}">
+                                @php
+                                    $thumbnail = checkThumbnail($product->thumbnail);
+                                @endphp
+                                <img src="{{ $thumbnail }}" style="width: 100%; height: auto" alt="{{ __('home.thumbnail') }}">
                             </td>
                             <td></td>
                             <td class="d-flex justify-content-center">

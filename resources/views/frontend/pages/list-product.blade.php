@@ -7,11 +7,14 @@
 <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
 <div class="item item-hover">
     @if($product->thumbnail)
+        @php
+            $thumbnail = checkThumbnail($product->thumbnail);
+        @endphp
         <div class="item-img">
             @if(\Illuminate\Support\Facades\Auth::check())
-                <a href="{{route('detail_product.show', $product->id)}}"><img src="{{ asset('storage/' . $product->thumbnail) }}" alt=""></a>
+                <a href="{{route('detail_product.show', $product->id)}}"><img src="{{ $thumbnail }}" alt=""></a>
             @else
-                <a href="#"><img src="{{ asset('storage/' . $product->thumbnail) }}" alt=""></a>
+                <a href="#"><img src="{{ $thumbnail }}" alt=""></a>
             @endif
             <div class="button-view">
                 <button type="button" class="btn view_modal" data-toggle="modal"

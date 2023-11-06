@@ -136,9 +136,8 @@
                                                 $location = locationHelper();
                                                 $langWithLocation = 'lang_'.$locale;
                                             @endphp
-                                            <span class="package_member d-flex">( {{__('home.Member')}} :
-                                               @php $nameMember = \App\Models\Member::where('name',$company->member)->value($langWithLocation) ?? ''; @endphp
-
+                                            <span class="package_member d-flex"> {{__('home.Member')}} :
+                                               @php $nameMember = \App\Models\Member::where('id',$company->member_id)->value($langWithLocation) ?? ''; @endphp
                                                 @if(locationHelper() == 'kr')
                                                     <div class="item-text">{{ $nameMember }}</div>
                                                 @elseif(locationHelper() == 'cn')
@@ -236,14 +235,14 @@
                                                     }
                                                 }
                                             }
-
+                                            $memberLogistic = \App\Models\Member::where('name', \App\Enums\RegisterMember::LOGISTIC)->first();
                                             $isValid = (new \App\Http\Controllers\Frontend\HomeController())->checkSellerOrAdmin();
                                         @endphp
-                                        @if($isMember && $member->member == \App\Enums\RegisterMember::LOGISTIC)
+                                        @if($isMember && $member->member_id == $memberLogistic->id)
                                             <div class="drop-item">
                                                 <a href="{{ route('stand.register.member.index', $member->id) }}">{{ __('home.Shop') }}</a>
                                             </div>
-                                        @elseif($isMember && $member->member == \App\Enums\RegisterMember::TRUST)
+                                        @elseif($isMember)
                                             <div class="drop-item">
                                                 <a href="{{ route('trust.register.member.index') }}">{{ __('home.Partner List') }}</a>
                                             </div>
@@ -481,13 +480,16 @@
                                                                 <div class="swiper Category_listProduct">
                                                                     <div class="swiper-wrapper">
                                                                         @php
-                                                                            $products = DB::table('products')->get();
+                                                                            $products = \App\Models\Product::where('status', \App\Enums\ProductStatus::ACTIVE)->limit(5)->get();
                                                                         @endphp
                                                                         @foreach($products as $product)
                                                                             <div class="swiper-slide">
                                                                                 <div class="item">
                                                                                     <div class="item-img">
-                                                                                        <img src="{{ asset('storage/' . $product->thumbnail) }}"
+                                                                                        @php
+                                                                                            $thumbnail = checkThumbnail($product->thumbnail);
+                                                                                        @endphp
+                                                                                        <img src="{{ $thumbnail }}"
                                                                                              alt="">
                                                                                     </div>
                                                                                     <div class="item-body">

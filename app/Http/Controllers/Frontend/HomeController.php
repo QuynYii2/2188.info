@@ -65,7 +65,7 @@ class HomeController extends Controller
             'en' => 'USD'
         ];
 
-        $currentProducts = Product::where([['location', $locale], ['status', ProductStatus::ACTIVE]])->get();
+        $currentProducts = Product::where([['location', $locale], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
 
         if (array_key_exists($locale, $currencies)) {
             $currency = $currencies[$locale];
@@ -116,7 +116,7 @@ class HomeController extends Controller
 
         $products = Product::where([
             ['status', ProductStatus::ACTIVE]
-        ])->orderBy('hot', 'desc')->get();
+        ])->orderBy('hot', 'desc')->limit(10)->get();
         $products = $products->unique('slug');
         $productHots[] = $products;
 //        dd($productHots);
@@ -134,7 +134,7 @@ class HomeController extends Controller
 
         $products = Product::where([
             ['status', ProductStatus::ACTIVE]
-        ])->orderBy('feature', 'desc')->get();
+        ])->orderBy('feature', 'desc')->limit(10)->get();
         $products = $products->unique('slug');
         $productFeatures[] = $products;
 

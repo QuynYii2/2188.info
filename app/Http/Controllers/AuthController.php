@@ -101,8 +101,9 @@ class AuthController extends Controller
             return back();
         }
 
-        $locale = $this->getLocale($request);
+//        $locale = $this->getLocale($request);
 //        dd($locale, $user->region);
+        $locale = app()->getLocale();
 
         if ($user) {
             $role_id = DB::table('role_user')->where('user_id', $user->id)->get();
@@ -132,6 +133,9 @@ class AuthController extends Controller
             User::where('id', Auth::id())->update(['token' => $token]);
 
             $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+
+            $memberLogistic = Member::where('name', RegisterMember::LOGISTIC)->first();
+
             $isMember = null;
             if ($memberPerson) {
                 $member = MemberRegisterInfo::where([
@@ -141,10 +145,10 @@ class AuthController extends Controller
                 if ($member) {
                     $isMember = true;
                 }
-//                dd($isMember, $member->member, RegisterMember::BUYER);
-                if ($isMember && $member->member == RegisterMember::LOGISTIC) {
+
+                if ($isMember && $member->member_id == $memberLogistic->id) {
                     return redirect()->route('stand.register.member.index', ['id' => $member->id]);
-                } elseif ($isMember && $member->member == RegisterMember::TRUST) {
+                } elseif ($isMember) {
                     return redirect()->route('trust.register.member.index');
                 } else {
                     return redirect()->route('homepage');
@@ -293,7 +297,7 @@ class AuthController extends Controller
         for ($i = 0; $i < $maxAttempts; $i++) {
             $random_char1 = $characters[rand(0, strlen($characters) - 1)];
             $random_char2 = $characters[rand(0, strlen($characters) - 1)];
-            $random_string = $random_char1.$random_char2;
+            $random_string = $random_char1 . $random_char2;
 
             // Kiểm tra xem $random_string đã tồn tại trong bảng hay chưa
             $existingIsoCodes = DB::table($table)->pluck($column)->toArray();
@@ -315,7 +319,7 @@ class AuthController extends Controller
             $random_char1 = $characters[rand(0, strlen($characters) - 1)];
             $random_char2 = $characters[rand(0, strlen($characters) - 1)];
             $random_char3 = $characters[rand(0, strlen($characters) - 1)];
-            $random_string = $random_char1.$random_char2.$random_char3;
+            $random_string = $random_char1 . $random_char2 . $random_char3;
 
             $existingIsoCodes = DB::table($table)->pluck($column)->toArray();
 

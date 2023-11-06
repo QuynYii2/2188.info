@@ -31,9 +31,12 @@
                             @endphp
                             <div class="col-md-3">
                                 <div class="product-item bg-light mb-4">
+                                    @php
+                                        $thumbnail = checkThumbnail($product->thumbnail);
+                                    @endphp
                                     <div class="product-img position-relative overflow-hidden">
                                         <img class="img img-fluid w-100"
-                                             src="{{ asset('storage/' . $product->thumbnail) }}"
+                                             src="{{ $thumbnail }}"
                                              alt="">
                                     </div>
                                     <div class="text-center py-4">
@@ -71,9 +74,12 @@
                                                 <div class="card tabs-product row" id="id-tabs-product">
                                                     <div class="product-imgs col-md-12 py-1" id="product">
                                                         <div class="img-display ">
+                                                            @php
+                                                                $thumbnail = checkThumbnail($product->thumbnail);
+                                                            @endphp
                                                             <div class="img-showcase d-flex flex-row bd-highlight">
                                                                 <img id="img-default" class="img w-100"
-                                                                     src="{{ asset('storage/' . $product->thumbnail) }}"
+                                                                     src="{{ $thumbnail }}"
                                                                      alt="image" width="360px" height="250px">
                                                             </div>
                                                         </div>

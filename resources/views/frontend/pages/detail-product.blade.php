@@ -35,19 +35,28 @@
                 <div class="col-12 col-md-4">
                     <div class="product-gallery">
                         <div class="product-image">
+                            @php
+                                $thumbnail = checkThumbnail($product->thumbnail);
+                            @endphp
                             <img id="productThumbnail" class="active h-100"
-                                 src="{{ asset('storage/' . $product->thumbnail) }}">
-                            <input type="text" id="urlImage" value="{{asset('storage/')}}" hidden="">
+                                 src="{{ $thumbnail }}">
+                            <input type="text" id="urlImage" value="{{ $thumbnail }}" hidden="">
                         </div>
                         <ul class="image-list">
                             @php
                                 $gallery = $product->gallery;
                                 $arrayGallery = explode(',', $gallery);
                             @endphp
-                            <li class="image-item"><img src="{{ asset('storage/' . $product->thumbnail) }}"></li>
+                            @php
+                                $thumbnail = checkThumbnail($product->thumbnail);
+                            @endphp
+                            <li class="image-item"><img src="{{ $thumbnail }}"></li>
                             @if(count($arrayGallery)>1)
-                                @foreach($arrayGallery as $gallerys)
-                                    <li class="image-item"><img src="{{ asset('storage/' . $gallerys) }}"></li>
+                                @foreach($arrayGallery as $gallery)
+                                    @php
+                                        $gallery = checkThumbnail($gallery);
+                                    @endphp
+                                    <li class="image-item"><img src="{{ $gallery }}"></li>
                                 @endforeach
                             @endif
                         </ul>
@@ -277,7 +286,8 @@
                             <div class="express-footer">
                                 <a href="{{ route('chat.message.show', $name->name) }}">
                                     <div class="button-call"><i
-                                                class="fa-solid fa-envelope"></i> {{ __('home.Contact supplier') }}</div>
+                                                class="fa-solid fa-envelope"></i> {{ __('home.Contact supplier') }}
+                                    </div>
                                 </a>
                                 <a href="tel:{{ $name->phone }}" type="tel">
                                     <div class="button-call"><i class="fa-solid fa-phone"></i> {{ __('home.Call us') }}
@@ -341,7 +351,8 @@
                                     </div>
                                     <div class="company-basicCapacity ilvietnam-1-1-19">
                                         <a href=""
-                                           class="attr-item ilvietnam-2-19-20" aria-haspopup="true" aria-expanded="false">
+                                           class="attr-item ilvietnam-2-19-20" aria-haspopup="true"
+                                           aria-expanded="false">
                                             <div class="attr-title ilvietnam-3-20-21">
                                                 {{ __('home.Store Rating') }}
                                             </div>
@@ -365,7 +376,8 @@
 
                                             </div>
                                         </a>
-                                        <div class="attr-item ilvietnam-2-19-23" aria-haspopup="true" aria-expanded="false">
+                                        <div class="attr-item ilvietnam-2-19-23" aria-haspopup="true"
+                                             aria-expanded="false">
                                             <div class="attr-title ilvietnam-3-23-24">
                                                 {{ __('home.On-time delivery rate') }}
                                             </div>
@@ -373,7 +385,8 @@
                                                 95,6%
                                             </div>
                                         </div>
-                                        <div class="attr-item ilvietnam-2-19-26" aria-haspopup="true" aria-expanded="false">
+                                        <div class="attr-item ilvietnam-2-19-26" aria-haspopup="true"
+                                             aria-expanded="false">
                                             <div class="attr-title ilvietnam-3-26-27">
                                                 {{ __('home.Response time') }}
                                             </div>
@@ -381,7 +394,8 @@
                                                 ≤3h
                                             </div>
                                         </div>
-                                        <div class="attr-item ilvietnam-2-19-29" aria-haspopup="true" aria-expanded="false">
+                                        <div class="attr-item ilvietnam-2-19-29" aria-haspopup="true"
+                                             aria-expanded="false">
                                             <div class="attr-title ilvietnam-3-29-30">
                                                 {{ __('home.Online revenue') }}
                                             </div>
@@ -389,7 +403,8 @@
                                                 ${{$shopInformation->annual_output}}+
                                             </div>
                                         </div>
-                                        <div class="attr-item ilvietnam-2-19-32" aria-haspopup="true" aria-expanded="false">
+                                        <div class="attr-item ilvietnam-2-19-32" aria-haspopup="true"
+                                             aria-expanded="false">
                                             <div class="attr-title ilvietnam-3-32-33">
                                                 {{ __('home.Floor space') }}
                                             </div>
@@ -397,7 +412,8 @@
                                                 {{$shopInformation->acreage}}m²
                                             </div>
                                         </div>
-                                        <div class="attr-item ilvietnam-2-19-35" aria-haspopup="true" aria-expanded="false">
+                                        <div class="attr-item ilvietnam-2-19-35" aria-haspopup="true"
+                                             aria-expanded="false">
                                             <div class="attr-title ilvietnam-3-35-36">
                                                 {{ __('home.Staff') }}
                                             </div>
@@ -410,13 +426,16 @@
                                         <div class="attr-title ilvietnam-2-38-39">
                                             {{ __('home.Service') }}
                                         </div>
-                                        <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
+                                        <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true"
+                                             aria-expanded="false">
                                             <div class="attr-content ilvietnam-3-40-41" title="tùy chỉnh nhỏ">
                                                 {{ __('home.Small customization') }}
                                             </div>
                                         </div>
-                                        <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
-                                            <div class="attr-content ilvietnam-3-42-43" title="Tùy chỉnh dựa trên thiết kế">
+                                        <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true"
+                                             aria-expanded="false">
+                                            <div class="attr-content ilvietnam-3-42-43"
+                                                 title="Tùy chỉnh dựa trên thiết kế">
                                                 {{ __('home.Customization based on design') }}
                                             </div>
                                         </div>
@@ -425,13 +444,15 @@
                                         <div class="attr-title ilvietnam-2-38-39">
                                             {{ __('home.Quality control') }}
                                         </div>
-                                        <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
+                                        <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true"
+                                             aria-expanded="false">
                                             <div class="attr-content ilvietnam-3-40-41"
                                                  title="Nhận dạng truy xuất nguồn gốc nguyên liệu">
                                                 {{ __('home.Identification of traceability of raw materials') }}
                                             </div>
                                         </div>
-                                        <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true" aria-expanded="false">
+                                        <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true"
+                                             aria-expanded="false">
                                             <div class="attr-content ilvietnam-3-42-43" title="Kiểm tra thành phẩm">
                                                 {{ __('home.Finished product inspection') }}
                                             </div>
@@ -441,7 +462,8 @@
                                     </div>
                                     <a href="{{ route('shop.information.show', $name->id) }}"
                                        class="company-qualificationCertificate service-4 ilvietnam-1-1-50">
-                                        <div class="attr-item ilvietnam-2-50-53" aria-haspopup="true" aria-expanded="false">
+                                        <div class="attr-item ilvietnam-2-50-53" aria-haspopup="true"
+                                             aria-expanded="false">
                                             <div class="attr-content ilvietnam-3-53-54">
                                                 {{ __('home.Certificate') }}
                                             </div>
@@ -471,7 +493,8 @@
         <div class="productView-description">
             <ul class="nav nav-tabs container-fluid pt-4" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                       aria-controls="home"
                        aria-selected="true">{{ __('home.description') }}</a>
                 </li>
                 <li class="nav-item">
@@ -487,7 +510,7 @@
             <div class="tab-content container-fluid" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     @if($product)
-                        <div class="content contentHeight1" id="content1" >
+                        <div class="content contentHeight1" id="content1">
                             @if(locationHelper() == 'kr')
                                 <div class="item-text">{!! $product->description_ko !!}</div>
                             @elseif(locationHelper() == 'cn')
@@ -520,7 +543,8 @@
                                 {!! $shopInformation->information !!}
                             </div>
                         </div>
-                        <button id="toggleBtn2" class="toggleBtn" onclick="toggleContent('content2', 'toggleBtn2')">{{ __('home.Show More') }}</button>
+                        <button id="toggleBtn2" class="toggleBtn"
+                                onclick="toggleContent('content2', 'toggleBtn2')">{{ __('home.Show More') }}</button>
                     @endif
                 </div>
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
@@ -561,7 +585,8 @@
                                                                                  class="fa fa-star"></i></label>
                                 </div>
                                 <input id="input-star" value="0" hidden="">
-                                <div id="text-message" class="text-danger d-none">{{ __('home.Please select star rating') }}
+                                <div id="text-message"
+                                     class="text-danger d-none">{{ __('home.Please select star rating') }}
                                 </div>
 
                                 <div class="form-group row">
@@ -782,23 +807,24 @@
         </div>
     </div>
     <script>
-        $(window).on( 'load', function() {
+        $(window).on('load', function () {
             var largestHeight = 50;
-            if ($('#content1').height() < largestHeight){
+            if ($('#content1').height() < largestHeight) {
                 $('#toggleBtn1').addClass('d-none');
             } else {
                 $('#toggleBtn1').removeClass('d-none');
             }
         });
 
-        $(window).on( 'load1', function() {
+        $(window).on('load1', function () {
             var largestHeight1 = 50;
-            if ($('#content2').height() < largestHeight1){
+            if ($('#content2').height() < largestHeight1) {
                 $('#toggleBtn2').addClass('d-none');
             } else {
                 $('#toggleBtn2').removeClass('d-none');
             }
         });
+
         function toggleContent(contentId, btnId) {
             var content = document.getElementById(contentId);
             var toggleBtn = document.getElementById(btnId);

@@ -181,8 +181,11 @@
                             data-toggle="modal"
                             data-target="#exampleModal" data-value="{{$product}}" data-id="{{$product->id}}">
                         <div class="standsMember-item section">
+                            @php
+                                $thumbnail = checkThumbnail($product->thumbnail);
+                            @endphp
                             <img data-id="{{$product->id}}"
-                                 src="{{ asset('storage/' . $product->thumbnail) }}" alt=""
+                                 src="{{ $thumbnail }}" alt=""
                                  class="thumbnailProduct" data-value="{{$product}}"
                                  width="150px" height="150px">
                             <div class="item-body">
@@ -296,13 +299,16 @@
                                         <div class="main">
                                             <div class="item-card">
                                                 <div class="card-image">
+                                                    @php
+                                                        $thumbnail = checkThumbnail($firstProduct->thumbnail);
+                                                    @endphp
                                                     <a id="linkProductImg"
-                                                       href="{{ asset('storage/' . $firstProduct->thumbnail) }}"
+                                                       href="{{ $thumbnail }}"
                                                        data-fancybox="gallery"
                                                        data-caption="{{$firstProduct->name}}">
                                                         <img data-id="{{$firstProduct->id}}"
                                                              id="imgProductMain"
-                                                             src="{{ asset('storage/' . $firstProduct->thumbnail) }}"
+                                                             src="{{ $thumbnail }}"
                                                              class="thumbnailProductMain"
                                                              data-value="{{$firstProduct}}" alt="">
                                                     </a>
@@ -315,11 +321,14 @@
                                                 <div class="" id="productImgThumbnail">
                                                     @foreach($arrayProductImgThumbnail as $productImg)
                                                         <div class="item-card d-none">
+                                                            @php
+                                                                $productImg = checkThumbnail($productImg);
+                                                            @endphp
                                                             <div class="card-image">
-                                                                <a href="{{ asset('storage/' . $productImg) }}"
+                                                                <a href="{{ $productImg }}"
                                                                    data-fancybox="gallery"
                                                                    data-caption="{{$firstProduct->name}}">
-                                                                    <img src="{{ asset('storage/' . $productImg) }}"
+                                                                    <img src="{{ $productImg }}"
                                                                          class="thumbnailProductMain" alt="">
                                                                 </a>
                                                             </div>
@@ -337,8 +346,11 @@
                                         @endphp
                                         <div class="row thumbnailSupGallery" id="productThumbnail">
                                             @foreach($arrayProductImg as $productImg)
+                                                @php
+                                                    $productImg = checkThumbnail($productImg);
+                                                @endphp
                                                 <div class="col-md-2 thumbnailSupGallery-img">
-                                                    <img src="{{ asset('storage/' . $productImg) }}" alt=""
+                                                    <img src="{{ $productImg }}" alt=""
                                                          class="thumbnailProductGallery thumbnailGallery{{$loop->index+1}}"
                                                          data-id="{{$firstProduct->id}}">
                                                 </div>
