@@ -18,7 +18,7 @@
     }
 
 @endphp
-<table class="table element-bordered" align="center" id="tableMemberPerson">
+<table class=" element-bordered" align="center" id="tableMemberPerson">
     <table class="table element-bordered" id="tableMemberPerson">
         <form class="p-3" action="{{route('register.member.source')}}" method="post">
             @csrf
@@ -188,7 +188,7 @@
             <tr class="text-center">
                 <td colspan="7" class="bg-member-green">
                     <button type="button" id="buttonRegister"
-                            class="btn btn-warning mr-3 btn-register">{{ __('home.sign up') }}</button>
+                            class="w-50 btn btn-warning mr-3 btn-register">{{ __('home.sign up') }}</button>
                 </td>
             </tr>
             <input type="text" class="form-control" name="member" value="{{$member}}" hidden="">
