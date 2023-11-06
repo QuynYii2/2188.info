@@ -2,25 +2,24 @@
 
 
 if (!function_exists('location')) {
-    function locationHelper() {
-        $locale = 'kr';
+    function locationHelper()
+    {
+        $locale = app()->getLocale();
         return $locale;
     }
-    function locationPermissionHelper() {
-        $locale = 'kr';
+
+    function locationPermissionHelper()
+    {
+        $locale = app()->getLocale();
         if ($locale == 'kr') {
             $locationPermission = 'ko';
-        }
-        elseif ($locale == 'vi'){
+        } elseif ($locale == 'vi') {
             $locationPermission = 'vi';
-        }
-        elseif ($locale == 'cn'){
+        } elseif ($locale == 'cn') {
             $locationPermission = 'zh-CN';
-        }
-        elseif ($locale == 'jp'){
+        } elseif ($locale == 'jp') {
             $locationPermission = 'ja';
-        }
-        else {
+        } else {
             $locationPermission = 'en';
         }
 
