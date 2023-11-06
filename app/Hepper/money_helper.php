@@ -26,7 +26,8 @@ if (!function_exists('convertCurrency')) {
 //            return $rate * $amount;
 //        } else {
         $rate = subConvertCurrencyDB($currentFrom, $to, $amount);
-        return $rate*$amount;
+        $result = intval($amount) * intval($rate);
+        return $result;
 //        }
     }
 
