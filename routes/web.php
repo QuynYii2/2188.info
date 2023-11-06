@@ -44,12 +44,12 @@ use Illuminate\Support\Facades\Route;
 //    \UniSharp\LaravelFilemanager\Lfm::routes();
 //});
 
-Route::get('/lang/kr', function ($locale) {
-    session()->put('locale', 'kr');
+Route::get('/lang/en', function ($locale) {
+    session()->put('locale', 'en');
     return redirect()->back();
 })->name('language');
 
-Route::get('/set-locale/kr', [HomeController::class, 'setLocale'])->name('app.set.locale');
+Route::get('/set-locale/en', [HomeController::class, 'setLocale'])->name('app.set.locale');
 Route::post('/change-locale', [HomeController::class, 'changeLanguage'])->name('app.change.locale');
 
 Route::post('/register', [UserController::class, 'store'])->name('register.store');
