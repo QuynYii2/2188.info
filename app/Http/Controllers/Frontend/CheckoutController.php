@@ -45,8 +45,7 @@ class CheckoutController extends Controller
     public function index(Request $request)
     {
         (new HomeController())->getLocale($request);
-//        $currency = (new HomeController())->getLocation($request);
-        $currency = 'KWR';
+        $currency = (new HomeController())->getLocation($request);
         if (Auth::check()) {
             $number = Cart::where([
                 ['user_id', '=', Auth::user()->id],

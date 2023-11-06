@@ -61,10 +61,6 @@ Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])-
 //
 Route::post('/toggle-products-all/{id}', [ProductController::class, 'toggleProduct'])->name('admin.toggle.products');
 //
-//Detail marketing
-Route::get('/detail-marketing/{id}', [\App\Http\Controllers\DetailMarketingController::class, 'index'])->name('detail-marketing.show');
-Route::delete('/detail-marketing/{id}/{product}', [\App\Http\Controllers\DetailMarketingController::class, 'delete'])->name('detail-marketing.delete');
-//
 Route::get('/setup-marketing/', [SetupMarketingController::class, 'index'])->name('setup-marketing.show');
 Route::get('/setup-marketing/create', [SetupMarketingController::class, 'create'])->name('create-setup-marketing');
 Route::post('/setup-marketing/create', [SetupMarketingController::class, 'store'])->name('store-setup-marketing');

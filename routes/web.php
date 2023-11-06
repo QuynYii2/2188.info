@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CoinController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\DetailMarketingController;
 use App\Http\Controllers\EvaluateProductController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\Frontend\AddressController;
@@ -226,6 +227,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/chat-message-received',
         [SampleController::class, 'getListMessageReceived'])->name('chat.message.received');
     //Setup marketing
+    //
+    //Detail marketing
+    Route::get('/detail-marketing/{id}', [DetailMarketingController::class, 'index'])->name('detail-marketing.show');
+    Route::delete('/detail-marketing/{id}/{product}', [DetailMarketingController::class, 'delete'])->name('detail-marketing.delete');
     // Product member
     Route::get('/member/product-buy-lot/attribute/{id}',
         [ProductController::class, 'detailProduct'])->name('detail_product.member.attribute');
