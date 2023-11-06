@@ -1066,4 +1066,6 @@ return [
     'General Customs Clearance' => '일반통관',
     'thêm tỉnh thành' => '지역등록',
     'thêm vùng' => '권역추가',
+    'Quản lý thông tin' => '정보관리',
+
 ];
