@@ -128,7 +128,7 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
     function hidden() {
         const arrayHidden = ['header-bottom'];
         for (let i = 0; i < arrayHidden.length; i++) {
-            $('.' + arrayHidden[i]).addClass('d-none');
+            $('.header-bottom').addClass('d-none');
         }
     }
 
@@ -139,6 +139,42 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
         // const userLocale = navigator.language || navigator.userLanguage;
         return userLocale;
     }
+
+    async function redirectByLanguage() {
+        let locale = await getLanguage();
+
+        switch (locale) {
+            case 'vi':
+                locale = 'vi';
+                break;
+            case 'ko':
+                locale = 'kr';
+                break;
+            case 'zh-CN':
+                locale = 'cn';
+                break;
+            case 'ja':
+                locale = 'jp';
+                break;
+            default:
+                locale = 'en';
+                break;
+        }
+
+        checkDomain(locale);
+    }
+
+    function checkDomain(locale) {
+        let mainHost = location.hostname;
+
+        if (locale != 'en') {
+            if (!mainHost.includes(locale)) {
+                redirectUrl(locale);
+            }
+        }
+    }
+
+    redirectByLanguage();
 
     async function changeLanguageProject() {
         let lang = localStorage.getItem('language');
@@ -172,8 +208,8 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
 
         let url = `{{route('app.change.locale')}}`;
 
-        // await changeUrl(url, lang);
-        await redirectUrl(lang);
+        await changeUrl(url, lang);
+        // await redirectUrl(lang);
     }
 
     async function redirectUrl(locale) {
@@ -227,6 +263,6 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
             });
     }
 
-    changeLanguageProject();
+    // changeLanguageProject();
 </script>
 </html>
