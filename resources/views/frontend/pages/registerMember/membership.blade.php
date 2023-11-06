@@ -57,12 +57,16 @@
                     @endif
                     <tr class="bg-member-yellow">
                         <td colspan="6"
-                            style="font-weight: 400; font-size: 18px">{{ __('home.Employee registed staff') }}</td>
+                            style="font-weight: 400; font-size: 18px">
+                            <label style="color: blue">
+                            {{ __('home.Employee registed staff') }}
+                            </label>
+                        </td>
                         <td colspan=2">
-                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                    data-target="#modalRegisterMore" style="font-weight: 400; font-size: 18px">
+                            <a type="button" class="" data-toggle="modal"
+                                    data-target="#modalRegisterMore" style="font-weight: 400; font-size: 18px; color:blue ">
                                 {{ __('home.Sign up for more') }}
-                            </button>
+                            </a>
                         </td>
                     </tr>
                     <tr>
@@ -109,10 +113,10 @@
                         @endif
                     @endif
                     <tr class="">
-                        <td colspan="9" class="">
-                            <a style="font-size: 32px; font-weight: 600"
+                        <td colspan="9" class="bg-member-yellow" >
+                            <a style="font-size: 32px; font-weight: 600; color:blue "
                                href="{{route('show.register.member.logistic.congratulation', $memberRepresent->id)}}"
-                               class="btn btn-success mt-3 mb-5">{{ __('home.xác nhận đăng ký') }}</a>
+                               class="mt-3 mb-5" >{{ __('home.xác nhận đăng ký') }}</a>
                         </td>
                     </tr>
                     </tbody>

@@ -100,10 +100,10 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td></td>
-                                                <th scope="row" colspan="2" class="solid-4x-pink">
+                                                <td style="border: none"></td>
+                                                <th scope="row" colspan="3" class="solid-4x-pink">
                                                     <button type="submit"
-                                                            class="btn btn-warning btn-block btn-round">{{ __('home.sign in') }}
+                                                            class="btn btn-warning btn-block btn-round" style="height: 75px">{{ __('home.sign in') }}
                                                     </button>
                                                 </th>
                                             </tr>

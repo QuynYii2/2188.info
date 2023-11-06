@@ -966,4 +966,38 @@ return [
     'General Customs Clearance' => 'General Customs Clearance',
     'Quản lý thông tin' => 'Information management',
 
+    'info_company' => 'Info company',
+    'manager_products' => 'Manager products',
+    'commit member' => 'Commit member',
+    'commit member logistic' => 'Commit member logistic',
+    'permission_one' => 'permission_one',
+    'permission_tow' => 'permission_two',
+    'permission_three' => 'permission_three',
+    'Sign up company information' => 'Sign up company information',
+    'distributive' => 'distributive',
+    'manufacture' => 'manufacture',
+    'assemble' => 'assemble',
+    'machining' => 'machining',
+    'giay_phep_kinh_doanh' => 'Business license',
+    'wholesale' => 'Wholesale',
+    'retail' => 'Retail',
+    'ecommerce' => 'Ecommerce',
+    'home shopping' => 'Home shopping',
+    'commerce' => 'Commerce',
+    'Checkbox compare source and represent' => 'Checkbox compare source and represent',
+    'Name Default' => 'Name Default',
+    'Duplicate' => 'Duplicate',
+    'Re-Password' => 'Re-Password',
+    'Apply notification SMS' => 'Apply notification SMS',
+    'Confirm apply notification SMS' => 'Confirm apply notification SMS',
+    'Apply notification Email' => 'Apply notification Email',
+    'Confirm apply notification Email' => 'Confirm apply notification Email',
+    'Registered member represent' => 'Registered member represent',
+    'Registered staff' => 'Registered staff',
+    'Subscription options' => 'Subscription options',
+    'namess' => 'Name',
+    'Còn lại' => 'Remaining'
+
+
+
 ];
