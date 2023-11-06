@@ -284,7 +284,7 @@ class RegisterMemberController extends Controller
                 'status' => MemberRegisterPersonSourceStatus::ACTIVE
             ];
 
-            $this->createUser($fullName, $email, $phoneNumber, $password, RegisterMember::BUYER);
+            $this->createUser($fullName, $email, $phoneNumber, $password, RegisterMember::BUYER, $request);
             $save = MemberRegisterPersonSource::create($memberRegister);
 
             $member = MemberRegisterPersonSource::where([
@@ -685,7 +685,7 @@ class RegisterMemberController extends Controller
                     return back()->with('create', $create);
                 }
 
-                $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member);
+                $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member, $request);
                 $success = MemberRegisterPersonSource::create($create);
             }
 
@@ -893,7 +893,7 @@ class RegisterMemberController extends Controller
                     alert()->error('Error', 'Error, Code in member used!');
                     return back()->with('create', $create);
                 }
-                $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member);
+                $this->createUser($fullName, $email, $phoneNumber, $password, $memberAccount->member, $request);
                 $success = MemberRegisterPersonSource::create($create);
             }
 
@@ -1226,12 +1226,14 @@ class RegisterMemberController extends Controller
         });
     }
 
-    private function createUser($fullName, $email, $phoneNumber, $password, $member)
+    private function createUser($fullName, $email, $phoneNumber, $password, $member, $request)
     {
-        $locale = app()->getLocale();
-        if (!$locale) {
-            $locale = 'kr';
-        }
+//        $locale = app()->getLocale();
+//        if (!$locale) {
+//            $locale = 'kr';
+//        }
+        $locale = $request->input('locale');
+
         $user = new User;
         $user->name = $fullName;
         $user->email = $email;

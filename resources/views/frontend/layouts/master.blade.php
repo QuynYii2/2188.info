@@ -163,6 +163,8 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
 
         await changeUrl(url, lang);
 
+        $('#localeInput').val(lang);
+
         if (sessionStorage.getItem('languageRedirected') === 'true' || mainHost === 'localhost' || mainHost === '127.0.0.1') {
             return;
         }

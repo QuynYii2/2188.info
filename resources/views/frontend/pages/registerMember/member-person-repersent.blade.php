@@ -153,7 +153,7 @@
                         class="btn btn-warning mr-3 btn-register">{{ __('home.Confirm') }}</button>
             </td>
         </tr>
-
+        <input id="localeInput" name="locale" class="d-none">
         </tbody>
         <button class="d-none" id="btnSubmitFormRegister" type="submit">Done</button>
     </form>
