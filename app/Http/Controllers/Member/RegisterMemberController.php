@@ -753,6 +753,7 @@ class RegisterMemberController extends Controller
     /*Đăng kí thông tin người đại diện*/
     public function registerMemberPersonRepresent(Request $request)
     {
+        $create = null;
         try {
             $fullName = $request->input('name');
             $password = $request->input('password');
@@ -912,7 +913,11 @@ class RegisterMemberController extends Controller
             return back()->with('create', $create);
         } catch (\Exception $exception) {
             alert()->error('Error', 'Error, Please try again!');
-            return back()->with('create', $create);
+            if ($create) {
+                return back()->with('create', $create);
+            } else {
+                return back();
+            }
         }
     }
 
