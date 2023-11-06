@@ -135,162 +135,34 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
     hidden();
 
     async function getLanguage() {
-        if (sessionStorage.getItem('languageRedirected') === 'true') {
+        let mainHost = location.hostname;
+        const userLocale = navigator.language || navigator.userLanguage;
+        if (sessionStorage.getItem('languageRedirected') === 'true' || mainHost === 'localhost' || mainHost === '127.0.0.1'){
             return;
         }
 
-        const userLocale = navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language;
-        switch (userLocale) {
-            case 'vi':
-                window.location.href = 'https://vn.2188.info/';
+        sessionStorage.setItem('languageRedirected', 'true');
+
+        var redirectURL = 'https://2188.info/';
+
+        var localeMappings = {
+            'vi': 'https://vn.2188.info/',
+            'ko': 'https://kr.2188.info/',
+            'zh': 'https://cn.2188.info/',
+            'ja': 'https://jp.2188.info/'
+        };
+
+        for (var locale in localeMappings) {
+            if (userLocale.startsWith(locale)) {
+                redirectURL = localeMappings[locale];
                 break;
-            case 'ko':
-                window.location.href = 'https://kr.2188.info/';
-                break;
-            case 'zh-CN':
-                window.location.href = 'https://cn.2188.info/';
-                break;
-            case 'ja':
-                window.location.href = 'https://jp.2188.info/';
-                break;
-            default:
-                window.location.href = 'https://2188.info/';
-                break;
+            }
         }
 
-        sessionStorage.setItem('languageRedirected', 'true');
+        window.location.href = redirectURL;
     }
 
     getLanguage();
 
-
-    {{--async function redirectByLanguage() {--}}
-    {{--    let locale = await getLanguage();--}}
-
-    {{--    switch (locale) {--}}
-    {{--        case 'vi':--}}
-    {{--            locale = 'vi';--}}
-    {{--            break;--}}
-    {{--        case 'ko':--}}
-    {{--            locale = 'kr';--}}
-    {{--            break;--}}
-    {{--        case 'zh-CN':--}}
-    {{--            locale = 'cn';--}}
-    {{--            break;--}}
-    {{--        case 'ja':--}}
-    {{--            locale = 'jp';--}}
-    {{--            break;--}}
-    {{--        default:--}}
-    {{--            locale = 'en';--}}
-    {{--            break;--}}
-    {{--    }--}}
-
-    {{--    checkDomain(locale);--}}
-    {{--}--}}
-
-    {{--function checkDomain(locale) {--}}
-    {{--    let mainHost = location.hostname;--}}
-
-    {{--    if (mainHost != '2188.info') {--}}
-    {{--        if (locale != 'en') {--}}
-    {{--            if (!mainHost.includes(locale)) {--}}
-    {{--                redirectUrl(locale);--}}
-    {{--            }--}}
-    {{--        } else {--}}
-    {{--            window.location.href = 'https://2188.info/';--}}
-    {{--        }--}}
-    {{--    }--}}
-    {{--}--}}
-
-    {{--redirectByLanguage();--}}
-
-    {{--async function changeLanguageProject() {--}}
-    {{--    let lang = localStorage.getItem('language');--}}
-    {{--    let locale = await getLanguage();--}}
-    {{--    if (!lang || lang != locale) {--}}
-    {{--        lang = locale;--}}
-    {{--        localStorage.setItem('language', locale);--}}
-    {{--    }--}}
-    {{--    //app.change.locale--}}
-    {{--    console.log(lang);--}}
-
-    {{--    switch (lang) {--}}
-    {{--        case 'vi':--}}
-    {{--            lang = 'vi';--}}
-    {{--            break;--}}
-    {{--        case 'ko':--}}
-    {{--            lang = 'kr';--}}
-    {{--            break;--}}
-    {{--        case 'zh-CN':--}}
-    {{--            lang = 'cn';--}}
-    {{--            break;--}}
-    {{--        case 'ja':--}}
-    {{--            lang = 'jp';--}}
-    {{--            break;--}}
-    {{--        default:--}}
-    {{--            lang = 'en';--}}
-    {{--            break;--}}
-    {{--    }--}}
-
-    {{--    console.log(lang)--}}
-
-    {{--    let url = `{{route('app.change.locale')}}`;--}}
-
-    {{--    await changeUrl(url, lang);--}}
-    {{--    // await redirectUrl(lang);--}}
-    {{--}--}}
-
-    {{--async function redirectUrl(locale) {--}}
-    {{--    if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {--}}
-
-    {{--    } else {--}}
-    {{--        checkLocale(locale);--}}
-    {{--    }--}}
-    {{--}--}}
-
-    {{--function checkLocale(locale) {--}}
-    {{--    switch (locale) {--}}
-    {{--        case 'vi':--}}
-    {{--            locale = 'vi';--}}
-    {{--            window.location.href = 'https://vn.2188.info/';--}}
-    {{--            break;--}}
-    {{--        case 'ko':--}}
-    {{--            locale = 'kr';--}}
-    {{--            window.location.href = 'https://kr.2188.info/';--}}
-    {{--            break;--}}
-    {{--        case 'zh-CN':--}}
-    {{--            locale = 'cn';--}}
-    {{--            window.location.href = 'https://cn.2188.info/';--}}
-    {{--            break;--}}
-    {{--        case 'ja':--}}
-    {{--            locale = 'jp';--}}
-    {{--            window.location.href = 'https://jp.2188.info/';--}}
-    {{--            break;--}}
-    {{--        default:--}}
-    {{--            locale = 'en';--}}
-    {{--            window.location.href = 'https://2188.info/';--}}
-    {{--            break;--}}
-    {{--    }--}}
-    {{--}--}}
-
-    {{--async function changeUrl(url, lang) {--}}
-    {{--    await $.ajax({--}}
-    {{--        url: url,--}}
-    {{--        method: 'POST',--}}
-    {{--        data: {--}}
-    {{--            _token: `{{csrf_token()}}`,--}}
-    {{--            locale: lang--}}
-    {{--        },--}}
-    {{--    })--}}
-    {{--        .done(function (response) {--}}
-    {{--            let item = `{{app()->getLocale()}}`;--}}
-    {{--            console.log(item)--}}
-    {{--        })--}}
-    {{--        .fail(function (_, textStatus) {--}}
-    {{--            console.log(textStatus)--}}
-    {{--        });--}}
-    {{--}--}}
-
-    // changeLanguageProject();
 </script>
 </html>
