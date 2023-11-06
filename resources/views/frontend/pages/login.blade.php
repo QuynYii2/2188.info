@@ -136,7 +136,7 @@
         clearLocal();
 
         function submitFormLogin() {
-            // document.getElementById('formLogin').submit();
+            document.getElementById('formLogin').submit();
         }
 
         function sendVerifyCode() {
