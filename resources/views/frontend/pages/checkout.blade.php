@@ -101,6 +101,7 @@
                                         class=" mt-3 mb-3 btn btn-danger">{{ __('home.Pay Now') }}</button>
 
                             </div>
+
                             <div class="col-md-4 col-12 orderSummary">
                                 <div class="d-flex justify-content-between orderSummary-header">
                                     <span class="summary">{{ __('home.Order Summary') }}</span>
@@ -158,6 +159,7 @@
                                 </div>
 
                             </div>
+
                             <input type="text" id="total_price" name="total_price" value="0" hidden="">
                             <input type="text" id="shipping_price" name="shipping_price" value="0" hidden="">
                             <input type="text" id="discount_price" name="discount_price" value="0" hidden="">
@@ -176,10 +178,6 @@
     </div>
     {{--    <button class="btn btn-primary" id="GetProductPrice">Get Profile</button>--}}
     <div class="d-none">
-        @php
-            $homeController = new \App\Http\Controllers\Frontend\HomeController();
-            $currency = $homeController->getLocation(request());
-        @endphp
         <p id="valueCurrency">{{$currency}}</p>
     </div>
 

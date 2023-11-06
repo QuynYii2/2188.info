@@ -128,7 +128,7 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
     function hidden() {
         const arrayHidden = ['header-bottom'];
         for (let i = 0; i < arrayHidden.length; i++) {
-            $('.header-bottom').addClass('d-none');
+            $('.' + arrayHidden[i]).addClass('d-none');
         }
     }
 
@@ -167,9 +167,13 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
     function checkDomain(locale) {
         let mainHost = location.hostname;
 
-        if (locale != 'en') {
-            if (!mainHost.includes(locale)) {
-                redirectUrl(locale);
+        if (mainHost != '2188.info') {
+            if (locale != 'en') {
+                if (!mainHost.includes(locale)) {
+                    redirectUrl(locale);
+                }
+            } else {
+                window.location.href = 'https://2188.info/';
             }
         }
     }

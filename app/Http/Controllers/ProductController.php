@@ -78,6 +78,10 @@ class ProductController extends Controller
         (new HomeController())->getLocale($request);
         $value = $this->findProduct(1, $id);
 
+        if ($value == 404) {
+            return back();
+        }
+
         $currency = (new HomeController())->getLocation($request);
         return view('frontend/pages/detail-product', $value)->with('currency', $currency);
     }
@@ -247,7 +251,7 @@ class ProductController extends Controller
             $product = Product::where('slug', $text)->first();
         }
 
-        if ($product->status != ProductStatus::ACTIVE) {
+        if (!$product || $product->status != ProductStatus::ACTIVE) {
             return 404;
         }
 
