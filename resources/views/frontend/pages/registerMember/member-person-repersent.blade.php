@@ -4,11 +4,11 @@
     }
 
     #tableMemberRepresent th {
-        width: 250px!important;
+        width: 250px !important;
     }
 
     #tableMemberRepresent td {
-        width: 500px!important;
+        width: 500px !important;
     }
 </style>
 @php
@@ -167,19 +167,33 @@
 
     getDate();
 
-    let message;
-    const memberInput = $('#code');
-    const valueInput = $('#valueID');
     $(document).ready(function () {
+        const memberInput = $('#code');
+        const valueInput = $('#valueID');
+
         memberInput.on('keyup', checkID);
 
-        $('#buttonCheckID').on('click', function () {
-            checkID();
-            let message = localStorage.getItem('message');
-            alert(message);
-            let value = localStorage.getItem('valueInput');
-            valueInput.val(value);
-        })
+        async function checkIDBtn() {
+            await $('#buttonCheckID').on('click', function () {
+                checkID();
+                let message = localStorage.getItem('message');
+                if (message) {
+                    alert(message);
+                }
+
+                console.log(memberInput.val());
+
+                let value = memberInput.val();
+
+                // value = localStorage.getItem('valueInput');
+                valueInput.val(value);
+                if (!value) {
+                    alert('Please enter member ID!')
+                }
+            })
+        }
+
+        checkIDBtn();
 
         $('#buttonRegister').on('click', function () {
             // $('#formRegisterMember').trigger('submit');
@@ -195,6 +209,8 @@
     })
 
     async function checkID() {
+        let message;
+        const memberInput = $('#code');
         let urlCheckID = `{{route('member.checkId')}}`;
         let code = memberInput.val();
 
