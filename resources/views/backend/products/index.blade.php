@@ -704,6 +704,7 @@
             </table>
         </div>
     </div>
+    {{ $products->links() }}
     <script>
         var url = `{{ route('seller.products.hot', ['id' => ':productID']) }}`;
         var urla = `{{ route('seller.products.feature', ['id' => ':productID']) }}`;
