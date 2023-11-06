@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <div class="d-inline-block ml-3 dropbtn mobile-button">
-                            <label for="">Avatar</label>
+                            <label for="">{{ __('home.Avatar') }}</label>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group row">
@@ -234,7 +234,7 @@
             <div class="modal-dialog modal-dialog-centered cus-mr-modal">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Cập nhật số điện thoại</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Phone Number') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span>&times;</span>
                         </button>
@@ -243,7 +243,7 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="inputPassword" class="col-sm-4 col-form-label">Số điện thoại</label>
+                                <label for="inputPassword" class="col-sm-4 col-form-label">{{ __('home.Phone Number') }}</label>
                                 <div>
                                     <input type="number" class="form-control" value="{{ Auth::user()->phone }}"
                                            id="edit-phone-input" required name="edit-phone" inputmode="numeric"/>
@@ -251,8 +251,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Cancel') }}</button>
+                            <button type="submit" class="btn btn-primary">{{ __('home.save changes') }}</button>
                         </div>
                     </form>
                 </div>
@@ -263,7 +263,7 @@
             <div class="modal-dialog modal-dialog-centered cus-mr-modal">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Cập nhật Email</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">{{ __('home.email') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span>&times;</span>
                         </button>
@@ -272,7 +272,7 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="inputPassword" class="col-sm-4 col-form-label">Email</label>
+                                <label for="inputPassword" class="col-sm-4 col-form-label">{{ __('home.email') }}</label>
                                 <div>
                                     <input type="email" value="{{ Auth::user()->email }}" required class="form-control"
                                            pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
@@ -281,8 +281,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Cancel') }}</button>
+                            <button type="submit" class="btn btn-primary">{{ __('home.save changes') }}</button>
                         </div>
                     </form>
                 </div>
@@ -293,7 +293,7 @@
             <div class="modal-dialog modal-dialog-centered cus-mr-modal">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Đổi mật khẩu</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">{{ __('home.change password') }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span>&times;</span>
                         </button>
@@ -304,7 +304,7 @@
                             <div class="form-group">
                                 <label for="inputPassword" class="col-form-label">Mật khẩu hiện tại</label>
                                 <div>
-                                    <input type="password" class="form-control" name="current-password">
+                                    <input type="password" class="form-control" name="current-password" required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -322,8 +322,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                            <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Cancel') }}</button>
+                            <button type="submit" class="btn btn-primary">{{ __('home.save changes') }}</button>
                         </div>
                     </form>
                 </div>
