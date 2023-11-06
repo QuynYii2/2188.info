@@ -445,7 +445,7 @@
         <tr class="">
             <td colspan="6" class="text-center">
                 <button type="button" id="buttonRegister"
-                        class="btn bg-member-green solid mr-3 btn-register">{{ __('home.next') }}</button>
+                        class="w-50 btn bg-member-green solid mr-3 btn-register">{{ __('home.next') }}</button>
             </td>
         </tr>
         </tbody>

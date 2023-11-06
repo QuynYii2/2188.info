@@ -17,24 +17,24 @@
                     <tbody>
                     <tr>
                         <th colspan="4">
-                            <label for="position">1. {{ __('home.Registered member represent') }}</label>
+                            <label for="position" style="font-size: 25px">1. {{ __('home.Registered member represent') }}</label>
                         </th>
                         <td class="text-center">
                             <a href="{{route('show.register.member.person.represent', [
                                 'person_id' => $member->id,
                                 'registerMember' => $register->member
-                            ]) }}" class="btn btn-warning" style="font-size: 36px; font-weight: 600">
+                            ]) }}" class="w-100 btn btn-warning" style="font-size: 36px; font-weight: 600">
                                 {{ __('home.Confirm') }}
                             </a>
                         </td>
                     </tr>
                     <tr>
                         <th colspan="4">
-                            <label for="position">2. {{ __('home.Registered staff') }}</label>
+                            <label for="position" style="font-size: 25px">2. {{ __('home.Registered staff') }}</label>
                         </th>
                         <td class="text-center">
                             <a href="{{route('show.register.member.ship', $member->id)}}"
-                               class="btn btn-primary" style="font-size: 36px; font-weight: 600">
+                               class="w-100 btn btn-primary" style="font-size: 36px; font-weight: 600">
                                 {{ __('home.Confirm') }}
                             </a>
                         </td>

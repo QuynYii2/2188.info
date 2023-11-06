@@ -35,7 +35,7 @@
                 </div>
                 <div class="row ml-3 mr-3">
                     <div class="col-md-6 solid-3 pt-4 pl-0 pr-0">
-                        <h5 class="text-center mix-3 pb-2">{{ __('home.Check the rules you must agree to below') }}</h5>
+                        <h5 class="text-center mix-3 pb-1">{{ __('home.Check the rules you must agree to below') }}</h5>
                         <div class="rules mix-3 pb-5" onclick="validateAll()">
                             <div class="ml-3">
                                 <p class="text-warning" style="font-size: 18px">
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 solid-2 pt-4 pl-0 pr-0">
-                        <h5 class="text-center mix-3 pb-2">{{ __('home.Main function only for members') }}</h5>
+                        <h5 class="text-center mix-3 pb-1">{{ __('home.Main function only for members') }}</h5>
                         @php
                             $listPermissionID = $member->permission_id;
                             $arrayPermissionID = null;

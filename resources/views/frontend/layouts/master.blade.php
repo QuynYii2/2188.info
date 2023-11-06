@@ -137,35 +137,7 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
     async function getLanguage() {
         let mainHost = location.hostname;
         const userLocale = navigator.language || navigator.userLanguage;
-        console.log(userLocale)
-
-        let lang = null;
-
-        switch (userLocale) {
-            case 'vi':
-                lang = 'vi';
-                break;
-            case 'ko':
-                lang = 'kr';
-                break;
-            case 'zh-CN':
-                lang = 'cn';
-                break;
-            case 'ja':
-                lang = 'jp';
-                break;
-            default:
-                lang = 'en';
-                break;
-        }
-
-        let url = `{{route('app.change.locale')}}`;
-
-        await changeUrl(url, lang);
-
-        $('#localeInput').val(lang);
-
-        if (sessionStorage.getItem('languageRedirected') === 'true' || mainHost === 'localhost' || mainHost === '127.0.0.1') {
+        if (sessionStorage.getItem('languageRedirected') === 'true' || mainHost === 'localhost' || mainHost === '127.0.0.1'){
             return;
         }
 
@@ -187,29 +159,8 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
             }
         }
 
-
         console.log(redirectURL)
         window.location.href = redirectURL;
-
-        console.log(lang)
-    }
-
-    async function changeUrl(url, lang) {
-        await $.ajax({
-            url: url,
-            method: 'POST',
-            data: {
-                _token: `{{csrf_token()}}`,
-                locale: lang
-            },
-        })
-            .done(function (response) {
-                let item = `{{app()->getLocale()}}`;
-                console.log(item)
-            })
-            .fail(function (_, textStatus) {
-                console.log(textStatus)
-            });
     }
 
     getLanguage();

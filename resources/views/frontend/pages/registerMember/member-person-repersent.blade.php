@@ -150,7 +150,7 @@
         <tr class="text-center">
             <td colspan="7" class="bg-member-green">
                 <button type="button" id="buttonRegister"
-                        class="btn btn-warning mr-3 btn-register">{{ __('home.Confirm') }}</button>
+                        class="w-50 btn btn-warning mr-3 btn-register">{{ __('home.Confirm') }}</button>
             </td>
         </tr>
         <input id="localeInput" name="locale" class="d-none">
