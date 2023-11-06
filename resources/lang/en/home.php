@@ -972,7 +972,7 @@ return [
     'commit member logistic' => 'Commit member logistic',
     'permission_one' => 'Product arrival and departure management, inventory management and sales management',
     'permission_two' => 'Opening an e-store and managing e-commerce',
-    'permission_there' => 'Sending and receiving cargo (international, domestic, sea, air, express, courier)',
+    'permission_the' => 'Sending and receiving cargo (international, domestic, sea, air, express, courier)',
     'Sign up company information' => 'Sign up company information',
     'distributive' => 'distributive',
     'manufacture' => 'manufacture',
@@ -996,7 +996,9 @@ return [
     'Registered staff' => 'Registered staff',
     'Subscription options' => 'Subscription options',
     'namess' => 'Name',
-    'Còn lại' => 'Remaining'
+    'Còn lại' => 'Remaining',
+    'commit member trust' => 'Commit member trust',
+    'commit member buyer' => 'Commit member buyer'
 
 
 
