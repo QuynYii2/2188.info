@@ -972,7 +972,11 @@
                 </button>
             </div>
             @if($company)
-                @if($company->member == RegisterMember::TRUST)
+                @php
+                    $trustMember = \App\Models\Member::where('name', \App\Enums\RegisterMember::TRUST)->first();
+                    $logisticMember = \App\Models\Member::where('name', \App\Enums\RegisterMember::LOGISTIC)->first();
+                @endphp
+                @if($company->member_id == $trustMember->id)
                     <div class="modal-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="{{route('trust.register.member.locale', 'kr')}}">
@@ -989,7 +993,7 @@
                             </a>
                         </div>
                     </div>
-                @elseif($company->member == RegisterMember::LOGISTIC)
+                @elseif($company->member_id == $logisticMember->id)
                     <div class="modal-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="{{route('parent.register.member.locale', 'kr')}}">
