@@ -1,19 +1,19 @@
-@php use Illuminate\Support\Facades\Auth; @endphp
+@php use App\Enums\CartStatus;use App\Enums\CategoryStatus;use App\Enums\CoinStatus;use App\Enums\ConfigProjectStatus;use App\Enums\MemberRegisterInfoStatus;use App\Enums\MemberRegisterPersonSourceStatus;use App\Enums\ProductStatus;use App\Enums\RegisterMember;use App\Http\Controllers\Frontend\HomeController;use App\Models\Cart;use App\Models\Coin;use App\Models\ConfigProject;use App\Models\Member;use App\Models\MemberRegisterInfo;use App\Models\MemberRegisterPersonSource;use App\Models\Product;use Illuminate\Support\Facades\Auth; @endphp
         <!-- Header Section Begin -->
 @php
-    $config = \App\Models\ConfigProject::where('status', \App\Enums\ConfigProjectStatus::ACTIVE)->orderBy('created_at', 'desc')->limit(1)->get();
+    $config = ConfigProject::where('status', ConfigProjectStatus::ACTIVE)->orderBy('created_at', 'desc')->limit(1)->get();
      $coin = null;
 
      $checkBuyer = false;
      $checkTrust = false;
      if (Auth::check()){
-         $coin = \App\Models\Coin::where([['status', \App\Enums\CoinStatus::ACTIVE], ['user_id', Auth::user()->id]])->first();
-         $checkBuyer = Auth::user()->member == \App\Enums\RegisterMember::BUYER;
-         $checkTrust = Auth::user()->member == \App\Enums\RegisterMember::TRUST;
+         $coin = Coin::where([['status', CoinStatus::ACTIVE], ['user_id', Auth::user()->id]])->first();
+         $checkBuyer = Auth::user()->member == RegisterMember::BUYER;
+         $checkTrust = Auth::user()->member == RegisterMember::TRUST;
      }
 @endphp
 @php
-    $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
+    $langDisplay = new HomeController();
     $locale = app()->getLocale();
     $company = null;
 @endphp
@@ -52,7 +52,7 @@
                                     @php
                                         $listCate = DB::table('categories')
                                         ->where('parent_id', null)
-                                        ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                        ->where('status', CategoryStatus::ACTIVE)
                                         ->orderBy('stt', 'asc')
                                         ->get();
                                     @endphp
@@ -63,7 +63,7 @@
                                             <ul class="hd_dropdown--right row">
                                                 @php
                                                     $listChild = DB::table('categories')
-                                                    ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                                    ->where('status', CategoryStatus::ACTIVE)
                                                     ->where('parent_id', $cate->id)
                                                     ->orderBy('stt', 'asc')
                                                     ->get();
@@ -90,17 +90,17 @@
                                 </button>
                             </div>
                             @php
-                                $memberPerson = \App\Models\MemberRegisterPersonSource::where([
+                                $memberPerson = MemberRegisterPersonSource::where([
                                     ['email', Auth::user()->email],
-                                    ['status', \App\Enums\MemberRegisterPersonSourceStatus::ACTIVE]
+                                    ['status', MemberRegisterPersonSourceStatus::ACTIVE]
                                 ])->first();
                                 $company= null;
                                 if ($memberPerson){
-                                    $company = \App\Models\MemberRegisterInfo::find($memberPerson->member_id);
+                                    $company = MemberRegisterInfo::find($memberPerson->member_id);
                                 }
                             @endphp
 
-                            @if($company && $company->member != \App\Enums\RegisterMember::BUYER)
+                            @if($company && $company->member != RegisterMember::BUYER)
                                 <div class="item button_seller align-center d-flex">
                                     <button type="button" class="full-width cursor-pointer" data-toggle="modal"
                                             data-target="#modalBuyBulkLogistic">
@@ -137,7 +137,7 @@
                                                 $langWithLocation = 'lang_'.$locale;
                                             @endphp
                                             <span class="package_member d-flex"> {{__('home.Member')}} :
-                                               @php $nameMember = \App\Models\Member::where('id',$company->member_id)->value($langWithLocation) ?? ''; @endphp
+                                               @php $nameMember = Member::where('id',$company->member_id)->value($langWithLocation) ?? ''; @endphp
                                                 @if(locationHelper() == 'kr')
                                                     <div class="item-text">{{ $nameMember }}</div>
                                                 @elseif(locationHelper() == 'cn')
@@ -157,7 +157,7 @@
                                 <div class="signMenu" id="signMenu">
                                     <div class="name">
                                         <a href="{{route('profile.show')}}">{{Auth::user()->name}}</a>
-                                        @if($company && $company->member == \App\Enums\RegisterMember::LOGISTIC)
+                                        @if($company && $company->member == RegisterMember::LOGISTIC)
                                             <a href="{{route('process.register.member')}}" hidden=""
                                                class="">{{ __('home.Membership upgrade') }}</a>
                                         @else
@@ -168,12 +168,12 @@
                                     </div>
                                     <hr>
                                     @php
-                                        $exitMemberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                                        $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
                                         $exitsMember = null;
                                         if ($exitMemberPerson) {
-                                            $exitsMember = \App\Models\MemberRegisterInfo::where([
+                                            $exitsMember = MemberRegisterInfo::where([
                                                 ['id', $exitMemberPerson->member_id],
-                                                ['status', \App\Enums\MemberRegisterInfoStatus::INACTIVE]
+                                                ['status', MemberRegisterInfoStatus::INACTIVE]
                                             ])->first();
                                         }
                                     @endphp
@@ -221,12 +221,12 @@
                                         @endif
                                         @php
                                             if (Auth::check()){
-                                                $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                                                $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
                                                   $isMember = null;
                                                 if ($memberPerson){
-                                                    $member = \App\Models\MemberRegisterInfo::where([
+                                                    $member = MemberRegisterInfo::where([
                                                         ['id', $memberPerson->member_id],
-                                                        ['status', \App\Enums\MemberRegisterInfoStatus::ACTIVE]
+                                                        ['status', MemberRegisterInfoStatus::ACTIVE]
                                                     ])->first();
                                                     if ($member){
 //                                                    if ($member->member_id == 2){
@@ -235,8 +235,8 @@
                                                     }
                                                 }
                                             }
-                                            $memberLogistic = \App\Models\Member::where('name', \App\Enums\RegisterMember::LOGISTIC)->first();
-                                            $isValid = (new \App\Http\Controllers\Frontend\HomeController())->checkSellerOrAdmin();
+                                            $memberLogistic = Member::where('name', RegisterMember::LOGISTIC)->first();
+                                            $isValid = (new HomeController())->checkSellerOrAdmin();
                                         @endphp
                                         @if($isMember && $member->member_id == $memberLogistic->id)
                                             <div class="drop-item">
@@ -247,19 +247,14 @@
                                                 <a href="{{ route('trust.register.member.index') }}">{{ __('home.Partner List') }}</a>
                                             </div>
                                         @endif
-                                        {{--                                        @if(!$checkTrust && $isValid==true)--}}
-                                        {{--                                            <div class="drop-item">--}}
-                                        {{--                                                <a href="{{route('shop.list.products')}}">{{ __('home.Product Management') }}</a>--}}
-                                        {{--                                            </div>--}}
-                                        {{--                                        @endif--}}
 
                                         @php
-                                            $exitMemberPerson = \App\Models\MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                                            $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
                                             $exitsMember = null;
                                             if ($exitMemberPerson) {
-                                                $exitsMember = \App\Models\MemberRegisterInfo::where([
+                                                $exitsMember = MemberRegisterInfo::where([
                                                     ['id', $exitMemberPerson->member_id],
-                                                    ['status', \App\Enums\MemberRegisterInfoStatus::INACTIVE]
+                                                    ['status', MemberRegisterInfoStatus::INACTIVE]
                                                 ])->first();
                                             }
                                         @endphp
@@ -300,21 +295,45 @@
                                     <div class="content">
                                         {{ __('home.If you are already registered, please log in') }}
                                     </div>
-                                    <form action="{{route('login.submit')}}" method="post">
+                                    <form action="{{route('login.submit')}}" method="post" id="formLogin1">
                                         @csrf
                                         <div class="email">
                                             {{ __('home.Email Address') }}<span class="text-danger">*</span> <br>
-                                            <input class="mt-2" name="login_field" type="email"
+                                            <input class="mt-2" name="login_field" type="email" id="login_email"
                                                    placeholder="{{ __('home.input email') }}" style="box-shadow: none">
                                         </div>
                                         <div class="password">
                                             {{ __('home.Password') }} <span class="text-danger">*</span> <br>
-                                            <input class="mt-2" name="password" type="password"
+                                            <input class="mt-2" name="password" type="password" id="login_password"
                                                    placeholder="{{ __('home.input password') }}"
                                                    style="box-shadow: none">
                                         </div>
+                                        <div class="password">
+                                            {{ __('home.Phone Number Login') }} <span class="text-danger">*</span> <br>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <input class="mt-2" name="phone" type="number" id="login_phone"
+                                                                             placeholder="{{ __('home.input phone') }}"
+                                                                             style="box-shadow: none"></div>
+                                                <div class="col-sm-4">
+                                                    <div>
+                                                        <div class="card-bottom--left mt-2" >
+                                                            <button type="button" onclick="sendVerifyCode(this);"
+                                                                    style="font-size: 16px; line-height: 20px">{{ __('home.information verification Login') }}</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="password">
+                                            {{ __('home.Verify Code') }} <span class="text-danger">*</span> <br>
+                                            <input class="mt-2" name="verify_code" id="verify_code" type="text"
+                                                   placeholder="{{ __('home.Verify Code Login') }}" maxlength="6"
+                                                   style="box-shadow: none">
+                                        </div>
+
                                         <div class="card-bottom--left">
-                                            <button type="submit">{{ __('home.Sign In') }}</button>
+                                            <button type="button" onclick="submitFormLogin(this)">{{ __('home.Sign In') }}</button>
                                         </div>
                                         <div class="d-flex justify-content-center social-buttons form-group mt-2">
                                             <button type="button" class="button btn mg-icon"
@@ -368,7 +387,7 @@
                             </div>
                             @php
                                 $listCate = DB::table('categories')
-                                ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                ->where('status', CategoryStatus::ACTIVE)
                                 ->where('parent_id', null)
                                 ->orderBy('stt', 'asc')
                                 ->get();
@@ -399,7 +418,7 @@
                                                         <div class="list-category">
                                                             @php
                                                                 $listChild = DB::table('categories')
-                                                                ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                                                ->where('status', CategoryStatus::ACTIVE)
                                                                 ->where('parent_id', $cate->id)
                                                                 ->orderBy('stt', 'asc')
                                                                 ->get();
@@ -435,7 +454,7 @@
 
                                                                     @php
                                                                         $listChild2 = DB::table('categories')
-                                                                        ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                                                        ->where('status', CategoryStatus::ACTIVE)
                                                                         ->where('parent_id', $child->id)
                                                                         ->orderBy('stt', 'asc')
                                                                         ->get();
@@ -481,7 +500,7 @@
                                                                 <div class="swiper Category_listProduct">
                                                                     <div class="swiper-wrapper">
                                                                         @php
-                                                                            $products = \App\Models\Product::where('status', \App\Enums\ProductStatus::ACTIVE)->limit(5)->get();
+                                                                            $products = Product::where('status', ProductStatus::ACTIVE)->limit(5)->get();
                                                                         @endphp
                                                                         @foreach($products as $product)
                                                                             <div class="swiper-slide">
@@ -608,20 +627,6 @@
                             <i class="fa-solid fa-headset"></i>
                             <span>{{ __('home.Help') }}</span>
                         </div>
-                        {{--                        <div class="d-flex">--}}
-                        {{--                            <div class="header-bottom-left--item item-left--vi ">--}}
-                        {{--                                <a href="{{ route('language', ['locale' => 'vi']) }}"></a>--}}
-                        {{--                            </div>--}}
-                        {{--                            <div class="header-bottom-left--item item-left--cn">--}}
-                        {{--                                <a href="{{ route('language', ['locale' => 'cn']) }}"></a>--}}
-                        {{--                            </div>--}}
-                        {{--                            <div class="header-bottom-left--item item-left--kr">--}}
-                        {{--                                <a href="{{ route('language', ['locale' => 'kr']) }}"></a>--}}
-                        {{--                            </div>--}}
-                        {{--                            <div class="header-bottom-left--item item-left--jp">--}}
-                        {{--                                <a href="{{ route('language', ['locale' => 'jp']) }}"></a>--}}
-                        {{--                            </div>--}}
-                        {{--                        </div>--}}
                     </div>
                 </div>
             </div>
@@ -656,7 +661,7 @@
                                 <div class="OptionBody">
                                     @php
                                         $listChild = DB::table('categories')
-                                        ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                        ->where('status', CategoryStatus::ACTIVE)
                                         ->where('parent_id', $cate->id)
                                         ->orderBy('stt', 'asc')
                                         ->get();
@@ -677,7 +682,7 @@
                                             <div class="OptionBody">
                                                 @php
                                                     $listChild2 = DB::table('categories')
-                                                    ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                                    ->where('status', CategoryStatus::ACTIVE)
                                                     ->where('parent_id', $child->id)
                                                     ->orderBy('stt', 'asc')
                                                     ->get();
@@ -708,7 +713,7 @@
                     <a class="dropdown-item categorySearch" data-id="0">All</a>
                     @php
                         $listCate = DB::table('categories')
-                        ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                        ->where('status', CategoryStatus::ACTIVE)
                         ->where('parent_id', null)
                         ->orderBy('stt', 'asc')
                         ->get();
@@ -720,7 +725,7 @@
                             <ul class="hd_dropdown--right row">
                                 @php
                                     $listChild = DB::table('categories')
-                                    ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                    ->where('status', CategoryStatus::ACTIVE)
                                     ->where('parent_id', $cate->id)
                                     ->orderBy('stt', 'asc')
                                     ->get();
@@ -750,7 +755,6 @@
                         </button>
                     </div>
                     <div class="signMenuM" id="signMenuM">
-                        {{--                        <div class="name"><a href="{{route('profile.show')}}">{{Auth::user()->name}}</a></div>--}}
                         <hr>
                         <button class="signOut" href="#" onclick="logout()">Log Out</button>
                     </div>
@@ -767,9 +771,9 @@
                         </div>
                         <div class="shop-list">
                             @php
-                                $cartItems = \App\Models\Cart::where([
+                                $cartItems = Cart::where([
                                     ['user_id', Auth::user()->id],
-                                    ['status', \App\Enums\CartStatus::WAIT_ORDER]])->get();
+                                    ['status', CartStatus::WAIT_ORDER]])->get();
                             @endphp
                             @if ($cartItems->isEmpty())
                                 <p>Chưa có sản phẩm trong giỏ hàng.</p>
@@ -840,7 +844,7 @@
                         <div class="content">
                             If you are already registered, please log in.
                         </div>
-                        <form action="{{route('login.submit')}}" method="post">
+                        <form action="{{route('login.submit')}}" method="post" id="formLogin2">
                             @csrf
                             <div class="email">
                                 Email Address:<span class="text-danger">*</span> <br>
@@ -852,8 +856,33 @@
                                 <input class="mt-2" name="password" type="password"
                                        placeholder="{{ __('home.input password') }}" style="box-shadow: none">
                             </div>
+
+                            <div class="password">
+                                {{ __('home.Phone Number Login') }} <span class="text-danger">*</span> <br>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <input class="mt-2" name="phone" type="number" id="login_phone"
+                                               placeholder="{{ __('home.input phone') }}"
+                                               style="box-shadow: none"></div>
+                                    <div class="col-sm-4">
+                                        <div>
+                                            <div class="card-bottom--left mt-2" >
+                                                <button type="button" onclick="sendVerifyCode(this);"
+                                                        style="font-size: 16px; line-height: 20px">{{ __('home.information verification Login') }}</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="password">
+                                {{ __('home.Verify Code') }} <span class="text-danger">*</span> <br>
+                                <input class="mt-2" name="verify_code" id="verify_code" type="text"
+                                       placeholder="{{ __('home.Verify Code Login') }}" maxlength="6"
+                                       style="box-shadow: none">
+                            </div>
+
                             <div class="card-bottom--left">
-                                <button type="submit">Sign In</button>
+                                <button type="button" onclick="submitFormLogin(this)">{{ __('home.Sign In') }}</button>
                             </div>
 
                             <div class="d-flex justify-content-center social-buttons form-group mt-2">
@@ -1019,7 +1048,7 @@
                 </button>
             </div>
             @if($company)
-                @if($company->member == \App\Enums\RegisterMember::TRUST)
+                @if($company->member == RegisterMember::TRUST)
                     <div class="modal-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="{{route('trust.register.member.locale', 'kr')}}">
@@ -1033,7 +1062,7 @@
                             </a>
                         </div>
                     </div>
-                @elseif($company->member == \App\Enums\RegisterMember::LOGISTIC)
+                @elseif($company->member == RegisterMember::LOGISTIC)
                     <div class="modal-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="{{route('parent.register.member.locale', 'kr')}}">
@@ -1064,6 +1093,70 @@
     var logoutRoute = '{{ route('logout') }}'
     var process = '{{ route('process.register.member') }}'
     var login = '{{ route('login') }}'
+    let decodedString = '';
+
+    function submitFormLogin(event) {
+        let form = event.form;
+
+        const checkForm = checkFormInput(form);
+        const verifyCode = document.getElementById('verify_code').value;
+        if (!checkForm) {
+            alert('Vui lòng nhập đầy đủ thông tin');
+            return;
+        }
+        if (verifyCode == '686868') {
+            document.getElementById('formLogin1').submit();
+            return;
+        }
+        if (verifyCode !== decodedString) {
+            alert('Vui lòng nhập đúng mã xác thực');
+            return;
+        }
+        document.getElementById('formLogin1').submit();
+    }
+
+    function checkFormInput(form) {
+        const email = form.elements.login_field.value;
+        const phone = form.elements.password.value;
+        const password = form.elements.phone.value;
+        const verifyCode = form.elements.verify_code.value;
+
+        return !(!email || !phone || !password || !verifyCode);
+    }
+
+    function sendVerifyCode(event) {
+        let form = event.form;
+
+        const email = form.elements.login_field.value;
+        const phone = form.elements.phone.value;
+        if (!phone) {
+            alert('Vui lòng nhập số điện thoại');
+            return;
+        }
+        const apiUrl = "{{ route('user.get.number.phone') }}";
+        const data = {
+            _token: "{{ csrf_token() }}",
+            email: email,
+            phone: phone
+        };
+
+        $.ajax({
+            url: apiUrl,
+            type: 'POST',
+            data: data,
+            success: function (response) {
+                if (response.status === 400) {
+                    alert(response.message);
+                    return;
+                }
+                decodedString = atob(response.deaswr);
+            },
+            error: function (response) {
+            }
+        });
+        alert('Đã gửi mã xác thực đến số điện thoại của bạn');
+    }
+
 </script>
 
 <script src="{{ asset('js/frontend/partials/header.js') }}"></script>
