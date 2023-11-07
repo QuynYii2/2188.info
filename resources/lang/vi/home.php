@@ -1008,6 +1008,25 @@ return [
     'information verification Login' => 'Xác thực thông tin',
     'Verify Code Login' => 'Mã xác thực',
     'Find password/id Login' => 'Quên mật khẩu/ ID?',
+    'giay_phep_kinh_doanh' => 'Giấy phép kinh doanh',
+    'Thêm mới địa chỉ' => 'Thêm mới địa chỉ',
+    'Họ và tên' => 'Họ và tên',
+    'Công ty' => 'Công ty',
+    'Số điện thoại' => 'Số điện thoại',
+    'Tỉnh/Thành phố' => 'Tỉnh/Thành phố',
+    'Chọn tỉnh thành' => 'Chọn tỉnh thành',
+    'Quận huyện' => 'Quận huyện',
+    'Chọn quận huyện' => 'Chọn quận huyện',
+    'Phường xã' => 'Phường xã',
+    'Chọn phường xã' => 'Chọn phường xã',
+    'Địa chỉ' => 'Địa chỉ',
+    'Loại địa chỉ' => 'Loại địa chỉ',
+    'Nhà riêng / Chung cư' => 'Nhà riêng / Chung cư',
+    'Cơ quan / Công ty' => 'Cơ quan / Công ty',
+    'Đặt làm địa chỉ mặc định' => 'Đặt làm địa chỉ mặc định',
+    'Lưu thay đổi' => 'Lưu thay đổi',
+    'Sửa địa chỉ' => 'Sửa địa chỉ'
+
 
 ];
 
