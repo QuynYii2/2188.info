@@ -82,7 +82,7 @@
                                                            value="{{ old('login_phone') }}" required>
                                                 </td>
                                                 <td>
-                                                    <a href="#" id="btnVerify" onclick="sendVerifyCode();">
+                                                    <a id="btnVerify" onclick="sendVerifyCode();">
                                                         {{ __('home.information verification Login') }}
                                                     </a>
                                                 </td>

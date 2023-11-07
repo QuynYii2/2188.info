@@ -420,13 +420,13 @@ class UserController extends Controller
             } else {
                 return response()->json([
                     'status' => 400,
-                    'message' => "Error",
+                    'message' => "Số điện thoại không đúng",
                 ]);
             }
         } else {
             return response()->json([
                 'status' => 400,
-                'message' => "Error",
+                'message' => "User không tồn tại",
             ]);
         }
     }

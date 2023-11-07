@@ -12,7 +12,11 @@
     session()->forget('isDetail');
     session()->push('isDetail', $isDetail);
 @endphp
-
+<style>
+    .fa-stack {
+        color: #fac325;
+    }
+</style>
 @extends('frontend.layouts.master')
 @section('title', 'Detail')
 @section('content')
@@ -255,9 +259,9 @@
                     <div class="main-actions">
                         <form action="">
                             <div class="express-header">
-                                <p>{{ __('home.The minimum order quantity is 2 pair') }} {{$product->min}} {{ __('home.pair') }}</p>
+                                <p>{{ __('home.The minimum order quantity is 2 pair') }} {{$product->min}} {{ __('home.Product') }}</p>
                                 <div class="item-center d-flex justify-content-between">
-                                    <span> {{$product->min}} {{ __('home.pair') }}</span>
+                                    <span> {{$product->min}} {{ __('home.Product') }}</span>
                                     @if($product->price != null)
                                         <div id="productPrice"
                                              class="price">{{ __('home.from') }} {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</div>
