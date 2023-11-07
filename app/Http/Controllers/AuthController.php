@@ -150,6 +150,7 @@ class AuthController extends Controller
             $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
 
             $memberLogistic = Member::where('name', RegisterMember::LOGISTIC)->first();
+            $memberTrust = Member::where('name', RegisterMember::TRUST)->first();
 
             $isMember = null;
             if ($memberPerson) {
@@ -163,7 +164,7 @@ class AuthController extends Controller
 
                 if ($isMember && $member->member_id == $memberLogistic->id) {
                     return redirect()->route('stand.register.member.index', ['id' => $member->id]);
-                } elseif ($isMember) {
+                } elseif ($isMember && $member->member_id == $memberTrust->id) {
                     return redirect()->route('trust.register.member.index');
                 } else {
                     return redirect()->route('homepage');
