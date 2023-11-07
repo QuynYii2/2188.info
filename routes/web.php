@@ -78,7 +78,7 @@ Route::get('/login-kakaotalk', [SocialController::class, 'getKakaoSignUrl'])->na
 Route::post('/login-kakaotalk', [SocialController::class, 'getFacebookSignInUrl'])->name('login.kakaotalk.post');
 Route::get('/callback/kakaotalk', [SocialController::class, 'callbackKakaotalk'])->name('login.kakaotalk.callback');
 //
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/register/', [HomeController::class, 'register'])->name('register.show');
 Route::post('/file/img/store', [FileController::class, 'saveImgByUser'])->name('file.img.save');

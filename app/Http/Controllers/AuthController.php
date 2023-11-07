@@ -472,11 +472,9 @@ class AuthController extends Controller
         return response()->json($listWard);
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
         Auth::logout();
-        Session::forget('login');
-
         return redirect('/');
     }
 
