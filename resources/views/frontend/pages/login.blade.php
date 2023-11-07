@@ -63,7 +63,7 @@
                                     </tr>
                                     <tr class="text-center">
                                         <th scope="row">
-                                            <label for="login_phone">{{ __('home.Phone Number') }}: </label>
+                                            <label for="login_phone">{{ __('home.Phone Number Login') }}: </label>
                                         </th>
                                         <td>
                                             <input id="login_phone" type="number" class="form-control"
@@ -72,9 +72,9 @@
                                                    value="{{ old('login_phone') }}">
                                         </td>
                                         <td>
-                                            <button type="button" id="btnVerify" onclick="sendVerifyCode();"
-                                                    class="btn btn-warning">{{ __('home.information verification') }}
-                                            </button>
+                                            <a id="btnVerify" onclick="sendVerifyCode();">
+                                                {{ __('home.information verification Login') }}
+                                            </a>
                                         </td>
                                     </tr>
                                     <tr class="text-center">
@@ -84,7 +84,7 @@
                                         <td colspan="2">
                                             <input id="verify_code" type="text" class="form-control"
                                                    name="verify_code" maxlength="6"
-                                                   placeholder="{{ __('home.Verify Code') }}"
+                                                   placeholder="{{ __('home.Verify Code Login') }}"
                                                    value="{{ old('verify_code') }}">
                                         </td>
                                     </tr>
@@ -102,7 +102,7 @@
                                             <a href="{{route('register.show')}}">{{ __('home.sign up') }}</a>
                                         </th>
                                         <th scope="row" colspan="2">
-                                            <a href="#">{{ __('home.change password') }}</a>
+                                            <a href="#">{{ __('home.Find password/id Login') }}</a>
                                         </th>
                                     </tr>
                                     </tbody>
@@ -134,11 +134,11 @@
                 alert('Vui lòng nhập đầy đủ thông tin');
                 return;
             }
-            if (verifyCode == '686868'){
+            if (verifyCode == '686868') {
                 document.getElementById('formLogin').submit();
                 return;
             }
-            if ( verifyCode !== decodedString ) {
+            if (verifyCode !== decodedString) {
                 alert('Vui lòng nhập đúng mã xác thực');
                 return;
             }
@@ -178,6 +178,7 @@
                 error: function (response) {
                 }
             });
+            alert('Đã gửi mã xác thực đến số điện thoại của bạn');
         }
     </script>
 @endsection

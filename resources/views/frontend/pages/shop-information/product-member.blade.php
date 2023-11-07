@@ -1,5 +1,5 @@
 @php
-    $route = Route::currentRouteName();
+    use App\Enums\MemberPartnerStatus;use App\Enums\ProductStatus;use App\Enums\RegisterMember;use App\Models\EvaluateProduct;use App\Models\MemberPartner;use App\Models\MemberRegisterInfo;use App\Models\MemberRegisterPersonSource;use App\Models\Product;use App\Models\User;use Illuminate\Support\Facades\Auth;$route = Route::currentRouteName();
     $isDetail = null;
     if ($route == 'detail_product.show'){
         $isDetail = true;
@@ -22,12 +22,21 @@
         protect: true
     });
 </script>
+
+<style>
+
+    .hidden-title-product {
+        overflow: hidden;
+        text-overflow: ellipsis;;
+    }
+</style>
+
 <div class="product-member">
     @if($company)
         @php
-            $memberAccounts = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->get();
-            $companyPerson = \App\Models\MemberRegisterPersonSource::where('member_id', $company->id)->first();
-            $oldUser = \App\Models\User::where('email', $companyPerson->email)->first();
+            $memberAccounts = MemberRegisterPersonSource::where('member_id', $company->id)->get();
+            $companyPerson = MemberRegisterPersonSource::where('member_id', $company->id)->first();
+            $oldUser = User::where('email', $companyPerson->email)->first();
 
             // Initialize user1 and user2 with null values
             $user1 = null;
@@ -35,23 +44,23 @@
 
             if (!$memberAccounts->isEmpty()) {
                 if (count($memberAccounts) == 2) {
-                    $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
-                    $user2 = \App\Models\User::where('email', $memberAccounts[1]->email)->first();
+                    $user1 = User::where('email', $memberAccounts[0]->email)->first();
+                    $user2 = User::where('email', $memberAccounts[1]->email)->first();
                 } else {
-                    $user1 = \App\Models\User::where('email', $memberAccounts[0]->email)->first();
+                    $user1 = User::where('email', $memberAccounts[0]->email)->first();
                     $user2 = $user1; // Assign user2 to user1 if only one account
                 }
             }
 
-            $products = \App\Models\Product::where(function ($query) use ($company, $user1, $user2) {
-                $query->where([['user_id', $company->user_id], ['status', \App\Enums\ProductStatus::ACTIVE]]);
+            $products = Product::where(function ($query) use ($company, $user1, $user2) {
+                $query->where([['user_id', $company->user_id], ['status', ProductStatus::ACTIVE]]);
 
                 if ($user1) {
-                    $query->orWhere([['user_id', $user1->id], ['status', \App\Enums\ProductStatus::ACTIVE]]);
+                    $query->orWhere([['user_id', $user1->id], ['status', ProductStatus::ACTIVE]]);
                 }
 
                 if ($user2) {
-                    $query->orWhere([['user_id', $user2->id], ['status', \App\Enums\ProductStatus::ACTIVE]]);
+                    $query->orWhere([['user_id', $user2->id], ['status', ProductStatus::ACTIVE]]);
                 }
             })->get();
 
@@ -143,17 +152,17 @@
         <div class="col-md-6">
             <div class="d-flex">
                 @php
-                    $user = \Illuminate\Support\Facades\Auth::user();
-                    $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', $user->email)->first();
-                    $newCompany = \App\Models\MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
-                     $exitsPartner  = \App\Models\MemberPartner::where([
+                    $user = Auth::user();
+                    $memberPerson = MemberRegisterPersonSource::where('email', $user->email)->first();
+                    $newCompany = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
+                     $exitsPartner  = MemberPartner::where([
                             ['company_id_source', $company->id],
                             ['company_id_follow', $newCompany->id],
-                            ['status', \App\Enums\MemberPartnerStatus::ACTIVE],
+                            ['status', MemberPartnerStatus::ACTIVE],
                         ])->first();
                 @endphp
                 @if($id != $user->id)
-                    @if($newCompany && $newCompany->member != \App\Enums\RegisterMember::BUYER && empty($exitsPartner))
+                    @if($newCompany && $newCompany->member != RegisterMember::BUYER && empty($exitsPartner))
                         <form method="post" action="{{route('stands.register.member')}}">
                             @csrf
                             <input type="text" name="company_id_source" value="{{$company->id}} " hidden>
@@ -191,7 +200,7 @@
                             <div class="item-body">
                                 <div class="card-rating text-left">
                                     @php
-                                        $ratings = \App\Models\EvaluateProduct::where('product_id', $product->id)->get();
+                                        $ratings = EvaluateProduct::where('product_id', $product->id)->get();
                                         $totalRatings = $ratings->count();
                                         $totalStars = 0;
                                         foreach ($ratings as $rating) {
@@ -218,7 +227,7 @@
                                         {{($nameSeller->name)}}
                                     </a>
                                 </div>
-                                <div class="card-title text-left">
+                                <div class="card-title text-left hidden-title-product">
                                     @if(Auth::check())
                                         <div>
                                             @if(locationHelper() == 'kr')
@@ -233,7 +242,19 @@
                                                 {{$product->name_en}}</div>
                                     @endif
                                     @else
-                                        <a class="check_url">{{($product->name)}}</a>
+                                        <a class="check_url">
+                                            @if(locationHelper() == 'kr')
+                                                {{ $product->name_ko }}
+                                            @elseif(locationHelper() == 'cn')
+                                                {{$product->name_zh}}
+                                            @elseif(locationHelper() == 'jp')
+                                                {{$product->name_ja}}
+                                            @elseif(locationHelper() == 'vi')
+                                                {{$product->name_vi}}
+                                            @else
+                                                {{$product->name_en}}
+                                            @endif
+                                        </a>
                                     @endif
                                 </div>
                                 @if($product->price)
