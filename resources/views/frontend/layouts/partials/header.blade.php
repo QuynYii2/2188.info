@@ -184,8 +184,7 @@
                                         </div>
                                         <hr>
                                     @endif
-                                    <button class="signOut" href="#"
-                                            onclick="logout(`{{ route('logout') }}`,`{{ csrf_token() }}`)">{{ __('home.Sign Out') }}</button>
+                                    <a class="signOut" href="{{ route('logout') }}">{{ __('home.Sign Out') }}</a>
                                 </div>
                                 <div class="hover-list">
                                     <a href="{{route('profile.show')}}" class="none_decoration">
@@ -270,9 +269,8 @@
                                         <a href="{{route('chat.message.show')}}">{{ __('home.Message') }}</a>
                                     </div>
 
-                                    <div class="drop-item -hand-pointer"
-                                         onclick="logout(`{{ route('logout') }}`,`{{ csrf_token() }}`)">
-                                        <button>{{ __('home.Log out') }}</button>
+                                    <div class="drop-item -hand-pointer">
+                                        <a href="{{ route('logout') }}">{{ __('home.Log out') }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -313,11 +311,11 @@
                                             <div class="row">
                                                 <div class="col-sm-8">
                                                     <input class="mt-2" name="phone" type="number" id="login_phone"
-                                                                             placeholder="{{ __('home.input phone') }}"
-                                                                             style="box-shadow: none"></div>
+                                                           placeholder="{{ __('home.input phone') }}"
+                                                           style="box-shadow: none"></div>
                                                 <div class="col-sm-4">
                                                     <div>
-                                                        <div class="card-bottom--left mt-2" >
+                                                        <div class="card-bottom--left mt-2">
                                                             <button type="button" onclick="sendVerifyCodeHeader(this);"
                                                                     style="font-size: 16px; line-height: 20px">{{ __('home.information verification Login') }}</button>
                                                         </div>
@@ -333,7 +331,8 @@
                                         </div>
 
                                         <div class="card-bottom--left">
-                                            <button type="button" onclick="submitFormLoginHeader(this)">{{ __('home.Sign In') }}</button>
+                                            <button type="button"
+                                                    onclick="submitFormLoginHeader(this)">{{ __('home.Sign In') }}</button>
                                         </div>
                                         <div class="d-flex justify-content-center social-buttons form-group mt-2">
                                             <button type="button" class="button btn mg-icon"
@@ -756,7 +755,7 @@
                     </div>
                     <div class="signMenuM" id="signMenuM">
                         <hr>
-                        <button class="signOut" href="#" onclick="logout()">Log Out</button>
+                        <button class="signOut" href="{{ route('logout') }}">Log Out</button>
                     </div>
                     <div class="close-signMenuM" onclick="closesignInM()"></div>
                     <div class="hd-mobile--rightTwo">
@@ -866,7 +865,7 @@
                                                style="box-shadow: none"></div>
                                     <div class="col-sm-4">
                                         <div>
-                                            <div class="card-bottom--left mt-2" >
+                                            <div class="card-bottom--left mt-2">
                                                 <button type="button" onclick="sendVerifyCodeHeader(this);"
                                                         style="font-size: 16px; line-height: 20px">{{ __('home.information verification Login') }}</button>
                                             </div>
@@ -882,7 +881,8 @@
                             </div>
 
                             <div class="card-bottom--left">
-                                <button type="button" onclick="submitFormLoginHeader(this)">{{ __('home.Sign In') }}</button>
+                                <button type="button"
+                                        onclick="submitFormLoginHeader(this)">{{ __('home.Sign In') }}</button>
                             </div>
 
                             <div class="d-flex justify-content-center social-buttons form-group mt-2">
