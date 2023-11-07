@@ -275,7 +275,8 @@
                                         <a href="{{route('chat.message.show')}}">{{ __('home.Message') }}</a>
                                     </div>
 
-                                    <div class="drop-item -hand-pointer" onclick="logout(`{{ route('logout') }}`,`{{ csrf_token() }}`)">
+                                    <div class="drop-item -hand-pointer"
+                                         onclick="logout(`{{ route('logout') }}`,`{{ csrf_token() }}`)">
                                         <button>{{ __('home.Log out') }}</button>
                                     </div>
                                 </div>
@@ -910,16 +911,20 @@
             <div class="modal-body">
                 <div class="d-flex justify-content-center">
                     <a href="https://shipgo.biz/kr">
-                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px" src="{{ asset('flag/kr.svg') }}" alt="">
+                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                             src="{{ asset('flag/kr.svg') }}" alt="">
                     </a>
                     <a href="https://shipgo.biz/en">
-                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px" src="{{ asset('flag/us.svg') }}" alt="">
+                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                             src="{{ asset('flag/us.svg') }}" alt="">
                     </a>
                     <a href="https://shipgo.biz/cn">
-                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px" src="{{ asset('flag/cn.svg') }}" alt="">
+                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                             src="{{ asset('flag/cn.svg') }}" alt="">
                     </a>
                     <a href="https://shipgo.biz/vn">
-                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px" src="{{ asset('flag/vn.svg') }}" alt="">
+                        <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                             src="{{ asset('flag/vn.svg') }}" alt="">
                     </a>
                 </div>
             </div>
@@ -938,31 +943,41 @@
                 </button>
             </div>
             @if($company)
-                @if($company->member == \App\Enums\RegisterMember::TRUST)
+                @php
+                    $trustMember = \App\Models\Member::where('name', \App\Enums\RegisterMember::TRUST)->first();
+                    $logisticMember = \App\Models\Member::where('name', \App\Enums\RegisterMember::LOGISTIC)->first();
+                @endphp
+                @if($company->member_id == $trustMember->id)
                     <div class="modal-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="{{route('trust.register.member.locale', 'kr')}}">
-                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px" src="{{ asset('images/korea.png') }}" alt="">
+                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                                     src="{{ asset('images/korea.png') }}" alt="">
                             </a>
                             <a href="{{route('trust.register.member.locale', 'jp')}}">
-                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px" src="{{ asset('images/japan.webp') }}" alt="">
+                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                                     src="{{ asset('images/japan.webp') }}" alt="">
                             </a>
                             <a href="{{route('trust.register.member.locale', 'cn')}}">
-                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px" src="{{ asset('images/china.webp') }}" alt="">
+                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                                     src="{{ asset('images/china.webp') }}" alt="">
                             </a>
                         </div>
                     </div>
-                @elseif($company->member == \App\Enums\RegisterMember::LOGISTIC)
+                @elseif($company->member_id == $logisticMember->id)
                     <div class="modal-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="{{route('parent.register.member.locale', 'kr')}}">
-                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px" src="{{ asset('images/korea.png') }}" alt="">
+                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                                     src="{{ asset('images/korea.png') }}" alt="">
                             </a>
                             <a href="{{route('parent.register.member.locale', 'jp')}}">
-                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px" src="{{ asset('images/japan.webp') }}" alt="">
+                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                                     src="{{ asset('images/japan.webp') }}" alt="">
                             </a>
                             <a href="{{route('parent.register.member.locale', 'cn')}}">
-                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px" src="{{ asset('images/china.webp') }}" alt="">
+                                <img width="80px" height="80px" style="border: 1px solid; margin: 20px"
+                                     src="{{ asset('images/china.webp') }}" alt="">
                             </a>
                         </div>
                     </div>
