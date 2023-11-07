@@ -10,10 +10,10 @@
                    class="btn btn-warning mr-2 d-inline-block">{{ __('home.Booth') }}</a>
                 <a href="{{route('partner.register.member.index')}}"
                    class="btn btn-primary d-inline-block">{{ __('home.Partner List') }}</a>
-                @if(getTypeMember()->member == 'LOGISTIC')
+{{--                @if(getTypeMember()->member == 'LOGISTIC')--}}
                     <a href="{{ route('seller.products.index') }}"
                        class="btn btn-primary d-inline-block">{{ __('home.manager_products') }}</a>
-                @endif
+{{--                @endif--}}
             </div>
             <div>
                 <a href="{{route('chat.message.received')}}"
