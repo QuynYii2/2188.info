@@ -3,7 +3,7 @@
 @section('title', 'Register Member')
 @section('content')
     <div class="container-fluid">
-        <div class="d-flex">
+        <div class="d-flex mt-5">
             <a href="{{route('login')}}" class="btn btn-success mr-3">{{ __('home.info_company') }}</a>
             <a href="{{route('login')}}" class="btn btn-success mr-3">{{ __('home.Registrator Information') }}</a>
             <a href="{{route('login')}}" class="btn btn-success mr-3">{{ __('home.Representative Information') }}</a>

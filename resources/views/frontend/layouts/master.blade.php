@@ -1,6 +1,6 @@
 @php use App\Http\Controllers\Frontend\HomeController;use Illuminate\Support\Facades\Auth;
  $currentRouteName = Route::getCurrentRoute()->getName();
- $arrNameNeedHid = ['stand.register.member.index', 'partner.register.member.index', 'parent.register.member.locale', 'chat.message.received', 'chat.message.sent', 'chat.message.show','staff.member.info'];
+ $arrNameNeedHid = ['stand.register.member.index','home.login','show.register.member.ship','show.register.member.logistic.congratulation','register.show','show.register.member','show.register.member.info','show.register.member.person.source', 'partner.register.member.index', 'parent.register.member.locale', 'chat.message.received', 'chat.message.sent', 'chat.message.show','staff.member.info'];
 $isRoute = in_array($currentRouteName, $arrNameNeedHid);
 @endphp
         <!DOCTYPE html>
@@ -108,7 +108,7 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
 @include('frontend.layouts.partials.header', ['infoUser' => $infoUser ?? '', 'isRoute' => $isRoute ])
 @include('sweetalert::alert')
 
-<div class="{{ $isRoute ? ' mt-5' : 'marginTop-body' }}" id="mt-body {{ $isRoute ? ' booth' : '' }} ">
+<div class="{{ $isRoute ? '' : 'marginTop-body' }}" id="mt-body {{ $isRoute ? ' booth' : '' }} ">
 <div>
     @yield('content')
 </div>
