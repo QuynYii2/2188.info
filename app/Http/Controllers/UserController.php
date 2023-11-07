@@ -439,6 +439,15 @@ class UserController extends Controller
         $sendServiceCode = env('SMS_SendServiceCode');
         $brandName = env('SMS_BrandName');
         $unicode = env('SMS_Unicode');
+
+        $site = "ILVIETNAM";
+        $loginName = "admin";
+        $password = "ILVIETNAM@1";
+        $sendServiceCode = "11";
+        $brandName = "IL VIETNAM";
+        $unicode = "0";
+
+
         $timestamp = time();
         $randomValue = rand(0, 999);
         $smsId = $timestamp.$randomValue;
