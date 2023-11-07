@@ -998,8 +998,11 @@ return [
     'namess' => 'Name',
     'Còn lại' => 'Remaining',
     'commit member trust' => 'Commit member trust',
-    'commit member buyer' => 'Commit member buyer'
+    'commit member buyer' => 'Commit member buyer',
 
-
+    'Phone Number Login' => 'Phone Number',
+    'information verification Login' => 'Information verification',
+    'Verify Code Login' => 'Verify Code',
+    'Find password/id Login' => 'Find password or ID',
 
 ];
