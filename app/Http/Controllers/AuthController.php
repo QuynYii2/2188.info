@@ -120,23 +120,23 @@ class AuthController extends Controller
 
                 switch ($locale) {
                     case 'vi':
-                        $redirectRegion = 'vn';
+                        $redirectRegion = 'vn.';
                         break;
                     case 'kr':
-                        $redirectRegion = 'kr';
+                        $redirectRegion = 'kr.';
                         break;
                     case 'jp':
-                        $redirectRegion = 'jp';
+                        $redirectRegion = 'jp.';
                         break;
                     case 'cn':
-                        $redirectRegion = 'cn';
+                        $redirectRegion = 'cn.';
                         break;
                     default:
                         $redirectRegion = '';
                         break;
                 }
 
-                return redirect("https://$redirectRegion.2188.info/");
+                return redirect("https://" . $redirectRegion . "2188.info/");
             }
 
         }
