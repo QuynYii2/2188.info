@@ -156,7 +156,7 @@
 @if($cart)
     <input class="d-none" type="text" name="cartItem" id="cartItem" value="cartItem">
 @endif
-<a href="{{route('checkout.show')}}" class="btn btn-success {{ $isDetail ? 'd-none' : 'btn btn-success' }}">{{ __('home.Check out now') }}</a>
+<a href="{{route('checkout.show')}}" class="btn btn-success {{ $isDetail ? 'payment border-org' : 'btn btn-success' }}">{{ __('home.Check out now') }}</a>
 
 <button id="supBtnOrder" type="button"
         class="float-right {{ $isDetail ? 'payment' : 'btn btn-success' }}">{{ __('home.Tiếp nhận đặt hàng') }}</button>
