@@ -1024,6 +1024,7 @@ return [
     'Register source information for members' => 'Register source information for members',
     'Register represent information for members' => 'Register represent information for members',
     'Employee registed manager' => 'Employee registed manager',
-    'Employee registed staff' => 'Employee registed staff'
+    'Employee registed staff' => 'Employee registed staff',
+    '2188 Main' => '2188 Main',
 
 ];

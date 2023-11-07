@@ -4,6 +4,9 @@
         $memberId = \App\Models\MemberRegisterPersonSource::where('member_id',$getMemberId)->value('id');
     @endphp
     @if($getMemberId == $company->id)
+        <div class="d-flex justify-content-start align-items-center p-3">
+            <a href="{{route('homepage')}}" class="btn btn-success">{{ __('home.2188 Main') }}</a>
+        </div>
         <div  class="d-flex justify-content-between align-items-center p-3">
             <div>
                 <a href="{{ route('stand.register.member.index', $company->id) }}"
@@ -39,10 +42,7 @@
                    data-target="#exampleModalBuyBulk">{{ __('home.Foreign wholesale order') }}</a>
             </div>
         </div>
-            <div class="d-flex justify-content-center align-items-center p-3">
-{{--                <a href="{{route('checkout.show')}}" class="btn btn-success">{{ __('home.Check out now') }}</a>--}}
-                <a href="{{route('homepage')}}" class="btn btn-success">{{ __('home.Home') }}</a>
-            </div>
+
 {{--        </div>--}}
     @endif
 

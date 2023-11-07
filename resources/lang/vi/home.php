@@ -837,14 +837,13 @@ return [
     'Product' => 'Product',
     'danh sách marketing' => 'danh sách marketing',
     'Thông tin thanh toán' => 'Thông tin thanh toán',
-    'Số điện thoại' => 'Số điện thoại',
+
     'Trang Admin' => 'Trang Admin',
     'Vui lòng thanh toán trước khi tạo' => 'Vui lòng thanh toán trước khi tạo',
     'Tên tài khoản' => 'Tên tài khoản',
     'Tên ngân hàng' => 'Tên ngân hàng',
     'Số tài khoản' => 'Số tài khoản',
     'Số tiền' => 'Số tiền',
-    'Nhập mã OTP' => 'Nhập mã OTP',
     'Thanh toán' => 'Thanh toán',
     'Không có configs nào được tạo' => 'Không có configs nào được tạo',
     'Qty Products' => 'Qty Products',
@@ -904,7 +903,6 @@ return [
     'Đơn huỷ' => 'Đơn huỷ',
     'Nhập Họ tên' => 'Nhập Họ tên',
     'Nhập biệt danh' => 'Nhập biệt danh',
-    'Nhập số điện thoại' => 'Nhập số điện thoại',
     'Nhập email' => 'Nhập email',
     'Nhập id mxh' => 'Nhập id mxh',
     'Nhập mật khẩu' => 'Nhập mật khẩu',
@@ -1002,7 +1000,6 @@ return [
     'Independent Customs Clearance' => 'Thủ tục hải quan độc lập',
     'General Customs Clearance' => 'General Customs Clearance',
     'Quản lý thông tin' => 'Quản lý thông tin',
-    'giay_phep_kinh_doanh' => 'Giấy phép kinh doanh',
 
     'Phone Number Login' => 'Số điện thoại',
     'information verification Login' => 'Xác thực thông tin',
@@ -1025,7 +1022,9 @@ return [
     'Cơ quan / Công ty' => 'Cơ quan / Công ty',
     'Đặt làm địa chỉ mặc định' => 'Đặt làm địa chỉ mặc định',
     'Lưu thay đổi' => 'Lưu thay đổi',
-    'Sửa địa chỉ' => 'Sửa địa chỉ'
+    'Sửa địa chỉ' => 'Sửa địa chỉ',
+    '2188 Main' => 'Trang chủ 2188'
+
 
 
 ];

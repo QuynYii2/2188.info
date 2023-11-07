@@ -11,7 +11,7 @@
             <a href="{{route('homepage')}}" class="btn btn-success">{{ __('home.Home') }}</a>
         </div>
 
-        <h3 class="text-center mt-5">{{ __('home.Congratulations, you have registered as a member') }} {{$company->member}}</h3>
+        <h3 class="text-center mt-5">{{ __('home.Congratulations, you have registered as a member') }}</h3>
         <div class="d-flex justify-content-around mt-5">
             <img style="margin-bottom: 100px" src="{{asset('images/img/logo-carousel/kasa22.jpg')}}">
 

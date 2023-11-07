@@ -1,5 +1,9 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css?family=Pontano+Sans");
+a {
+  cursor: pointer;
+}
+
 #detail-product .toggleBtn {
   width: 130px;
   background: #fd6506;
