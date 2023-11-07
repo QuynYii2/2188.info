@@ -186,7 +186,7 @@
                                                                placeholder={{ __('home.Responsibility') }} required>
                                                     </div>
                                                     <div class="form-group">
-                                                        <div class="name">영 문 Tiếng Anh</div>
+                                                        <div class="name">영 문</div>
                                                         <input type="text" class="form-control" name="nickname"
                                                                id="nickname"
                                                                placeholder={{ __('home.Nhập biệt danh') }} required>
