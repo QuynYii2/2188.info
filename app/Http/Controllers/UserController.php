@@ -433,12 +433,12 @@ class UserController extends Controller
 
     public function sendVerifyCodeLogin($phoneTo, $code = null)
     {
-        $site = getenv('SMS_Site');
-        $loginName = getenv('SMS_LoginName');
-        $password = getenv('SMS_Password');
-        $sendServiceCode = getenv('SMS_SendServiceCode');
-        $brandName = getenv('SMS_BrandName');
-        $unicode = getenv('SMS_Unicode');
+        $site = env('SMS_Site');
+        $loginName = env('SMS_LoginName');
+        $password = env('SMS_Password');
+        $sendServiceCode = env('SMS_SendServiceCode');
+        $brandName = env('SMS_BrandName');
+        $unicode = env('SMS_Unicode');
         $timestamp = time();
         $randomValue = rand(0, 999);
         $smsId = $timestamp.$randomValue;
