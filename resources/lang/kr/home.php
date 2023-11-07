@@ -1068,6 +1068,10 @@ return [
     'thêm vùng' => '권역추가',
     'Quản lý thông tin' => '정보관리',
     'commit member trust' => 'Commit member trust',
-    'commit member buyer' => 'Commit member buyer'
+    'commit member buyer' => 'Commit member buyer',
+    'Phone Number Login' => '전화번호',
+    'information verification Login' => '코드요청',
+    'Verify Code Login' => '코드입력',
+    'Find password/id Login' => '아이디 및 비번 찾기',
 
 ];

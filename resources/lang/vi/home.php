@@ -1002,7 +1002,12 @@ return [
     'Independent Customs Clearance' => 'Thủ tục hải quan độc lập',
     'General Customs Clearance' => 'General Customs Clearance',
     'Quản lý thông tin' => 'Quản lý thông tin',
-    'giay_phep_kinh_doanh' => 'Giấy phép kinh doanh'
+    'giay_phep_kinh_doanh' => 'Giấy phép kinh doanh',
+
+    'Phone Number Login' => 'Số điện thoại',
+    'information verification Login' => 'Xác thực thông tin',
+    'Verify Code Login' => 'Mã xác thực',
+    'Find password/id Login' => 'Quên mật khẩu/ ID?',
 
 ];
 

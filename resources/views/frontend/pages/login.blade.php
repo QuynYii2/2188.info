@@ -73,7 +73,7 @@
                                             </tr>
                                             <tr class="text-center">
                                                 <th scope="row">
-                                                    <label for="login_phone">{{ __('home.Phone Number') }}: </label>
+                                                    <label for="login_phone">{{ __('home.Phone Number Login') }}: </label>
                                                 </th>
                                                 <td>
                                                     <input id="login_phone" type="text" class="form-control"
@@ -82,9 +82,9 @@
                                                            value="{{ old('login_phone') }}" required>
                                                 </td>
                                                 <td>
-                                                    <button type="button" id="btnVerify" onclick="sendVerifyCode();"
-                                                            class="btn btn-warning">{{ __('home.information verification') }}
-                                                    </button>
+                                                    <a href="#" id="btnVerify" onclick="sendVerifyCode();">
+                                                        {{ __('home.information verification Login') }}
+                                                    </a>
                                                 </td>
                                             </tr>
                                             <tr class="text-center">
@@ -94,7 +94,7 @@
                                                 <td colspan="2">
                                                     <input id="verify_code" type="text" class="form-control"
                                                            name="verify_code" maxlength="6"
-                                                           placeholder="{{ __('home.Verify Code') }}"
+                                                           placeholder="{{ __('home.Verify Code Login') }}"
                                                            value="{{ old('verify_code') }}" required>
                                                 </td>
                                             </tr>
@@ -111,7 +111,7 @@
                                                     <a href="{{route('register.show')}}">{{ __('home.sign up') }}</a>
                                                 </th>
                                                 <th scope="row" colspan="2">
-                                                    <a href="#">{{ __('home.change password') }}</a>
+                                                    <a href="#">{{ __('home.change password/id Login') }}</a>
                                                 </th>
                                             </tr>
                                             </tbody>
