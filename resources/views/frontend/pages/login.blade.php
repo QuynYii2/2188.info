@@ -24,9 +24,9 @@
     }
 </style>
 @section('content')
-    <div>
-        <div class="background container p-5 ">
-            <div class="row p-5" style="background: rgb(253,229,136)">
+    <div class="background">
+        <div class=" container p-5 ">
+            <div class="row p-5">
                 <div class="col-md-2">
 
                 </div>

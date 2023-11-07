@@ -742,6 +742,21 @@ input.qtyminus {
   background-color: #f1f1f1;
 }
 
+.border-org {
+  border: 1px solid #fd6506;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+body .background {
+  background-image: url("../images/img/cart-page/bg-login.jpg");
+  background-size: 100%;
+  background-repeat: round;
+  min-height: 100%;
+}
+
 .scrollbox {
   height: 250px;
   overflow: scroll;
@@ -774,7 +789,7 @@ td.priceTransport {
   color: #fff;
   border: none;
   padding: 17px 0;
-  width: 50%;
+  width: 45%;
   font-size: 1rem;
   cursor: pointer;
   transform: translateZ(0);
