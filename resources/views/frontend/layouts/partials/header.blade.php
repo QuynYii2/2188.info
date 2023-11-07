@@ -1093,7 +1093,7 @@
     var logoutRoute = '{{ route('logout') }}'
     var process = '{{ route('process.register.member') }}'
     var login = '{{ route('login') }}'
-    let decodedString = '';
+    let decodedStringHeader = '';
 
     function submitFormLoginHeader(event) {
         let form = event.form;
@@ -1108,7 +1108,7 @@
             document.getElementById('formLogin1').submit();
             return;
         }
-        if (verifyCode !== decodedString) {
+        if (verifyCode !== decodedStringHeader) {
             alert('Vui lòng nhập đúng mã xác thực');
             return;
         }
@@ -1149,7 +1149,7 @@
                     alert(response.message);
                     return;
                 }
-                decodedString = atob(response.deaswr);
+                decodedStringHeader = atob(response.deaswr);
             },
             error: function (response) {
             }

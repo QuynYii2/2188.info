@@ -42,10 +42,10 @@
                                     <tbody>
                                     <tr class="text-center">
                                         <th scope="row">
-                                            <label for="login_email">{{ __('home.ID') }}: </label>
+                                            <label for="login_email_1">{{ __('home.ID') }}: </label>
                                         </th>
                                         <td colspan="2">
-                                            <input id="login_email" type="email" class="form-control"
+                                            <input id="login_email_1" type="email" class="form-control"
                                                    name="login_field"
                                                    placeholder="{{ __('home.input username') }}"
                                                    value="{{ old('login_field') }}" autofocus>
@@ -53,23 +53,23 @@
                                     </tr>
                                     <tr class="text-center">
                                         <th scope="row">
-                                            <label for="login_password">{{ __('home.Password') }}: </label>
+                                            <label for="login_password_1">{{ __('home.Password') }}: </label>
                                         </th>
                                         <td colspan="2">
                                             <input type="password" class="form-control" name="password"
-                                                   id="login_password"
+                                                   id="login_password_1"
                                                    placeholder="{{ __('home.input password') }}">
                                         </td>
                                     </tr>
                                     <tr class="text-center">
                                         <th scope="row">
-                                            <label for="login_phone">{{ __('home.Phone Number Login') }}: </label>
+                                            <label for="login_phone_1">{{ __('home.Phone Number Login') }}: </label>
                                         </th>
                                         <td>
-                                            <input id="login_phone" type="number" class="form-control"
-                                                   name="login_phone"
+                                            <input id="login_phone_1" type="number" class="form-control"
+                                                   name="login_phone_1"
                                                    placeholder="{{ __('home.input phone') }}"
-                                                   value="{{ old('login_phone') }}">
+                                                   value="{{ old('login_phone_1') }}">
                                         </td>
                                         <td>
                                             <a id="btnVerify" onclick="sendVerifyCode();">
@@ -79,19 +79,19 @@
                                     </tr>
                                     <tr class="text-center">
                                         <th scope="row">
-                                            <label for="verify_code">{{ __('home.Verify Code') }}: </label>
+                                            <label for="verify_code_1">{{ __('home.Verify Code') }}: </label>
                                         </th>
                                         <td colspan="2">
-                                            <input id="verify_code" type="text" class="form-control"
-                                                   name="verify_code" maxlength="6"
+                                            <input id="verify_code_1" type="text" class="form-control"
+                                                   name="verify_code_1" maxlength="6"
                                                    placeholder="{{ __('home.Verify Code Login') }}"
-                                                   value="{{ old('verify_code') }}">
+                                                   value="{{ old('verify_code_1') }}">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="border: none"></td>
                                         <th scope="row" colspan="3" class="solid-4x-pink">
-                                            <button type="button" onclick="submitFormLogin();"
+                                            <button type="button" onclick="submitFormLogin()"
                                                     class="btn btn-warning btn-block btn-round"
                                                     style="height: 75px">{{ __('home.sign in') }}
                                             </button>
@@ -129,7 +129,7 @@
 
         function submitFormLogin() {
             const checkForm = checkFormInput();
-            const verifyCode = document.getElementById('verify_code').value;
+            const verifyCode = document.getElementById('verify_code_1').value;
             if (!checkForm) {
                 alert('Vui lòng nhập đầy đủ thông tin');
                 return;
@@ -146,17 +146,17 @@
         }
 
         function checkFormInput() {
-            const email = document.getElementById('login_email').value;
-            const phone = document.getElementById('login_phone').value;
-            const password = document.getElementById('login_password').value;
-            const verifyCode = document.getElementById('verify_code').value;
+            const email = document.getElementById('login_email_1').value;
+            const phone = document.getElementById('login_phone_1').value;
+            const password = document.getElementById('login_password_1').value;
+            const verifyCode = document.getElementById('verify_code_1').value;
 
             return !(!email || !phone || !password || !verifyCode);
         }
 
         function sendVerifyCode() {
-            const email = document.getElementById('login_email').value;
-            const phone = document.getElementById('login_phone').value;
+            const email = document.getElementById('login_email_1').value;
+            const phone = document.getElementById('login_phone_1').value;
             const apiUrl = "{{ route('user.get.number.phone') }}";
             const data = {
                 _token: "{{ csrf_token() }}",
