@@ -1038,6 +1038,8 @@ return [
     'Ảnh giấy phép kinh doanh' => 'Photo of business license',
     'manager_member' => 'Manger member',
     'list_user' => 'List user',
-    'create_member' => 'Create member'
+    'create_member' => 'Create member',
+    'Employee registed staff' => 'Employee registed staff',
+    '2188 Main' => '2188 Main',
 
 ];

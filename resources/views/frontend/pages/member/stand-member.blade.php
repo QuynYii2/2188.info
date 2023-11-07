@@ -12,7 +12,7 @@
 @section('content')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
-    <div class="container stand-member">
+    <div class="container stand-member mt-5">
         @if($company)
             <h3 class="text-center">{{ __('home.Member booth') }}</h3>
             @include('frontend.pages.member.header_member')
