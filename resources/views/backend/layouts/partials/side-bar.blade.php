@@ -297,7 +297,7 @@
             </li>
         @endif
         <li>
-            <a class="sidebar item" href='#'><i class="fa-solid fa-truck"></i> {{ __('home.Quản lý thông tin') }}</a>
+            <a class="sidebar item" href='#'><i class="fa-solid fa-sitemap"></i> {{ __('home.Quản lý thông tin') }}</a>
             <ul class='sub-items pl-3'>
                 <li><a class="sidebarUrl" href="{{route('member.info')}}">{{ __('home.Quản lý thông tin') }}</a>
                 </li>
@@ -308,7 +308,7 @@
                        href="{{route('profile.member.represent')}}">{{ __('home.Representative Information') }}</a>
                 </li>
                 <li><a class="sidebarUrl"
-                       href="{{route('staff.member.info', $memberId)}}">{{ __('home.Staffs Information') }}</a>
+                       href="{{route('show.register.member.ship', $memberId)}}">{{ __('home.Staffs Information') }}</a>
                 </li>
             </ul>
         </li>
