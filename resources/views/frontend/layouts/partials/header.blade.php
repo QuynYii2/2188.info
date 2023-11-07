@@ -318,7 +318,7 @@
                                                 <div class="col-sm-4">
                                                     <div>
                                                         <div class="card-bottom--left mt-2" >
-                                                            <button type="button" onclick="sendVerifyCode(this);"
+                                                            <button type="button" onclick="sendVerifyCodeHeader(this);"
                                                                     style="font-size: 16px; line-height: 20px">{{ __('home.information verification Login') }}</button>
                                                         </div>
                                                     </div>
@@ -333,7 +333,7 @@
                                         </div>
 
                                         <div class="card-bottom--left">
-                                            <button type="button" onclick="submitFormLogin(this)">{{ __('home.Sign In') }}</button>
+                                            <button type="button" onclick="submitFormLoginHeader(this)">{{ __('home.Sign In') }}</button>
                                         </div>
                                         <div class="d-flex justify-content-center social-buttons form-group mt-2">
                                             <button type="button" class="button btn mg-icon"
@@ -867,7 +867,7 @@
                                     <div class="col-sm-4">
                                         <div>
                                             <div class="card-bottom--left mt-2" >
-                                                <button type="button" onclick="sendVerifyCode(this);"
+                                                <button type="button" onclick="sendVerifyCodeHeader(this);"
                                                         style="font-size: 16px; line-height: 20px">{{ __('home.information verification Login') }}</button>
                                             </div>
                                         </div>
@@ -882,7 +882,7 @@
                             </div>
 
                             <div class="card-bottom--left">
-                                <button type="button" onclick="submitFormLogin(this)">{{ __('home.Sign In') }}</button>
+                                <button type="button" onclick="submitFormLoginHeader(this)">{{ __('home.Sign In') }}</button>
                             </div>
 
                             <div class="d-flex justify-content-center social-buttons form-group mt-2">
@@ -1095,10 +1095,10 @@
     var login = '{{ route('login') }}'
     let decodedString = '';
 
-    function submitFormLogin(event) {
+    function submitFormLoginHeader(event) {
         let form = event.form;
 
-        const checkForm = checkFormInput(form);
+        const checkForm = checkFormInputHeader(form);
         const verifyCode = document.getElementById('verify_code').value;
         if (!checkForm) {
             alert('Vui lòng nhập đầy đủ thông tin');
@@ -1115,7 +1115,7 @@
         document.getElementById('formLogin1').submit();
     }
 
-    function checkFormInput(form) {
+    function checkFormInputHeader(form) {
         const email = form.elements.login_field.value;
         const phone = form.elements.password.value;
         const password = form.elements.phone.value;
@@ -1124,7 +1124,7 @@
         return !(!email || !phone || !password || !verifyCode);
     }
 
-    function sendVerifyCode(event) {
+    function sendVerifyCodeHeader(event) {
         let form = event.form;
 
         const email = form.elements.login_field.value;
