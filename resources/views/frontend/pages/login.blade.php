@@ -111,7 +111,7 @@
                                                     <a href="{{route('register.show')}}">{{ __('home.sign up') }}</a>
                                                 </th>
                                                 <th scope="row" colspan="2">
-                                                    <a href="#">{{ __('home.change password/id Login') }}</a>
+                                                    <a href="#">{{ __('home.Find password/id Login') }}</a>
                                                 </th>
                                             </tr>
                                             </tbody>
