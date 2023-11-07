@@ -187,11 +187,7 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
             }
         }
 
-
-        console.log(redirectURL)
         window.location.href = redirectURL;
-
-        console.log(lang)
     }
 
     async function changeUrl(url, lang) {
