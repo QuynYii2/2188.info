@@ -48,7 +48,7 @@
                                             <input id="login_email" type="email" class="form-control"
                                                    name="login_field"
                                                    placeholder="{{ __('home.input username') }}"
-                                                   value="{{ old('login_field') }}"  autofocus>
+                                                   value="{{ old('login_field') }}" autofocus>
                                         </td>
                                     </tr>
                                     <tr class="text-center">
@@ -58,7 +58,7 @@
                                         <td colspan="2">
                                             <input type="password" class="form-control" name="password"
                                                    id="login_password"
-                                                   placeholder="{{ __('home.input password') }}" >
+                                                   placeholder="{{ __('home.input password') }}">
                                         </td>
                                     </tr>
                                     <tr class="text-center">
@@ -66,10 +66,10 @@
                                             <label for="login_phone">{{ __('home.Phone Number Login') }}: </label>
                                         </th>
                                         <td>
-                                            <input id="login_phone" type="text" class="form-control"
+                                            <input id="login_phone" type="number" class="form-control"
                                                    name="login_phone"
                                                    placeholder="{{ __('home.input phone') }}"
-                                                   value="{{ old('login_phone') }}" >
+                                                   value="{{ old('login_phone') }}">
                                         </td>
                                         <td>
                                             <a id="btnVerify" onclick="sendVerifyCode();">
@@ -85,14 +85,15 @@
                                             <input id="verify_code" type="text" class="form-control"
                                                    name="verify_code" maxlength="6"
                                                    placeholder="{{ __('home.Verify Code Login') }}"
-                                                   value="{{ old('verify_code') }}" >
+                                                   value="{{ old('verify_code') }}">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="border: none"></td>
                                         <th scope="row" colspan="3" class="solid-4x-pink">
                                             <button type="button" onclick="submitFormLogin();"
-                                                    class="btn btn-warning btn-block btn-round" style="height: 75px">{{ __('home.sign in') }}
+                                                    class="btn btn-warning btn-block btn-round"
+                                                    style="height: 75px">{{ __('home.sign in') }}
                                             </button>
                                         </th>
                                     </tr>
@@ -133,11 +134,11 @@
                 alert('Vui lòng nhập đầy đủ thông tin');
                 return;
             }
-            if (verifyCode == '686868'){
+            if (verifyCode == '686868') {
                 document.getElementById('formLogin').submit();
                 return;
             }
-            if ( verifyCode !== decodedString ) {
+            if (verifyCode !== decodedString) {
                 alert('Vui lòng nhập đúng mã xác thực');
                 return;
             }
@@ -177,6 +178,7 @@
                 error: function (response) {
                 }
             });
+            alert('Đã gửi mã xác thực đến số điện thoại của bạn');
         }
     </script>
 @endsection
