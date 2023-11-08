@@ -1041,6 +1041,14 @@ return [
     'create_member' => 'Create member',
     'Employee registed staff' => 'Employee registed staff',
     '2188 Main' => '2188 Main',
+    'Mã giảm giá có sẵn' => 'Discount code available',
+    'Order Summary' => 'Order Summary',
+    'Edit Cart' => 'Edit Cart',
+    'Update information register member' => 'Update information register member',
+    'Update information represent member' => 'Update information represent member',
+    'Chưa có sản phẩm nào' => 'No products',
+    'Đặt hàng thành công' => 'Order Success',
+    'manager page' => 'Manager page',
     'manager page' => 'Management page',
 
 ];

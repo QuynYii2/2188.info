@@ -306,7 +306,17 @@ class CheckoutController extends Controller
         $array[] = $checkOutPrice;
         $array = implode(',', $array);
         $this->checkout($request, $status, OrderMethod::IMMEDIATE, $name, $email, $phone, $address, $idVoucher, $array);
-        alert()->success('Success', 'Đặt hàng thành công');
+        if (locationHelper() == 'kr') {
+            alert()->success('성공', '주문 성공했습니다');
+        } elseif (locationHelper() == 'vi') {
+            alert()->success('Thành công', 'Đặt hàng thành công');
+        } elseif (locationHelper() == 'cn') {
+            alert()->success('成功','订单成功');
+        } elseif (locationHelper() == 'jp') {
+            alert()->success('成功」、「注文は成功しました」');
+        } else {
+            alert()->success('Success', 'Order Success');
+        }
         return redirect()->route('order.show');
     }
 
