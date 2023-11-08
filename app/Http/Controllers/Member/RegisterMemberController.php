@@ -154,8 +154,7 @@ class RegisterMemberController extends Controller
     public function registerMemberBuyer(Request $request)
     {
         try {
-            /*Thông tin công ty đăng ký*/
-            // MemberInfo
+            /* Check user exited*/
             $memberID = $request->input('member_id');
             $address = $request->input('wards-select') . ', ' . $request->input('provinces-select') . ', ' . $request->input('cities-select') . ', ' . $request->input('countries-select');
             $companyName = $request->input('name_en');
@@ -198,7 +197,22 @@ class RegisterMemberController extends Controller
 
             $price = 0;
 
-            $categoryIds = '';
+            $code_1 = $request->input('code_1');
+            $code_2 = $request->input('code_2');
+
+            if (is_array($code_2)) {
+                $code_2 = implode(',', $code_2);
+            } else {
+                $code_2 = '';
+            }
+
+            if (is_array($code_1)) {
+                $code_1 = implode(',', $code_1);
+            } else {
+                $code_1 = '';
+            }
+
+            $categoryIds = $code_1 . ',' . $code_2;
 
             $arrayCategoryID = explode(',', $categoryIds);
             sort($arrayCategoryID);
@@ -207,6 +221,38 @@ class RegisterMemberController extends Controller
             $id = 0;
 
             $status = MemberRegisterInfoStatus::ACTIVE;
+
+            if (Auth::check()) {
+                $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                $exitMemberInfo = MemberRegisterInfo::where('id', $exitMemberPerson->member_id)->first();
+
+                $exitMemberInfo->name_en = $companyName;
+                $exitMemberInfo->name_kr = $name_kr;
+                $exitMemberInfo->name = $fullName;
+
+                $exitMemberInfo->number_clearance = $number_clearance;
+
+                $exitMemberInfo->email = $email;
+                $exitMemberInfo->phone = $phoneNumber;
+
+                $exitMemberInfo->address = $address;
+                $exitMemberInfo->address_en = $address_en;
+                $exitMemberInfo->address_kr = $address_kr;
+
+                $exitMemberInfo->category_id = $categoryIds;
+                $exitMemberInfo->code_business = $code_2;
+                $exitMemberInfo->type_business = $code_1;
+
+                $success = $exitMemberInfo->save();
+                if ($success) {
+                    alert()->success('Success', 'Update success!');
+                } else {
+                    alert()->error('Error', 'Update error!');
+                }
+                return back();
+            }
+            /*Thông tin công ty đăng ký*/
+            // MemberInfo
 
             $create = [
                 'user_id' => $id,

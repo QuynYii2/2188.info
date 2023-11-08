@@ -1,15 +1,15 @@
-@extends('frontend.layouts.profile')
-
-@section('title', 'My Voucher')
-
-@section('sub-content')
+@extends('backend.layouts.master')
+@section('title', __('home.Kho Voucher'))
+<link rel="stylesheet" href="{{asset('css/style.css')}}">
+<link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+@section('content')
     <div class="p-4 list-voucher">
         <p class="category">{{ __('home.Kho Voucher') }}</p>
         <div class="search">
             <div class="form-search d-flex align-items-center">
                 <div class="mr-3 voucher">{{ __('home.Voucher') }}</div>
                 <div class="input-group">
-                    <input type="text" class="form-control mr-3" placeholder={{ __('home.Nhập mã voucher tại đây') }} aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <input type="text" class="form-control mr-3" placeholder="{{ __('home.Nhập mã voucher tại đây') }}" aria-label="Recipient's username" aria-describedby="basic-addon2">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button">{{ __('home.Lưu') }}</button>
                     </div>

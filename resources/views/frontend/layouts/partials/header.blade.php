@@ -189,7 +189,7 @@
                                 <div class="hover-list">
                                     <a href="{{route('profile.show')}}" class="none_decoration">
                                         <div class="drop-item">
-                                            {{ __('home.profile') }}
+                                            {{ __('home.manager page') }}
                                         </div>
                                     </a>
 
@@ -213,11 +213,7 @@
                                                 $locale == 'vn';
                                             }
                                         @endphp
-                                        @if(($isAdmin == true || $locale != 'vn') && !$checkTrust)
-                                            <div class="drop-item">
-                                                <a href="{{ route('seller.products.home') }}">{{ __('home.Product Management') }}</a>
-                                            </div>
-                                        @endif
+
                                         @php
                                             if (Auth::check()){
                                                 $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
@@ -264,10 +260,6 @@
                                             </div>
                                         @endif
                                     @endif
-
-                                    <div class="drop-item -hand-pointer">
-                                        <a href="{{route('chat.message.show')}}">{{ __('home.Message') }}</a>
-                                    </div>
 
                                     <div class="drop-item -hand-pointer">
                                         <a href="{{ route('logout') }}">{{ __('home.Log out') }}</a>
