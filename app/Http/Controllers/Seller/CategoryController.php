@@ -16,7 +16,7 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $categories = Category::where('status', CategoryStatus::ACTIVE)->orderBy('stt', 'asc')->get();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->orderBy('stt', 'asc')->paginate(10);
         return view('backend/categories/index', [
             'categories' => $categories
         ]);

@@ -1,4 +1,3 @@
-@include('frontend.pages.member.header-button')
 <div class="start-page mb-3">
     <div class="background container-fluid pt-3 justify-content-center pb-3">
         <div class="form-title text-center pt-2 solid-3x bg-member-green pt-4 pb-4" style="font-size: 35px; font-weight: 600">

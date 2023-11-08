@@ -1,6 +1,9 @@
 @php @endphp
 @extends('backend.layouts.master')
 
+@section('title')
+    {{ __('home.Thêm mới khuyến mãi') }}
+@endsection
 @section('content')
     <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
     <div class="card">

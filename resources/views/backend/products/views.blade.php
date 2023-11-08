@@ -1,5 +1,7 @@
 @extends('backend.layouts.master')
-
+@section('title')
+    {{ __('home.Sản phẩm được xem nhiều nhất') }}
+@endsection
 @section('content')
     <div class="container">
         <h5 class="mt-2 mb-2">{{ __('home.Sản phẩm được xem nhiều nhất') }}</h5>
@@ -92,5 +94,6 @@
             @endforeach
             </tbody>
         </table>
+        {{ $products->links() }}
     </div>
 @endsection

@@ -1,7 +1,7 @@
-@php
-
-        @endphp
 @extends('backend.layouts.master')
+@section('title')
+    {{ __('home.danh sách mã giảm giá') }}
+@endsection
 @section('content')
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
