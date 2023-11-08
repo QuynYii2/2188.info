@@ -15,16 +15,16 @@
                    class="btn btn-primary d-inline-block">{{ __('home.Partner List') }}</a>
                 @switch(getTypeMember()->member)
                     @case('LOGISTIC')
-                        <a href="{{ route('seller.products.index') }}" class="btn btn-primary d-inline-block">{{ __('home.manager_products') }}</a>
+                        <a href="{{ route('seller.products.index') }}" class="btn btn-primary d-inline-block">{{ __('home.manager page') }}</a>
                         @break
                     @case('물류회원')
-                        <a href="{{ route('seller.products.index') }}" class="btn btn-primary d-inline-block">{{ __('home.manager_products') }}</a>
+                        <a href="{{ route('seller.products.index') }}" class="btn btn-primary d-inline-block">{{ __('home.manager page') }}</a>
                         @break
                     @case('ロジスティック')
-                        <a href="{{ route('seller.products.index') }}" class="btn btn-primary d-inline-block">{{ __('home.manager_products') }}</a>
+                        <a href="{{ route('seller.products.index') }}" class="btn btn-primary d-inline-block">{{ __('home.manager page') }}</a>
                         @break
                     @case('物流')
-                        <a href="{{ route('seller.products.index') }}" class="btn btn-primary d-inline-block">{{ __('home.manager_products') }}</a>
+                        <a href="{{ route('seller.products.index') }}" class="btn btn-primary d-inline-block">{{ __('home.manager page') }}</a>
                         @break
                     @default
                 @endswitch
