@@ -38,7 +38,7 @@
                         <td>{{ $user->id }}</td>
                         <td><img src="{{ asset('storage/'.$user->image) }}" class="avatar-a"></td>
                         <td>
-                                <a href="#">{{ $user->name }}</a>
+                            <a href="#">{{ $user->name }}</a>
                         </td>
                         <td><a href="#">{{ $user->email }}</a></td>
                         <td>{{ $role }}</td>
@@ -49,16 +49,20 @@
                                 <span class="status text-danger">&bull;</span>{{ $user->status }}
                             @endif</td>
                         <td>
-                            <a href="{{ route('account.delete', $user->id) }}" class="delete" onclick="return confirmDelete()" title="Delete" data-toggle="tooltip"><i
+                            <a href="{{ route('account.delete', $user->id) }}" class="delete"
+                               onclick="return confirmDelete()" title="Delete" data-toggle="tooltip"><i
                                         class="material-icons">&#xE5C9;</i></a>
-                            <a href="{{ route('account.lock', $user->id) }}" class="settings" title="Lock" data-toggle="tooltip"><i
+                            <a href="{{ route('account.lock', $user->id) }}" class="settings" title="Lock"
+                               data-toggle="tooltip"><i
                                         class="material-icons">&#xe897;</i></a>
                             @if ($isSeller)
-                                <a href="{{ route('account.show.shop', $user->id) }}" class="settings" title="Lock" data-toggle="tooltip"><i
+                                <a href="{{ route('account.show.shop', $user->id) }}" class="settings" title="Lock"
+                                   data-toggle="tooltip"><i
                                             class="material-icons">&#xf05b;</i></a>
                             @endif
                             @if ($isBuyer)
-                                <a href="{{ route('account.show.order', $user->id) }}" class="settings" title="Lock" data-toggle="tooltip"><i
+                                <a href="{{ route('account.show.order', $user->id) }}" class="settings" title="Lock"
+                                   data-toggle="tooltip"><i
                                             class="material-icons">&#xe8cc;</i></a>
                             @endif
                         </td>
@@ -66,20 +70,21 @@
                 @endforeach
                 </tbody>
             </table>
-{{--            <div class="clearfix">--}}
-{{--                <div class="hint-text">Showing <b>10</b> out of <b>{{ $getAllUser->total() }}</b> entries</div>--}}
-{{--                <ul class="pagination">--}}
-{{--                    @foreach($getAllUser->links()->elements[0] as $index => $page)--}}
-{{--                        <li class="page-item"><a class="page-link" href="{{ $page }}">{{ $index }}</a></li>--}}
-{{--                    @endforeach--}}
-{{--                </ul>--}}
-{{--            </div>--}}
+            {{--            <div class="clearfix">--}}
+            {{--                <div class="hint-text">Showing <b>10</b> out of <b>{{ $getAllUser->total() }}</b> entries</div>--}}
+            {{--                <ul class="pagination">--}}
+            {{--                    @foreach($getAllUser->links()->elements[0] as $index => $page)--}}
+            {{--                        <li class="page-item"><a class="page-link" href="{{ $page }}">{{ $index }}</a></li>--}}
+            {{--                    @endforeach--}}
+            {{--                </ul>--}}
+            {{--            </div>--}}
+            {{ $getAllUser->links() }}
         </div>
     </div>
 
     <script>
         function confirmDelete() {
-             return confirm({{ __('home.Bạn có chắc chắn muốn xóa?') }})
+            return confirm({{ __('home.Bạn có chắc chắn muốn xóa?') }})
         }
     </script>
 @endsection

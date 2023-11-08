@@ -333,7 +333,7 @@
                            href="{{route('profile.member.represent')}}">{{ __('home.Representative Information') }}</a>
                     </li>
                     <li><a class="sidebarUrl"
-                           href="{{route('show.register.member.ship', $memberId)}}">{{ __('home.Staffs Information') }}</a>
+                           href="{{route('profile.member.ship', $memberId)}}">{{ __('home.Staffs Information') }}</a>
                     </li>
                 </ul>
             </li>

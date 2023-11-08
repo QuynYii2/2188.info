@@ -18,6 +18,9 @@
     }
 
 @endphp
+@if($memberPerson)
+    <input type="text" class="d-none" id="inputCheckExitMember" value="{{$memberPerson->code}}">
+@endif
 <table class="table element-bordered" id="tableMemberRepresent">
     <form class="p-3" action="{{route('register.member.represent')}}" method="post">
         @csrf
@@ -68,7 +71,7 @@
                        required>
             </td>
             <th rowspan="2">
-                <button id="buttonCheckID" type="button" class="btn btn-secondary">{{ __('home.Duplicate') }}</button>
+                <button id="buttonCheckID" type="button" class="btn btn-secondary" disabled>{{ __('home.Duplicate') }}</button>
             </th>
             @if(!Auth::check())
                 <th>
@@ -169,6 +172,14 @@
 
     $(document).ready(function () {
         const memberInput = $('#code');
+        let check = $('#inputCheckExitMember').val();
+        if (!check) {
+            submitBtn();
+        } else {
+            if (check == memberInput.val()) {
+                submitBtnDefault();
+            }
+        }
         const valueInput = $('#valueID');
 
         memberInput.on('keyup', checkID);
@@ -195,20 +206,34 @@
 
         checkIDBtn();
 
-        $('#buttonRegister').on('click', function () {
-            // $('#formRegisterMember').trigger('submit');
-            let item = valueInput.val();
-            if (!item || item == 'null' || item == '') {
-                alert('Please click button check ID!');
-            } else {
-                localStorage.clear();
-                $('#btnSubmitFormRegister').trigger('click');
-            }
-        })
+        memberInput.on('change', submitBtn);
 
+        function submitBtn() {
+            $('#buttonCheckID').attr('disabled', false);
+
+            $('#buttonRegister').on('click', function () {
+                // $('#formRegisterMember').trigger('submit');
+                localStorage.removeItem('message');
+                localStorage.removeItem('valueInput');
+                let item = valueInput.val();
+                if (!item || item == 'null' || item == '') {
+                    alert('Please click button check ID!');
+                } else {
+                    localStorage.clear();
+                    $('#btnSubmitFormRegister').trigger('click');
+                }
+            })
+        }
+
+        function submitBtnDefault() {
+            $('#buttonRegister').on('click', function () {
+                $('#btnSubmitFormRegister').trigger('click');
+            })
+        }
     })
 
     async function checkID() {
+        $('#buttonCheckID').attr('disabled', false);
         let message;
         const memberInput = $('#code');
         let urlCheckID = `{{route('member.checkId')}}`;

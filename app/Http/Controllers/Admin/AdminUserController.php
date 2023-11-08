@@ -145,7 +145,7 @@ class AdminUserController extends Controller
 
             DB::table('role_user')->where('user_id', $id)->delete();
 
-            $this->insertRole($role, $id);
+            $this->insertRole($role, $id, $request);
 
             $user->save();
             if ($companyPerson) {
@@ -222,7 +222,7 @@ class AdminUserController extends Controller
 
             $newUser = User::where('email', $request->input('email'))->first();
             $id = $newUser->id;
-            $this->insertRole($role, $id);
+            $this->insertRole($role, $id, $request);
 
             $company = new MemberRegisterInfo();
 
@@ -250,6 +250,8 @@ class AdminUserController extends Controller
 
             $company->address_en = $request->input('address_en');
             $company->address_kr = $request->input('address_kr');
+
+            $company->email = $request->input('email');
 
             $company->number_clearance = $request->input('number_clearance');
             $company->save();
@@ -288,6 +290,7 @@ class AdminUserController extends Controller
             return redirect(route('admin.list.users'));
         } catch (\Exception $exception) {
             alert()->error('Error', 'Error, Please try again');
+            dd($exception);
             return back();
         }
     }
