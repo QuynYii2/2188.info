@@ -1090,5 +1090,5 @@ return [
     'Verify Code Login' => '코드입력',
     'Find password/id Login' => '아이디 및 비번 찾기',
     '2188 Main' => '2188 메인',
-
+    'manager page' => '관리 페이지',
 ];

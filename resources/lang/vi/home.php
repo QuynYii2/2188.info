@@ -1023,8 +1023,8 @@ return [
     'Đặt làm địa chỉ mặc định' => 'Đặt làm địa chỉ mặc định',
     'Lưu thay đổi' => 'Lưu thay đổi',
     'Sửa địa chỉ' => 'Sửa địa chỉ',
-    '2188 Main' => 'Trang chủ 2188'
-
+    '2188 Main' => 'Trang chủ 2188',
+    'manager page' => 'Trang quản lí',
 
 
 ];
