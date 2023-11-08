@@ -166,11 +166,17 @@
                                 <strong>
                                     <a class="row-title"
                                        href="{{route('seller.products.edit', $product->id)}}">
-                                        @php
-                                            $ld = new TranslateController();
-                                        @endphp
-                                        {{$product->name}}
-                                        {{ $ld->translateText($product->name, locationPermissionHelper()) }}
+                                        @if(locationHelper() == 'kr')
+                                            <div class="item-text">{{ $product->name_ko }}</div>
+                                        @elseif(locationHelper() == 'cn')
+                                            <div class="item-text">{{$product->name_zh}}</div>
+                                        @elseif(locationHelper() == 'jp')
+                                            <div class="item-text">{{$product->name_ja}}</div>
+                                        @elseif(locationHelper() == 'vi')
+                                            <div class="item-text">{{$product->name_vi}}</div>
+                                        @else
+                                            <div class="item-text">{{$product->name_en}}</div>
+                                        @endif
 
                                     </a>
                                 </strong>
