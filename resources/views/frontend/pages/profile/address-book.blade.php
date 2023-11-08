@@ -1,8 +1,8 @@
-@extends('frontend.layouts.profile')
-
-@section('title', 'Return Management')
-
-@section('sub-content')
+@extends('backend.layouts.master')
+@section('title', __('home.address book'))
+<link rel="stylesheet" href="{{asset('css/style.css')}}">
+<link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+@section('content')
     <div class="container-fluid" id="address-book">
         <div class="row mt-2 bg-white rounded">
             <div class="row  rounded pt-1 ml-5">

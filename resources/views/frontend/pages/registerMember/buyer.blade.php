@@ -1,3 +1,10 @@
+@php
+    $create = null;
+    if(session('create')){
+          $create =  session('create');
+    }
+
+@endphp
 <table class="table element-bordered align-middle" align="center">
     <form action="{{route('register.member.buyer')}}" method="post"
           enctype="multipart/form-data">
@@ -35,34 +42,36 @@
                        placeholder="{{ __('home.Local language') }}" required>
             </td>
         </tr>
-        <tr>
-            <th scope="row" class="item">
-                <label for="code">{{ __('home.ID') }} :</label>
-            </th>
-            <td colspan="4" class="item">
-                <input type="text" class="form-control" id="code" name="code"
-                       value="{{ $create ? $create['code'] : old('code', $exitsMember ? $exitsMember->code : '') }}"
-                       required>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row" class="item">
-                <label for="password">{{ __('home.Password') }}:</label>
-            </th>
-            <td colspan="4" class="item">
-                <input type="password" class="form-control" id="password" name="password" required>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row" class="item">
-                <label for="passwordConfirm">{{ __('home.Password') }}{{ __('home.Confirm') }}:</label>
-            </th>
-            <td colspan="4" class="item">
-                <input type="password" class="form-control" id="passwordConfirm"
-                       name="passwordConfirm"
-                       required>
-            </td>
-        </tr>
+        @if(!$exitsMember)
+            <tr>
+                <th scope="row" class="item">
+                    <label for="code">{{ __('home.ID') }} :</label>
+                </th>
+                <td colspan="4" class="item">
+                    <input type="text" class="form-control" id="code" name="code"
+                           value="{{ $create ? $create['code'] : old('code', $exitsMember ? $exitsMember->code : '') }}"
+                           required>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row" class="item">
+                    <label for="password">{{ __('home.Password') }}:</label>
+                </th>
+                <td colspan="4" class="item">
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row" class="item">
+                    <label for="passwordConfirm">{{ __('home.Password') }}{{ __('home.Confirm') }}:</label>
+                </th>
+                <td colspan="4" class="item">
+                    <input type="password" class="form-control" id="passwordConfirm"
+                           name="passwordConfirm"
+                           required>
+                </td>
+            </tr>
+        @endif
         <tr>
             <th scope="row" class="item">
                 <label for="phoneNumber">{{ __('home.phone number') }}:</label>
@@ -73,7 +82,7 @@
                        required>
             </td>
             <td colspan="3" class="item">
-                <input type="checkbox" value="1" required>
+                <input type="checkbox" value="1" >
                 <span>{{ __('home.Allow receiving notifications via SMS message') }}</span>
             </td>
         </tr>
@@ -87,20 +96,22 @@
                        required>
             </td>
             <td colspan="3" class="item">
-                <input type="checkbox" value="1" required>
+                <input type="checkbox" value="1" >
                 <span>{{ __('home.Allow receiving notifications via Email') }}</span>
             </td>
         </tr>
-        <tr>
-            <th scope="row" class="item">
-                <label for="sns_account">{{ __('home.SNS Account') }}:</label>
-            </th>
-            <td colspan="4" class="item">
-                <input type="text" class="form-control" id="sns_account" name="sns_account"
-                       value="{{ $create ? $create['sns_account'] : old('sns_account', $exitsMember ? $exitsMember->sns_account : '') }}"
-                       placeholder="{{ __('home.ID Kakao Talk') }}" required>
-            </td>
-        </tr>
+        @if(!$exitsMember)
+            <tr>
+                <th scope="row" class="item">
+                    <label for="sns_account">{{ __('home.SNS Account') }}:</label>
+                </th>
+                <td colspan="4" class="item">
+                    <input type="text" class="form-control" id="sns_account" name="sns_account"
+                           value="{{ $create ? $create['sns_account'] : old('sns_account', $exitsMember ? $exitsMember->sns_account : '') }}"
+                           placeholder="{{ __('home.ID Kakao Talk') }}" required>
+                </td>
+            </tr>
+        @endif
         <tr>
             <th scope="row">
                 <label for="type_business">{{ __('home.Career') }} :</label>

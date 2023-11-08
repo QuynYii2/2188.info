@@ -1,6 +1,9 @@
-@extends('frontend.layouts.profile')
-@section('sub-content')
-    <h2>{{ __('home.Wishlist') }}</h2>
+@extends('backend.layouts.master')
+@section('title', 'Wish List')
+<link rel="stylesheet" href="{{asset('css/style.css')}}">
+<link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+@section('content')
+    <h2 class="mt-5">{{ __('home.Wishlist') }}</h2>
     <div class="row">
         @foreach($wishListItems as $wishLis)
             {{--                @foreach($productLists as $product)--}}

@@ -1041,6 +1041,6 @@ return [
     'create_member' => 'Create member',
     'Employee registed staff' => 'Employee registed staff',
     '2188 Main' => '2188 Main',
-    'manager page' => 'Manager page',
+    'manager page' => 'Management page',
 
 ];

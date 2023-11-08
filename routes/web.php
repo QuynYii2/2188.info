@@ -256,16 +256,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/info-member-person', [ProfileController::class, 'memberPerson'])->name('profile.member.person');
     Route::get('/info-member-represent',
         [ProfileController::class, 'memberRepresent'])->name('profile.member.represent');
+    Route::get('/info-member-ship/{member}',
+        [ProfileController::class, 'memberShip'])->name('profile.member.ship');
 //    Route::get('/my-notification/', [\App\Http\Controllers\ProfileController::class, 'my_notification']);
 //    Route::get('/order-management/', [\App\Http\Controllers\ProfileController::class, 'order_management']);
     Route::get('/return-management/', [ProfileController::class, 'return_management']);
 //    Route::get('/address-book/', [\App\Http\Controllers\ProfileController::class, 'address_book']);
     Route::get('/payment-information/', [ProfileController::class, 'payment_information']);
-    Route::get('/product-evaluation/', [ProfileController::class, 'product_evaluation']);
+    Route::get('/product-evaluation/', [ProfileController::class, 'product_evaluation'])->name('my.product.evaluation');
     Route::get('/product-evaluation/delete/{id}',
         [EvaluateProductController::class, 'destroy'])->name('product_evaluation.delete');
     Route::get('/favorite-product/', [ProfileController::class, 'favorite_product']);
-    Route::get('/product-viewed/', [ProfileController::class, 'product_viewed']);
+    Route::get('/product-viewed/', [ProfileController::class, 'product_viewed'])->name('my.product.viewed');
     Route::get('/my-review/', [ProfileController::class, 'my_review']);
     // Đánh giá sản phẩm
     Route::post('/evaluate', [EvaluateProductController::class, 'store'])->name('create.evaluate');

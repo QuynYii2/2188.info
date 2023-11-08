@@ -1,7 +1,8 @@
-@extends('frontend.layouts.master')
+@extends('backend.layouts.master')
 
 @section('title', 'List Message Sent')
-
+<link rel="stylesheet" href="{{asset('css/style.css')}}">
+<link rel="stylesheet" href="{{asset('css/responsive.css')}}">
 @section('content')
     <h3 class="text-center">{{ __('home.Message sent') }}</h3>
     @if($company)
@@ -11,8 +12,7 @@
             $oldUser = \App\Models\User::where('email', $companyPerson->email)->first();
         @endphp
         <div class="container mb-2">
-            <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
-            <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
+            <h3 class="text-center">{{ __('home.Member booth') }}</h3>
             @include('frontend.pages.member.header_member')
             <div class="row m-0">
                 <div class="col-md-6 border">

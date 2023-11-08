@@ -1,8 +1,8 @@
-@extends('frontend.layouts.profile')
-
+@extends('backend.layouts.master')
 @section('title', 'Product Viewed')
-
-@section('sub-content')
+<link rel="stylesheet" href="{{asset('css/style.css')}}">
+<link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+@section('content')
     <div class="row mt-2 bg-white rounded">
         <div class="row rounded pt-1 ml-5">
             <h5>{{ __('home.product viewed') }}</h5>

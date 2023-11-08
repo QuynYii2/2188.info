@@ -13,6 +13,8 @@ use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
 use App\Models\Product;
 use App\Models\ProductViewed;
+use App\Models\StaffUsers;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -61,9 +63,12 @@ class ProfileController extends Controller
             }
         }
 
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
+
         $categories_two_parent = collect($categories_two_parent_array);
+
         return view('frontend/pages/profile/member', compact('company', 'member', 'exitsMember',
-            'categories_no_parent', 'categories_one_parent', 'categories_two_parent'));
+            'categories_no_parent', 'categories_one_parent', 'categories_two_parent', 'categories'));
     }
 
     public function memberPerson(Request $request)
@@ -110,6 +115,21 @@ class ProfileController extends Controller
             'memberPerson',
             'person'
         ));
+    }
+
+    public function memberShip($member, Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $memberRepresent = MemberRegisterPersonSource::find($member);
+        if (!$memberRepresent) {
+            return back();
+        }
+        $memberSource = MemberRegisterPersonSource::find($memberRepresent->person);
+        $findMember = $memberRepresent->email;
+        $userRepresent = User::where('email', $findMember)->first();
+        $staffUsers = StaffUsers::where('parent_user_id', $userRepresent->id)->get();
+        return view('frontend.pages.profile.member-staff',
+            compact('memberRepresent', 'memberSource', 'staffUsers', 'userRepresent'));
     }
 
     public function my_notification(Request $request)
