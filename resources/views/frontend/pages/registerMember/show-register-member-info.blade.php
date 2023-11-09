@@ -143,8 +143,16 @@
         <div class="start-page mb-3">
             <div class="background container-fluid pt-3 justify-content-center pb-3">
                 <div class="form-title text-center solid-3x pt-2 pb-3 bg-member-green">
-                    <div class="title text-primary"
-                         style="font-size: 35px; font-weight: 600">{{ __('home.Sign up company information') }}</div>
+                    @if($member->name == \App\Enums\RegisterMember::BUYER)
+                        <div class="title text-primary"
+                             style="font-size: 35px; font-weight: 600">{{ __('home.Register member buyer') }}</div>
+                    @elseif($member->name == \App\Enums\RegisterMember::TRUST)
+                        <div class="title text-primary"
+                             style="font-size: 35px; font-weight: 600">{{ __('home.Register member trust') }}</div>
+                    @else
+                        <div class="title text-primary"
+                             style="font-size: 35px; font-weight: 600">{{ __('home.Register member logistic') }}</div>
+                    @endif
                 </div>
                 @php
                     $create = null;
@@ -179,7 +187,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('home.Close') }}</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="handleSelectRegion()">{{ __('home.save changes') }}</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                            onclick="handleSelectRegion()">{{ __('home.save changes') }}</button>
                 </div>
             </div>
         </div>

@@ -1026,6 +1026,8 @@ return [
     '2188 Main' => 'Trang chủ 2188',
     'manager page' => 'Trang quản lí',
 
-
+    'Register member buyer' => 'Đăng ký Hội viên Mua hàng',
+    'Register member trust' => 'Đăng ký công ty Hội viên Tin cậy',
+    'Register member logistic' => 'Đăng ký công ty',
 ];
 
