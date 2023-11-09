@@ -562,7 +562,7 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <h5 class="text-center">
-                                                                        {{ __('home.Bạn có chắc chắn muốn xoá') }} : {{$product->name}}
+                                                                        {{ __('home.Bạn có chắc chắn muốn xoá') }}
                                                                     </h5>
                                                                     <p class="text-danger">
                                                                         {{ __('home.Nếu xoá bạn sẽ không thể không thể tìm thấy nó!Chúng tôi sẽ không chịu trách nhiệm cho việc này!') }}
@@ -580,25 +580,7 @@
                                                     </div>
                                           |
                                     </span>
-                                    <span class="view">
-                                          <a href="#" rel="bookmark"
-                                             aria-label="Xem “{{$product->name}}”">
-                                            Xem
-                                          </a>
-                                          |
-                                    </span>
-                                    <span class="duplicate">
-                                        <a href="#"
-                                           aria-label="Make a duplicate from this product" rel="permalink">
-                                            Duplicate
-                                        </a>
-                                    </span>
                                 </div>
-                                <button type="button" class="toggle-row">
-                                    <span class="screen-reader-text">
-                                        Hiển thị chi tiết
-                                    </span>
-                                </button>
                             </td>
                             <td class="sku column-sku" data-colname="SKU">
                                 @php
