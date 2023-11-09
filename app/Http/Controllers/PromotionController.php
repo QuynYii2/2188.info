@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ProductStatus;
 use App\Enums\PromotionStatus;
 use App\Enums\VoucherStatus;
 use App\Http\Controllers\Frontend\HomeController;
@@ -144,7 +145,12 @@ class PromotionController extends Controller
 
     private function mergeDuplicate(Request $request)
     {
-        $products = Product::where('user_id', Auth::user()->id)->get();
+        $isAdmin = (new HomeController())->checkAdmin();
+        if ($isAdmin) {
+            $products = Product::where('status', '!=', ProductStatus::DELETED)->get();
+        } else {
+            $products = Product::where([['user_id', Auth::user()->id], ['status', '!=', ProductStatus::DELETED]])->get();
+        }
         $vouchers = Voucher::where([['user_id', Auth::user()->id], ['status', '!=', VoucherStatus::DELETED]])->get();
         $myArray = null;
         foreach ($products as $product) {
@@ -168,7 +174,12 @@ class PromotionController extends Controller
 
     private function getArrayIds(Request $request)
     {
-        $products = Product::where('user_id', Auth::user()->id)->get();
+        $isAdmin = (new HomeController())->checkAdmin();
+        if ($isAdmin) {
+            $products = Product::where('status', '!=', ProductStatus::DELETED)->get();
+        } else {
+            $products = Product::where([['user_id', Auth::user()->id], ['status', '!=', ProductStatus::DELETED]])->get();
+        }
         $listCategoryName[] = null;
         $arrayIds = null;
         foreach ($products as $category) {

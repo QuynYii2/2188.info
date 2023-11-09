@@ -1023,9 +1023,11 @@ return [
     'Đặt làm địa chỉ mặc định' => 'Đặt làm địa chỉ mặc định',
     'Lưu thay đổi' => 'Lưu thay đổi',
     'Sửa địa chỉ' => 'Sửa địa chỉ',
-    '2188 Main' => 'Trang chủ 2188'
+    '2188 Main' => 'Trang chủ 2188',
+    'manager page' => 'Trang quản lí',
 
-
-
+    'Register member buyer' => 'Đăng ký Hội viên Mua hàng',
+    'Register member trust' => 'Đăng ký công ty Hội viên Tin cậy',
+    'Register member logistic' => 'Đăng ký công ty',
 ];
 

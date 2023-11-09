@@ -21,7 +21,7 @@ class AccountController extends Controller
     public function index(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $getAllUser = User::all();
+        $getAllUser = User::where('status', '!=', UserStatus::DELETED)->paginate(10);
         return view('backend.account_manage.account-manage', compact('getAllUser'));
     }
 
@@ -38,7 +38,7 @@ class AccountController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -49,17 +49,17 @@ class AccountController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request,$id)
+    public function show(Request $request, $id)
     {
         (new HomeController())->getLocale($request);
         $products = Product::where('user_id', $id)->orderByDesc('id')->get();
         return view('backend.account_manage.show-shop', compact('products'));
     }
 
-    public function viewCart(Request $request,$id)
+    public function viewCart(Request $request, $id)
     {
         (new HomeController())->getLocale($request);
         $orderAll = Order::where([
@@ -105,10 +105,10 @@ class AccountController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request,$id)
+    public function edit(Request $request, $id)
     {
         (new HomeController())->getLocale($request);
         //
@@ -117,8 +117,8 @@ class AccountController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update($id)
@@ -138,7 +138,7 @@ class AccountController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

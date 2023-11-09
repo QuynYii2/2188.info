@@ -1090,5 +1090,9 @@ return [
     'Verify Code Login' => '코드입력',
     'Find password/id Login' => '아이디 및 비번 찾기',
     '2188 Main' => '2188 메인',
+    'manager page' => '관리 페이지',
 
+    'Register member buyer' => '구매회원가입',
+    'Register member trust' => '성실회원 회사등록',
+    'Register member logistic' => '회사등록',
 ];

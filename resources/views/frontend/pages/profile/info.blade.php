@@ -2,11 +2,11 @@
  $user = \App\Models\User::find(Auth::user()->id)
 @endphp
 
-@extends('frontend.layouts.profile')
-
-@section('title', 'Information')
-
-@section('sub-content')
+@extends('backend.layouts.master')
+@section('title', __('home.account information'))
+<link rel="stylesheet" href="{{asset('css/style.css')}}">
+<link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+@section('content')
 
     <div id="profile-info">
         <div class="d-flex rounded mt-5 bg-white m-auto">

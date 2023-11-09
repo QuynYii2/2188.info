@@ -65,6 +65,20 @@ class VoucherController extends Controller
 
             $arrayIds = $this->getArrayIds($request);
 
+            $ld = new TranslateController();
+
+            $nameVoucher_vi = $ld->translateText($nameVoucher, 'vi');
+            $nameVoucher_ja = $ld->translateText($nameVoucher, 'ja');
+            $nameVoucher_ko = $ld->translateText($nameVoucher, 'ko');
+            $nameVoucher_en = $ld->translateText($nameVoucher, 'en');
+            $nameVoucher_zh = $ld->translateText($nameVoucher, 'zh-CN');
+
+            $description_vi = $ld->translateText($description, 'vi');
+            $description_ja = $ld->translateText($description, 'ja');
+            $description_ko = $ld->translateText($description, 'ko');
+            $description_en = $ld->translateText($description, 'en');
+            $description_zh = $ld->translateText($description, 'zh-CN');
+
             $voucher = [
                 'name' => $nameVoucher,
                 'quantity' => $quantity,
@@ -77,6 +91,18 @@ class VoucherController extends Controller
                 'status' => $status,
                 'apply' => implode(',', $arrayIds),
                 'assign_to' => $assign_to,
+
+                'name_en' => $nameVoucher_en,
+                'name_kr' => $nameVoucher_ko,
+                'name_vi' => $nameVoucher_vi,
+                'name_jp' => $nameVoucher_ja,
+                'name_cn' => $nameVoucher_zh,
+
+                'description_en' => $description_en,
+                'description_vi' => $description_vi,
+                'description_kr' => $description_ko,
+                'description_jp' => $description_ja,
+                'description_cn' => $description_zh,
             ];
 
             $create = Voucher::create($voucher);
@@ -148,6 +174,20 @@ class VoucherController extends Controller
                 return back();
             }
 
+            $ld = new TranslateController();
+
+            $nameVoucher_vi = $ld->translateText($nameVoucher, 'vi');
+            $nameVoucher_ja = $ld->translateText($nameVoucher, 'ja');
+            $nameVoucher_ko = $ld->translateText($nameVoucher, 'ko');
+            $nameVoucher_en = $ld->translateText($nameVoucher, 'en');
+            $nameVoucher_zh = $ld->translateText($nameVoucher, 'zh-CN');
+
+            $description_vi = $ld->translateText($description, 'vi');
+            $description_ja = $ld->translateText($description, 'ja');
+            $description_ko = $ld->translateText($description, 'ko');
+            $description_en = $ld->translateText($description, 'en');
+            $description_zh = $ld->translateText($description, 'zh-CN');
+
             $voucher->name = $nameVoucher;
             $voucher->quantity = $quantity;
             $voucher->percent = $percent;
@@ -157,6 +197,19 @@ class VoucherController extends Controller
             $voucher->status = $status;
             $voucher->apply = $arrayIds;
             $voucher->assign_to = $assign_to;
+
+            $voucher->name_en = $nameVoucher_en;
+            $voucher->name_kr = $nameVoucher_ko;
+            $voucher->name_vi = $nameVoucher_vi;
+            $voucher->name_jp = $nameVoucher_ja;
+            $voucher->name_cn = $nameVoucher_zh;
+
+            $voucher->description_en = $description_en;
+            $voucher->description_vi = $description_vi;
+            $voucher->description_kr = $description_ko;
+            $voucher->description_jp = $description_ja;
+            $voucher->description_cn = $description_zh;
+
             $voucher->save();
 
 //            $oldVoucherItemsn = VoucherItem::where([
@@ -239,7 +292,12 @@ class VoucherController extends Controller
 
     private function getArrayIds(Request $request)
     {
-        $products = Product::where([['user_id', Auth::user()->id], ['status', '!=', ProductStatus::DELETED]])->get();
+        $isAdmin = (new HomeController())->checkAdmin();
+        if ($isAdmin) {
+            $products = Product::where('status', '!=', ProductStatus::DELETED)->get();
+        } else {
+            $products = Product::where([['user_id', Auth::user()->id], ['status', '!=', ProductStatus::DELETED]])->get();
+        }
         $listCategoryName[] = null;
         $arrayIds = null;
         foreach ($products as $category) {
@@ -264,9 +322,14 @@ class VoucherController extends Controller
 
     private function mergeDuplicate(Request $request)
     {
-        $products = Product::where([['user_id', Auth::user()->id], ['status', '!=', ProductStatus::DELETED]])->get();
+        $isAdmin = (new HomeController())->checkAdmin();
+        if ($isAdmin) {
+            $products = Product::where('status', '!=', ProductStatus::DELETED)->get();
+        } else {
+            $products = Product::where([['user_id', Auth::user()->id], ['status', '!=', ProductStatus::DELETED]])->get();
+        }
         $vouchers = Promotion::where([['user_id', Auth::user()->id], ['status', '!=', PromotionStatus::DELETED]])->get();
-        $myArray = null;
+        $myArray = [];
         foreach ($products as $product) {
             $myArray[] = $product->id;
         }
@@ -275,7 +338,6 @@ class VoucherController extends Controller
             $listIDs = $voucher->apply;
             $arrayIDs = explode(',', $listIDs);
         }
-//        dd($myArray, $arrayIDs);
         return array_diff($myArray, $arrayIDs);
     }
 

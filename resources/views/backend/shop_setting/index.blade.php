@@ -32,7 +32,7 @@
                                 {{ $ld->translateText('Ngọc Anh phố', locationPermissionHelper()) }}
                             </label>
                         @endforeach
-                        <button type="submit">{{ __('home.Lưu') }}L</button>
+                        <button type="submit">{{ __('home.Lưu') }}</button>
                     </form>
                 </div>
             </div>

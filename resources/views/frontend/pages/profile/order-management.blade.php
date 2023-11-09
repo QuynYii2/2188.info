@@ -1,7 +1,8 @@
-@extends('frontend.layouts.profile')
-
-@section('title', 'Order Management')
-@section('sub-content')
+@extends('backend.layouts.master')
+@section('title', __('home.order management'))
+<link rel="stylesheet" href="{{asset('css/style.css')}}">
+<link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+@section('content')
     <div class="row mt-2 bg-white rounded" id="address-book">
         <div class="row rounded pt-1 ml-5">
             <h5>{{ __('home.order management') }}</h5>

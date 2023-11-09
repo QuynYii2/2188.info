@@ -1,11 +1,11 @@
-@extends('frontend.layouts.master')
+@extends('backend.layouts.master')
 
 @section('title', 'Chat')
-
+<link rel="stylesheet" href="{{asset('css/style.css')}}">
+<link rel="stylesheet" href="{{asset('css/responsive.css')}}">
 @section('content')
     <div class="container-fluid">
-            <h3 class="text-center">{{ __('home.Member booth') }}{{$company->member}}</h3>
-            <h3 class="text-left">{{ __('home.Member') }}{{$company->member}}</h3>
+        <h3 class="text-center">{{ __('home.Member booth') }}</h3>
             <div class="d-flex justify-content-between align-items-center p-3">
                 <div>
                     <a href=" @if($company->member == "LOGISTIC") {{ route('seller.config.show') }} @endif " class="btn btn-warning mr-2">{{ __('home.Booth') }}</a>

@@ -3,5 +3,6 @@
 <link rel="stylesheet" href="{{asset('css/style.css')}}">
 <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
 @section('content')
-    @include('frontend.pages.member.detail-member-represent')
+    @include('frontend.pages.member.header-button')
+    @include('frontend.pages.registerMember.member-ship-show')
 @endsection

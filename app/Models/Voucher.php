@@ -22,6 +22,18 @@ class Voucher extends Model
         'startDate',
         'endDate',
         'description',
-        'assign_to'
+        'assign_to',
+
+        'name_en',
+        'name_vi',
+        'name_kr',
+        'name_jp',
+        'name_cn',
+
+        'description_en',
+        'description_vi',
+        'description_kr',
+        'description_jp',
+        'description_cn',
     ];
 }
