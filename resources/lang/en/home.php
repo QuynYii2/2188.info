@@ -1048,7 +1048,9 @@ return [
     'Update information represent member' => 'Update information represent member',
     'Chưa có sản phẩm nào' => 'No products',
     'Đặt hàng thành công' => 'Order Success',
-    'manager page' => 'Manager page',
     'manager page' => 'Management page',
 
+    'Register member buyer' => 'Register as a Purchase Member',
+    'Register member trust' => 'Register as a Trusted Member company',
+    'Register member logistic' => 'Sign up company information',
 ];
