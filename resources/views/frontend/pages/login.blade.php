@@ -41,7 +41,7 @@
                             <table class="table element-bordered-pink align-middle" align="center" id="tableLogin">
                                     <tbody>
                                     <tr class="text-center">
-                                        <th scope="row">
+                                        <th scope="row"  style="width: 160px;">
                                             <label for="login_email_1">{{ __('home.ID') }}: </label>
                                         </th>
                                         <td colspan="2">
@@ -56,7 +56,7 @@
                                 <table class="table element-bordered-pink align-middle" align="center" id="tableLogin">
                                     <tbody>
                                     <tr class="text-center">
-                                        <th scope="row">
+                                        <th scope="row" style="width: 160px;">
                                             <label for="login_password_1">{{ __('home.Password') }}: </label>
                                         </th>
                                         <td colspan="2">
@@ -70,7 +70,7 @@
                                 <table class="table element-bordered-pink align-middle" align="center" id="tableLogin">
                                     <tbody>
                                     <tr class="text-center">
-                                        <th scope="row">
+                                        <th scope="row" style="width: 160px;">
                                             <label for="login_phone_1">{{ __('home.Phone Number Login') }}: </label>
                                         </th>
                                         <td>
@@ -90,7 +90,7 @@
                                 <table class="table element-bordered-pink align-middle" align="center" id="tableLogin">
                                     <tbody>
                                     <tr class="text-center">
-                                        <th scope="row">
+                                        <th scope="row" style="width: 160px;">
                                             <label for="verify_code_1">{{ __('home.Verify Code') }}: </label>
                                         </th>
                                         <td colspan="2">
@@ -103,7 +103,7 @@
                                     </tbody>
                                 </table>
 
-                                <th scope="row" colspan="3" class="solid-4x-pink">
+                                <th scope="row" colspan="3" class="solid-4x-pink" style="width: 160px;">
                                     <button style="    width: 65%; position: relative; left: 36%; height: 75px" type="button" onclick="submitFormLogin()"
                                             class="btn btn-warning btn-block btn-round"
                                             style="height: 75px">{{ __('home.sign in') }}
