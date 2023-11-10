@@ -36,9 +36,9 @@
                     </div>
                     <div class="row text-center">
                         <div class="col-md-11 login-tags">
+                            <form method="post" action="{{ route('login.submit') }}" id="formLogin" style="border: 3px solid rgb(241, 172, 139); padding: 20px;">
+                                @csrf
                             <table class="table element-bordered-pink align-middle" align="center" id="tableLogin">
-                                <form method="post" action="{{ route('login.submit') }}" id="formLogin">
-                                    @csrf
                                     <tbody>
                                     <tr class="text-center">
                                         <th scope="row">
@@ -51,6 +51,10 @@
                                                    value="{{ old('login_field') }}" autofocus>
                                         </td>
                                     </tr>
+                                    </tbody>
+                            </table>
+                                <table class="table element-bordered-pink align-middle" align="center" id="tableLogin">
+                                    <tbody>
                                     <tr class="text-center">
                                         <th scope="row">
                                             <label for="login_password_1">{{ __('home.Password') }}: </label>
@@ -61,6 +65,10 @@
                                                    placeholder="{{ __('home.input password') }}">
                                         </td>
                                     </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table element-bordered-pink align-middle" align="center" id="tableLogin">
+                                    <tbody>
                                     <tr class="text-center">
                                         <th scope="row">
                                             <label for="login_phone_1">{{ __('home.Phone Number Login') }}: </label>
@@ -77,6 +85,10 @@
                                             </a>
                                         </td>
                                     </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table element-bordered-pink align-middle" align="center" id="tableLogin">
+                                    <tbody>
                                     <tr class="text-center">
                                         <th scope="row">
                                             <label for="verify_code_1">{{ __('home.Verify Code') }}: </label>
@@ -88,19 +100,16 @@
                                                    value="{{ old('verify_code_1') }}">
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td style="border: none"></td>
-                                        <th scope="row" colspan="3" class="solid-4x-pink">
-                                            <button type="button" onclick="submitFormLogin()"
-                                                    class="btn btn-warning btn-block btn-round"
-                                                    style="height: 75px">{{ __('home.sign in') }}
-                                            </button>
-                                        </th>
-                                    </tr>
-
                                     </tbody>
-                                </form>
-                            </table>
+                                </table>
+
+                                <th scope="row" colspan="3" class="solid-4x-pink">
+                                    <button style="    width: 65%; position: relative; left: 36%; height: 75px" type="button" onclick="submitFormLogin()"
+                                            class="btn btn-warning btn-block btn-round"
+                                            style="height: 75px">{{ __('home.sign in') }}
+                                    </button>
+                                </th>
+                            </form>
                             <table class="table element-bordered-pink align-middle" align="center">
                                 <tbody>
                                 <tr class="text-center">
