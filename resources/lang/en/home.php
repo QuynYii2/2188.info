@@ -1053,4 +1053,8 @@ return [
     'Register member buyer' => 'Register as a Purchase Member',
     'Register member trust' => 'Register as a Trusted Member company',
     'Register member logistic' => 'Sign up company information',
+    'hình thức vận chuyển' => 'Shipping method',
+    'Name English1' => 'Name English',
+    'back_to' => 'Back to',
+    'detail_account' => 'Detail account',
 ];

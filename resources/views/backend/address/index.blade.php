@@ -139,7 +139,7 @@
                         <button type="button" class="btn btn-secondary"
                                 data-dismiss="modal">{{ __('home.Close') }}</button>
                         <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                onclick="handleSubmitFormAddress()">{{ __('home.Save') }}</button>
+                                onclick="handleSubmitFormAddress()">{{ __('home.Lưu') }}</button>
                     </div>
                 </form>
             </div>
