@@ -80,7 +80,7 @@
         </tbody>
     </table>
     <div class="container-fluid" style="text-align: end">
-        Tổng doanh thu : {{$revenues->sum('revenue')}}
+        {{ __('home.Tổng doanh thu') }} : {{$revenues->sum('revenue')}}
     </div>
     <script>
         $(document).ready(function() {

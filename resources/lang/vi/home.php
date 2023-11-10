@@ -1031,5 +1031,10 @@ return [
     'Register member logistic' => 'Đăng ký công ty',
     'hình thức vận chuyển' => 'Hình thức vận chuyển',
     'Name English1' => 'Tên tiếng Anh',
+    'thêm tỉnh thành' => 'Thêm tỉnh thành',
+    'thêm vùng' => 'Thêm vùng',
+    'Tổng doanh thu' => 'Tổng doanh thu',
+    'Quay lại danh sách' => 'Quay lại danh sách',
+    'Cập nhập password' => 'Cập nhập password'
 ];
 
