@@ -125,10 +125,11 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
 </body>
 <script src="{{ asset('js/frontend.js') }}"></script>
 <script>
+    /* thành xóa d-none */
     function hidden() {
         const arrayHidden = ['header-bottom'];
         for (let i = 0; i < arrayHidden.length; i++) {
-            $('.' + arrayHidden[i]).addClass('d-none');
+            $('.' + arrayHidden[i]).addClass('');
         }
     }
 
