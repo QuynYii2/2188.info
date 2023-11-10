@@ -1029,5 +1029,7 @@ return [
     'Register member buyer' => 'Đăng ký Hội viên Mua hàng',
     'Register member trust' => 'Đăng ký công ty Hội viên Tin cậy',
     'Register member logistic' => 'Đăng ký công ty',
+    'hình thức vận chuyển' => 'Hình thức vận chuyển',
+    'Name English1' => 'Tên tiếng Anh',
 ];
 

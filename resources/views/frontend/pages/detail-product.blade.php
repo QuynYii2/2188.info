@@ -309,7 +309,7 @@
                             <form action="">
                                 <div class="widget-supplier-card company-card-integrated company-card-integrated-lite has-ta origin gps-background ilvietnam-0-0-1 style-v8cHz"
                                      data-role="widget-supplier-card" data-aui="supplier-card" id="style-v8cHz">
-                                    <div class="card-central-logo ilvietnam-1-1-2">
+                                    <div class="card-central-logo d-md-flex justify-content-center ilvietnam-1-1-2">
                                         <a href="" target="_blank" data-aui="ta-ordered"
                                            rel="nofollow" class="ilvietnam-2-2-3">
                                             <img src="https://img.alicdn.com/imgextra/i1/O1CN01AOhmtZ1HQ08UWY7sf_!!6000000000751-2-tps-266-54.png_240x240.jpg"
