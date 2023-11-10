@@ -1057,4 +1057,9 @@ return [
     'Name English1' => 'Name English',
     'back_to' => 'Back to',
     'detail_account' => 'Detail account',
+    'thêm tỉnh thành' => 'Add province',
+    'thêm vùng' => 'Add region',
+    'Tổng doanh thu' => 'Total revenue',
+    'Quay lại danh sách' => 'Back to the list',
+    'Cập nhập password' => 'Update password'
 ];

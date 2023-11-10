@@ -5,7 +5,7 @@
 @section('content')
     <div class="">
         <h3 class="text-center mt-3">Company Information</h3>
-        <a class="btn btn-info" href="{{route('admin.list.users')}}">Quay lại danh sách</a>
+        <a class="btn btn-info" href="{{route('admin.list.users')}}">{{ __('home.Quay lại danh sách') }}</a>
     </div>
     <div class="container">
         @if($company)
