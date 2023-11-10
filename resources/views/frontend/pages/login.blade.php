@@ -97,16 +97,20 @@
                                             </button>
                                         </th>
                                     </tr>
-                                    <tr class="text-center">
-                                        <th scope="row">
-                                            <a href="{{route('register.show')}}">{{ __('home.sign up') }}</a>
-                                        </th>
-                                        <th scope="row" colspan="2">
-                                            <a href="#">{{ __('home.Find password/id Login') }}</a>
-                                        </th>
-                                    </tr>
                                     </tbody>
                                 </form>
+                            </table>
+                            <table>
+                                <tbody>
+                                <tr class="text-center">
+                                    <th scope="row">
+                                        <a href="{{route('register.show')}}">{{ __('home.sign up') }}</a>
+                                    </th>
+                                    <th scope="row" colspan="2">
+                                        <a href="#">{{ __('home.Find password/id Login') }}</a>
+                                    </th>
+                                </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
