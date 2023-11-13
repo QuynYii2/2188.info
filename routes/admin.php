@@ -29,6 +29,7 @@ Route::prefix('user')->group(function () {
     Route::delete('/delete-users/{id}', [AdminUserController::class, 'delete'])->name('admin.delete.users');
     Route::get('/detail-users-company/{id}', [AdminUserController::class, 'showCompany'])->name('admin.detail.users.company');
     Route::put('/edit-users-company/{id}', [AdminUserController::class, 'updateCompany'])->name('admin.edit.users.company');
+    Route::post('/search-users', [AdminUserController::class, 'searchUser'])->name('admin.search.users');
 });
 //    Route::post('down-permission', [\App\Http\Controllers\PermissionRankController::class, 'downRank'])->name('permission.down.rank');
 // Admin Config

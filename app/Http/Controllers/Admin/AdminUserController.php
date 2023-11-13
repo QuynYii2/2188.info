@@ -6,7 +6,6 @@ use App\Enums\CategoryStatus;
 use App\Enums\MemberRegisterInfoStatus;
 use App\Enums\MemberRegisterType;
 use App\Enums\MemberStatus;
-use App\Enums\RegisterMember;
 use App\Enums\UserStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\HomeController;
@@ -14,9 +13,12 @@ use App\Models\Category;
 use App\Models\Member;
 use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
+use App\Models\Order;
+use App\Models\Product;
 use App\Models\Role;
 use App\Models\User;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -26,9 +28,11 @@ class AdminUserController extends Controller
     public function listUser(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $users = User::where('status', '!=', UserStatus::DELETED)->paginate(10);
+        $users = User::paginate(10);
         $members = Member::where('status', MemberStatus::ACTIVE)->get();
-        return view('admin.user-manager.list-user', compact('members', 'users'));
+        $roles = Role::all();
+        $categories = Category::all();
+        return view('admin.user-manager.list-user', compact('members', 'users', 'roles', 'categories'));
     }
 
     public function detail($id, Request $request)
@@ -74,7 +78,7 @@ class AdminUserController extends Controller
             $companyPerson->save();
             alert()->success('Success', 'Save information user success');
             return redirect(route('admin.list.users'));
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             alert()->error('Error', 'Error, Please try again');
             return back();
         }
@@ -155,9 +159,53 @@ class AdminUserController extends Controller
             }
             alert()->success('Success', 'Save information user success');
             return redirect(route('admin.list.users'));
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             alert()->error('Error', 'Error, Please try again');
             return back();
+        }
+    }
+
+    public function delete($id, Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $user = User::find($id);
+        if (!$user || $user->status == UserStatus::DELETED) {
+            alert()->success('Success', 'Deleted');
+            return redirect(route('admin.list.users'));
+        }
+        $user->status = UserStatus::DELETED;
+        $user->save();
+        alert()->success('Success', 'Delete success');
+        return redirect(route('admin.list.users'));
+    }
+
+    private function insertRole($role, $id, Request $request)
+    {
+        (new HomeController())->getLocale($request);
+        $adminRole = Role::where('name', 'super_admin')->first();
+        $seller = Role::where('name', 'seller')->first();
+        $buyer = Role::where('name', 'buyer')->first();
+        if ($role == 'ADMIN') {
+            DB::table('role_user')->insert([
+                [
+                    'role_id' => $adminRole->id,
+                    'user_id' => $id
+                ],
+                [
+                    'role_id' => $seller->id,
+                    'user_id' => $id
+                ]
+            ]);
+        } elseif ($role == 'SELLER') {
+            DB::table('role_user')->insert([
+                'role_id' => $seller->id,
+                'user_id' => $id
+            ]);
+        } else {
+            DB::table('role_user')->insert([
+                'role_id' => $buyer->id,
+                'user_id' => $id
+            ]);
         }
     }
 
@@ -288,7 +336,7 @@ class AdminUserController extends Controller
 
             alert()->success('Success', 'Save information user success');
             return redirect(route('admin.list.users'));
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             alert()->error('Error', 'Error, Please try again');
             dd($exception);
             return back();
@@ -331,48 +379,93 @@ class AdminUserController extends Controller
         return redirect(route('admin.list.users'));
     }
 
-    public function delete($id, Request $request)
+    public function searchUser(Request $request)
     {
-        (new HomeController())->getLocale($request);
-        $user = User::find($id);
-        if (!$user || $user->status == UserStatus::DELETED) {
-            $numLog = 404;
-            $message = 'Not found';
-            return view('frontend.widgets.error', compact('numLog', 'message'));
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $phone = $request->input('phone');
+        $member = $request->input('member');
+        $role = $request->input('role');
+        $category = $request->input('category');
+
+        $users = User::query();
+
+        if ($name) {
+            $users->where('users.name', 'like', '%'.$name.'%');
         }
-        $user->status = UserStatus::DELETED;
-        $user->save();
-        alert()->success('Success', 'Delete success');
-        return redirect(route('admin.list.users'));
+
+        if ($email) {
+            $users->where('users.email', 'like', '%'.$email.'%');
+        }
+
+        if ($phone) {
+            $users->where('users.phone', 'like', '%'.$phone.'%');
+        }
+
+        if ($member) {
+            $users->where('users.member', $member);
+        }
+
+        if ($role) {
+            $users->join('role_user', 'users.id', '=', 'role_user.user_id')->where('role_user.role_id', $role);
+        }
+
+        if ($category) {
+            $users->join('member_register_infos', 'users.id', '=',
+                'member_register_infos.user_id')->where('member_register_infos.category_id', 'like', '%'.$category.'%');
+        }
+
+        $results = $users->paginate(10);
+
+        $results = $this->renderToHTML($results);
+        return response()->json($results);
     }
 
-    private function insertRole($role, $id, Request $request)
+    public function renderToHTML($users)
     {
-        (new HomeController())->getLocale($request);
-        $adminRole = Role::where('name', 'super_admin')->first();
-        $seller = Role::where('name', 'seller')->first();
-        $buyer = Role::where('name', 'buyer')->first();
-        if ($role == 'ADMIN') {
-            DB::table('role_user')->insert([
-                [
-                    'role_id' => $adminRole->id,
-                    'user_id' => $id
-                ],
-                [
-                    'role_id' => $seller->id,
-                    'user_id' => $id
-                ]
-            ]);
-        } elseif ($role == 'SELLER') {
-            DB::table('role_user')->insert([
-                'role_id' => $seller->id,
-                'user_id' => $id
-            ]);
-        } else {
-            DB::table('role_user')->insert([
-                'role_id' => $buyer->id,
-                'user_id' => $id
-            ]);
+        $html = '';
+
+        foreach ($users as $index => $user) {
+            $html .= '<tr>
+                        <th scope="row">'.$index.'</th>
+                        <td class="table-name">'.$user->name.'</td>
+                        <td class="table-email">'.$user->email.'</td>
+                        <td>'.$user->phone.'</td>
+                        <td class="table-role">';
+            $user_roles = DB::table('role_user')->where('user_id', $user->id)->get();
+            if ($user_roles->isEmpty()) {
+                $html .= 'buyer';
+            }
+
+            foreach ($user_roles as $user_role) {
+                $role = Role::find($user_role->role_id);
+                $html .= $role->name.'<br>';
+            }
+
+            $html .= '</td>
+                        <td class="table-member">'.$user->member.'</td>
+                        <td>'.$user->region.'</td>
+                        <td>';
+            $orders = Order::where('user_id', $user->id)->get();
+            $html .= count($orders).'</td><td>';
+
+            $products = Product::where('user_id', $user->id)->get();
+            $html .= count($products).'</td>
+                        <td>'.$user->status.'</td>
+                        <td>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="'.route('admin.private.update.users', $user->id).'"
+                                   class="btn btn-primary">Detail</a>
+                                <form action="'.route('admin.delete.users', $user->id).'" method="post">
+                                    <input type="hidden" value="'.csrf_token().'">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>';
         }
+
+        return $html;
     }
+
 }

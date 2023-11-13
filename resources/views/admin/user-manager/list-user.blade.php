@@ -1,3 +1,6 @@
+@php use App\Models\Role; @endphp
+@php use App\Models\Order; @endphp
+@php use App\Models\Product; @endphp
 @extends('backend.layouts.master')
 @section('title')
     User Manager
@@ -6,40 +9,75 @@
     <div class="container">
         <section class="section ">
             <div class="">
-                <div class="row mt-3">
-                    <div class="col-md-6 mb-3">
-                        <h5>Search User</h5>
-                        <input class="form-control" id="inputSearchUser" type="text" placeholder="Search..">
+                <form id="form-search">
+                    <div class="row mt-3 mb-3">
+                        <div class="form-group col-md-4">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="name">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control" id="email" placeholder="email">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="email">Phone</label>
+                            <input type="text" class="form-control" id="phone" placeholder="phone">
+                        </div>
                     </div>
-                </div>
-                <div class="row mt-3 mb-3">
-                    <div class="form-group col-md-3">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" placeholder="name">
+                    <div class="row mt-3 mb-3">
+                        <div class="form-group col-md-4">
+                            <label for="member">Member</label>
+                            <select id="member" class="form-control" name="member">
+                                <option value="" selected></option>
+                                @if($members->isNotEmpty())
+                                    @foreach($members as $member)
+                                        <option value="{{$member->name}}">{{$member->name}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="role">Role</label>
+                            <select id="role" class="form-control" name="role">
+                                <option value="" selected></option>
+                                @if($roles->isNotEmpty())
+                                    @foreach($roles as $role)
+                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="role">Category</label>
+                            <select id="category" class="form-control" name="category">
+                                <option value="" selected></option>
+                                @if($categories->isNotEmpty())
+                                    @foreach($categories as $category)
+                                        @switch(locationHelper())
+                                            @case('kr')
+                                                <option value="{{ $category->id }}">{{ $category->name_kr }}</option>
+                                                @break
+                                            @case('cn')
+                                                <option value="{{ $category->id }}">{{ $category->name_zh }}</option>
+                                                @break
+                                            @case('jp')
+                                                <option value="{{ $category->id }}">{{ $category->name_ja }}</option>
+                                                @break
+                                            @case('vi')
+                                                <option value="{{ $category->id }}">{{ $category->name_vi }}</option>
+                                                @break
+                                            @default
+                                                <option value="{{ $category->id }}">{{ $category->name_en }}</option>
+                                        @endswitch
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="email">Email</label>
-                        <input type="text" class="form-control" id="email" placeholder="email">
+                    <div class="row float-right mb-3">
+                        <button class="btn btn-primary" type="button" onclick="searchListUser()">search</button>
                     </div>
-                    <div class="form-group col-md-3">
-                        <label for="member">Member</label>
-                        <select id="member" class="form-control" name="member">
-                            @if($members->isNotEmpty())
-                                @foreach($members as $member)
-                                    <option value="{{$member->name}}">{{$member->name}}</option>
-                                @endforeach
-                            @endif
-                        </select>
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="role">Role</label>
-                        <select id="role" class="form-control" name="role">
-                            <option value="buyer">BUYER</option>
-                            <option value="seller">SELLER</option>
-                            <option value="super_admin">ADMIN</option>
-                        </select>
-                    </div>
-                </div>
+                </form>
                 <br>
                 <table class="table table-bordered" id="tableUser">
                     <thead>
@@ -57,7 +95,7 @@
                         <th scope="col">Action</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tbody-user">
                     @if(!$users->isEmpty())
                         @foreach($users as $user)
                             <tr>
@@ -74,7 +112,7 @@
                                     @endif
                                     @foreach($user_roles as $user_role)
                                         @php
-                                            $role = \App\Models\Role::find($user_role->role_id)
+                                            $role = Role::find($user_role->role_id)
                                         @endphp
                                         {{$role->name}}
                                         <br>
@@ -85,14 +123,14 @@
 
                                 <td>
                                     @php
-                                        $orders = \App\Models\Order::where('user_id', $user->id)->get();
+                                        $orders = Order::where('user_id', $user->id)->get();
                                     @endphp
                                     {{count($orders)}}
                                 </td>
 
                                 <td>
                                     @php
-                                        $products = \App\Models\Product::where('user_id', $user->id)->get();
+                                        $products = Product::where('user_id', $user->id)->get();
                                     @endphp
                                     {{count($products)}}
                                 </td>
@@ -118,5 +156,36 @@
         </section>
     </div>
 
-    <script src="{{ asset('js/admin/list-user.js') }}"></script>
+    <script>
+        function searchListUser() {
+            let name = $('#name').val();
+            let email = $('#email').val();
+            let phone = $('#phone').val();
+            let member = $('#member').val();
+            let role = $('#role').val();
+            let category = $('#category').val();
+
+            let url = "{{route('admin.search.users')}}";
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    member: member,
+                    role: role,
+                    category: category,
+                    _token: '{{csrf_token()}}'
+                },
+                success: function (data) {
+                    $('#tbody-user').html(data);
+                }
+            });
+        }
+
+        function renderJson2Html() {
+
+        }
+    </script>
 @endsection

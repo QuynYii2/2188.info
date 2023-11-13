@@ -42,6 +42,8 @@ class Handler extends ExceptionHandler
     public function render($request, Exception|Throwable $exception)
     {
         if ($this->isHttpException($exception)) {
+            $numLog = 404;
+            $message = "Không tìm thấy trang";
             if ($exception->getStatusCode() == 404) {
                 $numLog = 404;
                 $message = "Không tìm thấy trang";
