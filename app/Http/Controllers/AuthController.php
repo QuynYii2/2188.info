@@ -101,8 +101,6 @@ class AuthController extends Controller
             return back();
         }
 
-//        $locale = $this->getLocale($request);
-//        dd($locale, $user->region);
         $locale = app()->getLocale();
 
         if ($user) {
@@ -114,30 +112,6 @@ class AuthController extends Controller
                     $isAdmin = true;
                 }
             }
-
-//            if (!$isAdmin && $user->region != $locale) {
-//                toast('Tài khoản của bạn không dành cho khu vực này. Vui lòng chọn khu vực khách phù hợp', 'error', 'top-right');
-//
-//                switch ($locale) {
-//                    case 'vi':
-//                        $redirectRegion = 'vn.';
-//                        break;
-//                    case 'kr':
-//                        $redirectRegion = 'kr.';
-//                        break;
-//                    case 'jp':
-//                        $redirectRegion = 'jp.';
-//                        break;
-//                    case 'cn':
-//                        $redirectRegion = 'cn.';
-//                        break;
-//                    default:
-//                        $redirectRegion = '';
-//                        break;
-//                }
-//
-//                return redirect("https://" . $redirectRegion . "2188.info/");
-//            }
 
         }
 

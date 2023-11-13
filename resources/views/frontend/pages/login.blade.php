@@ -36,12 +36,13 @@
                     </div>
                     <div class="row text-center">
                         <div class="col-md-11 login-tags">
-                            <form method="post" action="{{ route('login.submit') }}" id="formLogin" style="border: 3px solid rgb(241, 172, 139); padding: 20px;">
+                            <form method="post" action="{{ route('login.submit') }}" id="formLogin"
+                                  style="border: 3px solid rgb(241, 172, 139); padding: 20px;">
                                 @csrf
-                            <table class="table element-bordered-pink align-middle" align="center" id="tableLogin">
+                                <table class="table element-bordered-pink align-middle" align="center" id="tableLogin">
                                     <tbody>
                                     <tr class="text-center">
-                                        <th scope="row"  style="width: 160px;">
+                                        <th scope="row" style="width: 160px;">
                                             <label for="login_email_1">{{ __('home.ID') }}: </label>
                                         </th>
                                         <td colspan="2">
@@ -52,7 +53,7 @@
                                         </td>
                                     </tr>
                                     </tbody>
-                            </table>
+                                </table>
                                 <table class="table element-bordered-pink align-middle" align="center" id="tableLogin">
                                     <tbody>
                                     <tr class="text-center">
@@ -67,44 +68,10 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                                <table class="table element-bordered-pink align-middle" align="center" id="tableLogin">
-                                    <tbody>
-                                    <tr class="text-center">
-                                        <th scope="row" style="width: 160px;">
-                                            <label for="login_phone_1">{{ __('home.Phone Number Login') }}: </label>
-                                        </th>
-                                        <td>
-                                            <input id="login_phone_1" type="number" class="form-control"
-                                                   name="login_phone_1"
-                                                   placeholder="{{ __('home.input phone') }}"
-                                                   value="{{ old('login_phone_1') }}">
-                                        </td>
-                                        <td>
-                                            <a id="btnVerify" onclick="sendVerifyCode();">
-                                                {{ __('home.information verification Login') }}
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <table class="table element-bordered-pink align-middle" align="center" id="tableLogin">
-                                    <tbody>
-                                    <tr class="text-center">
-                                        <th scope="row" style="width: 160px;">
-                                            <label for="verify_code_1">{{ __('home.Verify Code') }}: </label>
-                                        </th>
-                                        <td colspan="2">
-                                            <input id="verify_code_1" type="text" class="form-control"
-                                                   name="verify_code_1" maxlength="6"
-                                                   placeholder="{{ __('home.Verify Code Login') }}"
-                                                   value="{{ old('verify_code_1') }}">
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
 
                                 <th scope="row" colspan="3" class="solid-4x-pink" style="width: 160px;">
-                                    <button style="    width: 65%; position: relative; left: 36%; height: 75px" type="button" onclick="submitFormLogin()"
+                                    <button style="    width: 65%; position: relative; left: 36%; height: 75px"
+                                            type="button" onclick="submitFormLogin()"
                                             class="btn btn-warning btn-block btn-round"
                                             style="height: 75px">{{ __('home.sign in') }}
                                     </button>
@@ -133,8 +100,6 @@
     </div>
     <script>
 
-        let decodedString = '';
-
         function clearLocal() {
             localStorage.clear();
         }
@@ -143,17 +108,8 @@
 
         function submitFormLogin() {
             const checkForm = checkFormInput();
-            const verifyCode = document.getElementById('verify_code_1').value;
             if (!checkForm) {
                 alert('Vui lòng nhập đầy đủ thông tin');
-                return;
-            }
-            if (verifyCode == '686868') {
-                document.getElementById('formLogin').submit();
-                return;
-            }
-            if (verifyCode !== decodedString) {
-                alert('Vui lòng nhập đúng mã xác thực');
                 return;
             }
             document.getElementById('formLogin').submit();
@@ -161,38 +117,10 @@
 
         function checkFormInput() {
             const email = document.getElementById('login_email_1').value;
-            const phone = document.getElementById('login_phone_1').value;
             const password = document.getElementById('login_password_1').value;
-            const verifyCode = document.getElementById('verify_code_1').value;
 
-            return !(!email || !phone || !password || !verifyCode);
+            return !(!email || !password);
         }
 
-        function sendVerifyCode() {
-            const email = document.getElementById('login_email_1').value;
-            const phone = document.getElementById('login_phone_1').value;
-            const apiUrl = "{{ route('user.get.number.phone') }}";
-            const data = {
-                _token: "{{ csrf_token() }}",
-                email: email,
-                phone: phone
-            };
-
-            $.ajax({
-                url: apiUrl,
-                type: 'POST',
-                data: data,
-                success: function (response) {
-                    if (response.status === 400) {
-                        alert(response.message);
-                        return;
-                    }
-                    decodedString = atob(response.deaswr);
-                },
-                error: function (response) {
-                }
-            });
-            alert('Đã gửi mã xác thực đến số điện thoại của bạn');
-        }
     </script>
 @endsection
