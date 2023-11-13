@@ -290,36 +290,13 @@
                                         @csrf
                                         <div class="email">
                                             {{ __('home.Email Address') }}<span class="text-danger">*</span> <br>
-                                            <input class="mt-2" name="login_field" type="email" id="login_email"
+                                            <input class="mt-2" name="login_field" type="email"
                                                    placeholder="{{ __('home.input email') }}" style="box-shadow: none">
                                         </div>
                                         <div class="password">
                                             {{ __('home.Password') }} <span class="text-danger">*</span> <br>
-                                            <input class="mt-2" name="password" type="password" id="login_password"
+                                            <input class="mt-2" name="password" type="password"
                                                    placeholder="{{ __('home.input password') }}"
-                                                   style="box-shadow: none">
-                                        </div>
-                                        <div class="password">
-                                            {{ __('home.Phone Number Login') }} <span class="text-danger">*</span> <br>
-                                            <div class="row">
-                                                <div class="col-sm-8">
-                                                    <input class="mt-2" name="phone" type="number" id="login_phone"
-                                                           placeholder="{{ __('home.input phone') }}"
-                                                           style="box-shadow: none"></div>
-                                                <div class="col-sm-4">
-                                                    <div>
-                                                        <div class="card-bottom--left mt-2">
-                                                            <button type="button" onclick="sendVerifyCodeHeader(this);"
-                                                                    style="font-size: 16px; line-height: 20px">{{ __('home.information verification Login') }}</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="password">
-                                            {{ __('home.Verify Code') }} <span class="text-danger">*</span> <br>
-                                            <input class="mt-2" name="verify_code" id="verify_code" type="text"
-                                                   placeholder="{{ __('home.Verify Code Login') }}" maxlength="6"
                                                    style="box-shadow: none">
                                         </div>
 
@@ -849,30 +826,6 @@
                                        placeholder="{{ __('home.input password') }}" style="box-shadow: none">
                             </div>
 
-                            <div class="password">
-                                {{ __('home.Phone Number Login') }} <span class="text-danger">*</span> <br>
-                                <div class="row">
-                                    <div class="col-sm-8">
-                                        <input class="mt-2" name="phone" type="number" id="login_phone"
-                                               placeholder="{{ __('home.input phone') }}"
-                                               style="box-shadow: none"></div>
-                                    <div class="col-sm-4">
-                                        <div>
-                                            <div class="card-bottom--left mt-2">
-                                                <button type="button" onclick="sendVerifyCodeHeader(this);"
-                                                        style="font-size: 16px; line-height: 20px">{{ __('home.information verification Login') }}</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="password">
-                                {{ __('home.Verify Code') }} <span class="text-danger">*</span> <br>
-                                <input class="mt-2" name="verify_code" id="verify_code" type="text"
-                                       placeholder="{{ __('home.Verify Code Login') }}" maxlength="6"
-                                       style="box-shadow: none">
-                            </div>
-
                             <div class="card-bottom--left">
                                 <button type="button"
                                         onclick="submitFormLoginHeader(this)">{{ __('home.Sign In') }}</button>
@@ -1086,68 +1039,23 @@
     var logoutRoute = '{{ route('logout') }}'
     var process = '{{ route('process.register.member') }}'
     var login = '{{ route('login') }}'
-    let decodedStringHeader = '';
 
     function submitFormLoginHeader(event) {
         let form = event.form;
 
         const checkForm = checkFormInputHeader(form);
-        const verifyCode = document.getElementById('verify_code').value;
         if (!checkForm) {
             alert('Vui lòng nhập đầy đủ thông tin');
             return;
         }
-        if (verifyCode == '686868') {
-            document.getElementById('formLogin1').submit();
-            return;
-        }
-        if (verifyCode !== decodedStringHeader) {
-            alert('Vui lòng nhập đúng mã xác thực');
-            return;
-        }
-        document.getElementById('formLogin1').submit();
+        form.submit();
     }
 
     function checkFormInputHeader(form) {
         const email = form.elements.login_field.value;
-        const phone = form.elements.password.value;
-        const password = form.elements.phone.value;
-        const verifyCode = form.elements.verify_code.value;
+        const password = form.elements.password.value;
 
-        return !(!email || !phone || !password || !verifyCode);
-    }
-
-    function sendVerifyCodeHeader(event) {
-        let form = event.form;
-
-        const email = form.elements.login_field.value;
-        const phone = form.elements.phone.value;
-        if (!phone) {
-            alert('Vui lòng nhập số điện thoại');
-            return;
-        }
-        const apiUrl = "{{ route('user.get.number.phone') }}";
-        const data = {
-            _token: "{{ csrf_token() }}",
-            email: email,
-            phone: phone
-        };
-
-        $.ajax({
-            url: apiUrl,
-            type: 'POST',
-            data: data,
-            success: function (response) {
-                if (response.status === 400) {
-                    alert(response.message);
-                    return;
-                }
-                decodedStringHeader = atob(response.deaswr);
-            },
-            error: function (response) {
-            }
-        });
-        alert('Đã gửi mã xác thực đến số điện thoại của bạn');
+        return !(!email || !password);
     }
 
 </script>
