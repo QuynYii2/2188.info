@@ -1,16 +1,12 @@
-var url;
+var url = `://${location.host}/?token`;
 if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
-
     url = 'ws://127.0.0.1:8080/?token';
 } else {
     if (location.protocol !== 'https:') {
-
-        url = 'ws://137.59.106.221:8080/?token';
+        url = 'ws' + url;
     } else {
-
-        url = 'wss://137.59.106.221:8080/?token';
+        url = 'wss' + url;
     }
-
 }
 
 const maxReconnectAttempts = 5;
