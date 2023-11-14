@@ -16,9 +16,9 @@ class WebSocketServer extends Command
      * @var string
      */
     // php artisan websocket:init
-    protected $signature = 'websocket:init';
-    // php artisan websocket:init 8090
-//    protected $signature = 'websocket:init {port}';
+//    protected $signature = 'websocket:init';
+    // php artisan websocket:init 8080
+    protected $signature = 'websocket:init {port}';
     // php artisan websocket:init 127.0.0.1 8080
 //    protected $signature = 'websocket:init {host} {port}';
 
@@ -55,23 +55,24 @@ class WebSocketServer extends Command
                     new SocketController()
                 )
             ),
-            $port,
+            $port
 //            $host
         );
 
-        $socket = $server->socket;
-        $address = $socket->getAddress();
-
-        $this->info($address);
-
-        if (is_array($address)) {
-            $host = $address['host'] ?? 'localhost';
-            $port = $address['port'] ?? $port;
-
-            $this->info("WebSocket server started on $host:$port");
-        } else {
-            $this->info("Unable to retrieve server address.");
-        }
+//        $socket = $server->socket;
+//        $address = $socket->getAddress();
+//
+//        $this->info($address);
+//
+//        if (is_array($address)) {
+//            $host = $address['host'] ?? 'localhost';
+//            $port = $address['port'] ?? $port;
+//
+//            $this->info("WebSocket server started on $host:$port");
+//        } else {
+//            $this->info("Unable to retrieve server address.");
+//        }
+        $this->info("WebSocket server started on port $port");
 
         $server->run();
     }
