@@ -1,4 +1,4 @@
-@php use App\Models\Role; @endphp
+@php use App\Models\MemberRegisterInfo;use App\Models\Role; @endphp
 @php use App\Models\Order; @endphp
 @php use App\Models\Product; @endphp
 @extends('backend.layouts.master')
@@ -6,7 +6,7 @@
     User Manager
 @endsection
 @section('content')
-    <div class="container">
+    <div class="">
         <section class="section ">
             <div class="">
                 <form id="form-search">
@@ -36,7 +36,7 @@
                                 @endif
                             </select>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-4 d-none">
                             <label for="role">Role</label>
                             <select id="role" class="form-control" name="role">
                                 <option value="" selected></option>
@@ -88,6 +88,7 @@
                         <th scope="col">Phone</th>
                         <th scope="col">Role</th>
                         <th scope="col">Member</th>
+                        <th scope="col">Category</th>
                         <th scope="col">Region</th>
                         <th scope="col">Order</th>
                         <th scope="col">Products</th>
@@ -119,6 +120,33 @@
                                     @endforeach
                                 </td>
                                 <td class="table-member">{{$user->member}}</td>
+                                @php
+                                    $cates = MemberRegisterInfo::where('user_id', $user->id)->first('category_id');
+                                    $cateName = [];
+                                    if($cates){
+                                    $cates = explode(',', $cates->category_id);
+                                    $listCate = \App\Models\Category::whereIn('id', $cates)->get();
+                                    foreach ($listCate as $cate) {
+                                        switch (locationHelper()) {
+                                            case 'kr':
+                                                array_push($cateName, $cate->name_kr);
+                                                break;
+                                            case 'cn':
+                                                array_push($cateName, $cate->name_zh);
+                                                break;
+                                            case 'jp':
+                                                array_push($cateName, $cate->name_ja);
+                                                break;
+                                            case 'vi':
+                                                array_push($cateName, $cate->name_vi);
+                                                break;
+                                            default:
+                                                array_push($cateName, $cate->name_en);
+                                        }
+                                    }
+                                    }
+                                @endphp
+                                <td>{{ implode(', ', $cateName) }}</td>
                                 <td>{{$user->region}}</td>
 
                                 <td>

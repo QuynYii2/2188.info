@@ -411,8 +411,10 @@ class AdminUserController extends Controller
         }
 
         if ($category) {
-            $users->join('member_register_infos', 'users.id', '=',
-                'member_register_infos.user_id')->where('member_register_infos.category_id', 'like', '%'.$category.'%');
+            $users
+                ->join('member_register_infos', 'users.id', '=',
+                'member_register_infos.user_id')
+                ->where('member_register_infos.category_id', 'like', '%'.$category.'%');
         }
 
         $results = $users->paginate(10);
