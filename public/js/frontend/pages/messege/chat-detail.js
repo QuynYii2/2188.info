@@ -123,10 +123,14 @@ conn.onmessage = function (e) {
         search_user(from_user_id, document.getElementById('search_people').value);
 
         load_unread_notification(from_user_id);
+
+        load_connected_chat_user(from_user_id);
     }
 
     if (data.response_to_user_chat_request) {
         load_unread_notification(data.user_id);
+
+        load_connected_chat_user(from_user_id);
     }
 
     if (data.response_load_notification) {
