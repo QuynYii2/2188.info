@@ -1,7 +1,7 @@
 var url;
 if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
 
-    url = 'ws://localhost:8080/?token';
+    url = 'ws://127.0.0.1:8080/?token';
 } else {
     if (location.protocol !== 'https:') {
 
@@ -17,7 +17,8 @@ const maxReconnectAttempts = 5;
 let reconnectAttempts = 0;
 
 function createWebSocket() {
-    const connection = new WebSocket(url + '='+userToken);
+    let wsUrl = url + '=' + userToken;
+    const connection = new WebSocket(wsUrl);
 
     connection.addEventListener('open', () => {
 
