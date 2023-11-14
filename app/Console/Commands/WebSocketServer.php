@@ -18,9 +18,9 @@ class WebSocketServer extends Command
     // php artisan websocket:init
 //    protected $signature = 'websocket:init';
     // php artisan websocket:init 8080
-    protected $signature = 'websocket:init {port}';
+//    protected $signature = 'websocket:init {port}';
     // php artisan websocket:init 127.0.0.1 8080
-//    protected $signature = 'websocket:init {host} {port}';
+    protected $signature = 'websocket:init {host} {port}';
 
     /**
      * The console command description.
@@ -46,33 +46,19 @@ class WebSocketServer extends Command
      */
     public function handle()
     {
-//        $port = $this->argument('port');
-        $port = 8080;
-//        $host = $this->argument('host');
+        $port = $this->argument('port');
+//        $port = 8080;
+        $host = $this->argument('host');
         $server = IoServer::factory(
             new HttpServer(
                 new WsServer(
                     new SocketController()
                 )
             ),
-            $port
-//            $host
+            $port,
+            $host
         );
-
-//        $socket = $server->socket;
-//        $address = $socket->getAddress();
-//
-//        $this->info($address);
-//
-//        if (is_array($address)) {
-//            $host = $address['host'] ?? 'localhost';
-//            $port = $address['port'] ?? $port;
-//
-//            $this->info("WebSocket server started on $host:$port");
-//        } else {
-//            $this->info("Unable to retrieve server address.");
-//        }
-        $this->info("WebSocket server started on port $port");
+        $this->info("WebSocket server started on $host:$port");
 
         $server->run();
     }
