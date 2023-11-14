@@ -15,14 +15,19 @@ class TrustMemberController extends Controller
     public function memberStand(Request $request)
     {
 
-        $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
-        (new HomeController())->getLocale($request);
-        $company = MemberRegisterInfo::where([
-            ['id', $memberPerson->member_id],
-            ['status', MemberRegisterInfoStatus::ACTIVE]
-        ])->first();
-        $companies = MemberRegisterInfo::where('category_id', $company->category_id)->get();
-        return view('frontend.pages.member.trust.member-trust', compact('companies', 'company'));
+        $isAdmin = (new HomeController())->checkAdmin();
+        if (!$isAdmin) {
+            $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+            (new HomeController())->getLocale($request);
+            $company = MemberRegisterInfo::where([
+                ['id', $memberPerson->member_id],
+                ['status', MemberRegisterInfoStatus::ACTIVE]
+            ])->first();
+            $companies = MemberRegisterInfo::where('category_id', $company->category_id)->get();
+            return view('frontend.pages.member.trust.member-trust', compact('companies', 'company'));
+        } else {
+            return back();
+        }
     }
 
     public function memberPartnerLocale(Request $request, $locale)
