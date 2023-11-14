@@ -47,15 +47,18 @@
             <ul class='sub-items pl-3'>
                 <li><a class="sidebarUrl" href="{{route('profile.show')}}">{{ __('home.account information') }}</a>
                 </li>
-                <li><a class="sidebarUrl" href="{{route('member.info')}}">{{ __('home.Member') }}</a>
-                </li>
+                @if(!$isAdmin)
+                    <li><a class="sidebarUrl" href="{{route('member.info')}}">{{ __('home.Member') }}</a>
+                    </li>
+                @endif
                 <li><a class="sidebarUrl" href="{{route('order.show')}}">{{ __('home.order management') }}</a>
                 </li>
                 <li><a class="sidebarUrl" href="{{route('my.voucher.show')}}">{{ __('home.voucher management') }}</a>
                 </li>
                 <li><a class="sidebarUrl" href="{{route('address.show')}}">{{ __('home.address book') }}</a>
                 </li>
-                <li><a class="sidebarUrl" href="{{route('my.product.evaluation')}}">{{ __('home.product evaluation') }}</a>
+                <li><a class="sidebarUrl"
+                       href="{{route('my.product.evaluation')}}">{{ __('home.product evaluation') }}</a>
                 </li>
                 <li><a class="sidebarUrl" href="{{route('my.product.viewed')}}">{{ __('home.product viewed') }}</a>
                 </li>
@@ -70,7 +73,8 @@
                 </li>
                 <li><a class="sidebarUrl" href="{{route('chat.message.sent')}}">{{ __('home.Message sent') }}</a>
                 </li>
-                <li><a class="sidebarUrl" href="{{route('chat.message.received')}}">{{ __('home.Message received') }}</a>
+                <li><a class="sidebarUrl"
+                       href="{{route('chat.message.received')}}">{{ __('home.Message received') }}</a>
                 </li>
             </ul>
         </li>
@@ -320,23 +324,26 @@
                     </ul>
                 </li>
             @endif
-            <li>
-                <a class="sidebar item" href='#'><i class="fa-solid fa-sitemap"></i> {{ __('home.Quản lý thông tin') }}
-                </a>
-                <ul class='sub-items pl-3'>
-                    <li><a class="sidebarUrl" href="{{route('member.info')}}">{{ __('home.Quản lý thông tin') }}</a>
-                    </li>
-                    <li><a class="sidebarUrl"
-                           href="{{route('profile.member.person')}}">{{ __('home.Registrator Information') }}</a>
-                    </li>
-                    <li><a class="sidebarUrl"
-                           href="{{route('profile.member.represent')}}">{{ __('home.Representative Information') }}</a>
-                    </li>
-                    <li><a class="sidebarUrl"
-                           href="{{route('profile.member.ship', $memberId)}}">{{ __('home.Staffs Information') }}</a>
-                    </li>
-                </ul>
-            </li>
+            @if(!$isAdmin)
+                <li>
+                    <a class="sidebar item" href='#'><i
+                                class="fa-solid fa-sitemap"></i> {{ __('home.Quản lý thông tin') }}
+                    </a>
+                    <ul class='sub-items pl-3'>
+                        <li><a class="sidebarUrl" href="{{route('member.info')}}">{{ __('home.Quản lý thông tin') }}</a>
+                        </li>
+                        <li><a class="sidebarUrl"
+                               href="{{route('profile.member.person')}}">{{ __('home.Registrator Information') }}</a>
+                        </li>
+                        <li><a class="sidebarUrl"
+                               href="{{route('profile.member.represent')}}">{{ __('home.Representative Information') }}</a>
+                        </li>
+                        <li><a class="sidebarUrl"
+                               href="{{route('profile.member.ship', $memberId)}}">{{ __('home.Staffs Information') }}</a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
         @endif
     </ul>
 </div>

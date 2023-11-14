@@ -11,8 +11,7 @@
          $checkBuyer = Auth::user()->member == RegisterMember::BUYER;
          $checkTrust = Auth::user()->member == RegisterMember::TRUST;
      }
-@endphp
-@php
+    $isAdmin = (new HomeController())->checkAdmin();
     $langDisplay = new HomeController();
     $locale = app()->getLocale();
     $company = null;
@@ -38,7 +37,7 @@
                             <input hidden="" type="text" id="category_search" name="category_search" value="0">
 
                             <button class="button-right search_header" type="submit"
-{{--                                    onclick="<?php echo $checkBuyer ? 'showAlert(1)' : (Auth::check() ? '' : 'showAlert(2)') ?>"--}}
+                                    {{--                                    onclick="<?php echo $checkBuyer ? 'showAlert(1)' : (Auth::check() ? '' : 'showAlert(2)') ?>"--}}
                             >
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
@@ -132,25 +131,27 @@
                                     <i class="item-icon fa-regular fa-user"></i>
                                     <div class="name_and_package_member">
                                         <div class="item-text">{{Auth::user()->name}}</div>
-                                        @if($company)
-                                            @php
-                                                $location = locationHelper();
-                                                $langWithLocation = 'lang_'.$locale;
-                                            @endphp
-                                            <span class="package_member d-flex"> {{__('home.Member')}} :
+                                        @if(!$isAdmin)
+                                            @if($company)
+                                                @php
+                                                    $location = locationHelper();
+                                                    $langWithLocation = 'lang_'.$locale;
+                                                @endphp
+                                                <span class="package_member d-flex"> {{__('home.Member')}} :
                                                @php $nameMember = Member::where('id',$company->member_id)->value($langWithLocation) ?? ''; @endphp
-                                                @if(locationHelper() == 'kr')
-                                                    <div class="item-text">{{ $nameMember }}</div>
-                                                @elseif(locationHelper() == 'cn')
-                                                    <div class="item-text">{{$nameMember}}</div>
-                                                @elseif(locationHelper() == 'jp')
-                                                    <div class="item-text">{{$nameMember}}</div>
-                                                @elseif(locationHelper() == 'vi')
-                                                    <div class="item-text">{{$nameMember }}</div>
-                                                @else
-                                                    <div class="item-text">{{$nameMember }}</div>
-                                                @endif
+                                                    @if(locationHelper() == 'kr')
+                                                        <div class="item-text">{{ $nameMember }}</div>
+                                                    @elseif(locationHelper() == 'cn')
+                                                        <div class="item-text">{{$nameMember}}</div>
+                                                    @elseif(locationHelper() == 'jp')
+                                                        <div class="item-text">{{$nameMember}}</div>
+                                                    @elseif(locationHelper() == 'vi')
+                                                        <div class="item-text">{{$nameMember }}</div>
+                                                    @else
+                                                        <div class="item-text">{{$nameMember }}</div>
+                                                    @endif
                                             </span>
+                                            @endif
                                         @endif
                                     </div>
 
@@ -194,71 +195,73 @@
                                         </div>
                                     </a>
 
-                                    @if(!$checkBuyer)
-                                        @php
-                                            $user = Auth::user()->id;
-                                            $role_id = DB::table('role_user')->where('user_id', $user)->get();
-                                            $isAdmin = false;
-                                            foreach ($role_id as $item) {
-                                                if ($item->role_id == 1 || $item->role_id == 2) {
-                                                    $isAdmin = true;
-                                                }
-                                            }
-                                        @endphp
-                                        @php
-                                            $locale = 'kr';
-                                            if(!$locale){
-                                                $locale == 'vn';
-                                            }
-                                            if($locale == 'null'){
-                                                $locale == 'vn';
-                                            }
-                                        @endphp
-
-                                        @php
-                                            if (Auth::check()){
-                                                $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
-                                                  $isMember = null;
-                                                if ($memberPerson){
-                                                    $member = MemberRegisterInfo::where([
-                                                        ['id', $memberPerson->member_id],
-                                                        ['status', MemberRegisterInfoStatus::ACTIVE]
-                                                    ])->first();
-                                                    if ($member){
-//                                                    if ($member->member_id == 2){
-                                                        $isMember = true;
-//                                                    }
+                                    @if(!$isAdmin)
+                                        @if(!$checkBuyer)
+                                            @php
+                                                $user = Auth::user()->id;
+                                                $role_id = DB::table('role_user')->where('user_id', $user)->get();
+                                                $isAdmin = false;
+                                                foreach ($role_id as $item) {
+                                                    if ($item->role_id == 1 || $item->role_id == 2) {
+                                                        $isAdmin = true;
                                                     }
                                                 }
-                                            }
-                                            $memberLogistic = Member::where('name', RegisterMember::LOGISTIC)->first();
-                                            $isValid = (new HomeController())->checkSellerOrAdmin();
-                                        @endphp
-                                        @if($isMember && $member->member_id == $memberLogistic->id)
-                                            <div class="drop-item">
-                                                <a href="{{ route('stand.register.member.index', $member->id) }}">{{ __('home.Shop') }}</a>
-                                            </div>
-                                        @elseif($isMember)
-                                            <div class="drop-item">
-                                                <a href="{{ route('trust.register.member.index') }}">{{ __('home.Partner List') }}</a>
-                                            </div>
-                                        @endif
+                                            @endphp
+                                            @php
+                                                $locale = 'kr';
+                                                if(!$locale){
+                                                    $locale == 'vn';
+                                                }
+                                                if($locale == 'null'){
+                                                    $locale == 'vn';
+                                                }
+                                            @endphp
 
-                                        @php
-                                            $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
-                                            $exitsMember = null;
-                                            if ($exitMemberPerson) {
-                                                $exitsMember = MemberRegisterInfo::where([
-                                                    ['id', $exitMemberPerson->member_id],
-                                                    ['status', MemberRegisterInfoStatus::INACTIVE]
-                                                ])->first();
-                                            }
-                                        @endphp
-                                        @if($exitsMember)
-                                            <div class="drop-item text-danger">
-                                                <a href="{{route('show.payment.member', $exitsMember->member)}}"
-                                                   class="text-danger">{{ __('home.Membership payment') }}</a>
-                                            </div>
+                                            @php
+                                                if (Auth::check()){
+                                                    $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                                                      $isMember = null;
+                                                    if ($memberPerson){
+                                                        $member = MemberRegisterInfo::where([
+                                                            ['id', $memberPerson->member_id],
+                                                            ['status', MemberRegisterInfoStatus::ACTIVE]
+                                                        ])->first();
+                                                        if ($member){
+    //                                                    if ($member->member_id == 2){
+                                                            $isMember = true;
+    //                                                    }
+                                                        }
+                                                    }
+                                                }
+                                                $memberLogistic = Member::where('name', RegisterMember::LOGISTIC)->first();
+                                                $isValid = (new HomeController())->checkSellerOrAdmin();
+                                            @endphp
+                                            @if($isMember && $member->member_id == $memberLogistic->id)
+                                                <div class="drop-item">
+                                                    <a href="{{ route('stand.register.member.index', $member->id) }}">{{ __('home.Shop') }}</a>
+                                                </div>
+                                            @elseif($isMember)
+                                                <div class="drop-item">
+                                                    <a href="{{ route('trust.register.member.index') }}">{{ __('home.Partner List') }}</a>
+                                                </div>
+                                            @endif
+
+                                            @php
+                                                $exitMemberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
+                                                $exitsMember = null;
+                                                if ($exitMemberPerson) {
+                                                    $exitsMember = MemberRegisterInfo::where([
+                                                        ['id', $exitMemberPerson->member_id],
+                                                        ['status', MemberRegisterInfoStatus::INACTIVE]
+                                                    ])->first();
+                                                }
+                                            @endphp
+                                            @if($exitsMember)
+                                                <div class="drop-item text-danger">
+                                                    <a href="{{route('show.payment.member', $exitsMember->member)}}"
+                                                       class="text-danger">{{ __('home.Membership payment') }}</a>
+                                                </div>
+                                            @endif
                                         @endif
                                     @endif
 
