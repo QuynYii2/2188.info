@@ -189,11 +189,20 @@
                                     <a class="signOut" href="{{ route('logout') }}">{{ __('home.Sign Out') }}</a>
                                 </div>
                                 <div class="hover-list">
-                                    <a href="{{route('seller.products.home')}}" class="none_decoration">
-                                        <div class="drop-item">
-                                            {{ __('home.manager page') }}
-                                        </div>
-                                    </a>
+                                    @if($checkBuyer)
+                                        <a href="{{route('profile.show')}}" class="none_decoration">
+                                            <div class="drop-item">
+                                                {{ __('home.profile') }}
+                                            </div>
+                                        </a>
+                                    @else
+                                        <a href="{{route('seller.products.home')}}" class="none_decoration">
+                                            <div class="drop-item">
+                                                {{ __('home.manager page') }}
+                                            </div>
+                                        </a>
+                                    @endif
+
 
                                     @if(!$isAdmin)
                                         @if(!$checkBuyer)
@@ -234,13 +243,14 @@
                                                     }
                                                 }
                                                 $memberLogistic = Member::where('name', RegisterMember::LOGISTIC)->first();
+                                                $memberTrust = Member::where('name', RegisterMember::TRUST)->first();
                                                 $isValid = (new HomeController())->checkSellerOrAdmin();
                                             @endphp
                                             @if($isMember && $member->member_id == $memberLogistic->id)
                                                 <div class="drop-item">
                                                     <a href="{{ route('stand.register.member.index', $member->id) }}">{{ __('home.Shop') }}</a>
                                                 </div>
-                                            @elseif($isMember)
+                                            @elseif($isMember && $member->member_id == $memberTrust->id)
                                                 <div class="drop-item">
                                                     <a href="{{ route('trust.register.member.index') }}">{{ __('home.Partner List') }}</a>
                                                 </div>
