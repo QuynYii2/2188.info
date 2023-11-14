@@ -270,12 +270,14 @@ class HomeController extends Controller
 
     public function checkAdmin()
     {
-        $user = Auth::user()->id;
-        $role_id = DB::table('role_user')->where('user_id', $user)->get();
         $isAdmin = false;
-        foreach ($role_id as $item) {
-            if ($item->role_id == 1) {
-                $isAdmin = true;
+        if (Auth::check()) {
+            $user = Auth::user()->id;
+            $role_id = DB::table('role_user')->where('user_id', $user)->get();
+            foreach ($role_id as $item) {
+                if ($item->role_id == 1) {
+                    $isAdmin = true;
+                }
             }
         }
         return $isAdmin;
