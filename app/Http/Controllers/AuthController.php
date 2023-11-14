@@ -103,10 +103,10 @@ class AuthController extends Controller
 
         $locale = app()->getLocale();
 
+        $isAdmin = false;
         if ($user) {
             $role_id = DB::table('role_user')->where('user_id', $user->id)->get();
 
-            $isAdmin = false;
             foreach ($role_id as $item) {
                 if ($item->role_id == 1) {
                     $isAdmin = true;
@@ -134,6 +134,10 @@ class AuthController extends Controller
                 ])->first();
                 if ($member) {
                     $isMember = true;
+                }
+
+                if ($isAdmin == true) {
+                    return redirect()->route('seller.products.home');
                 }
 
                 if ($isMember && $member->member_id == $memberLogistic->id) {

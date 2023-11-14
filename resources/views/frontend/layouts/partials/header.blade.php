@@ -188,7 +188,7 @@
                                     <a class="signOut" href="{{ route('logout') }}">{{ __('home.Sign Out') }}</a>
                                 </div>
                                 <div class="hover-list">
-                                    <a href="{{route('profile.show')}}" class="none_decoration">
+                                    <a href="{{route('seller.products.home')}}" class="none_decoration">
                                         <div class="drop-item">
                                             {{ __('home.manager page') }}
                                         </div>
