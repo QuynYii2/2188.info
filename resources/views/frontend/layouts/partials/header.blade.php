@@ -189,7 +189,7 @@
                                     <a class="signOut" href="{{ route('logout') }}">{{ __('home.Sign Out') }}</a>
                                 </div>
                                 <div class="hover-list">
-                                    @if($checkBuyer)
+                                    @if($checkBuyer || $checkTrust)
                                         <a href="{{route('profile.show')}}" class="none_decoration">
                                             <div class="drop-item">
                                                 {{ __('home.profile') }}
