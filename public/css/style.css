@@ -4,6 +4,14 @@ a {
   cursor: pointer;
 }
 
+.bg-main {
+  background: var(--secon-1, #F47621) !important;
+}
+
+.text-main {
+  color: var(--secon-1, #F47621) !important;
+}
+
 #detail-product .toggleBtn {
   width: 130px;
   background: #fd6506;
@@ -756,8 +764,8 @@ body {
 }
 body .background-login {
   background-image: url("../images/img/cart-page/bg-login.jpg");
-  background-size: 100%;
-  background-repeat: round;
+  background-size: cover;
+  background-repeat: no-repeat;
   min-height: 100%;
 }
 
@@ -3072,10 +3080,6 @@ hr {
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
-}
-
-.text-success {
-  height: 250px;
 }
 
 .category-list .item-body {
