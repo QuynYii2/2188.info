@@ -84,7 +84,7 @@
             </ul>
         </li>
         @if($isMember)
-            @if($isLogistic)
+            @if($isAdmin || $isLogistic)
                 <li>
                     <a class="sidebar item" href='#'><i class="fa-solid fa-truck"></i> {{ __('home.vận chuyển') }}</a>
                     <ul class='sub-items pl-3'>
