@@ -173,9 +173,9 @@
                 document.getElementById('p-table').innerHTML = '';
                 document.getElementById('c-table').innerHTML = '';
                 document.getElementById('title-div').style.display = 'none';
-                makeHTMLFromJson(data);
+                await makeHTMLFromJson(data);
 
-                setTextButton(ID_MASTER);
+                await setTextButton(ID_MASTER);
 
                 if (isCallback) {
                     const addIn4 = {
@@ -184,7 +184,7 @@
                         name: name,
                         data_num: '',
                     };
-                    checkKeyArrMap(addIn4);
+                    await checkKeyArrMap(addIn4);
                 }
 
             }
@@ -206,18 +206,18 @@
             }
         }
 
-        function createOrEditRegion(code, name, mode, element, index) {
+        async function createOrEditRegion(code, name, mode, element, index) {
 
             modeForAppend = mode;
             elementForAppend = element;
             indexForAppend = index;
 
-            resetFormModal();
+            await resetFormModal();
             document.getElementById('up_name').value = name;
             document.getElementById('up_code').value = code;
             document.getElementById('mode').value = mode;
             if (mode == MODE_EDIT) {
-                getById(code);
+                await getById(code);
             }
             if (mode == MODE_CREATE && !code && !name) {
                 if (isFirst) {
@@ -239,7 +239,7 @@
                 url = url.replace(':code', code);
             }
             let result = await fetch(url);
-            duyetTheTr(data_num);
+            await duyetTheTr(data_num);
 
             if (result.ok) {
                 isFirst = false;
@@ -251,10 +251,10 @@
                     document.getElementById('title-div').style.display = 'block';
                     document.getElementById('title-main').innerHTML = name;
                 }
-                makeHTMLFromJson(data);
+                await makeHTMLFromJson(data);
                 checkLevel++;
                 index_main++;
-                setTextButton(ID_CHILD);
+                await setTextButton(ID_CHILD);
 
                 if (isCallback) {
                     const addIn4 = {
@@ -263,13 +263,13 @@
                         name: name,
                         data_num: data_num,
                     };
-                    checkKeyArrMap(addIn4);
+                    await checkKeyArrMap(addIn4);
                 }
 
             }
         }
 
-        function duyetTheTr(index) {
+        async function duyetTheTr(index) {
             let i = ++index;
             let checkindex = 0;
             do {
@@ -294,11 +294,11 @@
             let result = await fetch(url);
             if (result.ok) {
                 const data = await result.json();
-                loadDataToModal(data);
+                await loadDataToModal(data);
             }
         }
 
-        function loadDataToModal(data) {
+        async function loadDataToModal(data) {
             document.getElementById('up_name').value = data.name;
             document.getElementById('name_en').value = data.name_en;
             document.getElementById('name').value = data.name;
@@ -306,15 +306,15 @@
             document.getElementsByName('status').value = data.status;
         }
 
-        function resetFormModal() {
+        async function resetFormModal() {
             document.getElementById('form-modify-address').reset();
         }
 
-        function makeHTMLFromJson(data) {
+        async function makeHTMLFromJson(data) {
             const isTable = checkLevel == 1;
             let str = '';
 
-            data.forEach((pItem, index) => {
+            await data.forEach((pItem, index) => {
                 const classTh = index % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
                 const classTd = index % 2 == 0 ? 'bg-color-td2' : 'bg-color-td1';
 
@@ -370,12 +370,12 @@
             });
             if (result.ok) {
                 isCallback = false;
-                handleAfterCreateOrEdit();
+                await handleAfterCreateOrEdit();
                 isCallback = true;
             }
         }
 
-        function setTextButton(id) {
+        async function setTextButton(id) {
             let textBtnMod2 = '';
             let textButton_create_region = '';
             switch (id) {
@@ -389,15 +389,15 @@
                     break;
             }
             document.getElementById('btnMod2').textContent = textBtnMod2
-            document.querySelectorAll('.button-create-region').forEach((element) => {
+            await document.querySelectorAll('.button-create-region').forEach((element) => {
                 element.textContent = textButton_create_region;
             });
         }
 
-        function handleAfterCreateOrEdit() {
+        async function handleAfterCreateOrEdit() {
             document.getElementById('p-table').innerHTML = '';
             document.getElementById('c-table').innerHTML = '';
-            arrAddress2.forEach((value) => {
+            await arrAddress2.forEach((value) => {
                 checkLevel = value.level - 1;
                 if (value.code) {
                     getListAddressChild(value.code, value.name, value.data_num);
@@ -407,11 +407,11 @@
             });
         }
 
-        function checkKeyArrMap(input) {
+        async function checkKeyArrMap(input) {
             let keyInput = input.code;
             let lengthKeyInput = keyInput.length;
 
-            arrAddress2.forEach((value, key) => {
+            await arrAddress2.forEach((value, key) => {
                 if (key >= lengthKeyInput) {
                     arrAddress2.splice(key, 1);
                 }

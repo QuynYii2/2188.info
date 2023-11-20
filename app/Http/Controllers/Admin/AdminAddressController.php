@@ -189,7 +189,23 @@ class AdminAddressController extends Controller
 
     public function getById($id)
     {
-        $address = Address::find($id);
+        $address = Address::where('id', '=', $id)
+            ->orderBy('sort_index', 'asc')
+            ->cursor()
+            ->map(function ($state) {
+                $cities = Address::where('code', 'like', $state->code . '!__')
+                    ->orderBy('sort_index', 'asc')
+                    ->get();
+
+                return [
+                    'name' => $state->name,
+                    'code' => $state->code,
+                    'name_en' => $state->name_en,
+                    'total_child' => $cities->count(),
+                    'child' => $cities->toArray(),
+                ];
+            });
+
         return response()->json($address);
     }
 }
