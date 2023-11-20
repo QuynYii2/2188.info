@@ -1,5 +1,56 @@
-php artisan make:enum Contains
-you must copy (1), (2), (3) to Contains enum file
-(1) const URL_INSERT_USER =  '';
-(2) const URL_INSERT_USER_LOCAL =  '';
-(3) const PASSWORD_DEFAULT =  '123123';
+<?php
+
+namespace App\Enums;
+
+use BenSampo\Enum\Enum;
+
+final class Contains extends Enum
+{
+    const URL_INSERT_USER = 'http://xilaisong.com/User/GetAll.aspx';
+    const URL_INSERT_USER_LOCAL = 'http://localhost:3646/User/GetAll.aspx';
+    /**/
+    const PASSWORD_DEFAULT = '123456';
+    /**/
+    const LOCALHOST_5001 = 'https://localhost:5001/';
+    const LOCALHOST_44369 = 'https://localhost:44369/';
+    const SHIP_GO = 'https://shipgo.biz/';
+    /**/
+    const URL_GET_ALL_CATEGORY_SHIP_GO = 'https://shipgo.biz/api/product/list';
+    const URL_GET_ALL_CATEGORY_SHIP_GO_LOCAL = 'https://localhost:5001/api/product/list';
+    /**/
+    const URL_GET_PRODUCT_BY_CATEGORY_SHIP_GO = 'https://shipgo.biz/api/product/category';
+    const URL_GET_PRODUCT_BY_CATEGORY_SHIP_GO_LOCAL = 'https://localhost:5001/api/product/category';
+    /**/
+    const URL_GET_ALL_PRODUCT_SHIP_GO = 'https://shipgo.biz/api/product/list-product';
+    const URL_GET_ALL_PRODUCT_SHIP_GO_LOCAL = 'https://localhost:5001/api/product/list-product';
+    /**/
+    const URL_GET_ALL_PRODUCT_SHIP_GO_ACTIVE = 'https://shipgo.biz/api/product/list-product-active';
+    const URL_GET_ALL_PRODUCT_SHIP_GO_LOCAL_ACTIVE = 'https://localhost:5001/api/product/list-product-active';
+
+    /* Get product picture(thumbnail) by productID*/
+    const URL_GET_ALL_PRODUCT_SHIP_GO_PICTURE = 'https://shipgo.biz/api/product/picture';
+    const URL_GET_ALL_PRODUCT_SHIP_GO_LOCAL_PICTURE = 'https://localhost:5001/api/product/picture';
+
+    /* Get all product picture(gallery) by productID*/
+    const URL_GET_ALL_PRODUCT_SHIP_GO_PICTURES = 'https://shipgo.biz/api/product/list-picture';
+    const URL_GET_ALL_PRODUCT_SHIP_GO_LOCAL_PICTURES = 'https://localhost:5001/api/product/list-picture';
+
+    /* Get product picture url by pictureID*/
+    const URL_GET_ALL_PRODUCT_SHIP_GO_PICTURES_DETAIL = 'https://shipgo.biz/api/product/pic-binary';
+    const URL_GET_ALL_PRODUCT_SHIP_GO_LOCAL_PICTURES_DETAIL = 'https://localhost:5001/api/product/pic-binary';
+
+    /* Get all attribute from shipgo*/
+    const URL_GET_ALL_ATTRIBUTE_SHIP_GO = 'https://shipgo.biz/api/product/attributes';
+    const URL_GET_ALL_ATTRIBUTE_SHIP_GO_LOCAL = 'https://localhost:5001/api/product/attributes';
+
+    /* Get product attribute by productID*/
+    const URL_GET_ALL_PRODUCT_ATTRIBUTE_SHIP_GO = 'https://shipgo.biz/api/product/product-attributes';
+    const URL_GET_ALL_PRODUCT_ATTRIBUTE_SHIP_GO_LOCAL = 'https://localhost:5001/api/product/product-attributes';
+
+    /* Get product attribute value by productAttributeID*/
+    const URL_GET_ALL_PRODUCT_ATTRIBUTE_VALUE_SHIP_GO = 'https://shipgo.biz/api/product/product-attribute-value';
+    const URL_GET_ALL_PRODUCT_ATTRIBUTE_VALUE_SHIP_GO_LOCAL = 'https://localhost:5001/api/product/product-attribute-value';
+
+    /* KEY LAZADA*/
+    const KEY_LAZADA= '79b4b17bc4msh2cb9dbaadc30462p1f029ajsn6d21b28fc4af';
+}
