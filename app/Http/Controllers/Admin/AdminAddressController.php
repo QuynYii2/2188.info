@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\HomeController;
-use App\Http\Controllers\TranslateController;
 use App\Models\Address;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +31,7 @@ class AdminAddressController extends Controller
             });
         return response()->json($listAddress);
     }
+
     public function showRegion($code)
     {
         $listAddress = Address::where('code', 'like', $code . '!__')
@@ -65,6 +65,7 @@ class AdminAddressController extends Controller
                     ->get();
 
                 return [
+                    'id' => $state->id,
                     'name' => $state->name,
                     'code' => $state->code,
                     'name_en' => $state->name_en,
@@ -180,11 +181,15 @@ class AdminAddressController extends Controller
 
     public function delete($id)
     {
-        $address = Address::find($id);
-        $delete = Address::where('id', $id)->delete();
-        Address::where('code', '=', $address->code)
-            ->orWhere('code', 'like', $address->code . '%')->delete();
-        return back();
+        try {
+            $address = Address::find($id);
+            Address::where('id', $id)->delete();
+            Address::where('code', '=', $address->code)
+                ->orWhere('code', 'like', $address->code . '%')->delete();
+            return response('delete success!', 200);
+        } catch (\Exception $exception) {
+            return response($exception, 400);
+        }
     }
 
     public function getById($id)

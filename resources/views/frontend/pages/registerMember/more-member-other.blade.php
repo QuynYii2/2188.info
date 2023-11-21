@@ -18,10 +18,18 @@
     }
 
 @endphp
-<table class=" element-bordered" align="center" id="tableMemberOther">
 <table class="table element-bordered" id="tableMemberOther">
-    <form action="{{route('register.member.info')}}" method="post" id="formRegisterMember">
-        @csrf
+    @if(isset($isAdminUpdate))
+        <form action="{{route('admin.edit.users.company', $isAdminUpdate->id)}}" method="post" id="formRegisterMember">
+            @csrf
+            @method('PUT')
+    @else
+        <form action="{{route('register.member.info')}}" method="post" id="formRegisterMember">
+            @csrf
+    @endif
+        @isset($isAdminUpdate)
+            <input type="text" class="d-none" name="updateCheck" value="updateCheck">
+        @endisset
         <input type="text" class="d-none" name="member_id" value="{{ $member->id }}">
         <input type="text" class="d-none" name="member" value="{{ ($member->name) }}">
         <div class="d-none" id="text-category">{{ __('home.Select the applicable category') }}</div>
@@ -566,4 +574,3 @@
         }
     })
 </script>
-
