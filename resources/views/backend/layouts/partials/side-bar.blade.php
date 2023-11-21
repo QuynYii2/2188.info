@@ -160,7 +160,8 @@
                         @endif
 
                         <li>
-                            <a class="sidebarUrl" href="{{route('seller.vouchers.list')}}">{{ __('home.Mã Giảm Giá') }}</a>
+                            <a class="sidebarUrl"
+                               href="{{route('seller.vouchers.list')}}">{{ __('home.Mã Giảm Giá') }}</a>
                         </li>
                         <li>
                             <a class="sidebarUrl"
@@ -199,7 +200,8 @@
                 </li>
                 @if(!$check_ctv_shop)
                     <li>
-                        <a class="sidebar item" href='#'><i class="fa-solid fa-chart-line"></i> {{ __('home.Dữ Liệu') }}</a>
+                        <a class="sidebar item" href='#'><i class="fa-solid fa-chart-line"></i> {{ __('home.Dữ Liệu') }}
+                        </a>
                         <ul class='sub-items pl-3'>
                             <li><a class="sidebarUrl" href="#!">{{ __('home.Phân Tích Bán Hàng') }}</a>
                             </li>
@@ -262,7 +264,8 @@
                         <li>
                         <li><a class="sidebarUrl"
                                href="{{route('seller.evaluates.index')}}">{{ __('home.Quản lí bình luận') }}</a></li>
-                        <li><a class="sidebarUrl" href="{{ route('profile.shop.index') }}">{{ __('home.Hồ Sơ Shop') }}</a>
+                        <li><a class="sidebarUrl"
+                               href="{{ route('profile.shop.index') }}">{{ __('home.Hồ Sơ Shop') }}</a>
                         </li>
                         <li><a class="sidebarUrl" href="#">{{ __('home.Trang Trí Shop') }}</a>
                         </li>
@@ -290,7 +293,8 @@
                     </ul>
                 </li>
                 <li>
-                    <a class="sidebar item" href='#'><i class="fa-solid fa-gear"></i> {{ __('home.Thiết Lập Shop') }}</a>
+                    <a class="sidebar item" href='#'><i class="fa-solid fa-gear"></i> {{ __('home.Thiết Lập Shop') }}
+                    </a>
                     <ul class='sub-items pl-3'>
                         <li><a class="sidebarUrl" class="sidebarFUrl"
                                href="{{ route('setting.shop.index') }}">{{ __('home.Cấu hình chung') }}</a>
@@ -331,25 +335,25 @@
                     </ul>
                 </li>
             @endif
-            @if(!$isAdmin)
-                <li>
-                    <a class="sidebar item" href='#'><i
-                                class="fa-solid fa-sitemap"></i> {{ __('home.Quản lý thông tin') }}
-                    </a>
-                    <ul class='sub-items pl-3'>
-                        <li><a class="sidebarUrl" href="{{route('member.info')}}">{{ __('home.Quản lý thông tin') }}</a>
-                        </li>
-                        <li><a class="sidebarUrl"
-                               href="{{route('profile.member.person')}}">{{ __('home.Registrator Information') }}</a>
-                        </li>
-                        <li><a class="sidebarUrl"
-                               href="{{route('profile.member.represent')}}">{{ __('home.Representative Information') }}</a>
-                        </li>
-                        <li><a class="sidebarUrl"
-                               href="{{route('profile.member.ship', $memberId)}}">{{ __('home.Staffs Information') }}</a>
-                        </li>
-                    </ul>
-                </li>
+            @if($isMember)
+                    <li>
+                        <a class="sidebar item" href='#'><i
+                                    class="fa-solid fa-sitemap"></i> {{ __('home.Quản lý thông tin') }}
+                        </a>
+                        <ul class='sub-items pl-3'>
+                            <li><a class="sidebarUrl" href="{{route('member.info')}}">{{ __('home.Quản lý thông tin') }}</a>
+                            </li>
+                            <li><a class="sidebarUrl"
+                                   href="{{route('profile.member.person')}}">{{ __('home.Registrator Information') }}</a>
+                            </li>
+                            <li><a class="sidebarUrl"
+                                   href="{{route('profile.member.represent')}}">{{ __('home.Representative Information') }}</a>
+                            </li>
+                            <li><a class="sidebarUrl"
+                                   href="{{route('profile.member.ship', $memberId)}}">{{ __('home.Staffs Information') }}</a>
+                            </li>
+                        </ul>
+                    </li>
             @endif
         @endif
     </ul>
