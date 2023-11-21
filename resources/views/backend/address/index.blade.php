@@ -66,7 +66,7 @@
                 <tr>
                     <th>
                         <button id="btnMod2" name="btnMod2" class="sky"
-                                onclick="createOrEditRegion('','', `${MODE_CREATE}`, `${elementTh}`, -1)"
+                                onclick="createOrEditRegion('','', `${MODE_CREATE}`, `${elementTh}`, -1, 0)"
                                 data-toggle="modal" data-target="#createRegion"
                                 style="margin-top:0; width:230px;">+ {{ __('home.Add continent') }}
                         </button>
@@ -83,9 +83,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Add region') }}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <div id="showBtnDeleteOrClose">
+
+                    </div>
                 </div>
                 <form id="form-modify-address">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -206,26 +206,38 @@
             }
         }
 
-        async function createOrEditRegion(code, name, mode, element, index) {
+        async function createOrEditRegion(code, name, mode, element, index, id) {
 
             modeForAppend = mode;
             elementForAppend = element;
             indexForAppend = index;
 
             await resetFormModal();
-            document.getElementById('up_name').value = name;
-            document.getElementById('up_code').value = code;
-            document.getElementById('mode').value = mode;
+
+            // document.getElementById('up_name').value = name;
+            // document.getElementById('up_code').value = code;
+            // document.getElementById('mode').value = mode;
+
+            $('#up_name').val(name)
+            $('#up_code').val(code)
+            $('#mode').val(mode)
+
             if (mode == MODE_EDIT) {
                 await getById(code);
+                await renderListBtn(code)
             }
             if (mode == MODE_CREATE && !code && !name) {
                 if (isFirst) {
                     nation_name = '';
                     nation_code = '';
                 }
+
                 document.getElementById('up_name').value = nation_name;
                 document.getElementById('up_code').value = nation_code;
+
+                document.getElementById('showBtnDeleteOrClose').innerHTML = '';
+            } else {
+                await renderListBtn(id);
             }
         }
 
@@ -293,7 +305,8 @@
             url = url.replace(':id', id);
             let result = await fetch(url);
             if (result.ok) {
-                const data = await result.json();
+                let data = await result.json();
+                data = data[0];
                 await loadDataToModal(data);
             }
         }
@@ -320,7 +333,8 @@
 
                 str += `<tr data-num="${index_main}"><th class="cont ${classTh} "><div class="text-center"><span class="cursor-pointer">${pItem.name_en ?? pItem.name ?? ''}</span></div>
                                     <div class="mt5 text-center"><span class="minBtn ml20"> <span class="cursor-pointer button-create-region"
-                                                                                                             onclick="createOrEditRegion('${pItem.code}','${pItem.name_en ?? pItem.name}', '${MODE_CREATE}', '${elementTd}', '${index}' )"
+                                                                                                            data-id="'${pItem.id}'"
+                                                                                                             onclick="createOrEditRegion('${pItem.code}','${pItem.name_en ?? pItem.name}', '${MODE_CREATE}', '${elementTd}', '${index}' , '${pItem.id}')"
                                                                                                              data-toggle="modal" data-target="#createRegion">{{ __('home.Add nation') }}</span></span>
                                     </div>
                                 </th>`
@@ -335,7 +349,7 @@
                             class="tit cursor-pointer" data-num="${index_main}"
                             onclick="getListAddressChild('${cItem.code}', '${cItem.name_en ?? cItem.name ?? ''}', ${index_main})">${cItem.name_en ?? ''} ${cItem.name ?? ''}</span>
                      <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion"
-                    onclick="createOrEditRegion('${cItem.id}','${cItem.name_en ?? cItem.name}', '${MODE_EDIT}', '${elementTd}', '${index}')">▤</span>
+                    onclick="createOrEditRegion('${cItem.id}','${cItem.name_en ?? cItem.name}', '${MODE_EDIT}', '${elementTd}', '${index}', '${cItem.id}')">▤</span>
                     </span>`
                     })
                     str += `</td>`;
@@ -417,6 +431,43 @@
                 }
             });
             arrAddress2[keyInput.length] = input;
+        }
+
+        async function renderListBtn(id) {
+            let html = `<button type="button" class="btn btn-danger"
+                                onclick="deleteAddress(${id})">{{ __('home.Delete') }}</button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>`;
+            document.getElementById('showBtnDeleteOrClose').innerHTML = html;
+        }
+
+        async function deleteAddress(id) {
+            const data = {
+                _token: `{{ csrf_token() }}`,
+            };
+
+            let url = `{{ route('admin.address.delete', ['id'=> ':id']) }}`;
+            url = url.replace(':id', id)
+
+            fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then((response) => {
+                    console.log(response);
+                    if (response.status == 200) {
+                        alert("Delete Success!")
+                        // getListAddress();
+                        window.location.reload();
+                    } else {
+                        alert("Delete Error!")
+                    }
+                })
+                .catch(error => console.log(error));
         }
     </script>
 @endsection
