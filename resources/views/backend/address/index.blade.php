@@ -1,5 +1,7 @@
 @extends('backend.layouts.master')
-
+@section('title')
+    Address Management
+@endsection
 @section('content')
     <style>
         .nation {
@@ -413,10 +415,12 @@
             document.getElementById('c-table').innerHTML = '';
             await arrAddress2.forEach((value) => {
                 checkLevel = value.level - 1;
-                if (value.code) {
-                    getListAddressChild(value.code, value.name, value.data_num);
-                } else if (checkLevel == 0) {
+                console.log(checkLevel);
+                if (checkLevel == 0) {
                     getListAddress();
+                } else {
+                    // if (value.code)
+                    getListAddressChild(value.code, value.name, value.data_num);
                 }
             });
         }
