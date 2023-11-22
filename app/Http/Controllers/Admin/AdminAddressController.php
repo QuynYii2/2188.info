@@ -82,12 +82,11 @@ class AdminAddressController extends Controller
         switch ($request->input('mode')) {
             case 'create':
                 return $this->create($request);
-                break;
             case 'edit':
                 return $this->update($request);
-                break;
+            default:
+                return back();
         }
-        return back();
     }
 
     public function create($request)
