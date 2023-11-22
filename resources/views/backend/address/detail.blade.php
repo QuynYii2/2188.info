@@ -1,5 +1,7 @@
 @extends('backend.layouts.master')
-
+@section('title')
+     Detail
+@endsection
 @section('content')
     <style>
         .nation {
@@ -48,11 +50,9 @@
             color: grey;
         }
     </style>
-
     <div class="jumbotron jumbotron-fluid" id="title-div" style="display: none">
         <div class="container">
-            <h1 class="title-main cursor-pointer" id="title-main"
-                onclick="getListAddress()">{{ __('home.Address management ') }}</h1>
+            <h1 class="title-main cursor-pointer" id="title-main">{{ __('home.Address management ') }}</h1>
         </div>
     </div>
     <div class="card">
@@ -146,7 +146,7 @@
         </div>
     </div>
     <script>
-        getListAddress();
+
         let checkLevel = 1;
         let index_main = 1;
         let nation_code = nation_name = '';
