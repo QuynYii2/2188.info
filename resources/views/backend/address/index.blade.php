@@ -385,8 +385,7 @@
                 body: formData
             });
             if (result.ok) {
-                /* Change test second */
-                // isCallback = false;
+                isCallback = false;
                 await handleAfterCreateOrEdit();
                 isCallback = true;
             }
@@ -414,35 +413,18 @@
         async function handleAfterCreateOrEdit() {
             document.getElementById('p-table').innerHTML = '';
             document.getElementById('c-table').innerHTML = '';
-            /* Change test first */
-            console.log(arrAddress2);
-            arrAddress2 = arrAddress2.filter(function (el) {
-                return el != null;
-            });
-            console.log(arrAddress2);
             await arrAddress2.forEach((value) => {
                 checkLevel = value.level - 1;
-                console.log(value)
-                console.log(checkLevel);
-                if (checkLevel == 0) {
-                    getListAddress();
-                } else {
-                    // if (value.code)
+                if (value.code) {
+                    console.log("exit code: ",value)
+
                     getListAddressChild(value.code, value.name, value.data_num);
+                } else if (checkLevel == 0) {
+                    console.log("level 0: ",value)
+
+                    getListAddress();
                 }
             });
-
-            // for (let i = 0; i < arrAddress2.length; i++) {
-            //     let value = arrAddress2[i];
-            //     console.log(value)
-            //     checkLevel = value.level - 1;
-            //     console.log(checkLevel);
-            //     if (checkLevel == 0) {
-            //         await getListAddress();
-            //     } else {
-            //         await getListAddressChild(value.code, value.name, value.data_num);
-            //     }
-            // }
         }
 
         async function checkKeyArrMap(input) {
