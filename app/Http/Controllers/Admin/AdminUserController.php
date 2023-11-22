@@ -28,7 +28,7 @@ class AdminUserController extends Controller
     public function listUser(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $users = User::paginate(10);
+        $users = User::orderBy('id','desc')->paginate(10);
         $members = Member::where('status', MemberStatus::ACTIVE)->get();
         $roles = Role::all();
         $categories = Category::all();

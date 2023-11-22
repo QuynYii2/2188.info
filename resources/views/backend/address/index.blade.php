@@ -416,10 +416,6 @@
             document.getElementById('c-table').innerHTML = '';
             /* Change test first */
             console.log(arrAddress2);
-            arrAddress2 = arrAddress2.filter(function (el) {
-                return el != null;
-            });
-            console.log(arrAddress2);
             await arrAddress2.forEach((value) => {
                 checkLevel = value.level - 1;
                 console.log(value)
@@ -431,18 +427,6 @@
                     getListAddressChild(value.code, value.name, value.data_num);
                 }
             });
-
-            // for (let i = 0; i < arrAddress2.length; i++) {
-            //     let value = arrAddress2[i];
-            //     console.log(value)
-            //     checkLevel = value.level - 1;
-            //     console.log(checkLevel);
-            //     if (checkLevel == 0) {
-            //         await getListAddress();
-            //     } else {
-            //         await getListAddressChild(value.code, value.name, value.data_num);
-            //     }
-            // }
         }
 
         async function checkKeyArrMap(input) {
