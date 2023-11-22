@@ -1,5 +1,7 @@
 @extends('backend.layouts.master')
-
+@section('title')
+    Address Management
+@endsection
 @section('content')
     <style>
         .nation {
@@ -153,7 +155,7 @@
         let elementTh = 'th';
         let elementTd = 'td';
         let modeForAppend = elementForAppend = indexForAppend = ''
-        let arrAddress2 = new Array();
+        let arrAddress2 = [];
         const ID_MASTER = 1;
         const ID_CHILD = 2;
         let isFirst = true;

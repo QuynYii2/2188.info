@@ -155,7 +155,7 @@
         let elementTh = 'th';
         let elementTd = 'td';
         let modeForAppend = elementForAppend = indexForAppend = ''
-        let arrAddress2 = new Array();
+        let arrAddress2 = [];
         const ID_MASTER = 1;
         const ID_CHILD = 2;
         let isFirst = true;
@@ -385,7 +385,8 @@
                 body: formData
             });
             if (result.ok) {
-                isCallback = false;
+                /* Change test second */
+                // isCallback = false;
                 await handleAfterCreateOrEdit();
                 isCallback = true;
             }
@@ -413,6 +414,8 @@
         async function handleAfterCreateOrEdit() {
             document.getElementById('p-table').innerHTML = '';
             document.getElementById('c-table').innerHTML = '';
+            /* Change test first */
+            console.log(arrAddress2);
             await arrAddress2.forEach((value) => {
                 checkLevel = value.level - 1;
                 console.log(checkLevel);
@@ -423,6 +426,7 @@
                     getListAddressChild(value.code, value.name, value.data_num);
                 }
             });
+            arrAddress2 = [];
         }
 
         async function checkKeyArrMap(input) {

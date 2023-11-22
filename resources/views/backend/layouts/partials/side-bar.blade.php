@@ -40,7 +40,7 @@
      }
 
      $isLogistic = false;
-     if ($isMember && $member->id == $memberLogistic->id){
+     if ($isMember && $member->member_id == $memberLogistic->id){
          $isLogistic = true;
      }
 
@@ -335,26 +335,24 @@
                     </ul>
                 </li>
             @endif
-            @if($isMember)
-                    <li>
-                        <a class="sidebar item" href='#'><i
-                                    class="fa-solid fa-sitemap"></i> {{ __('home.Quản lý thông tin') }}
-                        </a>
-                        <ul class='sub-items pl-3'>
-                            <li><a class="sidebarUrl" href="{{route('member.info')}}">{{ __('home.Quản lý thông tin') }}</a>
-                            </li>
-                            <li><a class="sidebarUrl"
-                                   href="{{route('profile.member.person')}}">{{ __('home.Registrator Information') }}</a>
-                            </li>
-                            <li><a class="sidebarUrl"
-                                   href="{{route('profile.member.represent')}}">{{ __('home.Representative Information') }}</a>
-                            </li>
-                            <li><a class="sidebarUrl"
-                                   href="{{route('profile.member.ship', $memberId)}}">{{ __('home.Staffs Information') }}</a>
-                            </li>
-                        </ul>
+            <li>
+                <a class="sidebar item" href='#'><i
+                            class="fa-solid fa-sitemap"></i> {{ __('home.Quản lý thông tin') }}
+                </a>
+                <ul class='sub-items pl-3'>
+                    <li><a class="sidebarUrl" href="{{route('member.info')}}">{{ __('home.Quản lý thông tin') }}</a>
                     </li>
-            @endif
+                    <li><a class="sidebarUrl"
+                           href="{{route('profile.member.person')}}">{{ __('home.Registrator Information') }}</a>
+                    </li>
+                    <li><a class="sidebarUrl"
+                           href="{{route('profile.member.represent')}}">{{ __('home.Representative Information') }}</a>
+                    </li>
+                    <li><a class="sidebarUrl"
+                           href="{{route('profile.member.ship', $memberId)}}">{{ __('home.Staffs Information') }}</a>
+                    </li>
+                </ul>
+            </li>
         @endif
     </ul>
 </div>
