@@ -423,7 +423,7 @@
             });
             console.log(filtered)
 
-            await getListAddress();
+            // await getListAddress();
 
             // if (filtered.length > 1) {
             //     filtered.forEach(value => {
@@ -442,6 +442,8 @@
                         if (value.code) {
                             console.log("exit code: ", value)
                             getListAddressChild(value.code, value.name, value.data_num);
+                        } else if (checkLevel == 0) {
+                            getListAddress();
                         }
                     })
                     myResolve('Success!')
