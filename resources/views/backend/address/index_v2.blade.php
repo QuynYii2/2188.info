@@ -175,9 +175,9 @@
                 document.getElementById('p-table').innerHTML = '';
                 document.getElementById('c-table').innerHTML = '';
                 document.getElementById('title-div').style.display = 'none';
-                await makeHTMLFromJson(data);
+                makeHTMLFromJson(data);
 
-                await setTextButton(ID_MASTER);
+                setTextButton(ID_MASTER);
 
                 if (isCallback) {
                     const addIn4 = {
@@ -186,7 +186,7 @@
                         name: name,
                         data_num: '',
                     };
-                    await checkKeyArrMap(addIn4);
+                    checkKeyArrMap(addIn4);
                 }
 
             }
@@ -208,13 +208,13 @@
             }
         }
 
-        async function createOrEditRegion(code, name, mode, element, index, id) {
+        function createOrEditRegion(code, name, mode, element, index, id) {
 
             modeForAppend = mode;
             elementForAppend = element;
             indexForAppend = index;
 
-            await resetFormModal();
+            resetFormModal();
 
             // document.getElementById('up_name').value = name;
             // document.getElementById('up_code').value = code;
@@ -225,8 +225,8 @@
             $('#mode').val(mode)
 
             if (mode == MODE_EDIT) {
-                await getById(code);
-                await renderListBtn(code)
+                getById(code);
+                renderListBtn(code)
             }
             if (mode == MODE_CREATE && !code && !name) {
                 if (isFirst) {
@@ -239,21 +239,24 @@
 
                 document.getElementById('showBtnDeleteOrClose').innerHTML = '';
             } else {
-                await renderListBtn(id);
+                renderListBtn(id);
             }
         }
 
         async function getListAddressChild(code, name, data_num) {
             let url = '';
+            console.log(checkLevel);
             if (checkLevel == 1) {
+                console.log('region');
                 url = '{{ route('admin.address.show.region', ['code' => ':code']) }}';
                 url = url.replace(':code', code);
             } else {
+                console.log('default')
                 url = '{{ route('admin.address.show', ['code' => ':code']) }}';
                 url = url.replace(':code', code);
             }
             let result = await fetch(url);
-            await duyetTheTr(data_num);
+            duyetTheTr(data_num);
 
             if (result.ok) {
                 isFirst = false;
@@ -265,10 +268,10 @@
                     document.getElementById('title-div').style.display = 'block';
                     document.getElementById('title-main').innerHTML = name;
                 }
-                await makeHTMLFromJson(data);
+                makeHTMLFromJson(data);
                 checkLevel++;
                 index_main++;
-                await setTextButton(ID_CHILD);
+                setTextButton(ID_CHILD);
 
                 if (isCallback) {
                     const addIn4 = {
@@ -277,13 +280,13 @@
                         name: name,
                         data_num: data_num,
                     };
-                    await checkKeyArrMap(addIn4);
+                    checkKeyArrMap(addIn4);
                 }
 
             }
         }
 
-        async function duyetTheTr(index) {
+        function duyetTheTr(index) {
             let i = ++index;
             let checkindex = 0;
             do {
@@ -309,11 +312,11 @@
             if (result.ok) {
                 let data = await result.json();
                 data = data[0];
-                await loadDataToModal(data);
+                loadDataToModal(data);
             }
         }
 
-        async function loadDataToModal(data) {
+        function loadDataToModal(data) {
             document.getElementById('up_name').value = data.name;
             document.getElementById('name_en').value = data.name_en;
             document.getElementById('name').value = data.name;
@@ -321,15 +324,15 @@
             document.getElementsByName('status').value = data.status;
         }
 
-        async function resetFormModal() {
+        function resetFormModal() {
             document.getElementById('form-modify-address').reset();
         }
 
-        async function makeHTMLFromJson(data) {
+        function makeHTMLFromJson(data) {
             const isTable = checkLevel == 1;
             let str = '';
 
-            await data.forEach((pItem, index) => {
+            data.forEach((pItem, index) => {
                 const classTh = index % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
                 const classTd = index % 2 == 0 ? 'bg-color-td2' : 'bg-color-td1';
 
@@ -386,12 +389,12 @@
             });
             if (result.ok) {
                 isCallback = false;
-                await handleAfterCreateOrEdit();
+                handleAfterCreateOrEdit();
                 isCallback = true;
             }
         }
 
-        async function setTextButton(id) {
+        function setTextButton(id) {
             let textBtnMod2 = '';
             let textButton_create_region = '';
             switch (id) {
@@ -405,29 +408,57 @@
                     break;
             }
             document.getElementById('btnMod2').textContent = textBtnMod2
-            await document.querySelectorAll('.button-create-region').forEach((element) => {
+            document.querySelectorAll('.button-create-region').forEach((element) => {
                 element.textContent = textButton_create_region;
             });
         }
 
         async function handleAfterCreateOrEdit() {
-            document.getElementById('p-table').innerHTML = '';
-            document.getElementById('c-table').innerHTML = '';
-            await arrAddress2.forEach((value) => {
-                checkLevel = value.level - 1;
-                if (value.code) {
-                    getListAddressChild(value.code, value.name, value.data_num);
-                } else if (checkLevel == 0) {
-                    getListAddress();
-                }
+            const pTable = document.getElementById('p-table');
+            const cTable = document.getElementById('c-table');
+
+            pTable.innerHTML = '';
+            cTable.innerHTML = '';
+
+            console.log(arrAddress2)
+            var filtered = arrAddress2.filter(function (el) {
+                return el != null;
             });
+            console.log(filtered)
+
+            await getListAddress();
+
+            let myPromise = new Promise(function (myResolve, myReject) {
+                if (filtered.length > 1) {
+                    filtered.forEach(value => {
+                        checkLevel = value.level - 1;
+                        if (value.code) {
+                            console.log("exit code: ", value)
+                            getListAddressChild(value.code, value.name, value.data_num);
+                        } else if(checkLevel == 0){
+                            getListAddress();
+                        }
+                    })
+                    myResolve('Success!')
+                }
+                myReject('No empty!')
+            });
+
+            myPromise.then(
+                function (value) {
+                    console.log(value);
+                },
+                function (error) {
+                    console.log(error);
+                }
+            );
         }
 
-        async function checkKeyArrMap(input) {
+        function checkKeyArrMap(input) {
             let keyInput = input.code;
             let lengthKeyInput = keyInput.length;
 
-            await arrAddress2.forEach((value, key) => {
+            arrAddress2.forEach((value, key) => {
                 if (key >= lengthKeyInput) {
                     arrAddress2.splice(key, 1);
                 }
@@ -435,7 +466,7 @@
             arrAddress2[keyInput.length] = input;
         }
 
-        async function renderListBtn(id) {
+        function renderListBtn(id) {
             let html = `<button type="button" class="btn btn-danger"
                                 onclick="deleteAddress(${id})">{{ __('home.Delete') }}</button>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -452,7 +483,7 @@
             let url = `{{ route('admin.address.delete', ['id'=> ':id']) }}`;
             url = url.replace(':id', id)
 
-            fetch(url, {
+            await fetch(url, {
                 method: 'DELETE',
                 headers: {
                     'content-type': 'application/json',
