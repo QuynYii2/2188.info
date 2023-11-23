@@ -385,7 +385,7 @@
             });
             if (result.ok) {
                 isCallback = false;
-                await handleAfterCreateOrEdit();
+                handleAfterCreateOrEdit();
                 isCallback = true;
             }
         }
@@ -409,12 +409,9 @@
             });
         }
 
-        async function handleAfterCreateOrEdit() {
-            const pTable = document.getElementById('p-table');
-            const cTable = document.getElementById('c-table');
-
-            pTable.innerHTML = '';
-            cTable.innerHTML = '';
+        function handleAfterCreateOrEdit() {
+            document.getElementById('p-table').innerHTML = '';
+            document.getElementById('c-table').innerHTML = '';
 
             console.log(arrAddress2)
             var filtered = arrAddress2.filter(function (el) {
@@ -422,49 +419,30 @@
             });
             console.log(filtered)
 
-            // let myPromise = new Promise(function (myResolve, myReject) {
-            //     if (filtered.length > 1) {
-            //         filtered.forEach(value => {
-            //             checkLevel = value.level - 1;
-            //             if (value.code) {
-            //                 console.log("exit code: ", value)
-            //                 getListAddressChild(value.code, value.name, value.data_num);
-            //
-            //             }
-            //         })
-            //         myResolve('Success!')
-            //     } else {
-            //         getListAddress();
-            //     }
-            //     myReject('No empty!')
-            // });
-            //
-            // myPromise.then(
-            //     function (value) {
-            //         console.log(value);
-            //     },
-            //     function (error) {
-            //         console.log(error);
-            //     }
-            // );
+            getListAddress();
 
-            if (filtered.length > 1) {
-                filtered.forEach(value => {
-                    checkLevel = value.level - 1;
-                    if (value.code) {
-                        // let myPromise = new Promise(function() {
-                            getListAddressChild(value.code, value.name, value.data_num);
-                        // });
-
-                        // myPromise.then(function() {
+            let myPromise = new Promise(function (myResolve, myReject) {
+                if (filtered.length > 1) {
+                    filtered.forEach(value => {
+                        checkLevel = value.level - 1;
+                        if (value.code) {
                             console.log("exit code: ", value)
-                        // });
-                    }
-                })
-                console.log('Success!')
-            } else {
-                await getListAddress();
-            }
+                            getListAddressChild(value.code, value.name, value.data_num);
+                        }
+                    })
+                    myResolve('Success!')
+                }
+                myReject('No empty!')
+            });
+
+            myPromise.then(
+                function (value) {
+                    console.log(value);
+                },
+                function (error) {
+                    console.log(error);
+                }
+            );
         }
 
         function checkKeyArrMap(input) {
