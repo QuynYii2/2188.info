@@ -436,14 +436,13 @@
             // }
 
             let myPromise = new Promise(function (myResolve, myReject) {
+                getListAddress();
                 if (filtered.length > 1) {
                     filtered.forEach(value => {
                         checkLevel = value.level - 1;
                         if (value.code) {
                             console.log("exit code: ", value)
                             getListAddressChild(value.code, value.name, value.data_num);
-                        } else if (checkLevel == 0) {
-                            getListAddress();
                         }
                     })
                     myResolve('Success!')
