@@ -132,6 +132,7 @@
                                 </tr>
 
                                 <input type="text" class="d-none" id="up_code" name="up_code" value="">
+                                <input type="text" class="d-none" id="data_num" name="data_num" value="">
                                 <input type="text" class="d-none" id="mode" name="mode" value="">
                                 </tbody>
                             </table>
@@ -163,7 +164,8 @@
 
         const MODE_CREATE = 'create'
         const MODE_EDIT = 'edit'
-
+        // getListAddressChild('6X!TM', 'G63', 1)
+        // getListAddressChild('6X!TM!R3!NS', 'Maybach S450', 1)
         async function getListAddress() {
             let url = '{{ route('admin.address.index') }}';
             let result = await fetch(url);
@@ -216,10 +218,6 @@
 
             resetFormModal();
 
-            // document.getElementById('up_name').value = name;
-            // document.getElementById('up_code').value = code;
-            // document.getElementById('mode').value = mode;
-
             $('#up_name').val(name)
             $('#up_code').val(code)
             $('#mode').val(mode)
@@ -244,6 +242,8 @@
         }
 
         async function getListAddressChild(code, name, data_num) {
+            let arrayCode = code.split('!');
+            console.log(arrayCode, code);
             let url = '';
             console.log(checkLevel);
             if (checkLevel == 1) {
@@ -286,6 +286,52 @@
             }
         }
 
+        async function supGetListChildRegion(code, name, data_num) {
+            let url = '{{ route('admin.address.show', ['code' => ':code']) }}';
+            url = url.replace(':code', code);
+            let result = await fetch(url);
+            let data = result.json();
+
+            supRenderAddressChild(data);
+        }
+
+        function supRenderAddressChild(data) {
+            let str = ``;
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
+
+                const classTh = i % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
+                const classTd = i % 2 == 0 ? 'bg-color-td2' : 'bg-color-td1';
+
+                str += `<tr data-num="${index_main}"><th class="cont ${classTh} "><div class="text-center"><span class="cursor-pointer">${item.name_en ?? item.name ?? ''}</span></div>
+                                    <div class="mt5 text-center"><span class="minBtn ml20"> <span class="cursor-pointer button-create-region"
+                                                                                                            data-id="'${item.id}'"
+                                                                                                             onclick="createOrEditRegion('${item.code}','${item.name_en ?? item.name}', '${MODE_CREATE}', '${elementTd}', '${i}' , '${item.id}')"
+                                                                                                             data-toggle="modal" data-target="#createRegion">{{ __('home.Add nation') }}</span></span>
+                                    </div>
+                                </th>`
+                if (item.total_child) {
+                    str += `<td class="${classTd} w-100" id="td-region-${i}">`;
+                    let listChild = item.child;
+                    for (let j = 0; j < listChild.length; j++) {
+                        let child = listChild[j];
+                        str += ` <span class="nation" id="span-id-${child.code}">`;
+                        str += `<span
+                            class="tit cursor-pointer" data-num="${index_main}"
+                            onclick="supGetListChildRegion('${child.code}', '${child.name_en ?? child.name ?? ''}', ${index_main})">${child.name_en ?? ''} ${child.name ?? ''}</span>
+                     <span class="cursor-pointer" data-toggle="modal" data-target="#createRegion"
+                    onclick="createOrEditRegion('${child.id}','${child.name_en ?? child.name}', '${MODE_EDIT}', '${elementTd}', '${index}', '${child.id}')">▤</span>
+                    </span>`
+                    }
+
+                    str += `</td>`;
+                }
+                str += `</tr>`
+            }
+            const t_p_Body = document.getElementById('c-table');
+            t_p_Body.innerHTML += str;
+        }
+
         function duyetTheTr(index) {
             let i = ++index;
             let checkindex = 0;
@@ -322,6 +368,7 @@
             document.getElementById('name').value = data.name;
             document.getElementById('sort_index').value = data.sort_index;
             document.getElementsByName('status').value = data.status;
+            document.getElementById('up_name').value = data.name;
         }
 
         function resetFormModal() {
@@ -331,6 +378,7 @@
         function makeHTMLFromJson(data) {
             const isTable = checkLevel == 1;
             let str = '';
+            console.log(data)
 
             data.forEach((pItem, index) => {
                 const classTh = index % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
@@ -389,7 +437,7 @@
             });
             if (result.ok) {
                 isCallback = false;
-                handleAfterCreateOrEdit();
+                handleAfterCreateOrEdit(document.getElementById('up_code').value, document.getElementById('up_name').value, document.getElementById('data_num').value);
                 isCallback = true;
             }
         }
@@ -413,52 +461,30 @@
             });
         }
 
-        async function handleAfterCreateOrEdit() {
-            document.getElementById('p-table').innerHTML = '';
-            document.getElementById('c-table').innerHTML = '';
+        function handleAfterCreateOrEdit(code, name, data_num) {
+            if (data_num > 2) {
+                supGetListChildRegion(code, name, data_num);
+            } else {
+                document.getElementById('p-table').innerHTML = '';
+                document.getElementById('c-table').innerHTML = '';
 
-            console.log(arrAddress2)
-            var filtered = arrAddress2.filter(function (el) {
-                return el != null;
-            });
-            console.log(filtered)
+                // console.log(arrAddress2)
+                var filtered = arrAddress2.filter(function (el) {
+                    return el != null;
+                });
 
-            // await getListAddress();
-
-            // if (filtered.length > 1) {
-            //     filtered.forEach(value => {
-            //         checkLevel = value.level - 1;
-            //         if (value.code) {
-            //             console.log("exit code: ", value)
-            //             getListAddressChild(value.code, value.name, value.data_num);
-            //         }
-            //     })
-            // }
-            await getListAddress();
-
-            let myPromise = new Promise(function (myResolve, myReject) {
                 if (filtered.length > 1) {
-                    filtered.forEach(value => {
+                    arrAddress2.forEach(value => {
                         checkLevel = value.level - 1;
                         if (value.code) {
                             console.log("exit code: ", value)
                             getListAddressChild(value.code, value.name, value.data_num);
                         }
                     })
-                    myResolve('Success!')
+                } else {
+                    getListAddress();
                 }
-                myReject('No empty!')
-            });
-
-            await myPromise.then(
-                function (value) {
-                    console.log(value);
-                },
-                function (error) {
-                    console.log(error);
-                }
-            );
-
+            }
         }
 
         function checkKeyArrMap(input) {
