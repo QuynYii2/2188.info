@@ -414,54 +414,38 @@
         }
 
         async function handleAfterCreateOrEdit() {
-            document.getElementById('p-table').innerHTML = '';
-            document.getElementById('c-table').innerHTML = '';
+            const pTable = document.getElementById('p-table');
+            const cTable = document.getElementById('c-table');
 
-            console.log(arrAddress2)
-            var filtered = arrAddress2.filter(function (el) {
-                return el != null;
-            });
-            console.log(filtered)
+            pTable.innerHTML = '';
+            cTable.innerHTML = '';
 
-            // await getListAddress();
+            console.log(arrAddress2);
 
-            // if (filtered.length > 1) {
-            //     filtered.forEach(value => {
-            //         checkLevel = value.level - 1;
-            //         if (value.code) {
-            //             console.log("exit code: ", value)
-            //             getListAddressChild(value.code, value.name, value.data_num);
-            //         }
-            //     })
-            // }
+            const filteredAddresses = arrAddress2.filter(el => el !== null);
+            console.log(filteredAddresses);
+
             await getListAddress();
 
-            let myPromise = new Promise(function (myResolve, myReject) {
-                if (filtered.length > 1) {
-                    if (filtered.length > 2) {
-                        getListAddress();
-                    }
-                    filtered.forEach(value => {
+            try {
+                if (filteredAddresses.length > 1) {
+                    await Promise.all(filteredAddresses.map(async value => {
                         checkLevel = value.level - 1;
+
                         if (value.code) {
-                            console.log("exit code: ", value)
-                            getListAddressChild(value.code, value.name, value.data_num);
+                            console.log("exit code: ", value);
+                            await getListAddressChild(value.code, value.name, value.data_num);
+                        } else if (checkLevel == 0) {
+                            await getListAddress();
                         }
-                    })
-                    myResolve('Success!')
+                    }));
+                    console.log('Success!');
+                } else {
+                    console.log('No empty!');
                 }
-                myReject('No empty!')
-            });
-
-            await myPromise.then(
-                function (value) {
-                    console.log(value);
-                },
-                function (error) {
-                    console.log(error);
-                }
-            );
-
+            } catch (error) {
+                console.log(error.message);
+            }
         }
 
         function checkKeyArrMap(input) {
