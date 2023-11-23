@@ -434,10 +434,13 @@
             //         }
             //     })
             // }
+            await getListAddress();
 
             let myPromise = new Promise(function (myResolve, myReject) {
-                getListAddress();
                 if (filtered.length > 1) {
+                    if (filtered.length > 2) {
+                        getListAddress();
+                    }
                     filtered.forEach(value => {
                         checkLevel = value.level - 1;
                         if (value.code) {
@@ -450,7 +453,7 @@
                 myReject('No empty!')
             });
 
-            myPromise.then(
+            await myPromise.then(
                 function (value) {
                     console.log(value);
                 },
