@@ -165,8 +165,7 @@
 
         const MODE_CREATE = 'create'
         const MODE_EDIT = 'edit'
-        // getListAddressChild('6X!TM', 'G63', 1)
-        // getListAddressChild('6X!TM!R3!NS', 'Maybach S450', 1)
+
         async function getListAddress() {
             let url = '{{ route('admin.address.index') }}';
             let result = await fetch(url);
@@ -308,7 +307,6 @@
                 supRenderAddressChild(data);
                 index_main++;
             }
-
 
         }
 
@@ -564,13 +562,23 @@
                 body: JSON.stringify(data),
             })
                 .then((response) => {
-                    if (response.status == 200) {
-                        alert("Delete Success!")
-                        // getListAddress();
-                        window.location.reload();
-                    } else {
-                        alert("Delete Error!")
-                    }
+                    $('#createRegion').modal('hide');
+
+                    var elements = document.getElementsByClassName('modal-backdrop fade show');
+
+                    // Chuyển NodeList thành mảng để có thể sử dụng forEach
+                    var elementsArray = Array.from(elements);
+
+                    // Lặp qua mảng và xóa từng phần tử
+                    elementsArray.forEach(function(element) {
+                        element.remove();
+                    });
+
+                    isCallback = false;
+                    isResetArray = true;
+                    handleAfterCreateOrEdit(document.getElementById('up_code').value, document.getElementById('up_name').value, document.getElementById('data_num').value);
+                    isCallback = true;
+
                 })
                 .catch(error => console.log(error));
         }
