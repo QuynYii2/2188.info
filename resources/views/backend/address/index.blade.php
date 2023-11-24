@@ -161,6 +161,7 @@
         const ID_CHILD = 2;
         let isFirst = true;
         let isCallback = true;
+        let isResetArray = false;
 
         const MODE_CREATE = 'create'
         const MODE_EDIT = 'edit'
@@ -215,8 +216,12 @@
             if (item) {
                 let in_p_table = $(item).parents('#p-table').first().length;
                 if (in_p_table !== 0) {
-                    isFirst = true;
+                    isResetArray = true;
                 }
+            }
+
+            if (index === -1) {
+                isResetArray = true;
             }
 
             modeForAppend = mode;
@@ -505,8 +510,9 @@
                     var arrAddress3 = [...arrAddress2];
 
                     // nếu là đang tạo mới vùng miền cấp đầu tiên của quốc gia, thì sẽ xóa phần tử thừa trong mảng
-                    if (isFirst) {
+                    if (isResetArray) {
                         arrAddress3.splice(2);
+                        isResetArray = false;
                     }
 
                     arrAddress3.forEach(value => {
