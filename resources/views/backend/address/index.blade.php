@@ -236,6 +236,7 @@
             if (mode == MODE_EDIT) {
                 getById(code);
                 renderListBtn(code)
+                isResetArray = true;
             }
             if (mode == MODE_CREATE && !code && !name) {
                 if (isFirst) {
