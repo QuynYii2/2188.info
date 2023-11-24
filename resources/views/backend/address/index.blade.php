@@ -210,7 +210,14 @@
             }
         }
 
-        function createOrEditRegion(code, name, mode, element, index, id) {
+        function createOrEditRegion(code, name, mode, element, index, id, item) {
+
+            if (item) {
+                let in_p_table = $(item).parents('#p-table').first().length;
+                if (in_p_table !== 0) {
+                    isFirst = true;
+                }
+            }
 
             modeForAppend = mode;
             elementForAppend = element;
@@ -243,19 +250,13 @@
 
         async function getListAddressChild(code, name, data_num) {
             let arrayCode = code.split('!');
-            console.log('data_num 222', data_num)
             document.getElementById('data_num').value = data_num;
-            console.log('data_num 2223333', document.getElementById('data_num').value)
 
-            console.log(arrayCode, code);
             let url = '';
-            console.log(checkLevel);
             if (checkLevel == 1) {
-                console.log('region');
                 url = '{{ route('admin.address.show.region', ['code' => ':code']) }}';
                 url = url.replace(':code', code);
             } else {
-                console.log('default')
                 url = '{{ route('admin.address.show', ['code' => ':code']) }}';
                 url = url.replace(':code', code);
             }
@@ -299,7 +300,6 @@
             if (result.ok){
                 let data = await result.json();
 
-                console.log("data", data)
                 supRenderAddressChild(data);
                 index_main++;
             }
@@ -309,7 +309,6 @@
 
         function supRenderAddressChild(data) {
             let str = ``;
-            console.log('sdfsd', data)
             for (let i = 0; i < data.length; i++) {
                 let item = data[i];
 
@@ -342,11 +341,7 @@
                 str += `</tr>`
             }
             const t_p_Body = document.getElementById('c-table');
-            console.log("cccccccccc")
             t_p_Body.querySelectorAll('tr').forEach(e=>{
-                console.log("ddddddddd")
-                console.log(Number(e.getAttribute('id').replace("data-num-", "")))
-                console.log(index_main)
                 if (Number(e.getAttribute('id').replace("data-num-", "")) >= index_main - 1){
                     t_p_Body.removeChild(e)
                 }
@@ -400,7 +395,6 @@
         function makeHTMLFromJson(data, data_num) {
             const isTable = checkLevel == 1;
             let str = '';
-            console.log(data)
 
             data.forEach((pItem, index) => {
                 const classTh = index % 2 == 0 ? 'bg-color-th2' : 'bg-color-th1';
@@ -409,7 +403,7 @@
                 str += `<tr id="data-num-${index_main}" data-num="${index_main}"><th class="cont ${classTh} "><div class="text-center"><span class="cursor-pointer">${pItem.name_en ?? pItem.name ?? ''}</span></div>
                                     <div class="mt5 text-center"><span class="minBtn ml20"> <span class="cursor-pointer button-create-region"
                                                                                                             data-id="'${pItem.id}'"
-                                                                                                             onclick="createOrEditRegion('${pItem.code}','${pItem.name_en ?? pItem.name}', '${MODE_CREATE}', '${elementTd}', '${index}' , '${pItem.id}')"
+                                                                                                             onclick="createOrEditRegion('${pItem.code}','${pItem.name_en ?? pItem.name}', '${MODE_CREATE}', '${elementTd}', '${index}' , '${pItem.id}', this)"
                                                                                                              data-toggle="modal" data-target="#createRegion">{{ __('home.Add nation') }}</span></span>
                                     </div>
                                 </th>`
@@ -438,9 +432,6 @@
             } else {
                 const t_p_Body = document.getElementById('c-table');
                 t_p_Body.querySelectorAll('tr').forEach(e=>{
-                    console.log("ddddddddd")
-                    console.log(Number(e.getAttribute('id').replace("data-num-", "")))
-                    console.log('main: ', data_num)
                     if (Number(e.getAttribute('id').replace("data-num-", "")) > data_num){
                         t_p_Body.removeChild(e)
                     }
@@ -492,26 +483,35 @@
         }
 
         function handleAfterCreateOrEdit(code, name, data_num) {
-            console.log('data_num', data_num)
             let arrayCode = code.split('!');
             let count = arrayCode.length
-            console.log("count", count)
             if (count > 3) {
                 supGetListChildRegion(code, name, data_num);
             } else {
                 document.getElementById('p-table').innerHTML = '';
                 document.getElementById('c-table').innerHTML = '';
 
-                // console.log(arrAddress2)
                 var filtered = arrAddress2.filter(function (el) {
                     return el != null;
                 });
-
                 if (filtered.length > 1) {
-                    arrAddress2.forEach(value => {
+
+                    // xóa phần tử empty khỏi mảng
+                    arrAddress2 = arrAddress2.filter(function (element) {
+                        return element !== '' && element !== null && element !== undefined;
+                    });
+
+                    // reset lại index của mảng
+                    var arrAddress3 = [...arrAddress2];
+
+                    // nếu là đang tạo mới vùng miền cấp đầu tiên của quốc gia, thì sẽ xóa phần tử thừa trong mảng
+                    if (isFirst) {
+                        arrAddress3.splice(2);
+                    }
+
+                    arrAddress3.forEach(value => {
                         checkLevel = value.level - 1;
                         if (value.code) {
-                            console.log("exit code: ", value)
                             getListAddressChild(value.code, value.name, value.data_num);
                         }
                     })
@@ -558,7 +558,6 @@
                 body: JSON.stringify(data),
             })
                 .then((response) => {
-                    console.log(response);
                     if (response.status == 200) {
                         alert("Delete Success!")
                         // getListAddress();
