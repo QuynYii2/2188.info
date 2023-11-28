@@ -119,7 +119,7 @@ class HomeController extends Controller
             ['status', ProductStatus::ACTIVE]
         ])->orderBy('hot', 'desc')->limit(10)->get();
         $products = $products->unique('slug');
-        $productHots[] = $products;
+        $productHots = $products;
 //        dd($productHots);
         $permissionFeature = Permission::where('name', 'Nâng cấp sản phẩm nổi bật')->first();
         $permissionSellerFeatures = DB::table('permission_user')->where('permission_id', $permissionFeature->id)->get();
@@ -137,7 +137,7 @@ class HomeController extends Controller
             ['status', ProductStatus::ACTIVE]
         ])->orderBy('feature', 'desc')->limit(10)->get();
         $products = $products->unique('slug');
-        $productFeatures[] = $products;
+        $productFeatures = $products;
 
         $configsTop1 = TopSellerConfig::where('local', TopSellerConfigLocation::OptionOne)->orderBy('created_at', 'desc')->limit(3)->get();
         $configsTop2 = TopSellerConfig::where('local', TopSellerConfigLocation::OptionTwo)->orderBy('created_at', 'desc')->limit(3)->get();

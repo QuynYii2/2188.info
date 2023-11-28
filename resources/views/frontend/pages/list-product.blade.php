@@ -4,7 +4,6 @@
 @php
     $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
 @endphp
-<input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
 <div class="item item-hover">
     @if($product->thumbnail)
         @php
@@ -16,18 +15,8 @@
             @else
                 <a href="#"><img src="{{ $thumbnail }}" alt=""></a>
             @endif
-{{--            <div class="button-view">--}}
-{{--                <button type="button" class="btn view_modal" data-toggle="modal"--}}
-{{--                        data-value="{{$product}}"--}}
-{{--                        data-target="#exampleModal">{{ __('home.Quick view') }}</button>--}}
-{{--            </div>--}}
-            <div class="text">
-                <div class="text-sale">
-                    {{ __('home.sales') }}
-                </div>
-                <div class="text-new">
-                    {{ __('home.new') }}
-                </div>
+            <div class="button-view">
+
             </div>
         </div>
     @endif

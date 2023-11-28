@@ -217,11 +217,51 @@
             </div>
         </div>
         <div class="section margin-layout-index container-fluid mt-3">
-            <h3 class="new-products">{{ __('home.New Products') }}</h3>
-
+            <h3 class="content-products">{{ __('home.New Products') }}</h3>
+            <div class="swiper NewProducts row">
+                <div class="swiper-wrapper">
+                    @foreach($newProducts as $product)
+                        <div class="swiper-slide">
+                            @include('frontend.pages.list-product')
+                        </div>
+                    @endforeach
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
         </div>
 
-        <section class="section-Seven ">
+        <div class="section margin-layout-index container-fluid mt-3">
+            <h3 class="content-products">{{ __('home.Featured Products') }}</h3>
+            <div class="swiper FeaturedProducts">
+                <div class="swiper-wrapper">
+                    @foreach($productFeatures as $product)
+                        <div class="swiper-slide">
+                            @include('frontend.pages.list-product')
+                        </div>
+                    @endforeach
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+
+        <div class="section margin-layout-index container-fluid mt-3">
+            <h3 class="content-products">{{ __('home.Hot Deals') }}</h3>
+            <div class="swiper FeaturedProducts">
+                <div class="swiper-wrapper">
+                    @foreach($productHots  as $product)
+                        <div class="swiper-slide">
+                            @include('frontend.pages.list-product')
+                        </div>
+                    @endforeach
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+
+        <section class="section-Seven mt-5">
             <div class="container-fluid">
                 <p>{{ __('home.If you are looking for a website to buy and sell online is a great choice for you.') }}
                     <span id="dots">...</span>
