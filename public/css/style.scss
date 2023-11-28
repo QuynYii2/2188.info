@@ -55,6 +55,159 @@ a {
   }
 }
 
+.section-First-category {
+  overflow-y: auto;
+  max-height: 60vh;
+
+  .show-list-category {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  ul {
+    .category-item {
+      a {
+        font-size: 16px;
+        color: #000;
+        font-weight: 500;
+      }
+
+      a:hover {
+        color: #F47621;
+      }
+    }
+
+    .active {
+      a {
+        color: #F47621;
+      }
+    }
+  }
+}
+
+.section-First-posted {
+  overflow-y: auto;
+  max-height: 60vh;
+
+  .list-item-posted-title {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .list-item-posted {
+    .list-item {
+      margin: 0 8px;
+
+      .posted-image {
+        max-width: 60px;
+      }
+
+      .posted-content {
+        .posted-title {
+          font-size: 18px;
+          font-weight: 600;
+        }
+
+        .posted-value {
+          font-size: 16px;
+          font-weight: 400;
+          color: #929292;
+        }
+      }
+    }
+  }
+
+  .list-item-posted-bottom {
+    margin-top: 16px;
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .btn-my-posted {
+    button {
+      border: 3px solid #F42121;
+      padding: 8px 16px;
+
+      span {
+        text-align: center;
+        vertical-align: middle;
+        font-size: 20px;
+        font-weight: 600;
+        color: #F42121;
+      }
+    }
+  }
+}
+
+.main-list-category {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+
+  .main-category-item {
+    width: 11%;
+    margin: 10px;
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 3px;
+    cursor: pointer;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+    position: relative;
+
+    &::before,
+    &::after {
+      content: '';
+      box-sizing: border-box;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      transform-origin: center;
+    }
+
+    &::before {
+      border-top: 0.2em solid #F47621;
+      border-bottom: 0.2em solid #F47621;
+      transform: scale3d(0,1,1);
+    }
+
+    &::after {
+      border-left: 0.2em solid #F47621;
+      border-right: 0.2em solid #F47621;
+      transform: scale3d(1,0,1);
+    }
+
+    &:hover::before,
+    &:hover::after {
+      transform: scale3d(1,1,1);
+      transition: transform 600ms;
+
+      .main-category-name {
+        color: #F47621;
+      }
+    }
+
+    .main-category-image {
+      margin: 16px 0 0 0;
+      max-width: 100px;
+      display: block;
+      transition: transform 0.3s ease-out;
+    }
+
+    .main-category-name {
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+      transition: transform 0.3s ease-out;
+    }
+  }
+}
+
 #animation-ctn {
   .alert {
     background: #f8d7da;
@@ -1118,10 +1271,13 @@ td.priceTransport {
   cursor: pointer;
   padding: 0;
   width: 101px;
-  background: white;
   height: 40px;
   border-radius: 10px;
   margin: 5px;
+}
+
+.button_seller i {
+  font-size: 24px;
 }
 
 .item-voucher {
@@ -1776,6 +1932,7 @@ a {
 
 .header {
   .header-pc {
+    background-color: #fff;
     position: fixed;
     left: 0;
     right: 0;
@@ -1783,8 +1940,8 @@ a {
     z-index: 10;
 
     .header-top {
-      padding: 20px 0;
-      background-color: $color-main;
+      height: 100px;
+      padding: 26px 40px;
 
       &-left {
         .header-logo {
@@ -1800,19 +1957,26 @@ a {
         .search-wrapper {
           position: relative;
           margin: 0;
-          height: 50px;
           border-radius: 30px;
           background-color: white;
+          height: 40px;
+          border: 1px solid $color-main;
 
           input {
+            margin-left: 5%;
             padding-left: 13%;
             padding-right: 10%;
-            width: 100%;
+            width: 95%;
             height: 100%;
             border: 0;
             background: #fff;
             outline: none;
             border-radius: 40px;
+          }
+
+          input::placeholder {
+            font-size: 14px;
+            color: #BFBFBF;
           }
 
           .button-right {
@@ -1824,9 +1988,9 @@ a {
             height: 100%;
             min-width: 10%;
             width: auto;
-            color: $color-main;
-            background: white;
-            border-radius: 40px;
+            background-color: $color-main;
+            color: #fff;
+            border-radius: 0 40px 40px 0;
           }
 
           .category-drop {
@@ -1838,8 +2002,9 @@ a {
             border-radius: 40px;
 
             button {
-              color: gray;
-              font-size: 20px;
+              color: #000;
+              font-size: 16px;
+              font-weight: 500;
               border-radius: 40px;
               border: none;
               background: white;
@@ -1886,6 +2051,10 @@ a {
           z-index: 3;
           position: relative;
 
+          i {
+            font-size: 24px;
+          }
+
           .hover-list {
             display: none;
             border-radius: 5px;
@@ -1904,7 +2073,6 @@ a {
 
                 a {
                   text-decoration: none;
-                  color: white;
                 }
 
                 button {
@@ -1923,7 +2091,7 @@ a {
 
         .item {
           position: relative;
-          margin-right: 8px;
+          margin-right: 2px;
 
           button {
             background: none;
@@ -1935,7 +2103,7 @@ a {
           }
 
           .button {
-            color: white;
+            //color: white;
             cursor: pointer;
             padding: 0;
           }
@@ -1943,16 +2111,19 @@ a {
           .button_login {
             cursor: pointer;
             padding: 0;
-            width: 100px;
-            background: white;
+            width: 120px;
             height: 40px;
             border-radius: 10px;
             margin: 5px;
           }
 
+          .button_login i {
+            font-size: 24px;
+          }
+
           .total_shop {
             position: absolute;
-            top: 0px;
+            top: 0;
             right: 5px;
             height: 20px;
             width: 20px;
@@ -2113,7 +2284,8 @@ a {
           }
 
           .item-text {
-            font-size: 17px;
+            font-size: 15px;
+            font-weight: 500;
           }
 
           .item-shop {
@@ -2121,7 +2293,7 @@ a {
             position: relative;
 
             &--icon {
-              font-size: 40px;
+              font-size: 24px;
             }
 
             &--text {
@@ -2317,9 +2489,19 @@ a {
       }
     }
 
+    .select-language a {
+      text-decoration: none;
+    }
+
     .header-bottom {
       background-color: white;
-      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .15);
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+      height: 40px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+
 
       &-left {
         &--item {
@@ -2327,6 +2509,7 @@ a {
 
           a {
             font-size: 16px;
+            color: #929292;
 
             .text {
               font-weight: 500;

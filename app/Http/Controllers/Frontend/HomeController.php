@@ -73,6 +73,7 @@ class HomeController extends Controller
 
 
         $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
+        $categoriesParent = Category::where('status', CategoryStatus::ACTIVE)->where('parent_id', null)->limit(16)->get();
         $categories = DB::table('categories')
             ->where([
                 ['status', CategoryStatus::ACTIVE],
@@ -176,6 +177,7 @@ class HomeController extends Controller
             'currency' => $currency,
             'countryCode' => $locale,
             'categories' => $categories,
+            'categoriesParent' => $categoriesParent,
             'productByVi' => $productByVi,
             'productByKr' => $productByKr,
             'productByJp' => $productByJp,

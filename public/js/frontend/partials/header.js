@@ -18,8 +18,9 @@ $(document).ready(function () {
 
     $('.categorySearch').on('click', function () {
         let id = $(this).data('id');
-        console.log(id);
+        let text = $(this).data('value');
         $('#category_search').val(id);
+        $('#btnCategorySearch').text(text);
     })
 })
 
