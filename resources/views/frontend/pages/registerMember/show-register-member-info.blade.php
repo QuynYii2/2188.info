@@ -2,156 +2,19 @@
 
 @section('title', 'Register Member')
 
-<style>
-
-    .modal-dialog {
-        min-width: 1300px !important;
-    }
-
-    .image-upload {
-        display: inline-block;
-        position: relative;
-        max-width: 205px;
-    }
-
-    .image-upload .image-edit {
-        position: absolute;
-        z-index: 1;
-    }
-
-    .image-upload .image-edit {
-        right: -13px;
-        top: 10px;
-    }
-
-    .image-upload .image-edit input {
-        display: none;
-    }
-
-    .image-upload .image-edit input + label {
-        display: inline-block;
-        width: 34px;
-        height: 34px;
-        margin-bottom: 0;
-        border-radius: 100%;
-        background: #ffffff;
-        border: 1px solid transparent;
-        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
-        cursor: pointer;
-        font-weight: normal;
-        transition: all 0.2s ease-in-out;
-    }
-
-    .image-upload .image-edit input + label:hover {
-        background: #f1f1f1;
-        border-color: #d6d6d6;
-    }
-
-    .image-upload .image-edit input + label:after {
-        content: "\f040";
-        font-family: "FontAwesome";
-        color: #757575;
-        position: absolute;
-        top: 10px;
-        left: 0;
-        right: 0;
-        text-align: center;
-        margin: auto;
-    }
-
-    .image-upload .preview {
-        width: 192px;
-        height: 192px;
-        position: relative;
-        border: 6px solid #f8f8f8;
-        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
-    }
-
-    .image-upload .preview > div {
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-    }
-
-
-    .preview > div,
-    .invalid-file {
-        display: none;
-    }
-
-    .error {
-        position: absolute;
-        transform: translate(-50%, -50%);
-        left: 50%;
-        top: 50%;
-        width: 100px;
-        height: 120px;
-        font-size: 1em;
-        text-transform: capitalize;
-        text-align: center;
-        color: #fff;
-        line-height: 1em;
-        text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
-    }
-
-    #code_1 {
-        display: none;
-        border: 1px #dadada solid;
-    }
-
-    #code_1 label {
-        display: block;
-    }
-
-    #code_1 label:hover {
-        background-color: #cccccc;
-    }
-
-    #code_2 {
-        display: none;
-        border: 1px #dadada solid;
-    }
-
-    #code_2 label {
-        display: block;
-    }
-
-    #code_2 label:hover {
-        background-color: #cccccc;
-    }
-
-    #code_3 {
-        display: none;
-        border: 1px #dadada solid;
-    }
-
-    #code_3 label {
-        display: block;
-    }
-
-    #code_3 label:hover {
-        background-color: #cccccc;
-    }
-
-</style>
 @section('content')
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
     <link href="{{asset('css/voucher.css')}}" rel="stylesheet">
     <div class=" container-fluid">
         <div class="start-page mb-3">
             <div class="background container-fluid pt-3 justify-content-center pb-3">
-                <div class="form-title text-center solid-3x pt-2 pb-3 bg-member-green">
+                <div class="form-title text-center pt-2 pb-3 ">
                     @if($member->name == \App\Enums\RegisterMember::BUYER)
-                        <div class="title text-primary"
-                             style="font-size: 35px; font-weight: 600">{{ __('home.Register member buyer') }}</div>
+                        <div class="title text-primary">{{ __('home.Register member buyer') }}</div>
                     @elseif($member->name == \App\Enums\RegisterMember::TRUST)
-                        <div class="title text-primary"
-                             style="font-size: 35px; font-weight: 600">{{ __('home.Register member trust') }}</div>
+                        <div class="title text-primary">{{ __('home.Register member trust') }}</div>
                     @else
-                        <div class="title text-primary"
-                             style="font-size: 35px; font-weight: 600">{{ __('home.Register member logistic') }}</div>
+                        <div class="title text-primary">{{ __('home.Register member logistic') }}</div>
                     @endif
                 </div>
                 @php
@@ -217,6 +80,8 @@
         function getDate() {
             let nowTime = new Date().toLocaleDateString('en-GB');
             $('#datetime_register').val(nowTime);
+            let text = 'Day register: ' + nowTime;
+            $('.day_register').text(text);
         }
 
         getDate();
