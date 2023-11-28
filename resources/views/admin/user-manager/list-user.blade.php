@@ -6,6 +6,35 @@
     User Manager
 @endsection
 @section('content')
+    <style>
+        .pagination {
+            height: 100px;
+            font-size: 24px;
+        }
+
+        .pagination li a{
+            margin: 4px;
+            padding: 4px;
+            color: #cccccc;
+            text-decoration: none;
+        }
+
+        .pagination li.active{
+            color: rgba(255, 165, 0, 0.93);
+        }
+
+        .pagination li a:hover{
+            color: rgba(238, 207, 51, 0.82);
+        }
+
+        ul.pagination > li:first-child {
+            margin-right: 8px;
+        }
+
+        ul.pagination > li:last-child {
+            margin-left: 8px;
+        }
+    </style>
     <div class="">
         <section class="section ">
             <div class="">
@@ -179,7 +208,7 @@
                     @endif
                     </tbody>
                 </table>
-                {{ $users->links() }}
+                {{ $users->links('vendor.pagination.default') }}
             </div>
         </section>
     </div>

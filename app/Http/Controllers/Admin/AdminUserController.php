@@ -28,10 +28,19 @@ class AdminUserController extends Controller
     public function listUser(Request $request)
     {
         (new HomeController())->getLocale($request);
-        $users = User::orderBy('id','desc')->paginate(10);
+        $locale = app()->getLocale();
+        if (!$locale) {
+            $locale = $request->session()->get('locale');
+        }
+        if (!$locale) {
+            $locale = 'kr';
+        }
+        $users = User::where('region', $locale)
+            ->orderBy('id', 'desc')->paginate(30);
         $members = Member::where('status', MemberStatus::ACTIVE)->get();
+
         $roles = Role::all();
-        $categories = Category::all();
+        $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
         return view('admin.user-manager.list-user', compact('members', 'users', 'roles', 'categories'));
     }
 
@@ -422,13 +431,13 @@ class AdminUserController extends Controller
         $homepage = $request->input('homepage');
         $numberBusiness = $request->input('number_business');
         $phoneNumber = $request->input('phone');
-        if (!$phoneNumber){
+        if (!$phoneNumber) {
             $phoneNumber = $request->input('phoneNumber');
         }
         $registerMember = $request->input('member');
 
         $fax = $request->input('fax');
-        if (!$fax){
+        if (!$fax) {
             $fax = '';
         }
 
@@ -475,7 +484,7 @@ class AdminUserController extends Controller
 
         $updateInfo = $request->input('updateInfo');
 
-        if (!$code_business){
+        if (!$code_business) {
             $code_business = '';
         }
 
@@ -506,11 +515,11 @@ class AdminUserController extends Controller
         $code_2_item = $code_2;
         $code_3_item = $code_3;
 
-        if (!$numberBusiness){
+        if (!$numberBusiness) {
             $numberBusiness = '';
         }
 
-        if (!$type_business){
+        if (!$type_business) {
             $type_business = '';
         }
 

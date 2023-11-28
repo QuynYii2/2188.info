@@ -13,6 +13,7 @@ use App\Models\MemberRegisterInfo;
 use App\Models\MemberRegisterPersonSource;
 use App\Models\Product;
 use App\Models\StaffUsers;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -121,18 +122,32 @@ class RegisterMemberSuccessController extends Controller
         $memberPerson = MemberRegisterPersonSource::where('email', Auth::user()->email)->first();
         $company = null;
         $memberList = null;
+        $locale = app()->getLocale();
+        if (!$locale) {
+            $locale = $request->session()->get('locale');
+        }
+        if (!$locale) {
+            $locale = 'kr';
+        }
+
         if ($memberPerson) {
             $company = MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
-            $memberList = MemberPartner::where([
-                ['company_id_source', $company->id],
-                ['status', MemberPartnerStatus::ACTIVE]
-            ])->get();
+            $memberList = DB::table('member_register_infos')
+                ->join('member_register_person_sources', 'member_register_person_sources.member_id', '=', 'member_register_infos.id')
+                ->join('users', 'users.email', '=', 'member_register_person_sources.email')
+                ->where('member_register_infos.id', '!=', $company->id)
+                ->where('users.region', $locale)
+                ->where('member_register_infos.member', $company->member)
+                ->where('member_register_infos.status', MemberRegisterInfoStatus::ACTIVE)
+                ->select('member_register_infos.*', 'users.region')
+                ->distinct()
+                ->paginate(30);
         }
         session()->forget('region');
-        if ($company && $company->member == RegisterMember::TRUST) {
+        if (!$company || $company->member == RegisterMember::TRUST) {
             return back();
         }
-        return view('frontend.pages.member.member-partner', compact('company', 'memberList'));
+        return view('frontend.pages.member.member-partner', compact('company', 'memberList', 'locale'));
     }
 
     public function memberPartnerLocale($locale, Request $request)
@@ -167,7 +182,7 @@ class RegisterMemberSuccessController extends Controller
             ->where('member_register_infos.status', MemberRegisterInfoStatus::ACTIVE)
             ->select('member_register_infos.*', 'users.region')
             ->distinct()
-            ->paginate(10);
+            ->paginate(30);
 
         return view('frontend.pages.member.member-partner-locale', compact('company', 'memberList', 'locale'));
     }
