@@ -88,16 +88,16 @@ class HomeController extends Controller
             ->limit(10)
             ->get();
 
-        $productByVi = Product::where([['location', 'vi'], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
-        $productByKr = Product::where([['location', 'kr'], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
-        $productByJp = Product::where([['location', 'jp'], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
-        $productByCn = Product::where([['location', 'cn'], ['status', ProductStatus::ACTIVE]])->limit(10)->get();
+        $productByVi = Product::where([['location', 'vi'], ['status', ProductStatus::ACTIVE]])->orderBy('id', 'desc')->limit(10)->get();
+        $productByKr = Product::where([['location', 'kr'], ['status', ProductStatus::ACTIVE]])->orderBy('id', 'desc')->limit(10)->get();
+        $productByJp = Product::where([['location', 'jp'], ['status', ProductStatus::ACTIVE]])->orderBy('id', 'desc')->limit(10)->get();
+        $productByCn = Product::where([['location', 'cn'], ['status', ProductStatus::ACTIVE]])->orderBy('id', 'desc')->limit(10)->get();
 
         $arrayProducts = [
-            'vi' => $productByVi,
             'kr' => $productByKr,
             'cn' => $productByCn,
-            'jp' => $productByJp
+            'jp' => $productByJp,
+            'vi' => $productByVi
         ];
 
         $newProducts = Product::where('status', ProductStatus::ACTIVE)->orderBy('created_at', 'desc')->limit(10)->get();

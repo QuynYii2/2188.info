@@ -66,20 +66,30 @@ a {
 
   ul {
     .category-item {
-      a {
+      padding: 4px 8px;
+      cursor: pointer;
+
+      .category-item-name {
         font-size: 16px;
         color: #000;
         font-weight: 500;
+        text-decoration: none;
       }
 
-      a:hover {
-        color: #F47621;
+      &:hover {
+        background-color: #F47621;
+
+        .category-item-name {
+          color: #fff;
+        }
       }
     }
 
     .active {
-      a {
-        color: #F47621;
+      background-color: #F47621;
+
+      .category-item-name {
+        color: #fff;
       }
     }
   }
@@ -97,6 +107,12 @@ a {
   .list-item-posted {
     .list-item {
       margin: 0 8px;
+      cursor: pointer;
+
+      &:hover {
+        border: 1px solid #F42121 !important;
+        box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.2);
+      }
 
       .posted-image {
         max-width: 60px;
@@ -158,6 +174,14 @@ a {
     transition: border-color 0.3s ease;
     position: relative;
 
+    &:hover {
+      text-decoration: none;
+
+      .main-category-name {
+        color: #F47621;
+      }
+    }
+
     &::before,
     &::after {
       content: '';
@@ -173,29 +197,27 @@ a {
     &::before {
       border-top: 0.2em solid #F47621;
       border-bottom: 0.2em solid #F47621;
-      transform: scale3d(0,1,1);
+      transform: scale3d(0, 1, 1);
     }
 
     &::after {
       border-left: 0.2em solid #F47621;
       border-right: 0.2em solid #F47621;
-      transform: scale3d(1,0,1);
+      transform: scale3d(1, 0, 1);
     }
 
     &:hover::before,
     &:hover::after {
-      transform: scale3d(1,1,1);
+      transform: scale3d(1, 1, 1);
       transition: transform 600ms;
-
-      .main-category-name {
-        color: #F47621;
-      }
     }
 
     .main-category-image {
       margin: 16px 0 0 0;
-      max-width: 100px;
-      display: block;
+      max-width: 150px;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 5px;
       transition: transform 0.3s ease-out;
     }
 
@@ -1228,9 +1250,150 @@ td.priceTransport {
 .item-hover {
   border: 1px solid #f9f9f9;
   border-radius: 4px;
+  position: relative;
 
   &:hover {
     border: 1px solid $color-main;
+
+    .button-hover {
+      bottom: 20px;
+
+      .btnQuickAdd {
+        background-color: #F47621;
+        padding: 12px 16px;
+        font-size: 18px;
+        color: #fff;
+        font-weight: 600;
+      }
+    }
+
+    .icon-hover {
+      right: 30px;
+    }
+  }
+
+  .button-hover {
+    position: absolute;
+    bottom: -40px;
+    transform: translateX(-50%);
+    transition: bottom 0.5s ease;
+    left: 50%;
+
+    .btnQuickAdd {
+      color: #fff;
+      background-color: #F47621;
+    }
+  }
+
+  .icon-hover {
+    position: absolute;
+    right: -30px;
+    top: 10px;
+    transition: right 0.5s ease;
+
+    .list-icon {
+      display: grid;
+
+      .icon-item {
+        background-color: #F5672680;
+        color: #292D32;
+        margin: 4px;
+        padding: 4px;
+        font-size: 16px;
+        border-radius: 3px;
+      }
+    }
+  }
+}
+
+.list-marketing {
+  position: relative;
+  text-align: center;
+
+  .show-marketing {
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .text-content {
+      position: absolute;
+      bottom: 20%;
+      left: 20%;
+      padding: 12px 18px;
+      border: 2px solid #FFB03F;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+
+      span {
+        color: #FFB03F;
+        transform: scaleX(0.6);
+        letter-spacing: 3px;
+        transform-origin: center left;
+        transition: color 0.3s ease;
+        position: relative;
+        z-index: 1;
+      }
+
+      &:before, &:after {
+        content: '';
+        background: #FFB03F;
+        height: 50%;
+        width: 0;
+        position: absolute;
+        transition: .3s cubic-bezier(.785, .135, .15, .86);
+      }
+
+      &:before {
+        top: 0;
+        left: 0;
+        right: auto;
+      }
+
+      &:after {
+        bottom: 0;
+        right: 0;
+        left: auto;
+      }
+
+      &:hover {
+        span {
+          text-decoration: none;
+          color: #fff;
+        }
+
+        &:before {
+          width: 100%;
+          right: 0;
+          left: auto;
+        }
+
+        &:after {
+          width: 100%;
+          left: 0;
+          right: auto;
+        }
+      }
+    }
+  }
+}
+
+.list-products {
+  .product-item {
+    max-width: 18%;
+    margin: 16px 0;
+  }
+}
+
+.section-description {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.70) 0%, rgba(0, 0, 0, 0.70) 100%), url('../images/imgaedesc.png'), lightgray 50% / cover no-repeat !important;
+
+  .text-description {
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
   }
 }
 
@@ -2632,17 +2795,15 @@ a {
                             .button-view {
                               display: none;
                               position: absolute;
-                              top: 50%;
-                              right: 25%;
 
                               button {
-                                padding: 8px 15px;
-                                border-radius: 50px;
-                                background-color: #fff;
+                                padding: 12px 16px;
+                                background-color: $color-main;
+                                color: #fff;
                                 border: none;
 
                                 &:hover {
-                                  color: white;
+                                  color: #fff;
                                   background-color: $color-main;
                                   border: 1px solid $color-main;
                                 }
@@ -3704,6 +3865,11 @@ hr {
   background-color: white;
 }
 
+.content-products {
+  font-size: 32px;
+  font-weight: 600;
+}
+
 .section {
   .content {
     font-weight: 700;
@@ -3746,6 +3912,7 @@ hr {
 
   .item {
     background-color: white;
+    overflow: hidden;
 
     &-img {
       margin: auto;
@@ -3760,21 +3927,27 @@ hr {
       }
 
       .button-view {
-        display: none;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        display: block; //////
+        transform: translateY(-100%);
+        opacity: 0;
+        transition: transform 0.5s ease, opacity 0.5s ease;
+
+        .list-icon {
+          color: $color-main;
+        }
 
         button {
-          padding: 8px;
-          border-radius: 50px;
-          background-color: #fff;
-          border: none;
-          border: 1px solid white;
+          padding: 12px 16px;
+          color: #fff;
+          text-align: center;
+          background-color: $color-main;
+          border: 1px solid $color-main;
+          width: 80%;
+          font-size: 20px;
+          font-weight: 600;
 
           &:hover {
-            color: white;
+            color: #fff;
             background-color: $color-main;
             border: 1px solid $color-main;
           }
@@ -3815,15 +3988,21 @@ hr {
           padding: 0 10px;
         }
       }
+    }
 
-      &:hover {
-        .button-view {
-          display: block;
+    &:hover {
+      .button-view {
+        display: block;
+        transform: translateY(0);
+        opacity: 1;
 
-          a {
-            text-decoration: none;
-          }
+        a {
+          text-decoration: none;
         }
+      }
+
+      .card-price {
+        font-size: 16px;
       }
     }
 
@@ -3849,12 +4028,13 @@ hr {
 
         a {
           height: 24px;
-          font-size: 15px;
           -webkit-line-clamp: 1;
           display: -webkit-box;
           -webkit-box-orient: vertical;
           overflow: hidden;
           margin-bottom: 5px;
+          font-size: 18px;
+          font-weight: 600;
         }
 
         &:hover {
@@ -3868,11 +4048,12 @@ hr {
       }
 
       .card-price {
-        font-size: 15px;
+        font-size: 20px;
         margin: 0 0 10px 0;
 
         .price-sale {
           color: #e10600;
+          font-weight: 600;
         }
 
         .price-cost {
@@ -4285,7 +4466,8 @@ figure.zoom {
 
 .footer {
   background-color: #f5f5f5;
-  padding: 40px 0;
+  padding: 40px 0 0 0;
+  bottom: 0;
 
   .footer-list-container {
     width: 20%;
@@ -4490,6 +4672,7 @@ figure.zoom {
 
   .footer-container {
     background-color: #fbfbfb;
+    padding: 0 0 10px 0;
   }
 
   //
@@ -4507,7 +4690,7 @@ figure.zoom {
   .footer-bottom-list {
     display: flex;
     justify-content: center;
-    margin-bottom: 2.5rem;
+    //margin-bottom: 2.5rem;
   }
 
   .footer-addres {

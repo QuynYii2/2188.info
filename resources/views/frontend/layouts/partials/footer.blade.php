@@ -365,9 +365,9 @@
                         </a>
                     </div>
                 </div>
-                <div class="footer-addres">
+{{--                <div class="footer-addres">--}}
 {{--                    Địa chỉ: Tầng 4-5-6, Tòa nhà Capital Place, số 29 đường Liễu Giai, Phường Ngọc Khánh, Quận Ba Đình, Thành phố Hà Nội, Việt Nam. Tổng đài hỗ trợ: 19001221 - Email: cskh@hotro.shopee.vn--}}
-                </div>
+{{--                </div>--}}
 {{--                <div class="footer-addres">--}}
 {{--                    Chịu Trách Nhiệm Quản Lý Nội Dung: Nguyễn Đức Trí -  Điện thoại liên hệ: 024 73081221 (ext 4678)--}}
 {{--                </div>--}}

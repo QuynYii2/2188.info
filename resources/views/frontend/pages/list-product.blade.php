@@ -15,9 +15,6 @@
             @else
                 <a href="#"><img src="{{ $thumbnail }}" alt=""></a>
             @endif
-            <div class="button-view">
-
-            </div>
         </div>
     @endif
     <div class="item-body">
@@ -55,5 +52,24 @@
                 </a>
             @endif
         </div>
+        <div class="card-price">
+            <div class="price-sale">
+                {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}
+            </div>
+        </div>
     </div>
+    <div class="icon-hover">
+        <div class="list-icon float-right">
+            <a class="icon-item" href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+            <a class="icon-item" href="#"><i class="fa-solid fa-rotate-right"></i></a>
+            <a class="icon-item" href="#"><i class="fa-regular fa-heart"></i></a>
+            <a class="icon-item" href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+        </div>
+    </div>
+    <div class="button-hover">
+            <div class="button-view">
+                <button class="btn btnQuickAdd">{{ __('home.Add To Cart') }}</button>
+            </div>
+        </div>
 </div>
+

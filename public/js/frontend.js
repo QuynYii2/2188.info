@@ -144,7 +144,7 @@ new Swiper(".NewProducts", {
             spaceBetween: 10,
         },
         800: {
-            slidesPerView: 4,
+            slidesPerView: 5,
             spaceBetween: 10,
         },
     },
