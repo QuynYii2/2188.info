@@ -355,9 +355,9 @@
                                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
                         </div>
                     @endif
-                    <div class="list-products d-flex flex-wrap {{ count($arrayProduct) > 4 ? 'justify-content-between' : 'justify-content-start'}} ">
+                    <div class="list-products d-flex flex-wrap">
                         @foreach($arrayProduct as $product)
-                            <div class="product-item {{ count($arrayProduct) > 4 ? '' : 'mr-2'}}">
+                            <div class="product-item">
                                 @include('frontend.pages.list-product')
                             </div>
                         @endforeach
