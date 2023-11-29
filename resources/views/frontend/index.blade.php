@@ -54,7 +54,8 @@
                     </div>
                     <ul class="m-auto">
                         @foreach($categoriesParent as $category)
-                            <li class="category-item" data-toggle="modal" data-target="#modaleCateogryShow_{{$category->id}}">
+                            <li class="category-item" data-toggle="modal"
+                                data-target="#modaleCateogryShow_{{$category->id}}">
                                 <a href="{{ route('category.show', $category->id) }}" class="category-item-name">
                                     {{($category->{'name' . $langDisplay->getLangDisplay()})}}
                                 </a>
@@ -205,8 +206,8 @@
             </div>
         </section>
         <div class="section margin-layout-index container-fluid mt-3">
-            <h3 class="title-category">{{ __('home.Category') }}</h3>
-            <div class="main-list-category d-flex justify-content-between align-items-center">
+            <h3 class="title-category content-products">{{ __('home.Category') }}</h3>
+            <div class="main-list-category">
                 @foreach($categoriesParent as $category)
                     <a href="{{ route('category.show', $category->id) }}" class="main-category-item bg-white">
                         <img src="{{ asset('storage/'.$category->thumbnail) }}" alt="" class="main-category-image">
@@ -258,128 +259,128 @@
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
-            {{--        </div>--}}
+        </div>
 
-            <div class="section margin-layout-index container-fluid mt-3">
-                <div class="row list-marketing">
-                    <div class="col-md-6 show-marketing">
-                        <img src=" {{ asset('images/Rectangle 8.png') }}" alt="">
-                        <a href="#" class="text-content">
-                            <span>Shop Now</span>
-                        </a>
-                    </div>
-                    <div class="col-md-6 show-marketing">
-                        <img src=" {{ asset('images/Rectangle 9.png') }}" alt="">
-                        <a href="#" class="text-content">
-                            <span>Shop Now</span>
-                        </a>
-                    </div>
+        <div class="section margin-layout-index container-fluid mt-3">
+            <div class="row list-marketing">
+                <div class="col-md-6 show-marketing">
+                    <img src=" {{ asset('images/Rectangle 8.png') }}" alt="">
+                    <a href="#" class="text-content">
+                        <span>Shop Now</span>
+                    </a>
+                </div>
+                <div class="col-md-6 show-marketing">
+                    <img src=" {{ asset('images/Rectangle 9.png') }}" alt="">
+                    <a href="#" class="text-content">
+                        <span>Shop Now</span>
+                    </a>
                 </div>
             </div>
-            <div class="section margin-layout-index container-fluid mt-3">
-                <div class="category-img">
-                    @if($locale == 'vi')
-                        <div class="content ">Viet Nam
-                            <img class="flag-ct"
-                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
+        </div>
+        <div class="section margin-layout-index container-fluid mt-3">
+            <div class="category-img">
+                @if($locale == 'vi')
+                    <div class="content ">Viet Nam
+                        <img class="flag-ct"
+                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
+                    </div>
+                @elseif($locale == 'kr')
+                    <div class="content ">Korea
+                        <img class="flag-ct"
+                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png">
+                    </div>
+                @elseif($locale == 'cn')
+                    <div class="content ">China
+                        <img class="flag-ct"
+                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
+                    </div>
+                @else
+                    <div class="content ">Japan
+                        <img class="flag-ct"
+                             src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
+                    </div>
+                @endif
+                <div class="list-products d-flex flex-wrap justify-content-between">
+                    @php
+                        $products = \App\Models\Product::where([['location','=',$locale],['status',\App\Enums\ProductStatus::ACTIVE]])
+                                                    ->limit(10)
+                                                    ->orderBy('id', 'desc')
+                                                    ->get();
+                    @endphp
+                    @foreach($products as $product)
+                        <div class="product-item">
+                            @include('frontend.pages.list-product')
                         </div>
-                    @elseif($locale == 'kr')
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        @foreach($arrayProducts as $keys => $arrayProduct)
+            @if($keys != $locale)
+                <div class="section margin-layout-index container-fluid mt-3">
+                    <div class="row list-marketing">
+                        <div class="col-md-6 show-marketing">
+                            <img src=" {{ asset('images/Rectangle 8.png') }}" alt="">
+                            <a href="#" class="text-content">
+                                <span>Shop Now</span>
+                            </a>
+                        </div>
+                        <div class="col-md-6 show-marketing">
+                            <img src=" {{ asset('images/Rectangle 9.png') }}" alt="">
+                            <a href="#" class="text-content">
+                                <span>Shop Now</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="section margin-layout-index container-fluid mt-3">
+                    @if($keys == 'jp')
+                        <div class="content ">Japan
+                            <img class="flag-ct"
+                                 src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
+                        </div>
+                    @elseif($keys == 'kr')
                         <div class="content ">Korea
                             <img class="flag-ct"
                                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png">
                         </div>
-                    @elseif($locale == 'cn')
+                    @elseif($keys == 'cn')
                         <div class="content ">China
                             <img class="flag-ct"
                                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
                         </div>
                     @else
-                        <div class="content ">Japan
+                        <div class="content ">Viet Nam
                             <img class="flag-ct"
-                                 src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
+                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
                         </div>
                     @endif
-                    <div class="list-products d-flex flex-wrap justify-content-between">
-                        @php
-                            $products = \App\Models\Product::where([['location','=',$locale],['status',\App\Enums\ProductStatus::ACTIVE]])
-                                                        ->limit(10)
-                                                        ->orderBy('id', 'desc')
-                                                        ->get();
-                        @endphp
-                        @foreach($products as $product)
-                            <div class="product-item">
+                    <div class="list-products d-flex flex-wrap {{ count($arrayProduct) > 4 ? 'justify-content-between' : 'justify-content-start'}} ">
+                        @foreach($arrayProduct as $product)
+                            <div class="product-item {{ count($arrayProduct) > 4 ? '' : 'mr-2'}}">
                                 @include('frontend.pages.list-product')
                             </div>
                         @endforeach
                     </div>
                 </div>
+            @endif
+        @endforeach
+        <section class="section-Seven section-description">
+            <div class="container">
+                {{--                <p>{{ __('home.If you are looking for a website to buy and sell online is a great choice for you.') }}--}}
+                {{--                    <span id="dots">...</span>--}}
+                {{--                    <span id="more">--}}
+                {{--                        {{ __('home.long description') }}--}}
+                {{--                    </span>--}}
+                {{--                </p>--}}
+                {{--                <button onclick="myFunction()" id="myBtn">{{ __('home.Show More') }}</button>--}}
+                <p class="text-description">
+                    {{ __('home.long description') }}
+                </p>
             </div>
-            @foreach($arrayProducts as $keys => $arrayProduct)
-                @if($keys != $locale)
-                    <div class="section margin-layout-index container-fluid mt-3">
-                        <div class="row list-marketing">
-                            <div class="col-md-6 show-marketing">
-                                <img src=" {{ asset('images/Rectangle 8.png') }}" alt="">
-                                <a href="#" class="text-content">
-                                    <span>Shop Now</span>
-                                </a>
-                            </div>
-                            <div class="col-md-6 show-marketing">
-                                <img src=" {{ asset('images/Rectangle 9.png') }}" alt="">
-                                <a href="#" class="text-content">
-                                    <span>Shop Now</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="section margin-layout-index container-fluid mt-3">
-                        @if($keys == 'jp')
-                            <div class="content ">Japan
-                                <img class="flag-ct"
-                                     src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
-                            </div>
-                        @elseif($keys == 'kr')
-                            <div class="content ">Korea
-                                <img class="flag-ct"
-                                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png">
-                            </div>
-                        @elseif($keys == 'cn')
-                            <div class="content ">China
-                                <img class="flag-ct"
-                                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
-                            </div>
-                        @else
-                            <div class="content ">Viet Nam
-                                <img class="flag-ct"
-                                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
-                            </div>
-                        @endif
-                        <div class="list-products d-flex flex-wrap {{ count($arrayProduct) > 4 ? 'justify-content-between' : 'justify-content-start'}} ">
-                            @foreach($arrayProduct as $product)
-                                <div class="product-item {{ count($arrayProduct) > 4 ? '' : 'mr-5'}}">
-                                    @include('frontend.pages.list-product')
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                @endif
-            @endforeach
-            <section class="section-Seven section-description">
-                <div class="container">
-                    {{--                <p>{{ __('home.If you are looking for a website to buy and sell online is a great choice for you.') }}--}}
-                    {{--                    <span id="dots">...</span>--}}
-                    {{--                    <span id="more">--}}
-                    {{--                        {{ __('home.long description') }}--}}
-                    {{--                    </span>--}}
-                    {{--                </p>--}}
-                    {{--                <button onclick="myFunction()" id="myBtn">{{ __('home.Show More') }}</button>--}}
-                    <p class="text-description">
-                        {{ __('home.long description') }}
-                    </p>
-                </div>
-            </section>
-            @include('frontend.pages.modal-products')
-        </div>
+        </section>
+        @include('frontend.pages.modal-products')
+    </div>
     </div>
     <script>
         var urla = '{{route('user.wish.lists')}}';
