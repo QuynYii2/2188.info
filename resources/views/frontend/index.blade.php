@@ -54,8 +54,7 @@
                     </div>
                     <ul class="m-auto">
                         @foreach($categoriesParent as $category)
-                            <li class="category-item" data-toggle="modal"
-                                data-target="#modaleCateogryShow_{{$category->id}}">
+                            <li class="category-item">
                                 <a href="{{ route('category.show', $category->id) }}" class="category-item-name">
                                     {{($category->{'name' . $langDisplay->getLangDisplay()})}}
                                 </a>
@@ -380,7 +379,6 @@
             </div>
         </section>
         @include('frontend.pages.modal-products')
-    </div>
     </div>
     <script>
         var urla = '{{route('user.wish.lists')}}';

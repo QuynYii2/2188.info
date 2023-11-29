@@ -82,6 +82,8 @@ a {
   color: #fff;
 }
 
+/* ----- MODAL STYLE ----- */
+/* ----- END STYLE ----- */
 .section-First-posted {
   overflow-y: auto;
   max-height: 60vh;
@@ -134,8 +136,9 @@ a {
   align-items: center;
 }
 .main-list-category .main-category-item {
-  width: 12%;
-  margin: 0.25%;
+  width: 9%;
+  padding: 1%;
+  margin: 1.25%;
   text-align: center;
   box-sizing: border-box;
   border-radius: 3px;
@@ -177,9 +180,11 @@ a {
 }
 .main-list-category .main-category-item .main-category-image {
   margin: 16px 0 0 0;
-  max-width: 150px;
+  max-width: 100%;
+  height: auto;
   text-align: center;
   border-radius: 5px;
+  object-fit: cover;
   transition: transform 0.3s ease-out;
 }
 .main-list-category .main-category-item .main-category-name {
@@ -187,6 +192,10 @@ a {
   font-weight: 600;
   text-align: center;
   transition: transform 0.3s ease-out;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 #animation-ctn .alert {
@@ -1068,6 +1077,9 @@ td.priceTransport {
 .item-hover:hover {
   border: 1px solid #fd6506;
 }
+.item-hover:hover .item-body .card-title1 a {
+  color: #F47621;
+}
 .item-hover:hover .button-hover {
   bottom: 20px;
 }
@@ -1095,7 +1107,7 @@ td.priceTransport {
 .item-hover .icon-hover {
   position: absolute;
   right: -30px;
-  top: 10px;
+  top: 48px;
   transition: right 0.5s ease;
 }
 .item-hover .icon-hover .list-icon {
@@ -3273,7 +3285,7 @@ hr {
 }
 .section .item-body .card-title1:hover a {
   text-decoration: underline;
-  color: #0a6cdc;
+  color: #F47621;
 }
 .section .item-body .card-price {
   font-size: 20px;
