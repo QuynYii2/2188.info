@@ -53,9 +53,9 @@
                         <span>All Categories</span>
                     </div>
                     <ul class="m-auto">
-                        @foreach($categories as $category)
-                            <li class="category-item">
-                                <a class="text-decoration-none" href="{{ route('category.show', $category->id) }}">
+                        @foreach($categoriesParent as $category)
+                            <li class="category-item" data-toggle="modal" data-target="#modaleCateogryShow_{{$category->id}}">
+                                <a href="{{ route('category.show', $category->id) }}" class="category-item-name">
                                     {{($category->{'name' . $langDisplay->getLangDisplay()})}}
                                 </a>
                             </li>
@@ -136,7 +136,8 @@
                     <div class="btn-my-posted d-flex align-items-center justify-content-between">
                         <button class="btnPosted w-100">
                             <span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="33" height="32" viewBox="0 0 33 32"
+                                <svg xmlns="http://www.w3.org/2000/svg" width="33" height="32"
+                                     viewBox="0 0 33 32"
                                      fill="none">
                                 <g clip-path="url(#clip0_187_12220)">
                                     <path d="M26.7768 5.72324C24.0317 2.97824 20.3821 1.46643 16.5 1.46643C12.6179 1.46643 8.96825 2.97824 6.22325 5.72324C3.47825 8.46831 1.9665 12.118 1.9665 16C1.9665 19.882 3.47825 23.5317 6.22325 26.2767C8.96831 29.0217 12.618 30.5335 16.5 30.5335C20.382 30.5335 24.0317 29.0217 26.7768 26.2767C29.5218 23.5317 31.0335 19.882 31.0335 16C31.0335 12.118 29.5218 8.46831 26.7768 5.72324ZM24.8015 24.3015C22.5841 26.5189 19.6359 27.7401 16.5 27.7401C13.3641 27.7401 10.4159 26.5189 8.1985 24.3015C5.98106 22.0841 4.75987 19.1359 4.75987 16C4.75987 12.8641 5.98106 9.91593 8.1985 7.69849C10.4159 5.48106 13.3641 4.25987 16.5 4.25987C19.6359 4.25987 22.5841 5.48106 24.8015 7.69849C27.0189 9.91593 28.2401 12.8641 28.2401 16C28.2401 19.1359 27.0189 22.0841 24.8015 24.3015Z"
@@ -207,18 +208,18 @@
             <h3 class="title-category">{{ __('home.Category') }}</h3>
             <div class="main-list-category d-flex justify-content-between align-items-center">
                 @foreach($categoriesParent as $category)
-                    <div class="main-category-item bg-white">
+                    <a href="{{ route('category.show', $category->id) }}" class="main-category-item bg-white">
                         <img src="{{ asset('storage/'.$category->thumbnail) }}" alt="" class="main-category-image">
                         <p class="main-category-name">
-                            {{$category->name}}
+                            {{($category->{'name' . $langDisplay->getLangDisplay()})}}
                         </p>
-                    </div>
+                    </a>
                 @endforeach
             </div>
         </div>
         <div class="section margin-layout-index container-fluid mt-3">
             <h3 class="content-products">{{ __('home.New Products') }}</h3>
-            <div class="swiper NewProducts row">
+            <div class="swiper NewProducts">
                 <div class="swiper-wrapper">
                     @foreach($newProducts as $product)
                         <div class="swiper-slide">
@@ -230,10 +231,9 @@
                 <div class="swiper-button-prev"></div>
             </div>
         </div>
-
         <div class="section margin-layout-index container-fluid mt-3">
             <h3 class="content-products">{{ __('home.Featured Products') }}</h3>
-            <div class="swiper FeaturedProducts">
+            <div class="swiper NewProducts">
                 <div class="swiper-wrapper">
                     @foreach($productFeatures as $product)
                         <div class="swiper-slide">
@@ -245,12 +245,11 @@
                 <div class="swiper-button-prev"></div>
             </div>
         </div>
-
         <div class="section margin-layout-index container-fluid mt-3">
             <h3 class="content-products">{{ __('home.Hot Deals') }}</h3>
-            <div class="swiper FeaturedProducts">
+            <div class="swiper NewProducts">
                 <div class="swiper-wrapper">
-                    @foreach($productHots  as $product)
+                    @foreach($productHots as $product)
                         <div class="swiper-slide">
                             @include('frontend.pages.list-product')
                         </div>
@@ -259,26 +258,134 @@
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
-        </div>
+            {{--        </div>--}}
 
-        <section class="section-Seven mt-5">
-            <div class="container-fluid">
-                <p>{{ __('home.If you are looking for a website to buy and sell online is a great choice for you.') }}
-                    <span id="dots">...</span>
-                    <span id="more">
-                        {{ __('home.long description') }}
-                    </span>
-                </p>
-                <button onclick="myFunction()" id="myBtn">{{ __('home.Show More') }}</button>
+            <div class="section margin-layout-index container-fluid mt-3">
+                <div class="row list-marketing">
+                    <div class="col-md-6 show-marketing">
+                        <img src=" {{ asset('images/Rectangle 8.png') }}" alt="">
+                        <a href="#" class="text-content">
+                            <span>Shop Now</span>
+                        </a>
+                    </div>
+                    <div class="col-md-6 show-marketing">
+                        <img src=" {{ asset('images/Rectangle 9.png') }}" alt="">
+                        <a href="#" class="text-content">
+                            <span>Shop Now</span>
+                        </a>
+                    </div>
+                </div>
             </div>
-        </section>
-        @include('frontend.pages.modal-products')
+            <div class="section margin-layout-index container-fluid mt-3">
+                <div class="category-img">
+                    @if($locale == 'vi')
+                        <div class="content ">Viet Nam
+                            <img class="flag-ct"
+                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
+                        </div>
+                    @elseif($locale == 'kr')
+                        <div class="content ">Korea
+                            <img class="flag-ct"
+                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png">
+                        </div>
+                    @elseif($locale == 'cn')
+                        <div class="content ">China
+                            <img class="flag-ct"
+                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
+                        </div>
+                    @else
+                        <div class="content ">Japan
+                            <img class="flag-ct"
+                                 src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
+                        </div>
+                    @endif
+                    <div class="list-products d-flex flex-wrap justify-content-between">
+                        @php
+                            $products = \App\Models\Product::where([['location','=',$locale],['status',\App\Enums\ProductStatus::ACTIVE]])
+                                                        ->limit(10)
+                                                        ->orderBy('id', 'desc')
+                                                        ->get();
+                        @endphp
+                        @foreach($products as $product)
+                            <div class="product-item">
+                                @include('frontend.pages.list-product')
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            @foreach($arrayProducts as $keys => $arrayProduct)
+                @if($keys != $locale)
+                    <div class="section margin-layout-index container-fluid mt-3">
+                        <div class="row list-marketing">
+                            <div class="col-md-6 show-marketing">
+                                <img src=" {{ asset('images/Rectangle 8.png') }}" alt="">
+                                <a href="#" class="text-content">
+                                    <span>Shop Now</span>
+                                </a>
+                            </div>
+                            <div class="col-md-6 show-marketing">
+                                <img src=" {{ asset('images/Rectangle 9.png') }}" alt="">
+                                <a href="#" class="text-content">
+                                    <span>Shop Now</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="section margin-layout-index container-fluid mt-3">
+                        @if($keys == 'jp')
+                            <div class="content ">Japan
+                                <img class="flag-ct"
+                                     src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
+                            </div>
+                        @elseif($keys == 'kr')
+                            <div class="content ">Korea
+                                <img class="flag-ct"
+                                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png">
+                            </div>
+                        @elseif($keys == 'cn')
+                            <div class="content ">China
+                                <img class="flag-ct"
+                                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
+                            </div>
+                        @else
+                            <div class="content ">Viet Nam
+                                <img class="flag-ct"
+                                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
+                            </div>
+                        @endif
+                        <div class="list-products d-flex flex-wrap {{ count($arrayProduct) > 4 ? 'justify-content-between' : 'justify-content-start'}} ">
+                            @foreach($arrayProduct as $product)
+                                <div class="product-item {{ count($arrayProduct) > 4 ? '' : 'mr-5'}}">
+                                    @include('frontend.pages.list-product')
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+            @endforeach
+            <section class="section-Seven section-description">
+                <div class="container">
+                    {{--                <p>{{ __('home.If you are looking for a website to buy and sell online is a great choice for you.') }}--}}
+                    {{--                    <span id="dots">...</span>--}}
+                    {{--                    <span id="more">--}}
+                    {{--                        {{ __('home.long description') }}--}}
+                    {{--                    </span>--}}
+                    {{--                </p>--}}
+                    {{--                <button onclick="myFunction()" id="myBtn">{{ __('home.Show More') }}</button>--}}
+                    <p class="text-description">
+                        {{ __('home.long description') }}
+                    </p>
+                </div>
+            </section>
+            @include('frontend.pages.modal-products')
+        </div>
+    </div>
+    <script>
+        var urla = '{{route('user.wish.lists')}}';
+        var token = '{{ csrf_token() }}';
 
-        <script>
-            var urla = '{{route('user.wish.lists')}}';
-            var token = '{{ csrf_token() }}';
 
-
-        </script>
+    </script>
 @endsection
 

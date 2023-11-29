@@ -109,18 +109,19 @@ $isRoute = in_array($currentRouteName, $arrNameNeedHid);
 @include('sweetalert::alert')
 
 <div class="{{ $isRoute ? '' : 'marginTop-body' }}" id="mt-body {{ $isRoute ? ' booth' : '' }} ">
-<div>
-    @yield('content')
-</div>
+    <div>
+        @yield('content')
+    </div>
 
-<!-- Footer -->
-@include('frontend.layouts.partials.footer', ['isRoute' => $isRoute])
-{{----}}
-<!-- Back to top -->
-<div class="btn-back-to-top" id="myBtn">
+    <!-- Footer -->
+    @include('frontend.layouts.partials.footer', ['isRoute' => $isRoute])
+    {{----}}
+    <!-- Back to top -->
+    <div class="btn-back-to-top" id="myBtn">
     <span class="symbol-btn-back-to-top">
         <i class="zmdi zmdi-chevron-up"></i>
     </span>
+    </div>
 </div>
 </body>
 <script src="{{ asset('js/frontend.js') }}"></script>
