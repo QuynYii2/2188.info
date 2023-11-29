@@ -4,16 +4,6 @@
 
 @section('content')
     <style>
-        @media (min-width: 768px) {
-            .page-register {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                padding: 20px;
-            }
-        }
-
         .member-item {
             border-radius: 6px;
         }
@@ -39,13 +29,33 @@
 
         .list-permission {
             margin: 0 16px;
-            min-height: 250px;
+            width: 250px;
+            height: 500px;
+            overflow-y: auto;
         }
 
         .item-permission {
             list-style: inside;
             font-size: 18px;
             font-weight: 500;
+        }
+
+        @media (min-width: 768px) {
+            .page-register {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .list-permission {
+                margin: 0 16px;
+                width: 250px;
+                height: auto;
+            }
         }
     </style>
     <link rel="stylesheet" href="{{asset('css/register_member.css')}}">
