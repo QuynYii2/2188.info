@@ -51,6 +51,125 @@ a {
   object-fit: cover;
 }
 
+.section-First-category {
+  overflow-y: auto;
+  max-height: 60vh;
+}
+.section-First-category .show-list-category {
+  font-size: 20px;
+  font-weight: 600;
+}
+.section-First-category ul .category-item a {
+  font-size: 16px;
+  color: #000;
+  font-weight: 500;
+}
+.section-First-category ul .category-item a:hover {
+  color: #F47621;
+}
+.section-First-category ul .active a {
+  color: #F47621;
+}
+
+.section-First-posted {
+  overflow-y: auto;
+  max-height: 60vh;
+}
+.section-First-posted .list-item-posted-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+.section-First-posted .list-item-posted .list-item {
+  margin: 0 8px;
+}
+.section-First-posted .list-item-posted .list-item .posted-image {
+  max-width: 60px;
+}
+.section-First-posted .list-item-posted .list-item .posted-content .posted-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+.section-First-posted .list-item-posted .list-item .posted-content .posted-value {
+  font-size: 16px;
+  font-weight: 400;
+  color: #929292;
+}
+.section-First-posted .list-item-posted-bottom {
+  margin-top: 16px;
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+}
+.section-First-posted .btn-my-posted button {
+  border: 3px solid #F42121;
+  padding: 8px 16px;
+}
+.section-First-posted .btn-my-posted button span {
+  text-align: center;
+  vertical-align: middle;
+  font-size: 20px;
+  font-weight: 600;
+  color: #F42121;
+}
+
+.main-list-category {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.main-list-category .main-category-item {
+  width: 11%;
+  margin: 10px;
+  text-align: center;
+  box-sizing: border-box;
+  border-radius: 3px;
+  cursor: pointer;
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: border-color 0.3s ease;
+  position: relative;
+}
+.main-list-category .main-category-item::before, .main-list-category .main-category-item::after {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  transform-origin: center;
+}
+.main-list-category .main-category-item::before {
+  border-top: 0.2em solid #F47621;
+  border-bottom: 0.2em solid #F47621;
+  transform: scale3d(0, 1, 1);
+}
+.main-list-category .main-category-item::after {
+  border-left: 0.2em solid #F47621;
+  border-right: 0.2em solid #F47621;
+  transform: scale3d(1, 0, 1);
+}
+.main-list-category .main-category-item:hover::before, .main-list-category .main-category-item:hover::after {
+  transform: scale3d(1, 1, 1);
+  transition: transform 600ms;
+}
+.main-list-category .main-category-item:hover::before .main-category-name, .main-list-category .main-category-item:hover::after .main-category-name {
+  color: #F47621;
+}
+.main-list-category .main-category-item .main-category-image {
+  margin: 16px 0 0 0;
+  max-width: 100px;
+  display: block;
+  transition: transform 0.3s ease-out;
+}
+.main-list-category .main-category-item .main-category-name {
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  transition: transform 0.3s ease-out;
+}
+
 #animation-ctn .alert {
   background: #f8d7da;
   padding: 5px 10px;
@@ -967,10 +1086,13 @@ td.priceTransport {
   cursor: pointer;
   padding: 0;
   width: 101px;
-  background: white;
   height: 40px;
   border-radius: 10px;
   margin: 5px;
+}
+
+.button_seller i {
+  font-size: 24px;
 }
 
 .item-voucher .item {
@@ -1492,6 +1614,7 @@ a {
 }
 
 .header .header-pc {
+  background-color: #fff;
   position: fixed;
   left: 0;
   right: 0;
@@ -1499,8 +1622,8 @@ a {
   z-index: 10;
 }
 .header .header-pc .header-top {
-  padding: 20px 0;
-  background-color: #fd6506;
+  height: 100px;
+  padding: 26px 40px;
 }
 .header .header-pc .header-top-left .header-logo {
   padding-right: 15px;
@@ -1511,19 +1634,25 @@ a {
 .header .header-pc .header-top-middle .search-wrapper {
   position: relative;
   margin: 0;
-  height: 50px;
   border-radius: 30px;
   background-color: white;
+  height: 40px;
+  border: 1px solid #fd6506;
 }
 .header .header-pc .header-top-middle .search-wrapper input {
+  margin-left: 5%;
   padding-left: 13%;
   padding-right: 10%;
-  width: 100%;
+  width: 95%;
   height: 100%;
   border: 0;
   background: #fff;
   outline: none;
   border-radius: 40px;
+}
+.header .header-pc .header-top-middle .search-wrapper input::placeholder {
+  font-size: 14px;
+  color: #BFBFBF;
 }
 .header .header-pc .header-top-middle .search-wrapper .button-right {
   position: absolute;
@@ -1534,9 +1663,9 @@ a {
   height: 100%;
   min-width: 10%;
   width: auto;
-  color: #fd6506;
-  background: white;
-  border-radius: 40px;
+  background-color: #fd6506;
+  color: #fff;
+  border-radius: 0 40px 40px 0;
 }
 .header .header-pc .header-top-middle .search-wrapper .category-drop {
   background-color: transparent;
@@ -1547,8 +1676,9 @@ a {
   border-radius: 40px;
 }
 .header .header-pc .header-top-middle .search-wrapper .category-drop button {
-  color: gray;
-  font-size: 20px;
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
   border-radius: 40px;
   border: none;
   background: white;
@@ -1584,6 +1714,9 @@ a {
   z-index: 3;
   position: relative;
 }
+.header .header-pc .header-top-right .user i {
+  font-size: 24px;
+}
 .header .header-pc .header-top-right .user .hover-list {
   display: none;
   border-radius: 5px;
@@ -1602,7 +1735,6 @@ a {
 }
 .header .header-pc .header-top-right .user .hover-list .drop-item:hover a {
   text-decoration: none;
-  color: white;
 }
 .header .header-pc .header-top-right .user .hover-list .drop-item:hover button {
   color: white;
@@ -1612,7 +1744,7 @@ a {
 }
 .header .header-pc .header-top-right .item {
   position: relative;
-  margin-right: 8px;
+  margin-right: 2px;
 }
 .header .header-pc .header-top-right .item button {
   background: none;
@@ -1622,22 +1754,23 @@ a {
   outline: none;
 }
 .header .header-pc .header-top-right .item .button {
-  color: white;
   cursor: pointer;
   padding: 0;
 }
 .header .header-pc .header-top-right .item .button_login {
   cursor: pointer;
   padding: 0;
-  width: 100px;
-  background: white;
+  width: 120px;
   height: 40px;
   border-radius: 10px;
   margin: 5px;
 }
+.header .header-pc .header-top-right .item .button_login i {
+  font-size: 24px;
+}
 .header .header-pc .header-top-right .item .total_shop {
   position: absolute;
-  top: 0px;
+  top: 0;
   right: 5px;
   height: 20px;
   width: 20px;
@@ -1771,14 +1904,15 @@ a {
   font-size: 20px;
 }
 .header .header-pc .header-top-right .item .item-text {
-  font-size: 17px;
+  font-size: 15px;
+  font-weight: 500;
 }
 .header .header-pc .header-top-right .item .item-shop {
   margin-top: 6px;
   position: relative;
 }
 .header .header-pc .header-top-right .item .item-shop--icon {
-  font-size: 40px;
+  font-size: 24px;
 }
 .header .header-pc .header-top-right .item .item-shop--text {
   position: absolute;
@@ -1924,15 +2058,24 @@ a {
   height: 100%;
   width: 100%;
 }
+.header .header-pc .select-language a {
+  text-decoration: none;
+}
 .header .header-pc .header-bottom {
   background-color: white;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  height: 40px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
 }
 .header .header-pc .header-bottom-left--item {
   margin: 0 10px;
 }
 .header .header-pc .header-bottom-left--item a {
   font-size: 16px;
+  color: #929292;
 }
 .header .header-pc .header-bottom-left--item a .text {
   font-weight: 500;

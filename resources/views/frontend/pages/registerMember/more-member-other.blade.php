@@ -18,189 +18,145 @@
     }
 
 @endphp
-<table class="table element-bordered" id="tableMemberOther">
-    @if(isset($isAdminUpdate))
-        <form action="{{route('admin.edit.users.company', $isAdminUpdate->id)}}" method="post" id="formRegisterMember">
-            @csrf
-            @method('PUT')
-    @else
-        <form action="{{route('register.member.info')}}" method="post" id="formRegisterMember">
-            @csrf
-    @endif
-        @isset($isAdminUpdate)
-            <input type="text" class="d-none" name="updateCheck" value="updateCheck">
-        @endisset
-        <input type="text" class="d-none" name="member_id" value="{{ $member->id }}">
-        <input type="text" class="d-none" name="member" value="{{ ($member->name) }}">
-        <div class="d-none" id="text-category">{{ __('home.Select the applicable category') }}</div>
-        <tbody class="text-nowrap">
-        <tr class="text-center">
-            <th scope="row">
-                <label for="datetime_register">{{ __('home.Day register') }}</label>
-            </th>
-            <th colspan="3">
-                <input type="text" class="form-control" id="datetime_register"
-                       name="datetime_register" disabled>
-            </th>
-            <th scope="row">
-                <label for="number_clearance">{{ __('home.Number clearance')}}</label>
-            </th>
-            <td colspan="2">
-                <input type="number" class="form-control" id="number_clearance"
-                       value="{{ $create ? $create['number_clearance'] : old('number_clearance', $exitsMember ? $exitsMember->number_clearance: '') }}"
-                       name="number_clearance"
-                       placeholder="{{ __('home.Customs clearance number (enter numbers only)')}}">
-            </td>
-        </tr>
-        <tr class="text-center">
-            <th rowspan="4" class="companyName">
-                <label>{{ __('home.Company Name') }}</label>
-            </th>
-            <th>
-                <label for="name_en">{{ __('home.English only') }}</label>
-            </th>
-            <td colspan="2">
-                <input type="text" class="form-control" id="name_en"
+<div class="container">
+        @if(isset($isAdminUpdate))
+            <form action="{{route('admin.edit.users.company', $isAdminUpdate->id)}}" method="post" id="formRegisterMember">
+                @csrf
+                @method('PUT')
+        @else
+            <form action="{{route('register.member.info')}}" method="post" id="formRegisterMember">
+                @csrf
+        @endif
+            @isset($isAdminUpdate)
+                <input type="text" class="d-none" name="updateCheck" value="updateCheck">
+            @endisset
+            <input type="text" class="d-none" name="member_id" value="{{ $member->id }}">
+            <input type="text" class="d-none" name="member" value="{{ ($member->name) }}">
+            <div class="d-none" id="text-category">{{ __('home.Select the applicable category') }}</div>
+        <div class="day_register title-input">Day register:</div>
+        <div class="form-group">
+            <label for="number_clearance" class="label_form">{{ __('home.Number clearance')}} <span class="text-danger">*</span></label>
+            <input type="number" class="form-control" id="number_clearance" name="number_clearance"
+                   value="{{ $create ? $create['number_clearance'] : old('number_clearance', $exitsMember ? $exitsMember->number_clearance: '') }}"
+                   placeholder="{{ __('home.Customs clearance number (enter numbers only)')}}" required>
+        </div>
+        <label for="name_en" class="label_form">{{ __('home.Company Name') }} <span class="text-danger">*</span></label>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="name_en" name="name_en"
                        value="{{ $create ? $create['name_en'] : old('name_en', $exitsMember ? $exitsMember->name_en : '') }}"
-                       name="name_en" required>
-            </td>
-            <th>
-                <label for="phone">{{ __('home.Phone Number') }}</label>
-            </th>
-            <td colspan="2">
-                <input type="number" class="form-control" id="phone"
-                       value="{{ $create ? $create['phone'] : old('phone', $exitsMember ? $exitsMember->phone : '') }}"
-                       name="phone" placeholder="{{ __('home.Phone Number') }}" required>
-            </td>
-        </tr>
-        <tr class="text-center">
-            <th>
-                <label for="name_kr">{{ __('home.Name Korea')}}</label>
-            </th>
-            <td colspan="2">
-                <input type="text" class="form-control" id="name_kr"
+                       placeholder="{{ __('home.English only') }}" required>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" id="name_kr" name="name_kr"
                        value="{{ $create ? $create['name_kr'] : old('name_kr', $exitsMember ? $exitsMember->name_kr :'') }}"
-                       name="name_kr" required>
-            </td>
-            <th>
-                <label for="fax">{{ __('home.Fax') }}</label>
-            </th>
-            <td colspan="2">
-                <input type="number" class="form-control" id="fax"
-                       value="{{ $create ? $create['fax'] : old('fax', $exitsMember ? $exitsMember->fax :'') }}"
-                       name="fax" placeholder="{{ __('home.Fax') }}">
-            </td>
-        </tr>
-        <tr class="text-center">
-            <th>
-                <label for="homepage">{{ __('home.Home') }}</label>
-            </th>
-            <td colspan="2">
+                       placeholder="{{ __('home.Name Korea')}}">
+            </div>
+        </div>
+        <label for="email" class="label_form">{{ __('home.company information') }} <span
+                    class="text-danger">*</span></label>
+        <div class="form-row">
+            <div class="form-group col-md-6">
                 <input type="text" class="form-control" id="homepage"
                        value="{{ $create ? $create['homepage'] : old('homepage', $exitsMember ? $exitsMember->homepage : '') }}"
                        name="homepage" placeholder="{{ __('home.Home') }}" required>
-            </td>
-            <th>
-                <label for="email">{{ __('home.email') }}</label>
-            </th>
-            <td colspan="2">
-                <input type="email" class="form-control" id="email"
-                       value="{{ $create ? $create['email'] : old('email', $exitsMember ? $exitsMember->email: '') }}"
-                       name="email" placeholder="{{ __('home.email') }}">
-            </td>
-        </tr>
-        <tr>
-            <th class="text-center">
-                <label for="number_business">{{ __('home.Business registration number') }}</label>
-            </th>
-            <td class="text-center" colspan="2">
+            </div>
+            <div class="form-group col-md-6">
                 <input type="number" class="form-control" id="number_business"
                        value="{{ $create ? $create['number_business'] : old('number_business', $exitsMember ? $exitsMember->number_business :'') }}"
                        name="number_business" placeholder="{{ __('home.Business registration number') }}" required>
-            </td>
-            <th class="text-center">
-                <label for="giay_phep_kinh_doanh"> {{ __('home.giay_phep_kinh_doanh') }} </label>
-            </th>
-            <td colspan="2">
-                <div class="" style="margin-top: 16px; margin-bottom: -38px">
-                    <label id="giay_phep_kinh_doanhLabel" for="giay_phep_kinh_doanh"
-                           class="btn btn-outline-secondary">{{ __('home.Select file') }}</label>
-                    <input type="file" class="form-control" id="giay_phep_kinh_doanh" accept="image/*"
-                           style="visibility:hidden;"
-                           name="giay_phep_kinh_doanh" {{ $exitsMember ? '' : 'required' }}">
+            </div>
+            <div class="form-group col-md-6">
+                <input type="number" class="form-control" id="phone"
+                       value="{{ $create ? $create['phone'] : old('phone', $exitsMember ? $exitsMember->phone : '') }}"
+                       name="phone" placeholder="{{ __('home.Phone Number') }}" required>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="number" class="form-control" id="fax"
+                       value="{{ $create ? $create['fax'] : old('fax', $exitsMember ? $exitsMember->fax :'') }}"
+                       name="fax" placeholder="{{ __('home.Fax') }}">
+            </div>
+            <div class="form-group col-md-12">
+                <input type="email" class="form-control" id="email"
+                       value="{{ $create ? $create['email'] : old('email', $exitsMember ? $exitsMember->email: '') }}"
+                       name="email" placeholder="{{ __('home.email') }}">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label_item">
+                {{ __('home.Business license')}}
+                <span class="text-danger">*</span>
+            </div>
+            <label id="giay_phep_kinh_doanhLabel" for="giay_phep_kinh_doanh"
+                   class="upload-item-input d-flex justify-content-between">
+                <div class="upload-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="61" viewBox="0 0 60 61" fill="none">
+                        <path d="M30 13V48M12.5 30.5H47.5" stroke="#929292" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </div>
-                @if($exitsMember)
-                    <img src="{{ asset('storage/'.$exitsMember->giay_phep_kinh_doanh) }}" alt="" width="60px"
-                         height="60px">
-                @endif
-            </td>
-        </tr>
-        <tr class="text-center">
-            <th rowspan="2">
-                <label>{{ __('home.Address Business') }}</label>
-            </th>
-            <th>
-                <label for="detail-address"> {{ __('home.Language English') }} </label>
-            </th>
-            <td colspan="5">
-                <div class="row">
-                    <div class="form-group col-md-3 address-above" data-toggle="modal" data-target="#modal-address">
-                        <label for="countries-select">{{ __('home.Select country') }}:</label>
-                        <input type="text" readonly class="form-control" id="countries-select" name="countries-select">
-                    </div>
-                    <div class="form-group col-md-3 address-above" data-toggle="modal" data-target="#modal-address">
-                        <label for="cities-select">{{ __('home.Choose the city') }}:</label>
-                        <input type="text" readonly class="form-control" id="cities-select" name="cities-select">
-                    </div>
-                    <div class="form-group col-md-3 address-above" data-toggle="modal" data-target="#modal-address">
-                        <label for="provinces-select">{{ __('home.Select district/district') }}:</label>
-                        <input type="text" readonly class="form-control" id="provinces-select" name="provinces-select">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="detail-address">{{ __('home.Address detail') }}:</label>
-                        <input type="text" name="detail-address" id="detail-address" class="form-control"
-                               value="{{ $create ? $create['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">
-                    </div>
-                    <input type="hidden" id="address_code" name="address_code">
+            </label>
+            <input type="file" class="form-control" id="giay_phep_kinh_doanh" accept="image/*"
+                   style="visibility:hidden;"
+                   name="giay_phep_kinh_doanh" {{ $exitsMember ? '' : 'required' }}">
+            @if($exitsMember)
+                <img src="{{ asset('storage/'.$exitsMember->giay_phep_kinh_doanh) }}" alt="" width="60px"
+                     height="60px">
+            @endif
+        </div>
+        <div class="label_form">{{ __('home.Address Business') }} <span class="text-danger">*</span></div>
+        <label for="detail-address" class="label_item">{{ __('home.Address English') }}</label>
+        <div class="form-row">
+            <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">
+                <input type="text" readonly class="form-control" id="countries-select"
+                       placeholder="{{ __('home.Select country') }}"
+                       name="countries-select">
+            </div>
+            <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">
+                <input type="text" readonly class="form-control" id="cities-select"
+                       placeholder="{{ __('home.Choose the city') }}"
+                       name="cities-select">
+            </div>
+            <div class="form-group col-md-4 address-above" data-toggle="modal" data-target="#modal-address">
+                <input type="text" readonly class="form-control" id="provinces-select"
+                       placeholder="{{ __('home.Select district/district') }}"
+                       name="provinces-select">
+            </div>
+            <div class="form-group col-md-12">
+                <input type="text" name="detail-address" id="detail-address"
+                       class="form-control" placeholder="{{ __('home.Address detail') }}"
+                       value="{{ $create ? $create['address_en'] : old('address_en', $exitsMember ? $exitsMember->address_en : '') }}">
+            </div>
+            <input type="hidden" id="address_code" name="address_code">
+        </div>
+        <label for="detail-address-1" class="label_item">{{ __('home.Address Korea') }}</label>
+        <div class="form-group">
+            <div class="form-row">
+                <div class="form-group col-md-4 address-below" data-toggle="modal" data-target="#modal-address">
+                    <input type="text" readonly class="form-control" id="countries-select-1"
+                           placeholder="{{ __('home.Select country') }}"
+                           name="countries-select-1">
                 </div>
-            </td>
-        </tr>
-        <tr class="text-center">
-            <th>
-                <label for="detail-address-1"> {{ __('home.Language Local') }} </label>
-            </th>
-            <td colspan="5">
-                <div class="row">
-                    <div class="form-group col-md-3 address-below" data-toggle="modal" data-target="#modal-address">
-                        <label for="countries-select-1">{{ __('home.Select country') }}:</label>
-                        <input type="text" readonly class="form-control" id="countries-select-1"
-                               name="countries-select-1">
-                    </div>
-                    <div class="form-group col-md-3 address-below" data-toggle="modal" data-target="#modal-address">
-                        <label for="cities-select-1">{{ __('home.Choose the city') }}:</label>
-                        <input type="text" readonly class="form-control" id="cities-select-1" name="cities-select-1">
-                    </div>
-                    <div class="form-group col-md-3 address-below" data-toggle="modal" data-target="#modal-address">
-                        <label for="provinces-select-1">{{ __('home.Select district/district') }}:</label>
-                        <input type="text" readonly class="form-control" id="provinces-select-1"
-                               name="provinces-select-1">
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="address_kr"> {{ __('home.Address detail') }}:</label>
-                        <input type="text" name="detail-address-1" id="detail-address-1" class="form-control"
-                               value="{{ $create ? $create['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">
-                    </div>
+                <div class="form-group col-md-4 address-below" data-toggle="modal" data-target="#modal-address">
+                    <input type="text" readonly class="form-control" id="cities-select-1"
+                           placeholder="{{ __('home.Choose the city') }}"
+                           name="cities-select-1">
                 </div>
-            </td>
-        </tr>
-        <tr class="text-center">
-            <th>
-                <label>{{ __('home.Business industry') }}</label>
-            </th>
-            <th>
-                <label for="type_business">{{ __('home.Business') }}</label>
-            </th>
-            <td colspan="2">
+                <div class="form-group col-md-4 address-below" data-toggle="modal" data-target="#modal-address">
+                    <input type="text" readonly class="form-control" id="provinces-select-1"
+                           placeholder="{{ __('home.Select district/district') }}"
+                           name="provinces-select-1">
+                </div>
+                <div class="form-group col-md-12">
+                    <input type="text" name="detail-address-1" id="detail-address-1"
+                           class="form-control" placeholder="{{ __('home.Address detail') }}"
+                           value="{{ $create ? $create['address_kr'] : old('address_kr', $exitsMember ? $exitsMember->address_kr : '') }}">
+                </div>
+            </div>
+        </div>
+        <div class="label_form">{{ __('home.Business industry') }} <span class="text-danger">*</span></div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="type_business" class="label_item">{{ __('home.Business') }}</label>
                 <select id="type_business" name="type_business" class="form-control">
                     <option @if($exitsMember)
                                 @if($exitsMember->type_business == 'distributive')
@@ -213,11 +169,9 @@
                             @endif
                             @endif value="manufacture">{{ __('home.manufacture') }}</option>
                 </select>
-            </td>
-            <th>
-                <label for="code_business">{{ __('home.Business industry') }}</label>
-            </th>
-            <td colspan="2">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="code_business" class="label_item">{{ __('home.Business industry') }}</label>
                 <select id="code_business" name="code_business" class="form-control">
                     <option @if($exitsMember)
                                 @if($exitsMember->code_business == 'wholesale')
@@ -261,152 +215,151 @@
                             @endif
                             @endif class="manufacture d-none" value="machining">{{ __('home.machining') }}</option>
                 </select>
-            </td>
-        </tr>
-        <tr class="text-center">
-            <th rowspan="2">
-                <label>{{ __('home.PLU') }}</label>
-            </th>
-            <th>
-                <label for="code_1">{{ __('home.1st classification') }}</label>
-            </th>
-            <td colspan="2">
-                <div class="multiselect" style="position: relative">
-                    <div class="selectBox" id="code_1_item" onclick="showCheckboxes()">
-                        <select>
-                            <option id="inputCheckboxCategory">{{ __('home.Select the applicable category') }}</option>
-                        </select>
-                        <div class="overSelect"></div>
-                    </div>
-                    @if($exitsMember)
-                        @php
-                            $listCategory = $exitsMember->category_id;
-                            $arrayCategory = explode(',', $listCategory);
-                        @endphp
-                        <div id="code_1" class="mt-1 checkboxes">
-                            @foreach($categories_no_parent as $category)
-                                @foreach($arrayCategory as $item)
-                                    @php
-                                        $isChecked = false;
-                                        if ($category->id == $item){
-                                            $isChecked = true;
-                                            break;
-                                        }
-                                    @endphp
-                                @endforeach
-                                <label class="ml-2 d-flex align-items-center" for="code_1-{{$category->id}}">
-                                    <input type="checkbox" id="code_1-{{$category->id}}"
-                                           name="code_1[]"
-                                           value="{{ ($category->id) }}"
-                                           {{ $isChecked ? 'checked' : '' }}
-                                           class="inputCheckboxCategory mr-2 p-3"/>
-                                    <span class="labelCheckboxCategory">
+            </div>
+        </div>
+        <div class="label_form">{{ __('home.PLU') }} <span class="text-danger">*</span></div>
+        <div class="form-group">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="code_1" class="label_item">{{ __('home.1st classification') }} <span
+                                class="text-danger">*</span></label>
+                    <div class="multiselect" style="position: relative">
+                        <div class="selectBox" id="code_1_item" onclick="showCheckboxes()">
+                            <select>
+                                <option id="inputCheckboxCategory">{{ __('home.Select the applicable category') }}</option>
+                            </select>
+                            <div class="overSelect"></div>
+                        </div>
+                        @if($exitsMember)
+                            @php
+                                $listCategory = $exitsMember->category_id;
+                                $arrayCategory = explode(',', $listCategory);
+                            @endphp
+                            <div id="code_1" class="mt-1 checkboxes">
+                                @foreach($categories_no_parent as $category)
+                                    @foreach($arrayCategory as $item)
+                                        @php
+                                            $isChecked = false;
+                                            if ($category->id == $item){
+                                                $isChecked = true;
+                                                break;
+                                            }
+                                        @endphp
+                                    @endforeach
+                                    <label class="ml-2 d-flex align-items-center" for="code_1-{{$category->id}}">
+                                        <input type="checkbox" id="code_1-{{$category->id}}"
+                                               name="code_1[]"
+                                               value="{{ ($category->id) }}"
+                                               {{ $isChecked ? 'checked' : '' }}
+                                               class="inputCheckboxCategory mr-2 p-3"/>
+                                        <span class="labelCheckboxCategory">
                                                             @if(locationHelper() == 'kr')
-                                            <div class="item-text">{{ $category->name_ko }}</div>
-                                        @elseif(locationHelper() == 'cn')
-                                            <div class="item-text">{{$category->name_zh}}</div>
-                                        @elseif(locationHelper() == 'jp')
-                                            <div class="item-text">{{$category->name_ja}}</div>
-                                        @elseif(locationHelper() == 'vi')
-                                            <div class="item-text">{{$category->name_vi}}</div>
-                                        @else
-                                            <div class="item-text">{{$category->name_en}}</div>
-                                        @endif</span>
-                                </label>
-                            @endforeach
-                        </div>
-                    @else
-                        <div id="code_1" class="mt-1  checkboxes">
-                            @foreach($categories_no_parent as $category)
-                                <label class="ml-2 d-flex align-items-center" for="type_business-{{$category->id}}">
-                                    <input type="checkbox" id="type_business-{{$category->id}}"
-                                           {{--                                           name="code_1[]"--}}
-                                           value="{{ ($category->id) }}"
-                                           class="inputCheckboxCategory mr-2 p-3"/>
-                                    <span class="labelCheckboxCategory">
+                                                <div class="item-text">{{ $category->name_ko }}</div>
+                                            @elseif(locationHelper() == 'cn')
+                                                <div class="item-text">{{$category->name_zh}}</div>
+                                            @elseif(locationHelper() == 'jp')
+                                                <div class="item-text">{{$category->name_ja}}</div>
+                                            @elseif(locationHelper() == 'vi')
+                                                <div class="item-text">{{$category->name_vi}}</div>
+                                            @else
+                                                <div class="item-text">{{$category->name_en}}</div>
+                                            @endif</span>
+                                    </label>
+                                @endforeach
+                            </div>
+                        @else
+                            <div id="code_1" class="mt-1  checkboxes">
+                                @foreach($categories_no_parent as $category)
+                                    <label class="ml-2 d-flex align-items-center" for="type_business-{{$category->id}}">
+                                        <input type="checkbox" id="type_business-{{$category->id}}"
+                                               {{--                                           name="code_1[]"--}}
+                                               value="{{ ($category->id) }}"
+                                               class="inputCheckboxCategory mr-2 p-3"/>
+                                        <span class="labelCheckboxCategory">
                                         @if(locationHelper() == 'kr')
-                                            <div class="item-text">{{ $category->name_ko }}</div>
-                                        @elseif(locationHelper() == 'cn')
-                                            <div class="item-text">{{$category->name_zh}}</div>
-                                        @elseif(locationHelper() == 'jp')
-                                            <div class="item-text">{{$category->name_ja}}</div>
-                                        @elseif(locationHelper() == 'vi')
-                                            <div class="item-text">{{$category->name_vi}}</div>
-                                        @else
-                                            <div class="item-text">{{$category->name_en}}</div>
-                                        @endif
+                                                <div class="item-text">{{ $category->name_ko }}</div>
+                                            @elseif(locationHelper() == 'cn')
+                                                <div class="item-text">{{$category->name_zh}}</div>
+                                            @elseif(locationHelper() == 'jp')
+                                                <div class="item-text">{{$category->name_ja}}</div>
+                                            @elseif(locationHelper() == 'vi')
+                                                <div class="item-text">{{$category->name_vi}}</div>
+                                            @else
+                                                <div class="item-text">{{$category->name_en}}</div>
+                                            @endif
                                     </span>
-                                </label>
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
-            </td>
-            <th rowspan="2">
-                <label for="code_3">{{ __('home.3rd classification') }}</label>
-            </th>
-            <td colspan="2">
-                <div class="multiselect" style="position: relative">
-                    <div class="selectBox" id="code_3_item" onclick="showCheckboxes1()">
-                        <select>
-                            <option id="inputCheckboxCategory2">{{ __('home.Select the applicable category') }}</option>
-                        </select>
-                        <div class="overSelect"></div>
+                                    </label>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
-                    @if($exitsMember)
-                        @php
-                            $listCategory = $exitsMember->category_id;
-                            $arrayCategory = explode(',', $listCategory);
-                        @endphp
-                        <div id="code_3" class="mt-1 checkboxes">
-
-                        </div>
-                    @else
-                        <div id="code_3" class="mt-1  checkboxes">
-
-                        </div>
-                    @endif
                 </div>
-            </td>
-        </tr>
-        <tr class="text-center">
-            <th>
-                <label for="code_2">{{ __('home.2nd classification') }}</label>
-            </th>
-            <td colspan="2">
-                <div class="multiselect" style="position: relative">
-                    <div class="selectBox" id="code_2_item" onclick="showCheckboxes2()">
-                        <select>
-                            <option id="inputCheckboxCategory1">{{ __('home.Select the applicable category') }}</option>
-                        </select>
-                        <div class="overSelect"></div>
+                <div class="form-group col-md-4">
+                    <label for="code_2" class="label_item">
+                        {{ __('home.2nd classification') }}<span class="text-danger">*</span>
+                    </label>
+                    <div class="multiselect" style="position: relative">
+                        <div class="selectBox" id="code_2_item" onclick="showCheckboxes2()">
+                            <select>
+                                <option id="inputCheckboxCategory1">{{ __('home.Select the applicable category') }}</option>
+                            </select>
+                            <div class="overSelect"></div>
+                        </div>
+                        @if($exitsMember)
+                            @php
+                                $listCategory = $exitsMember->category_id;
+                                $arrayCategory = explode(',', $listCategory);
+                            @endphp
+                            <input value="{{$listCategory}}" id="inputArrayCategory" class="d-none">
+                            <div id="code_2" class="mt-1 checkboxes">
+
+                            </div>
+                        @else
+                            <div id="code_2" class="mt-1  checkboxes">
+
+                            </div>
+                        @endif
                     </div>
-                    @if($exitsMember)
-                        @php
-                            $listCategory = $exitsMember->category_id;
-                            $arrayCategory = explode(',', $listCategory);
-                        @endphp
-                        <input value="{{$listCategory}}" id="inputArrayCategory" class="d-none">
-                        <div id="code_2" class="mt-1 checkboxes">
-
-                        </div>
-                    @else
-                        <div id="code_2" class="mt-1  checkboxes">
-
-                        </div>
-                    @endif
                 </div>
-            </td>
-            <td colspan="2">
-            </td>
-        </tr>
-        <tr class="">
-            <td colspan="6" class="text-center">
-                <button type="button" id="buttonRegister"
-                        class="w-50 btn bg-member-green solid mr-3 btn-register">{{ __('home.next') }}</button>
-            </td>
-        </tr>
-        </tbody>
+
+                <div class="form-group col-md-4">
+                    <label for="code_3" class="label_item">
+                        {{ __('home.3rd classification') }} <span class="text-danger">*</span>
+                    </label>
+                    <div class="multiselect" style="position: relative">
+                        <div class="selectBox" id="code_3_item" onclick="showCheckboxes1()">
+                            <select>
+                                <option id="inputCheckboxCategory2">{{ __('home.Select the applicable category') }}</option>
+                            </select>
+                            <div class="overSelect"></div>
+                        </div>
+                        @if($exitsMember)
+                            @php
+                                $listCategory = $exitsMember->category_id;
+                                $arrayCategory = explode(',', $listCategory);
+                            @endphp
+                            <div id="code_3" class="mt-1 checkboxes">
+
+                            </div>
+                        @else
+                            <div id="code_3" class="mt-1  checkboxes">
+
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="gridCheck" required>
+                <label class="form-check-label text-checkout" for="gridCheck">
+                    I have read, understand and accept Global's Agree to Terms,
+                    <a class="text-policy" href="#">Agree to the Information Collection Policy</a> and
+                    <a class="text-policy" href="#">Agree to the Terms of Information Use</a>
+                </label>
+            </div>
+        </div>
         @php
             $isUpdate = false;
             $route = Route::currentRouteName();
@@ -421,8 +374,12 @@
         <input type="text" name="code_2" class="d-none" id="input_code2">
         <input type="text" name="code_3" class="d-none" id="input_code3">
         <button class="d-none" id="btnSubmitFormRegister" type="submit">Done</button>
+        <div class="text-center">
+            <button type="button" id="buttonRegister"
+                    class="w-50 btn bg-member-primary solid mr-3 btn-register">{{ __('home.next') }}</button>
+        </div>
     </form>
-</table>
+</div>
 <script>
     $(document).ready(function () {
         $('#buttonRegister').on('click', function () {

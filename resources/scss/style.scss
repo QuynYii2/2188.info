@@ -772,7 +772,7 @@ a {
     z-index: 10;
     .header-top {
       padding: 20px 0;
-      background-color: $color-main;
+      background-color: #fff;
 
       &-left {
         .header-logo {
@@ -788,19 +788,22 @@ a {
         .search-wrapper {
           position: relative;
           margin: 0;
-          height: 50px;
           border-radius: 30px;
           background-color: white;
+          width: 634px;
+          height: 40px;
+          padding: 12px 0 12px 16px;
+          border: 1px solid $color-main;
 
           input {
             padding-left: 13%;
             padding-right: 10%;
             width: 100%;
             height: 100%;
-            border: 0;
             background: #fff;
             outline: none;
             border-radius: 40px;
+            font-size: 12px;
           }
 
           .button-right {

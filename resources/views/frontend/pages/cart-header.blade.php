@@ -1,5 +1,8 @@
-<button class="btn btn-primary" onclick="Shop()">
+<button class="btn" onclick="Shop()">
     <i class="item-shop--icon fa-solid fa-cart-shopping"></i>
+    <div class="it em-text">
+        {{ __('home.Cart') }}
+    </div>
 </button>
 @php
     $cartViews = \App\Models\Cart::where([

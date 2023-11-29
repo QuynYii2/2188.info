@@ -106,7 +106,7 @@
                                             @endif
                                         </ul>
                                         <div class="col-12 d-flex justify-content-center text-main">
-                                            <a href="{{route('show.register.member', $member->id)}}"
+                                            <a href="{{route('show.register.member.info', $member->id)}}"
                                                class="btn btnRegister border-org">{{ __('home.Sign up now') }}</a>
                                         </div>
                                     </div>

@@ -6,6 +6,11 @@
         $mentor = \App\Models\User::where('email', $memberPer->email)->first();
     @endphp
     <div class="container">
+        <style>
+            .hidden {
+                display: none !important;
+            }
+        </style>
         <h3 class="text-center">{{ __('home.Partner List') }}</h3>
         @include('frontend.pages.member.header_member')
         @include('frontend.pages.member.tabs_info')
@@ -17,8 +22,6 @@
                 <th scope="col">{{ __('home.Company Name') }}</th>
                 <th scope="col">{{ __('home.Area') }}</th>
                 <th scope="col">{{ __('home.Day trading') }}</th>
-                <th scope="col">{{ __('home.Transaction value') }}</th>
-                <th scope="col">{{ __('home.quantity') }}</th>
                 <th scope="col">{{ __('home.Membership classification') }}</th>
                 <th scope="col">{{ __('home.Status') }}</th>
                 <th scope="col">{{ __('home.Customer level') }}</th>
@@ -27,146 +30,153 @@
             <tbody>
             @if(!$memberList->isEmpty())
                 @foreach($memberList as $memberItem)
-                    @php
-                        $memberPartner = \App\Models\MemberRegisterInfo::find($memberItem->company_id_follow);
-                        $memberPersons = \App\Models\MemberRegisterPersonSource::where('member_id', $memberItem->company_id_follow)->first();
-                        $user = \App\Models\User::where('email', $memberPersons->email)->first();
-                        $locale = session()->get('region');
-                    @endphp
-                    @if($locale)
-                        @if($user->region == $locale)
-                            <tr>
-                                <td scope="row">{{$memberPartner->id}}</td>
-                                <td>
-                                    {{$mentor->region}}
-                                </td>
-                                <td>{{$memberPartner->name}}</td>
-                                <td>{{$memberPartner->address}}</td>
-                                <td>{{ \Carbon\Carbon::parse($memberItem->created_at)->format('d/m/Y') }}</td>
-                                <td>{{$memberItem->price * $memberItem->quantity}}</td>
-                                <td>{{$memberItem->quantity}}</td>
-                                <td>{{$memberPartner->member}}</td>
-                                <td>
-                                    <button>{{$memberPartner->member}}</button>
-                                </td>
-                                <td>
-                                    <i class="fa-solid fa-trophy"></i>
-                                    <i class="fa-solid fa-trophy"></i>
-                                    <i class="fa-solid fa-trophy"></i>
-                                </td>
-
-                            </tr>
-                        @endif
-                    @else
-                        <tr>
-                            <td scope="row">{{$memberPartner->id}}</td>
-                            <td>
-                                {{$mentor->region}}
-                            </td>
-                            <td>{{$memberPartner->name}}</td>
-                            <td>{{$memberPartner->address}}</td>
-                            <td>{{ \Carbon\Carbon::parse($memberItem->created_at)->format('d/m/Y') }}</td>
-                            <td>{{$memberItem->price * $memberItem->quantity}}</td>
-                            <td>{{$memberItem->quantity}}</td>
-                            <td>{{$memberPartner->member}}</td>
-                            <td>
-                                <div class="d-flex">
-                                    @php
-                                        $user = \Illuminate\Support\Facades\Auth::user();
-                                        $memberPerson = \App\Models\MemberRegisterPersonSource::where('email', $user->email)->first();
-                                        $newCompany = \App\Models\MemberRegisterInfo::where('id', $memberPerson->member_id)->first();
-                                         $exitsPartner  = \App\Models\MemberPartner::where([
-                                                // cong ty dang huong den tai url
-                                                ['company_id_source', $memberPartner->id],
-                                                // cong ty dang login
-                                                ['company_id_follow', $newCompany->id],
-                                                ['status', \App\Enums\MemberPartnerStatus::ACTIVE],
-                                            ])->first();
-                                    @endphp
-                                    @if($newCompany->id != $memberPartner->id)
-                                        @if($newCompany && $newCompany->member != \App\Enums\RegisterMember::BUYER && !$exitsPartner)
-                                            <form method="post" action="{{route('stands.register.member')}}">
-                                                @csrf
-                                                <input type="text" name="company_id_source"
-                                                       value="{{$memberPartner->id}} "
-                                                       hidden>
-                                                <button class="btn btn-primary" id="btnFollow" type="submit">
-                                                    {{ __('home.Follow') }}
-                                                </button>
-                                            </form>
-                                        @else
-                                            <form method="post"
-                                                  action="{{ route('stands.unregister.member', $memberPartner->id) }}"
-                                                  }>
-                                                @csrf
-                                                <input type="text" name="company_id_source"
-                                                       value="{{ $memberPartner->id }}" hidden>
-                                                <button class="btn btn-danger" id="btnUnfollow" type="submit">
-                                                    {{ __('home.Unfollow') }}
-                                                </button>
-                                            </form>
-                                        @endif
-                                    @endif
-                                </div>
-                            </td>
-                            <td>
-                                @php
-                                    $ranks = null;
-                                    $rankSetup = \App\Models\RankSetUpSeller::where('user_id', $mentor->id)->first();
-                                    if ($rankSetup){
-                                         $orderItems = DB::table('order_items')
-                                            ->join('orders', 'orders.id', '=', 'order_items.order_id')
-                                            ->join('products', 'products.id', '=', 'order_items.product_id')
-                                            ->where([
-                                                ['orders.user_id', '=', $user->id],
-                                                ['products.user_id', $mentor->id]
-                                            ])
-                                            ->select('order_items.*', 'products.user_id')
-                                            ->get();
-                                        $total = 0;
-                                        foreach ($orderItems as $orderItem) {
-                                            $total = $total + $orderItem->price * $orderItem->quantity;
-                                        }
-                                        $listRank = $rankSetup->setup;
-                                        $arrayRank = explode(',', $listRank);
-                                        for($i = 0; $i<4; $i++){
-                                             $detailRank = $arrayRank[$i];
-                                             $arrayDetailRank = explode(':', $detailRank);
-                                             $value = (int)$arrayDetailRank[1];
-                                             if ($total > $value) {
-                                                 $ranks = $arrayDetailRank[0];
-                                             }
-                                        }
-                                        $ranks = str_replace(' ', '', $ranks);
-                                    }
-                                @endphp
-                                @if($ranks == \App\Enums\RankSetupSeller::DIAMOND)
-                                    <i class="fa-solid fa-trophy"></i>
-                                    <i class="fa-solid fa-trophy"></i>
-                                    <i class="fa-solid fa-trophy"></i>
-                                    <i class="fa-solid fa-trophy"></i>
-                                    <i class="fa-solid fa-trophy"></i>
-                                @elseif($ranks == \App\Enums\RankSetupSeller::GOLD)
-                                    <i class="fa-solid fa-trophy"></i>
-                                    <i class="fa-solid fa-trophy"></i>
-                                    <i class="fa-solid fa-trophy"></i>
-                                    <i class="fa-solid fa-trophy"></i>
-                                @elseif($ranks == \App\Enums\RankSetupSeller::SILVER)
-                                    <i class="fa-solid fa-trophy"></i>
-                                    <i class="fa-solid fa-trophy"></i>
-                                    <i class="fa-solid fa-trophy"></i>
-                                @elseif($ranks == \App\Enums\RankSetupSeller::COPPER)
-                                    <i class="fa-solid fa-trophy"></i>
-                                    <i class="fa-solid fa-trophy"></i>
-                                @else
-                                    <i class="fa-solid fa-trophy"></i>
+                    <tr>
+                        <td scope="row">
+                            @if($memberItem->number_business != 'default number business')
+                                @if($memberItem->number_business != 'item_is_null')
+                                    {{$memberItem->number_business}}
                                 @endif
-                            </td>
-                        </tr>
-                    @endif
+                            @endif
+                        </td>
+                        <td>
+                            {{$locale}}
+                        </td>
+                        <td>
+                            <span data-toggle="modal" data-target="#modelDetail_{{$memberItem->id}}"
+                                  style="cursor: pointer" class="btn btn-outline-secondary">{{$memberItem->name}}</span>
+                            <div class="modal fade" id="modelDetail_{{$memberItem->id}}" tabindex="-1"
+                                 aria-labelledby="exampleModalLabel_{{$memberItem->id}}" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-member">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title"
+                                                id="exampleModalLabel_{{$memberItem->id}}">{{ __('home.Company Name') }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                <tr>
+                                                    <th>{{ __('home.Independent Customs Clearance') }}</th>
+                                                    <td colspan="3">{{ __('home.General Customs Clearance') }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ __('home.Company Name') }}</th>
+                                                    <td>{{$memberItem->name}}</td>
+                                                    <th>{{ __('home.Member') }}</th>
+                                                    <td>{{$memberItem->member}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ __('home.Name company English') }}</th>
+                                                    <td>{{$memberItem->name_en}}</td>
+                                                    <th>{{ __('home.Day register') }}</th>
+                                                    <td>{{$memberItem->datetime_register}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ __('home.address') }}</th>
+                                                    <td colspan="3">{{$memberItem->address}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ __('home.Phone Number') }}</th>
+                                                    <td>{{$memberItem->phone}}</td>
+                                                    <th>{{ __('home.Business license') }}</th>
+                                                    <td>{{$memberItem->number_business}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ __('home.email') }}</th>
+                                                    <td>{{$memberItem->email}}</td>
+                                                    <th>{{ __('home.Category') }}</th>
+                                                    <td>
+                                                        @php
+                                                            $arrayCategory = explode(',',  $memberItem->category_id);
+                                                            $categories = \App\Models\Category::whereIn('id', $arrayCategory)->get();
+                                                        @endphp
+                                                        @foreach($categories as $category)
+                                                            @if(locationHelper() == 'kr')
+                                                                {{ $category->name_ko }},
+                                                            @elseif(locationHelper() == 'cn')
+                                                                {{$category->name_zh}},
+                                                            @elseif(locationHelper() == 'jp')
+                                                                {{$category->name_ja}},
+                                                            @elseif(locationHelper() == 'vi')
+                                                                {{$category->name_vi}},
+                                                            @else
+                                                                {{$category->name_en}},
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ __('home.Fax') }}</th>
+                                                    <td>{{$memberItem->fax}}</td>
+                                                    <th>{{ __('home.Home') }}</th>
+                                                    <td>{{$memberItem->homepage}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>{{ __('home.Number clearance') }}</th>
+                                                    <td colspan="3">{{$memberItem->number_clearance}}</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="{{ route('stand.register.member.index', $memberItem->id) }}"
+                                               class="btn btn-primary">{{ __('home.Shop') }}</a>
+                                            <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">{{ __('home.Close') }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{$memberItem->address}}</td>
+                        <td>{{ \Carbon\Carbon::parse($memberItem->created_at)->format('d/m/Y') }}</td>
+                        <td>{{$memberItem->member}}</td>
+                        <td>
+                            @php
+                                $isValid = false;
+                                $companyItem = \App\Models\MemberPartner::where([
+                                    ['company_id_source', $memberItem->id],
+                                    ['company_id_follow', $company->id],
+                                    ['status', \App\Enums\MemberPartnerStatus::ACTIVE],
+                                ])->first();
+                            @endphp
+
+                            @if(!$companyItem)
+                                <form method="post" action="{{route('stands.register.member')}}">
+                                    @csrf
+                                    <input type="text" name="company_id_source"
+                                           value="{{$memberItem->id}} "
+                                           hidden>
+                                    <button class="btn btn-primary" id="btnFollow" type="submit">
+                                        {{ __('home.Follow') }}
+                                    </button>
+                                </form>
+                            @else
+                                <form method="post" action="{{ route('stands.unregister.member', $memberItem->id) }}">
+                                    @csrf
+                                    <input type="text" name="company_id_source"
+                                           value="{{ $memberItem->id }}" hidden>
+                                    <button class="btn btn-danger" id="btnUnfollow" type="submit">
+                                        {{ __('home.Unfollow') }}
+                                    </button>
+                                </form>
+                            @endif
+                        </td>
+                        <td>
+                            <i class="fa-solid fa-trophy"></i>
+                            <i class="fa-solid fa-trophy"></i>
+                            <i class="fa-solid fa-trophy"></i>
+                        </td>
+
+                    </tr>
                 @endforeach
             @endif
             </tbody>
         </table>
+        {{ $memberList->links() }}
     </div>
 @endsection

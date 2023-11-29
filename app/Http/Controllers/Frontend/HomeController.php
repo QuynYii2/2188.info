@@ -73,6 +73,7 @@ class HomeController extends Controller
 
 
         $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
+        $categoriesParent = Category::where('status', CategoryStatus::ACTIVE)->where('parent_id', null)->limit(16)->get();
         $categories = DB::table('categories')
             ->where([
                 ['status', CategoryStatus::ACTIVE],
@@ -118,7 +119,7 @@ class HomeController extends Controller
             ['status', ProductStatus::ACTIVE]
         ])->orderBy('hot', 'desc')->limit(10)->get();
         $products = $products->unique('slug');
-        $productHots[] = $products;
+        $productHots = $products;
 //        dd($productHots);
         $permissionFeature = Permission::where('name', 'Nâng cấp sản phẩm nổi bật')->first();
         $permissionSellerFeatures = DB::table('permission_user')->where('permission_id', $permissionFeature->id)->get();
@@ -136,7 +137,7 @@ class HomeController extends Controller
             ['status', ProductStatus::ACTIVE]
         ])->orderBy('feature', 'desc')->limit(10)->get();
         $products = $products->unique('slug');
-        $productFeatures[] = $products;
+        $productFeatures = $products;
 
         $configsTop1 = TopSellerConfig::where('local', TopSellerConfigLocation::OptionOne)->orderBy('created_at', 'desc')->limit(3)->get();
         $configsTop2 = TopSellerConfig::where('local', TopSellerConfigLocation::OptionTwo)->orderBy('created_at', 'desc')->limit(3)->get();
@@ -176,6 +177,7 @@ class HomeController extends Controller
             'currency' => $currency,
             'countryCode' => $locale,
             'categories' => $categories,
+            'categoriesParent' => $categoriesParent,
             'productByVi' => $productByVi,
             'productByKr' => $productByKr,
             'productByJp' => $productByJp,
