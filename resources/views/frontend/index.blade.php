@@ -223,7 +223,7 @@
             <div class="swiper NewProducts">
                 <div class="swiper-wrapper">
                     @foreach($newProducts as $product)
-                        <div class="swiper-slide">
+                        <div class="swiper-slide swiper-slide-product">
                             @include('frontend.pages.list-product')
                         </div>
                     @endforeach
@@ -237,7 +237,7 @@
             <div class="swiper NewProducts">
                 <div class="swiper-wrapper">
                     @foreach($productFeatures as $product)
-                        <div class="swiper-slide">
+                        <div class="swiper-slide swiper-slide-product">
                             @include('frontend.pages.list-product')
                         </div>
                     @endforeach
@@ -251,7 +251,7 @@
             <div class="swiper NewProducts">
                 <div class="swiper-wrapper">
                     @foreach($productHots as $product)
-                        <div class="swiper-slide">
+                        <div class="swiper-slide swiper-slide-product">
                             @include('frontend.pages.list-product')
                         </div>
                     @endforeach
