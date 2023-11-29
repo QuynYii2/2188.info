@@ -73,7 +73,7 @@ class HomeController extends Controller
 
 
         $categories = Category::where('status', CategoryStatus::ACTIVE)->get();
-        $categoriesParent = Category::where('status', CategoryStatus::ACTIVE)->where('parent_id', null)->limit(16)->get();
+        $categoriesParent = Category::where('status', CategoryStatus::ACTIVE)->where('parent_id', null)->get();
         $categories = DB::table('categories')
             ->where([
                 ['status', CategoryStatus::ACTIVE],
