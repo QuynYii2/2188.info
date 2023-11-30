@@ -9,7 +9,7 @@
         @php
             $thumbnail = checkThumbnail($product->thumbnail);
         @endphp
-        <div class="item-img">
+        <div class="item-img p-2">
             @if(\Illuminate\Support\Facades\Auth::check())
                 <a href="{{route('detail_product.show', $product->id)}}">
                     <img src="{{ $thumbnail }}" alt="" class="image-product"></a>
@@ -18,7 +18,7 @@
             @endif
         </div>
     @endif
-    <div class="item-body">
+    <div class="item-body p-2">
         @php
             $nameSeller = DB::table('users')->where('id', $product->user_id)->first();
         @endphp
