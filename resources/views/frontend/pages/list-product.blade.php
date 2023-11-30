@@ -4,7 +4,7 @@
 @php
     $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
 @endphp
-<div class="item item-hover">
+<div class="item item-hover bg-white">
     @if($product->thumbnail)
         @php
             $thumbnail = checkThumbnail($product->thumbnail);
@@ -68,9 +68,9 @@
         </div>
     </div>
     <div class="button-hover">
-            <div class="button-view">
-                <button class="btn btnQuickAdd">{{ __('home.Add To Cart') }}</button>
-            </div>
+        <div class="button-view">
+            <button class="btn btnQuickAdd">{{ __('home.Add To Cart') }}</button>
         </div>
+    </div>
 </div>
 

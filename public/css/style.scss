@@ -1260,6 +1260,11 @@ td.priceTransport {
   border: 1px solid #f9f9f9;
   border-radius: 4px;
   position: relative;
+  overflow: hidden;
+
+  .item-body {
+    padding: 10px;
+  }
 
   &:hover {
     border: 1px solid $color-main;
@@ -1273,7 +1278,8 @@ td.priceTransport {
     }
 
     .button-hover {
-      bottom: 20px;
+      bottom: 8%;
+      //display: block;
 
       .btnQuickAdd {
         background-color: #F47621;
@@ -1285,7 +1291,8 @@ td.priceTransport {
     }
 
     .icon-hover {
-      right: 30px;
+      //display: block;
+      right: 8%;
     }
   }
 
@@ -1295,6 +1302,7 @@ td.priceTransport {
     transform: translateX(-50%);
     transition: bottom 0.5s ease;
     left: 50%;
+    //display: none;
 
     .btnQuickAdd {
       color: #fff;
@@ -1305,8 +1313,9 @@ td.priceTransport {
   .icon-hover {
     position: absolute;
     right: -30px;
-    top: 48px;
+    top: 15%;
     transition: right 0.5s ease;
+    //display: none;
 
     .list-icon {
       display: grid;
