@@ -1073,6 +1073,10 @@ td.priceTransport {
   border: 1px solid #f9f9f9;
   border-radius: 4px;
   position: relative;
+  overflow: hidden;
+}
+.item-hover .item-body {
+  padding: 10px;
 }
 .item-hover:hover {
   border: 1px solid #fd6506;
@@ -1081,7 +1085,7 @@ td.priceTransport {
   color: #F47621;
 }
 .item-hover:hover .button-hover {
-  bottom: 20px;
+  bottom: 8%;
 }
 .item-hover:hover .button-hover .btnQuickAdd {
   background-color: #F47621;
@@ -1091,7 +1095,7 @@ td.priceTransport {
   font-weight: 600;
 }
 .item-hover:hover .icon-hover {
-  right: 30px;
+  right: 8%;
 }
 .item-hover .button-hover {
   position: absolute;
@@ -1107,7 +1111,7 @@ td.priceTransport {
 .item-hover .icon-hover {
   position: absolute;
   right: -30px;
-  top: 48px;
+  top: 15%;
   transition: right 0.5s ease;
 }
 .item-hover .icon-hover .list-icon {
