@@ -56,7 +56,7 @@ a {
   max-height: 60vh;
 }
 .section-First-category .show-list-category {
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 600;
 }
 .section-First-category ul .category-item {
@@ -64,7 +64,7 @@ a {
   cursor: pointer;
 }
 .section-First-category ul .category-item .category-item-name {
-  font-size: 16px;
+  font-size: 12px;
   color: #000;
   font-weight: 500;
   text-decoration: none;
@@ -89,7 +89,7 @@ a {
   max-height: 60vh;
 }
 .section-First-posted .list-item-posted-title {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
 }
 .section-First-posted .list-item-posted .list-item {
@@ -104,18 +104,18 @@ a {
   max-width: 60px;
 }
 .section-First-posted .list-item-posted .list-item .posted-content .posted-title {
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 600;
 }
 .section-First-posted .list-item-posted .list-item .posted-content .posted-value {
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 400;
   color: #929292;
 }
 .section-First-posted .list-item-posted-bottom {
   margin-top: 16px;
   color: #000;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 500;
 }
 .section-First-posted .btn-my-posted button {
@@ -125,7 +125,7 @@ a {
 .section-First-posted .btn-my-posted button span {
   text-align: center;
   vertical-align: middle;
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 600;
   color: #F42121;
 }
@@ -136,7 +136,7 @@ a {
   align-items: center;
 }
 .main-list-category .main-category-item {
-  width: 9%;
+  width: 10%;
   padding: 1%;
   margin: 1.25%;
   text-align: center;
@@ -188,7 +188,7 @@ a {
   transition: transform 0.3s ease-out;
 }
 .main-list-category .main-category-item .main-category-name {
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
   text-align: center;
   transition: transform 0.3s ease-out;
@@ -1069,6 +1069,10 @@ td.priceTransport {
   margin: 0 200px;
 }
 
+.margin-top-layout {
+  margin-top: 56px !important;
+}
+
 .item-hover {
   border: 1px solid #f9f9f9;
   border-radius: 4px;
@@ -1077,6 +1081,10 @@ td.priceTransport {
 }
 .item-hover .item-body {
   padding: 10px;
+}
+.item-hover .item-body .card-title1 a {
+  font-size: 14px;
+  font-weight: 600;
 }
 .item-hover:hover {
   border: 1px solid #fd6506;
@@ -1090,7 +1098,7 @@ td.priceTransport {
 .item-hover:hover .button-hover .btnQuickAdd {
   background-color: #F47621;
   padding: 12px 16px;
-  font-size: 18px;
+  font-size: 16px;
   color: #fff;
   font-weight: 600;
 }
@@ -1124,6 +1132,62 @@ td.priceTransport {
   padding: 4px;
   font-size: 16px;
   border-radius: 3px;
+}
+.item-hover .item-img {
+  position: relative;
+  text-align: center;
+}
+.item-hover .item-img .top-left {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+.item-hover .item-img .top-left .img-feature {
+  max-width: 69px;
+  max-height: 69px;
+}
+.item-hover .item-img .more-gifcode {
+  position: relative;
+  text-align: center;
+}
+.item-hover .item-img .more-gifcode .text-svg {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.item-hover .item-img .top-left-2 {
+  position: absolute;
+  top: 0px;
+  left: 12%;
+}
+
+.list-flag .item-flag {
+  display: flex;
+  align-items: center;
+}
+.list-flag .item-flag svg {
+  max-width: 85px;
+  max-height: 64px;
+  border-radius: 3px;
+}
+.list-flag .item-flag .text-flag-region {
+  margin-left: 8px;
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.see-all a {
+  color: #E20000;
+  font-size: 14px;
+  font-weight: 400;
+}
+.see-all:hover a {
+  text-decoration: none;
 }
 
 .list-marketing {
@@ -3151,6 +3215,11 @@ hr {
   font-size: 32px;
   font-weight: 600;
 }
+.content-products .img-gif {
+  max-width: 36px;
+  max-height: 48px;
+  margin-bottom: 8px;
+}
 
 .section .content {
   font-weight: 700;
@@ -3261,9 +3330,6 @@ hr {
 .section .item:hover .button-view a {
   text-decoration: none;
 }
-.section .item:hover .card-price {
-  font-size: 16px;
-}
 .section .item-body {
   padding: 10px;
 }
@@ -3284,15 +3350,13 @@ hr {
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin-bottom: 5px;
-  font-size: 18px;
-  font-weight: 600;
 }
 .section .item-body .card-title1:hover a {
   text-decoration: underline;
   color: #F47621;
 }
 .section .item-body .card-price {
-  font-size: 20px;
+  font-size: 18px;
   margin: 0 0 10px 0;
 }
 .section .item-body .card-price .price-sale {
