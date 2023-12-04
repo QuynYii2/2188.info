@@ -59,30 +59,54 @@ a {
   font-size: 14px;
   font-weight: 600;
 }
-.section-First-category ul .category-item {
+.section-First-category .show-accordion {
+  cursor: pointer;
+}
+.section-First-category .all-category .category-item {
   padding: 4px 8px;
   cursor: pointer;
 }
-.section-First-category ul .category-item .category-item-name {
+.section-First-category .all-category .category-item .category-item-name {
   font-size: 12px;
   color: #000;
   font-weight: 500;
   text-decoration: none;
 }
-.section-First-category ul .category-item:hover {
+.section-First-category .all-category .category-item:hover {
   background-color: #F47621;
 }
-.section-First-category ul .category-item:hover .category-item-name {
+.section-First-category .all-category .category-item:hover .category-item-name {
   color: #fff;
 }
-.section-First-category ul .active {
+.section-First-category .all-category .category-hover {
+  border-left: 3px solid var(--1233, #F56726);
+  width: 100%;
+  max-height: 60vh;
+  z-index: 1000;
+  margin-left: 100%;
+}
+.section-First-category .all-category .list-category-child .show-category-child .category-child a {
+  font-size: 16px;
+  font-weight: 600;
+}
+.section-First-category .all-category .active {
   background-color: #F47621;
 }
-.section-First-category ul .active .category-item-name {
+.section-First-category .all-category .active .category-item-name {
   color: #fff;
 }
 
 /* ----- MODAL STYLE ----- */
+.modal-category {
+  margin: 200px auto auto 25%;
+}
+.modal-category .modal-content {
+  max-width: 1000px;
+  max-height: 60vh;
+  overflow-y: auto;
+  border-left: 3px solid var(--1233, #F56726);
+}
+
 /* ----- END STYLE ----- */
 .section-First-posted {
   overflow-y: auto;

@@ -52,13 +52,56 @@
                         </svg>
                         <span>All Categories</span>
                     </div>
-                    <ul class="m-auto">
+                    <ul class="m-auto all-category">
                         @foreach($categoriesParent as $category)
-                            <li class="category-item">
+                            <li class="category-item" data-toggle="modal" data-target="#modalCategory_{{ $category->id }}">
                                 <a href="{{ route('category.show', $category->id) }}" class="category-item-name">
                                     {{($category->{'name' . $langDisplay->getLangDisplay()})}}
                                 </a>
                             </li>
+                            @php
+                                $categoryChilds = \App\Models\Category::where('parent_id', $category->id)
+                                        ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                        ->orderBy('id', 'desc')
+                                        ->get();
+                            @endphp
+                            <div class="category-hover">
+
+                            </div>
+                            <div class="modal fade" id="modalCategory_{{ $category->id }}" tabindex="-1" aria-labelledby="modalCategoryLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-category">
+                                    <div class="modal-content ">
+                                        <div class="modal-body">
+                                            <div class="row list-category-child">
+                                                @foreach($categoryChilds as $categoryChild)
+                                                    <div class="col-md-6 show-category-child">
+                                                        <div class="category-child">
+                                                            <a href="{{ route('category.show', $categoryChild->id) }}" class="category-item-name">
+                                                                {{($categoryChild->{'name' . $langDisplay->getLangDisplay()})}}
+                                                            </a>
+                                                        </div>
+                                                        @php
+                                                            $categoryChild2s = \App\Models\Category::where('parent_id', $category->id)
+                                                                    ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                                                    ->orderBy('id', 'desc')
+                                                                    ->get();
+                                                        @endphp
+                                                        <ul class="list-group-flush">
+                                                            @foreach($categoryChild2s as $categoryChild2)
+                                                                <li class="category-item">
+                                                                    <a href="{{ route('category.show', $categoryChild2->id) }}" class="category-item-name">
+                                                                        {{($categoryChild2->{'name' . $langDisplay->getLangDisplay()})}}
+                                                                    </a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                     </ul>
                 </div>
@@ -204,6 +247,7 @@
                 </div>
             </div>
         </section>
+
         <div class="section margin-layout-index container-fluid mt-3">
             <h3 class="title-category content-products">{{ __('home.Category') }}</h3>
             <div class="main-list-category">
@@ -605,13 +649,13 @@
         @endforeach
         <section class="section-Seven section-description">
             <div class="container">
-                {{--                <p>{{ __('home.If you are looking for a website to buy and sell online is a great choice for you.') }}--}}
-                {{--                    <span id="dots">...</span>--}}
-                {{--                    <span id="more">--}}
-                {{--                        {{ __('home.long description') }}--}}
-                {{--                    </span>--}}
-                {{--                </p>--}}
-                {{--                <button onclick="myFunction()" id="myBtn">{{ __('home.Show More') }}</button>--}}
+                <p>{{ __('home.If you are looking for a website to buy and sell online is a great choice for you.') }}
+                    <span id="dots">...</span>
+                    <span id="more">
+                                        {{ __('home.long description') }}
+                                    </span>
+                </p>
+                <button onclick="myFunction()" id="myBtn">{{ __('home.Show More') }}</button>
                 <p class="text-description">
                     {{ __('home.long description') }}
                 </p>

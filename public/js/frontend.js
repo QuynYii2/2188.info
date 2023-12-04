@@ -69,6 +69,10 @@ new Swiper(".mySwiper", {
     },
     mousewheel: true,
     keyboard: true,
+    autoplay: {
+        delay: 1500,
+        disableOnInteraction: false,
+    },
 });
 
 new Swiper(".Categories", {

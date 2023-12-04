@@ -64,7 +64,11 @@ a {
     font-weight: 600;
   }
 
-  ul {
+  .show-accordion{
+    cursor: pointer;
+  }
+
+  .all-category {
     .category-item {
       padding: 4px 8px;
       cursor: pointer;
@@ -85,6 +89,25 @@ a {
       }
     }
 
+    .category-hover {
+      border-left: 3px solid var(--1233, #F56726);
+      width: 100%;
+      max-height: 60vh;
+      z-index: 1000;
+      margin-left: 100%;
+    }
+
+    .list-category-child {
+      .show-category-child {
+        .category-child {
+          a {
+            font-size: 16px;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+
     .active {
       background-color: #F47621;
 
@@ -96,6 +119,16 @@ a {
 }
 
 /* ----- MODAL STYLE ----- */
+.modal-category {
+  margin: 200px auto auto 25%;
+
+  .modal-content {
+    max-width: 1000px;
+    max-height: 60vh;
+    overflow-y: auto;
+    border-left: 3px solid var(--1233, #F56726);
+  }
+}
 
 /* ----- END STYLE ----- */
 
@@ -1403,14 +1436,14 @@ td.priceTransport {
 }
 
 .see-all {
-  a{
+  a {
     color: #E20000;
     font-size: 14px;
     font-weight: 400;
   }
 
   &:hover {
-    a{
+    a {
       text-decoration: none;
     }
   }
