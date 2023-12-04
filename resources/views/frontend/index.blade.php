@@ -52,13 +52,56 @@
                         </svg>
                         <span>All Categories</span>
                     </div>
-                    <ul class="m-auto">
+                    <ul class="m-auto all-category">
                         @foreach($categoriesParent as $category)
-                            <li class="category-item">
+                            <li class="category-item" data-toggle="modal" data-target="#modalCategory_{{ $category->id }}">
                                 <a href="{{ route('category.show', $category->id) }}" class="category-item-name">
                                     {{($category->{'name' . $langDisplay->getLangDisplay()})}}
                                 </a>
                             </li>
+                            @php
+                                $categoryChilds = \App\Models\Category::where('parent_id', $category->id)
+                                        ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                        ->orderBy('id', 'desc')
+                                        ->get();
+                            @endphp
+                            <div class="category-hover">
+
+                            </div>
+                            <div class="modal fade" id="modalCategory_{{ $category->id }}" tabindex="-1" aria-labelledby="modalCategoryLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-category">
+                                    <div class="modal-content ">
+                                        <div class="modal-body">
+                                            <div class="row list-category-child">
+                                                @foreach($categoryChilds as $categoryChild)
+                                                    <div class="col-md-6 show-category-child">
+                                                        <div class="category-child">
+                                                            <a href="{{ route('category.show', $categoryChild->id) }}" class="category-item-name">
+                                                                {{($categoryChild->{'name' . $langDisplay->getLangDisplay()})}}
+                                                            </a>
+                                                        </div>
+                                                        @php
+                                                            $categoryChild2s = \App\Models\Category::where('parent_id', $category->id)
+                                                                    ->where('status', \App\Enums\CategoryStatus::ACTIVE)
+                                                                    ->orderBy('id', 'desc')
+                                                                    ->get();
+                                                        @endphp
+                                                        <ul class="list-group-flush">
+                                                            @foreach($categoryChild2s as $categoryChild2)
+                                                                <li class="category-item">
+                                                                    <a href="{{ route('category.show', $categoryChild2->id) }}" class="category-item-name">
+                                                                        {{($categoryChild2->{'name' . $langDisplay->getLangDisplay()})}}
+                                                                    </a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                     </ul>
                 </div>
@@ -204,6 +247,7 @@
                 </div>
             </div>
         </section>
+
         <div class="section margin-layout-index container-fluid mt-3">
             <h3 class="title-category content-products">{{ __('home.Category') }}</h3>
             <div class="main-list-category">
@@ -217,13 +261,19 @@
                 @endforeach
             </div>
         </div>
-        <div class="section margin-layout-index container-fluid mt-3">
-            <h3 class="content-products">{{ __('home.New Products') }}</h3>
+
+        <div class="section margin-layout-index margin-top-layout container-fluid mt-3">
+           <div class="d-flex justify-content-between align-items-center">
+               <h3 class="content-products">{{ __('home.New Products') }}</h3>
+               <div class="see-all">
+                   <a href="#">See All</a>
+               </div>
+           </div>
             <div class="swiper NewProducts">
                 <div class="swiper-wrapper">
                     @foreach($newProducts as $product)
                         <div class="swiper-slide swiper-slide-product">
-                            @include('frontend.pages.list-product')
+                            @include('frontend.layouts.branch.list-product-new')
                         </div>
                     @endforeach
                 </div>
@@ -231,13 +281,18 @@
                 <div class="swiper-button-prev"></div>
             </div>
         </div>
-        <div class="section margin-layout-index container-fluid mt-3">
-            <h3 class="content-products">{{ __('home.Featured Products') }}</h3>
-            <div class="swiper NewProducts">
+        <div class="section margin-layout-index margin-top-layout container-fluid mt-3">
+           <div class="d-flex justify-content-between align-items-center">
+               <h3 class="content-products">{{ __('home.Featured Products') }}</h3>
+               <div class="see-all">
+                   <a href="#">See All</a>
+               </div>
+           </div>
+            <div class="swiper FeaturedProducts">
                 <div class="swiper-wrapper">
                     @foreach($productFeatures as $product)
                         <div class="swiper-slide swiper-slide-product">
-                            @include('frontend.pages.list-product')
+                            @include('frontend.layouts.branch.list-product-feature')
                         </div>
                     @endforeach
                 </div>
@@ -245,13 +300,23 @@
                 <div class="swiper-button-prev"></div>
             </div>
         </div>
-        <div class="section margin-layout-index container-fluid mt-3">
-            <h3 class="content-products">{{ __('home.Hot Deals') }}</h3>
-            <div class="swiper NewProducts">
+        <div class="section margin-layout-index margin-top-layout container-fluid mt-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="content-products">
+                    <span>
+                        <img class="img-gif" src="{{ asset('images/gif/hot-deal.gif') }}"
+                                                        alt="">
+                    </span> {{ __('home.Hot Deals') }}</h3>
+                <div class="see-all">
+                    <a href="#">See All</a>
+                </div>
+            </div>
+
+            <div class="swiper HotDeals">
                 <div class="swiper-wrapper">
                     @foreach($productHots as $product)
                         <div class="swiper-slide swiper-slide-product">
-                            @include('frontend.pages.list-product')
+                            @include('frontend.layouts.branch.list-product-hot')
                         </div>
                     @endforeach
                 </div>
@@ -260,7 +325,7 @@
             </div>
         </div>
 
-        <div class="section margin-layout-index container-fluid mt-3">
+        <div class="section margin-layout-index margin-top-layout container-fluid mt-3">
             <div class="row list-marketing">
                 <div class="col-md-6 show-marketing">
                     <img src=" {{ asset('images/Rectangle 8.png') }}" alt="">
@@ -276,29 +341,137 @@
                 </div>
             </div>
         </div>
-        <div class="section margin-layout-index container-fluid mt-3">
-            <div class="category-img">
-                @if($locale == 'vi')
-                    <div class="content ">Viet Nam
-                        <img class="flag-ct"
-                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
+        <div class="section margin-layout-index margin-top-layout container-fluid mt-3">
+            <div class="category-img list-flag">
+                <div class="d-flex justify-content-between align-items-center">
+                    @if($locale == 'jp')
+                        <div class="content item-flag">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="85" height="64" viewBox="0 0 85 64"
+                                 fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M-5.3125 0H90.3125V64H-5.3125V0Z"
+                                      fill="white"/>
+                                <path d="M42.5073 51.897C53.4514 51.897 62.3234 42.9903 62.3234 32.0032C62.3234 21.0161 53.4514 12.1094 42.5073 12.1094C31.5631 12.1094 22.6912 21.0161 22.6912 32.0032C22.6912 42.9903 31.5631 51.897 42.5073 51.897Z"
+                                      fill="#BC002D"/>
+                            </svg>
+                            <span class="text-flag-region">Japan</span>
+                        </div>
+                    @elseif($locale == 'kr')
+                        <div class="content item-flag">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="85" height="64" viewBox="0 0 85 64"
+                                 fill="none">
+                                <g clip-path="url(#clip0_45_12018)">
+                                    <rect width="85" height="64" fill="white"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M64.6487 56.756L68.8381 50.5205L71.3226 52.2029L67.1331 58.4384L64.6487 56.756Z"
+                                          fill="black"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M69.5085 49.5236L73.698 43.2881L76.1825 44.9704L71.993 51.2059L69.5085 49.5236Z"
+                                          fill="black"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M61.1707 54.4003L65.3601 48.1648L67.8446 49.8472L63.6551 56.0826L61.1707 54.4003Z"
+                                          fill="black"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M66.0305 47.1679L70.22 40.9324L72.7044 42.6147L68.515 48.8502L66.0305 47.1679Z"
+                                          fill="black"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M57.6924 52.046L61.8818 45.8105L64.3663 47.4929L60.1768 53.7284L57.6924 52.046Z"
+                                          fill="black"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M62.5525 44.8119L66.742 38.5764L69.2264 40.2588L65.0369 46.4943L62.5525 44.8119Z"
+                                          fill="black"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M10.9845 43.2881L20.0337 56.7567L17.5492 58.4391L8.5 44.9704L10.9845 43.2881Z"
+                                          fill="black"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M19.3223 48.1648L23.5118 54.4003L21.0274 56.0826L16.8379 49.8472L19.3223 48.1648Z"
+                                          fill="black"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M14.4625 40.9324L18.6519 47.1679L16.1675 48.8502L11.978 42.6147L14.4625 40.9324Z"
+                                          fill="black"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M17.9408 38.5764L26.99 52.0451L24.5055 53.7274L15.4563 40.2588L17.9408 38.5764Z"
+                                          fill="black"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M42.6287 48.0985C33.5325 48.0985 26.1584 40.6896 26.1584 31.5503C26.1584 28.5988 26.9275 25.8278 28.2753 23.4285C27.7013 24.5817 27.3785 25.883 27.3785 27.2601C27.3785 31.999 31.202 35.2277 35.9186 35.2277C37.956 35.2277 39.6358 34.8173 41.1037 33.0081C41.2068 32.8701 41.3096 32.7343 41.4121 32.6009L41.7193 32.2079C41.8215 32.0793 41.9237 31.9531 42.0259 31.8294L42.3325 31.4657C44.2761 29.2106 46.2623 27.873 49.0339 27.873C53.582 27.873 57.8673 30.3516 57.269 36.76C57.0576 39.0243 56.3587 41.0875 54.8848 42.5826L54.9054 42.5823C51.8895 45.9679 47.5068 48.0985 42.6287 48.0985Z"
+                                          fill="#0047A0"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M42.0538 15.6064C51.1501 15.6064 58.5241 23.0153 58.5241 32.1546C58.5241 35.1062 57.755 37.8772 56.4072 40.2765C56.9812 39.1233 57.3041 37.822 57.3041 36.4449C57.3041 31.706 53.4805 28.4773 48.7639 28.4773C46.7265 28.4773 45.0467 28.8876 43.5788 30.6969C41.2079 33.8719 39.0037 35.832 35.6487 35.832C31.1005 35.832 26.8152 33.3534 27.4135 26.945C27.6249 24.6806 28.3238 22.6175 29.7977 21.1224L29.7772 21.1227C32.793 17.7371 37.1757 15.6064 42.0538 15.6064Z"
+                                          fill="#CD2E3A"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M65.0369 17.2104L69.2264 23.4459L66.742 25.1283L62.5525 18.8928L65.0369 17.2104Z"
+                                          fill="black"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M60.1768 9.97656L64.3663 16.2121L61.8818 17.8944L57.6924 11.6589L60.1768 9.97656Z"
+                                          fill="black"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M63.6551 7.62061L72.7044 21.0893L70.2199 22.7716L61.1707 9.30296L63.6551 7.62061Z"
+                                          fill="black"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M71.993 12.4988L76.1825 18.7343L73.698 20.4166L69.5085 14.1811L71.993 12.4988Z"
+                                          fill="black"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M67.1331 5.26636L71.3226 11.5018L68.8381 13.1842L64.6487 6.94871L67.1331 5.26636Z"
+                                          fill="black"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M15.4563 23.4452L24.5055 9.97656L26.99 11.6589L17.9408 25.1276L15.4563 23.4452Z"
+                                          fill="black"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M11.978 21.0893L21.0273 7.62061L23.5117 9.30296L14.4625 22.7716L11.978 21.0893Z"
+                                          fill="black"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                          d="M8.5 18.7353L17.5492 5.2666L20.0337 6.94896L10.9845 20.4176L8.5 18.7353Z"
+                                          fill="black"/>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_45_12018">
+                                        <rect width="85" height="64" rx="8" fill="white"/>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                            <span class="text-flag-region">Korea</span>
+                        </div>
+                    @elseif($locale == 'cn')
+                        <div class="content item-flag">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="85" height="64" viewBox="0 0 85 64"
+                                 fill="none">
+                                <g clip-path="url(#clip0_45_12430)">
+                                    <path d="M0 0H85V64H0V0Z" fill="#EE1C25"/>
+                                    <path d="M10.2 23.6799L15.9374 6.3999L21.6748 23.6799L6.375 13.1199H25.4998L10.2 23.6799Z"
+                                          fill="#FFFF00"/>
+                                    <path d="M35.0853 6.73099L29.1808 8.0446L33.1193 3.43705L32.733 9.63821L29.4564 4.14832L35.0853 6.73099Z"
+                                          fill="#FFFF00"/>
+                                    <path d="M41.0444 14.3128L35.0945 13.2246L40.5048 10.5112L37.7531 16.0766L36.8538 9.74058L41.0444 14.3128Z"
+                                          fill="#FFFF00"/>
+                                    <path d="M40.1759 24.9498L35.1855 21.52L41.2277 21.2578L36.4543 25.2126L38.2072 19.0593L40.1759 24.9498Z"
+                                          fill="#FFFF00"/>
+                                    <path d="M32.6703 31.8989L29.3866 26.8003L35.0608 28.9012L29.1363 30.6983L33.1205 25.7021L32.6703 31.8989Z"
+                                          fill="#FFFF00"/>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_45_12430">
+                                        <rect width="85" height="64" rx="8" fill="white"/>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                            <span class="text-flag-region">China</span>
+                        </div>
+                    @else
+                        <div class="content item-flag">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="85" height="64" viewBox="0 0 85 64"
+                                 fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M-5.3125 0H90.3125V64H-5.3125V0Z"
+                                      fill="#DA251D"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                      d="M54.1543 47.6248L42.998 39.2873L31.9165 47.6998L36.0254 33.9998L24.9438 25.5373L38.6526 25.4123L42.9109 11.7373L47.2314 25.3748L60.9402 25.3873L49.9209 33.9373L54.1418 47.6373L54.1543 47.6248Z"
+                                      fill="#FFFF00"/>
+                            </svg>
+                            <span class="text-flag-region">Viet Nam</span>
+                        </div>
+                    @endif
+                    <div class="see-all">
+                        <a href="#">See All</a>
                     </div>
-                @elseif($locale == 'kr')
-                    <div class="content ">Korea
-                        <img class="flag-ct"
-                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png">
-                    </div>
-                @elseif($locale == 'cn')
-                    <div class="content ">China
-                        <img class="flag-ct"
-                             src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
-                    </div>
-                @else
-                    <div class="content ">Japan
-                        <img class="flag-ct"
-                             src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
-                    </div>
-                @endif
+                </div>
                 <div class="list-products d-flex flex-wrap justify-content-between">
                     @php
                         $products = \App\Models\Product::where([['location','=',$locale],['status',\App\Enums\ProductStatus::ACTIVE]])
@@ -316,7 +489,7 @@
         </div>
         @foreach($arrayProducts as $keys => $arrayProduct)
             @if($keys != $locale)
-                <div class="section margin-layout-index container-fluid mt-3">
+                <div class="section margin-layout-index margin-top-layout container-fluid mt-3">
                     <div class="row list-marketing">
                         <div class="col-md-6 show-marketing">
                             <img src=" {{ asset('images/Rectangle 8.png') }}" alt="">
@@ -332,47 +505,157 @@
                         </div>
                     </div>
                 </div>
-                <div class="section margin-layout-index container-fluid mt-3">
-                    @if($keys == 'jp')
-                        <div class="content ">Japan
-                            <img class="flag-ct"
-                                 src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png">
-                        </div>
-                    @elseif($keys == 'kr')
-                        <div class="content ">Korea
-                            <img class="flag-ct"
-                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/1280px-Flag_of_South_Korea.svg.png">
-                        </div>
-                    @elseif($keys == 'cn')
-                        <div class="content ">China
-                            <img class="flag-ct"
-                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/1280px-Flag_of_the_People%27s_Republic_of_China.svg.png">
-                        </div>
-                    @else
-                        <div class="content ">Viet Nam
-                            <img class="flag-ct"
-                                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png">
-                        </div>
-                    @endif
-                    <div class="list-products d-flex flex-wrap">
-                        @foreach($arrayProduct as $product)
-                            <div class="product-item">
-                                @include('frontend.pages.list-product')
+                <div class="section margin-layout-index margin-top-layout container-fluid mt-3">
+                    <div class="list-flag">
+                        <div class="d-flex justify-content-between align-items-center">
+                            @if($keys == 'jp')
+                                <div class="content item-flag">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="85" height="64" viewBox="0 0 85 64"
+                                         fill="none">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                              d="M-5.3125 0H90.3125V64H-5.3125V0Z" fill="white"/>
+                                        <path d="M42.5073 51.897C53.4514 51.897 62.3234 42.9903 62.3234 32.0032C62.3234 21.0161 53.4514 12.1094 42.5073 12.1094C31.5631 12.1094 22.6912 21.0161 22.6912 32.0032C22.6912 42.9903 31.5631 51.897 42.5073 51.897Z"
+                                              fill="#BC002D"/>
+                                    </svg>
+                                    <span class="text-flag-region">Japan</span>
+                                </div>
+                            @elseif($keys == 'kr')
+                                <div class="content item-flag">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="85" height="64" viewBox="0 0 85 64"
+                                         fill="none">
+                                        <g clip-path="url(#clip0_45_12018)">
+                                            <rect width="85" height="64" fill="white"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M64.6487 56.756L68.8381 50.5205L71.3226 52.2029L67.1331 58.4384L64.6487 56.756Z"
+                                                  fill="black"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M69.5085 49.5236L73.698 43.2881L76.1825 44.9704L71.993 51.2059L69.5085 49.5236Z"
+                                                  fill="black"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M61.1707 54.4003L65.3601 48.1648L67.8446 49.8472L63.6551 56.0826L61.1707 54.4003Z"
+                                                  fill="black"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M66.0305 47.1679L70.22 40.9324L72.7044 42.6147L68.515 48.8502L66.0305 47.1679Z"
+                                                  fill="black"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M57.6924 52.046L61.8818 45.8105L64.3663 47.4929L60.1768 53.7284L57.6924 52.046Z"
+                                                  fill="black"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M62.5525 44.8119L66.742 38.5764L69.2264 40.2588L65.0369 46.4943L62.5525 44.8119Z"
+                                                  fill="black"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M10.9845 43.2881L20.0337 56.7567L17.5492 58.4391L8.5 44.9704L10.9845 43.2881Z"
+                                                  fill="black"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M19.3223 48.1648L23.5118 54.4003L21.0274 56.0826L16.8379 49.8472L19.3223 48.1648Z"
+                                                  fill="black"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M14.4625 40.9324L18.6519 47.1679L16.1675 48.8502L11.978 42.6147L14.4625 40.9324Z"
+                                                  fill="black"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M17.9408 38.5764L26.99 52.0451L24.5055 53.7274L15.4563 40.2588L17.9408 38.5764Z"
+                                                  fill="black"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M42.6287 48.0985C33.5325 48.0985 26.1584 40.6896 26.1584 31.5503C26.1584 28.5988 26.9275 25.8278 28.2753 23.4285C27.7013 24.5817 27.3785 25.883 27.3785 27.2601C27.3785 31.999 31.202 35.2277 35.9186 35.2277C37.956 35.2277 39.6358 34.8173 41.1037 33.0081C41.2068 32.8701 41.3096 32.7343 41.4121 32.6009L41.7193 32.2079C41.8215 32.0793 41.9237 31.9531 42.0259 31.8294L42.3325 31.4657C44.2761 29.2106 46.2623 27.873 49.0339 27.873C53.582 27.873 57.8673 30.3516 57.269 36.76C57.0576 39.0243 56.3587 41.0875 54.8848 42.5826L54.9054 42.5823C51.8895 45.9679 47.5068 48.0985 42.6287 48.0985Z"
+                                                  fill="#0047A0"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M42.0538 15.6064C51.1501 15.6064 58.5241 23.0153 58.5241 32.1546C58.5241 35.1062 57.755 37.8772 56.4072 40.2765C56.9812 39.1233 57.3041 37.822 57.3041 36.4449C57.3041 31.706 53.4805 28.4773 48.7639 28.4773C46.7265 28.4773 45.0467 28.8876 43.5788 30.6969C41.2079 33.8719 39.0037 35.832 35.6487 35.832C31.1005 35.832 26.8152 33.3534 27.4135 26.945C27.6249 24.6806 28.3238 22.6175 29.7977 21.1224L29.7772 21.1227C32.793 17.7371 37.1757 15.6064 42.0538 15.6064Z"
+                                                  fill="#CD2E3A"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M65.0369 17.2104L69.2264 23.4459L66.742 25.1283L62.5525 18.8928L65.0369 17.2104Z"
+                                                  fill="black"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M60.1768 9.97656L64.3663 16.2121L61.8818 17.8944L57.6924 11.6589L60.1768 9.97656Z"
+                                                  fill="black"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M63.6551 7.62061L72.7044 21.0893L70.2199 22.7716L61.1707 9.30296L63.6551 7.62061Z"
+                                                  fill="black"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M71.993 12.4988L76.1825 18.7343L73.698 20.4166L69.5085 14.1811L71.993 12.4988Z"
+                                                  fill="black"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M67.1331 5.26636L71.3226 11.5018L68.8381 13.1842L64.6487 6.94871L67.1331 5.26636Z"
+                                                  fill="black"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M15.4563 23.4452L24.5055 9.97656L26.99 11.6589L17.9408 25.1276L15.4563 23.4452Z"
+                                                  fill="black"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M11.978 21.0893L21.0273 7.62061L23.5117 9.30296L14.4625 22.7716L11.978 21.0893Z"
+                                                  fill="black"/>
+                                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                                  d="M8.5 18.7353L17.5492 5.2666L20.0337 6.94896L10.9845 20.4176L8.5 18.7353Z"
+                                                  fill="black"/>
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_45_12018">
+                                                <rect width="85" height="64" rx="8" fill="white"/>
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                    <span class="text-flag-region">Korea</span>
+                                </div>
+                            @elseif($keys == 'cn')
+                                <div class="content item-flag">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="85" height="64" viewBox="0 0 85 64"
+                                         fill="none">
+                                        <g clip-path="url(#clip0_45_12430)">
+                                            <path d="M0 0H85V64H0V0Z" fill="#EE1C25"/>
+                                            <path d="M10.2 23.6799L15.9374 6.3999L21.6748 23.6799L6.375 13.1199H25.4998L10.2 23.6799Z"
+                                                  fill="#FFFF00"/>
+                                            <path d="M35.0853 6.73099L29.1808 8.0446L33.1193 3.43705L32.733 9.63821L29.4564 4.14832L35.0853 6.73099Z"
+                                                  fill="#FFFF00"/>
+                                            <path d="M41.0444 14.3128L35.0945 13.2246L40.5048 10.5112L37.7531 16.0766L36.8538 9.74058L41.0444 14.3128Z"
+                                                  fill="#FFFF00"/>
+                                            <path d="M40.1759 24.9498L35.1855 21.52L41.2277 21.2578L36.4543 25.2126L38.2072 19.0593L40.1759 24.9498Z"
+                                                  fill="#FFFF00"/>
+                                            <path d="M32.6703 31.8989L29.3866 26.8003L35.0608 28.9012L29.1363 30.6983L33.1205 25.7021L32.6703 31.8989Z"
+                                                  fill="#FFFF00"/>
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_45_12430">
+                                                <rect width="85" height="64" rx="8" fill="white"/>
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                    <span class="text-flag-region">China</span>
+                                </div>
+                            @else
+                                <div class="content item-flag">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="85" height="64" viewBox="0 0 85 64"
+                                         fill="none">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                              d="M-5.3125 0H90.3125V64H-5.3125V0Z" fill="#DA251D"/>
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                              d="M54.1543 47.6248L42.998 39.2873L31.9165 47.6998L36.0254 33.9998L24.9438 25.5373L38.6526 25.4123L42.9109 11.7373L47.2314 25.3748L60.9402 25.3873L49.9209 33.9373L54.1418 47.6373L54.1543 47.6248Z"
+                                              fill="#FFFF00"/>
+                                    </svg>
+                                    <span class="text-flag-region">Viet Nam</span>
+                                </div>
+                            @endif
+                            <div class="see-all">
+                                <a href="#">See All</a>
                             </div>
-                        @endforeach
+                        </div>
+                        <div class="list-products d-flex flex-wrap">
+                            @foreach($arrayProduct as $product)
+                                <div class="product-item">
+                                    @include('frontend.pages.list-product')
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             @endif
         @endforeach
         <section class="section-Seven section-description">
             <div class="container">
-                {{--                <p>{{ __('home.If you are looking for a website to buy and sell online is a great choice for you.') }}--}}
-                {{--                    <span id="dots">...</span>--}}
-                {{--                    <span id="more">--}}
-                {{--                        {{ __('home.long description') }}--}}
-                {{--                    </span>--}}
-                {{--                </p>--}}
-                {{--                <button onclick="myFunction()" id="myBtn">{{ __('home.Show More') }}</button>--}}
+                <p>{{ __('home.If you are looking for a website to buy and sell online is a great choice for you.') }}
+                    <span id="dots">...</span>
+                    <span id="more">
+                                        {{ __('home.long description') }}
+                                    </span>
+                </p>
+                <button onclick="myFunction()" id="myBtn">{{ __('home.Show More') }}</button>
                 <p class="text-description">
                     {{ __('home.long description') }}
                 </p>

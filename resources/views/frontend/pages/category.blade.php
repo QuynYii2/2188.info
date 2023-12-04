@@ -186,24 +186,40 @@
             <div class="row category-page">
                 <div class="col-xl-3 col-md-3 col-6">
                     <div class="section-First-category bg-white">
-                        <div class="show-list-category">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="mt-2" width="16" height="17"
-                                 viewBox="0 0 16 17"
-                                 fill="none">
-                                <path d="M2 8.5H10M2 4.5H14M2 12.5H14" stroke="black" stroke-width="2"
-                                      stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>All Categories</span>
+                        <div class="accordion" id="accordionExample">
+                            <div class="show-accordion" id="headingOne" data-toggle="collapse"
+                                 data-target="#collapseOne" aria-expanded="true"
+                                 aria-controls="collapseOne">
+                                    <span class="text-left">
+                                        <div class="show-list-category">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="mt-2" width="16" height="17"
+                                                 viewBox="0 0 16 17"
+                                                 fill="none">
+                                                <path d="M2 8.5H10M2 4.5H14M2 12.5H14" stroke="black" stroke-width="2"
+                                                      stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <span>All Categories</span>
+                                            <i id="iconUp" class="fa-solid fa-chevron-up float-right mt-3"></i>
+                                            <i id="iconDown"
+                                               class="fa-solid fa-chevron-down d-none float-right mt-3"></i>
+                                        </div>
+                                    </span>
+                            </div>
+
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                 data-parent="#accordionExample">
+                                <ul class="m-auto all-category">
+                                    @foreach($categories as $category)
+                                        <li class="category-item">
+                                            <a href="{{ route('category.show', $category->id) }}"
+                                               class="category-item-name">
+                                                {{($category->{'name' . $langDisplay->getLangDisplay()})}}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
-                        <ul class="m-auto">
-                            @foreach($categories as $category)
-                                <li class="category-item">
-                                    <a href="{{ route('category.show', $category->id) }}" class="category-item-name">
-                                        {{($category->{'name' . $langDisplay->getLangDisplay()})}}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
                     </div>
                     <div class="border-radius mt-3 bg-white">
                         <div class="d-flex p-3">
@@ -261,6 +277,23 @@
                 let price = $(this).val();
                 $('#inputProductMax').val(price)
             })
+
+            $('#headingOne').on('click', function () {
+                checkClass();
+            })
         })
+
+        function checkClass() {
+            let hasClass = $("#collapseOne").hasClass("show");
+            let isShow = $(".show-accordion.collapsed").length;
+
+            if (!isShow) {
+                $('#iconUp').removeClass('d-none');
+                $('#iconDown').addClass('d-none');
+            } else {
+                $('#iconDown').removeClass('d-none');
+                $('#iconUp').addClass('d-none');
+            }
+        }
     </script>
 @endsection

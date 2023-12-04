@@ -881,7 +881,7 @@ body {
         left: 15%;
         padding: 4px 8px;
 
-        span{
+        span {
           font-size: 12px;
         }
       }
@@ -1058,7 +1058,7 @@ body {
     }
   }
 
-  .swiper-slide-product{
+  .swiper-slide-product {
     max-width: 50%;
     margin: 2%
   }
@@ -1077,11 +1077,21 @@ body {
         left: 12%;
         padding: 4px 8px;
 
-        span{
+        span {
           font-size: 12px;
         }
       }
     }
   }
 
+  .item-hover {
+    .item-img {
+      position: relative;
+      text-align: center;
+
+      .top-left-2 {
+        left: 20%;
+      }
+    }
+  }
 }

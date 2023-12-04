@@ -60,17 +60,21 @@ a {
   max-height: 60vh;
 
   .show-list-category {
-    font-size: 20px;
+    font-size: 14px;
     font-weight: 600;
   }
 
-  ul {
+  .show-accordion{
+    cursor: pointer;
+  }
+
+  .all-category {
     .category-item {
       padding: 4px 8px;
       cursor: pointer;
 
       .category-item-name {
-        font-size: 16px;
+        font-size: 12px;
         color: #000;
         font-weight: 500;
         text-decoration: none;
@@ -81,6 +85,25 @@ a {
 
         .category-item-name {
           color: #fff;
+        }
+      }
+    }
+
+    .category-hover {
+      border-left: 3px solid var(--1233, #F56726);
+      width: 100%;
+      max-height: 60vh;
+      z-index: 1000;
+      margin-left: 100%;
+    }
+
+    .list-category-child {
+      .show-category-child {
+        .category-child {
+          a {
+            font-size: 16px;
+            font-weight: 600;
+          }
         }
       }
     }
@@ -96,6 +119,16 @@ a {
 }
 
 /* ----- MODAL STYLE ----- */
+.modal-category {
+  margin: 200px auto auto 25%;
+
+  .modal-content {
+    max-width: 1000px;
+    max-height: 60vh;
+    overflow-y: auto;
+    border-left: 3px solid var(--1233, #F56726);
+  }
+}
 
 /* ----- END STYLE ----- */
 
@@ -104,7 +137,7 @@ a {
   max-height: 60vh;
 
   .list-item-posted-title {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 600;
   }
 
@@ -124,12 +157,12 @@ a {
 
       .posted-content {
         .posted-title {
-          font-size: 18px;
+          font-size: 14px;
           font-weight: 600;
         }
 
         .posted-value {
-          font-size: 16px;
+          font-size: 12px;
           font-weight: 400;
           color: #929292;
         }
@@ -140,7 +173,7 @@ a {
   .list-item-posted-bottom {
     margin-top: 16px;
     color: #000;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 500;
   }
 
@@ -152,7 +185,7 @@ a {
       span {
         text-align: center;
         vertical-align: middle;
-        font-size: 20px;
+        font-size: 14px;
         font-weight: 600;
         color: #F42121;
       }
@@ -166,7 +199,7 @@ a {
   align-items: center;
 
   .main-category-item {
-    width: 9%;
+    width: 10%;
     padding: 1%;
     margin: 1.25%;
     text-align: center;
@@ -227,7 +260,7 @@ a {
     }
 
     .main-category-name {
-      font-size: 16px;
+      font-size: 12px;
       font-weight: 600;
       text-align: center;
       transition: transform 0.3s ease-out;
@@ -1256,6 +1289,10 @@ td.priceTransport {
   }
 }
 
+.margin-top-layout {
+  margin-top: 56px !important;
+}
+
 .item-hover {
   border: 1px solid #f9f9f9;
   border-radius: 4px;
@@ -1264,6 +1301,13 @@ td.priceTransport {
 
   .item-body {
     padding: 10px;
+
+    .card-title1 {
+      a {
+        font-size: 14px;
+        font-weight: 600;
+      }
+    }
   }
 
   &:hover {
@@ -1284,7 +1328,7 @@ td.priceTransport {
       .btnQuickAdd {
         background-color: #F47621;
         padding: 12px 16px;
-        font-size: 18px;
+        font-size: 16px;
         color: #fff;
         font-weight: 600;
       }
@@ -1328,6 +1372,79 @@ td.priceTransport {
         font-size: 16px;
         border-radius: 3px;
       }
+    }
+  }
+
+  .item-img {
+    position: relative;
+    text-align: center;
+
+    .top-left {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+
+      .img-feature {
+        max-width: 69px;
+        max-height: 69px;
+      }
+    }
+
+    .more-gifcode {
+      position: relative;
+      text-align: center;
+
+      .text-svg {
+        font-size: 12px;
+        font-weight: 600;
+        color: #fff;
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .top-left-2 {
+      position: absolute;
+      top: 0px;
+      left: 12%;
+    }
+  }
+}
+
+
+.list-flag {
+  .item-flag {
+    display: flex;
+    align-items: center;
+
+    svg {
+      max-width: 85px;
+      max-height: 64px;
+      border-radius: 3px;
+    }
+
+    .text-flag-region {
+      margin-left: 8px;
+      font-size: 32px;
+      font-weight: 600;
+
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.see-all {
+  a {
+    color: #E20000;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  &:hover {
+    a {
+      text-decoration: none;
     }
   }
 }
@@ -3899,6 +4016,12 @@ hr {
 .content-products {
   font-size: 32px;
   font-weight: 600;
+
+  .img-gif {
+    max-width: 36px;
+    max-height: 48px;
+    margin-bottom: 8px;
+  }
 }
 
 .section {
@@ -4031,10 +4154,6 @@ hr {
           text-decoration: none;
         }
       }
-
-      .card-price {
-        font-size: 16px;
-      }
     }
 
     &-body {
@@ -4056,7 +4175,6 @@ hr {
       }
 
       .card-title1 {
-
         a {
           height: 24px;
           -webkit-line-clamp: 1;
@@ -4064,8 +4182,6 @@ hr {
           -webkit-box-orient: vertical;
           overflow: hidden;
           margin-bottom: 5px;
-          font-size: 18px;
-          font-weight: 600;
         }
 
         &:hover {
@@ -4079,7 +4195,7 @@ hr {
       }
 
       .card-price {
-        font-size: 20px;
+        font-size: 18px;
         margin: 0 0 10px 0;
 
         .price-sale {

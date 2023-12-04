@@ -69,6 +69,10 @@ new Swiper(".mySwiper", {
     },
     mousewheel: true,
     keyboard: true,
+    autoplay: {
+        delay: 1500,
+        disableOnInteraction: false,
+    },
 });
 
 new Swiper(".Categories", {
@@ -128,7 +132,6 @@ new Swiper(".CategoriesOne", {
 });
 
 new Swiper(".NewProducts", {
-
     cssMode: true,
     navigation: {
         nextEl: ".swiper-button-next",
@@ -150,6 +153,10 @@ new Swiper(".NewProducts", {
     },
     mousewheel: true,
     keyboard: true,
+    autoplay: {
+        delay: 2000,
+        disableOnInteraction: false,
+    },
 });
 
 new Swiper(".FeaturedProducts", {
@@ -167,13 +174,17 @@ new Swiper(".FeaturedProducts", {
             slidesPerView: 3,
             spaceBetween: 10,
         },
-        900: {
-            slidesPerView: 4,
+        800: {
+            slidesPerView: 5,
             spaceBetween: 10,
         },
     },
     mousewheel: true,
     keyboard: true,
+    autoplay: {
+        delay: 2000,
+        disableOnInteraction: false,
+    },
 });
 
 new Swiper(".HotDeals", {
@@ -191,13 +202,17 @@ new Swiper(".HotDeals", {
             slidesPerView: 3,
             spaceBetween: 10,
         },
-        900: {
-            slidesPerView: 4,
+        800: {
+            slidesPerView: 5,
             spaceBetween: 10,
         },
     },
     mousewheel: true,
     keyboard: true,
+    autoplay: {
+        delay: 2000,
+        disableOnInteraction: false,
+    },
 });
 
 new Swiper(".advertisementBanner",{
