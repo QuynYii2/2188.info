@@ -56,7 +56,7 @@ a {
   max-height: 60vh;
 }
 .section-First-category .show-list-category {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
 }
 .section-First-category .show-accordion {
@@ -161,7 +161,7 @@ a {
 }
 .main-list-category .main-category-item {
   width: 10%;
-  padding: 1%;
+  padding: 16px 1% 20px 1%;
   margin: 1.25%;
   text-align: center;
   box-sizing: border-box;
@@ -216,6 +216,7 @@ a {
   font-weight: 600;
   text-align: center;
   transition: transform 0.3s ease-out;
+  line-height: 150%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -499,7 +500,9 @@ a {
 }
 
 body {
-  font-family: "DM Sans", sans-serif;
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  line-height: normal;
 }
 
 #product-detail .btn-16 {
@@ -847,7 +850,7 @@ header .none_decoration {
 }
 
 .marginTop-body {
-  margin-top: 200px;
+  margin-top: 150px;
 }
 
 #checkboxes {
@@ -1098,17 +1101,35 @@ td.priceTransport {
 }
 
 .item-hover {
-  border: 1px solid #f9f9f9;
+  border: 1px solid #fff;
   border-radius: 4px;
   position: relative;
   overflow: hidden;
+  padding: 16px 16px 32px 16px;
+}
+.item-hover .item-img {
+  padding-bottom: 8px;
 }
 .item-hover .item-body {
-  padding: 10px;
+  text-align: left;
+}
+.item-hover .item-body .card-title1 {
+  transition: transform 0.3s ease-out;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  min-height: 50px;
+  white-space: normal;
 }
 .item-hover .item-body .card-title1 a {
   font-size: 14px;
   font-weight: 600;
+}
+.item-hover .item-body .card-price .price-sale {
+  font-size: 18px;
+  font-weight: 600;
+  color: #DD0B00;
 }
 .item-hover:hover {
   border: 1px solid #fd6506;
@@ -3114,6 +3135,10 @@ a {
   color: white;
 }
 
+.show-category {
+  margin: 0 15% 0 15%;
+}
+
 .category-header--left {
   font-size: 14px;
 }
@@ -3175,6 +3200,124 @@ a {
 }
 .category-header--right .layout-vertical i:focus {
   outline: none;
+}
+.category-header .breadcrumbs_filter .breadcrumb {
+  background-color: #F3F3F3;
+}
+.category-header .breadcrumbs_filter .breadcrumb .breadcrumb-item {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.img-category-banner {
+  height: 350px;
+  object-fit: cover;
+}
+
+.category-name-banner {
+  font-size: 64px;
+  font-weight: 600;
+}
+
+.price-search {
+  font-family: Mulish, sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.price-input {
+  width: 100%;
+  display: flex;
+  margin: 30px 0 35px;
+}
+
+.price-input .field {
+  display: flex;
+  width: 100%;
+  height: 45px;
+  align-items: center;
+}
+
+.field input {
+  width: 100%;
+  height: 100%;
+  outline: none;
+  font-size: 19px;
+  margin-left: 12px;
+  border-radius: 5px;
+  text-align: center;
+  border: 1px solid #999;
+  -moz-appearance: textfield;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.price-input .separator {
+  width: 130px;
+  display: flex;
+  font-size: 19px;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider {
+  height: 5px;
+  position: relative;
+  background: #ddd;
+  border-radius: 5px;
+}
+
+.input-min, .input-max {
+  color: #929292;
+}
+
+.slider .progress {
+  height: 100%;
+  left: 25%;
+  right: 25%;
+  position: absolute;
+  border-radius: 5px;
+  background: #F47621;
+}
+
+.range-input {
+  top: 35px;
+  position: relative;
+}
+
+.range-input input {
+  position: absolute;
+  width: 100%;
+  height: 5px;
+  top: -40px;
+  background: none;
+  pointer-events: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  height: 17px;
+  width: 17px;
+  border-radius: 50%;
+  background: #F47621;
+  pointer-events: auto;
+  -webkit-appearance: none;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
+}
+
+input[type=range]::-moz-range-thumb {
+  height: 17px;
+  width: 17px;
+  border: none;
+  border-radius: 50%;
+  background: #F47621;
+  pointer-events: auto;
+  -moz-appearance: none;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
 }
 
 .category-body .card {

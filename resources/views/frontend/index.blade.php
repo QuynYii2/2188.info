@@ -22,24 +22,11 @@
             margin-left: auto;
             margin-right: auto;
         }
-
-        .swiper-slide1 {
-            text-align: center;
-            font-size: 18px;
-            background: #fff;
-            height: calc((100% - 30px) / 2) !important;
-
-            /* Center slide text vertically */
-            display: grid;
-            justify-content: center;
-            align-items: center;
-        }
     </style>
     @php
         $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
     @endphp
     <link rel="stylesheet" href="{{asset('css/frontend.css')}}">
-    <!-- test nhanh -->
     <div class="body m-3" id="body-content">
         <section class="section-First pt-3 pb-3 container-fluid bg-white">
             <div class="row m-0">

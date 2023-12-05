@@ -3,145 +3,10 @@
 @section('title', 'Category')
 
 @section('content')
-    <style>
-        .img-category-banner {
-            height: 350px;
-            object-fit: cover;
-        }
-
-        .category-name-banner {
-            font-size: 64px;
-            font-weight: 600;
-        }
-
-        .card-title1 {
-            font-size: 16px;
-            font-weight: 600;
-            text-align: center;
-            transition: transform 0.3s ease-out;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            -webkit-line-clamp: 2;
-            min-height: 50px;
-            white-space: normal;
-        }
-
-        .image-product {
-            height: 250px;
-            object-fit: cover;
-        }
-
-        .price-sale {
-            font-size: 18px;
-            font-weight: 600;
-            color: #DD0B00;
-        }
-
-        .price-search {
-            font-size: 18px;
-            font-weight: 800;
-        }
-
-        .price-input {
-            width: 100%;
-            display: flex;
-            margin: 30px 0 35px;
-        }
-
-        .price-input .field {
-            display: flex;
-            width: 100%;
-            height: 45px;
-            align-items: center;
-        }
-
-        .field input {
-            width: 100%;
-            height: 100%;
-            outline: none;
-            font-size: 19px;
-            margin-left: 12px;
-            border-radius: 5px;
-            text-align: center;
-            border: 1px solid #999;
-            -moz-appearance: textfield;
-        }
-
-        input[type=number]::-webkit-outer-spin-button,
-        input[type=number]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-        }
-
-        .price-input .separator {
-            width: 130px;
-            display: flex;
-            font-size: 19px;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .slider {
-            height: 5px;
-            position: relative;
-            background: #ddd;
-            border-radius: 5px;
-        }
-
-        .input-min, .input-max {
-            color: #929292;
-        }
-
-        .slider .progress {
-            height: 100%;
-            left: 25%;
-            right: 25%;
-            position: absolute;
-            border-radius: 5px;
-            background: #F47621;
-        }
-
-        .range-input {
-            top: 35px;
-            position: relative;
-        }
-
-        .range-input input {
-            position: absolute;
-            width: 100%;
-            height: 5px;
-            top: -40px;
-            background: none;
-            pointer-events: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-        }
-
-        input[type=range]::-webkit-slider-thumb {
-            height: 17px;
-            width: 17px;
-            border-radius: 50%;
-            background: #F47621;
-            pointer-events: auto;
-            -webkit-appearance: none;
-            box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-        }
-
-        input[type=range]::-moz-range-thumb {
-            height: 17px;
-            width: 17px;
-            border: none;
-            border-radius: 50%;
-            background: #F47621;
-            pointer-events: auto;
-            -moz-appearance: none;
-            box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-        }
-    </style>
     @php
         $langDisplay = new \App\Http\Controllers\Frontend\HomeController();
     @endphp
-    <div id="body-content " style="background-color: #f5f5f5">
+    <div id="body-content" style="background-color: #F3F3F3">
         <div class="category-banner">
             <img class="img-category-banner" src="{{ asset('storage/'. $category->thumbnail)  }}"
                  alt="">
@@ -159,7 +24,7 @@
                 @endif
             </div>
         </div>
-        <div class="container pb-5">
+        <div class="show-category pb-5">
             <div class="category-header align-items-center mt-4 mb-3 container-fluid d-flex justify-content-between">
                 <div class="breadcrumbs_filter">
                     <nav aria-label="breadcrumb">
