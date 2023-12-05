@@ -16,9 +16,6 @@
             @else
                 <a href="#"><img src="{{ $thumbnail }}" alt="" class="image-product"></a>
             @endif
-            <div class="top-left">
-                <img src=" {{ asset('images/gif/feature.gif') }}" alt="" class="img-feature">
-            </div>
         </div>
     @endif
     <div class="item-body p-2">
@@ -74,6 +71,9 @@
         <div class="button-view">
             <button class="btn btnQuickAdd">{{ __('home.Add To Cart') }}</button>
         </div>
+    </div>
+    <div class="top-left">
+        <img src=" {{ asset('images/gif/feature.gif') }}" alt="" class="img-feature">
     </div>
 </div>
 

@@ -726,7 +726,7 @@ header .none_decoration {
 }
 
 .body {
-  background-color: #f5f5f5;
+  background-color: #F3F3F3;
 }
 
 .w-50 {
@@ -1205,6 +1205,33 @@ td.priceTransport {
   transform: translate(-50%, -50%);
 }
 .item-hover .item-img .top-left-2 {
+  position: absolute;
+  top: 0px;
+  left: 12%;
+}
+.item-hover .top-left {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+.item-hover .top-left .img-feature {
+  max-width: 69px;
+  max-height: 69px;
+}
+.item-hover .more-gifcode {
+  position: relative;
+  text-align: center;
+}
+.item-hover .more-gifcode .text-svg {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.item-hover .top-left-2 {
   position: absolute;
   top: 0px;
   left: 12%;

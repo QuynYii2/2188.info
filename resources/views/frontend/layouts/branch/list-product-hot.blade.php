@@ -16,27 +16,6 @@
             @else
                 <a href="#"><img src="{{ $thumbnail }}" alt="" class="image-product"></a>
             @endif
-            <div class="top-left">
-                <div class="more-gifcode">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="39" viewBox="0 0 32 39" fill="none">
-                        <path d="M0 0H32V37.7962C32 38.6554 30.9881 39.1146 30.3415 38.5488L16.6585 26.5762C16.2815 26.2463 15.7185 26.2463 15.3415 26.5762L1.6585 38.5488C1.01192 39.1146 0 38.6554 0 37.7962V0Z"
-                              fill="#E80000"/>
-                    </svg>
-                    <div class="text-svg">
-                        new
-                    </div>
-                </div>
-            </div>
-            <div class="top-left-2">
-                <div class="more-gifcode">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="39" viewBox="0 0 32 39" fill="none">
-                        <path d="M0 0H32V37.7962C32 38.6554 30.9881 39.1146 30.3415 38.5488L16.6585 26.5762C16.2815 26.2463 15.7185 26.2463 15.3415 26.5762L1.6585 38.5488C1.01192 39.1146 0 38.6554 0 37.7962V0Z" fill="#FFA800"/>
-                    </svg>
-                    <div class="text-svg">
-                        75%
-                    </div>
-                </div>
-            </div>
         </div>
     @endif
     <div class="item-body p-2">
@@ -91,6 +70,28 @@
     <div class="button-hover">
         <div class="button-view">
             <button class="btn btnQuickAdd">{{ __('home.Add To Cart') }}</button>
+        </div>
+    </div>
+    <div class="top-left">
+        <div class="more-gifcode">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="39" viewBox="0 0 32 39" fill="none">
+                <path d="M0 0H32V37.7962C32 38.6554 30.9881 39.1146 30.3415 38.5488L16.6585 26.5762C16.2815 26.2463 15.7185 26.2463 15.3415 26.5762L1.6585 38.5488C1.01192 39.1146 0 38.6554 0 37.7962V0Z"
+                      fill="#E80000"/>
+            </svg>
+            <div class="text-svg">
+                new
+            </div>
+        </div>
+    </div>
+    <div class="top-left-2">
+        <div class="more-gifcode">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="39" viewBox="0 0 32 39" fill="none">
+                <path d="M0 0H32V37.7962C32 38.6554 30.9881 39.1146 30.3415 38.5488L16.6585 26.5762C16.2815 26.2463 15.7185 26.2463 15.3415 26.5762L1.6585 38.5488C1.01192 39.1146 0 38.6554 0 37.7962V0Z"
+                      fill="#FFA800"/>
+            </svg>
+            <div class="text-svg">
+                75%
+            </div>
         </div>
     </div>
 </div>
