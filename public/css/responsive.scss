@@ -1085,13 +1085,11 @@ body {
   }
 
   .item-hover {
-    .item-img {
-      position: relative;
-      text-align: center;
+    position: relative;
+    text-align: center;
 
-      .top-left-2 {
-        left: 20%;
-      }
+    .top-left-2 {
+      left: 20%;
     }
   }
 }

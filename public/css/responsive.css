@@ -669,11 +669,11 @@ body {
   .list-marketing .show-marketing .text-content span {
     font-size: 12px;
   }
-  .item-hover .item-img {
+  .item-hover {
     position: relative;
     text-align: center;
   }
-  .item-hover .item-img .top-left-2 {
+  .item-hover .top-left-2 {
     left: 20%;
   }
 }
