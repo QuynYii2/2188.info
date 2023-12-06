@@ -17,7 +17,6 @@ use App\Models\ProductInterested;
 use App\Models\ProductSale;
 use App\Models\ProductViewed;
 use App\Models\Promotion;
-use App\Models\Properties;
 use App\Models\Variation;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
@@ -73,6 +72,33 @@ class ProductController extends Controller
         return view('frontend.pages.member.modal-att', compact('testArray', 'listAtt', 'productID'));
     }
 
+    private function getArray($array)
+    {
+        if ($array) {
+            if (count($array) == 1) {
+                return $array;
+            }
+            $newArray = $array[0];
+            for ($i = 1; $i < count($array); $i++) {
+                $newArray = $this->mergeArray($newArray, $array[$i]);
+            }
+            return $newArray;
+        } else {
+            return null;
+        }
+    }
+
+    private function mergeArray($array1, $array2)
+    {
+        $arrayList = [];
+        for ($j = 0; $j < count($array1); $j++) {
+            for ($z = 0; $z < count($array2); $z++) {
+                $arrayList[] = $array1[$j] . "," . $array2[$z];
+            }
+        }
+        return $arrayList;
+    }
+
     public function detail_product(Request $request, $id)
     {
         (new HomeController())->getLocale($request);
@@ -85,6 +111,94 @@ class ProductController extends Controller
         $currency = (new HomeController())->getLocation($request);
         return view('frontend/pages/detail-product', $value)->with('currency', $currency);
     }
+
+    private function findProduct($key, $text)
+    {
+        if ($key === 1) {
+            $product = Product::find($text);
+        } else {
+            $product = Product::where('slug', $text)->first();
+        }
+
+        if (!$product || $product->status != ProductStatus::ACTIVE) {
+            return 404;
+        }
+
+        $product->views = $product->views + 1;
+        $product->save();
+        if (Auth::check()) {
+            $result = EvaluateProduct::where([
+                ['product_id', '=', $product->id],
+                ['status', '=', EvaluateProductStatus::APPROVED]
+            ])->orWhere([
+                ['user_id', '=', Auth::user()->id],
+                ['product_id', '=', $product->id]
+            ])->get();
+        } else {
+            $result = EvaluateProduct::where([
+                ['product_id', '=', $product->id],
+                ['status', '=', EvaluateProductStatus::APPROVED]
+            ])->get();
+        }
+
+
+        $product_att = DB::table('product_attribute')->where('product_id', '=', $text)->get();
+        $listAtt = [];
+        $listProperties = [];
+        foreach ($product_att as $item) {
+            $id = $item->attribute_id;
+            $att = Attribute::where('id', $id)->first(['id', 'name', 'name_vi', 'name_zh', 'name_en', 'name_ja', 'name_ko',]);
+            $listAtt[$id] = $att;
+            $listProperties[$id] = explode(',', $item->value);
+        }
+        $otherProduct = Product::where('id', '!=', $product->id)->limit(4)->get();
+
+        $listProducts = Product::where('user_id', $product->user_id)
+            ->where('id', '!=', $product->id)
+            ->orderBy('id', 'desc')
+            ->limit(16)
+            ->get();
+
+        $vouchers = Voucher::where([['status', VoucherStatus::ACTIVE], ['user_id', $product->user_id]])->get();
+        $arrayVouchers = null;
+        foreach ($vouchers as $voucher) {
+            $listIds = $voucher->apply;
+            $arrayID = explode(",", $listIds);
+            for ($i = 0; $i < count($arrayID); $i++) {
+                if ($arrayID[$i] == $product->id) {
+                    $arrayVouchers[] = $voucher;
+                }
+            }
+        }
+
+        $promotions = Promotion::where([['status', PromotionStatus::ACTIVE], ['user_id', $product->user_id]])->get();
+        $arrayPromotions = null;
+        foreach ($promotions as $promotion) {
+            $listIds = $promotion->apply;
+            $arrayID = explode(",", $listIds);
+            for ($i = 0; $i < count($arrayID); $i++) {
+                if ($arrayID[$i] == $product->id) {
+                    $arrayPromotions[] = $promotion;
+                }
+            }
+        }
+        $attributes = DB::table('product_attribute')->where([['product_id', $product->id], ['status', AttributeProductStatus::ACTIVE]])->get();
+        $variables = Variation::where([['product_id', $product->id], ['status', VariationStatus::ACTIVE]])->get();
+
+        return ['result' => $result,
+            'product' => $product,
+            'otherProduct' => $otherProduct,
+            'attributes' => $attributes,
+            'arrayVouchers' => $arrayVouchers,
+            'arrayPromotions' => $arrayPromotions,
+            'variables' => $variables,
+            'listAtt' => $listAtt,
+            'listProducts' => $listProducts,
+            'listProperties' => $listProperties,
+        ];
+    }
+
+    // Products by language
 
     public function orderProduct($id, Request $request)
     {
@@ -167,7 +281,6 @@ class ProductController extends Controller
         return $product;
     }
 
-    // Products by language
     public function listProductsByLanguage(Request $request, $locale)
     {
         (new HomeController())->getLocale($request);
@@ -243,116 +356,10 @@ class ProductController extends Controller
         return view('frontend/pages/member/product-sales', compact('price_sales', 'currency'));
     }
 
-    private function findProduct($key, $text)
-    {
-        if ($key === 1) {
-            $product = Product::find($text);
-        } else {
-            $product = Product::where('slug', $text)->first();
-        }
-
-        if (!$product || $product->status != ProductStatus::ACTIVE) {
-            return 404;
-        }
-
-        $product->views = $product->views + 1;
-        $product->save();
-        if (Auth::check()) {
-            $result = EvaluateProduct::where([
-                ['product_id', '=', $product->id],
-                ['status', '=', EvaluateProductStatus::APPROVED]
-            ])->orWhere([
-                ['user_id', '=', Auth::user()->id],
-                ['product_id', '=', $product->id]
-            ])->get();
-        } else {
-            $result = EvaluateProduct::where([
-                ['product_id', '=', $product->id],
-                ['status', '=', EvaluateProductStatus::APPROVED]
-            ])->get();
-        }
-
-
-        $product_att = DB::table('product_attribute')->where('product_id', '=', $text)->get();
-        $listAtt = [];
-        $listProperties = [];
-        foreach ($product_att as $item) {
-            $id = $item->attribute_id;
-            $att = Attribute::where('id', $id)->first(['id', 'name', 'name_vi', 'name_zh', 'name_en', 'name_ja', 'name_ko',]);
-            $listAtt[$id] = $att;
-            $listProperties[$id] = explode(',', $item->value);
-        }
-        $otherProduct = Product::where('id', '!=', $product->id)->limit(4)->get();
-
-        $vouchers = Voucher::where([['status', VoucherStatus::ACTIVE], ['user_id', $product->user_id]])->get();
-        $arrayVouchers = null;
-        foreach ($vouchers as $voucher) {
-            $listIds = $voucher->apply;
-            $arrayID = explode(",", $listIds);
-            for ($i = 0; $i < count($arrayID); $i++) {
-                if ($arrayID[$i] == $product->id) {
-                    $arrayVouchers[] = $voucher;
-                }
-            }
-        }
-
-        $promotions = Promotion::where([['status', PromotionStatus::ACTIVE], ['user_id', $product->user_id]])->get();
-        $arrayPromotions = null;
-        foreach ($promotions as $promotion) {
-            $listIds = $promotion->apply;
-            $arrayID = explode(",", $listIds);
-            for ($i = 0; $i < count($arrayID); $i++) {
-                if ($arrayID[$i] == $product->id) {
-                    $arrayPromotions[] = $promotion;
-                }
-            }
-        }
-        $attributes = DB::table('product_attribute')->where([['product_id', $product->id], ['status', AttributeProductStatus::ACTIVE]])->get();
-        $variables = Variation::where([['product_id', $product->id], ['status', VariationStatus::ACTIVE]])->get();
-
-        return ['result' => $result,
-            'product' => $product,
-            'otherProduct' => $otherProduct,
-            'attributes' => $attributes,
-            'arrayVouchers' => $arrayVouchers,
-            'arrayPromotions' => $arrayPromotions,
-            'variables' => $variables,
-            'listAtt' => $listAtt,
-            'listProperties' => $listProperties,
-        ];
-    }
-
     public function getAllProduct(Request $request)
     {
         $products = Product::all();
         $currency = (new HomeController())->getLocation($request);
         return view('frontend.pages.member.product-load', compact('products', 'currency'));
-    }
-
-    private function mergeArray($array1, $array2)
-    {
-        $arrayList = [];
-        for ($j = 0; $j < count($array1); $j++) {
-            for ($z = 0; $z < count($array2); $z++) {
-                $arrayList[] = $array1[$j] . "," . $array2[$z];
-            }
-        }
-        return $arrayList;
-    }
-
-    private function getArray($array)
-    {
-        if ($array) {
-            if (count($array) == 1) {
-                return $array;
-            }
-            $newArray = $array[0];
-            for ($i = 1; $i < count($array); $i++) {
-                $newArray = $this->mergeArray($newArray, $array[$i]);
-            }
-            return $newArray;
-        } else {
-            return null;
-        }
     }
 }
