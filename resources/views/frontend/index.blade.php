@@ -164,7 +164,7 @@
                         No desirable products?
                     </p>
                     <div class="btn-my-posted d-flex align-items-center justify-content-between">
-                        <button class="btnPosted w-100">
+                        <button class="btnPosted w-100 bg-white">
                             <span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="33" height="32"
                                      viewBox="0 0 33 32"
@@ -636,13 +636,6 @@
         @endforeach
         <section class="section-Seven section-description">
             <div class="container">
-                <p>{{ __('home.If you are looking for a website to buy and sell online is a great choice for you.') }}
-                    <span id="dots">...</span>
-                    <span id="more">
-                                        {{ __('home.long description') }}
-                                    </span>
-                </p>
-                <button onclick="myFunction()" id="myBtn">{{ __('home.Show More') }}</button>
                 <p class="text-description">
                     {{ __('home.long description') }}
                 </p>

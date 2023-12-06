@@ -20,17 +20,49 @@
 @extends('frontend.layouts.master')
 @section('title', 'Detail')
 @section('content')
-    <div id="detail-product">
+    <div id="detail-product" class="body">
         <div class="container-fluid detail">
             <div class="grid second-nav">
-                <div class="column-xs-12">
-                    <nav>
-                        {!! getBreadcrumbs('product', $product) !!}
-                    </nav>
+                <div class="column-xs-12 category-header">
+                    <div class="breadcrumbs_filter">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item">
+                                    <a href="{{ route('category.show', $product->category->id) }}">
+                                        @if(locationHelper() == 'kr')
+                                            {{ $product->category->name_ko }}
+                                        @elseif(locationHelper() == 'cn')
+                                            {{ $product->category->name_zh }}
+                                        @elseif(locationHelper() == 'jp')
+                                            {{ $product->category->name_ja }}
+                                        @elseif(locationHelper() == 'vi')
+                                            {{ $product->category->name_vi }}
+                                        @else
+                                            {{ $product->category->name_en }}
+                                        @endif
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    @if(locationHelper() == 'kr')
+                                        {{ ($product->name_ko) }}
+                                    @elseif(locationHelper() == 'cn')
+                                        {{ ($product->name_zh) }}
+                                    @elseif(locationHelper() == 'jp')
+                                        {{ ($product->name_ja) }}
+                                    @elseif(locationHelper() == 'vi')
+                                        {{ ($product->name_vi) }}
+                                    @else
+                                        {{ ($product->name_en) }}
+                                    @endif
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
                 </div>
             </div>
             @php
-                $name = DB::table('users')->where('id', $product->user_id)->first();
+                $userProduct = DB::table('users')->where('id', $product->user_id)->first();
                 $productID = $product->id;
                 $productDetails = \App\Models\Variation::where('product_id', $product->id)->get();
                 $productDetail = \App\Models\Variation::where('product_id', $product->id)->first();
@@ -42,7 +74,7 @@
                             @php
                                 $thumbnail = checkThumbnail($product->thumbnail);
                             @endphp
-                            <img id="productThumbnail" class="active h-100"
+                            <img alt="" id="productThumbnail" class="main-image-product active h-100"
                                  src="{{ $thumbnail }}">
                             <input type="text" id="urlImage" value="{{ $thumbnail }}" hidden="">
                         </div>
@@ -54,448 +86,255 @@
                             @php
                                 $thumbnail = checkThumbnail($product->thumbnail);
                             @endphp
-                            <li class="image-item"><img src="{{ $thumbnail }}"></li>
+                            <li class="image-item"><img alt="" src="{{ $thumbnail }}"></li>
                             @if(count($arrayGallery)>1)
                                 @foreach($arrayGallery as $gallery)
                                     @php
                                         $gallery = checkThumbnail($gallery);
                                     @endphp
-                                    <li class="image-item"><img src="{{ $gallery }}"></li>
+                                    <li class="image-item"><img alt="" src="{{ $gallery }}"></li>
                                 @endforeach
                             @endif
                         </ul>
                     </div>
                 </div>
-                <div class="column-xs-12 column-md-5">
-                    <form action="{{ route('cart.add', $product) }}" method="POST">
-                        @csrf
-                        <div class="product-name"><a
-                                    href="{{ route('shop.information.show', $name->id) }}">{{$name->name}}</a></div>
-                        <div class="product-title">
-                            @if(locationHelper() == 'kr')
-                                <div class="item-text">{{ $product->name_ko }}</div>
-                            @elseif(locationHelper() == 'cn')
-                                <div class="item-text">{{$product->name_zh}}</div>
-                            @elseif(locationHelper() == 'jp')
-                                <div class="item-text">{{$product->name_ja}}</div>
-                            @elseif(locationHelper() == 'vi')
-                                <div class="item-text">{{$product->name_vi}}</div>
-                            @else
-                                <div class="item-text">{{$product->name_en}}</div>
-                            @endif</div>
-                        <div class="d-flex">
-                            <div class="product-origin">{{ __('home.ORIGIN') }}:
-                                @php
-                                    $ld = new \App\Http\Controllers\TranslateController();
-                                @endphp
-                                {{ $ld->translateText($product->origin, locationPermissionHelper()) }}
-                            </div>
-                            <div class="card-rating text-left ml-3">
-                                @php
-                                    $ratings = \App\Models\EvaluateProduct::where('product_id', $product->id)->get();
-                                    $totalRatings = $ratings->count();
-                                    $totalStars = 0;
-                                    foreach ($ratings as $rating) {
-                                        $totalStars += $rating->star_number;
-                                    }
-                                    $averageRating = $totalRatings > 0 ? $totalStars / $totalRatings : 0;
-                                    $averageRatingsFormatted = number_format($averageRating, 2);
-                                @endphp
-
-                                @for ($i = 1; $i <= 5; $i++)
-                                    <i class="fa-solid fa-star"
-                                       style="color: {{ $i <= $averageRating ? '#fac325' : '#ccc' }}"></i>
-                                @endfor
-
-                                <span>{{ $averageRatingsFormatted }} ({{ $totalRatings }})</span>
-                            </div>
-                            <div class="eyes ml-3"><i
-                                        class="fa-regular fa-eye"></i>{{$product->views}}{{ __('home.19 customers are viewing this product') }}
-                            </div>
-                        </div>
-                        <div class="product-price d-flex" style="gap: 3rem">
-                            @if($product->price != null)
-                                <strike class="productOldPrice"
-                                        id="productOldPrice">({{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}
-                                    )</strike>
-                                <div id="productPrice"
-                                     class="price">{{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</div>
-                            @else
-                                <strike class="productOldPrice"
-                                        id="productOldPrice">({{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}
-                                    )</strike>
-                            @endif
-                        </div>
-                        <div class="description-text">
-                            @if(locationHelper() == 'kr')
-                                <div class="item-text">{!! $product->short_description_ko !!}</div>
-                            @elseif(locationHelper() == 'cn')
-                                <div class="item-text">{!! $product->short_description_zh !!}</div>
-                            @elseif(locationHelper() == 'jp')
-                                <div class="item-text">{!! $product->short_description_ja !!}</div>
-                            @elseif(locationHelper() == 'vi')
-                                <div class="item-text">{!! $product->short_description_vi !!}</div>
-                            @else
-                                <div class="item-text">{!! $product->short_description_en !!}</div>
-                            @endif
-                        </div>
-                        @if(!$attributes->isEmpty())
-                            <div class="row d-none">
-                                @foreach($attributes as $attribute)
-                                    @php
-                                        $att = Attribute::where('id', $attribute->attribute_id)
-                                            ->where('status', \App\Enums\AttributeStatus::ACTIVE)->first();
-                                        $properties_id = $attribute->value;
-                                        $arrayAtt = array();
-                                        $arrayAtt = explode(',', $properties_id);
-                                    @endphp
-                                    <div class="col-sm-6 col-6 d-flex">
-                                        @if($att)
-                                            <label>{{($att->{'name' . $langDisplay->getLangDisplay()})}}</label>
-                                            <div class="radio-toolbar ml-3">
-                                                @foreach($arrayAtt as $index => $data)
-                                                    @php
-                                                        $property = Properties::where('id', $data)
-                                                            ->where('status', \App\Enums\PropertiStatus::ACTIVE)->first();
-                                                    @endphp
-                                                    @if($property)
-                                                        <input class="inputRadioButton"
-                                                               id="input-{{$attribute->attribute_id}}-{{$loop->index+1}}"
-                                                               name="inputProperty-{{$attribute->attribute_id}}"
-                                                               type="radio"
-                                                               value="{{$attribute->attribute_id}}-{{$property->id}}"
-                                                               @if($index ==0 )checked @endif>
-                                                        <label for="input-{{$attribute->attribute_id}}-{{$loop->index+1}}">
-                                                            @php
-                                                                $ld = new \App\Http\Controllers\TranslateController();
-                                                            @endphp
-                                                            {{ $ld->translateText($property->name, locationPermissionHelper()) }}
-                                                        </label>
-                                                    @endif
-                                                @endforeach
-                                            </div>
-                                        @endif
-                                    </div>
-                                @endforeach
-                            </div>
-                            {{--                        <a id="resetSelect" class="btn btn-dark mt-3 "--}}
-                            {{--                           style="color: white">{{ __('home.Reset select') }}</a>--}}
+                <div class="column-xs-12 column-md-5 product-show">
+                    <div class="product-title">
+                        @if(locationHelper() == 'kr')
+                            <div class="item-text">{{ $product->name_ko }}</div>
+                        @elseif(locationHelper() == 'cn')
+                            <div class="item-text">{{$product->name_zh}}</div>
+                        @elseif(locationHelper() == 'jp')
+                            <div class="item-text">{{$product->name_ja}}</div>
+                        @elseif(locationHelper() == 'vi')
+                            <div class="item-text">{{$product->name_vi}}</div>
+                        @else
+                            <div class="item-text">{{$product->name_en}}</div>
                         @endif
-                        <div class="">
-                            <input id="product_id" hidden value="{{$product->id}}">
-                            <input name="price" id="price" hidden value="{{$product->price}}">
-                            @if(count($productDetails)>0)
-                                <input name="variable" id="variable" hidden value="{{$productDetails[0]->variation}}">
-                            @endif
+                    </div>
+                    <div class="d-flex">
+                        <div class="card-rating text-left">
+                            @php
+                                $ratings = \App\Models\EvaluateProduct::where('product_id', $product->id)->get();
+                                $totalRatings = $ratings->count();
+                                $totalStars = 0;
+                                foreach ($ratings as $rating) {
+                                    $totalStars += $rating->star_number;
+                                }
+                                $averageRating = $totalRatings > 0 ? $totalStars / $totalRatings : 0;
+                                $averageRatingsFormatted = number_format($averageRating, 2);
+                            @endphp
 
+                            @for ($i = 1; $i <= 5; $i++)
+                                <i class="fa-solid fa-star"
+                                   style="color: {{ $i <= $averageRating ? '#fac325' : '#ccc' }}"></i>
+                            @endfor
+
+                            <span class="total-rating"> ({{ $totalRatings }})</span>
                         </div>
-                        {{--                    <div class="count__wrapper count__wrapper--ml mt-3">--}}
-                        {{--                        <label for="qty">{{ __('home.remaining') }}<span--}}
-                        {{--                                    id="productQuantity">{{$product->qty}}</span></label>--}}
-                        {{--                    </div><!-- Button to trigger modal -->--}}
-                        <!-- Button trigger modal -->
-                        @php
-                            $price_sales = \App\Models\ProductSale::where('product_id', '=', $product->id)->get();
-                        @endphp
-                        {{--                    @if($price_sales)--}}
-                        {{--                        <a class="p-2 btn-light" style="cursor: pointer" data-toggle="modal" data-target="#priceList">--}}
-                        {{--                            {{ __('home.Wholesale price list') }}--}}
-                        {{--                        </a>--}}
-                        {{--                    @endif--}}
-                        <!-- Modal -->
-                        <div class="modal fade" id="priceList" tabindex="-1" role="dialog"
-                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">{{ __('home.Price list') }}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <table class="table-fill">
-                                            <thead>
-                                            <tr>
-                                                <th class="text-left">{{ __('home.Month') }}</th>
-                                                <th class="text-left">{{ __('home.sale') }}</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody class="table-hover">
-                                            @php
-                                                $price_sales = \App\Models\ProductSale::where('product_id', '=', $product->id)->get();
-                                            @endphp
-                                            @if(!$price_sales->isEmpty())
-                                                @foreach($price_sales as $price_sale)
-                                                    <tr>
-                                                        <td class="text-left">{{$price_sale->quantity}}</td>
-                                                        <td class="text-left">-{{$price_sale->sales}} %</td>
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-                                            </tbody>
-                                        </table>
-                                    </div>
+                        <div class="eyes ml-3">
+                            <i class="fa-regular fa-eye"></i>
+                            {{$product->views}}{{ __('home.19 customers are viewing this product') }}
+                        </div>
+                    </div>
+                    <div class="product-price d-flex justify-content-between">
+                        <div class="price-area d-flex align-items-center" style="gap: 2rem">
+                            @if($product->price != null)
+                                <div id="productPrice" class="price">
+                                    {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}
                                 </div>
+                                <strike class="productOldPrice" id="productOldPrice">
+                                    {{ number_format(convertCurrency('USD', $currency,$product->old_price), 0, ',', '.') }} {{$currency}}
+                                </strike>
+                            @else
+                                <strike class="productOldPrice" id="productOldPrice">
+                                    {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}
+                                </strike>
+                            @endif
+                        </div>
+                        <div class="product-list-social d-flex justify-content-between align-items-center m-auto">
+                            <div class="social-item social-product-facebook mr-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"
+                                     fill="none">
+                                    <g clip-path="url(#clip0_45_13518)">
+                                        <path d="M20 0C16.0444 0 12.1776 1.17298 8.8886 3.37061C5.59962 5.56824 3.03617 8.69181 1.52242 12.3463C0.00866564 16.0009 -0.387401 20.0222 0.384303 23.9018C1.15601 27.7814 3.06082 31.3451 5.85787 34.1421C8.65492 36.9392 12.2186 38.844 16.0982 39.6157C19.9778 40.3874 23.9992 39.9913 27.6537 38.4776C31.3082 36.9638 34.4318 34.4004 36.6294 31.1114C38.827 27.8224 40 23.9556 40 20C40 14.6957 37.8929 9.60859 34.1421 5.85786C30.3914 2.10714 25.3043 0 20 0V0ZM25.6895 13.0158C25.6895 13.3921 25.5316 13.5421 25.1632 13.5421C24.4553 13.5421 23.7474 13.5421 23.0421 13.5711C22.3369 13.6 21.9526 13.9211 21.9526 14.6579C21.9368 15.4474 21.9526 16.2211 21.9526 17.0263H24.9816C25.4132 17.0263 25.5605 17.1737 25.5605 17.6079C25.5605 18.6605 25.5605 19.7184 25.5605 20.7816C25.5605 21.2105 25.4237 21.3447 24.9895 21.3474H21.9263V29.9105C21.9263 30.3684 21.7842 30.5132 21.3316 30.5132H18.0369C17.6395 30.5132 17.4842 30.3579 17.4842 29.9605V21.3605H14.8684C14.4579 21.3605 14.3105 21.2105 14.3105 20.7974C14.3105 19.7325 14.3105 18.6684 14.3105 17.6053C14.3105 17.1947 14.4658 17.0395 14.8711 17.0395H17.4842V14.7368C17.4532 13.7025 17.7014 12.679 18.2026 11.7737C18.7237 10.8598 19.5587 10.1659 20.5526 9.82105C21.1977 9.58636 21.8794 9.46872 22.5658 9.47368H25.1526C25.5237 9.47368 25.679 9.63684 25.679 10C25.6921 11.0132 25.6921 12.0158 25.6895 13.0158Z"
+                                              fill="black"/>
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_45_13518">
+                                            <rect width="40" height="40" fill="white"/>
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <div class="social-item social-product-whatapp mr-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="41" height="40" viewBox="0 0 41 40"
+                                     fill="none">
+                                    <g clip-path="url(#clip0_45_13522)">
+                                        <path d="M20.6665 0C9.6225 0 0.666504 8.95599 0.666504 20C0.666504 31.044 9.6225 40 20.6665 40C31.7105 40 40.6665 31.044 40.6665 20C40.6665 8.95599 31.7105 0 20.6665 0ZM21.0904 31.6446C21.0901 31.6446 21.0907 31.6446 21.0904 31.6446H21.0855C19.082 31.6437 17.1133 31.1414 15.365 30.188L9.01947 31.8521L10.7178 25.6509C9.6701 23.8364 9.11896 21.7776 9.11987 19.6686C9.12262 13.0707 14.4925 7.70294 21.0904 7.70294C24.2923 7.70416 27.298 8.9505 29.5578 11.2122C31.8179 13.4741 33.0618 16.4807 33.0606 19.678C33.0579 26.2762 27.6874 31.6446 21.0904 31.6446Z"
+                                              fill="black"/>
+                                        <path d="M21.0952 9.72412C15.6072 9.72412 11.144 14.1855 11.1416 19.6695C11.141 21.5488 11.6671 23.3789 12.6629 24.9625L12.8994 25.3387L11.8942 29.0091L15.6597 28.0215L16.0232 28.237C17.5506 29.1434 19.3017 29.6228 21.087 29.6234H21.0909C26.5746 29.6234 31.0378 25.1617 31.0403 19.6774C31.0412 17.0197 30.0073 14.5209 28.1289 12.641C26.2505 10.7611 23.7524 9.72504 21.0952 9.72412ZM26.9473 23.9456C26.6979 24.6439 25.5032 25.2814 24.9285 25.3674C24.4131 25.4443 23.7612 25.4764 23.0447 25.249C22.6101 25.1111 22.0532 24.9271 21.3394 24.6191C18.3392 23.324 16.3796 20.304 16.2301 20.1044C16.0806 19.9048 15.0088 18.483 15.0088 17.0111C15.0088 15.5396 15.7815 14.816 16.0555 14.5169C16.3299 14.2175 16.654 14.1428 16.8533 14.1428C17.0526 14.1428 17.2521 14.1446 17.4264 14.1531C17.6101 14.1623 17.8567 14.0833 18.0993 14.6664C18.3486 15.2652 18.9468 16.7368 19.0215 16.8863C19.0963 17.0361 19.1461 17.2107 19.0466 17.4103C18.9468 17.6099 18.6154 18.0405 18.2989 18.4329C18.1661 18.5974 17.9931 18.7439 18.1677 19.0433C18.3419 19.3423 18.9425 20.3217 19.8315 21.1145C20.9741 22.1332 21.9378 22.4487 22.2369 22.5986C22.5356 22.7481 22.7102 22.7231 22.8848 22.5238C23.059 22.3242 23.6324 21.6507 23.8317 21.3513C24.031 21.0519 24.2306 21.102 24.5046 21.2018C24.779 21.3013 26.2493 22.0248 26.5484 22.1744C26.8475 22.3242 27.0468 22.399 27.1215 22.5238C27.1966 22.6486 27.1966 23.2471 26.9473 23.9456Z"
+                                              fill="black"/>
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_45_13522">
+                                            <rect width="40" height="40" fill="white"
+                                                  transform="translate(0.666504)"/>
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <div class="social-item social-product-ins mr-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="41" height="40" viewBox="0 0 41 40"
+                                     fill="none">
+                                    <g clip-path="url(#clip0_45_13525)">
+                                        <path d="M24.1616 20C24.1616 22.1143 22.4478 23.8281 20.3335 23.8281C18.2192 23.8281 16.5054 22.1143 16.5054 20C16.5054 17.8857 18.2192 16.1719 20.3335 16.1719C22.4478 16.1719 24.1616 17.8857 24.1616 20Z"
+                                              fill="black"/>
+                                        <path d="M29.2874 13.227C29.1033 12.7283 28.8098 12.277 28.4283 11.9065C28.0578 11.525 27.6068 11.2314 27.1078 11.0474C26.7031 10.8903 26.0952 10.7032 24.9755 10.6522C23.7643 10.597 23.4011 10.5851 20.3347 10.5851C17.268 10.5851 16.9048 10.5967 15.6939 10.6519C14.5742 10.7032 13.966 10.8903 13.5616 11.0474C13.0627 11.2314 12.6113 11.525 12.2411 11.9065C11.8597 12.277 11.5661 12.728 11.3818 13.227C11.2246 13.6317 11.0375 14.2399 10.9866 15.3596C10.9313 16.5705 10.9194 16.9337 10.9194 20.0004C10.9194 23.0668 10.9313 23.4299 10.9866 24.6412C11.0375 25.7609 11.2246 26.3688 11.3818 26.7734C11.5661 27.2724 11.8594 27.7234 12.2408 28.0939C12.6113 28.4754 13.0624 28.769 13.5613 28.953C13.966 29.1105 14.5742 29.2975 15.6939 29.3485C16.9048 29.4037 17.2677 29.4153 20.3344 29.4153C23.4014 29.4153 23.7646 29.4037 24.9752 29.3485C26.0949 29.2975 26.7031 29.1105 27.1078 28.953C28.1094 28.5667 28.901 27.775 29.2874 26.7734C29.4445 26.3688 29.6316 25.7609 29.6829 24.6412C29.7381 23.4299 29.7497 23.0668 29.7497 20.0004C29.7497 16.9337 29.7381 16.5705 29.6829 15.3596C29.6319 14.2399 29.4448 13.6317 29.2874 13.227ZM20.3347 25.8973C17.0776 25.8973 14.4372 23.2572 14.4372 20.0001C14.4372 16.7429 17.0776 14.1028 20.3347 14.1028C23.5916 14.1028 26.2319 16.7429 26.2319 20.0001C26.2319 23.2572 23.5916 25.8973 20.3347 25.8973ZM26.4651 15.2479C25.704 15.2479 25.0869 14.6308 25.0869 13.8697C25.0869 13.1086 25.704 12.4915 26.4651 12.4915C27.2262 12.4915 27.8433 13.1086 27.8433 13.8697C27.843 14.6308 27.2262 15.2479 26.4651 15.2479Z"
+                                              fill="black"/>
+                                        <path d="M20.3335 0C9.28949 0 0.333496 8.95599 0.333496 20C0.333496 31.044 9.28949 40 20.3335 40C31.3775 40 40.3335 31.044 40.3335 20C40.3335 8.95599 31.3775 0 20.3335 0ZM31.7486 24.7348C31.6931 25.9573 31.4987 26.792 31.2148 27.5226C30.6182 29.0652 29.3987 30.2847 27.8561 30.8813C27.1258 31.1652 26.2908 31.3593 25.0686 31.4151C23.8439 31.4709 23.4527 31.4844 20.3338 31.4844C17.2146 31.4844 16.8237 31.4709 15.5987 31.4151C14.3765 31.3593 13.5415 31.1652 12.8112 30.8813C12.0446 30.593 11.3506 30.141 10.7769 29.5566C10.1928 28.9832 9.74084 28.2889 9.45245 27.5226C9.16864 26.7923 8.97424 25.9573 8.9187 24.7351C8.86224 23.5101 8.84912 23.1189 8.84912 20C8.84912 16.8811 8.86224 16.4899 8.9184 15.2652C8.97394 14.0427 9.16803 13.208 9.45184 12.4774C9.74023 11.7111 10.1925 11.0168 10.7769 10.4434C11.3503 9.85901 12.0446 9.40704 12.8109 9.11865C13.5415 8.83484 14.3762 8.64075 15.5987 8.5849C16.8234 8.52905 17.2146 8.51562 20.3335 8.51562C23.4524 8.51562 23.8436 8.52905 25.0683 8.58521C26.2908 8.64075 27.1255 8.83484 27.8561 9.11835C28.6224 9.40674 29.3167 9.85901 29.8904 10.4434C30.4745 11.0172 30.9268 11.7111 31.2148 12.4774C31.499 13.208 31.6931 14.0427 31.7489 15.2652C31.8047 16.4899 31.8179 16.8811 31.8179 20C31.8179 23.1189 31.8047 23.5101 31.7486 24.7348Z"
+                                              fill="black"/>
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_45_13525">
+                                            <rect width="40" height="40" fill="white"
+                                                  transform="translate(0.333496)"/>
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <div class="social-item social-product-twitter">
+                                <img src="{{ asset('images/tter.svg') }}" alt="">
                             </div>
                         </div>
-                        <div class=" buy justify-content-center d-none">
-                            @if(!$attributes->isEmpty())
-                                <button type="submit" id="btnAddCard"
-                                        class="add-to-cart mr-3">{{ __('home.Add To Cart') }}</button>
-                            @else
-                                <button type="submit" class="add-to-cart">{{ __('home.Add To Cart') }}</button>
-                            @endif
-                            <button class="share"><i class="fa-regular fa-heart"></i></button>
-                            <button class="share"><i class="fa-solid fa-share-nodes"></i></button>
-                        </div>
-                        <div class="column-xs-12 column-md-12 layout-fixed_rm table_element">
-                            @include('frontend.pages.orderProductsDetail.tab-price-table')
-                            <div class="" id="productMainOrder"></div>
-                        </div>
-                    </form>
+                    </div>
+                    <div class="description-text">
+                        @if(locationHelper() == 'kr')
+                            <div class="item-text">{!! $product->short_description_ko !!}</div>
+                        @elseif(locationHelper() == 'cn')
+                            <div class="item-text">{!! $product->short_description_zh !!}</div>
+                        @elseif(locationHelper() == 'jp')
+                            <div class="item-text">{!! $product->short_description_ja !!}</div>
+                        @elseif(locationHelper() == 'vi')
+                            <div class="item-text">{!! $product->short_description_vi !!}</div>
+                        @else
+                            <div class="item-text">{!! $product->short_description_en !!}</div>
+                        @endif
+                    </div>
+                    <div class="">
+                        <input id="product_id" hidden value="{{$product->id}}">
+                        <input name="price" id="price" hidden value="{{$product->price}}">
+                        @if(count($productDetails)>0)
+                            <input name="variable" id="variable" hidden value="{{$productDetails[0]->variation}}">
+                        @endif
+
+                    </div>
+                    <div class="show-order-area d-flex m-auto align-items-center">
+                        <button type="button" class="btn btnOrder">Start ordering</button>
+                        <button type="button" class="btn btnContact">Contact</button>
+                        <button type="button" class="btn btnCart">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none">
+                                <path d="M2 2H3.30616C3.55218 2 3.67519 2 3.77418 2.04524C3.86142 2.08511 3.93535 2.14922 3.98715 2.22995C4.04593 2.32154 4.06333 2.44332 4.09812 2.68686L4.57143 6M4.57143 6L5.62332 13.7314C5.75681 14.7125 5.82355 15.2031 6.0581 15.5723C6.26478 15.8977 6.56108 16.1564 6.91135 16.3174C7.30886 16.5 7.80394 16.5 8.79411 16.5H17.352C18.2945 16.5 18.7658 16.5 19.151 16.3304C19.4905 16.1809 19.7818 15.9398 19.9923 15.6342C20.2309 15.2876 20.3191 14.8247 20.4955 13.8988L21.8191 6.94969C21.8812 6.62381 21.9122 6.46087 21.8672 6.3335C21.8278 6.22177 21.7499 6.12768 21.6475 6.06802C21.5308 6 21.365 6 21.0332 6H4.57143ZM10 21C10 21.5523 9.55228 22 9 22C8.44772 22 8 21.5523 8 21C8 20.4477 8.44772 20 9 20C9.55228 20 10 20.4477 10 21ZM18 21C18 21.5523 17.5523 22 17 22C16.4477 22 16 21.5523 16 21C16 20.4477 16.4477 20 17 20C17.5523 20 18 20.4477 18 21Z"
+                                      stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    {{--                        <div class="column-xs-12 column-md-12 layout-fixed_rm table_element">--}}
+                    {{--                            @include('frontend.pages.orderProductsDetail.tab-price-table')--}}
+                    {{--                            <div class="" id="productMainOrder"></div>--}}
+                    {{--                        </div>--}}
                 </div>
                 <div class="column-xs-12 column-md-3 layout-fixed">
-                    <div class="main-actions">
-                        <form action="">
-                            <div class="express-header">
-                                <p>{{ __('home.The minimum order quantity is 2 pair') }} {{$product->min}} {{ __('home.Product') }}</p>
-                                <div class="item-center d-flex justify-content-between">
-                                    <span> {{$product->min}} {{ __('home.Product') }}</span>
-                                    @if($product->price != null)
-                                        <div id="productPrice"
-                                             class="price">{{ __('home.from') }} {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</div>
-                                    @else
-                                        <strike id="productOldPrice"> {{ __('home.from') }} {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strike>
-                                    @endif
-                                </div>
-                                <p class="">{{ __('home.Lead time') }} 15 {{ __('home.day') }} <i
-                                            class="fa-solid fa-info"></i></p>
+                    <div class="main-actions main-profile text-center">
+                        <div class="profile-user">
+                            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="" class="img-profile">
+                            <div class="profile-name">
+                                Quỳnh Hương
                             </div>
-                            <div class="express-body">
-                                <div class="item-center d-flex justify-content-between">
-                                    <span>{{ __('home.shipping') }}</span>
-                                    @if($product->price != null)
-                                        <div id="productPrice"
-                                             class="price">{{ __('home.from') }} {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</div>
-                                    @else
-                                        <strike id="productOldPrice"> {{ __('home.from') }} {{ number_format(convertCurrency('USD', $currency,$product->price), 0, ',', '.') }} {{$currency}}</strike>
-                                    @endif
-                                </div>
-                                <div>
-                                    <p class="">{{ __('home.Lead time') }} 15 {{ __('home.day') }} <i
-                                                class="fa-solid fa-info"></i></p>
-                                </div>
-                            </div>
-                            <div class="express-footer">
-                                <a href="{{ route('chat.message.show', $name->name) }}">
-                                    <div class="button-call"><i
-                                                class="fa-solid fa-envelope"></i> {{ __('home.Contact supplier') }}
-                                    </div>
-                                </a>
-                                <a href="tel:{{ $name->phone }}" type="tel">
-                                    <div class="button-call"><i class="fa-solid fa-phone"></i> {{ __('home.Call us') }}
-                                    </div>
-                                </a>
-
-                            </div>
-                        </form>
-                    </div>
-                    @php
-                        $shopInformation = \App\Models\ShopInfo::where('user_id', '=', $name->id)->orderBy('created_at', 'DESC')->first()
-                    @endphp
-                    @if($shopInformation != null)
-                        <div class="detail-module">
-                            <form action="">
-                                <div class="widget-supplier-card company-card-integrated company-card-integrated-lite has-ta origin gps-background ilvietnam-0-0-1 style-v8cHz"
-                                     data-role="widget-supplier-card" data-aui="supplier-card" id="style-v8cHz">
-                                    <div class="card-central-logo d-md-flex justify-content-center ilvietnam-1-1-2">
-                                        <a href="" target="_blank" data-aui="ta-ordered"
-                                           rel="nofollow" class="ilvietnam-2-2-3">
-                                            <img src="https://img.alicdn.com/imgextra/i1/O1CN01AOhmtZ1HQ08UWY7sf_!!6000000000751-2-tps-266-54.png_240x240.jpg"
-                                                 class="ilvietnam-3-3-4 style-q27At" id="style-q27At">
-                                        </a>
-                                    </div>
-                                    <div class="company-name-container ilvietnam-1-1-5">
-                                        <a class="company-name company-name-lite-vb ilvietnam-2-5-6"
-                                           href="{{ route('shop.information.show', $name->id) }}"
-                                           target="_blank" title="Tên công ty"
-                                           data-aui="company-name" data-domdot="id:3317">
-                                            {{$name->name}}
-                                        </a>
-                                    </div>
-                                    <div class="company-brand ilvietnam-1-1-7">
-                                <span class="ilvietnam-2-7-8">
-                                    {{ __('home.Producer') }} {{$shopInformation->product_name}}
-                                </span>
-                                    </div>
-                                    <div class="card-supplier card-icons-lite ilvietnam-1-1-9">
-                                <span class="company-name-country ilvietnam-2-9-10">
-                                    <i class="icbu-icon-flag icbu-icon-flag-cn ilvietnam-3-10-11">
-
-                                    </i>
-                                    <span class="register-country ilvietnam-3-10-12">
-                                       {{$shopInformation->country}}
-                                    </span>
-                                </span>
-                                        <a class="verify-info ilvietnam-2-9-13" data-aui="ggs-icon" rel="nofollow">
-                                    <span class="join-year ilvietnam-3-13-14">
-                                        <span class="value ilvietnam-4-14-15">{{$shopInformation->industry_year}}
-                                        </span>
-                                        <span class="unit ilvietnam-4-14-16">
-                                            YRS
-                                        </span>
-                                    </span>
-                                        </a>
-                                    </div>
-                                    <div class="ability ilvietnam-1-1-17">
-                                        <img src="https://img.alicdn.com/imgextra/i3/O1CN015NySK71aBmY1PTG9K_!!6000000003292-2-tps-28-28.png"
-                                             class="ilvietnam-2-17-18">
-                                        {{ __('home.Registered Trademark') }} (1)
-                                    </div>
-                                    <div class="company-basicCapacity ilvietnam-1-1-19">
-                                        <a href=""
-                                           class="attr-item ilvietnam-2-19-20" aria-haspopup="true"
-                                           aria-expanded="false">
-                                            <div class="attr-title ilvietnam-3-20-21">
-                                                {{ __('home.Store Rating') }}
-                                            </div>
-                                            <div class="attr-content ilvietnam-3-20-22" title="4,7(21)">
-                                                @php
-                                                    $userId = $name->id;
-                                                    $evaluates = DB::table('evaluate_products')
-                                                        ->join('products', 'products.id', '=', 'evaluate_products.product_id')
-                                                        ->where('products.user_id', $userId)
-                                                        ->select('evaluate_products.star_number')
-                                                        ->get();
-                                                    $totalRating = $evaluates->count();
-                                                    $totalStars = 0;
-                                                    foreach ($evaluates as $evaluate) {
-                                                        $totalStars += $evaluate->star_number;
-                                                    }
-                                                    $averageRatings = $totalRating > 0 ? $totalStars / $totalRating : 0;
-                                                    $averageRatingsFormatted = number_format($averageRatings, 2);
-                                                @endphp
-                                                {{ $averageRatingsFormatted }} ({{ $totalRating }})
-
-                                            </div>
-                                        </a>
-                                        <div class="attr-item ilvietnam-2-19-23" aria-haspopup="true"
-                                             aria-expanded="false">
-                                            <div class="attr-title ilvietnam-3-23-24">
-                                                {{ __('home.On-time delivery rate') }}
-                                            </div>
-                                            <div class="attr-content ilvietnam-3-23-25" title="95,6%">
-                                                95,6%
-                                            </div>
-                                        </div>
-                                        <div class="attr-item ilvietnam-2-19-26" aria-haspopup="true"
-                                             aria-expanded="false">
-                                            <div class="attr-title ilvietnam-3-26-27">
-                                                {{ __('home.Response time') }}
-                                            </div>
-                                            <div class="attr-content ilvietnam-3-26-28" title="≤3h">
-                                                ≤3h
-                                            </div>
-                                        </div>
-                                        <div class="attr-item ilvietnam-2-19-29" aria-haspopup="true"
-                                             aria-expanded="false">
-                                            <div class="attr-title ilvietnam-3-29-30">
-                                                {{ __('home.Online revenue') }}
-                                            </div>
-                                            <div class="attr-content ilvietnam-3-29-31" title="$480,000+">
-                                                ${{$shopInformation->annual_output}}+
-                                            </div>
-                                        </div>
-                                        <div class="attr-item ilvietnam-2-19-32" aria-haspopup="true"
-                                             aria-expanded="false">
-                                            <div class="attr-title ilvietnam-3-32-33">
-                                                {{ __('home.Floor space') }}
-                                            </div>
-                                            <div class="attr-content ilvietnam-3-32-34" title="1000m²">
-                                                {{$shopInformation->acreage}}m²
-                                            </div>
-                                        </div>
-                                        <div class="attr-item ilvietnam-2-19-35" aria-haspopup="true"
-                                             aria-expanded="false">
-                                            <div class="attr-title ilvietnam-3-35-36">
-                                                {{ __('home.Staff') }}
-                                            </div>
-                                            <div class="attr-content ilvietnam-3-35-37" title="14">
-                                                {{$shopInformation->inspection_staff}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="company-productionServiceCapacity service-2 ilvietnam-1-1-38">
-                                        <div class="attr-title ilvietnam-2-38-39">
-                                            {{ __('home.Service') }}
-                                        </div>
-                                        <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true"
-                                             aria-expanded="false">
-                                            <div class="attr-content ilvietnam-3-40-41" title="tùy chỉnh nhỏ">
-                                                {{ __('home.Small customization') }}
-                                            </div>
-                                        </div>
-                                        <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true"
-                                             aria-expanded="false">
-                                            <div class="attr-content ilvietnam-3-42-43"
-                                                 title="Tùy chỉnh dựa trên thiết kế">
-                                                {{ __('home.Customization based on design') }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="company-productionServiceCapacity service-2 ilvietnam-1-1-38">
-                                        <div class="attr-title ilvietnam-2-38-39">
-                                            {{ __('home.Quality control') }}
-                                        </div>
-                                        <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true"
-                                             aria-expanded="false">
-                                            <div class="attr-content ilvietnam-3-40-41"
-                                                 title="Nhận dạng truy xuất nguồn gốc nguyên liệu">
-                                                {{ __('home.Identification of traceability of raw materials') }}
-                                            </div>
-                                        </div>
-                                        <div class="attr-item ilvietnam-2-38-40" aria-haspopup="true"
-                                             aria-expanded="false">
-                                            <div class="attr-content ilvietnam-3-42-43" title="Kiểm tra thành phẩm">
-                                                {{ __('home.Finished product inspection') }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="attr-title ilvietnam-2-38-39">{{ __('home.Certificate') }}
-                                    </div>
-                                    <a href="{{ route('shop.information.show', $name->id) }}"
-                                       class="company-qualificationCertificate service-4 ilvietnam-1-1-50">
-                                        <div class="attr-item ilvietnam-2-50-53" aria-haspopup="true"
-                                             aria-expanded="false">
-                                            <div class="attr-content ilvietnam-3-53-54">
-                                                {{ __('home.Certificate') }}
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <div class="company-profile ilvietnam-1-1-55">
-                                        <a href="{{ route('shop.information.show', $name->id) }}"
-                                           class="detail-next-btn detail-next-medium detail-next-btn-normal ilvietnam-2-55-56 attr-item">
-                                    <span class="detail-next-btn-helper ilvietnam-3-56-57">
-                                       {{ __('home.company profile') }}
-                                    </span>
-                                        </a>
-                                        <a href="{{ route('shop.information.show', $name->id) }}"
-                                           class="detail-next-btn detail-next-medium detail-next-btn-normal ilvietnam-2-55-56 attr-item">
-                                    <span class="detail-next-btn-helper ilvietnam-3-58-59">
-                                        {{ __('home.Visit the store') }}
-                                    </span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </form>
                         </div>
-                    @endif
+                        <div class="list-action ">
+                            <button class="btn btn-contact">
+                                <i class="fa-solid fa-envelope"></i>Contact supplier
+                            </button>
+                            <br/>
+                            <button class="btn btn-call">
+                                <i class="fa-solid fa-phone-volume"></i>Call the supplier
+                            </button>
+                        </div>
+                    </div>
+                    <div class="main-actions main-shop">
+                        <div class="banner-shop">
+                            <img src="https://png.pngtree.com/thumb_back/fh260/back_pic/00/02/44/5056179b42b174f.jpg"
+                                 alt="" class="banner">
+                            <div class="shop-info d-flex align-items-center">
+                                <img src="https://vn4u.vn/wp-content/uploads/2023/09/logo-co-tinh-nhat-quan-2.png"
+                                     alt="" class="logo-shop">
+                                <div class="shop-name">
+                                    Công ty IL Global
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review-shop p-2">
+                            <div class="rank-shop d-flex align-items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none">
+                                    <path d="M19.0345 2.48279H4.96552L0 7.4483L12 21.5172L24 7.4483L19.0345 2.48279Z"
+                                          fill="#00C3FF"/>
+                                    <path d="M19.0345 2.48279L12 21.5172L24 7.4483L19.0345 2.48279Z" fill="#87DAFF"/>
+                                    <path d="M4.96552 2.48279L6.80081 7.4483H0L4.96552 2.48279Z" fill="#00AAF0"/>
+                                    <path d="M12 2.48279L6.80078 7.4483H17.1992L12 2.48279Z" fill="#87DAFF"/>
+                                    <path d="M17.1992 7.4483H24L19.0345 2.48279L17.1992 7.4483Z" fill="#A5E9FF"/>
+                                    <path d="M0 7.44824H6.80081L12 21.5172L0 7.44824Z" fill="#0096DC"/>
+                                </svg>
+                                <span>Diamond member</span>
+                            </div>
+                            <div class="review-shop d-flex align-items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="none">
+                                    <g clip-path="url(#clip0_87_11682)">
+                                        <path d="M17.9359 8.59202C17.9799 8.01602 17.9999 7.41602 17.9999 6.78802V3.99202C17.9999 3.69602 17.7719 3.46002 17.4879 3.45202C12.7239 3.32402 10.3879 1.42802 9.5599 0.556024C9.3599 0.348024 9.0399 0.348024 8.8399 0.556024C8.0119 1.42802 5.6759 3.32402 0.911902 3.45202C0.627902 3.46002 0.399902 3.69602 0.399902 3.99202V6.78802C0.399902 18.228 7.4599 20.76 8.9319 21.164C9.1079 21.212 9.2919 21.212 9.4679 21.164C9.8159 21.068 10.4679 20.856 11.2679 20.436L17.9359 8.59202Z"
+                                              fill="#C9EFF4"/>
+                                        <path d="M16.372 7.88797C16.392 7.53197 16.4 7.16397 16.4 6.78797V5.35597C16.4 5.15197 16.24 4.97997 16.036 4.95997C12.796 4.62797 10.68 3.50797 9.444 2.57997C9.3 2.46797 9.1 2.46797 8.956 2.57997C7.72 3.50797 5.604 4.62797 2.364 4.95997C2.16 4.97997 2 5.15197 2 5.35597V6.78797C2 16.46 7.408 18.988 9.08 19.536C9.16 19.564 9.24 19.564 9.32 19.536C9.448 19.496 9.6 19.44 9.768 19.372L16.372 7.88797Z"
+                                              fill="#39BC71"/>
+                                        <path d="M23.4361 23.036L23.0361 23.436C22.8161 23.656 22.4561 23.656 22.2361 23.436L19.6081 20.808L19.6001 20.4L20.4001 19.6L20.8081 19.608L23.4361 22.236C23.6561 22.456 23.6561 22.816 23.4361 23.036Z"
+                                              fill="#7F3633"/>
+                                        <path d="M18.564 19.7677L19.7641 18.5676L20.8041 19.6076L19.604 20.8077L18.564 19.7677Z"
+                                              fill="#91C0C1"/>
+                                        <path d="M14.4001 21.2C18.1556 21.2 21.2001 18.1555 21.2001 14.4C21.2001 10.6444 18.1556 7.59998 14.4001 7.59998C10.6446 7.59998 7.6001 10.6444 7.6001 14.4C7.6001 18.1555 10.6446 21.2 14.4001 21.2Z"
+                                              fill="#2BB5E2"/>
+                                        <path d="M14.4002 21.6C10.4302 21.6 7.2002 18.37 7.2002 14.4C7.2002 10.43 10.4302 7.19995 14.4002 7.19995C18.3702 7.19995 21.6002 10.43 21.6002 14.4C21.6002 18.37 18.3702 21.6 14.4002 21.6ZM14.4002 7.99995C10.8714 7.99995 8.0002 10.8712 8.0002 14.4C8.0002 17.9288 10.8714 20.8 14.4002 20.8C17.929 20.8 20.8002 17.9288 20.8002 14.4C20.8002 10.8712 17.929 7.99995 14.4002 7.99995Z"
+                                              fill="#B7E1E5"/>
+                                        <path d="M13.2002 17.2C13.0942 17.2 12.9926 17.1584 12.9174 17.0828L11.7174 15.8828C11.561 15.7264 11.561 15.4736 11.7174 15.3172C11.8738 15.1608 12.1266 15.1608 12.283 15.3172L13.157 16.1912L16.4806 11.7604C16.6134 11.584 16.8638 11.548 17.0402 11.6804C17.217 11.8128 17.253 12.0636 17.1202 12.24L13.5202 17.04C13.4506 17.1328 13.3446 17.1908 13.2286 17.1988C13.219 17.1996 13.2094 17.2 13.2002 17.2Z"
+                                              fill="white"/>
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_87_11682">
+                                            <rect width="24" height="24" fill="white"/>
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                                <span>Suppliers are audited</span>
+                            </div>
+                            <div class="rating-shop">
+                                <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                <i class="fa-solid fa-star" style="color: #ccc"></i>
+                                <i class="fa-solid fa-star" style="color: #ccc"></i>
+                                <span class="total-rating"> (4,5)</span>
+                            </div>
+                        </div>
+                        <div class="description-shop m-2">
+                            Manufacturer/Factory & Trading Company
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="productView-description">
-            <ul class="nav nav-tabs container-fluid pt-4" id="myTab" role="tablist">
+            <ul class="nav nav-tabs pt-4" id="myTab" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
                        aria-controls="home"
@@ -511,241 +350,247 @@
                        aria-controls="contact" aria-selected="false">{{ __('home.review') }}</a>
                 </li>
             </ul>
-            <div class="tab-content container-fluid" id="myTabContent">
+            <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     @if($product)
-                        <div class="content contentHeight1" id="content1">
-                            @if(locationHelper() == 'kr')
-                                <div class="item-text">{!! $product->description_ko !!}</div>
-                            @elseif(locationHelper() == 'cn')
-                                <div class="item-text">{!! $product->description_zh !!}</div>
-                            @elseif(locationHelper() == 'jp')
-                                <div class="item-text">{!! $product->description_ja !!}</div>
-                            @elseif(locationHelper() == 'vi')
-                                <div class="item-text">{!! $product->description_vi !!}</div>
-                            @else
-                                <div class="item-text">{!! $product->description_en !!}</div>
-                            @endif
-                            {{--                    {!! $product->description!!}--}}
-                        </div>
-                        <button id="toggleBtn1" class="toggleBtn"
-                                onclick="toggleContent('content1', 'toggleBtn1')">{{ __('home.Show More') }}</button>
+                        @if(locationHelper() == 'kr')
+                            <div class="item-text">{!! $product->description_ko !!}</div>
+                        @elseif(locationHelper() == 'cn')
+                            <div class="item-text">{!! $product->description_zh !!}</div>
+                        @elseif(locationHelper() == 'jp')
+                            <div class="item-text">{!! $product->description_ja !!}</div>
+                        @elseif(locationHelper() == 'vi')
+                            <div class="item-text">{!! $product->description_vi !!}</div>
+                        @else
+                            <div class="item-text">{!! $product->description_en !!}</div>
+                        @endif
                     @endif
                 </div>
-                @php
-                    $infos = DB::table('shop_infos')->first();
-                    $user = DB::table('users')->first();
-                @endphp
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    @php
-                        $shopInformation = \App\Models\ShopInfo::where('user_id', '=', $name->id)->orderBy('created_at', 'DESC')->first()
-                    @endphp
-                    @if($shopInformation)
-                        <div class="contentHeight2 content" id="content2">
-                            {{ $shopInformation -> name }}
-                            <div class="item-text">
-                                {!! $shopInformation->information !!}
+                    <div class="shop-info d-flex align-items-center">
+                        <div class="info d-flex align-items-center w-50">
+                            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="" class="avt">
+                            <div class="show-info">
+                                <div class="name">
+                                    Quỳnh Hương
+                                </div>
+                                <div class="rating-shop">
+                                    <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                    <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                    <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                    <i class="fa-solid fa-star" style="color: #ccc"></i>
+                                    <i class="fa-solid fa-star" style="color: #ccc"></i>
+                                    <span class="total-rating"> (4,5)</span>
+                                </div>
                             </div>
                         </div>
-                        <button id="toggleBtn2" class="toggleBtn"
-                                onclick="toggleContent('content2', 'toggleBtn2')">{{ __('home.Show More') }}</button>
-                    @endif
-                </div>
-                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                    <div class="mb-4">
-                        <div class="">{{ __('home.write a read') }}</div>
-                        @php
-                            if (Auth::check()){
-                                $isMember = \App\Models\MemberRegisterPersonSource::where([
-                                    ['email', Auth::user()->email],
-                                    ['status', \App\Enums\MemberRegisterPersonSourceStatus::ACTIVE]
-                                ])->first();
-
-                                if (!$isMember){
-                                    $isMember = \App\Models\MemberRegisterInfo::where('user_id', Auth::user()->id);
-                                }
-                            }
-                        @endphp
-                        @if($isMember)
-                            <form method="post" action="{{route('create.evaluate')}}">
-                                @csrf
-                                <input type="text" class="form-control" id="product_id" name="product_id"
-                                       value="{{$product->id}}" hidden/>
-                                <div class="rating">
-                                    <input type="radio" name="star_number" id="star1" value="1" hidden="">
-                                    <label for="star1" onclick="starCheck(1)"><i id="icon-star-1"
-                                                                                 class="fa fa-star"></i></label>
-                                    <input type="radio" name="star_number" id="star2" value="2" hidden="">
-                                    <label for="star2" onclick="starCheck(2)"><i id="icon-star-2"
-                                                                                 class="fa fa-star"></i></label>
-                                    <input type="radio" name="star_number" id="star3" value="3" hidden="">
-                                    <label for="star3" onclick="starCheck(3)"><i id="icon-star-3"
-                                                                                 class="fa fa-star"></i></label>
-                                    <input type="radio" name="star_number" id="star4" value="4" hidden="">
-                                    <label for="star4" onclick="starCheck(4)"><i id="icon-star-4"
-                                                                                 class="fa fa-star"></i></label>
-                                    <input type="radio" name="star_number" id="star5" value="5" hidden="" checked>
-                                    <label for="star5" onclick="starCheck(5)"><i id="icon-star-5"
-                                                                                 class="fa fa-star"></i></label>
-                                </div>
-                                <input id="input-star" value="0" hidden="">
-                                <div id="text-message"
-                                     class="text-danger d-none">{{ __('home.Please select star rating') }}
-                                </div>
-
-                                <div class="form-group row">
-                                    <label for=""
-                                           class="col-sm-12 col-form-label">{{ __('home.your name') }}</label>
-                                    <div class="col-sm-12">
-                                        <input onclick="checkStar()" type="text" class="form-control" id=""
-                                               name="username"
-                                               placeholder="{{ __('home.your name') }}" required/>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for=""
-                                           class="col-sm-12 col-form-label">{{ __('home.your review') }}</label>
-                                    <div class="col-sm-12">
-                                    <textarea onclick="checkStar()" class="form-control" id=""
-                                              name="content"
-                                              placeholder="{{ __('home.your review') }}"
-                                              rows="3" required></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <button id="btn-submit" class="btn btn-primary btn-16" type="submit">
-                                        {{ __('home.submit') }}
-                                    </button>
-                                </div>
-                            </form>
-                        @endif
+                        <div class="product-category w-25">
+                            <div class="product">
+                                <span>Products: 120</span>
+                            </div>
+                            <div class="category">
+                                <span class="title-category">Category: </span> <span class="value-category">Mobile Phone, Sports</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="card-header">{{ __('home.write a review') }}</div>
-                            @foreach($result as $res)
-                                <table class="table table-bordered">
-                                    <tbody>
-                                    <tr>
-                                        <td>
-                                            <strong>{{$res->username}}</strong>
-                                        </td>
-                                        @if($res->user_id == Auth::user()->id)
-                                            <td>
-                                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                        data-target="#edit-comment"
-                                                        onclick="getCommentById({{ $res->id }})">
-                                                    {{ __('home.edit-comment') }}
-                                                </button>
-                                            </td>
-                                        @endif
-
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p>{{$res->content}}</p>
-                                            <p class="m-0">{{$res->created_at}}</p>
-                                        </td>
-                                    </tr>
-                                    @if($res->status == \App\Enums\EvaluateProductStatus::PENDING)
-                                        <tr>
-                                            <td>
-                                                <p class="text-danger">{{ __('home.wait a review') }}</p>
-                                            </td>
-                                        </tr>
-                                    @endif
-                                    <tr>
-                                        <td>
-                                            <strong class="mr-2">{{ __('home.customer rating') }}: </strong>
-                                            @if($res->star_number == 1)
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star"></i></span>
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star-o"></i></span>
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star-o"></i></span>
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star-o"></i></span>
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star-o"></i></span>
-                                            @endif
-                                            @if($res->star_number == 2)
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star"></i></span>
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star"></i></span>
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star-o"></i></span>
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star-o"></i></span>
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star-o"></i></span>
-                                            @endif
-                                            @if($res->star_number == 3)
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star"></i></span>
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star"></i></span>
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star"></i></span>
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star-o"></i></span>
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star-o"></i></span>
-                                            @endif
-                                            @if($res->star_number == 4)
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star"></i></span>
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star"></i></span>
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star"></i></span>
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star"></i></span>
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star-o"></i></span>
-                                            @endif
-                                            @if($res->star_number == 5)
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star"></i></span>
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star"></i></span>
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star"></i></span>
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star"></i></span>
-                                                <span class="fa fa-stack">
-                                                    <i class="fa fa-star"></i></span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                    @php
+                        $productItem = $product;
+                    @endphp
+                    <div class="product-shop">
+                        <div class="product-title">
+                            Product from shop
+                        </div>
+                        <div class="list-product d-flex flex-wrap">
+                            @foreach($listProducts as $product)
+                                <div class=" mb-3 product-item">
+                                    @include('frontend.pages.list-product')
+                                </div>
                             @endforeach
                         </div>
                     </div>
                 </div>
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                    <div class="form-review d-none" id="formReview">
+                        <form method="post" action="{{route('create.evaluate')}}">
+                            <h5 class="text-center">Write a review</h5>
+                            @csrf
+                            <input type="text" class="form-control" id="product_id" name="product_id"
+                                   value="{{$productItem->id}}" hidden/>
+                            <div class="rating text-center">
+                                <input type="radio" name="star_number" id="star1" value="1" hidden="">
+                                <label for="star1" onclick="starCheck(1)"><i id="icon-star-1"
+                                                                             class="fa fa-star"></i></label>
+                                <input type="radio" name="star_number" id="star2" value="2" hidden="">
+                                <label for="star2" onclick="starCheck(2)"><i id="icon-star-2"
+                                                                             class="fa fa-star"></i></label>
+                                <input type="radio" name="star_number" id="star3" value="3" hidden="">
+                                <label for="star3" onclick="starCheck(3)"><i id="icon-star-3"
+                                                                             class="fa fa-star"></i></label>
+                                <input type="radio" name="star_number" id="star4" value="4" hidden="">
+                                <label for="star4" onclick="starCheck(4)"><i id="icon-star-4"
+                                                                             class="fa fa-star"></i></label>
+                                <input type="radio" name="star_number" id="star5" value="5" hidden="" checked>
+                                <label for="star5" onclick="starCheck(5)"><i id="icon-star-5"
+                                                                             class="fa fa-star"></i></label>
+                            </div>
+                            <input id="input-star" value="0" hidden="">
+                            <div id="text-message"
+                                 class="text-danger text-center d-none">{{ __('home.Please select star rating') }}
+                            </div>
+
+                            <div class="form-group row">
+                                <label for=""
+                                       class="col-sm-12 col-form-label label-item">{{ __('home.your name') }}</label>
+                                <div class="col-sm-12">
+                                    <input onclick="checkStar()" type="text" class="form-control" id=""
+                                           name="username"
+                                           placeholder="{{ __('home.your name') }}" required/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for=""
+                                       class="col-sm-12 col-form-label label-item">{{ __('home.your review') }}</label>
+                                <div class="col-sm-12">
+                                    <textarea onclick="checkStar()" class="form-control" id=""
+                                              name="content"
+                                              placeholder="{{ __('home.your review') }}"
+                                              rows="5" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group text-center list-button-action">
+                                <button class="btn btn-cancel btn-16" type="button">
+                                    {{ __('home.Cancel') }}
+                                </button>
+                                <button id="btn-submit" class="btn btn-send btn-16" type="submit">
+                                    {{ __('home.submit') }}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="calc-review" class="calc-review reviewed justify-content-between align-items-center mt-3">
+                        <div class="rating-review">
+                            <div class="title">
+                                Nhận xét đánh giá trung bình
+                            </div>
+                            <div class="point">
+                                4.9
+                            </div>
+                            <div class="rating">
+                                <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                <i class="fa-solid fa-star" style="color: #ccc"></i>
+                                <i class="fa-solid fa-star" style="color: #ccc"></i>
+                            </div>
+                        </div>
+                        <div class="review-detail">
+                            <div class="title text-center">
+                                Chi tiết
+                            </div>
+                            <div class="show-review  float-right">
+                                <div class="range">
+                                    <label for="vol">5 sao</label>
+                                    <input type="range" id="vol" name="vol" min="0" max="100" disabled value="90">
+                                    <span>89.8</span>
+                                </div>
+                                <div class="range">
+                                    <label for="vol">4 sao</label>
+                                    <input type="range" id="vol" name="vol" min="0" max="100" disabled value="60">
+                                    <span>60.0</span>
+                                </div>
+                                <div class="range">
+                                    <label for="vol">3 sao</label>
+                                    <input type="range" id="vol" name="vol" min="0" max="100" disabled value="10">
+                                    <span>10.0</span>
+                                </div>
+                                <div class="range">
+                                    <label for="vol">2 sao</label>
+                                    <input type="range" id="vol" name="vol" min="0" max="100" disabled value="1">
+                                    <span>0.1</span>
+                                </div>
+                                <div class="range">
+                                    <label for="vol">1 sao</label>
+                                    <input type="range" id="vol" name="vol" min="0" max="100" disabled value="3">
+                                    <span>0.3</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="add-review mt-3 mb-3 reviewed" id="addReview">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+                            <path d="M26.6668 14.0001V9.06675C26.6668 6.82654 26.6668 5.70643 26.2309 4.85079C25.8474 4.09814 25.2354 3.48622 24.4828 3.10272C23.6271 2.66675 22.507 2.66675 20.2668 2.66675H11.7335C9.49329 2.66675 8.37318 2.66675 7.51753 3.10272C6.76489 3.48622 6.15296 4.09814 5.76947 4.85079C5.3335 5.70643 5.3335 6.82654 5.3335 9.06675V22.9334C5.3335 25.1736 5.3335 26.2937 5.76947 27.1494C6.15296 27.902 6.76489 28.5139 7.51753 28.8974C8.37318 29.3334 9.49329 29.3334 11.7335 29.3334H16.0002M18.6668 14.6667H10.6668M13.3335 20.0001H10.6668M21.3335 9.33341H10.6668M24.0002 28.0001V20.0001M20.0002 24.0001H28.0002"
+                                  stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Write a review</span>
+                    </div>
+                    <div id="listReview" class="list-review reviewed">
+                        @foreach($result as $res)
+                            @php
+                                $userReview = $res->user_id;
+                            @endphp
+                            <div class="review-item">
+                                <div class="review-user d-flex justify-content-between align-items-center">
+                                    <div class="user d-flex align-items-center">
+                                        <img src="https://www.w3schools.com/howto/img_avatar.png" alt="" class="avt">
+                                        <div class="name">
+                                            {{$res->username}}
+                                        </div>
+                                    </div>
+                                    <div class="review-rating">
+                                        <div class="rating">
+                                            @if($res->star_number == 1)
+                                                <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                                <i class="fa-solid fa-star" style="color: #ccc"></i>
+                                                <i class="fa-solid fa-star" style="color: #ccc"></i>
+                                                <i class="fa-solid fa-star" style="color: #ccc"></i>
+                                                <i class="fa-solid fa-star" style="color: #ccc"></i>
+                                            @endif
+                                            @if($res->star_number == 2)
+                                                <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                                <i class="fa-solid fa-star" style="color: #ccc"></i>
+                                                <i class="fa-solid fa-star" style="color: #ccc"></i>
+                                                <i class="fa-solid fa-star" style="color: #ccc"></i>
+                                                <i class="fa-solid fa-star" style="color: #ccc"></i>
+                                            @endif
+                                            @if($res->star_number == 3)
+                                                <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                                <i class="fa-solid fa-star" style="color: #ccc"></i>
+                                                <i class="fa-solid fa-star" style="color: #ccc"></i>
+                                            @endif
+                                            @if($res->star_number == 4)
+                                                <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                                <i class="fa-solid fa-star" style="color: #ccc"></i>
+                                            @endif
+                                            @if($res->star_number == 5)
+                                                <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                                <i class="fa-solid fa-star" style="color: #fac325"></i>
+                                            @endif
+                                        </div>
+                                        <div class="time">
+                                            {{$res->created_at}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="review-content">
+                                    {{$res->content}}
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
             </div>
         </div>
-        <input id="url" type="text" hidden value="{{asset('/add-to-cart')}}">
-        <section class="section-Fifth section pt-3 pb-3 container-fluid">
-            <div class="content">{{ __('home.Customers Also Viewed') }}</div>
-            <div class="swiper HotDeal">
-                <div class="swiper-wrapper">
-                    @php
-                        $products = \App\Models\Product::where([['location','=','vi'],['status',\App\Enums\ProductStatus::ACTIVE]])->get();
-                    @endphp
-                    @foreach($products as $product)
-                        <div class="swiper-slide" style="background: #f5f5f5">
-                            @include('frontend.pages.list-product')
-                        </div>
-                    @endforeach
-                </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-            </div>
-        </section>
-        @include('frontend.pages.modal-products')
+
         <div class="modal fade" id="edit-comment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -760,7 +605,7 @@
                             <input type="text" hidden id="id-cmt-edit" name="id">
 
                             <input type="text" class="form-control" id="product_id" name="product_id"
-                                   value="{{$product->id}}" hidden/>
+                                   value="{{$productItem->id}}" hidden/>
                             <div class="rating">
                                 <input type="radio" name="star_number" id="star-edit-1" value="1" hidden="">
                                 <label for="star-edit-1" onclick="starCheckEdit(1)"><i id="icon-star-edit-1"
@@ -810,6 +655,25 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#addReview').on('click', function () {
+                $('#formReview').removeClass('d-none');
+                $('.reviewed').addClass('d-none');
+
+            })
+
+
+            $('.btn-cancel').on('click', function () {
+                $('#formReview').addClass('d-none');
+                $('.reviewed').removeClass('d-none');
+            })
+        })
+
+        function showForm() {
+
+        }
+    </script>
     <script>
         $(window).on('load', function () {
             var largestHeight = 50;
