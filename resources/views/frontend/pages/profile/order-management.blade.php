@@ -14,8 +14,11 @@
             font-weight: 500;
             line-height: normal;
         }
+        td, th {
+            border: none!important;
+        }
     </style>
-    <div class="row mt-2 bg-white rounded" id="address-book">
+    <div class="row p-4 bg-white rounded" id="address-book">
 
         <div class="border-bottom"></div>
         <div class="col-md-12">
@@ -62,7 +65,7 @@
                         <p>{{ __('home.you have no order') }}</p>
                     @else
                         <div class="d-flex justify-content-between">
-                            <div class="">Total:{{count($orderAll)}}</div>
+{{--                            <div class="">Total:{{count($orderAll)}}</div>--}}
                         </div>
                         <table class="table">
                             <thead>
@@ -226,16 +229,16 @@
                             @foreach ($orderWaitPay as $order)
                                 <tr>
                                     <td>
-                                        <button class="text-decoration-none" data-toggle="modal"
-                                                data-target="#updateOrder1{{$order->id}}"
-                                                style="cursor: pointer">{{ $loop->index+1 }}</button>
+                                        <a class="text-decoration-none" data-toggle="modal"
+                                           data-target="#updateOrder1{{$order->id}}"
+                                           style="cursor: pointer;color: red;">#{{ $loop->index+1 }}</a>
                                         <div class="modal fade" id="updateOrder1{{$order->id}}" tabIndex="-1"
                                              role="dialog"
                                              aria-labelledby="editModalLabel">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Detail
+                                                <div class="modal-content border-content">
+                                                    <div class="modal-header" style="border-bottom: 0;">
+                                                        <h5 class="modal-title title-modal" id="exampleModalLabel">Detail
                                                             Order</h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
@@ -288,17 +291,17 @@
                                                             <div class="d-flex justify-content-around">
                                                                 @if($order->status == \App\Enums\OrderStatus::PROCESSING  || $order->status == \App\Enums\OrderStatus::WAIT_PAYMENT)
                                                                     <button type="submit"
-                                                                            class="btn w-25 btn-danger">
-                                                                        Cancel
+                                                                            class="btn w-25 btn-danger btn-cancel m-2">
+                                                                        Cancel order
                                                                     </button>
                                                                 @else
-                                                                    <button class="btn w-25 btn-danger"
+                                                                    <button class="btn w-25 btn-danger btn-cancel m-2"
                                                                             disabled>
-                                                                        Cancel
+                                                                        Cancel order
                                                                     </button>
                                                                 @endif
                                                                 <button type="button"
-                                                                        class="btn w-25 btn-secondary"
+                                                                        class="btn w-25 btn-secondary-back m-2"
                                                                         data-dismiss="modal">Back
                                                                 </button>
                                                             </div>
@@ -370,16 +373,16 @@
                             @foreach ($orderProcessing as $order)
                                 <tr>
                                     <td>
-                                        <button class="text-decoration-none" data-toggle="modal"
-                                                data-target="#updateOrder2{{$order->id}}"
-                                                style="cursor: pointer">{{ $loop->index+1 }}</button>
+                                        <a class="text-decoration-none" data-toggle="modal"
+                                           data-target="#updateOrder2{{$order->id}}"
+                                           style="cursor: pointer;color: red;">#{{ $loop->index+1 }}</a>
                                         <div class="modal fade" id="updateOrder2{{$order->id}}" tabIndex="-1"
                                              role="dialog"
                                              aria-labelledby="editModalLabel">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Detail
+                                                <div class="modal-content border-content">
+                                                    <div class="modal-header" style="border-bottom: 0;">
+                                                        <h5 class="modal-title title-modal" id="exampleModalLabel">Detail
                                                             Order</h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
@@ -430,17 +433,17 @@
                                                             <div class="d-flex justify-content-around">
                                                                 @if($order->status == \App\Enums\OrderStatus::PROCESSING  || $order->status == \App\Enums\OrderStatus::WAIT_PAYMENT)
                                                                     <button type="submit"
-                                                                            class="btn w-25 btn-danger">
-                                                                        Cancel
+                                                                            class="btn w-25 btn-danger btn-cancel m-2">
+                                                                        Cancel order
                                                                     </button>
                                                                 @else
-                                                                    <button class="btn w-25 btn-danger"
+                                                                    <button class="btn w-25 btn-danger btn-cancel m-2"
                                                                             disabled>
-                                                                        Cancel
+                                                                        Cancel order
                                                                     </button>
                                                                 @endif
                                                                 <button type="button"
-                                                                        class="btn w-25 btn-secondary"
+                                                                        class="btn w-25 btn-secondary-back m-2"
                                                                         data-dismiss="modal">Back
                                                                 </button>
                                                             </div>
@@ -512,16 +515,16 @@
                             @foreach ($orderShipping as $order)
                                 <tr>
                                     <td>
-                                        <button class="text-decoration-none" data-toggle="modal"
-                                                data-target="#updateOrder3{{$order->id}}"
-                                                style="cursor: pointer">{{ $loop->index+1 }}</button>
+                                        <a class="text-decoration-none" data-toggle="modal"
+                                           data-target="#updateOrder3{{$order->id}}"
+                                           style="cursor: pointer;color: red;">#{{ $loop->index+1 }}</a>
                                         <div class="modal fade" id="updateOrder3{{$order->id}}" tabIndex="-1"
                                              role="dialog"
                                              aria-labelledby="editModalLabel">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Detail
+                                                <div class="modal-content border-content">
+                                                    <div class="modal-header" style="border-bottom: 0;">
+                                                        <h5 class="modal-title title-modal" id="exampleModalLabel">Detail
                                                             Order</h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
@@ -574,17 +577,17 @@
                                                             <div class="d-flex justify-content-around">
                                                                 @if($order->status == \App\Enums\OrderStatus::PROCESSING  || $order->status == \App\Enums\OrderStatus::WAIT_PAYMENT)
                                                                     <button type="submit"
-                                                                            class="btn w-25 btn-danger">
-                                                                        Cancel
+                                                                            class="btn w-25 btn-danger btn-cancel m-2">
+                                                                        Cancel order
                                                                     </button>
                                                                 @else
-                                                                    <button class="btn w-25 btn-danger"
+                                                                    <button class="btn w-25 btn-danger btn-cancel m-2"
                                                                             disabled>
-                                                                        Cancel
+                                                                        Cancel order
                                                                     </button>
                                                                 @endif
                                                                 <button type="button"
-                                                                        class="btn w-25 btn-secondary"
+                                                                        class="btn w-25 btn-secondary-back m-2"
                                                                         data-dismiss="modal">Back
                                                                 </button>
                                                             </div>
@@ -656,16 +659,16 @@
                             @foreach ($orderDelivered as $order)
                                 <tr>
                                     <td>
-                                        <button class="text-decoration-none" data-toggle="modal"
-                                                data-target="#updateOrder4{{$order->id}}"
-                                                style="cursor: pointer">{{ $loop->index+1 }}</button>
+                                        <a class="text-decoration-none" data-toggle="modal"
+                                           data-target="#updateOrder4{{$order->id}}"
+                                           style="cursor: pointer;color: red;">#{{ $loop->index+1 }}</a>
                                         <div class="modal fade" id="updateOrder4{{$order->id}}" tabIndex="-1"
                                              role="dialog"
                                              aria-labelledby="editModalLabel">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Detail
+                                                <div class="modal-content border-content">
+                                                    <div class="modal-header" style="border-bottom: 0;">
+                                                        <h5 class="modal-title title-modal" id="exampleModalLabel">Detail
                                                             Order</h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
@@ -718,17 +721,17 @@
                                                             <div class="d-flex justify-content-around">
                                                                 @if($order->status == \App\Enums\OrderStatus::PROCESSING  || $order->status == \App\Enums\OrderStatus::WAIT_PAYMENT)
                                                                     <button type="submit"
-                                                                            class="btn w-25 btn-danger">
-                                                                        Cancel
+                                                                            class="btn w-25 btn-danger btn-cancel m-2">
+                                                                        Cancel order
                                                                     </button>
                                                                 @else
-                                                                    <button class="btn w-25 btn-danger"
+                                                                    <button class="btn w-25 btn-danger btn-cancel m-2"
                                                                             disabled>
-                                                                        Cancel
+                                                                        Cancel order
                                                                     </button>
                                                                 @endif
                                                                 <button type="button"
-                                                                        class="btn w-25 btn-secondary"
+                                                                        class="btn w-25 btn-secondary-back m-2"
                                                                         data-dismiss="modal">Back
                                                                 </button>
                                                             </div>
@@ -800,16 +803,16 @@
                             @foreach ($orderCancel as $order)
                                 <tr>
                                     <td>
-                                        <button class="text-decoration-none" data-toggle="modal"
-                                                data-target="#updateOrder5{{$order->id}}"
-                                                style="cursor: pointer">{{ $loop->index+1 }}</button>
+                                        <a class="text-decoration-none" data-toggle="modal"
+                                           data-target="#updateOrder5{{$order->id}}"
+                                           style="cursor: pointer;color: red;">#{{ $loop->index+1 }}</a>
                                         <div class="modal fade" id="updateOrder5{{$order->id}}" tabIndex="-1"
                                              role="dialog"
                                              aria-labelledby="editModalLabel">
                                             <div class="modal-dialog modal-dialog-centered" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Detail
+                                                <div class="modal-content border-content">
+                                                    <div class="modal-header" style="border-bottom: 0;">
+                                                        <h5 class="modal-title title-modal" id="exampleModalLabel">Detail
                                                             Order</h5>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                                 aria-label="Close">
@@ -863,17 +866,17 @@
                                                             <div class="d-flex justify-content-around">
                                                                 @if($order->status == \App\Enums\OrderStatus::PROCESSING  || $order->status == \App\Enums\OrderStatus::WAIT_PAYMENT)
                                                                     <button type="submit"
-                                                                            class="btn w-25 btn-danger">
-                                                                        Cancel
+                                                                            class="btn w-25 btn-danger btn-cancel m-2">
+                                                                        Cancel order
                                                                     </button>
                                                                 @else
-                                                                    <button class="btn w-25 btn-danger"
+                                                                    <button class="btn w-25 btn-danger btn-cancel m-2"
                                                                             disabled>
-                                                                        Cancel
+                                                                        Cancel order
                                                                     </button>
                                                                 @endif
                                                                 <button type="button"
-                                                                        class="btn w-25 btn-secondary"
+                                                                        class="btn w-25 btn-secondary-back m-2"
                                                                         data-dismiss="modal">Back
                                                                 </button>
                                                             </div>
