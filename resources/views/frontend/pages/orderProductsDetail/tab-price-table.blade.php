@@ -14,9 +14,6 @@
             <tbody>
             @if(!$price_sales->isEmpty())
                 @foreach($price_sales as $price_sale)
-                    @php
-                        $product = \App\Models\Product::find($price_sale->product_id);
-                    @endphp
                     <tr>
                         <td class="">{{$price_sale->quantity}}</td>
                         <td>
