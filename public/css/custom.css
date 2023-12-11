@@ -9303,9 +9303,10 @@ header.card-header a {
 .avatar-upload .avatar-edit {
   position: absolute;
   z-index: 1;
-  right: 12px;
-  top: 10px;
+  right: 10px;
+  bottom: 30px;
 }
+
 .avatar-upload .preview {
   border-radius: 100%;
 }

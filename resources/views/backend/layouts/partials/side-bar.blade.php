@@ -45,15 +45,29 @@
      }
 
 @endphp
+<style>
+    .border-left-sidebar {
+        border-left: 4px solid #F47621;
+    }
+
+    .text-danger {
+        color: var(--secon-1, #F47621) !important;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+    }
+</style>
+
 <div class='wrapper text-nowrap'>
     <ul class='items'>
-        <li>
+        <li class="border-list_profile">
             <a class="sidebar item" href='#'><i class="fa-solid fa-user"></i> {{ __('home.account manage') }}</a>
             <ul class='sub-items pl-3'>
                 <li><a class="sidebarUrl" href="{{route('profile.show')}}">{{ __('home.account information') }}</a>
                 </li>
                 @if(!$isAdmin)
-                    <li><a class="sidebarUrl" href="{{route('member.info')}}">{{ __('home.Member') }}</a>
+                    <li class="sidebarUrlLi"><a class="sidebarUrl"
+                                                href="{{route('member.info')}}">{{ __('home.Member') }}</a>
                     </li>
                 @endif
                 <li><a class="sidebarUrl" href="{{route('order.show')}}">{{ __('home.order management') }}</a>
@@ -71,7 +85,7 @@
                 </li>
             </ul>
         </li>
-        <li>
+        <li class="border-list_profile">
             <a class="sidebar item" href='#'><i class="fa-solid fa-inbox"></i> {{ __('home.Message') }}</a>
             <ul class='sub-items pl-3'>
                 <li><a class="sidebarUrl" href="{{route('chat.message.show')}}">{{ __('home.Message') }}</a>
