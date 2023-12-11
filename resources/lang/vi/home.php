@@ -64,6 +64,7 @@ return [
     'set pin code' => 'Thiết lập mã PIN',
     'link social network' => 'Liên kết mạng xã hội',
     'save changes' => 'Lưu thay đổi',
+    'Update profile' => 'Cập nhật thông tin',
     'address' => 'Địa chỉ',
 
     //update, add email, liên kết, nam, nữ, khác

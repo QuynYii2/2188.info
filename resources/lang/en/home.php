@@ -64,6 +64,7 @@ return [
     'set pin code' => 'Set pin code',
     'link social network' => 'Link social network',
     'save changes' => 'Save changes',
+    'Update profile' => 'Update profile',
     'address' => 'Address',
 
     //update, add email, liên kết, nam, nữ, khác
