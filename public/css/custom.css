@@ -3627,7 +3627,49 @@ input[type=button].btn-block {
   border: 1px solid transparent;
 }
 .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
-  border-color: #e9ecef #e9ecef #dee2e6;
+  border-color: #F47621;
+}
+.border-content {
+  border-radius: 16px;
+  background: var(--White, #FFF);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.currency-color {
+  color: var(--secon-1, #F47621);
+  font-style: normal;
+  line-height: normal;
+}
+.title-modal {
+  color: #000;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.btn-secondary-back {
+  background: var(--secon-1, #F47621);
+  display: flex;
+  height: 48px;
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex: 1 0 0;
+}
+.btn-cancel {
+  display: flex;
+  height: 48px;
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex: 1 0 0;
+  background: var(--White-Light, #F3F3F3);
+  color: var(--Grey-Dark, #929292);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 .nav-tabs .nav-link.disabled {
   color: #6c757d;
@@ -3636,8 +3678,12 @@ input[type=button].btn-block {
 }
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
-  color: #495057;
-  background-color: #F5F5F5;
+  border-radius: 86px;
+  background: #F47621 !important;
+  /*color: #495057;*/
+  color:  #FFF !important;
+
+  /*background-color: #F5F5F5;*/
   border-color: #dee2e6 #dee2e6 #F5F5F5;
 }
 .nav-tabs .dropdown-menu {
@@ -9303,9 +9349,10 @@ header.card-header a {
 .avatar-upload .avatar-edit {
   position: absolute;
   z-index: 1;
-  right: 12px;
-  top: 10px;
+  right: 10px;
+  bottom: 30px;
 }
+
 .avatar-upload .preview {
   border-radius: 100%;
 }

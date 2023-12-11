@@ -64,6 +64,7 @@ return [
     'set pin code' => 'PIN 코드 설정',
     'link social network' => 'SNS 계정 연결',
     'save changes' => '저장',
+    'Update profile' => '프로필 업데이트',
     'address' => '주소',
     //update, add email, liên kết, nam, nữ, khác
     'update' => '업데이트',
